@@ -12,17 +12,29 @@
 
 @synthesize ident, coordinates, tags;
 
--(id) initWithId: (int) i coordinates: (CLLocationCoordinate2D *) coordinate keyValues: (NSMutableDictionary *) tag
+-(id) initWithId: (int) i coordinates: (CLLocation *) coordinate keyValues: (NSMutableDictionary *) tag
 {
     self = [super init];
     if(self)
     {
         ident = i;
         coordinates = coordinate;
-        tags = tag;
+        tags = [[NSMutableDictionary alloc] initWithDictionary:tag];
     }
     return self;
     
+}
+
+-(id) initWithId:(int)i latitude:(double) la longitude:(double) lo
+{
+    self = [super init];
+    if (self)
+    {
+        ident = i;
+        coordinates = [[CLLocation alloc] initWithLatitude:la longitude:lo];
+        tags = [[NSMutableDictionary alloc] init];
+    }
+    return self;
 }
 
 -(void)addKey: (NSString*) key Value: (NSString*) val

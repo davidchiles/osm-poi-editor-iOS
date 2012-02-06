@@ -12,10 +12,11 @@
 @interface OPENode : NSObject
 
 @property int ident;
-@property CLLocationCoordinate2D* coordinates;
+@property (retain) CLLocation* coordinates;
 @property (retain) NSMutableDictionary* tags;
 
--(id) initWithId: (int) i coordinates: (CLLocationCoordinate2D *) coordinate keyValues: (NSMutableDictionary *) tag;
+-(id) initWithId: (int) i coordinates: (CLLocation *) coordinate keyValues: (NSMutableDictionary *) tag;
+-(id) initWithId:(int)i latitude:(double) la longitude:(double) lo;
 -(void)addKey: (NSString*) key Value: (NSString*) val;
 -(BOOL)onlyTagCreatedBy;
 

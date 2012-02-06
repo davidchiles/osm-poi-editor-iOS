@@ -10,6 +10,7 @@
 #import "RMCloudMadeMapSource.h"
 #import "RMCloudMadeHiResMapSource.h" 
 #import "OPEParser.h"
+#import "OPEOSMData.h"
 
 @implementation OPEViewController
 
@@ -48,7 +49,14 @@
     [mapView moveToLatLong: initLocation];
     
     [mapView.contents setZoom: 16];
-    OPEParser *parser = [[OPEParser alloc] init];
+    //OPEParser *parser = [[OPEParser alloc] init];
+    double bboxleft = -122.26341;
+    double bboxbottom = 37.86981;
+    double bboxright = -122.25421;
+    double bboxtop = 37.87533;
+    OPEOSMData* data = [[OPEOSMData alloc] initWithLeft:bboxleft bottom:bboxbottom right:bboxright top:bboxtop];
+    [data getData];
+    
 }
 
 - (void)viewDidUnload
