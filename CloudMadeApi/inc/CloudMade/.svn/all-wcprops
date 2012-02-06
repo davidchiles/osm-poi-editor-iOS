@@ -1,0 +1,275 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/iphone-api/!svn/ver/205/iphone-api/trunk/inc/CloudMade
+END
+HelperConstant.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/iphone-api/!svn/ver/161/iphone-api/trunk/inc/CloudMade/HelperConstant.h
+END
+CMRouteSummary.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/iphone-api/!svn/ver/196/iphone-api/trunk/inc/CloudMade/CMRouteSummary.h
+END
+CMRouteSammury.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/iphone-api/!svn/ver/196/iphone-api/trunk/inc/CloudMade/CMRouteSammury.h
+END
+CMGeosearchRequestParams.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/iphone-api/!svn/ver/196/iphone-api/trunk/inc/CloudMade/CMGeosearchRequestParams.h
+END
+RouteInstruction.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/iphone-api/!svn/ver/196/iphone-api/trunk/inc/CloudMade/RouteInstruction.h
+END
+CMSynchronousGeocodingRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/CMSynchronousGeocodingRequest.h
+END
+CMLBABanner.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/iphone-api/!svn/ver/187/iphone-api/trunk/inc/CloudMade/CMLBABanner.h
+END
+GeoCodingJsonParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/GeoCodingJsonParser.h
+END
+CMRouting.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/CMRouting.h
+END
+Location.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/iphone-api/!svn/ver/194/iphone-api/trunk/inc/CloudMade/Location.h
+END
+CMLBAManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/iphone-api/!svn/ver/196/iphone-api/trunk/inc/CloudMade/CMLBAManager.h
+END
+ServiceRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/iphone-api/!svn/ver/161/iphone-api/trunk/inc/CloudMade/ServiceRequest.h
+END
+UserRegistration.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/UserRegistration.h
+END
+CMLBAConstants.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/iphone-api/!svn/ver/187/iphone-api/trunk/inc/CloudMade/CMLBAConstants.h
+END
+TokenManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/iphone-api/!svn/ver/196/iphone-api/trunk/inc/CloudMade/TokenManager.h
+END
+RouteSummary.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/RouteSummary.h
+END
+RMMarkerAdditions.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/iphone-api/!svn/ver/192/iphone-api/trunk/inc/CloudMade/RMMarkerAdditions.h
+END
+GeocoderManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/GeocoderManager.h
+END
+BrowserViewController.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/iphone-api/!svn/ver/204/iphone-api/trunk/inc/CloudMade/BrowserViewController.h
+END
+CMRouteDetails.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/CMRouteDetails.h
+END
+CMAnnotationView.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/CMAnnotationView.h
+END
+bbox.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/bbox.h
+END
+CMMarkerWithControlLayer.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/iphone-api/!svn/ver/194/iphone-api/trunk/inc/CloudMade/CMMarkerWithControlLayer.h
+END
+CMCurrentLocationMarker.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/iphone-api/!svn/ver/205/iphone-api/trunk/inc/CloudMade/CMCurrentLocationMarker.h
+END
+JsonRoutingParser.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/JsonRoutingParser.h
+END
+ILocationsBase.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/ILocationsBase.h
+END
+RoutingRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/iphone-api/!svn/ver/161/iphone-api/trunk/inc/CloudMade/RoutingRequest.h
+END
+Utils.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/Utils.h
+END
+RMMarker+CMAnnotationView.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/iphone-api/!svn/ver/193/iphone-api/trunk/inc/CloudMade/RMMarker+CMAnnotationView.h
+END
+CMRoutingManager.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/iphone-api/!svn/ver/196/iphone-api/trunk/inc/CloudMade/CMRoutingManager.h
+END
+GeoCoordinates.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/iphone-api/!svn/ver/149/iphone-api/trunk/inc/CloudMade/GeoCoordinates.h
+END
+CMGeosearchOptionalParamaters.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/iphone-api/!svn/ver/196/iphone-api/trunk/inc/CloudMade/CMGeosearchOptionalParamaters.h
+END
+GeoCodingRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/iphone-api/!svn/ver/194/iphone-api/trunk/inc/CloudMade/GeoCodingRequest.h
+END
+CMGeocoder.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/iphone-api/!svn/ver/205/iphone-api/trunk/inc/CloudMade/CMGeocoder.h
+END
+CMSearchParameters.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/iphone-api/!svn/ver/196/iphone-api/trunk/inc/CloudMade/CMSearchParameters.h
+END
+postDataToServer.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/postDataToServer.h
+END
+CMRoute.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/iphone-api/!svn/ver/205/iphone-api/trunk/inc/CloudMade/CMRoute.h
+END
+RunLoopSource.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/iphone-api/!svn/ver/149/iphone-api/trunk/inc/CloudMade/RunLoopSource.h
+END
+CMBannerView.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/iphone-api/!svn/ver/196/iphone-api/trunk/inc/CloudMade/CMBannerView.h
+END
+CMRouteInstruction.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/iphone-api/!svn/ver/196/iphone-api/trunk/inc/CloudMade/CMRouteInstruction.h
+END
+GetDataFromServer.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/GetDataFromServer.h
+END
+CloudMadeMapView.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/iphone-api/!svn/ver/149/iphone-api/trunk/inc/CloudMade/CloudMadeMapView.h
+END
+PlaceMarker.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/iphone-api/!svn/ver/159/iphone-api/trunk/inc/CloudMade/PlaceMarker.h
+END
+CloudMadeView.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/iphone-api/!svn/ver/149/iphone-api/trunk/inc/CloudMade/CloudMadeView.h
+END
+CMLocation.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/iphone-api/!svn/ver/205/iphone-api/trunk/inc/CloudMade/CMLocation.h
+END
