@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "RMMapView.h"
 #import <CoreLocation/CoreLocation.h>
+#import "OPENode.h"
 
 @interface OPEViewController : UIViewController {
     IBOutlet RMMapView* mapView;
     CLLocationManager* locationManager;
 }
+-(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition;
 
 @end

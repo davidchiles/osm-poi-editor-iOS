@@ -11,6 +11,7 @@
 #import "RMCloudMadeHiResMapSource.h" 
 #import "OPEParser.h"
 #import "OPEOSMData.h"
+#import "RMMarkerManager.h" 
 
 @implementation OPEViewController
 
@@ -28,35 +29,55 @@
     [RMMapView class];
     
     id cmTilesource = [[RMCloudMadeHiResMapSource alloc] initWithAccessKey: @"0d68a3f7f77a47bc8ef3923816ebbeab" 
-                                                           styleNumber: 36079];
+                                                           styleNumber: 1];
+    //36079
     
     [[RMMapContents alloc] initWithView: mapView tilesource: cmTilesource];
     
-    locationManager = [[CLLocationManager alloc] init];
+    //locationManager = [[CLLocationManager alloc] init];
     //locationManager.delegate = self;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [locationManager startUpdatingLocation];
+    //locationManager.distanceFilter = kCLDistanceFilterNone;
+    //locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    //[locationManager startUpdatingLocation];
     
     
     CLLocationCoordinate2D initLocation;
-    NSLog(@"location Manager: %@",[locationManager location]);
+    //NSLog(@"location Manager: %@",[locationManager location]);
     
-    initLocation.longitude = -0.127523;
-    initLocation.latitude  = 51.51383;
+    initLocation.latitude  = 37.871667;
+    initLocation.longitude =  -122.272778;
+   
     //initLocation = [[locationManager location] coordinate];
     
     [mapView moveToLatLong: initLocation];
     
     [mapView.contents setZoom: 16];
+    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
     //OPEParser *parser = [[OPEParser alloc] init];
-    double bboxleft = -122.26341;
-    double bboxbottom = 37.86981;
-    double bboxright = -122.25421;
-    double bboxtop = 37.87533;
+    double bboxleft = geoBox.southwest.longitude;
+    double bboxbottom = geoBox.southwest.latitude;
+    double bboxright = geoBox.northeast.longitude;
+    double bboxtop = geoBox.northeast.latitude;
     OPEOSMData* data = [[OPEOSMData alloc] initWithLeft:bboxleft bottom:bboxbottom right:bboxright top:bboxtop];
     [data getData];
     
+    for(id key in data.allNodes)
+    {
+        OPENode* node = [data.allNodes objectForKey:key];
+        initLocation= node.coordinate;
+        [self addMarkerAt:initLocation];
+        
+    }
+        
+}
+
+-(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition
+{
+    NSData* imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://developers.cloudmade.com/images/layout/cloudmade-logo.png"]];
+    UIImage* blueMarkerImage = [UIImage imageWithData:imgData];
+    RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:blueMarkerImage anchorPoint:CGPointMake(0.5, 1.0)];
+    [mapView.contents.markerManager addMarker:newMarker AtLatLong:markerPosition];
+    [newMarker release];
 }
 
 - (void)viewDidUnload

@@ -10,15 +10,15 @@
 
 @implementation OPENode
 
-@synthesize ident, coordinates, tags;
+@synthesize ident, coordinate, tags;
 
--(id) initWithId: (int) i coordinates: (CLLocation *) coordinate keyValues: (NSMutableDictionary *) tag
+-(id) initWithId: (int) i coordinate: (CLLocationCoordinate2D) newCoordinate keyValues: (NSMutableDictionary *) tag
 {
     self = [super init];
     if(self)
     {
         ident = i;
-        coordinates = coordinate;
+        coordinate = newCoordinate;
         tags = [[NSMutableDictionary alloc] initWithDictionary:tag];
     }
     return self;
@@ -31,7 +31,7 @@
     if (self)
     {
         ident = i;
-        coordinates = [[CLLocation alloc] initWithLatitude:la longitude:lo];
+        coordinate = CLLocationCoordinate2DMake(la,lo);
         tags = [[NSMutableDictionary alloc] init];
     }
     return self;
