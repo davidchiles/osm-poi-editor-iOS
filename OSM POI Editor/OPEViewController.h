@@ -8,13 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "RMMapView.h"
+#import "RMMapViewDelegate.h" 
 #import <CoreLocation/CoreLocation.h>
 #import "OPENode.h"
+#import "OPEOSMData.h"
 
-@interface OPEViewController : UIViewController {
+
+@interface OPEViewController : UIViewController<RMMapViewDelegate> {
     IBOutlet RMMapView* mapView;
     CLLocationManager* locationManager;
 }
--(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition;
+
+@property (nonatomic,retain) OPEOSMData * osmData;
+
+-(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;
+
+
 
 @end

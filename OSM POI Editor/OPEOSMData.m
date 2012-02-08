@@ -9,6 +9,7 @@
 #import "OPEOSMData.h"
 #import "TBXML.h"
 #import "OPENode.h"
+#import "ASIHTTPRequest.h"
 
 @implementation OPEOSMData
 
@@ -30,12 +31,14 @@
     return self;
 }
 
--(void) getData
+- (void)requestFinished:(ASIHTTPRequest *)request
 {
-    NSLog(@"box: %f,%f,%f,%f",bboxleft,bboxbottom,bboxright,bboxtop);
-    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[amenity=*][bbox=%f,%f,%f,%f]",bboxleft,bboxbottom,bboxright,bboxtop]];
-    NSLog(@"url: %@",[url absoluteString]);
-    TBXML* tbxml = [TBXML tbxmlWithURL:url];
+    // Use when fetching text data
+    //NSString *responseString = [request responseString];
+    
+    // Use when fetching binary data
+    NSData *responseData = [request responseData];
+    TBXML* tbxml = [TBXML tbxmlWithXMLData:responseData];
     
     TBXMLElement * root = tbxml.rootXMLElement;
     if(root)
@@ -83,7 +86,28 @@
         }
         
     }
+
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    if (error) {
+        NSLog(@"Error Description: %@",error.description);
+    }
+}
+
+-(void) getData
+{
+    NSLog(@"box: %f,%f,%f,%f",bboxleft,bboxbottom,bboxright,bboxtop);
+    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[amenity=*][bbox=%f,%f,%f,%f]",bboxleft,bboxbottom,bboxright,bboxtop]];
+    NSLog(@"url: %@",[url absoluteString]);
     
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    [request setDelegate:self];
+    [request startAsynchronous];
+    
+        
     
     
 }

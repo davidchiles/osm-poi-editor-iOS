@@ -19,5 +19,6 @@
 -(id) initWithId:(int)i latitude:(double) la longitude:(double) lo;
 -(void)addKey: (NSString*) key Value: (NSString*) val;
 -(BOOL)onlyTagCreatedBy;
+-(NSString *)getName;
 
 @end

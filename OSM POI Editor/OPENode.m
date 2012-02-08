@@ -42,6 +42,20 @@
     [tags setValue:val forKey:key];
 }
 
+-(NSString *)getName
+{
+    if(tags)
+    {
+        NSString* name = [tags objectForKey:@"name"];
+        if(name)
+            return name;
+        else
+            return @"no name";
+    }
+    else
+        return @"no name";
+}
+
 -(BOOL)onlyTagCreatedBy
 {
     if(tags.count == 1)

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface OPEOSMData : NSObject
+@interface OPEOSMData : NSObject 
 
 @property double bboxleft;
 @property double bboxbottom;
