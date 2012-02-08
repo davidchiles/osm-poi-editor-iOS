@@ -1,14 +1,19 @@
 //
-//  OPEEditView.m
+//  OPENodeViewController.m
 //  OSM POI Editor
 //
-//  Created by David Chiles on 2/7/12.
+//  Created by David Chiles on 2/8/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "OPEEditView.h"
+#import "OPENodeViewController.h"
 
-@implementation OPEEditView
+
+
+
+@implementation OPENodeViewController
+
+@synthesize node;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,7 +37,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    [self.navigationController setNavigationBarHidden:NO];
+    
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: nil action: nil];
+    
+    [[self navigationItem] setRightBarButtonItem:saveButton];
+    
 }
 
 - (void)viewDidUnload

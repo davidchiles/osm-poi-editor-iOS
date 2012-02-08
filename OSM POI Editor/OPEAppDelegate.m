@@ -9,11 +9,11 @@
 #import "OPEAppDelegate.h"
 #import "OPEViewController.h"
 
-
 @implementation OPEAppDelegate
 
 @synthesize window = _window;
 @synthesize viewController = _viewController;
+@synthesize navController = _navController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -24,7 +24,15 @@
     } else {
         self.viewController = [[OPEViewController alloc] initWithNibName:@"OPEViewController_iPad" bundle:nil];
     }
-    self.window.rootViewController = self.viewController;
+    
+    UIViewController *rootView = [[OPEViewController alloc]
+                                  initWithNibName:@"OPEViewController_iPhone"
+                                  bundle:nil];
+    self.navController = [[UINavigationController alloc] initWithRootViewController:rootView];
+    [[self window] setRootViewController:self.navController];
+    
+    
+    //self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     return YES;
 }

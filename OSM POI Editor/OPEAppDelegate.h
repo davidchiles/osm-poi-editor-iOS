@@ -16,4 +16,6 @@
 
 @property (strong, nonatomic) OPEViewController *viewController;
 
+@property (nonatomic, retain) UINavigationController *navController;
+
 @end

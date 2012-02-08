@@ -12,12 +12,14 @@
 #import "OPEParser.h"
 #import "RMMarkerManager.h" 
 #import "RMMarkerAdditions.h"
+#import "OPENodeViewController.h"
 
 
 
 @implementation OPEViewController
 
 @synthesize osmData;
+@synthesize locationManager;
 
 - (void)didReceiveMemoryWarning
 {
@@ -39,30 +41,33 @@
     
     [RMMapView class];
     
+    [self.navigationController setNavigationBarHidden:YES];
+    
     id cmTilesource = [[RMCloudMadeHiResMapSource alloc] initWithAccessKey: @"0d68a3f7f77a47bc8ef3923816ebbeab" 
                                                            styleNumber: 1];
     //36079
-    
+
     [[RMMapContents alloc] initWithView: mapView tilesource: cmTilesource];
     
-    //locationManager = [[CLLocationManager alloc] init];
-    //locationManager.delegate = self;
-    //locationManager.distanceFilter = kCLDistanceFilterNone;
-    //locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    //[locationManager startUpdatingLocation];
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    [locationManager startUpdatingLocation];
     
     
     CLLocationCoordinate2D initLocation;
     //NSLog(@"location Manager: %@",[locationManager location]);
     
-    initLocation.latitude  = 37.871667;
-    initLocation.longitude =  -122.272778;
+    //initLocation.latitude  = 37.871667;
+    //initLocation.longitude =  -122.272778;
    
-    //initLocation = [[locationManager location] coordinate];
+    initLocation = [[locationManager location] coordinate];
     
     [mapView moveToLatLong: initLocation];
     
-    [mapView.contents setZoom: 16];
+    [mapView.contents setZoom: 18];
+    [self addMarkerAt:initLocation withNode:nil];
     RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
     //OPEParser *parser = [[OPEParser alloc] init];
 
@@ -86,9 +91,9 @@
 -(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode: (OPENode *) node
 {
     NSLog(@"start addMarkerAt");
-    UIImage *blueMarkerImage = [UIImage imageNamed:@"Blue_Marker.png"];
+    UIImage *blueMarkerImage = [UIImage imageNamed:@"Blue_Dot.png"];
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:blueMarkerImage anchorPoint:CGPointMake(0.5, 1.0)];
-    newMarker.data = [NSNumber numberWithInt: node.ident];
+    newMarker.data = node;
     [mapView.contents.markerManager addMarker:newMarker AtLatLong:markerPosition];
     //[newMarker retain];
 }
@@ -109,9 +114,21 @@
     
     //marker.data = [NSNumber numberWithInt: clickCounter ];
     
-    NSString* markerText = [NSString stringWithFormat:@"%@", @"test"];
-    [self setText: markerText forMarker: marker];
+    //NSString* markerText = [NSString stringWithFormat:@"%@", @"test"];
+    //[self setText: markerText forMarker: marker];
     //[marker addAnnotationViewWithTitle:@"test"];
+    OPENodeViewController * viewer = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
+    
+    viewer.title = @"Node Info";
+    viewer.node = (OPENode *)marker.data;
+    
+
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
+    
+    [[self navigationItem] setBackBarButtonItem: newBackButton];
+    
+    [self.navigationController pushViewController:viewer animated:YES];
+    //[self.view addSubview:OPENodeViewController.view];
     
 }
 
@@ -163,6 +180,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    [locationManager stopUpdatingLocation];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -173,6 +191,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

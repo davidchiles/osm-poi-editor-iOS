@@ -26,9 +26,10 @@
 		6330AC0314DB547D00448852 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0214DB547D00448852 /* libstdc++.6.dylib */; };
 		6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0414DB54A200448852 /* QuartzCore.framework */; };
 		6330AC0714DB5E4D00448852 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0614DB5E4D00448852 /* CoreLocation.framework */; };
+		6345E57C14E2FD1200F55486 /* Blue_Dot.png in Resources */ = {isa = PBXBuildFile; fileRef = 6345E57B14E2FD1200F55486 /* Blue_Dot.png */; };
+		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
+		6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6345E57F14E3122900F55486 /* OPENodeViewController.xib */; };
 		637A89FE14E1C340003F656F /* SPOI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 637A89FD14E1C340003F656F /* SPOI.bundle */; };
-		63805A3C14E1D58A0000F972 /* OPEEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63805A3A14E1D58A0000F972 /* OPEEditView.m */; };
-		63805A3D14E1D58A0000F972 /* OPEEditView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63805A3B14E1D58A0000F972 /* OPEEditView.xib */; };
 		63E2796814E1F274009D02BD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796714E1F274009D02BD /* CFNetwork.framework */; };
 		63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796914E1F281009D02BD /* SystemConfiguration.framework */; };
 		63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */; };
@@ -189,10 +190,11 @@
 		6330AC0214DB547D00448852 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		6330AC0414DB54A200448852 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6330AC0614DB5E4D00448852 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		6345E57B14E2FD1200F55486 /* Blue_Dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Dot.png; sourceTree = "<group>"; };
+		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
+		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
+		6345E57F14E3122900F55486 /* OPENodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPENodeViewController.xib; sourceTree = "<group>"; };
 		637A89FD14E1C340003F656F /* SPOI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SPOI.bundle; sourceTree = "<group>"; };
-		63805A3914E1D58A0000F972 /* OPEEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPEEditView.h; path = ../OPEEditView.h; sourceTree = "<group>"; };
-		63805A3A14E1D58A0000F972 /* OPEEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPEEditView.m; path = ../OPEEditView.m; sourceTree = "<group>"; };
-		63805A3B14E1D58A0000F972 /* OPEEditView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OPEEditView.xib; path = ../OPEEditView.xib; sourceTree = "<group>"; };
 		63E2796714E1F274009D02BD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		63E2796914E1F281009D02BD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -365,12 +367,12 @@
 				6330AB7E14DB519A00448852 /* OPEAppDelegate.m */,
 				6330AB8014DB519A00448852 /* OPEViewController.h */,
 				6330AB8114DB519A00448852 /* OPEViewController.m */,
-				63805A3914E1D58A0000F972 /* OPEEditView.h */,
-				63805A3A14E1D58A0000F972 /* OPEEditView.m */,
-				63805A3B14E1D58A0000F972 /* OPEEditView.xib */,
 				6330AB8314DB519A00448852 /* OPEViewController_iPhone.xib */,
 				6330AB8614DB519A00448852 /* OPEViewController_iPad.xib */,
 				6330AB7514DB519A00448852 /* Supporting Files */,
+				6345E57D14E3122900F55486 /* OPENodeViewController.h */,
+				6345E57E14E3122900F55486 /* OPENodeViewController.m */,
+				6345E57F14E3122900F55486 /* OPENodeViewController.xib */,
 			);
 			path = "OSM POI Editor";
 			sourceTree = "<group>";
@@ -562,6 +564,7 @@
 		637A89FB14E1B426003F656F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6345E57B14E2FD1200F55486 /* Blue_Dot.png */,
 				63E279EF14E2073C009D02BD /* Blue_Marker.png */,
 				637A89FD14E1C340003F656F /* SPOI.bundle */,
 			);
@@ -759,8 +762,9 @@
 				6330AB8514DB519A00448852 /* OPEViewController_iPhone.xib in Resources */,
 				6330AB8814DB519A00448852 /* OPEViewController_iPad.xib in Resources */,
 				637A89FE14E1C340003F656F /* SPOI.bundle in Resources */,
-				63805A3D14E1D58A0000F972 /* OPEEditView.xib in Resources */,
 				63E279F014E2073C009D02BD /* Blue_Marker.png in Resources */,
+				6345E57C14E2FD1200F55486 /* Blue_Dot.png in Resources */,
+				6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -779,7 +783,6 @@
 				631539E814DCB6D6000236F0 /* OPEParser.m in Sources */,
 				63E4BF3114E0728200E0BD46 /* NSDataAdditions.m in Sources */,
 				63E4BF3214E0728200E0BD46 /* TBXML.m in Sources */,
-				63805A3C14E1D58A0000F972 /* OPEEditView.m in Sources */,
 				63E279C014E1F31B009D02BD /* ASIAuthenticationDialog.m in Sources */,
 				63E279C114E1F31B009D02BD /* ASIDataCompressor.m in Sources */,
 				63E279C214E1F31B009D02BD /* ASIDataDecompressor.m in Sources */,
@@ -803,6 +806,7 @@
 				63E279D414E1F31B009D02BD /* ASIS3Request.m in Sources */,
 				63E279D514E1F31B009D02BD /* ASIS3ServiceRequest.m in Sources */,
 				63E279E814E1F32B009D02BD /* Reachability.m in Sources */,
+				6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

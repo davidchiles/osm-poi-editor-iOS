@@ -16,10 +16,12 @@
 
 @interface OPEViewController : UIViewController<RMMapViewDelegate> {
     IBOutlet RMMapView* mapView;
-    CLLocationManager* locationManager;
+    
 }
 
 @property (nonatomic,retain) OPEOSMData * osmData;
+@property (nonatomic,strong) CLLocationManager* locationManager;
+
 
 -(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;
 -(void) addMarkers;
