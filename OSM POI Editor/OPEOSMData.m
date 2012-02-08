@@ -86,6 +86,9 @@
         }
         
     }
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"DownloadComplete"
+     object:self];
 
 }
 

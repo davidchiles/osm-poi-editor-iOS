@@ -22,6 +22,7 @@
 @property (nonatomic,retain) OPEOSMData * osmData;
 
 -(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;
+-(void) addMarkers;
 
 
 

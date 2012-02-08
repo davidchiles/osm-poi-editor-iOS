@@ -30,6 +30,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(addMarkers)
+     name:@"DownloadComplete"
+     object:nil ];
+    
     [RMMapView class];
     
     id cmTilesource = [[RMCloudMadeHiResMapSource alloc] initWithAccessKey: @"0d68a3f7f77a47bc8ef3923816ebbeab" 
@@ -67,14 +74,6 @@
     
     [osmData getData];
     
-    for(id key in osmData.allNodes)
-    {
-        OPENode* node = [osmData.allNodes objectForKey:key];
-        initLocation= node.coordinate;
-        [self addMarkerAt:initLocation withNode:node];
-        
-    }
-    
     //[mapView moveToLatLong: initLocation];
     //[mapView.contents setZoom: 16];
     
@@ -86,8 +85,8 @@
 
 -(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode: (OPENode *) node
 {
-    NSData* imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://developers.cloudmade.com/images/layout/cloudmade-logo.png"]];
-    UIImage* blueMarkerImage = [UIImage imageWithData:imgData];
+    NSLog(@"start addMarkerAt");
+    UIImage *blueMarkerImage = [UIImage imageNamed:@"Blue_Marker.png"];
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:blueMarkerImage anchorPoint:CGPointMake(0.5, 1.0)];
     newMarker.data = [NSNumber numberWithInt: node.ident];
     [mapView.contents.markerManager addMarker:newMarker AtLatLong:markerPosition];
@@ -138,26 +137,25 @@
 
 -(void) afterMapMove:(RMMapView *)map
 {
+    NSLog(@"start map move");
     RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
     
-   
     osmData.bboxleft = geoBox.southwest.longitude; 
     osmData.bboxbottom = geoBox.southwest.latitude;
     osmData.bboxright = geoBox.northeast.longitude;
     osmData.bboxtop = geoBox.northeast.latitude;
     
-    
     [osmData getData];
-    
+}
+
+- (void) addMarkers
+{
     for(id key in osmData.allNodes)
     {
         OPENode* node = [osmData.allNodes objectForKey:key];
         [self addMarkerAt:node.coordinate withNode:node];
         
     }
-
-    
-    
 }
 
 - (void)viewDidUnload
