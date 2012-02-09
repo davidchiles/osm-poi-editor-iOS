@@ -2,25 +2,444 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>food</key>
+	<key>Food and Drink</key>
 	<dict>
 		<key>amenity</key>
-		<array>
-			<string>restaurant</string>
-			<string>cafe</string>
-			<string>pub</string>
-			<string>fast_food</string>
-			<string>bar</string>
-			<string>biergarten</string>
-		</array>
+		<dict>
+			<key>restaurant</key>
+			<string>Restaurant</string>
+			<key>cafe</key>
+			<string>Cafe</string>
+			<key>pub</key>
+			<string>Pub</string>
+			<key>fast_food</key>
+			<string>Fast Food</string>
+			<key>bar</key>
+			<string>Bar</string>
+			<key>biergarten</key>
+			<string>Beer Garden</string>
+			<key>drinking_water</key>
+			<string>Drinking Water</string>
+			<key>food_court</key>
+			<string>Food Court</string>
+			<key>ice_cream</key>
+			<string>Ice Cream Shop</string>
+		</dict>
 	</dict>
 	<key>government</key>
 	<dict>
 		<key>amenity</key>
-		<array>
-			<string>townhall</string>
-			<string></string>
-		</array>
+		<dict>
+			<key>townhall</key>
+			<string>Townhall or Cityhall</string>
+			<key>embassy</key>
+			<string>Embassy</string>
+			<key>fire_station</key>
+			<string>Fire Station</string>
+			<key>police</key>
+			<string>Police Station</string>
+			<key>post_office</key>
+			<string>Post Office</string>
+			<key>prison</key>
+			<string>Prison</string>
+			<key>post_box</key>
+			<string>Post Box</string>
+			<key>courthouse</key>
+			<string>Courthouse</string>
+		</dict>
+		<key>office</key>
+		<dict>
+			<key>government</key>
+			<string>Office Building</string>
+		</dict>
+	</dict>
+	<key>Education</key>
+	<dict>
+		<key>amenity</key>
+		<dict>
+			<key>college</key>
+			<string>College</string>
+			<key>kindergarten</key>
+			<string>Kindergarden/Playschool/Nursery School</string>
+			<key>library</key>
+			<string>Library</string>
+			<key>school</key>
+			<string>School</string>
+			<key>university</key>
+			<string>University</string>
+		</dict>
+	</dict>
+	<key>Transportation</key>
+	<dict>
+		<key>amenity</key>
+		<dict>
+			<key>bicycle_parking</key>
+			<string>Bicycle Parking</string>
+			<key>bicycle_rental</key>
+			<string>Bicycle Rental</string>
+			<key>bus_station</key>
+			<string>Bus Station</string>
+			<key>car_rental</key>
+			<string>Car Rental</string>
+			<key>car_sharing</key>
+			<string>Car Sharing</string>
+			<key>car_wash</key>
+			<string>Car Wash</string>
+			<key>ev_charging</key>
+			<string>Electric Vehicle Charging Facility</string>
+			<key>ferry_terminal</key>
+			<string>Ferry Terminal</string>
+			<key>fuel</key>
+			<string>Gas Station</string>
+			<key>parking</key>
+			<string>Parking</string>
+			<key>taxi</key>
+			<string>Taxi Stand</string>
+		</dict>
+		<key>highway</key>
+		<dict>
+			<key>bus_stop</key>
+			<string>Bus Stop</string>
+		</dict>
+		<key>railway</key>
+		<dict>
+			<key>station</key>
+			<string>Rail Station</string>
+			<key>subway_entrance</key>
+			<string>Subway Entrance</string>
+			<key>tram_stop</key>
+			<string>Tram Stop</string>
+		</dict>
+	</dict>
+	<key>Healthcare</key>
+	<dict>
+		<key>amenity</key>
+		<dict>
+			<key>baby_hatch</key>
+			<string>Baby Hatch</string>
+			<key>clinic</key>
+			<string>Clinic</string>
+			<key>dentist</key>
+			<string>Dentist</string>
+			<key>doctors</key>
+			<string>Doctor</string>
+			<key>hospital</key>
+			<string>Hospital</string>
+			<key>nursing_home</key>
+			<string>Nursing Home</string>
+			<key>pharmacy</key>
+			<string>Pharmacy</string>
+			<key>social_facility</key>
+			<string>Social Facility</string>
+			<key>veterinary</key>
+			<string>Veterinary</string>
+		</dict>
+	</dict>
+	<key>Entertainment and Art</key>
+	<dict>
+		<key>amenity</key>
+		<dict>
+			<key>arts_centre</key>
+			<string>Arts Center</string>
+			<key>cinema</key>
+			<string>Movie Theater</string>
+			<key>community_centre</key>
+			<string>Community Center</string>
+			<key>fountain</key>
+			<string>Fountain</string>
+			<key>nightclub</key>
+			<string>Nightclub</string>
+			<key>social_centre</key>
+			<string>Social Center</string>
+			<key>stripclub</key>
+			<string>Stripclub</string>
+			<key>studio</key>
+			<string>TV, Radio or Recording Studio</string>
+			<key>theatre</key>
+			<string>Theater or Opera House</string>
+		</dict>
+		<key>tourism</key>
+		<dict>
+			<key>artwork</key>
+			<string>Public Artwork</string>
+		</dict>
+	</dict>
+	<key>Tourism</key>
+	<dict>
+		<key>tourism</key>
+		<dict>
+			<key>apine_hut</key>
+			<string>Mountain Hut</string>
+			<key>camp_site</key>
+			<string>Camp Site</string>
+			<key>caravan_site</key>
+			<string>RV Park</string>
+			<key>chalet</key>
+			<string>Chalet</string>
+			<key>guest_house</key>
+			<string>Bed and Breakfast</string>
+			<key>hostel</key>
+			<string>Hostel</string>
+			<key>hotel</key>
+			<string>Hotel</string>
+			<key>motel</key>
+			<string>Motel</string>
+			<key>museum</key>
+			<string>Museum</string>
+			<key>theme_park</key>
+			<string>Theme Park</string>
+			<key>zoo</key>
+			<string>Zoo</string>
+		</dict>
+		<key>historic</key>
+		<dict>
+			<key>battlefield</key>
+			<string>Historic Battlefield</string>
+			<key>boundry_stone</key>
+			<string>Historic Boundry Stone</string>
+			<key>castle</key>
+			<string>Castle</string>
+			<key>fort</key>
+			<string>Military Fort</string>
+			<key>memorial</key>
+			<string>Memorial</string>
+			<key>monument</key>
+			<string>Monument</string>
+			<key>ruins</key>
+			<string>Ruins</string>
+			<key>wreck</key>
+			<string>Nautical Craft Sunken or Destroyed</string>
+		</dict>
+	</dict>
+	<key>Outdoors and Natural</key>
+	<dict>
+		<key>tourism</key>
+		<dict>
+			<key>viewpoint</key>
+			<string>Scenic Viewpoint</string>
+			<key>picnic_site</key>
+			<string>Picnic Site</string>
+		</dict>
+		<key>natural</key>
+		<dict>
+			<key>beach</key>
+			<string>Beach</string>
+			<key>peak</key>
+			<string>Peak</string>
+			<key>spring</key>
+			<string>Spring</string>
+			<key>tree</key>
+			<string>Tree</string>
+			<key>volcano</key>
+			<string>Volcano</string>
+			<key>water</key>
+			<string>Lake</string>
+		</dict>
+		<key>amenity</key>
+		<dict>
+			<key>bench</key>
+			<string>Bench</string>
+		</dict>
+	</dict>
+	<key>Man Made</key>
+	<dict>
+		<key>man_made</key>
+		<dict>
+			<key>flagpole</key>
+			<string>Flagpole</string>
+			<key>lighthouse</key>
+			<string>Lighthouse</string>
+			<key>storage_tank</key>
+			<string>Storage Tank</string>
+			<key>tower</key>
+			<string>Tower</string>
+			<key>water_tower</key>
+			<string>Water Tower</string>
+			<key>windmill</key>
+			<string>Windmill</string>
+		</dict>
+		<key>emergency</key>
+		<dict>
+			<key>siren</key>
+			<string>Emergency Siren</string>
+		</dict>
+		<key>amenity</key>
+		<dict>
+			<key>clock</key>
+			<string>Publicly Visible Clock</string>
+		</dict>
+		<key>building</key>
+		<dict>
+			<key>yes</key>
+			<string>Generic Building</string>
+		</dict>
+	</dict>
+	<key>Services</key>
+	<dict>
+		<key>office</key>
+		<dict>
+			<key>accountant</key>
+			<string>Accountant</string>
+			<key>architect</key>
+			<string>Architect</string>
+			<key>estate_agent</key>
+			<string>Realtor</string>
+			<key>insurance</key>
+			<string>Insurance</string>
+			<key>it</key>
+			<string>IT Specialist</string>
+			<key>lawyer</key>
+			<string>Lawyer</string>
+			<key>ngo</key>
+			<string>Non-Government Orginization</string>
+			<key>travel_agent</key>
+			<string>Travel Agency</string>
+		</dict>
+	</dict>
+	<key>Other</key>
+	<dict>
+		<key>emergency</key>
+		<dict>
+			<key>fire_hydrant</key>
+			<string>Fire Hydrant</string>
+			<key>phone</key>
+			<string>Emergency Phone</string>
+		</dict>
+		<key>amenity</key>
+		<dict>
+			<key>phone</key>
+			<string>Public Telephone</string>
+			<key>waste_basket</key>
+			<string>Trash Can</string>
+			<key>recycling</key>
+			<string>Recycling Can</string>
+			<key>telephone</key>
+			<string>Public Telephone</string>
+			<key>toilets</key>
+			<string>Public Toilets</string>
+			<key>vending_machine</key>
+			<string>Vending Machine</string>
+		</dict>
+	</dict>
+	<key>Shopping</key>
+	<dict>
+		<key>shop</key>
+		<dict>
+			<key>alcohol</key>
+			<string>Alcohol</string>
+			<key>art</key>
+			<string>Art</string>
+			<key>baby_goods</key>
+			<string>Baby Goods</string>
+			<key>bakery</key>
+			<string>Bakery</string>
+			<key>beauty</key>
+			<string>Spa or Nail Salon</string>
+			<key>bed</key>
+			<string>Matress Store</string>
+			<key>beverages</key>
+			<string>Alcoholic and Non-Alcoholic Drinks</string>
+			<key>bicycle</key>
+			<string>Bicycle Shop</string>
+			<key>books</key>
+			<string>Book Store</string>
+			<key>boutique</key>
+			<string>Boutique</string>
+			<key>butcher</key>
+			<string>Butcher</string>
+			<key>car</key>
+			<string>Car Dealership</string>
+			<key>car_repair</key>
+			<string>Car Repair</string>
+			<key>car_parts</key>
+			<string>Car Parts Store</string>
+			<key>carpet</key>
+			<string>Carpet</string>
+			<key>chemist</key>
+			<string>Cosmetics</string>
+			<key>clothes</key>
+			<string>Clothes</string>
+			<key>computer</key>
+			<string>Computer</string>
+			<key>confectionery</key>
+			<string>Candy Shop</string>
+			<key>convenience</key>
+			<string>Convenience Store</string>
+			<key>copyshop</key>
+			<string>Copy and Fax Shop</string>
+			<key>deli</key>
+			<string>Deli</string>
+			<key>department_store</key>
+			<string>Department Store</string>
+			<key>dive</key>
+			<string>Diving Equipment Store</string>
+			<key>dry_cleaning</key>
+			<string>Dry Cleaning</string>
+			<key>electronics</key>
+			<string>Electronics</string>
+			<key>erotic</key>
+			<string>XXX/Adult Store</string>
+			<key>farm</key>
+			<string>Farm Store</string>
+			<key>florist</key>
+			<string>Florist</string>
+			<key>frame</key>
+			<string>Frame Store</string>
+			<key>furniture</key>
+			<string>Furniture Store</string>
+			<key>garden_centre</key>
+			<string>Garden Center</string>
+			<key>general</key>
+			<string>General Store</string>
+			<key>gift</key>
+			<string>Gift Shop</string>
+			<key>hairdresser</key>
+			<string>Hairdresser</string>
+			<key>hardware</key>
+			<string>Hardware Store</string>
+			<key>jewelry</key>
+			<string>Jewelry Store</string>
+			<key>laundry</key>
+			<string>Laundromat</string>
+			<key>mall</key>
+			<string>Shopping Mall</string>
+			<key>money_lender</key>
+			<string>Loans</string>
+			<key>motorcycle</key>
+			<string>Motorcycle Dealership</string>
+			<key>musical_instruments</key>
+			<string>Music Store for instruments</string>
+			<key>newsagent</key>
+			<string>Newsstand </string>
+			<key>optician</key>
+			<string>Optician</string>
+			<key>outdoor</key>
+			<string>Outdoor Store</string>
+			<key>paint</key>
+			<string>Paint</string>
+			<key>pawnbroker</key>
+			<string>Pawn Shop</string>
+			<key>pet</key>
+			<string>Pet Store</string>
+			<key>second_hand</key>
+			<string>Second Hand Store</string>
+			<key>shoes</key>
+			<string>Shoe Store</string>
+			<key>sports</key>
+			<string>Sporting Goods</string>
+			<key>stationery</key>
+			<string>Office Supplies</string>
+			<key>supermarket</key>
+			<string>Supermarket</string>
+			<key>tattoo</key>
+			<string>Tattoo Parlor</string>
+			<key>tobacco</key>
+			<string>Tobacco Shop</string>
+			<key>toys</key>
+			<string>Toy Store</string>
+			<key>video</key>
+			<string>Video Rental</string>
+		</dict>
 	</dict>
 </dict>
 </plist>
