@@ -14,6 +14,7 @@
 @implementation OPENodeViewController
 
 @synthesize node;
+@synthesize nodeName;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,9 +41,25 @@
     
     [self.navigationController setNavigationBarHidden:NO];
     
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: nil action: nil];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
     
     [[self navigationItem] setRightBarButtonItem:saveButton];
+    
+    [self setupTags];
+    
+}
+
+- (void) saveButtonPressed
+{
+    NSLog(@"saveBottoPressed");
+}
+
+- (void) setupTags
+{
+    if([node.tags objectForKey:@"name"])
+    {
+        nodeName.text = [node.tags objectForKey:@"name"];
+    }
     
 }
 

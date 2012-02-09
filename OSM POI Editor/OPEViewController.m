@@ -134,7 +134,7 @@
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
 {
-    return YES;
+    return NO;
 }
 
 - (void) mapView:(RMMapView *)map didDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
