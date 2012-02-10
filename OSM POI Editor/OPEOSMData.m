@@ -86,6 +86,12 @@
         }
         
     }
+    
+    OPETagInterpreter * interpreter = [[OPETagInterpreter alloc] init];
+    [interpreter readPlist];
+    
+    
+    
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"DownloadComplete"
      object:self];
