@@ -21,6 +21,7 @@
 
 @property (nonatomic,retain) OPEOSMData * osmData;
 @property (nonatomic,strong) CLLocationManager* locationManager;
+@property (nonatomic,retain) OPETagInterpreter * interpreter;
 
 
 -(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;

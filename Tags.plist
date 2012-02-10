@@ -268,11 +268,6 @@
 			<key>clock</key>
 			<string>Publicly Visible Clock</string>
 		</dict>
-		<key>building</key>
-		<dict>
-			<key>yes</key>
-			<string>Generic Building</string>
-		</dict>
 	</dict>
 	<key>Services</key>
 	<dict>

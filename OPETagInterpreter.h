@@ -11,11 +11,17 @@
 
 @interface OPETagInterpreter : NSObject
 
-@property (nonatomic, retain) NSDictionary * categoryAndType;
-@property (nonatomic, retain) NSDictionary * osmKeyandValue;
+@property (nonatomic, retain) NSMutableDictionary * categoryAndType;
+@property (nonatomic, retain) NSMutableDictionary * osmKeyandValue;
+@property (nonatomic, retain) NSMutableDictionary * osmKVandCategoryType;
 
 - (id) init;
-- (BOOL) nodeHasRecognizedTags:(OPENode *)node;
+- (BOOL) nodeHasRecognizedTags:(OPENode *)n;
+- (NSDictionary *) getPrimaryKeyValue: (OPENode *)n;
+- (NSString *) getCategory: (OPENode *)n;
+- (NSString *) getType: (OPENode *)n;
+- (NSArray *) getOsmKeyValue: (NSDictionary *) catAndTyp;
+
 - (void) readPlist;
 
 @end

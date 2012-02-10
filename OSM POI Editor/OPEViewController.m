@@ -20,6 +20,7 @@
 
 @synthesize osmData;
 @synthesize locationManager;
+@synthesize interpreter;
 
 - (void)didReceiveMemoryWarning
 {
@@ -39,6 +40,9 @@
      name:@"DownloadComplete"
      object:nil ];
     
+    interpreter = [[OPETagInterpreter alloc] init];
+    [interpreter readPlist];
+    
     [RMMapView class];
     
     [self.navigationController setNavigationBarHidden:YES];
@@ -46,7 +50,6 @@
     id cmTilesource = [[RMCloudMadeHiResMapSource alloc] initWithAccessKey: @"0d68a3f7f77a47bc8ef3923816ebbeab" 
                                                            styleNumber: 1];
     //36079
-
     [[RMMapContents alloc] initWithView: mapView tilesource: cmTilesource];
     
     locationManager = [[CLLocationManager alloc] init];
@@ -85,17 +88,22 @@
     //[self addMarkerAt: initLocation];
 
     mapView.delegate = self;
+    
+    
         
 }
 
 -(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode: (OPENode *) node
 {
-    NSLog(@"start addMarkerAt");
+    //NSLog(@"start addMarkerAt");
     UIImage *blueMarkerImage = [UIImage imageNamed:@"Blue_Dot.png"];
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:blueMarkerImage anchorPoint:CGPointMake(0.5, 1.0)];
     newMarker.data = node;
     [mapView.contents.markerManager addMarker:newMarker AtLatLong:markerPosition];
     //[newMarker retain];
+    //NSLog(@"Node Category: %@",[interpreter getCategory:node]);
+    [interpreter getCategory:node];
+    
 }
 
 - (void) setText: (NSString*) text forMarker: (RMMarker*) marker
