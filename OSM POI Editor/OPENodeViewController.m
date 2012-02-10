@@ -14,7 +14,7 @@
 @implementation OPENodeViewController
 
 @synthesize node;
-@synthesize nodeName;
+@synthesize tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -58,7 +58,7 @@
 {
     if([node.tags objectForKey:@"name"])
     {
-        nodeName.text = [node.tags objectForKey:@"name"];
+        //nodeName.text = [node.tags objectForKey:@"name"];
     }
     
 }

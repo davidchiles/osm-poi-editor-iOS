@@ -12,7 +12,7 @@
 @interface OPENodeViewController : UIViewController
 
 @property (nonatomic, retain) OPENode * node;
-@property (nonatomic, retain) IBOutlet UITextView* nodeName;
+@property (nonatomic, retain) IBOutlet UITableView* tableView;
 
 - (void) saveButtonPressed;
 - (void) setupTags;
