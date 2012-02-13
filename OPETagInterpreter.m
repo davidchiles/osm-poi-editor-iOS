@@ -10,6 +10,7 @@
 
 
 @implementation OPETagInterpreter
+static OPETagInterpreter *sharedManager = nil;
 
 @synthesize categoryAndType;
 @synthesize osmKeyandValue;
@@ -18,7 +19,7 @@
 - (id) init
 {
     self = [super init];
-    
+    [self readPlist];
     
     return self;
 }
@@ -198,5 +199,16 @@
     
 
 }
+
++(OPETagInterpreter *)sharedInstance
+{
+    @synchronized(self) {
+        if (sharedManager == nil) {
+            sharedManager = [[self alloc] init];
+        }
+    }
+    return sharedManager;
+}
+
 
 @end

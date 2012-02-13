@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "OPENode.h"
+#import "OPETagInterpreter.h"
 
-@interface OPENodeViewController : UIViewController
+@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+{
+    UITableView *tableView;
+}
 
 @property (nonatomic, retain) OPENode * node;
 @property (nonatomic, retain) IBOutlet UITableView* tableView;

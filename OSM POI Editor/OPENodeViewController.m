@@ -7,7 +7,7 @@
 //
 
 #import "OPENodeViewController.h"
-
+#import "OPETagInterpreter.h"
 
 
 
@@ -39,7 +39,7 @@
 {
     [super viewDidLoad];
     
-    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
     
@@ -47,6 +47,77 @@
     
     [self setupTags];
     
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    if(section == 1)
+        return 2;
+    return 1;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+	if (section == 0) {
+		return @"Name";
+	}
+	else if (section == 1) {
+		return @"Category";
+	}
+	else if (section == 2) {
+		return @"Value2 Style";
+	}
+	else {
+		return @"Subtitle Style";
+	}
+}
+
+// Customize the appearance of table view cells.
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *CellIdentifier1 = @"Cell_Section_1";
+    NSString *CellIdentifier2 = @"Cell_Section_2";
+    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
+    //[tagInterpreter readPlist];
+    
+    
+    NSArray * catAndType = [[NSArray alloc] initWithObjects:[tagInterpreter getCategory:node],[tagInterpreter getType:node], nil];
+    NSArray * catAndTypeName = [[NSArray alloc] initWithObjects:@"Category",@"Type", nil];
+
+    
+    
+    UITableViewCell *cell;
+	if (indexPath.section == 0) {
+		cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier1];
+		if (cell == nil) {
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier1];
+            cell.textLabel.text = [node.tags objectForKey:@"name"];
+		}
+	}
+	else if (indexPath.section == 1) {
+		cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier2];
+		if (cell == nil) {
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier2];
+            cell.textLabel.text = [catAndTypeName objectAtIndex:indexPath.row];
+            cell.detailTextLabel.text = [catAndType objectAtIndex:indexPath.row];
+            //cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",indexPath.row];
+		}
+	}
+    cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
+	
+	// Configure the cell...
+	//cell.textLabel.text = @"Text Label";
+	//cell.detailTextLabel.text = @"Detail Text Label";
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void) saveButtonPressed
@@ -58,7 +129,7 @@
 {
     if([node.tags objectForKey:@"name"])
     {
-        //nodeName.text = [node.tags objectForKey:@"name"];
+        
     }
     
 }

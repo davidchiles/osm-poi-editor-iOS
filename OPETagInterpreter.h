@@ -21,7 +21,8 @@
 - (NSString *) getCategory: (OPENode *)n;
 - (NSString *) getType: (OPENode *)n;
 - (NSArray *) getOsmKeyValue: (NSDictionary *) catAndTyp;
-
 - (void) readPlist;
+
++(OPETagInterpreter *)sharedInstance;
 
 @end
