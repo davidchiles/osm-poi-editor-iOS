@@ -31,6 +31,8 @@
 		6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6345E57F14E3122900F55486 /* OPENodeViewController.xib */; };
 		6345E58D14E347E800F55486 /* Tags.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6345E58C14E347E800F55486 /* Tags.plist */; };
 		637A89FE14E1C340003F656F /* SPOI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 637A89FD14E1C340003F656F /* SPOI.bundle */; };
+		63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49D114E9C5A0008C4551 /* OPETextEdit.m */; };
+		63CB49D414E9C5A0008C4551 /* OPETextEdit.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49D214E9C5A0008C4551 /* OPETextEdit.xib */; };
 		63E2796814E1F274009D02BD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796714E1F274009D02BD /* CFNetwork.framework */; };
 		63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796914E1F281009D02BD /* SystemConfiguration.framework */; };
 		63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */; };
@@ -198,6 +200,9 @@
 		6345E57F14E3122900F55486 /* OPENodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPENodeViewController.xib; sourceTree = "<group>"; };
 		6345E58C14E347E800F55486 /* Tags.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Tags.plist; sourceTree = "<group>"; };
 		637A89FD14E1C340003F656F /* SPOI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SPOI.bundle; sourceTree = "<group>"; };
+		63CB49D014E9C5A0008C4551 /* OPETextEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETextEdit.h; sourceTree = "<group>"; };
+		63CB49D114E9C5A0008C4551 /* OPETextEdit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETextEdit.m; sourceTree = "<group>"; };
+		63CB49D214E9C5A0008C4551 /* OPETextEdit.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPETextEdit.xib; sourceTree = "<group>"; };
 		63E2796714E1F274009D02BD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		63E2796914E1F281009D02BD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -380,6 +385,9 @@
 				6345E57D14E3122900F55486 /* OPENodeViewController.h */,
 				6345E57E14E3122900F55486 /* OPENodeViewController.m */,
 				6345E57F14E3122900F55486 /* OPENodeViewController.xib */,
+				63CB49D014E9C5A0008C4551 /* OPETextEdit.h */,
+				63CB49D114E9C5A0008C4551 /* OPETextEdit.m */,
+				63CB49D214E9C5A0008C4551 /* OPETextEdit.xib */,
 			);
 			path = "OSM POI Editor";
 			sourceTree = "<group>";
@@ -774,6 +782,7 @@
 				6345E57C14E2FD1200F55486 /* Blue_Dot.png in Resources */,
 				6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */,
 				6345E58D14E347E800F55486 /* Tags.plist in Resources */,
+				63CB49D414E9C5A0008C4551 /* OPETextEdit.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -817,6 +826,7 @@
 				63E279E814E1F32B009D02BD /* Reachability.m in Sources */,
 				6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */,
 				63FFDC6614E480DF00701DEC /* OPETagInterpreter.m in Sources */,
+				63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

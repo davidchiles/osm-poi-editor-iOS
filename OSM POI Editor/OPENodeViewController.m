@@ -8,6 +8,7 @@
 
 #import "OPENodeViewController.h"
 #import "OPETagInterpreter.h"
+#import "OPETextEdit.h"
 
 
 
@@ -44,8 +45,6 @@
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
     
     [[self navigationItem] setRightBarButtonItem:saveButton];
-    
-    [self setupTags];
     
 }
 
@@ -118,6 +117,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0) {
+        OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
+        
+        viewer.title = @"Name";
+        viewer.text = [node.tags objectForKey:@"name"];
+        
+        
+        //UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
+        
+        //[[self navigationItem] setBackBarButtonItem: newBackButton];
+        
+        [self.navigationController pushViewController:viewer animated:YES];
+    }
 }
 
 - (void) saveButtonPressed
