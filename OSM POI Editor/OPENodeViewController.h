@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "OPENode.h"
 #import "OPETagInterpreter.h"
+#import "OPETextEdit.h"
 
-@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, PassText>
 {
     UITableView *tableView;
 }

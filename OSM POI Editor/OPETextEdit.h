@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol PassText <NSObject>
+@required
+- (void) setText:(NSString *)text;
+@end
+
 @interface OPETextEdit : UIViewController
+
 
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) IBOutlet UITextView * textView;
+
+@property (retain) id delegate;
 
 - (void) saveButtonPressed;
 

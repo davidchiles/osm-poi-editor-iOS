@@ -1,18 +1,17 @@
 //
-//  OPETextEdit.m
+//  OPECategoryViewController.m
 //  OSM POI Editor
 //
 //  Created by David Chiles on 2/13/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "OPETextEdit.h"
+#import "OPECategoryViewController.h"
+#import "OPETagInterpreter.h"
 
-@implementation OPETextEdit
+@implementation OPECategoryViewController
 
-@synthesize text;
-@synthesize textView;
-@synthesize delegate;
+@synthesize tableView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,21 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
-    [[self navigationItem] setRightBarButtonItem:saveButton];
-    
-    textView.text = text;
-    [textView becomeFirstResponder];
-    
-    
-    
-}
-
-- (void) viewDidAppear:(BOOL)animated
-{
-    textView.text = text;
-    [textView becomeFirstResponder];
+    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidUnload
@@ -60,20 +45,10 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (void) viewDidDisappear:(BOOL)animated
-{
-    [[self delegate] setText:textView.text];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void) saveButtonPressed
-{
-    
 }
 
 @end

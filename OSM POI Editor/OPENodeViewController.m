@@ -9,6 +9,7 @@
 #import "OPENodeViewController.h"
 #import "OPETagInterpreter.h"
 #import "OPETextEdit.h"
+#import "OPECategoryViewController.h"
 
 
 
@@ -122,13 +123,21 @@
         
         viewer.title = @"Name";
         viewer.text = [node.tags objectForKey:@"name"];
-        
-        
-        //UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
-        
-        //[[self navigationItem] setBackBarButtonItem: newBackButton];
+        [viewer setDelegate:self];
         
         [self.navigationController pushViewController:viewer animated:YES];
+    }
+    else if(indexPath.section == 1)
+    {
+        if (indexPath.row == 0) {
+            OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OpeCategoryViewController" bundle:nil];
+            viewer.title = @"Category";
+            
+            [self.navigationController pushViewController:viewer animated:YES];
+        }
+        else if (indexPath.row == 1){
+            
+        }
     }
 }
 
@@ -144,6 +153,18 @@
         
     }
     
+}
+
+- (void) setText:(NSString *)text
+{
+    [node.tags setObject:text forKey:@"name"];
+    //NSLog(@"we're back %@", text);
+    [tableView reloadData];
+}
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [tableView reloadData];
 }
 
 - (void)viewDidUnload
