@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol PassCategoryAndType <NSObject>
+@required
+- (void) setCategoryAndType:(NSArray *)cAndT;
+@end
+
 @interface OPETypeViewController : UITableViewController
 
 @property (nonatomic,retain) NSString * category;
+@property (retain) id delagate;
 
 @end

@@ -17,6 +17,7 @@
 
 @synthesize node;
 @synthesize tableView;
+@synthesize catAndType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,6 +47,9 @@
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
     
     [[self navigationItem] setRightBarButtonItem:saveButton];
+    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
+    
+    catAndType = [[NSArray alloc] initWithObjects:[tagInterpreter getCategory:node],[tagInterpreter getType:node], nil];
     
 }
 
@@ -81,11 +85,7 @@
     
     NSString *CellIdentifier1 = @"Cell_Section_1";
     NSString *CellIdentifier2 = @"Cell_Section_2";
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
-    //[tagInterpreter readPlist];
     
-    
-    NSArray * catAndType = [[NSArray alloc] initWithObjects:[tagInterpreter getCategory:node],[tagInterpreter getType:node], nil];
     NSArray * catAndTypeName = [[NSArray alloc] initWithObjects:@"Category",@"Type", nil];
 
     
@@ -129,10 +129,25 @@
     }
     else if(indexPath.section == 1)
     {
-        OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OpeCategoryViewController" bundle:nil];
-        viewer.title = @"Category";
         
-        [self.navigationController pushViewController:viewer animated:YES];
+        if(indexPath.row == 1)
+        {
+            OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:nil];
+            viewer.title = @"Type";
+            viewer.category = [catAndType objectAtIndex:0];
+            [viewer setDelagate:self];
+            NSLog(@"category previous: %@",viewer.category);
+            
+            [self.navigationController pushViewController:viewer animated:YES];
+            
+        }
+        else
+        {
+            OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OpeCategoryViewController" bundle:nil];
+            viewer.title = @"Category";
+            
+            [self.navigationController pushViewController:viewer animated:YES];
+        }
     }
 }
 
@@ -154,12 +169,19 @@
 {
     [node.tags setObject:text forKey:@"name"];
     //NSLog(@"we're back %@", text);
-    [tableView reloadData];
+    [self.tableView reloadData];
+}
+
+- (void) setCategoryAndType:(NSArray *)cAndT
+{
+    catAndType = cAndT;
+    NSLog(@"catAndType: %@",catAndType);
+    [self.tableView reloadData];
 }
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    [tableView reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidUnload

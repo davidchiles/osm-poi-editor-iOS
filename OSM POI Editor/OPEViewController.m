@@ -9,7 +9,6 @@
 #import "OPEViewController.h"
 #import "RMCloudMadeMapSource.h"
 #import "RMCloudMadeHiResMapSource.h" 
-#import "OPEParser.h"
 #import "RMMarkerManager.h" 
 #import "RMMarkerAdditions.h"
 #import "OPENodeViewController.h"
@@ -72,7 +71,7 @@
     [mapView.contents setZoom: 18];
     [self addMarkerAt:initLocation withNode:nil];
     RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
-    //OPEParser *parser = [[OPEParser alloc] init];
+    
 
     double bboxleft = geoBox.southwest.longitude;
     double bboxbottom = geoBox.southwest.latitude;
@@ -194,17 +193,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

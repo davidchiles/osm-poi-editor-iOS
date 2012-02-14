@@ -10,14 +10,16 @@
 #import "OPENode.h"
 #import "OPETagInterpreter.h"
 #import "OPETextEdit.h"
+#import "OPETypeViewController.h"
 
-@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, PassText>
+@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, PassText, PassCategoryAndType>
 {
     UITableView *tableView;
 }
 
 @property (nonatomic, retain) OPENode * node;
 @property (nonatomic, retain) IBOutlet UITableView* tableView;
+@property (nonatomic, retain) NSArray * catAndType;
 
 - (void) saveButtonPressed;
 - (void) setupTags;

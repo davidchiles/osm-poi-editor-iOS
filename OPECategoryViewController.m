@@ -162,7 +162,9 @@
     
     OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:nil];
     viewer.title = @"Type";
-    viewer.category = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+    viewer.category = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+    [viewer setDelagate: [[[self navigationController] viewControllers] objectAtIndex:1]];
+    
     
     
     [self.navigationController pushViewController:viewer animated:YES];

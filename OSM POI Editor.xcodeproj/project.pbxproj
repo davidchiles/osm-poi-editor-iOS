@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E014DC98D0000236F0 /* OPEOSMData.m */; };
 		631539E514DCA29B000236F0 /* OPENode.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E414DCA29B000236F0 /* OPENode.m */; };
-		631539E814DCB6D6000236F0 /* OPEParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E714DCB6D6000236F0 /* OPEParser.m */; };
 		6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB6E14DB519A00448852 /* UIKit.framework */; };
 		6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7014DB519A00448852 /* Foundation.framework */; };
 		6330AB7314DB519A00448852 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7214DB519A00448852 /* CoreGraphics.framework */; };
@@ -76,8 +75,6 @@
 		631539E014DC98D0000236F0 /* OPEOSMData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMData.m; sourceTree = "<group>"; };
 		631539E314DCA29B000236F0 /* OPENode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENode.h; sourceTree = "<group>"; };
 		631539E414DCA29B000236F0 /* OPENode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENode.m; sourceTree = "<group>"; };
-		631539E614DCB6D6000236F0 /* OPEParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEParser.h; sourceTree = "<group>"; };
-		631539E714DCB6D6000236F0 /* OPEParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEParser.m; sourceTree = "<group>"; };
 		6330AB6A14DB519A00448852 /* OSM POI Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSM POI Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6330AB6E14DB519A00448852 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6330AB7014DB519A00448852 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -383,8 +380,6 @@
 				631539E014DC98D0000236F0 /* OPEOSMData.m */,
 				63FFDC6414E480DF00701DEC /* OPETagInterpreter.h */,
 				63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */,
-				631539E614DCB6D6000236F0 /* OPEParser.h */,
-				631539E714DCB6D6000236F0 /* OPEParser.m */,
 				6330AB7D14DB519A00448852 /* OPEAppDelegate.h */,
 				6330AB7E14DB519A00448852 /* OPEAppDelegate.m */,
 				6330AB8014DB519A00448852 /* OPEViewController.h */,
@@ -816,7 +811,6 @@
 				6330AB8214DB519A00448852 /* OPEViewController.m in Sources */,
 				631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */,
 				631539E514DCA29B000236F0 /* OPENode.m in Sources */,
-				631539E814DCB6D6000236F0 /* OPEParser.m in Sources */,
 				63E4BF3114E0728200E0BD46 /* NSDataAdditions.m in Sources */,
 				63E4BF3214E0728200E0BD46 /* TBXML.m in Sources */,
 				63E279C014E1F31B009D02BD /* ASIAuthenticationDialog.m in Sources */,
