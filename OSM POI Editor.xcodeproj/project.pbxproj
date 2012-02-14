@@ -33,8 +33,10 @@
 		637A89FE14E1C340003F656F /* SPOI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 637A89FD14E1C340003F656F /* SPOI.bundle */; };
 		63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49D114E9C5A0008C4551 /* OPETextEdit.m */; };
 		63CB49D414E9C5A0008C4551 /* OPETextEdit.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49D214E9C5A0008C4551 /* OPETextEdit.xib */; };
-		63CB49D814E9DA0D008C4551 /* OPECategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49D614E9DA0D008C4551 /* OPECategoryViewController.m */; };
-		63CB49D914E9DA0D008C4551 /* OPECategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49D714E9DA0D008C4551 /* OPECategoryViewController.xib */; };
+		63CB49DD14E9DE7B008C4551 /* OPECategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49DB14E9DE7B008C4551 /* OPECategoryViewController.m */; };
+		63CB49DE14E9DE7B008C4551 /* OPECategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49DC14E9DE7B008C4551 /* OPECategoryViewController.xib */; };
+		63CB49E214E9E3BF008C4551 /* OPETypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */; };
+		63CB49E314E9E3BF008C4551 /* OPETypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49E114E9E3BF008C4551 /* OPETypeViewController.xib */; };
 		63E2796814E1F274009D02BD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796714E1F274009D02BD /* CFNetwork.framework */; };
 		63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796914E1F281009D02BD /* SystemConfiguration.framework */; };
 		63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */; };
@@ -205,9 +207,12 @@
 		63CB49D014E9C5A0008C4551 /* OPETextEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETextEdit.h; sourceTree = "<group>"; };
 		63CB49D114E9C5A0008C4551 /* OPETextEdit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETextEdit.m; sourceTree = "<group>"; };
 		63CB49D214E9C5A0008C4551 /* OPETextEdit.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPETextEdit.xib; sourceTree = "<group>"; };
-		63CB49D514E9DA0C008C4551 /* OPECategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECategoryViewController.h; sourceTree = "<group>"; };
-		63CB49D614E9DA0D008C4551 /* OPECategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECategoryViewController.m; sourceTree = "<group>"; };
-		63CB49D714E9DA0D008C4551 /* OPECategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPECategoryViewController.xib; sourceTree = "<group>"; };
+		63CB49DA14E9DE7B008C4551 /* OPECategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPECategoryViewController.h; path = ../OPECategoryViewController.h; sourceTree = "<group>"; };
+		63CB49DB14E9DE7B008C4551 /* OPECategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPECategoryViewController.m; path = ../OPECategoryViewController.m; sourceTree = "<group>"; };
+		63CB49DC14E9DE7B008C4551 /* OPECategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OPECategoryViewController.xib; path = ../OPECategoryViewController.xib; sourceTree = "<group>"; };
+		63CB49DF14E9E3BE008C4551 /* OPETypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETypeViewController.h; sourceTree = "<group>"; };
+		63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETypeViewController.m; sourceTree = "<group>"; };
+		63CB49E114E9E3BF008C4551 /* OPETypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPETypeViewController.xib; sourceTree = "<group>"; };
 		63E2796714E1F274009D02BD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		63E2796914E1F281009D02BD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -393,9 +398,12 @@
 				63CB49D014E9C5A0008C4551 /* OPETextEdit.h */,
 				63CB49D114E9C5A0008C4551 /* OPETextEdit.m */,
 				63CB49D214E9C5A0008C4551 /* OPETextEdit.xib */,
-				63CB49D514E9DA0C008C4551 /* OPECategoryViewController.h */,
-				63CB49D614E9DA0D008C4551 /* OPECategoryViewController.m */,
-				63CB49D714E9DA0D008C4551 /* OPECategoryViewController.xib */,
+				63CB49DA14E9DE7B008C4551 /* OPECategoryViewController.h */,
+				63CB49DB14E9DE7B008C4551 /* OPECategoryViewController.m */,
+				63CB49DC14E9DE7B008C4551 /* OPECategoryViewController.xib */,
+				63CB49DF14E9E3BE008C4551 /* OPETypeViewController.h */,
+				63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */,
+				63CB49E114E9E3BF008C4551 /* OPETypeViewController.xib */,
 			);
 			path = "OSM POI Editor";
 			sourceTree = "<group>";
@@ -791,7 +799,8 @@
 				6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */,
 				6345E58D14E347E800F55486 /* Tags.plist in Resources */,
 				63CB49D414E9C5A0008C4551 /* OPETextEdit.xib in Resources */,
-				63CB49D914E9DA0D008C4551 /* OPECategoryViewController.xib in Resources */,
+				63CB49DE14E9DE7B008C4551 /* OPECategoryViewController.xib in Resources */,
+				63CB49E314E9E3BF008C4551 /* OPETypeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -836,7 +845,8 @@
 				6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */,
 				63FFDC6614E480DF00701DEC /* OPETagInterpreter.m in Sources */,
 				63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */,
-				63CB49D814E9DA0D008C4551 /* OPECategoryViewController.m in Sources */,
+				63CB49DD14E9DE7B008C4551 /* OPECategoryViewController.m in Sources */,
+				63CB49E214E9E3BF008C4551 /* OPETypeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

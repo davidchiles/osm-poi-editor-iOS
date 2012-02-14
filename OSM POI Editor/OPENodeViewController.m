@@ -129,15 +129,10 @@
     }
     else if(indexPath.section == 1)
     {
-        if (indexPath.row == 0) {
-            OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OpeCategoryViewController" bundle:nil];
-            viewer.title = @"Category";
-            
-            [self.navigationController pushViewController:viewer animated:YES];
-        }
-        else if (indexPath.row == 1){
-            
-        }
+        OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OpeCategoryViewController" bundle:nil];
+        viewer.title = @"Category";
+        
+        [self.navigationController pushViewController:viewer animated:YES];
     }
 }
 

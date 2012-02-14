@@ -1,5 +1,5 @@
 //
-//  OPECategoryViewController.h
+//  OPETypeViewController.h
 //  OSM POI Editor
 //
 //  Created by David Chiles on 2/13/12.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OPECategoryViewController : UIViewController
+@interface OPETypeViewController : UITableViewController
 
-@property (nonatomic,retain) IBOutlet UITableView * tableView;
+@property (nonatomic,retain) NSString * category;
 
 @end
