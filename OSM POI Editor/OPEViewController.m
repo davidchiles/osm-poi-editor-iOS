@@ -20,6 +20,8 @@
 @synthesize osmData;
 @synthesize locationManager;
 @synthesize interpreter;
+@synthesize infoButton,location;
+@synthesize addOPEPoint;
 
 - (void)didReceiveMemoryWarning
 {
@@ -180,6 +182,14 @@
         [self addMarkerAt:node.coordinate withNode:node];
         
     }
+}
+
+- (IBAction)infoButtonPressed:(id)sender
+{
+    NSLog(@"sent button pressed");
+    OPEInfoViewController * viewer = [[OPEInfoViewController alloc] initWithNibName:@"OPEInfoViewController" bundle:nil];
+    viewer.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:viewer animated:YES];
 }
 
 - (void)viewDidUnload

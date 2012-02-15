@@ -154,6 +154,7 @@
 - (void) saveButtonPressed
 {
     NSLog(@"saveBottoPressed");
+    // This is where the uploading needs to happen  
 }
 
 - (void) setupTags

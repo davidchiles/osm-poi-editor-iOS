@@ -12,6 +12,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "OPENode.h"
 #import "OPEOSMData.h"
+#import "OPEInfoViewController.h"
 
 
 @interface OPEViewController : UIViewController<RMMapViewDelegate> {
@@ -23,10 +24,16 @@
 @property (nonatomic,strong) CLLocationManager* locationManager;
 @property (nonatomic,retain) OPETagInterpreter * interpreter;
 
+@property (nonatomic,retain) IBOutlet UIButton * infoButton;
+@property (nonatomic,retain) IBOutlet UIBarButtonItem * location;
+@property (nonatomic,retain) IBOutlet UIBarButtonItem * addOPEPoint;
+
 
 -(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;
 -(void) addMarkers;
 
-
+-(IBAction)infoButtonPressed:(id)sender;
+-(IBAction)addPointButtonPressed:(id)sender;
+-(IBAction)locationButtonPressed:(id)sender;
 
 @end

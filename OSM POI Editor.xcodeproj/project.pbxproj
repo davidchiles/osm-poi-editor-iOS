@@ -30,6 +30,8 @@
 		6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6345E57F14E3122900F55486 /* OPENodeViewController.xib */; };
 		6345E58D14E347E800F55486 /* Tags.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6345E58C14E347E800F55486 /* Tags.plist */; };
 		637A89FE14E1C340003F656F /* SPOI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 637A89FD14E1C340003F656F /* SPOI.bundle */; };
+		6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */; };
+		6383948214EC4DDD00C74A57 /* OPEInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6383948014EC4DDD00C74A57 /* OPEInfoViewController.xib */; };
 		63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49D114E9C5A0008C4551 /* OPETextEdit.m */; };
 		63CB49D414E9C5A0008C4551 /* OPETextEdit.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49D214E9C5A0008C4551 /* OPETextEdit.xib */; };
 		63CB49DD14E9DE7B008C4551 /* OPECategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49DB14E9DE7B008C4551 /* OPECategoryViewController.m */; };
@@ -201,6 +203,9 @@
 		6345E57F14E3122900F55486 /* OPENodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPENodeViewController.xib; sourceTree = "<group>"; };
 		6345E58C14E347E800F55486 /* Tags.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Tags.plist; sourceTree = "<group>"; };
 		637A89FD14E1C340003F656F /* SPOI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SPOI.bundle; sourceTree = "<group>"; };
+		6383947E14EC4DDD00C74A57 /* OPEInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEInfoViewController.h; sourceTree = "<group>"; };
+		6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEInfoViewController.m; sourceTree = "<group>"; };
+		6383948014EC4DDD00C74A57 /* OPEInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPEInfoViewController.xib; sourceTree = "<group>"; };
 		63CB49D014E9C5A0008C4551 /* OPETextEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETextEdit.h; sourceTree = "<group>"; };
 		63CB49D114E9C5A0008C4551 /* OPETextEdit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETextEdit.m; sourceTree = "<group>"; };
 		63CB49D214E9C5A0008C4551 /* OPETextEdit.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPETextEdit.xib; sourceTree = "<group>"; };
@@ -399,6 +404,9 @@
 				63CB49DF14E9E3BE008C4551 /* OPETypeViewController.h */,
 				63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */,
 				63CB49E114E9E3BF008C4551 /* OPETypeViewController.xib */,
+				6383947E14EC4DDD00C74A57 /* OPEInfoViewController.h */,
+				6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */,
+				6383948014EC4DDD00C74A57 /* OPEInfoViewController.xib */,
 			);
 			path = "OSM POI Editor";
 			sourceTree = "<group>";
@@ -796,6 +804,7 @@
 				63CB49D414E9C5A0008C4551 /* OPETextEdit.xib in Resources */,
 				63CB49DE14E9DE7B008C4551 /* OPECategoryViewController.xib in Resources */,
 				63CB49E314E9E3BF008C4551 /* OPETypeViewController.xib in Resources */,
+				6383948214EC4DDD00C74A57 /* OPEInfoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -841,6 +850,7 @@
 				63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */,
 				63CB49DD14E9DE7B008C4551 /* OPECategoryViewController.m in Sources */,
 				63CB49E214E9E3BF008C4551 /* OPETypeViewController.m in Sources */,
+				6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
