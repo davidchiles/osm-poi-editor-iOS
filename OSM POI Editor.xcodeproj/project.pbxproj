@@ -75,6 +75,7 @@
 		63E4BF1A14E068EC00E0BD46 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E4BF1914E068EC00E0BD46 /* libz.dylib */; };
 		63E4BF3114E0728200E0BD46 /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E4BF2E14E0728200E0BD46 /* NSDataAdditions.m */; };
 		63E4BF3214E0728200E0BD46 /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E4BF3014E0728200E0BD46 /* TBXML.m */; };
+		63E5B13614EDAF2E007E9BAF /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E5B13514EDAF2E007E9BAF /* location.png */; };
 		63FFDC6614E480DF00701DEC /* OPETagInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */; };
 /* End PBXBuildFile section */
 
@@ -321,6 +322,7 @@
 		63E4BF2E14E0728200E0BD46 /* NSDataAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataAdditions.m; sourceTree = "<group>"; };
 		63E4BF2F14E0728200E0BD46 /* TBXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBXML.h; sourceTree = "<group>"; };
 		63E4BF3014E0728200E0BD46 /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
+		63E5B13514EDAF2E007E9BAF /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location.png; sourceTree = "<group>"; };
 		63FFDC6414E480DF00701DEC /* OPETagInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPETagInterpreter.h; path = ../OPETagInterpreter.h; sourceTree = "<group>"; };
 		63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPETagInterpreter.m; path = ../OPETagInterpreter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -617,6 +619,7 @@
 		637A89FB14E1B426003F656F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				63E5B13514EDAF2E007E9BAF /* location.png */,
 				6345E57B14E2FD1200F55486 /* Blue_Dot.png */,
 				63E279EF14E2073C009D02BD /* Blue_Marker.png */,
 				637A89FD14E1C340003F656F /* SPOI.bundle */,
@@ -841,6 +844,7 @@
 				63CB49E314E9E3BF008C4551 /* OPETypeViewController.xib in Resources */,
 				6383948214EC4DDD00C74A57 /* OPEInfoViewController.xib in Resources */,
 				6383949814EC7DAC00C74A57 /* GTMOAuthViewTouch.xib in Resources */,
+				63E5B13614EDAF2E007E9BAF /* location.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -316,6 +316,7 @@ static const NSTimeInterval kDefaultNetworkLossTimeoutInterval = 30.0;
   }
 
   // the callback page was requested, so tell the window to close
+    NSLog(@"closeTheWindow");
   [self closeTheWindow];
 
   // notify the app so it can put up a post-sign in, pre-access token fetch UI

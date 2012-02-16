@@ -15,8 +15,10 @@
 
 - (IBAction)doneButtonPressed:(id)sender;
 - (IBAction)loginButtonPressed:(id)sender;
+- (IBAction)logoutButtonPressed:(id)sender;
 
 - (void) signInToOSM;
 - (GTMOAuthAuthentication *)osmAuth;
+- (void) signOutOfOSM;
 
 @end

@@ -50,6 +50,12 @@
     [self signInToOSM];
 }
 
+- (IBAction)logoutButtonPressed:(id)sender
+{
+    NSLog(@"Logout Button Pressed");
+    [self signOutOfOSM];
+}
+
 - (void)viewController:(GTMOAuthViewControllerTouch *)viewController
       finishedWithAuth:(GTMOAuthAuthentication *)auth
                  error:(NSError *)error {
@@ -125,7 +131,7 @@
     // finished or been canceled
     //
     // This URL does not need to be for an actual web page
-    [auth setCallback:@"http://www.dbro.pro"];
+    [auth setCallback:@"http://www.google.com/OAuthCallback"];
     
     // Display the autentication view
     GTMOAuthViewControllerTouch *viewController;
@@ -144,6 +150,10 @@
                                            animated:YES];
 }
 
+- (void) signOutOfOSM
+{
+    [GTMOAuthViewControllerTouch removeParamsFromKeychainForName:@"OSMPOIEditor"];
+}
 
 
 #pragma mark - View lifecycle
