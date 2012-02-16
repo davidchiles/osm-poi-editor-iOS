@@ -7,7 +7,7 @@
 //
 
 #import "OPEInfoViewController.h"
-#import "GTMOAuthViewControllerTouch.h"
+
 
 @implementation OPEInfoViewController
 
@@ -32,7 +32,16 @@
 
 - (IBAction)doneButtonPressed:(id)sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+    GTMOAuthAuthentication *auth = [self osmAuth];
+    BOOL didAuth = NO;
+    BOOL canAuth = NO;
+    if (auth) {
+        didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor"
+                                                                  authentication:auth];
+        canAuth = [auth canAuthorize];
+    }
+    NSLog(@"didAuth %d",didAuth);
+    NSLog(@"canAuth %d",canAuth);
 }
 
 - (IBAction)loginButtonPressed:(id)sender
@@ -75,6 +84,7 @@
         // Just to prove we're signed in, we'll attempt an authenticated fetch for the
         // signed-in user
         //[self doAnAuthenticatedAPIFetch];
+        NSLog(@"succeeeeeeded");
     }
     
     //[self updateUI];
@@ -115,7 +125,7 @@
     // finished or been canceled
     //
     // This URL does not need to be for an actual web page
-    [auth setCallback:@"http://www.example.com/OAuthCallback"];
+    [auth setCallback:@"http://www.dbro.pro"];
     
     // Display the autentication view
     GTMOAuthViewControllerTouch *viewController;
@@ -129,6 +139,7 @@
                                                                delegate:self
                                                        finishedSelector:@selector(viewController:finishedWithAuth:error:)];
     
+    
     [[self navigationController] pushViewController:viewController
                                            animated:YES];
 }
@@ -140,6 +151,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
 }
 

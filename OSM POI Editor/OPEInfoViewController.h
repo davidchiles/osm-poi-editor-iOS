@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GTMOAuthViewControllerTouch.h"
 
 @interface OPEInfoViewController : UIViewController
 
@@ -16,5 +17,6 @@
 - (IBAction)loginButtonPressed:(id)sender;
 
 - (void) signInToOSM;
+- (GTMOAuthAuthentication *)osmAuth;
 
 @end

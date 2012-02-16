@@ -95,17 +95,18 @@
 		cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier1];
 		if (cell == nil) {
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier1];
-            cell.textLabel.text = [node.tags objectForKey:@"name"];
 		}
+        cell.textLabel.text = [node.tags objectForKey:@"name"];
+
 	}
 	else if (indexPath.section == 1) {
 		cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier2];
 		if (cell == nil) {
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier2];
-            cell.textLabel.text = [catAndTypeName objectAtIndex:indexPath.row];
-            cell.detailTextLabel.text = [catAndType objectAtIndex:indexPath.row];
-            //cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",indexPath.row];
-		}
+        }
+        cell.textLabel.text = [catAndTypeName objectAtIndex:indexPath.row];
+        cell.detailTextLabel.text = [catAndType objectAtIndex:indexPath.row];
+        //cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",indexPath.row];
 	}
     cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
 	
@@ -170,14 +171,16 @@
 {
     [node.tags setObject:text forKey:@"name"];
     //NSLog(@"we're back %@", text);
-    [self.tableView reloadData];
+    //[self.tableView reloadData];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void) setCategoryAndType:(NSArray *)cAndT
 {
     catAndType = cAndT;
     NSLog(@"catAndType: %@",catAndType);
-    [self.tableView reloadData];
+    //[self.tableView reloadData];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void) viewDidAppear:(BOOL)animated
