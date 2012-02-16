@@ -12,16 +12,14 @@
 #import "RMMarkerManager.h" 
 #import "RMMarkerAdditions.h"
 #import "OPENodeViewController.h"
-
-
+#import "GTMOAuthViewControllerTouch.h"
 
 @implementation OPEViewController
 
 @synthesize osmData;
 @synthesize locationManager;
 @synthesize interpreter;
-@synthesize infoButton,location;
-@synthesize addOPEPoint;
+@synthesize infoButton,location, addOPEPoint;
 
 - (void)didReceiveMemoryWarning
 {
@@ -184,12 +182,23 @@
     }
 }
 
+- (IBAction)addPointButtonPressed:(id)sender
+{
+    
+}
+
+-(IBAction)locationButtonPressed:(id)sender
+{
+    
+}
+
 - (IBAction)infoButtonPressed:(id)sender
 {
     NSLog(@"sent button pressed");
     OPEInfoViewController * viewer = [[OPEInfoViewController alloc] initWithNibName:@"OPEInfoViewController" bundle:nil];
     viewer.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentModalViewController:viewer animated:YES];
+    viewer.title = @"Info";
+    [[self navigationController] pushViewController:viewer animated:YES];
 }
 
 - (void)viewDidUnload
@@ -199,6 +208,8 @@
     // e.g. self.myOutlet = nil;
     [locationManager stopUpdatingLocation];
 }
+
+
 
 - (void)viewWillAppear:(BOOL)animated
 {

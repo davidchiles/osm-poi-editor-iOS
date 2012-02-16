@@ -15,4 +15,6 @@
 - (IBAction)doneButtonPressed:(id)sender;
 - (IBAction)loginButtonPressed:(id)sender;
 
+- (void) signInToOSM;
+
 @end
