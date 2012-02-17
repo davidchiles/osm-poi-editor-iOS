@@ -155,31 +155,38 @@
     NSLog(@"didAuth %d",didAuth);
     NSLog(@"canAuth %d",canAuth);
     
-    
-    
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api06.dev.openstreetmap.org/api/0.6/changeset/create"]];
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/changeset/create"]];
     NSLog(@"URL: %@",[url absoluteURL]);
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     //[urlRequest setURL:url];
     [urlRequest setHTTPMethod:@"PUT"];
    
-    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:url];
-    request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"changeset",@"type", nil];
     //NSLog(@"URL before: %@",[urlRequest.URL absoluteURL]);
-    [auth authorizeRequest:urlRequest];
+    
     //NSLog(@"URL header: %@",urlRequest.allHTTPHeaderFields);
     //NSLog(@"URL after: %@",[urlRequest.URL absoluteURL]);
     
-    //for(id k in urlRequest.allHTTPHeaderFields)
-        //[request addRequestHeader:k value:[urlRequest.allHTTPHeaderFields objectForKey:k]];
-    request.requestHeaders = [urlRequest.allHTTPHeaderFields mutableCopy];
-    [request setRequestMethod:@"PUT"];
+    NSMutableData *changeset = [NSMutableData data];
     
-    request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"changeset",@"type", nil];
-    [request setDelegate:self];
-    //[request startAsynchronous];     
+    [changeset appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [changeset appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [changeset appendData: [[NSString stringWithFormat: @"<changeset>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [changeset appendData: [[NSString stringWithFormat: @"<tag k=\"created_by\" v=\"OSMPOIEditor\"/>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [changeset appendData: [[NSString stringWithFormat: @"<tag k=\"comment\" v=\"NewChangeset\"/>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [changeset appendData: [[NSString stringWithFormat: @"</changeset>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [changeset appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    //[changeset appendData: [[NSString stringWithFormat: @"</xml>"] dataUsingEncoding: NSUTF8StringEncoding]];
     
-    return nil;
+    NSLog(@"Changeset Data: %@",[[NSString alloc] initWithData:changeset encoding:NSUTF8StringEncoding]);
+    
+    [urlRequest setHTTPBody: changeset];
+    [urlRequest setHTTPMethod: @"PUT"];
+    [auth authorizeRequest:urlRequest];
+    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
+    NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
+    
+    
+    return 0;
 }
 
 

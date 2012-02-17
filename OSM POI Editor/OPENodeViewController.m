@@ -157,7 +157,7 @@
 {
     NSLog(@"saveBottoPressed");
     OPEOSMData* data = [[OPEOSMData alloc] init];
-    NSLog(@"Open Changeset: %d",[data openChangeset]);
+    [data openChangeset];
     
 }
 
