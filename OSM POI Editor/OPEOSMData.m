@@ -10,6 +10,8 @@
 #import "TBXML.h"
 #import "OPENode.h"
 #import "ASIHTTPRequest.h"
+#import "ASIFormDataRequest.h"
+#import "GTMOAuthViewControllerTouch.h"
 
 @implementation OPEOSMData
 
@@ -33,64 +35,75 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
+    NSLog(@"Request Type: %@",[request.userInfo objectForKey:@"type"]);
     // Use when fetching text data
     //NSString *responseString = [request responseString];
     
     // Use when fetching binary data
-    NSData *responseData = [request responseData];
-    TBXML* tbxml = [TBXML tbxmlWithXMLData:responseData];
-    
-    TBXMLElement * root = tbxml.rootXMLElement;
-    if(root)
+    if ([request.userInfo objectForKey:@"type"] == @"download" )
     {
-        NSLog(@"root: %@",[TBXML elementName:root]);
-        NSLog(@"version: %@",[TBXML valueOfAttributeNamed:@"version" forElement:root]);
-        TBXMLElement* node = [TBXML childElementNamed:@"node" parentElement:root];
-        while (node!=nil) {
-            
-            //NSLog(@"node: %@",[TBXML textForElement:node]);
-            NSString* identS = [TBXML valueOfAttributeNamed:@"id" forElement:node];
-            //NSLog(@"id %@",identS);
-            NSString* latS = [TBXML valueOfAttributeNamed:@"lat" forElement:node];
-            NSString* lonS = [TBXML valueOfAttributeNamed:@"lon" forElement:node];
-            
-            double ident = [identS doubleValue];
-            double lat = [latS doubleValue];
-            double lon = [lonS doubleValue];
-            
-            OPENode * newNode = [[OPENode alloc] initWithId:ident latitude:lat longitude:lon];
-            //NSLog(@"lat: %f, lon: %f",lat,lon);
-            TBXMLElement* tag = [TBXML childElementNamed:@"tag" parentElement:node];
-            
-            while (tag!=nil) //Takes in tags and adds them to newNode
-            {
-                NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tag];
-                NSString* value = [TBXML valueOfAttributeNamed:@"v" forElement:tag];
-                //NSLog(@"key: %@, value: %@",key,value);
-                [newNode.tags setObject:value forKey:key];
-                tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
-            }
-            
-            [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
-            
-            for (id key in newNode.tags) { //Used to Log all keys and values stored
-                
-                //NSLog(@"dkey: %@, dvalue: %@", key, [newNode.tags objectForKey:key]);
-            }
-            node = [TBXML nextSiblingNamed:@"node" searchFromElement:node];
-        }
-        NSLog(@"allNodes size: %d",[allNodes count]);
-        for (id key in self.allNodes) {
-            
-            //NSLog(@"akey: %@, avalue: %@", key, [self.allNodes objectForKey:key]);
-        }
+        NSLog(@"Changeset finish: %@", [request responseString]);
         
     }
     
-    
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"DownloadComplete"
-     object:self];
+    if ([request.userInfo objectForKey:@"type"] == @"download" )
+    {
+        
+        NSData *responseData = [request responseData];
+        TBXML* tbxml = [TBXML tbxmlWithXMLData:responseData];
+        
+        TBXMLElement * root = tbxml.rootXMLElement;
+        if(root)
+        {
+            NSLog(@"root: %@",[TBXML elementName:root]);
+            NSLog(@"version: %@",[TBXML valueOfAttributeNamed:@"version" forElement:root]);
+            TBXMLElement* node = [TBXML childElementNamed:@"node" parentElement:root];
+            while (node!=nil) {
+                
+                //NSLog(@"node: %@",[TBXML textForElement:node]);
+                NSString* identS = [TBXML valueOfAttributeNamed:@"id" forElement:node];
+                //NSLog(@"id %@",identS);
+                NSString* latS = [TBXML valueOfAttributeNamed:@"lat" forElement:node];
+                NSString* lonS = [TBXML valueOfAttributeNamed:@"lon" forElement:node];
+                
+                double ident = [identS doubleValue];
+                double lat = [latS doubleValue];
+                double lon = [lonS doubleValue];
+                
+                OPENode * newNode = [[OPENode alloc] initWithId:ident latitude:lat longitude:lon];
+                //NSLog(@"lat: %f, lon: %f",lat,lon);
+                TBXMLElement* tag = [TBXML childElementNamed:@"tag" parentElement:node];
+                
+                while (tag!=nil) //Takes in tags and adds them to newNode
+                {
+                    NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tag];
+                    NSString* value = [TBXML valueOfAttributeNamed:@"v" forElement:tag];
+                    //NSLog(@"key: %@, value: %@",key,value);
+                    [newNode.tags setObject:value forKey:key];
+                    tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
+                }
+                
+                [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+                
+                for (id key in newNode.tags) { //Used to Log all keys and values stored
+                    
+                    //NSLog(@"dkey: %@, dvalue: %@", key, [newNode.tags objectForKey:key]);
+                }
+                node = [TBXML nextSiblingNamed:@"node" searchFromElement:node];
+            }
+            NSLog(@"allNodes size: %d",[allNodes count]);
+            for (id key in self.allNodes) {
+                
+                //NSLog(@"akey: %@, avalue: %@", key, [self.allNodes objectForKey:key]);
+            }
+            
+        }
+        
+        
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"DownloadComplete"
+         object:self];
+    }
 
 }
 
@@ -109,12 +122,64 @@
     NSLog(@"url: %@",[url absoluteString]);
     
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"download",@"type", nil];
     [request setDelegate:self];
     [request startAsynchronous];
+}
+
+- (NSInteger) openChangeset
+{
+   
     
-        
+    NSString *myConsumerKey = @"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
+    NSString *myConsumerSecret = @"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
+    
+    GTMOAuthAuthentication *auth;
+    auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
+                                                        consumerKey:myConsumerKey
+                                                         privateKey:myConsumerSecret];
+    BOOL didAuth = NO;
+    BOOL canAuth = NO;
+    if (auth) {
+        didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor"
+                                                                  authentication:auth];
+        // if the auth object contains an access token, didAuth is now true
+        canAuth = [auth canAuthorize];
+    }
+    
+    // retain the authentication object, which holds the auth tokens
+    //
+    // we can determine later if the auth object contains an access token
+    // by calling its -canAuthorize method
+    //[self setAuthentication:auth];
+    NSLog(@"didAuth %d",didAuth);
+    NSLog(@"canAuth %d",canAuth);
     
     
+    
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api06.dev.openstreetmap.org/api/0.6/changeset/create"]];
+    NSLog(@"URL: %@",[url absoluteURL]);
+    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
+    //[urlRequest setURL:url];
+    [urlRequest setHTTPMethod:@"PUT"];
+   
+    ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:url];
+    request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"changeset",@"type", nil];
+    //NSLog(@"URL before: %@",[urlRequest.URL absoluteURL]);
+    [auth authorizeRequest:urlRequest];
+    //NSLog(@"URL header: %@",urlRequest.allHTTPHeaderFields);
+    //NSLog(@"URL after: %@",[urlRequest.URL absoluteURL]);
+    
+    //for(id k in urlRequest.allHTTPHeaderFields)
+        //[request addRequestHeader:k value:[urlRequest.allHTTPHeaderFields objectForKey:k]];
+    request.requestHeaders = [urlRequest.allHTTPHeaderFields mutableCopy];
+    [request setRequestMethod:@"PUT"];
+    
+    request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"changeset",@"type", nil];
+    [request setDelegate:self];
+    //[request startAsynchronous];     
+    
+    return nil;
 }
 
 

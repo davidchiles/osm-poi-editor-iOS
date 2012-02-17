@@ -20,5 +20,6 @@
 
 -(id) initWithLeft:(double) lef bottom: (double) bot right: (double) rig top: (double) to;
 -(void) getData;
+- (NSInteger) openChangeset;
 
 @end

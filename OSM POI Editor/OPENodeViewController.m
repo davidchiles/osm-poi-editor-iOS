@@ -10,6 +10,7 @@
 #import "OPETagInterpreter.h"
 #import "OPETextEdit.h"
 #import "OPECategoryViewController.h"
+#import "OPEOSMData.h"
 
 
 
@@ -155,7 +156,9 @@
 - (void) saveButtonPressed
 {
     NSLog(@"saveBottoPressed");
-    // This is where the uploading needs to happen  
+    OPEOSMData* data = [[OPEOSMData alloc] init];
+    NSLog(@"Open Changeset: %d",[data openChangeset]);
+    
 }
 
 - (void) setupTags
