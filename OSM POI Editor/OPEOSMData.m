@@ -28,6 +28,12 @@
         bboxbottom = bot;
         bboxright = rig;
         bboxtop = to;
+        NSString *myConsumerKey = @"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
+        NSString *myConsumerSecret = @"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
+        
+        auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
+                                                           consumerKey:myConsumerKey
+                                                            privateKey:myConsumerSecret];
     }
     allNodes = [[NSMutableDictionary alloc] init];
     return self;
@@ -65,12 +71,14 @@
                 //NSLog(@"id %@",identS);
                 NSString* latS = [TBXML valueOfAttributeNamed:@"lat" forElement:node];
                 NSString* lonS = [TBXML valueOfAttributeNamed:@"lon" forElement:node];
+                NSString* verS = [TBXML valueOfAttributeNamed:@"version" forElement:node];
                 
                 double ident = [identS doubleValue];
                 double lat = [latS doubleValue];
                 double lon = [lonS doubleValue];
+                int ver = [verS intValue];
                 
-                OPENode * newNode = [[OPENode alloc] initWithId:ident latitude:lat longitude:lon];
+                OPENode * newNode = [[OPENode alloc] initWithId:ident latitude:lat longitude:lon version:ver];
                 //NSLog(@"lat: %f, lon: %f",lat,lon);
                 TBXMLElement* tag = [TBXML childElementNamed:@"tag" parentElement:node];
                 
@@ -118,7 +126,7 @@
 -(void) getData
 {
     NSLog(@"box: %f,%f,%f,%f",bboxleft,bboxbottom,bboxright,bboxtop);
-    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[amenity=*][bbox=%f,%f,%f,%f]",bboxleft,bboxbottom,bboxright,bboxtop]];
+    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[amenity=*][bbox=%f,%f,%f,%f][@meta]",bboxleft,bboxbottom,bboxright,bboxtop]];
     NSLog(@"url: %@",[url absoluteString]);
     
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -131,13 +139,7 @@
 {
    
     
-    NSString *myConsumerKey = @"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
-    NSString *myConsumerSecret = @"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
     
-    GTMOAuthAuthentication *auth;
-    auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
-                                                        consumerKey:myConsumerKey
-                                                         privateKey:myConsumerSecret];
     BOOL didAuth = NO;
     BOOL canAuth = NO;
     if (auth) {
@@ -187,6 +189,49 @@
     
     
     return 0;
+}
+
+- (void) updateXmlNode: (OPENode *) node withChangeset: (NSInteger *) changesetNumber
+{
+    
+    
+}
+
+- (void) createXmlNode: (OPENode *) node withChangeset: (NSInteger *) changesetNumber
+{
+    double lat = node.coordinate.latitude;
+    double lon = node.coordinate.longitude;
+    NSLog(@"upload lat: %f",lat);
+    NSLog(@"upload lon: %f",lon);
+    
+    
+    
+    NSMutableData *nodeXML = [NSMutableData data];
+    
+    [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"<node changeset=\"%d\" lat=\"%f\" lon=\"%f\">",changesetNumber,lat,lon] dataUsingEncoding: NSUTF8StringEncoding]];
+    
+    for (NSString *k in node.tags)
+    {
+        [nodeXML appendData: [[NSString stringWithFormat: @"<tag k=\"%@\" v=\"%@\"/>",k,[node.tags objectForKey:k]] dataUsingEncoding: NSUTF8StringEncoding]];
+    }
+    
+    [nodeXML appendData: [[NSString stringWithFormat: @"</node>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    
+    NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
+    
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/create"]];
+    NSLog(@"URL: %@",[url absoluteURL]);
+    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPBody: nodeXML];
+    [urlRequest setHTTPMethod: @"PUT"];
+    [auth authorizeRequest:urlRequest];
+    //NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
+    NSData * returnData = nil;
+    NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
+    
 }
 
 

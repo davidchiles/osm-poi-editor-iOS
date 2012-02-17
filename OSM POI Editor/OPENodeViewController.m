@@ -157,8 +157,8 @@
 {
     NSLog(@"saveBottoPressed");
     OPEOSMData* data = [[OPEOSMData alloc] init];
-    [data openChangeset];
-    
+    NSInteger change = 420;
+    [data createXmlNode:node withChangeset:&change];
 }
 
 - (void) setupTags
