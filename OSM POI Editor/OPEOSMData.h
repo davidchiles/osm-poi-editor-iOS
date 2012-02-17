@@ -24,7 +24,10 @@
 
 - (id) initWithLeft:(double) lef bottom: (double) bot right: (double) rig top: (double) to;
 - (void) getData;
-- (NSInteger) openChangeset;
-- (void) createXmlNode: (OPENode *) node withChangeset: (NSInteger *) changesetNumber;
+- (NSInteger) openChangesetWithMessage: (NSString *) message;
+- (void) createXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
+- (void) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
+- (void) deleteXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
+- (void) closeChangeset: (NSInteger) changesetNumber;
 
 @end

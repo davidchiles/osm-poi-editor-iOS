@@ -989,6 +989,7 @@
 					"\"$(SRCROOT)/CloudMadeApi/libs/Proj4\"",
 					"\"$(SRCROOT)/CloudMadeApi/libs/route-me\"",
 				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1008,6 +1009,7 @@
 					"\"$(SRCROOT)/CloudMadeApi/libs/Proj4\"",
 					"\"$(SRCROOT)/CloudMadeApi/libs/route-me\"",
 				);
+				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

@@ -123,7 +123,12 @@
     
     //NSString* markerText = [NSString stringWithFormat:@"%@", @"test"];
     //[self setText: markerText forMarker: marker];
-    //[marker addAnnotationViewWithTitle:@"test"];
+    [mapView.contents.markerManager
+    
+    [marker addAnnotationViewWithTitle:@"test"];
+    
+    
+    /*
     OPENodeViewController * viewer = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
     
     viewer.title = @"Node Info";
@@ -135,6 +140,9 @@
     [[self navigationItem] setBackBarButtonItem: newBackButton];
     
     [self.navigationController pushViewController:viewer animated:YES];
+    
+    */
+    
     //[self.view addSubview:OPENodeViewController.view];
     
 }
