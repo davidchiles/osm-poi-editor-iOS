@@ -20,6 +20,7 @@
 @synthesize locationManager;
 @synthesize interpreter;
 @synthesize infoButton,location, addOPEPoint;
+@synthesize openMarker;
 
 - (void)didReceiveMemoryWarning
 {
@@ -123,9 +124,22 @@
     
     //NSString* markerText = [NSString stringWithFormat:@"%@", @"test"];
     //[self setText: markerText forMarker: marker];
-    [mapView.contents.markerManager
     
-    [marker addAnnotationViewWithTitle:@"test"];
+    if(openMarker) 
+    {
+        [openMarker hideLabel];
+    }
+    
+    if(openMarker == marker) 
+    {
+        [openMarker hideLabel];
+        self.openMarker = nil;
+    } 
+    else 
+    {
+        [marker addAnnotationViewWithTitle:@"test"];
+        self.openMarker = marker;
+    }
     
     
     /*
@@ -144,6 +158,22 @@
     */
     
     //[self.view addSubview:OPENodeViewController.view];
+    
+}
+- (void)pushMapAnnotationDetailedViewControllerDelegate:(id) sender
+{
+    NSLog(@"Arrow Pressed");
+    OPENodeViewController * viewer = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
+    
+    viewer.title = @"Node Info";
+    viewer.node = (OPENode *)openMarker.data;
+    
+    
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
+    
+    [[self navigationItem] setBackBarButtonItem: newBackButton];
+    
+    [self.navigationController pushViewController:viewer animated:YES];
     
 }
 

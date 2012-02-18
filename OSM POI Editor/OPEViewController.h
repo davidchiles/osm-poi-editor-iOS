@@ -13,9 +13,10 @@
 #import "OPENode.h"
 #import "OPEOSMData.h"
 #import "OPEInfoViewController.h"
+#import "CMMarkerWithControlLayer.h"
 
 
-@interface OPEViewController : UIViewController<RMMapViewDelegate> {
+@interface OPEViewController : UIViewController<RMMapViewDelegate, CMMarkerWithControlLayerDelegate> {
     IBOutlet RMMapView* mapView;
     
 }
@@ -27,6 +28,7 @@
 @property (nonatomic,retain) IBOutlet UIButton * infoButton;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem * location;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem * addOPEPoint;
+@property (nonatomic,retain) RMMarker *openMarker;
 
 
 -(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;
