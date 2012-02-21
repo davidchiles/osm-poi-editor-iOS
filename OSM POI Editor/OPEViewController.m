@@ -118,13 +118,6 @@
 
 - (void) tapOnMarker: (RMMarker*) marker onMap: (RMMapView*) map
 {
-    //NSInteger clickCounter = [((NSNumber*) marker.data) intValue] + 1;
-    
-    //marker.data = [NSNumber numberWithInt: clickCounter ];
-    
-    //NSString* markerText = [NSString stringWithFormat:@"%@", @"test"];
-    //[self setText: markerText forMarker: marker];
-    
     if(openMarker) 
     {
         [openMarker hideLabel];
@@ -137,29 +130,13 @@
     } 
     else 
     {
-        [marker addAnnotationViewWithTitle:@"test"];
         self.openMarker = marker;
-    }
-    
-    
-    /*
-    OPENodeViewController * viewer = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
-    
-    viewer.title = @"Node Info";
-    viewer.node = (OPENode *)marker.data;
-    
-
-    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
-    
-    [[self navigationItem] setBackBarButtonItem: newBackButton];
-    
-    [self.navigationController pushViewController:viewer animated:YES];
-    
-    */
-    
-    //[self.view addSubview:OPENodeViewController.view];
-    
+        OPENode * node = (OPENode *)openMarker.data;
+        [marker addAnnotationViewWithTitle:[node getName]];
+        
+    }    
 }
+
 - (void)pushMapAnnotationDetailedViewControllerDelegate:(id) sender
 {
     NSLog(@"Arrow Pressed");
@@ -175,6 +152,22 @@
     
     [self.navigationController pushViewController:viewer animated:YES];
     
+}
+
+- (void) tapOnLabelForMarker: (RMMarker*) marker onMap: (RMMapView*) map 
+{
+    NSLog(@"Label Pressed");
+    OPENodeViewController * viewer = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
+    
+    viewer.title = @"Node Info";
+    viewer.node = (OPENode *)openMarker.data;
+    
+    
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
+    
+    [[self navigationItem] setBackBarButtonItem: newBackButton];
+    
+    [self.navigationController pushViewController:viewer animated:YES];
 }
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event

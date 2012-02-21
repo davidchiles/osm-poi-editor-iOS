@@ -31,8 +31,10 @@
 @property (nonatomic,retain) RMMarker *openMarker;
 
 
--(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;
--(void) addMarkers;
+- (void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;
+- (void) addMarkers;
+- (void) pushMapAnnotationDetailedViewControllerDelegate:(id) sender;
+- (void) tapOnLabelForMarker: (RMMarker*) marker onMap: (RMMapView*) map;
 
 -(IBAction)infoButtonPressed:(id)sender;
 -(IBAction)addPointButtonPressed:(id)sender;

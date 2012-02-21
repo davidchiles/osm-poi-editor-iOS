@@ -16,7 +16,7 @@
 
 @implementation OPENodeViewController
 
-@synthesize node;
+@synthesize node, theNewNode;
 @synthesize tableView;
 @synthesize catAndType;
 
@@ -48,9 +48,14 @@
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
     
     [[self navigationItem] setRightBarButtonItem:saveButton];
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     
-    catAndType = [[NSArray alloc] initWithObjects:[tagInterpreter getCategory:node],[tagInterpreter getType:node], nil];
+    theNewNode = [[OPENode alloc] initWithNode:node];
+    
+    tagInterpreter = [OPETagInterpreter sharedInstance];
+    
+    catAndType = [[NSArray alloc] initWithObjects:[tagInterpreter getCategory:theNewNode],[tagInterpreter getType:theNewNode], nil];
+    osmKeyValue =  [[NSDictionary alloc] initWithDictionary: [tagInterpreter getPrimaryKeyValue:theNewNode]];
+    
     
 }
 
@@ -97,7 +102,7 @@
 		if (cell == nil) {
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier1];
 		}
-        cell.textLabel.text = [node.tags objectForKey:@"name"];
+        cell.textLabel.text = [theNewNode.tags objectForKey:@"name"];
 
 	}
 	else if (indexPath.section == 1) {
@@ -124,7 +129,7 @@
         OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
         
         viewer.title = @"Name";
-        viewer.text = [node.tags objectForKey:@"name"];
+        viewer.text = [theNewNode.tags objectForKey:@"name"];
         [viewer setDelegate:self];
         
         [self.navigationController pushViewController:viewer animated:YES];
@@ -162,18 +167,9 @@
     [data deleteXmlNode:node withChangeset:change];
 }
 
-- (void) setupTags
-{
-    if([node.tags objectForKey:@"name"])
-    {
-        
-    }
-    
-}
-
 - (void) setText:(NSString *)text
 {
-    [node.tags setObject:text forKey:@"name"];
+    [theNewNode.tags setObject:text forKey:@"name"];
     //NSLog(@"we're back %@", text);
     //[self.tableView reloadData];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
@@ -182,7 +178,33 @@
 - (void) setCategoryAndType:(NSArray *)cAndT
 {
     catAndType = cAndT;
+    NSArray * KV = [tagInterpreter getOsmKeyValue:[[NSDictionary alloc] initWithObjectsAndKeys:[cAndT objectAtIndex:1],[cAndT objectAtIndex:0], nil]];
     NSLog(@"catAndType: %@",catAndType);
+    NSLog(@"KV: %@",KV);
+    NSString * theNewKey;
+    NSString * theNewValue;
+    
+    for (NSString * k in [KV objectAtIndex:0])
+    {
+        theNewKey = k;
+        theNewValue = [[KV objectAtIndex:0] objectForKey:k];
+    }
+    
+    NSLog(@"ID: %d",node.ident);
+    NSLog(@"Version: %d",node.version);
+    NSLog(@"Lat: %f",node.coordinate.latitude);
+    NSLog(@"Lon: %f",node.coordinate.longitude);
+    NSLog(@"Tags: %@",node.tags);
+    
+    [theNewNode.tags removeObjectsForKeys:[osmKeyValue allKeys]];
+    [theNewNode.tags setObject:theNewValue forKey:theNewKey];
+    //NSLog(@"id: %@ \n version: %@ \n lat: %f \n lon: %f \n newTags: %@ \n ",theNewNode.ident,theNewNode.version,theNewNode.coordinate.latitude,theNewNode.coordinate.longitude,theNewNode.tags);
+    NSLog(@"ID: %d",theNewNode.ident);
+    NSLog(@"Version: %d",theNewNode.version);
+    NSLog(@"Lat: %f",theNewNode.coordinate.latitude);
+    NSLog(@"Lon: %f",theNewNode.coordinate.longitude);
+    NSLog(@"Tags: %@",theNewNode.tags);
+    
     //[self.tableView reloadData];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }

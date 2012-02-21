@@ -50,6 +50,19 @@
     return self;
 }
 
+-(id) initWithNode: (OPENode *) node
+{
+    self = [super init];
+    if (self)
+    {
+        version = node.version;
+        ident = node.ident;
+        coordinate = CLLocationCoordinate2DMake(node.coordinate.latitude, node.coordinate.longitude);
+        tags = [[NSMutableDictionary alloc] initWithDictionary:node.tags];
+    }
+    return self;
+}
+
 -(void)addKey: (NSString*) key Value: (NSString*) val
 {
     [tags setValue:val forKey:key];

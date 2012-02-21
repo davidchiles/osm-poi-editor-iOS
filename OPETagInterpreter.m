@@ -50,7 +50,6 @@ static OPETagInterpreter *sharedManager = nil;
         NSMutableArray * values = [osmKeyandValue objectForKey:nodeKey];
         if(values)
         {
-            
             if([values containsObject:nodeValue])
             {
                 NSDictionary * primaryKeyValue = [[NSDictionary alloc] initWithObjectsAndKeys:nodeValue,nodeKey, nil];

@@ -62,7 +62,9 @@
 
 - (void) viewDidDisappear:(BOOL)animated
 {
-    [[self delegate] setText:textView.text];
+    [super viewDidDisappear:animated];
+    
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -73,7 +75,8 @@
 
 - (void) saveButtonPressed
 {
-    
+    [self.navigationController popViewControllerAnimated:YES];
+    [[self delegate] setText:textView.text];
 }
 
 @end

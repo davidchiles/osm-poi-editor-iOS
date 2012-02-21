@@ -15,14 +15,16 @@
 @interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, PassText, PassCategoryAndType>
 {
     UITableView *tableView;
+    OPETagInterpreter * tagInterpreter;
+    NSDictionary * osmKeyValue;
 }
 
-@property (nonatomic, retain) OPENode * node;
-@property (nonatomic, retain) IBOutlet UITableView* tableView;
-@property (nonatomic, retain) NSArray * catAndType;
+@property (nonatomic, strong) OPENode * node;
+@property (nonatomic, strong) OPENode * theNewNode;
+@property (nonatomic, strong) IBOutlet UITableView* tableView;
+@property (nonatomic, strong) NSArray * catAndType;
 
 - (void) saveButtonPressed;
-- (void) setupTags;
 
 
 
