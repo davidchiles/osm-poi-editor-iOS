@@ -23,8 +23,11 @@
 @property (nonatomic, strong) OPENode * theNewNode;
 @property (nonatomic, strong) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) NSArray * catAndType;
+@property (nonatomic, strong) NSString * type;
+@property (nonatomic, strong) IBOutlet UIButton * deleteButton;
 
 - (void) saveButtonPressed;
+- (void) deleteButtonPressed;
 
 
 

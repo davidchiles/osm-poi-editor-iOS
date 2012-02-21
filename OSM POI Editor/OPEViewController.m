@@ -220,7 +220,9 @@
 
 -(IBAction)locationButtonPressed:(id)sender
 {
+    CLLocationCoordinate2D currentLocation = [[locationManager location] coordinate];
     
+    [mapView moveToLatLong: currentLocation];
 }
 
 - (IBAction)infoButtonPressed:(id)sender

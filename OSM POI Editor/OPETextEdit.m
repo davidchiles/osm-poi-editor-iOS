@@ -75,8 +75,8 @@
 
 - (void) saveButtonPressed
 {
-    [self.navigationController popViewControllerAnimated:YES];
     [[self delegate] setText:textView.text];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

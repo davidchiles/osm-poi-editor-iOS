@@ -16,15 +16,16 @@
 
 @implementation OPENodeViewController
 
-@synthesize node, theNewNode;
+@synthesize node, theNewNode, type;
 @synthesize tableView;
 @synthesize catAndType;
+@synthesize deleteButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
@@ -49,6 +50,21 @@
     
     [[self navigationItem] setRightBarButtonItem:saveButton];
     
+    
+    deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
+    [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
+                                           stretchableImageWithLeftCapWidth:8.0f
+                                           topCapHeight:0.0f]
+                                 forState:UIControlStateNormal];
+    
+    [self.deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.deleteButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    self.deleteButton.titleLabel.shadowColor = [UIColor lightGrayColor];
+    self.deleteButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
+    [self.deleteButton addTarget:self action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     theNewNode = [[OPENode alloc] initWithNode:node];
     
     tagInterpreter = [OPETagInterpreter sharedInstance];
@@ -61,7 +77,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -79,7 +95,7 @@
 		return @"Category";
 	}
 	else if (section == 2) {
-		return @"Value2 Style";
+		return @""; //Delete Button Header
 	}
 	else {
 		return @"Subtitle Style";
@@ -91,6 +107,7 @@
     
     NSString *CellIdentifier1 = @"Cell_Section_1";
     NSString *CellIdentifier2 = @"Cell_Section_2";
+    NSString *CellIdentifier3 = @"Cell_Section_3";
     
     NSArray * catAndTypeName = [[NSArray alloc] initWithObjects:@"Category",@"Type", nil];
 
@@ -103,6 +120,7 @@
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier1];
 		}
         cell.textLabel.text = [theNewNode.tags objectForKey:@"name"];
+        cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
 
 	}
 	else if (indexPath.section == 1) {
@@ -112,9 +130,20 @@
         }
         cell.textLabel.text = [catAndTypeName objectAtIndex:indexPath.row];
         cell.detailTextLabel.text = [catAndType objectAtIndex:indexPath.row];
+        cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         //cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",indexPath.row];
 	}
-    cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
+    else if (indexPath.section == 2) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier3];
+        if(cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier3];
+        }
+        
+        deleteButton.frame = cell.contentView.bounds;
+       
+        [cell.contentView addSubview:deleteButton];
+    }
+    
 	
 	// Configure the cell...
 	//cell.textLabel.text = @"Text Label";
@@ -165,6 +194,11 @@
     NSInteger change = 420;
     NSLog(@"save button change: %d",change);
     [data deleteXmlNode:node withChangeset:change];
+}
+
+- (void) deleteButtonPressed
+{
+    NSLog(@"Delete Button Pressed");
 }
 
 - (void) setText:(NSString *)text

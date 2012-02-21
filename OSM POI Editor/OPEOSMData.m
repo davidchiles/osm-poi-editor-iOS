@@ -157,10 +157,7 @@
 }
 
 - (NSInteger) openChangesetWithMessage: (NSString *) message
-{
-   
-    
-    
+{    
     BOOL didAuth = NO;
     BOOL canAuth = NO;
     if (auth) {
