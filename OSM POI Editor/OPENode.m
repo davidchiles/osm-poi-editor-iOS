@@ -10,7 +10,7 @@
 
 @implementation OPENode
 
-@synthesize ident, coordinate, tags, version;
+@synthesize ident, coordinate, tags, version, image;
 
 -(id) initWithId: (int) i coordinate: (CLLocationCoordinate2D) newCoordinate keyValues: (NSMutableDictionary *) tag
 {

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		630B46FA14F45D83000581AD /* bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 630B46F914F45D83000581AD /* bar@2x.png */; };
+		630B46FC14F45DEF000581AD /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 630B46FB14F45DEF000581AD /* bar.png */; };
+		630B46FE14F46091000581AD /* symbols.plist in Resources */ = {isa = PBXBuildFile; fileRef = 630B46FD14F46091000581AD /* symbols.plist */; };
 		631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E014DC98D0000236F0 /* OPEOSMData.m */; };
 		631539E514DCA29B000236F0 /* OPENode.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E414DCA29B000236F0 /* OPENode.m */; };
 		6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB6E14DB519A00448852 /* UIKit.framework */; };
@@ -25,7 +28,7 @@
 		6330AC0314DB547D00448852 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0214DB547D00448852 /* libstdc++.6.dylib */; };
 		6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0414DB54A200448852 /* QuartzCore.framework */; };
 		6330AC0714DB5E4D00448852 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0614DB5E4D00448852 /* CoreLocation.framework */; };
-		6345E57C14E2FD1200F55486 /* Blue_Dot.png in Resources */ = {isa = PBXBuildFile; fileRef = 6345E57B14E2FD1200F55486 /* Blue_Dot.png */; };
+		6345E57C14E2FD1200F55486 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6345E57B14E2FD1200F55486 /* default.png */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
 		6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6345E57F14E3122900F55486 /* OPENodeViewController.xib */; };
 		6345E58D14E347E800F55486 /* Tags.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6345E58C14E347E800F55486 /* Tags.plist */; };
@@ -81,6 +84,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		630B46F914F45D83000581AD /* bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar@2x.png"; sourceTree = "<group>"; };
+		630B46FB14F45DEF000581AD /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
+		630B46FD14F46091000581AD /* symbols.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = symbols.plist; sourceTree = "<group>"; };
 		631539DF14DC98D0000236F0 /* OPEOSMData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMData.h; sourceTree = "<group>"; };
 		631539E014DC98D0000236F0 /* OPEOSMData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMData.m; sourceTree = "<group>"; };
 		631539E314DCA29B000236F0 /* OPENode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENode.h; sourceTree = "<group>"; };
@@ -205,7 +211,7 @@
 		6330AC0214DB547D00448852 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		6330AC0414DB54A200448852 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6330AC0614DB5E4D00448852 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		6345E57B14E2FD1200F55486 /* Blue_Dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Blue_Dot.png; sourceTree = "<group>"; };
+		6345E57B14E2FD1200F55486 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
 		6345E57F14E3122900F55486 /* OPENodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPENodeViewController.xib; sourceTree = "<group>"; };
@@ -356,16 +362,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		630B46FF14F463F4000581AD /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				630B46FB14F45DEF000581AD /* bar.png */,
+				630B46F914F45D83000581AD /* bar@2x.png */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
 		6330AB5F14DB519A00448852 = {
 			isa = PBXGroup;
 			children = (
 				6383948A14EC7D8C00C74A57 /* OAuth */,
 				63E279E914E1F87D009D02BD /* libxml2.dylib */,
 				6330AB7414DB519A00448852 /* OSM POI Editor */,
+				637A89FB14E1B426003F656F /* Resources */,
 				63E279E514E1F32B009D02BD /* Reachability */,
 				63E2796D14E1F31B009D02BD /* Classes */,
 				6330AB6D14DB519A00448852 /* Frameworks */,
-				637A89FB14E1B426003F656F /* Resources */,
 				63E4BF0B14E0677A00E0BD46 /* TBXML */,
 				6330AB8E14DB51A800448852 /* CloudMadeApi */,
 				6330AB6B14DB519A00448852 /* Products */,
@@ -621,12 +636,14 @@
 		637A89FB14E1B426003F656F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				630B46FF14F463F4000581AD /* Icons */,
 				63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */,
 				63E5B13514EDAF2E007E9BAF /* location.png */,
-				6345E57B14E2FD1200F55486 /* Blue_Dot.png */,
+				6345E57B14E2FD1200F55486 /* default.png */,
 				63E279EF14E2073C009D02BD /* Blue_Marker.png */,
 				637A89FD14E1C340003F656F /* SPOI.bundle */,
 				6345E58C14E347E800F55486 /* Tags.plist */,
+				630B46FD14F46091000581AD /* symbols.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -839,7 +856,7 @@
 				6330AB8814DB519A00448852 /* OPEViewController_iPad.xib in Resources */,
 				637A89FE14E1C340003F656F /* SPOI.bundle in Resources */,
 				63E279F014E2073C009D02BD /* Blue_Marker.png in Resources */,
-				6345E57C14E2FD1200F55486 /* Blue_Dot.png in Resources */,
+				6345E57C14E2FD1200F55486 /* default.png in Resources */,
 				6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */,
 				6345E58D14E347E800F55486 /* Tags.plist in Resources */,
 				63CB49D414E9C5A0008C4551 /* OPETextEdit.xib in Resources */,
@@ -849,6 +866,9 @@
 				6383949814EC7DAC00C74A57 /* GTMOAuthViewTouch.xib in Resources */,
 				63E5B13614EDAF2E007E9BAF /* location.png in Resources */,
 				63F9CCA514F32B2E00308DE1 /* iphone_delete_button.png in Resources */,
+				630B46FA14F45D83000581AD /* bar@2x.png in Resources */,
+				630B46FC14F45DEF000581AD /* bar.png in Resources */,
+				630B46FE14F46091000581AD /* symbols.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

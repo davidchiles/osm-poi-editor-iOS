@@ -96,14 +96,10 @@
 -(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode: (OPENode *) node
 {
     //NSLog(@"start addMarkerAt");
-    UIImage *blueMarkerImage = [UIImage imageNamed:@"Blue_Dot.png"];
+    UIImage *blueMarkerImage = [UIImage imageNamed:@"bar16.png"];
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:blueMarkerImage anchorPoint:CGPointMake(0.5, 1.0)];
     newMarker.data = node;
     [mapView.contents.markerManager addMarker:newMarker AtLatLong:markerPosition];
-    //[newMarker retain];
-    //NSLog(@"Node Category: %@",[interpreter getCategory:node]);
-    [interpreter getCategory:node];
-    
 }
 
 - (void) setText: (NSString*) text forMarker: (RMMarker*) marker
@@ -118,6 +114,10 @@
 
 - (void) tapOnMarker: (RMMarker*) marker onMap: (RMMapView*) map
 {
+    NSLog(@"name?: %@",[map.contents.layer name]);
+    ;
+    OPENode * tempNode = (OPENode *)marker.data;
+    [mapView moveToLatLong: tempNode.coordinate];
     if(openMarker) 
     {
         [openMarker hideLabel];

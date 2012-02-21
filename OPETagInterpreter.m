@@ -126,6 +126,8 @@ static OPETagInterpreter *sharedManager = nil;
     NSLog(@"start reading plist");
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"plist"];
     NSDictionary* plistDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    filePath = [[NSBundle mainBundle] pathForResource:@"Symbols" ofType:@"plist"];
+    NSDictionary* symbolDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
     NSLog(@"Number of dictionaries in plist: %d",[plistDict count]);
     
