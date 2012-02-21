@@ -20,7 +20,7 @@
 @property double bboxbottom;
 @property double bboxright;
 @property double bboxtop;
-@property (retain) NSMutableDictionary * allNodes;
+@property (strong) NSMutableDictionary * allNodes;
 
 - (id) initWithLeft:(double) lef bottom: (double) bot right: (double) rig top: (double) to;
 - (void) getData;
@@ -29,5 +29,6 @@
 - (void) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
 - (void) deleteXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
 - (void) closeChangeset: (NSInteger) changesetNumber;
+
 
 @end

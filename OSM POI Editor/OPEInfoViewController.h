@@ -11,7 +11,9 @@
 
 @interface OPEInfoViewController : UIViewController
 
-@property (nonatomic, retain) IBOutlet UIButton * loginButton;
+@property (nonatomic, strong) IBOutlet UIButton * loginButton;
+@property (nonatomic, strong) IBOutlet UIButton * logoutButton;
+@property (nonatomic, strong) IBOutlet UITextView * textBox;
 
 - (IBAction)doneButtonPressed:(id)sender;
 - (IBAction)loginButtonPressed:(id)sender;

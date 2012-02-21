@@ -132,7 +132,7 @@
     {
         self.openMarker = marker;
         OPENode * node = (OPENode *)openMarker.data;
-        [marker addAnnotationViewWithTitle:[node getName]];
+        [marker addAnnotationViewWithTitle:[interpreter getName:node]];
         
     }    
 }

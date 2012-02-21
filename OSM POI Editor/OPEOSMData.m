@@ -90,8 +90,11 @@
                     [newNode.tags setObject:value forKey:key];
                     tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
                 }
-                
-                [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+                OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
+                if([tagInterpreter nodeHasRecognizedTags:newNode])
+                {
+                    [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+                }
                 
                 for (id key in newNode.tags) { //Used to Log all keys and values stored
                     
@@ -126,7 +129,7 @@
 -(void) getData
 {
     NSLog(@"box: %f,%f,%f,%f",bboxleft,bboxbottom,bboxright,bboxtop);
-    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[amenity=*][bbox=%f,%f,%f,%f][@meta]",bboxleft,bboxbottom,bboxright,bboxtop]];
+    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[bbox=%f,%f,%f,%f][@meta]",bboxleft,bboxbottom,bboxright,bboxtop]];
     NSLog(@"url: %@",[url absoluteString]);
     
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
@@ -322,7 +325,6 @@
     NSData * returnData = nil;
     NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
 }
-
 
 
 @end

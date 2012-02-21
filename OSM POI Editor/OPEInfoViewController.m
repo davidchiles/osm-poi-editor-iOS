@@ -11,7 +11,7 @@
 
 @implementation OPEInfoViewController
 
-@synthesize loginButton;
+@synthesize loginButton, logoutButton, textBox;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,12 +48,16 @@
 {
     NSLog(@"Login Button Pressed");
     [self signInToOSM];
+    loginButton.hidden = YES;
+    logoutButton.hidden = NO;
 }
 
 - (IBAction)logoutButtonPressed:(id)sender
 {
     NSLog(@"Logout Button Pressed");
     [self signOutOfOSM];
+    loginButton.hidden = NO;
+    logoutButton.hidden = YES;
 }
 
 - (void)viewController:(GTMOAuthViewControllerTouch *)viewController
@@ -145,7 +149,7 @@
                                                                delegate:self
                                                        finishedSelector:@selector(viewController:finishedWithAuth:error:)];
     
-    
+    textBox.text = [NSString stringWithFormat:@"User info: %@",auth.userData];
     [[self navigationController] pushViewController:viewController
                                            animated:YES];
 }
@@ -155,14 +159,49 @@
     [GTMOAuthViewControllerTouch removeParamsFromKeychainForName:@"OSMPOIEditor"];
 }
 
+- (void) setLoginButtons
+{
+    GTMOAuthAuthentication *auth = [self osmAuth];
+    BOOL didAuth= NO;
+    BOOL canAuth= NO;
+    if (auth) {
+        didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor"
+                                                             authentication:auth];
+        canAuth = [auth canAuthorize];
+    }
+    if (didAuth && canAuth) {
+        loginButton.hidden = YES;
+        logoutButton.hidden = NO;
+    }
+    else
+    {
+        loginButton.hidden = NO;
+        logoutButton.hidden = YES; 
+    }
+
+    
+}
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setLoginButtons];
     
-    // Do any additional setup after loading the view from its nib.
+        // if the auth object contains an access token, didAuth is now true
+    
+    // retain the authentication object, which holds the auth tokens
+    //
+    // we can determine later if the auth object contains an access token
+    // by calling its -canAuthorize method
+    //[self setAuthentication:auth];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+        
 }
 
 - (void)viewDidUnload

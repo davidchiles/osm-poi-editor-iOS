@@ -199,6 +199,20 @@ static OPETagInterpreter *sharedManager = nil;
 
 }
 
+- (NSString *) getName:(OPENode *)node
+{
+    NSString * name = [node.tags objectForKey:@"name"];
+    if(name)
+    {
+        return name;
+    }
+    else
+    {
+        return [self getType:node];
+    }
+    return @"Unknown";
+}
+
 +(OPETagInterpreter *)sharedInstance
 {
     @synchronized(self) {

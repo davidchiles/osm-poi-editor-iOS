@@ -271,6 +271,15 @@
 	</dict>
 	<key>Services</key>
 	<dict>
+		<key>amenity</key>
+		<dict>
+			<key>atm</key>
+			<string>ATM</string>
+			<key>bank</key>
+			<string>Bank</string>
+			<key>bureau_de_change</key>
+			<string>Currency Exchange</string>
+		</dict>
 		<key>office</key>
 		<dict>
 			<key>accountant</key>
