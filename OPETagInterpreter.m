@@ -121,13 +121,23 @@ static OPETagInterpreter *sharedManager = nil;
     
 }
 
+- (void) setImageforNode: (OPENode *) node
+{
+    NSString * filePath = [[NSBundle mainBundle] pathForResource:@"Symbols" ofType:@"plist"];
+    NSDictionary* symbolDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    
+    NSString * key;
+    NSString * value;
+    
+}
+
 - (void) readPlist
 {
     NSLog(@"start reading plist");
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"plist"];
     NSDictionary* plistDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-    filePath = [[NSBundle mainBundle] pathForResource:@"Symbols" ofType:@"plist"];
-    NSDictionary* symbolDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    
+    
     
     NSLog(@"Number of dictionaries in plist: %d",[plistDict count]);
     

@@ -93,10 +93,34 @@
         
 }
 
+- (UIImage*)imageWithBorderFromImage:(UIImage*)source;
+{
+    CGSize size = [source size];
+    size = CGSizeMake(size.width+6, size.width+6);
+    NSLog(@"size: %f %f",size.height,size.width);
+    UIGraphicsBeginImageContext(size);
+    
+    CGRect rect = CGRectMake(3, 3, size.width-6, size.height-6);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [[UIColor whiteColor] setFill];
+    CGRect wrect = CGRectMake(0, 0, size.width, size.height);
+    CGContextFillRect(context, wrect);
+    [source drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
+    
+    
+    CGContextSetRGBStrokeColor(context, 0, 0, 0, 1.0); 
+    
+    CGContextStrokeRect(context, wrect);
+    UIImage *testImg =  UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return testImg;
+}
+
 -(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode: (OPENode *) node
 {
     //NSLog(@"start addMarkerAt");
-    UIImage *blueMarkerImage = [UIImage imageNamed:@"bar16.png"];
+    UIImage *blueMarkerImage = [UIImage imageNamed:@"bar.png"];
+    blueMarkerImage = [self imageWithBorderFromImage:blueMarkerImage];
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:blueMarkerImage anchorPoint:CGPointMake(0.5, 1.0)];
     newMarker.data = node;
     [mapView.contents.markerManager addMarker:newMarker AtLatLong:markerPosition];
