@@ -129,8 +129,17 @@
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier2];
         }
         cell.textLabel.text = [catAndTypeName objectAtIndex:indexPath.row];
-        cell.detailTextLabel.text = [catAndType objectAtIndex:indexPath.row];
         cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
+        if ([catAndType count]==2) {
+            cell.detailTextLabel.text = [catAndType objectAtIndex:indexPath.row];
+        }
+        else
+        {
+            cell.detailTextLabel.text =@"";
+        }
+        
+        
+        
         //cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",indexPath.row];
 	}
     else if (indexPath.section == 2) {
@@ -192,13 +201,47 @@
     NSLog(@"saveBottoPressed");
     OPEOSMData* data = [[OPEOSMData alloc] init];
     NSInteger change = 420;
-    NSLog(@"save button change: %d",change);
-    [data deleteXmlNode:node withChangeset:change];
+    
+    if(node.ident<0)
+    {
+        NSLog(@"Create Node");
+        [data createNode:node];
+    }
+    else
+    {
+        NSLog(@"Update Node");
+        [data updateNode:node];
+    }
 }
 
 - (void) deleteButtonPressed
 {
     NSLog(@"Delete Button Pressed");
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Delete Point of Interest"
+                                                      message:@"Are you Sure you want to delete this node?"
+                                                     delegate:self
+                                            cancelButtonTitle:@"Yes"
+                                            otherButtonTitles:@"Cancel",nil];
+    
+    [message show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    
+    if([title isEqualToString:@"Yes"])
+    {
+        NSLog(@"Button OK was selected.");
+        OPEOSMData* data = [[OPEOSMData alloc] init];
+        [data deleteNode:node];
+        
+        [self.navigationController popViewControllerAnimated:self];
+    }
+    else if([title isEqualToString:@"Cancel"])
+    {
+        NSLog(@"Button Cancel was selected.");
+    }
 }
 
 - (void) setText:(NSString *)text

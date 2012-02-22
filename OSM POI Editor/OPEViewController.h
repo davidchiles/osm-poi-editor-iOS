@@ -29,6 +29,7 @@
 @property (nonatomic,retain) IBOutlet UIBarButtonItem * location;
 @property (nonatomic,retain) IBOutlet UIBarButtonItem * addOPEPoint;
 @property (nonatomic,retain) RMMarker *openMarker;
+@property (nonatomic,strong) RMMarker *theNewMarker;
 
 
 - (void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;

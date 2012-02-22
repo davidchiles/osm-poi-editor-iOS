@@ -20,7 +20,7 @@
 @synthesize locationManager;
 @synthesize interpreter;
 @synthesize infoButton,location, addOPEPoint;
-@synthesize openMarker;
+@synthesize openMarker,theNewMarker;
 
 - (void)didReceiveMemoryWarning
 {
@@ -70,7 +70,7 @@
     [mapView moveToLatLong: initLocation];
     
     [mapView.contents setZoom: 18];
-    [self addMarkerAt:initLocation withNode:nil];
+    //[self addMarkerAt:initLocation withNode:nil];
     RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
     
 
@@ -97,13 +97,13 @@
 {
     CGSize size = [source size];
     size = CGSizeMake(size.width+6, size.width+6);
-    NSLog(@"size: %f %f",size.height,size.width);
+    //NSLog(@"size: %f %f",size.height,size.width);
     UIGraphicsBeginImageContext(size);
     
     CGRect rect = CGRectMake(3, 3, size.width-6, size.height-6);
     CGContextRef context = UIGraphicsGetCurrentContext();
     [[UIColor whiteColor] setFill];
-    CGRect wrect = CGRectMake(0, 0, size.width, size.height);
+    CGRect wrect = CGRectMake(1, 1, size.width-2, size.height-2);
     CGContextFillRect(context, wrect);
     [source drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
     
@@ -126,6 +126,16 @@
     [mapView.contents.markerManager addMarker:newMarker AtLatLong:markerPosition];
 }
 
+- (RMMarker *) addNewMarkerAt:(CLLocationCoordinate2D) markerPosition withNode: (OPENode *) node
+{
+    UIImage *blueMarkerImage = [UIImage imageNamed:@"bar.png"];
+    blueMarkerImage = [self imageWithBorderFromImage:blueMarkerImage];
+    RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:blueMarkerImage anchorPoint:CGPointMake(0.5, 1.0)];
+    newMarker.data = node;
+    [mapView.contents.markerManager addMarker:newMarker AtLatLong:markerPosition];
+    return newMarker;
+}
+
 - (void) setText: (NSString*) text forMarker: (RMMarker*) marker
 {
     CGSize textSize = [text sizeWithFont: [RMMarker defaultFont]]; 
@@ -139,9 +149,9 @@
 - (void) tapOnMarker: (RMMarker*) marker onMap: (RMMapView*) map
 {
     NSLog(@"name?: %@",[map.contents.layer name]);
-    ;
-    OPENode * tempNode = (OPENode *)marker.data;
-    [mapView moveToLatLong: tempNode.coordinate];
+    
+    //OPENode * tempNode = (OPENode *)marker.data; //Center map
+    //[mapView moveToLatLong: tempNode.coordinate];
     if(openMarker) 
     {
         [openMarker hideLabel];
@@ -195,7 +205,12 @@
 }
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
-{
+{   
+    OPENode * node = (OPENode *)marker.data;
+    if(node.ident<0)
+    {
+        return YES;
+    }
     return NO;
 }
 
@@ -237,10 +252,39 @@
     }
 }
 
+- (CLLocationCoordinate2D) centerOfMap
+{
+    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
+    
+    double left = geoBox.southwest.longitude; 
+    double bottom = geoBox.southwest.latitude;
+    double right = geoBox.northeast.longitude;
+    double top = geoBox.northeast.latitude;
+    CLLocationDegrees lat = (bottom + top)/2;
+    CLLocationDegrees lon = (left + right)/2;
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(lat, lon);
+    return center;
+}
+
 - (IBAction)addPointButtonPressed:(id)sender
 {
-    
+    if(openMarker) 
+    {
+        [openMarker hideLabel];
+    }
+    CLLocationCoordinate2D center = [self centerOfMap];
+    if(theNewMarker)
+    {
+        [mapView.contents.markerManager moveMarker: theNewMarker AtLatLon:center];
+    }
+    else
+    {
+        OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
+        theNewMarker = [self addNewMarkerAt:center withNode:node];
+    }
 }
+                      
+                      
 
 -(IBAction)locationButtonPressed:(id)sender
 {
@@ -251,7 +295,7 @@
 
 - (IBAction)infoButtonPressed:(id)sender
 {
-    NSLog(@"sent button pressed");
+    NSLog(@"info button pressed");
     OPEInfoViewController * viewer = [[OPEInfoViewController alloc] initWithNibName:@"OPEInfoViewController" bundle:nil];
     viewer.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     viewer.title = @"Info";

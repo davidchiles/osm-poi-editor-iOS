@@ -12,7 +12,7 @@
 #import "OPETextEdit.h"
 #import "OPETypeViewController.h"
 
-@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, PassText, PassCategoryAndType>
+@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, PassText, PassCategoryAndType>
 {
     UITableView *tableView;
     OPETagInterpreter * tagInterpreter;

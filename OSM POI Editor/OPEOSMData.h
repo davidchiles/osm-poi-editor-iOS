@@ -30,5 +30,8 @@
 - (void) deleteXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
 - (void) closeChangeset: (NSInteger) changesetNumber;
 
+- (void) createNode: (OPENode *) node;
+- (void) updateNode: (OPENode *) node;
+- (void) deleteNode: (OPENode *) node;
 
 @end
