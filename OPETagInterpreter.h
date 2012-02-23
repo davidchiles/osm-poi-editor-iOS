@@ -23,6 +23,7 @@
 - (NSArray *) getOsmKeyValue: (NSDictionary *) catAndTyp;
 - (void) readPlist;
 - (NSString *) getName: (OPENode *) node;
+- (NSString *) getImageForNode: (OPENode *) node;
 
 +(OPETagInterpreter *)sharedInstance;
 

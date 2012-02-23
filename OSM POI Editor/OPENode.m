@@ -20,6 +20,7 @@
         ident = i;
         coordinate = newCoordinate;
         tags = [[NSMutableDictionary alloc] initWithDictionary:tag];
+        image = [[NSString alloc] init];
     }
     return self;
     
@@ -33,6 +34,7 @@
         ident = i;
         coordinate = CLLocationCoordinate2DMake(la,lo);
         tags = [[NSMutableDictionary alloc] init];
+        image = [[NSString alloc] init];
     }
     return self;
 }
@@ -46,6 +48,7 @@
         ident = i;
         coordinate = CLLocationCoordinate2DMake(la,lo);
         tags = [[NSMutableDictionary alloc] init];
+        image = [[NSString alloc] init];
     }
     return self;
 }
@@ -59,6 +62,7 @@
         ident = node.ident;
         coordinate = CLLocationCoordinate2DMake(node.coordinate.latitude, node.coordinate.longitude);
         tags = [[NSMutableDictionary alloc] initWithDictionary:node.tags];
+        image = node.image;
     }
     return self;
 }

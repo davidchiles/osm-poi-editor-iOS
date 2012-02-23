@@ -93,14 +93,20 @@
         
 }
 
-- (UIImage*)imageWithBorderFromImage:(UIImage*)source;
+- (UIImage*)imageWithBorderFromImage:(UIImage*)source  //Draw box around centered image
 {
     CGSize size = [source size];
-    size = CGSizeMake(size.width+6, size.width+6);
-    //NSLog(@"size: %f %f",size.height,size.width);
+    //size = CGSizeMake(size.width+6, size.width+6);
+    double squareSize = 22;
+    size = CGSizeMake(squareSize, squareSize);
+    CGSize sourceSize = [source size];
+    NSLog(@"size: %f %f",sourceSize.height,sourceSize.width);
     UIGraphicsBeginImageContext(size);
     
-    CGRect rect = CGRectMake(3, 3, size.width-6, size.height-6);
+    double x = squareSize-sourceSize.width;
+    double y = squareSize-sourceSize.height;
+    
+    CGRect rect = CGRectMake(x/2, y/2, sourceSize.width, sourceSize.height);
     CGContextRef context = UIGraphicsGetCurrentContext();
     [[UIColor whiteColor] setFill];
     CGRect wrect = CGRectMake(1, 1, size.width-2, size.height-2);
@@ -119,8 +125,8 @@
 -(void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode: (OPENode *) node
 {
     //NSLog(@"start addMarkerAt");
-    UIImage *blueMarkerImage = [UIImage imageNamed:@"bar.png"];
-    blueMarkerImage = [self imageWithBorderFromImage:blueMarkerImage];
+    UIImage *blueMarkerImage = [UIImage imageNamed:node.image];   //Get image from stored value in node
+    blueMarkerImage = [self imageWithBorderFromImage:blueMarkerImage]; //center image inside box
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:blueMarkerImage anchorPoint:CGPointMake(0.5, 1.0)];
     newMarker.data = node;
     [mapView.contents.markerManager addMarker:newMarker AtLatLong:markerPosition];

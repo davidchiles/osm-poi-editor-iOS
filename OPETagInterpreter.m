@@ -42,7 +42,7 @@ static OPETagInterpreter *sharedManager = nil;
     return NO;
 }
 
-- (NSDictionary *) getPrimaryKeyValue: (OPENode *)node
+- (NSDictionary *) getPrimaryKeyValue: (OPENode *)node //Returns primay OSM key and value for given node based on supported types
 {
     for(NSString * nodeKey in node.tags)
     {
@@ -223,6 +223,29 @@ static OPETagInterpreter *sharedManager = nil;
         return [self getType:node];
     }
     return @"Unknown";
+}
+
+- (NSString *) getImageForNode: (OPENode *) node
+{
+    NSString * category = [self getCategory:node];
+    NSDictionary * osmKeyValue = [self getPrimaryKeyValue:node];
+    NSString * key = [[osmKeyValue allKeys] objectAtIndex:0];
+    NSString * value = [osmKeyValue objectForKey:key];
+    
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"symbols" ofType:@"plist"];
+    NSDictionary * symbolsDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    NSDictionary * categoryDict = [symbolsDict objectForKey:category];
+    NSDictionary * keyDict = [categoryDict objectForKey:key];
+    NSString * image = [keyDict objectForKey:value];
+    
+    NSLog(@"Image: %@",image);
+    return image;
+    
+    
+    
+    
+    
+    //return @"";
 }
 
 +(OPETagInterpreter *)sharedInstance

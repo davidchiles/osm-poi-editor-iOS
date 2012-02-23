@@ -14,6 +14,7 @@
 @interface OPEOSMData : NSObject 
 {
     GTMOAuthAuthentication *auth;
+    
 }
 
 @property double bboxleft;
@@ -33,5 +34,7 @@
 - (void) createNode: (OPENode *) node;
 - (void) updateNode: (OPENode *) node;
 - (void) deleteNode: (OPENode *) node;
+
+
 
 @end

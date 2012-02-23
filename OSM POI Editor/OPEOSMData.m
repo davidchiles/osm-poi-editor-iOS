@@ -91,8 +91,9 @@
                     tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
                 }
                 OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
-                if([tagInterpreter nodeHasRecognizedTags:newNode])
+                if([tagInterpreter nodeHasRecognizedTags:newNode]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
                 {
+                    newNode.image = [tagInterpreter getImageForNode:newNode];
                     [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
                 }
                 
@@ -140,20 +141,23 @@
 
 - (void) createNode: (OPENode *) node
 {
-    NSInteger changeset = [self openChangesetWithMessage:@"Created new POI"];
+    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
+    NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Created new POI: %@",[tagInterpreter getName:node]]];
     [self createXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
 }
 - (void) updateNode: (OPENode *) node
 {
-    NSInteger changeset = [self openChangesetWithMessage:@"Updated existing POI"];
+    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
+    NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Updated existing POI: %@",[tagInterpreter getName:node]]];
     [self updateXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
     
 }
 - (void) deleteNode: (OPENode *) node
 {
-    NSInteger changeset = [self openChangesetWithMessage:@"Deleted POI"];
+    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
+    NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Deleted POI: %@",[tagInterpreter getName:node]]];
     [self deleteXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
     
