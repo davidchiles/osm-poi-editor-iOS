@@ -79,7 +79,6 @@
 		635E0295151BB94F00B6BBCE /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E028F151BB94F00B6BBCE /* right.png */; };
 		635E0296151BB94F00B6BBCE /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E0290151BB94F00B6BBCE /* right@2x.png */; };
 		635E02BF151BE73B00B6BBCE /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E02BE151BE73B00B6BBCE /* location@2x.png */; };
-		636639AD151A973B00C7E7D0 /* libMapView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 636639A7151A971500C7E7D0 /* libMapView.a */; };
 		6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6370D354151A8BAE0081206A /* libsqlite3.dylib */; };
 		637A89FE14E1C340003F656F /* SPOI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 637A89FD14E1C340003F656F /* SPOI.bundle */; };
 		6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */; };
@@ -128,28 +127,36 @@
 		63E4BF3114E0728200E0BD46 /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E4BF2E14E0728200E0BD46 /* NSDataAdditions.m */; };
 		63E4BF3214E0728200E0BD46 /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E4BF3014E0728200E0BD46 /* TBXML.m */; };
 		63E5B13614EDAF2E007E9BAF /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E5B13514EDAF2E007E9BAF /* location.png */; };
+		63ED79A6151C1AF60076940F /* libMapView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63ED799E151C1AD10076940F /* libMapView.a */; };
 		63F9CCA514F32B2E00308DE1 /* iphone_delete_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */; };
 		63FFDC6614E480DF00701DEC /* OPETagInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		636639A6151A971500C7E7D0 /* PBXContainerItemProxy */ = {
+		63ED799D151C1AD10076940F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 63663997151A971400C7E7D0 /* MapView.xcodeproj */;
+			containerPortal = 63ED798D151C1AD00076940F /* MapView.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 17F31EFA1331050A00122B16;
 			remoteInfo = MapView;
 		};
-		636639A8151A971500C7E7D0 /* PBXContainerItemProxy */ = {
+		63ED799F151C1AD10076940F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 63663997151A971400C7E7D0 /* MapView.xcodeproj */;
+			containerPortal = 63ED798D151C1AD00076940F /* MapView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 17157D87133BBC8300E28941;
+			remoteInfo = MapViewTests;
+		};
+		63ED79A1151C1AD10076940F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63ED798D151C1AD00076940F /* MapView.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 2BF3078F0F8AC5C0007014EE;
 			remoteInfo = "Unit Tests";
 		};
-		636639AB151A972900C7E7D0 /* PBXContainerItemProxy */ = {
+		63ED79A4151C1AEF0076940F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 63663997151A971400C7E7D0 /* MapView.xcodeproj */;
+			containerPortal = 63ED798D151C1AD00076940F /* MapView.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = B8C974130E8A19B2007D16AD;
 			remoteInfo = MapView;
@@ -238,7 +245,6 @@
 		635E028F151BB94F00B6BBCE /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
 		635E0290151BB94F00B6BBCE /* right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right@2x.png"; sourceTree = "<group>"; };
 		635E02BE151BE73B00B6BBCE /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location@2x.png"; sourceTree = "<group>"; };
-		63663997151A971400C7E7D0 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = "alpstein-route-me/MapView/MapView.xcodeproj"; sourceTree = "<group>"; };
 		6370D354151A8BAE0081206A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		637A89FD14E1C340003F656F /* SPOI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SPOI.bundle; sourceTree = "<group>"; };
 		6383947E14EC4DDD00C74A57 /* OPEInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEInfoViewController.h; sourceTree = "<group>"; };
@@ -354,6 +360,7 @@
 		63E4BF2F14E0728200E0BD46 /* TBXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBXML.h; sourceTree = "<group>"; };
 		63E4BF3014E0728200E0BD46 /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
 		63E5B13514EDAF2E007E9BAF /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location.png; sourceTree = "<group>"; };
+		63ED798D151C1AD00076940F /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = "Library/route-me-original/MapView/MapView.xcodeproj"; sourceTree = "<group>"; };
 		63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone_delete_button.png; sourceTree = "<group>"; };
 		63FFDC6414E480DF00701DEC /* OPETagInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPETagInterpreter.h; path = ../OPETagInterpreter.h; sourceTree = "<group>"; };
 		63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPETagInterpreter.m; path = ../OPETagInterpreter.m; sourceTree = "<group>"; };
@@ -364,7 +371,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				636639AD151A973B00C7E7D0 /* libMapView.a in Frameworks */,
+				63ED79A6151C1AF60076940F /* libMapView.a in Frameworks */,
 				6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */,
 				6383949A14EC85C100C74A57 /* Security.framework in Frameworks */,
 				63E279EA14E1F87D009D02BD /* libxml2.dylib in Frameworks */,
@@ -440,7 +447,7 @@
 		6330AB5F14DB519A00448852 = {
 			isa = PBXGroup;
 			children = (
-				63663997151A971400C7E7D0 /* MapView.xcodeproj */,
+				63ED798D151C1AD00076940F /* MapView.xcodeproj */,
 				6370D354151A8BAE0081206A /* libsqlite3.dylib */,
 				6330AB7414DB519A00448852 /* OSM POI Editor */,
 				6383948A14EC7D8C00C74A57 /* OAuth */,
@@ -538,15 +545,6 @@
 				635E0290151BB94F00B6BBCE /* right@2x.png */,
 			);
 			name = callout;
-			sourceTree = "<group>";
-		};
-		63663998151A971400C7E7D0 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				636639A7151A971500C7E7D0 /* libMapView.a */,
-				636639A9151A971500C7E7D0 /* RM Unit Tests.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		637A89FB14E1B426003F656F /* Resources */ = {
@@ -719,6 +717,16 @@
 			name = TBXML;
 			sourceTree = "<group>";
 		};
+		63ED798E151C1AD00076940F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				63ED799E151C1AD10076940F /* libMapView.a */,
+				63ED79A0151C1AD10076940F /* MapViewTests.octest */,
+				63ED79A2151C1AD10076940F /* RM Unit Tests.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -733,7 +741,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				636639AC151A972900C7E7D0 /* PBXTargetDependency */,
+				63ED79A5151C1AEF0076940F /* PBXTargetDependency */,
 			);
 			name = "OSM POI Editor";
 			productName = "OSM POI Editor";
@@ -760,8 +768,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 63663998151A971400C7E7D0 /* Products */;
-					ProjectRef = 63663997151A971400C7E7D0 /* MapView.xcodeproj */;
+					ProductGroup = 63ED798E151C1AD00076940F /* Products */;
+					ProjectRef = 63ED798D151C1AD00076940F /* MapView.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -772,18 +780,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		636639A7151A971500C7E7D0 /* libMapView.a */ = {
+		63ED799E151C1AD10076940F /* libMapView.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libMapView.a;
-			remoteRef = 636639A6151A971500C7E7D0 /* PBXContainerItemProxy */;
+			remoteRef = 63ED799D151C1AD10076940F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		636639A9151A971500C7E7D0 /* RM Unit Tests.app */ = {
+		63ED79A0151C1AD10076940F /* MapViewTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MapViewTests.octest;
+			remoteRef = 63ED799F151C1AD10076940F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		63ED79A2151C1AD10076940F /* RM Unit Tests.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
 			path = "RM Unit Tests.app";
-			remoteRef = 636639A8151A971500C7E7D0 /* PBXContainerItemProxy */;
+			remoteRef = 63ED79A1151C1AD10076940F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -918,10 +933,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		636639AC151A972900C7E7D0 /* PBXTargetDependency */ = {
+		63ED79A5151C1AEF0076940F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MapView;
-			targetProxy = 636639AB151A972900C7E7D0 /* PBXContainerItemProxy */;
+			targetProxy = 63ED79A4151C1AEF0076940F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1010,7 +1025,7 @@
 				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
 				"HEADER_SEARCH_PATHS[arch=*]" = (
 					$SDK_DIR/usr/include/libxml2,
-					"\"$(PROJECT_DIR)/alpstein-route-me/MapView\"/**",
+					"\"$(PROJECT_DIR)/Library/route-me-original\"/**",
 				);
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -1037,7 +1052,7 @@
 				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
 				"HEADER_SEARCH_PATHS[arch=*]" = (
 					$SDK_DIR/usr/include/libxml2,
-					"\"$SRCROOT/alpstein-route-me/MapView\"",
+					"\"$SRCROOT/Library/route-me-original\"/**",
 				);
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
 				LIBRARY_SEARCH_PATHS = (

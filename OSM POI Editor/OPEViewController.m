@@ -9,9 +9,9 @@
 #import "OPEViewController.h" 
 #import "OPENodeViewController.h"
 #import "GTMOAuthViewControllerTouch.h"
-#import "RMAnnotation.h"
 #import "RMFoundation.h"
 #import "RMMarker.h"
+#import "RMMarkerManager.h"
 
 @implementation OPEViewController
 
@@ -66,17 +66,16 @@
    
     initLocation = [[locationManager location] coordinate];
     
-    //[mapView moveToLatLong: initLocation];
-    [mapView setCenterCoordinate:initLocation animated:YES];
+    [mapView moveToLatLong: initLocation];
     
-    //[mapView.contents setZoom: 18];
-    //[self addMarkerAt:initLocation withNode:nil];
+    [mapView.contents setZoom: 18];
+    [self addMarkerAt:initLocation withNode:nil];
     
-    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBox];
+    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
     
     osmData = [[OPEOSMData alloc] init];
     
-    [osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
+    [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
     
     //[mapView moveToLatLong: initLocation];
     //[mapView.contents setZoom: 16];
@@ -84,15 +83,13 @@
     //[self addMarkerAt: initLocation];
 
     [mapView setDelegate:self];
-    mapView.zoom = 18.0;
-    
+    /*
     RMAnnotation * annotation = [RMAnnotation annotationWithMapView:mapView coordinate: initLocation andTitle:@"Hello"];
     annotation.anchorPoint = CGPointMake(0.5, 1.0);
     annotation.annotationIcon = [UIImage imageNamed:@"taxi.png"]; 
-
+     */
     
-    [mapView addAnnotation:annotation];
-        
+    //[mapView addAnnotation:annotation];
 }
 
 - (UIImage*)imageWithBorderFromImage:(UIImage*)source  //Draw box around centered image
@@ -133,20 +130,7 @@
     //RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:blueMarkerImage anchorPoint:CGPointMake(0.5, 1.0)];
     
     //newMarker.data = node;
-    
-    RMAnnotation * annotation = [RMAnnotation annotationWithMapView:mapView coordinate: position andTitle:@"Hello"];
-    annotation.annotationIcon = icon;
-    annotation.userInfo = node;
-    annotation.anchorPoint = CGPointMake(0.5, 1.0);
-    
-    [mapView addAnnotation:annotation];
-}
 
-- (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
-{
-    NSLog(@"layerforAnnotation");
-    RMMarker *marker = [[RMMarker alloc] initWithUIImage:annotation.annotationIcon anchorPoint:annotation.anchorPoint];
-    return marker;
 }
 
 #define CENTER_IMAGE_WIDTH  31 
@@ -157,8 +141,10 @@
 #define LABEL_FONT_SIZE  20 
 #define ANCHOR_Y  80
 
+/*
 -(void) tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
+    
     NSString * titulo = [((OPENode *)annotation.userInfo) getName];
     CGSize size = [titulo sizeWithFont:[UIFont boldSystemFontOfSize:LABEL_FONT_SIZE]]; 
     float sizes = size.width;
@@ -206,41 +192,29 @@
     
     UIButton *buttongo= [UIButton 
                          buttonWithType:UIButtonTypeDetailDisclosure]; 
+    [buttongo addTarget:self action:@selector(testItOut) forControlEvents:UIControlEventTouchUpInside];
     buttongo.frame=CGRectMake(left_width2*2-3, 8, 30, 30); 
-    buttongo.multipleTouchEnabled=YES; 
     buttongo.userInteractionEnabled=YES; 
     buttongo.enabled=YES;
     [label addSubview:buttongo];
+    [label bringSubviewToFront:buttongo];
     
-    
-    
+    [annotation.layer setDelegate:self];
+    [((RMMarker *)annotation.layer) setDelegate:self];
     
     [((RMMarker *)annotation.layer) setLabel:label];
     
-    
+    [label bringSubviewToFront:buttongo];
+    [mapView bringSubviewToFront:label];
+    [mapView bringSubviewToFront:buttongo];
 }
-
--(void)tapOnLabelForMarker:(RMMarker *)marker onMap:(RMMapView *)map
-{
-    NSLog(@"Marker Push Button");
+*/
+- (void) testItOut {
+    NSLog(@"COOL");
 }
--(void)tapOnLabelForAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
-{
-    NSLog(@"Annotation Push Button");
-}
--(void)pushMapAnnotationDetailedViewControllerDelegate:(id)sender
-{
-    NSLog(@"pushMapAnn Push Button");
-}
-
--(void)singleTapOnMap:(RMMapView *)map at:(CGPoint)point
-{
-    NSLog(@"Tap on Map");
-}
-
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
 {   
-    OPENode * node = (OPENode *)marker.userInfo;
+    OPENode * node = (OPENode *)marker.data;
     if(node.ident<0)
     {
         return YES;
@@ -350,9 +324,9 @@
 -(void) afterMapMove:(RMMapView *)map
 {
     NSLog(@"afterMapMove");
-    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBox];
+    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
     
-    [osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
+    [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
 }
 
 - (void) addMarkers:(NSNotification*)notification 
@@ -367,9 +341,10 @@
     }
 }
 
+
 - (CLLocationCoordinate2D) centerOfMap
 {
-    return mapView.centerCoordinate;
+    return CLLocationCoordinate2DMake(0, 0);
 }
 
 /*
@@ -397,7 +372,7 @@
 {
     CLLocationCoordinate2D currentLocation = [[locationManager location] coordinate];
     
-    [mapView setCenterCoordinate: currentLocation animated:YES];
+    //[mapView setCenterCoordinate: currentLocation animated:YES];
 }
 
 - (IBAction)infoButtonPressed:(id)sender
