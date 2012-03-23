@@ -15,19 +15,14 @@
 
 @implementation OPEOSMData
 
-@synthesize bboxleft, bboxbottom, bboxright, bboxtop, allNodes;
+@synthesize allNodes;
 
 
--(id) initWithLeft:(double) lef bottom: (double) bot right: (double) rig top: (double) to
+-(id) init
 {
-    
     self = [super init];
     if(self)
     {
-        bboxleft = lef;
-        bboxbottom = bot;
-        bboxright = rig;
-        bboxtop = to;
         NSString *myConsumerKey = @"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
         NSString *myConsumerSecret = @"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
         
@@ -54,7 +49,7 @@
     
     if ([request.userInfo objectForKey:@"type"] == @"download" )
     {
-        
+        NSMutableDictionary * newNodes = [[NSMutableDictionary alloc] init];
         NSData *responseData = [request responseData];
         TBXML* tbxml = [TBXML tbxmlWithXMLData:responseData];
         
@@ -94,7 +89,11 @@
                 if([tagInterpreter nodeHasRecognizedTags:newNode]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
                 {
                     newNode.image = [tagInterpreter getImageForNode:newNode];
-                    [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+                    if (![self.allNodes objectForKey:[NSNumber numberWithInt:newNode.ident]]) 
+                    {
+                        [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+                        [newNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+                    }
                 }
                 
                 for (id key in newNode.tags) { //Used to Log all keys and values stored
@@ -104,17 +103,14 @@
                 node = [TBXML nextSiblingNamed:@"node" searchFromElement:node];
             }
             NSLog(@"allNodes size: %d",[allNodes count]);
-            for (id key in self.allNodes) {
-                
-                //NSLog(@"akey: %@, avalue: %@", key, [self.allNodes objectForKey:key]);
-            }
             
         }
         
         
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"DownloadComplete"
-         object:self];
+         object:self
+         userInfo:newNodes];
     }
 
 }
@@ -126,12 +122,28 @@
         NSLog(@"Error Description: %@",error.description);
     }
 }
-
+/*
 -(void) getData
 {
     NSLog(@"box: %f,%f,%f,%f",bboxleft,bboxbottom,bboxright,bboxtop);
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[bbox=%f,%f,%f,%f][@meta]",bboxleft,bboxbottom,bboxright,bboxtop]];
     NSLog(@"url: %@",[url absoluteString]);
+    
+    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"download",@"type", nil];
+    [request setDelegate:self];
+    [request startAsynchronous];
+}
+*/
+ 
+-(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
+{
+    double boxleft = southWest.longitude;
+    double boxbottom = southWest.latitude;
+    double boxright = northEast.longitude;
+    double boxtop = northEast.latitude;
+    
+    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[bbox=%f,%f,%f,%f][@meta]",boxleft,boxbottom,boxright,boxtop]];
     
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"download",@"type", nil];

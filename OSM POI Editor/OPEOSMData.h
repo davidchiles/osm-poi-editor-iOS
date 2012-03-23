@@ -17,14 +17,9 @@
     
 }
 
-@property double bboxleft;
-@property double bboxbottom;
-@property double bboxright;
-@property double bboxtop;
 @property (strong) NSMutableDictionary * allNodes;
 
-- (id) initWithLeft:(double) lef bottom: (double) bot right: (double) rig top: (double) to;
-- (void) getData;
+-(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 - (NSInteger) openChangesetWithMessage: (NSString *) message;
 - (void) createXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
 - (void) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;

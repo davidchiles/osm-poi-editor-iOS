@@ -34,11 +34,11 @@ static OPETagInterpreter *sharedManager = nil;
         
         if(osmValues && [osmValues containsObject:nodeValue])
         {
-            NSLog(@"Does contain nodeValue %@",nodeValue);
+            //NSLog(@"Does contain nodeValue %@",nodeValue);
             return YES;
         }
     }
-    NSLog(@"Doesn't contain nodeValue %@",nodeValue);
+    //NSLog(@"Doesn't contain nodeValue %@",nodeValue);
     return NO;
 }
 

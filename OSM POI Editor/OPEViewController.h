@@ -13,29 +13,29 @@
 #import "OPENode.h"
 #import "OPEOSMData.h"
 #import "OPEInfoViewController.h"
-#import "CMMarkerWithControlLayer.h"
 
-
-@interface OPEViewController : UIViewController<RMMapViewDelegate, CMMarkerWithControlLayerDelegate> {
+@interface OPEViewController : UIViewController<RMMapViewDelegate, CLLocationManagerDelegate > {
     IBOutlet RMMapView* mapView;
     
 }
 
-@property (nonatomic,retain) OPEOSMData * osmData;
+@property (nonatomic,strong) OPEOSMData * osmData;
 @property (nonatomic,strong) CLLocationManager* locationManager;
-@property (nonatomic,retain) OPETagInterpreter * interpreter;
+@property (nonatomic,strong) OPETagInterpreter * interpreter;
 
-@property (nonatomic,retain) IBOutlet UIButton * infoButton;
-@property (nonatomic,retain) IBOutlet UIBarButtonItem * location;
-@property (nonatomic,retain) IBOutlet UIBarButtonItem * addOPEPoint;
-@property (nonatomic,retain) RMMarker *openMarker;
+@property (nonatomic,strong) IBOutlet UIButton * infoButton;
+@property (nonatomic,strong) IBOutlet UIBarButtonItem * location;
+@property (nonatomic,strong) IBOutlet UIBarButtonItem * addOPEPoint;
+@property (nonatomic,strong) RMMarker *openMarker;
 @property (nonatomic,strong) RMMarker *theNewMarker;
+@property (nonatomic,strong) UIView * label;
+@property (nonatomic,strong) UILabel * calloutLabel;
 
 
 - (void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;
-- (void) addMarkers;
+- (void) addMarkers:(NSNotification *) notification;
 - (void) pushMapAnnotationDetailedViewControllerDelegate:(id) sender;
-- (void) tapOnLabelForMarker: (RMMarker*) marker onMap: (RMMapView*) map;
+- (void)buttonEvent:(id)sender;
 
 -(IBAction)infoButtonPressed:(id)sender;
 -(IBAction)addPointButtonPressed:(id)sender;
