@@ -11,6 +11,13 @@
 #import "OPETagInterpreter.h"
 #import "OPETextEdit.h"
 #import "OPETypeViewController.h"
+@protocol OPENodeViewDelegate 
+@optional
+-(void)createdNode:(OPENode *)newNode;
+-(void)updatedNode:(OPENode *)newNode;
+-(void)deletedNode:(OPENode *)newNode;
+@end
+
 
 @interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, PassText, PassCategoryAndType>
 {

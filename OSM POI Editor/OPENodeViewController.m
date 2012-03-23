@@ -200,17 +200,16 @@
 {
     NSLog(@"saveBottoPressed");
     OPEOSMData* data = [[OPEOSMData alloc] init];
-    NSInteger change = 420;
     
     if(node.ident<0)
     {
         NSLog(@"Create Node");
-        [data createNode:node];
+        [data createNode:theNewNode];
     }
     else
     {
         NSLog(@"Update Node");
-        [data updateNode:node];
+        [data updateNode:theNewNode];
     }
 }
 

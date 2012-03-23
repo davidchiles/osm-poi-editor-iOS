@@ -196,18 +196,6 @@ static OPETagInterpreter *sharedManager = nil;
     NSLog(@"categoryAndType count: %d",[categoryAndType count]);
     NSLog(@"osmkeyandValue count: %d",[osmKeyandValue count]);
     NSLog(@"osmKVandCategoryType count: %d",[osmKVandCategoryType count]);
-    
-    for (NSDictionary * key in osmKVandCategoryType) 
-    {
-        //NSLog(@"Each key: %@",key);
-        NSDictionary * value = [osmKVandCategoryType objectForKey:key];
-        for( NSString * k in value)
-        {
-            NSLog(@"Each value: %@",[value objectForKey:k]);
-        }
-    }
-    
-    
 
 }
 

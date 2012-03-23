@@ -225,7 +225,7 @@
     NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
     
     
-    return 0;
+    return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
 }
 
 - (void) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
@@ -295,8 +295,8 @@
     [urlRequest setHTTPBody: nodeXML];
     [urlRequest setHTTPMethod: @"PUT"];
     [auth authorizeRequest:urlRequest];
-    //NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
-    NSData * returnData = nil;
+    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
+    //NSData * returnData = nil;
     NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
     
 }
@@ -337,8 +337,8 @@
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod: @"PUT"];
     [auth authorizeRequest:urlRequest];
-    //NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
-    NSData * returnData = nil;
+    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
+    //NSData * returnData = nil;
     NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
 }
 

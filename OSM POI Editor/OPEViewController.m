@@ -13,6 +13,7 @@
 #import "RMMarker.h"
 #import "RMMarkerManager.h"
 
+
 @implementation OPEViewController
 
 @synthesize osmData;
@@ -20,6 +21,7 @@
 @synthesize interpreter;
 @synthesize infoButton,location, addOPEPoint;
 @synthesize openMarker,theNewMarker, label, calloutLabel;
+@synthesize addedNode;
 
 - (void)didReceiveMemoryWarning
 {
@@ -75,7 +77,13 @@
     
     osmData = [[OPEOSMData alloc] init];
     
-    [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+    dispatch_queue_t q = dispatch_queue_create("queue", NULL);
+    
+    dispatch_async(q, ^{
+        [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+    });
+    
+    dispatch_release(q);
     
     //[mapView moveToLatLong: initLocation];
     //[mapView.contents setZoom: 16];
@@ -127,7 +135,8 @@
     NSLog(@"start addMarkerAt %@",node.image);
     UIImage *icon = [UIImage imageNamed:node.image];   //Get image from stored value in node
     icon = [self imageWithBorderFromImage:icon]; //center image inside box
-    RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 1.0)];
+    //RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 1.0)];
+    RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
     
     newMarker.data = node;
     [mapView.markerManager addMarker:newMarker AtLatLong:node.coordinate];
@@ -142,78 +151,10 @@
 #define LABEL_FONT_SIZE  20 
 #define ANCHOR_Y  80
 
-/*
--(void) tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
-{
-    
-    NSString * titulo = [((OPENode *)annotation.userInfo) getName];
-    CGSize size = [titulo sizeWithFont:[UIFont boldSystemFontOfSize:LABEL_FONT_SIZE]]; 
-    float sizes = size.width;
-    
-    int left_width2 = ((int)(sizes + CENTER_IMAGE_WIDTH)/2)-5; 
-    int right_width2 = (int)(sizes + CENTER_IMAGE_WIDTH)/2;
-    
-    label=[[UIView alloc]initWithFrame:CGRectMake(((-left_width2*2+21)/ 2)-18, 19 - ANCHOR_Y,0 , 0)];
-    label.backgroundColor = [UIColor clearColor]; 
-    label.userInteractionEnabled=YES;
-    
-    
-    
-    UIImage * CALLOUT_LEFT_IMAGE = [[UIImage imageNamed:@"left.png"] 
-                           stretchableImageWithLeftCapWidth:15 topCapHeight:0]; 
-    UIImage * CALLOUT_CENTER_IMAGE = [[UIImage 
-                              imageNamed:@"center.png"]stretchableImageWithLeftCapWidth:30 
-                             topCapHeight:0]; 
-    UIImage * CALLOUT_RIGHT_IMAGE = [[UIImage imageNamed:@"right.png"] 
-                            stretchableImageWithLeftCapWidth:1 topCapHeight:0]; 
-    UIImageView * calloutCenter = [[UIImageView alloc] 
-                     initWithFrame:CGRectMake(left_width2-5+5,0, right_width2+5+5, 
-                                              CALLOUT_HEIGHT)]; 
-    calloutCenter.image = CALLOUT_CENTER_IMAGE; 
-    [label addSubview:calloutCenter]; 
-    UIImageView * calloutLeft = [[UIImageView alloc] initWithFrame:CGRectMake(round(0), 
-                                                                round(0), left_width2-5+5, round(CALLOUT_HEIGHT))]; 
-    calloutLeft.image = CALLOUT_LEFT_IMAGE; 
-    [label addSubview:calloutLeft]; 
-    UIImageView * calloutRight = [[UIImageView alloc] 
-                    initWithFrame:CGRectMake(left_width2*2+5+10, round(0), 16, 
-                                             round(CALLOUT_HEIGHT))]; 
-    calloutRight.image = CALLOUT_RIGHT_IMAGE; 
-    [label addSubview:calloutRight];
-    
-    
-    
-    calloutLabel = [[UILabel alloc] 
-                    initWithFrame:CGRectMake(MIN_LEFT_IMAGE_WIDTH-3,0 , sizes, LABEL_HEIGHT)]; 
-    calloutLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE]; 
-    calloutLabel.text=titulo; 
-    calloutLabel.textColor = [UIColor whiteColor]; 
-    calloutLabel.backgroundColor = [UIColor clearColor]; 
-    [label addSubview:calloutLabel]; 
-    
-    UIButton *buttongo= [UIButton 
-                         buttonWithType:UIButtonTypeDetailDisclosure]; 
-    [buttongo addTarget:self action:@selector(testItOut) forControlEvents:UIControlEventTouchUpInside];
-    buttongo.frame=CGRectMake(left_width2*2-3, 8, 30, 30); 
-    buttongo.userInteractionEnabled=YES; 
-    buttongo.enabled=YES;
-    [label addSubview:buttongo];
-    [label bringSubviewToFront:buttongo];
-    
-    [annotation.layer setDelegate:self];
-    [((RMMarker *)annotation.layer) setDelegate:self];
-    
-    [((RMMarker *)annotation.layer) setLabel:label];
-    
-    [label bringSubviewToFront:buttongo];
-    [mapView bringSubviewToFront:label];
-    [mapView bringSubviewToFront:buttongo];
-}
-*/
-
 -(void) tapOnMarker:(RMMarker *)marker onMap:(RMMapView *)map
 {
-    NSString * titulo = [((OPENode *)marker.data) getName];
+    //NSString * titulo = [((OPENode *)marker.data) getName];
+    NSString * titulo = [interpreter getName:(OPENode *)marker.data];
     CGSize size = [titulo sizeWithFont:[UIFont boldSystemFontOfSize:LABEL_FONT_SIZE]]; 
     float sizes = size.width;
     
@@ -261,7 +202,7 @@
     UIButton *buttongo= [UIButton 
                          buttonWithType:UIButtonTypeDetailDisclosure]; 
     //[buttongo setTitle:@"TTT" forState:UIControlStateNormal];
-    [buttongo addTarget:self action:@selector(testItOut) forControlEvents:UIControlEventTouchUpInside];
+    //[buttongo addTarget:self action:@selector(testItOut) forControlEvents:UIControlEventTouchUpInside];
     buttongo.frame=CGRectMake(left_width2*2-3, 8, 30, 30); 
     buttongo.userInteractionEnabled=YES; 
     buttongo.enabled=YES;
@@ -269,10 +210,6 @@
     [label bringSubviewToFront:buttongo];
     [marker setDelegate:self];
     [marker setLabel:label];
-}
-
-- (void) testItOut {
-    NSLog(@"COOL");
 }
 
 
@@ -312,12 +249,18 @@
         {
             CGPoint position = [touch locationInView: mapView ];
             //[mapView.markerManager moveMarker:marker AtXY: position];
+            CGSize delta = CGSizeMake((position.x-(marker.position.x)), 
+                                      (position.y-(marker.position.y))); 
+            [marker moveBy: delta];
+            //[marker setProjectedLocation:[[mapView.contents projection] latLongToPoint:[mapView pixelToLatLong:marker.position]]]; 
+            //[marker setProjectedLocation: [[mapView projection] latLongToPoint:[mapView pixelToLatLong:marker.position]]];
+            [mapView.markerManager moveMarker:marker AtXY:position];
         }
     }
 }
 
 
-
+/*
 - (RMMarker *) addNewMarkerAt:(CLLocationCoordinate2D) markerPosition withNode: (OPENode *) node
 {
     UIImage *blueMarkerImage = [UIImage imageNamed:@"bar.png"];
@@ -327,6 +270,7 @@
     [mapView.contents.markerManager addMarker:newMarker AtLatLong:markerPosition];
     return newMarker;
 }
+ */
 
 - (void) setText: (NSString*) text forMarker: (RMMarker*) marker
 {
@@ -337,75 +281,18 @@
     [marker changeLabelUsingText: text position: position ];    
 }
 
-/*
-- (void) tapOnMarker: (RMMarker*) marker onMap: (RMMapView*) map
-{
-    NSLog(@"name?: %@",[map.contents.layer name]);
-    
-    //OPENode * tempNode = (OPENode *)marker.data; //Center map
-    //[mapView moveToLatLong: tempNode.coordinate];
-    if(openMarker) 
-    {
-        [openMarker hideLabel];
-    }
-    
-    if(openMarker == marker) 
-    {
-        [openMarker hideLabel];
-        self.openMarker = nil;
-    } 
-    else 
-    {
-        self.openMarker = marker;
-        OPENode * node = (OPENode *)openMarker.data;
-        [marker addAnnotationViewWithTitle:[interpreter getName:node]];
-        
-    }    
-}
-
-- (void)pushMapAnnotationDetailedViewControllerDelegate:(id) sender
-{
-    NSLog(@"Arrow Pressed");
-    OPENodeViewController * viewer = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
-    
-    viewer.title = @"Node Info";
-    viewer.node = (OPENode *)openMarker.data;
-    
-    
-    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
-    
-    [[self navigationItem] setBackBarButtonItem: newBackButton];
-    
-    [self.navigationController pushViewController:viewer animated:YES];
-    
-}
-
-- (void) tapOnLabelForMarker: (RMMarker*) marker onMap: (RMMapView*) map 
-{
-    NSLog(@"Label Pressed");
-    OPENodeViewController * viewer = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
-    
-    viewer.title = @"Node Info";
-    viewer.node = (OPENode *)openMarker.data;
-    
-    
-    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
-    
-    [[self navigationItem] setBackBarButtonItem: newBackButton];
-    
-    [self.navigationController pushViewController:viewer animated:YES];
-}
-
-
-
-
-*/
 -(void) afterMapTouch:(RMMapView *)map
 {
-    NSLog(@"afterMapMove");
-    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
+    //RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
     
-    [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+    dispatch_queue_t q = dispatch_queue_create("queue", NULL);
+    
+    dispatch_async(q, ^{
+        RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
+        [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+    });
+    
+    dispatch_release(q);
 }
 
 - (void) addMarkers:(NSNotification*)notification 
@@ -423,10 +310,23 @@
 
 - (CLLocationCoordinate2D) centerOfMap
 {
-    return CLLocationCoordinate2DMake(0, 0);
+    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
+    
+    double left = geoBox.southwest.longitude; 
+    double bottom = geoBox.southwest.latitude;
+    double right = geoBox.northeast.longitude;
+    double top = geoBox.northeast.latitude;
+    
+    CLLocationDegrees lat = (bottom + top)/2.0;
+    CLLocationDegrees lon = (left + right)/2.0;
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(lat, lon);
+    return center;
+    
+    
 }
 
-/*
+#pragma - Actions
+
 - (IBAction)addPointButtonPressed:(id)sender
 {
     if(openMarker) 
@@ -441,17 +341,24 @@
     else
     {
         OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
-        theNewMarker = [self addNewMarkerAt:center withNode:node];
+       //theNewMarker = [self addNewMarkerAt:center withNode:node];
+    }
+    if (addedNode) {
+        //[mapView.markerManager moveMarker:addedNode AtXY:];
+    }
+    else {
+        OPENode * newNode = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
+        newNode.image = @"icon.png";
+        [self addMarkerAt:center withNode:newNode];
     }
 }
-                      
-  */                    
 
 -(IBAction)locationButtonPressed:(id)sender
 {
     CLLocationCoordinate2D currentLocation = [[locationManager location] coordinate];
     
     //[mapView setCenterCoordinate: currentLocation animated:YES];
+    [mapView moveToLatLong:currentLocation];
 }
 
 - (IBAction)infoButtonPressed:(id)sender

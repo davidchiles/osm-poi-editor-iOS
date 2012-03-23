@@ -30,6 +30,7 @@
 @property (nonatomic,strong) RMMarker *theNewMarker;
 @property (nonatomic,strong) UIView * label;
 @property (nonatomic,strong) UILabel * calloutLabel;
+@property (nonatomic,strong) RMMarker * addedNode;
 
 
 - (void) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;
