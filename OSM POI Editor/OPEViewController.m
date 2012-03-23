@@ -61,8 +61,8 @@
     CLLocationCoordinate2D initLocation;
     //NSLog(@"location Manager: %@",[locationManager location]);
     
-    //initLocation.latitude  = 37.871667;
-    //initLocation.longitude =  -122.272778;
+    initLocation.latitude  = 37.871667;
+    initLocation.longitude =  -122.272778;
    
     initLocation = [[locationManager location] coordinate];
     
@@ -127,9 +127,10 @@
     NSLog(@"start addMarkerAt %@",node.image);
     UIImage *icon = [UIImage imageNamed:node.image];   //Get image from stored value in node
     icon = [self imageWithBorderFromImage:icon]; //center image inside box
-    //RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:blueMarkerImage anchorPoint:CGPointMake(0.5, 1.0)];
+    RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 1.0)];
     
-    //newMarker.data = node;
+    newMarker.data = node;
+    [mapView.markerManager addMarker:newMarker AtLatLong:node.coordinate];
 
 }
 
@@ -209,9 +210,87 @@
     [mapView bringSubviewToFront:buttongo];
 }
 */
+
+-(void) tapOnMarker:(RMMarker *)marker onMap:(RMMapView *)map
+{
+    NSString * titulo = [((OPENode *)marker.data) getName];
+    CGSize size = [titulo sizeWithFont:[UIFont boldSystemFontOfSize:LABEL_FONT_SIZE]]; 
+    float sizes = size.width;
+    
+    int left_width2 = ((int)(sizes + CENTER_IMAGE_WIDTH)/2)-5; 
+    int right_width2 = (int)(sizes + CENTER_IMAGE_WIDTH)/2;
+    
+    label=[[UIView alloc]initWithFrame:CGRectMake(((-left_width2*2+21)/ 2)-18, 19 - ANCHOR_Y,0 , 0)];
+    label.backgroundColor = [UIColor clearColor]; 
+    label.userInteractionEnabled=YES;
+    
+    
+    
+    UIImage * CALLOUT_LEFT_IMAGE = [[UIImage imageNamed:@"left.png"] 
+                                    stretchableImageWithLeftCapWidth:15 topCapHeight:0]; 
+    UIImage * CALLOUT_CENTER_IMAGE = [[UIImage 
+                                       imageNamed:@"center.png"]stretchableImageWithLeftCapWidth:30 
+                                      topCapHeight:0]; 
+    UIImage * CALLOUT_RIGHT_IMAGE = [[UIImage imageNamed:@"right.png"] 
+                                     stretchableImageWithLeftCapWidth:1 topCapHeight:0]; 
+    UIImageView * calloutCenter = [[UIImageView alloc] 
+                                   initWithFrame:CGRectMake(left_width2-5+5,0, right_width2+5+5, 
+                                                            CALLOUT_HEIGHT)]; 
+    calloutCenter.image = CALLOUT_CENTER_IMAGE; 
+    [label addSubview:calloutCenter]; 
+    UIImageView * calloutLeft = [[UIImageView alloc] initWithFrame:CGRectMake(round(0), 
+                                                                              round(0), left_width2-5+5, round(CALLOUT_HEIGHT))]; 
+    calloutLeft.image = CALLOUT_LEFT_IMAGE; 
+    [label addSubview:calloutLeft]; 
+    UIImageView * calloutRight = [[UIImageView alloc] 
+                                  initWithFrame:CGRectMake(left_width2*2+5+10, round(0), 16, 
+                                                           round(CALLOUT_HEIGHT))]; 
+    calloutRight.image = CALLOUT_RIGHT_IMAGE; 
+    [label addSubview:calloutRight];
+    
+    
+    
+    calloutLabel = [[UILabel alloc] 
+                    initWithFrame:CGRectMake(MIN_LEFT_IMAGE_WIDTH-3,0 , sizes, LABEL_HEIGHT)]; 
+    calloutLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE]; 
+    calloutLabel.text=titulo; 
+    calloutLabel.textColor = [UIColor whiteColor]; 
+    calloutLabel.backgroundColor = [UIColor clearColor]; 
+    [label addSubview:calloutLabel]; 
+    
+    UIButton *buttongo= [UIButton 
+                         buttonWithType:UIButtonTypeDetailDisclosure]; 
+    [buttongo addTarget:self action:@selector(testItOut) forControlEvents:UIControlEventTouchUpInside];
+    buttongo.frame=CGRectMake(left_width2*2-3, 8, 30, 30); 
+    buttongo.userInteractionEnabled=YES; 
+    buttongo.enabled=YES;
+    [label addSubview:buttongo];
+    [label bringSubviewToFront:buttongo];
+    
+    [marker setLabel:label];
+    
+}
+
 - (void) testItOut {
     NSLog(@"COOL");
 }
+
+
+-(void) tapOnLabelForMarker:(RMMarker *)marker onMap:(RMMapView *)map onLayer:(CALayer *)layer
+{
+    NSLog(@"hello %@",layer.name);
+    OPENodeViewController * viewer = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
+    
+    viewer.title = @"Node Info";
+    viewer.node = (OPENode *)marker.data;
+    
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
+    
+    [[self navigationItem] setBackBarButtonItem: newBackButton];
+    
+    [self.navigationController pushViewController:viewer animated:YES];
+}
+
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
 {   
     OPENode * node = (OPENode *)marker.data;
@@ -237,7 +316,7 @@
     }
 }
 
-/*
+
 
 - (RMMarker *) addNewMarkerAt:(CLLocationCoordinate2D) markerPosition withNode: (OPENode *) node
 {
@@ -257,7 +336,7 @@
     
     [marker changeLabelUsingText: text position: position ];    
 }
-*/
+
 /*
 - (void) tapOnMarker: (RMMarker*) marker onMap: (RMMapView*) map
 {
