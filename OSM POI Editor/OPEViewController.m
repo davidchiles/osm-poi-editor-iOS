@@ -260,15 +260,15 @@
     
     UIButton *buttongo= [UIButton 
                          buttonWithType:UIButtonTypeDetailDisclosure]; 
+    //[buttongo setTitle:@"TTT" forState:UIControlStateNormal];
     [buttongo addTarget:self action:@selector(testItOut) forControlEvents:UIControlEventTouchUpInside];
     buttongo.frame=CGRectMake(left_width2*2-3, 8, 30, 30); 
     buttongo.userInteractionEnabled=YES; 
     buttongo.enabled=YES;
     [label addSubview:buttongo];
     [label bringSubviewToFront:buttongo];
-    
+    [marker setDelegate:self];
     [marker setLabel:label];
-    
 }
 
 - (void) testItOut {
@@ -400,7 +400,7 @@
 
 
 */
--(void) afterMapMove:(RMMapView *)map
+-(void) afterMapTouch:(RMMapView *)map
 {
     NSLog(@"afterMapMove");
     RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
