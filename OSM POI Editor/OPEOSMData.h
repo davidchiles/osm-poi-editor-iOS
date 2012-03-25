@@ -21,14 +21,14 @@
 
 -(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 - (NSInteger) openChangesetWithMessage: (NSString *) message;
-- (void) createXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
-- (void) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
-- (void) deleteXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
+- (int) createXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
+- (int) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
+- (int) deleteXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
 - (void) closeChangeset: (NSInteger) changesetNumber;
 
-- (void) createNode: (OPENode *) node;
-- (void) updateNode: (OPENode *) node;
-- (void) deleteNode: (OPENode *) node;
+- (int) createNode: (OPENode *) node;
+- (int) updateNode: (OPENode *) node;
+- (int) deleteNode: (OPENode *) node;
 
 
 

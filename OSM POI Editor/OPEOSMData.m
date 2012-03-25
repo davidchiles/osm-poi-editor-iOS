@@ -144,34 +144,37 @@
     double boxtop = northEast.latitude;
     
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[bbox=%f,%f,%f,%f][@meta]",boxleft,boxbottom,boxright,boxtop]];
-    
+    NSLog(@"Download URL %@",url);
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"download",@"type", nil];
     [request setDelegate:self];
     [request startAsynchronous];
 }
 
-- (void) createNode: (OPENode *) node
+- (int) createNode: (OPENode *) node
 {
     OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Created new POI: %@",[tagInterpreter getName:node]]];
-    [self createXmlNode:node withChangeset:changeset];
+    int newIdent = [self createXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
+    return newIdent;
 }
-- (void) updateNode: (OPENode *) node
+- (int) updateNode: (OPENode *) node
 {
     OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Updated existing POI: %@",[tagInterpreter getName:node]]];
-    [self updateXmlNode:node withChangeset:changeset];
+    int version = [self updateXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
+    return version;
     
 }
-- (void) deleteNode: (OPENode *) node
+- (int) deleteNode: (OPENode *) node
 {
     OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Deleted POI: %@",[tagInterpreter getName:node]]];
-    [self deleteXmlNode:node withChangeset:changeset];
+    int version = [self deleteXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
+    return version;
     
 }
 
@@ -228,7 +231,7 @@
     return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
 }
 
-- (void) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
+- (int) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
 {
     double lat = node.coordinate.latitude;
     double lon = node.coordinate.longitude;
@@ -240,7 +243,7 @@
     
     [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
     [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<node lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\">",lat,lon,node.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"<node id=\"%d\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\">",node.ident,lat,lon,node.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
     
     for (NSString *k in node.tags)
     {
@@ -258,14 +261,14 @@
     [urlRequest setHTTPBody: nodeXML];
     [urlRequest setHTTPMethod: @"PUT"];
     [auth authorizeRequest:urlRequest];
-    //NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
-    NSData * returnData = nil;
+    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
+    //NSData * returnData = nil;
     NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
-    
+    return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
     
 }
 
-- (void) createXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
+- (int) createXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
 {
     double lat = node.coordinate.latitude;
     double lon = node.coordinate.longitude;
@@ -297,11 +300,11 @@
     [auth authorizeRequest:urlRequest];
     NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
     //NSData * returnData = nil;
-    NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
-    
+    NSLog(@"Create Node Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
+    return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
 }
     
-- (void) deleteXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
+- (int) deleteXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
 {
     double lat = node.coordinate.latitude;
     double lon = node.coordinate.longitude;
@@ -313,7 +316,7 @@
     
     [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
     [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<node lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\"/>",lat,lon,node.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"<node id=\"%d\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\"/>",node.ident,lat,lon,node.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
     [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
     
     NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
@@ -324,9 +327,10 @@
     [urlRequest setHTTPBody: nodeXML];
     [urlRequest setHTTPMethod: @"DELETE"];
     [auth authorizeRequest:urlRequest];
-    //NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
-    NSData * returnData = nil;
-    NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
+    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
+    //NSData * returnData = nil;
+    NSLog(@"Delete Node Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
+    return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
     
 }
 
@@ -339,7 +343,7 @@
     [auth authorizeRequest:urlRequest];
     NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
     //NSData * returnData = nil;
-    NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
+    NSLog(@"Close Changeset Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
 }
 
 

@@ -12,7 +12,7 @@
 @implementation OPETypeViewController
 
 @synthesize category;
-@synthesize delagate;
+@synthesize delegate;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -161,7 +161,7 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
     NSArray * cAndT = [[NSArray alloc] initWithObjects:category,[self.tableView cellForRowAtIndexPath:indexPath].textLabel.text ,nil];
-    [[self delagate] setCategoryAndType: cAndT];
+    [[self delegate] setCategoryAndType: cAndT];
     //[[self navigationController] popViewControllerAnimated:YES];
     [[self navigationController] popToViewController:[[[self navigationController] viewControllers] objectAtIndex:1] animated:YES];
 }

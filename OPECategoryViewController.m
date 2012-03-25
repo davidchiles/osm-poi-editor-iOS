@@ -163,7 +163,7 @@
     OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:nil];
     viewer.title = @"Type";
     viewer.category = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
-    [viewer setDelagate: [[[self navigationController] viewControllers] objectAtIndex:1]];
+    [viewer setDelegate: [[[self navigationController] viewControllers] objectAtIndex:1]];
     
     
     

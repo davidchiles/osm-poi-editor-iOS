@@ -11,7 +11,8 @@
 #import "OPETagInterpreter.h"
 #import "OPETextEdit.h"
 #import "OPETypeViewController.h"
-@protocol OPENodeViewDelegate 
+
+@protocol OPENodeViewDelegate
 @optional
 -(void)createdNode:(OPENode *)newNode;
 -(void)updatedNode:(OPENode *)newNode;
@@ -32,6 +33,8 @@
 @property (nonatomic, strong) NSArray * catAndType;
 @property (nonatomic, strong) NSString * type;
 @property (nonatomic, strong) IBOutlet UIButton * deleteButton;
+@property (nonatomic, strong) id <OPENodeViewDelegate> delegate;
+@property (nonatomic) BOOL nodeIsEdited;
 
 - (void) saveButtonPressed;
 - (void) deleteButtonPressed;

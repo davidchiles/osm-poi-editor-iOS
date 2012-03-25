@@ -7,7 +7,6 @@
 //
 
 #import "OPEViewController.h" 
-#import "OPENodeViewController.h"
 #import "GTMOAuthViewControllerTouch.h"
 #import "RMFoundation.h"
 #import "RMMarker.h"
@@ -21,7 +20,7 @@
 @synthesize interpreter;
 @synthesize infoButton,location, addOPEPoint;
 @synthesize openMarker,theNewMarker, label, calloutLabel;
-@synthesize addedNode;
+@synthesize addedNode,nodeInfo;
 
 - (void)didReceiveMemoryWarning
 {
@@ -130,7 +129,7 @@
 }
 
 
--(void) addMarkerAt:(CLLocationCoordinate2D) position withNode: (OPENode *) node
+-(RMMarker *) addMarkerAt:(CLLocationCoordinate2D) position withNode: (OPENode *) node
 {
     NSLog(@"start addMarkerAt %@",node.image);
     UIImage *icon = [UIImage imageNamed:node.image];   //Get image from stored value in node
@@ -140,6 +139,8 @@
     
     newMarker.data = node;
     [mapView.markerManager addMarker:newMarker AtLatLong:node.coordinate];
+    
+    return newMarker;
 
 }
 
@@ -153,73 +154,90 @@
 
 -(void) tapOnMarker:(RMMarker *)marker onMap:(RMMapView *)map
 {
-    //NSString * titulo = [((OPENode *)marker.data) getName];
-    NSString * titulo = [interpreter getName:(OPENode *)marker.data];
-    CGSize size = [titulo sizeWithFont:[UIFont boldSystemFontOfSize:LABEL_FONT_SIZE]]; 
-    float sizes = size.width;
+    [openMarker hideLabel];
+    OPENode * tempNode = (OPENode *)marker.data;
     
-    int left_width2 = ((int)(sizes + CENTER_IMAGE_WIDTH)/2)-5; 
-    int right_width2 = (int)(sizes + CENTER_IMAGE_WIDTH)/2;
+    if(tempNode.ident < 0)
+    {
+        ((OPENode *)marker.data).coordinate = [map.markerManager latitudeLongitudeForMarker:marker];
+        [self tapOnLabelForMarker:marker onMap:mapView onLayer:nil];
+    }
+    else if (marker.label) {
+        [marker showLabel];
+    }
+    else {
     
-    label=[[UIView alloc]initWithFrame:CGRectMake(((-left_width2*2+21)/ 2)-18, 19 - ANCHOR_Y,0 , 0)];
-    label.backgroundColor = [UIColor clearColor]; 
-    label.userInteractionEnabled=YES;
-    
-    
-    
-    UIImage * CALLOUT_LEFT_IMAGE = [[UIImage imageNamed:@"left.png"] 
-                                    stretchableImageWithLeftCapWidth:15 topCapHeight:0]; 
-    UIImage * CALLOUT_CENTER_IMAGE = [[UIImage 
-                                       imageNamed:@"center.png"]stretchableImageWithLeftCapWidth:30 
-                                      topCapHeight:0]; 
-    UIImage * CALLOUT_RIGHT_IMAGE = [[UIImage imageNamed:@"right.png"] 
-                                     stretchableImageWithLeftCapWidth:1 topCapHeight:0]; 
-    UIImageView * calloutCenter = [[UIImageView alloc] 
-                                   initWithFrame:CGRectMake(left_width2-5+5,0, right_width2+5+5, 
-                                                            CALLOUT_HEIGHT)]; 
-    calloutCenter.image = CALLOUT_CENTER_IMAGE; 
-    [label addSubview:calloutCenter]; 
-    UIImageView * calloutLeft = [[UIImageView alloc] initWithFrame:CGRectMake(round(0), 
-                                                                              round(0), left_width2-5+5, round(CALLOUT_HEIGHT))]; 
-    calloutLeft.image = CALLOUT_LEFT_IMAGE; 
-    [label addSubview:calloutLeft]; 
-    UIImageView * calloutRight = [[UIImageView alloc] 
-                                  initWithFrame:CGRectMake(left_width2*2+5+10, round(0), 16, 
-                                                           round(CALLOUT_HEIGHT))]; 
-    calloutRight.image = CALLOUT_RIGHT_IMAGE; 
-    [label addSubview:calloutRight];
-    
-    
-    
-    calloutLabel = [[UILabel alloc] 
-                    initWithFrame:CGRectMake(MIN_LEFT_IMAGE_WIDTH-3,0 , sizes, LABEL_HEIGHT)]; 
-    calloutLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE]; 
-    calloutLabel.text=titulo; 
-    calloutLabel.textColor = [UIColor whiteColor]; 
-    calloutLabel.backgroundColor = [UIColor clearColor]; 
-    [label addSubview:calloutLabel]; 
-    
-    UIButton *buttongo= [UIButton 
-                         buttonWithType:UIButtonTypeDetailDisclosure]; 
-    //[buttongo setTitle:@"TTT" forState:UIControlStateNormal];
-    //[buttongo addTarget:self action:@selector(testItOut) forControlEvents:UIControlEventTouchUpInside];
-    buttongo.frame=CGRectMake(left_width2*2-3, 8, 30, 30); 
-    buttongo.userInteractionEnabled=YES; 
-    buttongo.enabled=YES;
-    [label addSubview:buttongo];
-    [label bringSubviewToFront:buttongo];
-    [marker setDelegate:self];
-    [marker setLabel:label];
+        //NSString * titulo = [((OPENode *)marker.data) getName];
+        NSString * titulo = [interpreter getName:tempNode];
+        CGSize size = [titulo sizeWithFont:[UIFont boldSystemFontOfSize:LABEL_FONT_SIZE]]; 
+        float sizes = size.width;
+        
+        int left_width2 = ((int)(sizes + CENTER_IMAGE_WIDTH)/2)-5; 
+        int right_width2 = (int)(sizes + CENTER_IMAGE_WIDTH)/2;
+        
+        label=[[UIView alloc]initWithFrame:CGRectMake(((-left_width2*2+21)/ 2)-18, 19 - ANCHOR_Y,0 , 0)];
+        label.backgroundColor = [UIColor clearColor]; 
+        label.userInteractionEnabled=YES;
+        
+        
+        
+        UIImage * CALLOUT_LEFT_IMAGE = [[UIImage imageNamed:@"left.png"] 
+                                        stretchableImageWithLeftCapWidth:15 topCapHeight:0]; 
+        UIImage * CALLOUT_CENTER_IMAGE = [[UIImage 
+                                           imageNamed:@"center.png"]stretchableImageWithLeftCapWidth:30 
+                                          topCapHeight:0]; 
+        UIImage * CALLOUT_RIGHT_IMAGE = [[UIImage imageNamed:@"right.png"] 
+                                         stretchableImageWithLeftCapWidth:1 topCapHeight:0]; 
+        UIImageView * calloutCenter = [[UIImageView alloc] 
+                                       initWithFrame:CGRectMake(left_width2-5+5,0, right_width2+5+5, 
+                                                                CALLOUT_HEIGHT)]; 
+        calloutCenter.image = CALLOUT_CENTER_IMAGE; 
+        [label addSubview:calloutCenter]; 
+        UIImageView * calloutLeft = [[UIImageView alloc] initWithFrame:CGRectMake(round(0), 
+                                                                                  round(0), left_width2-5+5, round(CALLOUT_HEIGHT))]; 
+        calloutLeft.image = CALLOUT_LEFT_IMAGE; 
+        [label addSubview:calloutLeft]; 
+        UIImageView * calloutRight = [[UIImageView alloc] 
+                                      initWithFrame:CGRectMake(left_width2*2+5+10, round(0), 16, 
+                                                               round(CALLOUT_HEIGHT))]; 
+        calloutRight.image = CALLOUT_RIGHT_IMAGE; 
+        [label addSubview:calloutRight];
+        
+        
+        
+        calloutLabel = [[UILabel alloc] 
+                        initWithFrame:CGRectMake(MIN_LEFT_IMAGE_WIDTH-3,0 , sizes, LABEL_HEIGHT)]; 
+        calloutLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE]; 
+        calloutLabel.text=titulo; 
+        calloutLabel.textColor = [UIColor whiteColor]; 
+        calloutLabel.backgroundColor = [UIColor clearColor]; 
+        [label addSubview:calloutLabel]; 
+        
+        UIButton *buttongo= [UIButton 
+                             buttonWithType:UIButtonTypeDetailDisclosure]; 
+        //[buttongo setTitle:@"TTT" forState:UIControlStateNormal];
+        //[buttongo addTarget:self action:@selector(testItOut) forControlEvents:UIControlEventTouchUpInside];
+        buttongo.frame=CGRectMake(left_width2*2-3, 8, 30, 30); 
+        buttongo.userInteractionEnabled=YES; 
+        buttongo.enabled=YES;
+        [label addSubview:buttongo];
+        [label bringSubviewToFront:buttongo];
+        [marker setDelegate:self];
+        [marker setLabel:label];
+    }
+    openMarker = marker;
 }
 
 
 -(void) tapOnLabelForMarker:(RMMarker *)marker onMap:(RMMapView *)map onLayer:(CALayer *)layer
 {
     NSLog(@"hello %@",layer.name);
+    nodeInfo = marker;
     OPENodeViewController * viewer = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
     
     viewer.title = @"Node Info";
     viewer.node = (OPENode *)marker.data;
+    [viewer setDelegate:self];
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
     
@@ -257,6 +275,15 @@
             [mapView.markerManager moveMarker:marker AtXY:position];
         }
     }
+}
+
+-(void) singleTapOnMap:(RMMapView *)map At:(CGPoint)point
+{
+    if (openMarker) {
+        [openMarker hideLabel];
+        openMarker = nil;
+    }
+    
 }
 
 
@@ -325,15 +352,38 @@
     
 }
 
+#pragma - NodeViewDelegate
+
+-(void) updatedNode:(OPENode *)newNode
+{
+    [mapView.markerManager removeMarker:nodeInfo];
+    [self addMarkerAt:newNode.coordinate withNode:newNode];
+    [self.osmData.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+}
+-(void) createdNode:(OPENode *)newNode
+{
+    [mapView.markerManager removeMarker:nodeInfo];
+    [self addMarkerAt:newNode.coordinate withNode:newNode];
+    [self.osmData.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+    
+}
+-(void) deletedNode:(OPENode *)newNode
+{
+    [mapView.markerManager removeMarker:nodeInfo];
+    [self.osmData.allNodes removeObjectForKey:[NSNumber numberWithInt:newNode.ident]];
+}
+
 #pragma - Actions
 
 - (IBAction)addPointButtonPressed:(id)sender
 {
+    CLLocationCoordinate2D center = [self centerOfMap];
+    
     if(openMarker) 
     {
         [openMarker hideLabel];
+        openMarker = nil;
     }
-    CLLocationCoordinate2D center = [self centerOfMap];
     if(theNewMarker)
     {
         [mapView.contents.markerManager moveMarker: theNewMarker AtLatLon:center];
@@ -341,15 +391,8 @@
     else
     {
         OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
-       //theNewMarker = [self addNewMarkerAt:center withNode:node];
-    }
-    if (addedNode) {
-        //[mapView.markerManager moveMarker:addedNode AtXY:];
-    }
-    else {
-        OPENode * newNode = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
-        newNode.image = @"icon.png";
-        [self addMarkerAt:center withNode:newNode];
+        node.image = @"icon.png";
+        theNewMarker = [self addMarkerAt:center withNode:node];
     }
 }
 

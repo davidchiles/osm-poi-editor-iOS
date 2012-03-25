@@ -503,7 +503,6 @@
 				6330AB8114DB519A00448852 /* OPEViewController.m */,
 				6330AB8314DB519A00448852 /* OPEViewController_iPhone.xib */,
 				6330AB8614DB519A00448852 /* OPEViewController_iPad.xib */,
-				6330AB7514DB519A00448852 /* Supporting Files */,
 				6345E57D14E3122900F55486 /* OPENodeViewController.h */,
 				6345E57E14E3122900F55486 /* OPENodeViewController.m */,
 				6345E57F14E3122900F55486 /* OPENodeViewController.xib */,
@@ -519,6 +518,7 @@
 				6383947E14EC4DDD00C74A57 /* OPEInfoViewController.h */,
 				6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */,
 				6383948014EC4DDD00C74A57 /* OPEInfoViewController.xib */,
+				6330AB7514DB519A00448852 /* Supporting Files */,
 			);
 			path = "OSM POI Editor";
 			sourceTree = "<group>";
@@ -1028,12 +1028,7 @@
 					"\"$(PROJECT_DIR)/Library/route-me-original\"/**",
 				);
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/CloudMadeApi/libs/CloudMade\"",
-					"\"$(SRCROOT)/CloudMadeApi/libs/Proj4\"",
-					"\"$(SRCROOT)/CloudMadeApi/libs/route-me\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1055,12 +1050,7 @@
 					"\"$SRCROOT/Library/route-me-original\"/**",
 				);
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/CloudMadeApi/libs/CloudMade\"",
-					"\"$(SRCROOT)/CloudMadeApi/libs/Proj4\"",
-					"\"$(SRCROOT)/CloudMadeApi/libs/route-me\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";

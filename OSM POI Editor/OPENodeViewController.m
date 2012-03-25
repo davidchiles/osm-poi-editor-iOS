@@ -20,12 +20,14 @@
 @synthesize tableView;
 @synthesize catAndType;
 @synthesize deleteButton;
+@synthesize delegate;
+@synthesize nodeIsEdited;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
+       
     }
     return self;
 }
@@ -42,6 +44,7 @@
 
 - (void)viewDidLoad
 {
+    nodeIsEdited = NO;
     [super viewDidLoad];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
@@ -177,13 +180,24 @@
         
         if(indexPath.row == 1)
         {
-            OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:nil];
-            viewer.title = @"Type";
-            viewer.category = [catAndType objectAtIndex:0];
-            [viewer setDelagate:self];
-            NSLog(@"category previous: %@",viewer.category);
+            if ([catAndType count]==2) 
+            {
+                OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:nil];
+                viewer.title = @"Type";
+                
+                viewer.category = [catAndType objectAtIndex:0];
+                [viewer setDelegate:self];
+                NSLog(@"category previous: %@",viewer.category);
+                
+                [self.navigationController pushViewController:viewer animated:YES];
+            }
+            else {
+                OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OpeCategoryViewController" bundle:nil];
+                viewer.title = @"Category";
+                
+                [self.navigationController pushViewController:viewer animated:YES];
+            }
             
-            [self.navigationController pushViewController:viewer animated:YES];
             
         }
         else
@@ -198,19 +212,49 @@
 
 - (void) saveButtonPressed
 {
-    NSLog(@"saveBottoPressed");
-    OPEOSMData* data = [[OPEOSMData alloc] init];
     
-    if(node.ident<0)
+    if (nodeIsEdited) 
     {
-        NSLog(@"Create Node");
-        [data createNode:theNewNode];
+        dispatch_queue_t q = dispatch_queue_create("queue", NULL);
+        dispatch_async(q, ^{
+            NSLog(@"saveBottoPressed");
+            OPEOSMData* data = [[OPEOSMData alloc] init];
+            
+            if(theNewNode.ident<0)
+            {
+                NSLog(@"Create Node");
+                int newIdent = [data createNode:theNewNode];
+                theNewNode.ident = newIdent;
+                theNewNode.version = 1;
+                node = theNewNode;
+                if(delegate)
+                {
+                    [delegate createdNode:node];
+                }
+            }
+            else
+            {
+                NSLog(@"Update Node");
+                int version = [data updateNode:theNewNode];
+                NSLog(@"Version after update: %d",version);
+                theNewNode.version = version;
+                node = theNewNode;
+                if(delegate)
+                {
+                    [delegate updatedNode:node];
+                }
+            }
+            
+        });
+        
+        dispatch_release(q);
+
+        
     }
-    else
-    {
-        NSLog(@"Update Node");
-        [data updateNode:theNewNode];
+    else {
+        NSLog(@"NO CHANGES TO UPLOAD");
     }
+     nodeIsEdited = NO;
 }
 
 - (void) deleteButtonPressed
@@ -232,10 +276,24 @@
     if([title isEqualToString:@"Yes"])
     {
         NSLog(@"Button OK was selected.");
-        OPEOSMData* data = [[OPEOSMData alloc] init];
-        [data deleteNode:node];
         
-        [self.navigationController popViewControllerAnimated:self];
+        
+        dispatch_queue_t q = dispatch_queue_create("queue", NULL);
+        dispatch_async(q, ^{
+            OPEOSMData* data = [[OPEOSMData alloc] init];
+            [data deleteNode:node];
+            if(delegate)
+            {
+                [delegate deletedNode:node];
+                
+            }
+        });
+        
+        dispatch_release(q);
+        
+        
+        
+        [self.navigationController popViewControllerAnimated:YES];
     }
     else if([title isEqualToString:@"Cancel"])
     {
@@ -245,7 +303,34 @@
 
 - (void) setText:(NSString *)text
 {
-    [theNewNode.tags setObject:text forKey:@"name"];
+    NSString * newName = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString * oldName = [theNewNode.tags objectForKey:@"name"];
+    if (![newName isEqualToString:@""]) 
+    {
+        NSLog(@"check string: %@",newName);
+        if (oldName) 
+        {
+            if(![oldName isEqualToString:newName])
+            {
+                [theNewNode.tags setObject:text forKey:@"name"];
+                nodeIsEdited = YES;
+            }
+        }
+        else {
+            [theNewNode.tags setObject:text forKey:@"name"];
+            nodeIsEdited = YES;
+        }
+    }
+    else {
+        if (oldName) {
+            [theNewNode.tags removeObjectForKey:@"name"];
+            nodeIsEdited = YES;
+        }
+        NSLog(@"emptyString");
+        
+    }
+    NSLog(@"NewNode: %@",theNewNode.tags);
+    
     //NSLog(@"we're back %@", text);
     //[self.tableView reloadData];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
@@ -256,7 +341,7 @@
     catAndType = cAndT;
     NSArray * KV = [tagInterpreter getOsmKeyValue:[[NSDictionary alloc] initWithObjectsAndKeys:[cAndT objectAtIndex:1],[cAndT objectAtIndex:0], nil]];
     NSLog(@"catAndType: %@",catAndType);
-    NSLog(@"KV: %@",KV);
+    NSLog(@"KV: %@",osmKeyValue);
     NSString * theNewKey;
     NSString * theNewValue;
     
@@ -266,21 +351,32 @@
         theNewValue = [[KV objectAtIndex:0] objectForKey:k];
     }
     
-    NSLog(@"ID: %d",node.ident);
-    NSLog(@"Version: %d",node.version);
-    NSLog(@"Lat: %f",node.coordinate.latitude);
-    NSLog(@"Lon: %f",node.coordinate.longitude);
-    NSLog(@"Tags: %@",node.tags);
     
-    [theNewNode.tags removeObjectsForKeys:[osmKeyValue allKeys]];
-    [theNewNode.tags setObject:theNewValue forKey:theNewKey];
-    //NSLog(@"id: %@ \n version: %@ \n lat: %f \n lon: %f \n newTags: %@ \n ",theNewNode.ident,theNewNode.version,theNewNode.coordinate.latitude,theNewNode.coordinate.longitude,theNewNode.tags);
     NSLog(@"ID: %d",theNewNode.ident);
     NSLog(@"Version: %d",theNewNode.version);
     NSLog(@"Lat: %f",theNewNode.coordinate.latitude);
     NSLog(@"Lon: %f",theNewNode.coordinate.longitude);
     NSLog(@"Tags: %@",theNewNode.tags);
     
+    if (![osmKeyValue isEqualToDictionary:[KV objectAtIndex:0]]) {
+        [theNewNode.tags removeObjectsForKeys:[osmKeyValue allKeys]];
+        [theNewNode.tags setObject:theNewValue forKey:theNewKey];
+        nodeIsEdited = YES;
+    }
+    
+    
+    
+    
+    
+    //NSLog(@"id: %@ \n version: %@ \n lat: %f \n lon: %f \n newTags: %@ \n ",theNewNode.ident,theNewNode.version,theNewNode.coordinate.latitude,theNewNode.coordinate.longitude,theNewNode.tags);
+    NSLog(@"ID: %d",theNewNode.ident);
+    NSLog(@"Version: %d",theNewNode.version);
+    NSLog(@"Lat: %f",theNewNode.coordinate.latitude);
+    NSLog(@"Lon: %f",theNewNode.coordinate.longitude);
+    NSLog(@"Tags: %@",theNewNode.tags);
+    theNewNode.image = [tagInterpreter getImageForNode:theNewNode];
+    
+    catAndType = cAndT;
     //[self.tableView reloadData];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }
