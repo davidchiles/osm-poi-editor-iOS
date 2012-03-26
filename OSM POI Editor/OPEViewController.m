@@ -21,6 +21,7 @@
 @synthesize infoButton,location, addOPEPoint;
 @synthesize openMarker,theNewMarker, label, calloutLabel;
 @synthesize addedNode,nodeInfo;
+@synthesize currentTile;
 
 - (void)didReceiveMemoryWarning
 {
@@ -48,6 +49,7 @@
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
+    currentTile = 0;
    
     //36079
     
@@ -138,7 +140,9 @@
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
     
     newMarker.data = node;
+    
     [mapView.markerManager addMarker:newMarker AtLatLong:node.coordinate];
+    
     
     return newMarker;
 
@@ -373,6 +377,19 @@
     [self.osmData.allNodes removeObjectForKey:[NSNumber numberWithInt:newNode.ident]];
 }
 
+#pragma - InfoViewDelegate
+
+-(void)setTileSource:(id)tileSource at:(int)number
+{
+    if (tileSource) {
+        currentTile = number;
+        [mapView.contents removeAllCachedImages];
+        [mapView.contents setTileSource:tileSource];
+    }
+    NSLog(@"TileSource: %@",((id<RMTileSource>)tileSource));
+    
+}
+
 #pragma - Actions
 
 - (IBAction)addPointButtonPressed:(id)sender
@@ -408,6 +425,8 @@
 {
     NSLog(@"info button pressed");
     OPEInfoViewController * viewer = [[OPEInfoViewController alloc] initWithNibName:@"OPEInfoViewController" bundle:nil];
+    [viewer setDelegate:self];
+    [viewer setCurrentNumber:currentTile];
     viewer.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     viewer.title = @"Info";
     [[self navigationController] pushViewController:viewer animated:YES];
@@ -426,7 +445,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated

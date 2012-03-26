@@ -16,6 +16,7 @@
 @implementation OPEOSMData
 
 @synthesize allNodes;
+@synthesize ignoreNodes;
 
 
 -(id) init
@@ -29,8 +30,10 @@
         auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
                                                            consumerKey:myConsumerKey
                                                             privateKey:myConsumerSecret];
+        allNodes = [[NSMutableDictionary alloc] init];
+        ignoreNodes = [[NSMutableDictionary alloc] init];
     }
-    allNodes = [[NSMutableDictionary alloc] init];
+    
     return self;
 }
 
@@ -43,7 +46,7 @@
     // Use when fetching binary data
     if ([request.userInfo objectForKey:@"type"] == @"download" )
     {
-        NSLog(@"Changeset finish: %@", [request responseString]);
+        //NSLog(@"Changeset finish: %@", [request responseString]);
         
     }
     
@@ -88,9 +91,12 @@
                 OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
                 if([tagInterpreter nodeHasRecognizedTags:newNode]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
                 {
+                    NSLog(@"New Node Id: %d",newNode.ident);
+                    NSLog(@"all nodes: %@",[self.allNodes objectForKey:[NSNumber numberWithInt:newNode.ident]]);
                     newNode.image = [tagInterpreter getImageForNode:newNode];
-                    if (![self.allNodes objectForKey:[NSNumber numberWithInt:newNode.ident]]) 
+                    if ([self.allNodes objectForKey:[NSNumber numberWithInt:newNode.ident]] ==nil && [self.ignoreNodes objectForKey:[NSNumber numberWithInt:newNode.ident]] == nil) 
                     {
+                        NSLog(@"add to node dictionary");
                         [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
                         [newNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
                     }
@@ -165,6 +171,7 @@
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Updated existing POI: %@",[tagInterpreter getName:node]]];
     int version = [self updateXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
+    [ignoreNodes setObject:node forKey:[NSNumber numberWithInt:node.ident]];
     return version;
     
 }
@@ -174,6 +181,7 @@
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Deleted POI: %@",[tagInterpreter getName:node]]];
     int version = [self deleteXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
+    
     return version;
     
 }

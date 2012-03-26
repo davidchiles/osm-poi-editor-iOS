@@ -15,7 +15,7 @@
 #import "OPEInfoViewController.h"
 #import "OPENodeViewController.h"
 
-@interface OPEViewController : UIViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate > {
+@interface OPEViewController : UIViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate > {
     IBOutlet RMMapView* mapView;
     
 }
@@ -33,6 +33,7 @@
 @property (nonatomic,strong) UILabel * calloutLabel;
 @property (nonatomic,strong) RMMarker * addedNode;
 @property (nonatomic,strong) RMMarker * nodeInfo;
+@property (nonatomic) int currentTile;
 
 
 - (RMMarker *) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;

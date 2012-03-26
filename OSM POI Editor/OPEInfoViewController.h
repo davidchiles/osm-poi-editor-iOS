@@ -8,16 +8,27 @@
 
 #import <UIKit/UIKit.h>
 #import "GTMOAuthViewControllerTouch.h"
+#import "RMMapView.h"
 
-@interface OPEInfoViewController : UIViewController
+@protocol OPEInfoViewControllerDelegate
+@optional
+-(void)setTileSource:(id)tileSource at:(int)number;
 
-@property (nonatomic, strong) IBOutlet UIButton * loginButton;
+@end
+
+@interface OPEInfoViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) UIButton * loginButton;
 @property (nonatomic, strong) IBOutlet UIButton * logoutButton;
 @property (nonatomic, strong) IBOutlet UITextView * textBox;
+@property (nonatomic, strong) id<OPEInfoViewControllerDelegate> delegate;
+@property (nonatomic) int currentNumber;
 
 - (IBAction)doneButtonPressed:(id)sender;
 - (IBAction)loginButtonPressed:(id)sender;
 - (IBAction)logoutButtonPressed:(id)sender;
+
+-(void)osmButtonPressed:(id)sender;
 
 - (void) signInToOSM;
 - (GTMOAuthAuthentication *)osmAuth;

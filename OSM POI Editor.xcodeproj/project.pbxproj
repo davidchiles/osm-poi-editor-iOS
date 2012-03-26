@@ -12,6 +12,10 @@
 		630B46FE14F46091000581AD /* symbols.plist in Resources */ = {isa = PBXBuildFile; fileRef = 630B46FD14F46091000581AD /* symbols.plist */; };
 		631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E014DC98D0000236F0 /* OPEOSMData.m */; };
 		631539E514DCA29B000236F0 /* OPENode.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E414DCA29B000236F0 /* OPENode.m */; };
+		632573B11520FFB200478B78 /* tileSource.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632573B01520FFB100478B78 /* tileSource.plist */; };
+		632573DB152108BD00478B78 /* OPEStamenTerrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 632573DA152108BD00478B78 /* OPEStamenTerrain.m */; };
+		632573DF15211A1C00478B78 /* OPEStamenToner.m in Sources */ = {isa = PBXBuildFile; fileRef = 632573DE15211A1C00478B78 /* OPEStamenToner.m */; };
+		632573E215211CE300478B78 /* OPEMapquestAerial.m in Sources */ = {isa = PBXBuildFile; fileRef = 632573E115211CE200478B78 /* OPEMapquestAerial.m */; };
 		6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB6E14DB519A00448852 /* UIKit.framework */; };
 		6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7014DB519A00448852 /* Foundation.framework */; };
 		6330AB7314DB519A00448852 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7214DB519A00448852 /* CoreGraphics.framework */; };
@@ -171,6 +175,13 @@
 		631539E014DC98D0000236F0 /* OPEOSMData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMData.m; sourceTree = "<group>"; };
 		631539E314DCA29B000236F0 /* OPENode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENode.h; sourceTree = "<group>"; };
 		631539E414DCA29B000236F0 /* OPENode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENode.m; sourceTree = "<group>"; };
+		632573B01520FFB100478B78 /* tileSource.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tileSource.plist; sourceTree = "<group>"; };
+		632573D9152108BD00478B78 /* OPEStamenTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEStamenTerrain.h; sourceTree = "<group>"; };
+		632573DA152108BD00478B78 /* OPEStamenTerrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEStamenTerrain.m; sourceTree = "<group>"; };
+		632573DD15211A1C00478B78 /* OPEStamenToner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEStamenToner.h; sourceTree = "<group>"; };
+		632573DE15211A1C00478B78 /* OPEStamenToner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEStamenToner.m; sourceTree = "<group>"; };
+		632573E015211CE200478B78 /* OPEMapquestAerial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMapquestAerial.h; sourceTree = "<group>"; };
+		632573E115211CE200478B78 /* OPEMapquestAerial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMapquestAerial.m; sourceTree = "<group>"; };
 		6330AB6A14DB519A00448852 /* OSM POI Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSM POI Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6330AB6E14DB519A00448852 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6330AB7014DB519A00448852 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -444,6 +455,19 @@
 			name = Icons;
 			sourceTree = "<group>";
 		};
+		632573DC152108C300478B78 /* MapSources */ = {
+			isa = PBXGroup;
+			children = (
+				632573D9152108BD00478B78 /* OPEStamenTerrain.h */,
+				632573DA152108BD00478B78 /* OPEStamenTerrain.m */,
+				632573DD15211A1C00478B78 /* OPEStamenToner.h */,
+				632573DE15211A1C00478B78 /* OPEStamenToner.m */,
+				632573E015211CE200478B78 /* OPEMapquestAerial.h */,
+				632573E115211CE200478B78 /* OPEMapquestAerial.m */,
+			);
+			name = MapSources;
+			sourceTree = "<group>";
+		};
 		6330AB5F14DB519A00448852 = {
 			isa = PBXGroup;
 			children = (
@@ -519,6 +543,7 @@
 				6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */,
 				6383948014EC4DDD00C74A57 /* OPEInfoViewController.xib */,
 				6330AB7514DB519A00448852 /* Supporting Files */,
+				632573DC152108C300478B78 /* MapSources */,
 			);
 			path = "OSM POI Editor";
 			sourceTree = "<group>";
@@ -560,6 +585,7 @@
 				637A89FD14E1C340003F656F /* SPOI.bundle */,
 				6345E58C14E347E800F55486 /* Tags.plist */,
 				630B46FD14F46091000581AD /* symbols.plist */,
+				632573B01520FFB100478B78 /* tileSource.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -877,6 +903,7 @@
 				635E0295151BB94F00B6BBCE /* right.png in Resources */,
 				635E0296151BB94F00B6BBCE /* right@2x.png in Resources */,
 				635E02BF151BE73B00B6BBCE /* location@2x.png in Resources */,
+				632573B11520FFB200478B78 /* tileSource.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -927,6 +954,9 @@
 				6383949514EC7DAC00C74A57 /* GTMOAuthAuthentication.m in Sources */,
 				6383949614EC7DAC00C74A57 /* GTMOAuthSignIn.m in Sources */,
 				6383949714EC7DAC00C74A57 /* GTMHTTPFetcher.m in Sources */,
+				632573DB152108BD00478B78 /* OPEStamenTerrain.m in Sources */,
+				632573DF15211A1C00478B78 /* OPEStamenToner.m in Sources */,
+				632573E215211CE300478B78 /* OPEMapquestAerial.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

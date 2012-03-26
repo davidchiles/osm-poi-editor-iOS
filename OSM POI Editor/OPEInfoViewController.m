@@ -7,11 +7,16 @@
 //
 
 #import "OPEInfoViewController.h"
+#import "OPEStamenTerrain.h"
+#import "OPEStamenToner.h"
+#import "OPEMapquestAerial.h"
+#import "RMOpenStreetMapSource.h"
 
 
 @implementation OPEInfoViewController
 
 @synthesize loginButton, logoutButton, textBox;
+@synthesize delegate, currentNumber;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -181,13 +186,123 @@
 
     
 }
+#pragma - TableView
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 4;
+    }
+    else {
+        return 1;
+    }
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return @"Tile Source";
+    }
+    else {
+        return @"";
+    }
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell * cell;
+    static NSString * tileIdentifier = @"Cell";
+    static NSString * buttonIdentifier = @"Cell1";
+    if (indexPath.section == 0) {
+        
+        //cell = [tableView dequeueReusableCellWithIdentifier:tileIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tileIdentifier];
+        }
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"Default OSM";
+        }
+        else if (indexPath.row == 1) {
+            cell.textLabel.text = @"Terrain";
+        }
+        else if (indexPath.row == 2){
+            cell.textLabel.text = @"Toner";
+        }
+        else if (indexPath.row == 3){
+            cell.textLabel.text = @"OpenMapquest Aerial";
+        }
+        
+        if (indexPath.row == currentNumber) {
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        }
+    
+    }
+    else if (indexPath.section == 1)
+    {
+        //cell = [tableView dequeueReusableCellWithIdentifier:buttonIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tileIdentifier];
+        }
+        loginButton.frame = cell.contentView.bounds;
+        NSLog(@"bounds: %f",cell.contentView.bounds.size.width);
+        NSLog(@"button: %f",loginButton.frame.size.width);
+        loginButton.frame = CGRectMake(loginButton.frame.origin.x, loginButton.frame.origin.y, 300.0f, loginButton.frame.size.height);
+        
+        [cell.contentView addSubview:loginButton];
+    }
+
+    return cell;
+    
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (indexPath.section == 0) {
+        UITableViewCell * cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:currentNumber inSection:0]]; //Switch check marks
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+        cell = [tableView cellForRowAtIndexPath:indexPath];
+        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        currentNumber = indexPath.row;
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        id <RMTileSource> newTileSource = nil;
+        if (indexPath.row == 0) {
+            newTileSource = [[RMOpenStreetMapSource alloc] init];
+        }
+        else if (indexPath.row == 1) {
+            newTileSource = [[OPEStamenTerrain alloc] init];
+        }
+        else if (indexPath.row == 2) {
+            newTileSource = [[OPEStamenToner alloc] init];
+        }
+        else if (indexPath.row == 3) {
+            newTileSource = [[OPEMapquestAerial alloc] init];
+        }
+        [delegate setTileSource:newTileSource at:indexPath.row ];
+    }
+}
+
+#pragma - TileSource
+
+-(void)changeTileSourceTo:(NSString *) newSoureceName
+{
+    id <RMTileSource> newTileSource = nil;
+    newTileSource = [[OPEStamenTerrain alloc] init];
+    
+    //[delegate setTileSource:newTileSource a];
+    
+}
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setLoginButtons];
+    //[self setLoginButtons];
     
         // if the auth object contains an access token, didAuth is now true
     
@@ -196,11 +311,26 @@
     // we can determine later if the auth object contains an access token
     // by calling its -canAuthorize method
     //[self setAuthentication:auth];
+    
+    self.loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.loginButton.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
+    [self.loginButton setTitle:@"Login to OSM" forState:UIControlStateNormal];
+    
+    [self.loginButton addTarget:self action:@selector(osmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+
+-(void)osmButtonPressed:(id)sender
+{
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    
         
 }
 
