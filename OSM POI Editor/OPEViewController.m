@@ -116,11 +116,13 @@
     else {
         rectSize = imgSize.height;
     }
-    
-    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, rectSize+2,rectSize+2)];
+    UIView * view;
+    //view = [[UIView alloc] init];
+    view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, rectSize+2,rectSize+2)];
     UIImageView * imageView = [[UIImageView alloc] initWithImage:source];  
     
     [view addSubview:imageView];
+    [view sizeToFit];
     imageView.center = view.center; //Center the Image
     
     [view.layer setBorderColor: [[UIColor blackColor] CGColor]];
@@ -128,7 +130,8 @@
     [view setBackgroundColor:[UIColor whiteColor]];
     
     CGSize size = [view bounds].size;
-    UIGraphicsBeginImageContext(size);
+    //UIGraphicsBeginImageContext(size);
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
     [[view layer] renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
