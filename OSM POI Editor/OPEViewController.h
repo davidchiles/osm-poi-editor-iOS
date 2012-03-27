@@ -24,7 +24,7 @@
 @property (nonatomic,strong) CLLocationManager* locationManager;
 @property (nonatomic,strong) OPETagInterpreter * interpreter;
 
-@property (nonatomic,strong) IBOutlet UIButton * infoButton;
+@property (nonatomic,strong) IBOutlet UIBarButtonItem * infoButton;
 @property (nonatomic,strong) IBOutlet UIBarButtonItem * location;
 @property (nonatomic,strong) IBOutlet UIBarButtonItem * addOPEPoint;
 @property (nonatomic,strong) RMMarker *openMarker;
@@ -33,6 +33,7 @@
 @property (nonatomic,strong) UILabel * calloutLabel;
 @property (nonatomic,strong) RMMarker * addedNode;
 @property (nonatomic,strong) RMMarker * nodeInfo;
+@property (nonatomic,strong) RMMarker * currentLocationMarker;
 @property (nonatomic) int currentTile;
 
 

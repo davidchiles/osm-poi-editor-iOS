@@ -99,7 +99,8 @@
         // Just to prove we're signed in, we'll attempt an authenticated fetch for the
         // signed-in user
         //[self doAnAuthenticatedAPIFetch];
-        NSLog(@"succeeeeeeded");
+        [self.loginButton setTitle:@"Logout of OSM" forState:UIControlStateNormal];
+        self.loginButton.tag = 1;
     }
     
     //[self updateUI];
@@ -143,8 +144,7 @@
     [auth setCallback:@"http://www.google.com/OAuthCallback"];
     
     // Display the autentication view
-    GTMOAuthViewControllerTouch *viewController;
-    viewController = [[GTMOAuthViewControllerTouch alloc] initWithScope:scope
+    GTMOAuthViewControllerTouch * viewController = [[GTMOAuthViewControllerTouch alloc] initWithScope:scope
                                                                language:nil
                                                         requestTokenURL:requestURL
                                                       authorizeTokenURL:authorizeURL
@@ -154,7 +154,6 @@
                                                                delegate:self
                                                        finishedSelector:@selector(viewController:finishedWithAuth:error:)];
     
-    textBox.text = [NSString stringWithFormat:@"User info: %@",auth.userData];
     [[self navigationController] pushViewController:viewController
                                            animated:YES];
 }
@@ -162,6 +161,8 @@
 - (void) signOutOfOSM
 {
     [GTMOAuthViewControllerTouch removeParamsFromKeychainForName:@"OSMPOIEditor"];
+    self.loginButton.tag = 0;
+    [self.loginButton setTitle:@"Login to OSM" forState:UIControlStateNormal];
 }
 
 - (void) setLoginButtons
@@ -244,7 +245,7 @@
     {
         //cell = [tableView dequeueReusableCellWithIdentifier:buttonIdentifier];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tileIdentifier];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:buttonIdentifier];
         }
         loginButton.frame = cell.contentView.bounds;
         NSLog(@"bounds: %f",cell.contentView.bounds.size.width);
@@ -315,15 +316,49 @@
     self.loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [self.loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.loginButton.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
-    [self.loginButton setTitle:@"Login to OSM" forState:UIControlStateNormal];
+    
+    
+    [self checkButtonStatus];
     
     [self.loginButton addTarget:self action:@selector(osmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
 }
 
+-(void)checkButtonStatus
+{
+    GTMOAuthAuthentication *auth = [self osmAuth];
+    BOOL didAuth= NO;
+    BOOL canAuth= NO;
+    BOOL hasAuth= NO;
+    if (auth) {
+        didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor" authentication:auth];
+        canAuth = [auth canAuthorize];
+        hasAuth = [auth hasAccessToken];
+    }
+    
+    if (didAuth && canAuth && hasAuth) {
+        NSLog(@"All three true");
+        
+        [self.loginButton setTitle:@"Logout of OSM" forState:UIControlStateNormal];
+        loginButton.tag = 1;
+    }
+    else
+    {
+        NSLog(@"did: %@ can: %@ has: %@",(didAuth ? @"YES" : @"NO"),(canAuth ? @"YES" : @"NO"),(hasAuth ? @"YES" : @"NO"));
+        [self.loginButton setTitle:@"Login to OSM" forState:UIControlStateNormal];
+        loginButton.tag = 0;
+    }
+    
+}
+
 -(void)osmButtonPressed:(id)sender
 {
-    
+    if (loginButton.tag == 0) {
+        [self signInToOSM];
+    }
+    else {
+        [self signOutOfOSM];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated

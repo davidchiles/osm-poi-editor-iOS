@@ -20,7 +20,7 @@
 @synthesize interpreter;
 @synthesize infoButton,location, addOPEPoint;
 @synthesize openMarker,theNewMarker, label, calloutLabel;
-@synthesize addedNode,nodeInfo;
+@synthesize addedNode,nodeInfo,currentLocationMarker;
 @synthesize currentTile;
 
 - (void)didReceiveMemoryWarning
@@ -35,6 +35,8 @@
 {
     [super viewDidLoad];
     
+    
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
     //Check OAuth
     
     
@@ -47,7 +49,7 @@
     interpreter = [[OPETagInterpreter alloc] init];
     [interpreter readPlist];
     
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
     
     currentTile = 0;
    
@@ -58,6 +60,7 @@
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
     [locationManager startUpdatingLocation];
     
     
@@ -103,31 +106,34 @@
 
 - (UIImage*)imageWithBorderFromImage:(UIImage*)source  //Draw box around centered image
 {
-    CGSize size = [source size];
-    //size = CGSizeMake(size.width+6, size.width+6);
-    double squareSize = 22;
-    size = CGSizeMake(squareSize, squareSize);
-    CGSize sourceSize = [source size];
-    //NSLog(@"size: %f %f",sourceSize.height,sourceSize.width);
+    CGSize imgSize = [source size];
+    
+    //NSLog(@"Image Size: h-%f w-%f",size.height,size.width);
+    float rectSize;
+    if (imgSize.width > imgSize.height) {
+        rectSize = imgSize.width;
+    }
+    else {
+        rectSize = imgSize.height;
+    }
+    
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, rectSize+2,rectSize+2)];
+    UIImageView * imageView = [[UIImageView alloc] initWithImage:source];  
+    
+    [view addSubview:imageView];
+    imageView.center = view.center; //Center the Image
+    
+    [view.layer setBorderColor: [[UIColor blackColor] CGColor]];
+    [view.layer setBorderWidth: 1.0];
+    [view setBackgroundColor:[UIColor whiteColor]];
+    
+    CGSize size = [view bounds].size;
     UIGraphicsBeginImageContext(size);
-    
-    double x = squareSize-sourceSize.width;
-    double y = squareSize-sourceSize.height;
-    
-    CGRect rect = CGRectMake(x/2, y/2, sourceSize.width, sourceSize.height);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    [[UIColor whiteColor] setFill];
-    CGRect wrect = CGRectMake(1, 1, size.width-2, size.height-2);
-    CGContextFillRect(context, wrect);
-    [source drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0];
-    
-    
-    CGContextSetRGBStrokeColor(context, 0, 0, 0, 1.0); 
-    
-    CGContextStrokeRect(context, wrect);
-    UIImage *testImg =  UIGraphicsGetImageFromCurrentImageContext();
+    [[view layer] renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    return testImg;
+    
+    return newImage;
 }
 
 
@@ -135,7 +141,11 @@
 {
     NSLog(@"start addMarkerAt %@",node.image);
     UIImage *icon = [UIImage imageNamed:node.image];   //Get image from stored value in node
-    icon = [self imageWithBorderFromImage:icon]; //center image inside box
+    //UIImage * icon = [UIImage imageNamed:@"restaurant"];
+    if (node.ident>0) {
+         icon = [self imageWithBorderFromImage:icon]; //center image inside box
+    }
+   
     //RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 1.0)];
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
     
@@ -161,15 +171,16 @@
     [openMarker hideLabel];
     OPENode * tempNode = (OPENode *)marker.data;
     
-    if(tempNode.ident < 0)
+    if(tempNode.ident == -1)
     {
         ((OPENode *)marker.data).coordinate = [map.markerManager latitudeLongitudeForMarker:marker];
         [self tapOnLabelForMarker:marker onMap:mapView onLayer:nil];
     }
     else if (marker.label) {
         [marker showLabel];
+        openMarker = marker;
     }
-    else {
+    else if (tempNode.ident > 0){
     
         //NSString * titulo = [((OPENode *)marker.data) getName];
         NSString * titulo = [interpreter getName:tempNode];
@@ -228,8 +239,10 @@
         [label bringSubviewToFront:buttongo];
         [marker setDelegate:self];
         [marker setLabel:label];
+        
+        openMarker = marker;
     }
-    openMarker = marker;
+    
 }
 
 
@@ -356,6 +369,26 @@
     
 }
 
+#pragma - LocationManagerDelegate
+
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"Denied Location: %@",error.userInfo);
+}
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    if (currentLocationMarker == nil) {
+        UIImage *icon = [UIImage imageNamed:@"userLocation.png"]; 
+        currentLocationMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
+        
+        [mapView.markerManager addMarker:currentLocationMarker AtLatLong:newLocation.coordinate];
+    }
+    else {
+        [mapView.markerManager moveMarker:currentLocationMarker AtLatLon:newLocation.coordinate];
+    }
+}
+
 #pragma - NodeViewDelegate
 
 -(void) updatedNode:(OPENode *)newNode
@@ -408,7 +441,7 @@
     else
     {
         OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
-        node.image = @"icon.png";
+        node.image = @"newNodeMarker.png";
         theNewMarker = [self addMarkerAt:center withNode:node];
     }
 }
@@ -445,7 +478,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated

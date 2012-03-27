@@ -182,7 +182,7 @@
         {
             if ([catAndType count]==2) 
             {
-                OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:nil];
+                OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:[NSBundle mainBundle]];
                 viewer.title = @"Type";
                 
                 viewer.category = [catAndType objectAtIndex:0];
@@ -192,7 +192,7 @@
                 [self.navigationController pushViewController:viewer animated:YES];
             }
             else {
-                OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OpeCategoryViewController" bundle:nil];
+                OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
                 viewer.title = @"Category";
                 
                 [self.navigationController pushViewController:viewer animated:YES];
@@ -202,7 +202,7 @@
         }
         else
         {
-            OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OpeCategoryViewController" bundle:nil];
+            OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
             viewer.title = @"Category";
             
             [self.navigationController pushViewController:viewer animated:YES];
