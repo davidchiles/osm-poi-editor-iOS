@@ -11,6 +11,7 @@
 #import "OPETextEdit.h"
 #import "OPECategoryViewController.h"
 #import "OPEOSMData.h"
+#import "OPEInfoViewController.h"
 
 
 
@@ -19,9 +20,10 @@
 @synthesize node, theNewNode, type;
 @synthesize tableView;
 @synthesize catAndType;
-@synthesize deleteButton;
+@synthesize deleteButton, saveButton;
 @synthesize delegate;
 @synthesize nodeIsEdited;
+@synthesize HUD;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,7 +51,7 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
+    self.saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
     
     [[self navigationItem] setRightBarButtonItem:saveButton];
     
@@ -65,22 +67,34 @@
     self.deleteButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     self.deleteButton.titleLabel.shadowColor = [UIColor lightGrayColor];
     self.deleteButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
+    //self.deleteButton.frame = CGRectMake(0, 0, 300, 44);
     [self.deleteButton addTarget:self action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     
     theNewNode = [[OPENode alloc] initWithNode:node];
+    [self checkSaveButton];
+    
     
     tagInterpreter = [OPETagInterpreter sharedInstance];
     
     catAndType = [[NSArray alloc] initWithObjects:[tagInterpreter getCategory:theNewNode],[tagInterpreter getType:theNewNode], nil];
     osmKeyValue =  [[NSDictionary alloc] initWithDictionary: [tagInterpreter getPrimaryKeyValue:theNewNode]];
     
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.HUD.delegate = self;
+    
     
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 3;
+    if(theNewNode.ident<0)
+    {
+        return 2;
+    }
+    else {
+        return 3;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -152,7 +166,10 @@
         }
         
         deleteButton.frame = cell.contentView.bounds;
-       
+        NSLog(@"bounds: %f",cell.contentView.bounds.size.width);
+        NSLog(@"button: %f",deleteButton.frame.size.width);
+        deleteButton.frame = CGRectMake(deleteButton.frame.origin.x, deleteButton.frame.origin.y, 300.0f, deleteButton.frame.size.height);
+        
         [cell.contentView addSubview:deleteButton];
     }
     
@@ -209,21 +226,43 @@
         }
     }
 }
+-(void) showOauthError
+{
+    if (HUD)
+    {
+        [HUD hide:YES];
+    }
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"OAuth Error"
+                                                      message:@"You need to login to OpenStreetMap"
+                                                     delegate:self
+                                            cancelButtonTitle:@"Login"
+                                            otherButtonTitles:@"Cancel", nil];
+    message.tag = 0;
+    [message show];
+}
 
 - (void) saveButtonPressed
 {
-    
-    if (nodeIsEdited) 
+    OPEOSMData* data = [[OPEOSMData alloc] init];
+    if (![data canAuth])
     {
+        [self showOauthError];
+    }
+    else if ([theNewNode isEqualToNode:node]) 
+    {
+        [self.view addSubview:HUD];
+        [HUD setLabelText:@"Saving..."];
+        [HUD show:YES];
         dispatch_queue_t q = dispatch_queue_create("queue", NULL);
         dispatch_async(q, ^{
             NSLog(@"saveBottoPressed");
-            OPEOSMData* data = [[OPEOSMData alloc] init];
+            
             
             if(theNewNode.ident<0)
             {
                 NSLog(@"Create Node");
                 int newIdent = [data createNode:theNewNode];
+                NSLog(@"New Id: %d", newIdent);
                 theNewNode.ident = newIdent;
                 theNewNode.version = 1;
                 node = theNewNode;
@@ -259,46 +298,69 @@
 
 - (void) deleteButtonPressed
 {
-    NSLog(@"Delete Button Pressed");
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Delete Point of Interest"
-                                                      message:@"Are you Sure you want to delete this node?"
-                                                     delegate:self
-                                            cancelButtonTitle:@"Yes"
-                                            otherButtonTitles:@"Cancel",nil];
-    
-    [message show];
+    OPEOSMData* data = [[OPEOSMData alloc] init];
+    if (![data canAuth])
+    {
+        [self showOauthError];
+    }
+    else {
+        NSLog(@"Delete Button Pressed");
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Delete Point of Interest"
+                                                          message:@"Are you Sure you want to delete this node?"
+                                                         delegate:self
+                                                cancelButtonTitle:@"Yes"
+                                                otherButtonTitles:@"Cancel",nil];
+        message.tag = 1;
+        
+        [message show];
+    }
+   
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    NSLog(@"AlertView Tag %d",alertView.tag);
+    if(alertView.tag == 0)
+    {
+        if([title isEqualToString:@"Login"])
+        {
+            NSLog(@"SignInToOSM");
+            [self signInToOSM];
+        }
+        
+    }
+    else if (alertView.tag == 1) {
+        if([title isEqualToString:@"Yes"])
+        {
+            NSLog(@"Button OK was selected.");
+            
+            
+            dispatch_queue_t q = dispatch_queue_create("queue", NULL);
+            dispatch_async(q, ^{
+                OPEOSMData* data = [[OPEOSMData alloc] init];
+                [data deleteNode:node];
+                if(delegate)
+                {
+                    [delegate deletedNode:node];
+                    
+                }
+            });
+            
+            dispatch_release(q);
+            
+            
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else if([title isEqualToString:@"Cancel"])
+        {
+            NSLog(@"Button Cancel was selected.");
+        }
+    }
     
-    if([title isEqualToString:@"Yes"])
-    {
-        NSLog(@"Button OK was selected.");
-        
-        
-        dispatch_queue_t q = dispatch_queue_create("queue", NULL);
-        dispatch_async(q, ^{
-            OPEOSMData* data = [[OPEOSMData alloc] init];
-            [data deleteNode:node];
-            if(delegate)
-            {
-                [delegate deletedNode:node];
-                
-            }
-        });
-        
-        dispatch_release(q);
-        
-        
-        
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    else if([title isEqualToString:@"Cancel"])
-    {
-        NSLog(@"Button Cancel was selected.");
-    }
+   
+    
 }
 
 - (void) setText:(NSString *)text
@@ -381,9 +443,24 @@
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }
 
+- (void)checkSaveButton
+{
+    NSLog(@"cAndT count %d",[catAndType count]);
+    if([theNewNode isEqualToNode:node] || [catAndType count]!=2)
+    {
+        NSLog(@"NO CHANGES YET");
+        self.saveButton.enabled= NO;
+    }
+    else {
+        self.saveButton.enabled = YES;
+    }
+}
+
 - (void) viewDidAppear:(BOOL)animated
 {
     [self.tableView reloadData];
+    [self checkSaveButton];
+    
 }
 
 - (void)viewDidUnload
@@ -397,6 +474,99 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma - OAuth
+- (void)viewController:(GTMOAuthViewControllerTouch *)viewController
+      finishedWithAuth:(GTMOAuthAuthentication *)auth
+                 error:(NSError *)error {
+    if (error != nil) {
+        // Authentication failed (perhaps the user denied access, or closed the
+        // window before granting access)
+        NSLog(@"Authentication error: %@", error);
+        NSData *responseData = [[error userInfo] objectForKey:@"data"];// kGTMHTTPFetcherStatusDataKey
+        if ([responseData length] > 0) {
+            // show the body of the server's authentication failure response
+            NSString *str = [[NSString alloc] initWithData:responseData
+                                                  encoding:NSUTF8StringEncoding];
+            NSLog(@"%@", str);
+        }
+        
+        //[self setAuthentication:nil];
+    } else {
+        // Authentication succeeded
+        //
+        // At this point, we either use the authentication object to explicitly
+        // authorize requests, like
+        //
+        //   [auth authorizeRequest:myNSURLMutableRequest]
+        //
+        // or store the authentication object into a GTM service object like
+        //
+        //   [[self contactService] setAuthorizer:auth];
+        
+        // save the authentication object
+        //[self setAuthentication:auth];
+        
+        // Just to prove we're signed in, we'll attempt an authenticated fetch for the
+        // signed-in user
+        //[self doAnAuthenticatedAPIFetch];
+        NSLog(@"Suceeed");
+        //[self dismissModalViewControllerAnimated:YES];
+    }
+    
+    //[self updateUI];
+}
+
+
+- (GTMOAuthAuthentication *)osmAuth {
+    NSString *myConsumerKey = @"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
+    NSString *myConsumerSecret = @"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
+    
+    GTMOAuthAuthentication *auth;
+    auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
+                                                       consumerKey:myConsumerKey
+                                                        privateKey:myConsumerSecret];
+    
+    // setting the service name lets us inspect the auth object later to know
+    // what service it is for
+    auth.serviceProvider = @"OSMPOIEditor";
+    
+    return auth;
+}
+
+- (void)signInToOSM {
+    
+    NSURL *requestURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/request_token"];
+    NSURL *accessURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/access_token"];
+    NSURL *authorizeURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/authorize"];
+    NSString *scope = @"http://api.openstreetmap.org/";
+    
+    GTMOAuthAuthentication *auth = [self osmAuth];
+    if (auth == nil) {
+        // perhaps display something friendlier in the UI?
+        NSLog(@"A valid consumer key and consumer secret are required for signing in to OSM");
+    }
+    
+    // set the callback URL to which the site should redirect, and for which
+    // the OAuth controller should look to determine when sign-in has
+    // finished or been canceled
+    //
+    // This URL does not need to be for an actual web page
+    [auth setCallback:@"http://www.google.com/OAuthCallback"];
+    
+    // Display the autentication view
+    GTMOAuthViewControllerTouch * viewController = [[GTMOAuthViewControllerTouch alloc] initWithScope:scope
+                                                                                             language:nil
+                                                                                      requestTokenURL:requestURL
+                                                                                    authorizeTokenURL:authorizeURL
+                                                                                       accessTokenURL:accessURL
+                                                                                       authentication:auth
+                                                                                       appServiceName:@"OSMPOIEditor"
+                                                                                             delegate:self
+                                                                                     finishedSelector:@selector(viewController:finishedWithAuth:error:)];
+    
+    [[self navigationController] pushViewController:viewController animated:YES];
 }
 
 @end

@@ -81,6 +81,7 @@
 		635E0295151BB94F00B6BBCE /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E028F151BB94F00B6BBCE /* right.png */; };
 		635E0296151BB94F00B6BBCE /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E0290151BB94F00B6BBCE /* right@2x.png */; };
 		635E02BF151BE73B00B6BBCE /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E02BE151BE73B00B6BBCE /* location@2x.png */; };
+		636D7819152E58F8005E31A3 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D7818152E58F8005E31A3 /* MBProgressHUD.m */; };
 		6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6370D354151A8BAE0081206A /* libsqlite3.dylib */; };
 		637A89FE14E1C340003F656F /* SPOI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 637A89FD14E1C340003F656F /* SPOI.bundle */; };
 		6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */; };
@@ -260,6 +261,8 @@
 		635E028F151BB94F00B6BBCE /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
 		635E0290151BB94F00B6BBCE /* right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right@2x.png"; sourceTree = "<group>"; };
 		635E02BE151BE73B00B6BBCE /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location@2x.png"; sourceTree = "<group>"; };
+		636D7817152E58F8005E31A3 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		636D7818152E58F8005E31A3 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		6370D354151A8BAE0081206A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		637A89FD14E1C340003F656F /* SPOI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SPOI.bundle; sourceTree = "<group>"; };
 		6383947E14EC4DDD00C74A57 /* OPEInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEInfoViewController.h; sourceTree = "<group>"; };
@@ -485,6 +488,7 @@
 			children = (
 				63ED798D151C1AD00076940F /* MapView.xcodeproj */,
 				6370D354151A8BAE0081206A /* libsqlite3.dylib */,
+				636D781A152E58FD005E31A3 /* MBProgressHUD */,
 				6330AB7414DB519A00448852 /* OSM POI Editor */,
 				6383948A14EC7D8C00C74A57 /* OAuth */,
 				637A89FB14E1B426003F656F /* Resources */,
@@ -582,6 +586,15 @@
 				635E0290151BB94F00B6BBCE /* right@2x.png */,
 			);
 			name = callout;
+			sourceTree = "<group>";
+		};
+		636D781A152E58FD005E31A3 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				636D7817152E58F8005E31A3 /* MBProgressHUD.h */,
+				636D7818152E58F8005E31A3 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		637A89FB14E1B426003F656F /* Resources */ = {
@@ -981,6 +994,7 @@
 				632573DB152108BD00478B78 /* OPEStamenTerrain.m in Sources */,
 				632573DF15211A1C00478B78 /* OPEStamenToner.m in Sources */,
 				632573E215211CE300478B78 /* OPEMapquestAerial.m in Sources */,
+				636D7819152E58F8005E31A3 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

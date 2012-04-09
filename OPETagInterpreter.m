@@ -123,11 +123,12 @@ static OPETagInterpreter *sharedManager = nil;
 
 - (void) setImageforNode: (OPENode *) node
 {
-    NSString * filePath = [[NSBundle mainBundle] pathForResource:@"Symbols" ofType:@"plist"];
-    NSDictionary* symbolDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    //NSString * filePath = [[NSBundle mainBundle] pathForResource:@"Symbols" ofType:@"plist"];
+    //NSDictionary* symbolDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
-    NSString * key;
-    NSString * value;
+    //NSString * key;
+    //NSString * value;
+    
     
 }
 

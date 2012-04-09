@@ -11,6 +11,7 @@
 #import "OPETagInterpreter.h"
 #import "OPETextEdit.h"
 #import "OPETypeViewController.h"
+#import "MBProgressHUD.h"
 
 @protocol OPENodeViewDelegate
 @optional
@@ -20,7 +21,7 @@
 @end
 
 
-@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, PassText, PassCategoryAndType>
+@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, PassText, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate>
 {
     UITableView *tableView;
     OPETagInterpreter * tagInterpreter;
@@ -33,11 +34,14 @@
 @property (nonatomic, strong) NSArray * catAndType;
 @property (nonatomic, strong) NSString * type;
 @property (nonatomic, strong) IBOutlet UIButton * deleteButton;
+@property (nonatomic, strong) UIBarButtonItem * saveButton;
 @property (nonatomic, strong) id <OPENodeViewDelegate> delegate;
 @property (nonatomic) BOOL nodeIsEdited;
+@property (nonatomic, strong) MBProgressHUD * HUD;
 
 - (void) saveButtonPressed;
 - (void) deleteButtonPressed;
+- (void) checkSaveButton;
 
 
 

@@ -7,6 +7,7 @@
 //
 
 #import "OPETextEdit.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation OPETextEdit
 
@@ -40,6 +41,7 @@
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
     [[self navigationItem] setRightBarButtonItem:saveButton];
     
+    [[textView layer] setCornerRadius:7.0];
     textView.text = text;
     [textView becomeFirstResponder];
     

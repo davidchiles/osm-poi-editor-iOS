@@ -17,6 +17,7 @@
 
 @synthesize allNodes;
 @synthesize ignoreNodes;
+@synthesize auth;
 
 
 -(id) init
@@ -44,12 +45,6 @@
     //NSString *responseString = [request responseString];
     
     // Use when fetching binary data
-    if ([request.userInfo objectForKey:@"type"] == @"download" )
-    {
-        //NSLog(@"Changeset finish: %@", [request responseString]);
-        
-    }
-    
     if ([request.userInfo objectForKey:@"type"] == @"download" )
     {
         NSMutableDictionary * newNodes = [[NSMutableDictionary alloc] init];
@@ -126,7 +121,29 @@
     NSError *error = [request error];
     if (error) {
         NSLog(@"Error Description: %@",error.description);
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"DownloadError"
+         object:self
+         userInfo:nil];
     }
+}
+
+-(BOOL) canAuth;
+{
+    BOOL didAuth = NO;
+    BOOL canAuth = NO;
+    if (auth) {
+        didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor"
+                                                             authentication:auth];
+        // if the auth object contains an access token, didAuth is now true
+        canAuth = [auth canAuthorize];
+    }
+    else {
+        return NO;
+    }
+    return didAuth && canAuth;
+
+    
 }
 /*
 -(void) getData

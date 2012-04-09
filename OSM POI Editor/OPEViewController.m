@@ -31,6 +31,8 @@
 
 #pragma mark - View lifecycle
 
+#define MINZOOM 16.0
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -84,7 +86,10 @@
     dispatch_queue_t q = dispatch_queue_create("queue", NULL);
     
     dispatch_async(q, ^{
-        [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+        if (mapView.contents.zoom > MINZOOM) {
+            [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+        }
+        
     });
     
     dispatch_release(q);
@@ -117,7 +122,6 @@
         rectSize = imgSize.height;
     }
     UIView * view;
-    //view = [[UIView alloc] init];
     view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, rectSize+2,rectSize+2)];
     UIImageView * imageView = [[UIImageView alloc] initWithImage:source];  
     
@@ -130,7 +134,6 @@
     [view setBackgroundColor:[UIColor whiteColor]];
     
     CGSize size = [view bounds].size;
-    //UIGraphicsBeginImageContext(size);
     UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
     [[view layer] renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -157,6 +160,7 @@
     [mapView.markerManager addMarker:newMarker AtLatLong:node.coordinate];
     
     
+   
     return newMarker;
 
 }
@@ -182,6 +186,7 @@
     else if (marker.label) {
         [marker showLabel];
         openMarker = marker;
+        [mapView bringSubviewToFront:marker.label];
     }
     else if (tempNode.ident > 0){
     
@@ -243,7 +248,10 @@
         [marker setDelegate:self];
         [marker setLabel:label];
         
+        
+        
         openMarker = marker;
+        [mapView bringSubviewToFront:marker.label];
     }
     
 }
@@ -336,7 +344,10 @@
     
     dispatch_async(q, ^{
         RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
-        [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+        if (mapView.contents.zoom > MINZOOM) {
+            [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+        }
+        
     });
     
     dispatch_release(q);
@@ -431,21 +442,31 @@
 - (IBAction)addPointButtonPressed:(id)sender
 {
     CLLocationCoordinate2D center = [self centerOfMap];
-    
-    if(openMarker) 
-    {
-        [openMarker hideLabel];
-        openMarker = nil;
+    if (mapView.contents.zoom > MINZOOM) {
+        if(openMarker) 
+        {
+            [openMarker hideLabel];
+            openMarker = nil;
+        }
+        if(theNewMarker)
+        {
+            [mapView.contents.markerManager moveMarker: theNewMarker AtLatLon:center];
+        }
+        else
+        {
+            OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
+            node.image = @"newNodeMarker.png";
+            theNewMarker = [self addMarkerAt:center withNode:node];
+        }
     }
-    if(theNewMarker)
-    {
-        [mapView.contents.markerManager moveMarker: theNewMarker AtLatLon:center];
-    }
-    else
-    {
-        OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
-        node.image = @"newNodeMarker.png";
-        theNewMarker = [self addMarkerAt:center withNode:node];
+    else {
+        UIAlertView * zoomAlert = [[UIAlertView alloc]
+                                   initWithTitle: @"Zoom Level"
+                                   message: @"You need to zoom in to add a new POI"
+                                   delegate: nil
+                                   cancelButtonTitle:@"OK"
+                                   otherButtonTitles:nil];
+        [zoomAlert show];
     }
 }
 

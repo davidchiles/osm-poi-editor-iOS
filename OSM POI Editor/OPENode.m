@@ -104,5 +104,20 @@
     return NO;
 }
 
+-(BOOL) isEqualToNode:(OPENode *)node
+{
+    if(self.ident != node.ident)
+        return NO;
+    else if (self.coordinate.latitude != node.coordinate.latitude)
+        return NO;
+    else if (self.coordinate.longitude != node.coordinate.longitude)
+        return NO;
+    else if (![self.tags isEqualToDictionary:node.tags])
+        return NO;
+    
+    return YES;
+    
+}
+
 
 @end

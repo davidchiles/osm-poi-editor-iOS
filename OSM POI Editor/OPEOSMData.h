@@ -19,13 +19,15 @@
 
 @property (nonatomic, strong) NSMutableDictionary * allNodes;
 @property (nonatomic, strong) NSMutableDictionary * ignoreNodes;
+@property (nonatomic, strong) GTMOAuthAuthentication * auth;
 
--(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
+- (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 - (NSInteger) openChangesetWithMessage: (NSString *) message;
 - (int) createXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
 - (int) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
 - (int) deleteXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
 - (void) closeChangeset: (NSInteger) changesetNumber;
+- (BOOL) canAuth;
 
 - (int) createNode: (OPENode *) node;
 - (int) updateNode: (OPENode *) node;

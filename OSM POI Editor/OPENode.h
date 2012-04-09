@@ -24,5 +24,6 @@
 -(void)addKey: (NSString*) key Value: (NSString*) val;
 -(BOOL)onlyTagCreatedBy;
 -(NSString *)getName;
+-(BOOL) isEqualToNode:(OPENode *) node;
 
 @end
