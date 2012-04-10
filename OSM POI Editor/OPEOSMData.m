@@ -181,6 +181,7 @@
     int newIdent = [self createXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
     return newIdent;
+    
 }
 - (int) updateNode: (OPENode *) node
 {
@@ -366,10 +367,18 @@
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod: @"PUT"];
     [auth authorizeRequest:urlRequest];
-    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
+    NSError * error;
+    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: &error];
+    [self uploadComplete];
     //NSData * returnData = nil;
     NSLog(@"Close Changeset Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
 }
 
-
+- (void) uploadComplete
+{
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"uploadComplete"
+     object:self
+     userInfo:nil];
+}
 @end

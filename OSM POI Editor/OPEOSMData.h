@@ -32,6 +32,7 @@
 - (int) createNode: (OPENode *) node;
 - (int) updateNode: (OPENode *) node;
 - (int) deleteNode: (OPENode *) node;
+- (void) uploadComplete;
 
 
 

@@ -161,6 +161,7 @@ static OPETagInterpreter *sharedManager = nil;
     for (NSString * i in plistDict)
     {
         //NSLog(@"NAME: %@",i);
+        NSMutableArray * types = [[NSMutableArray alloc] init];
         NSDictionary * categories = [plistDict objectForKey:i];
         for (NSString * osmKey in categories)
         {
@@ -187,10 +188,12 @@ static OPETagInterpreter *sharedManager = nil;
                 [osmKVandCategoryType setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[p objectForKey:osmValue],i, nil] forKey:[[NSDictionary alloc] initWithObjectsAndKeys:osmValue,osmKey,nil]];
                 //NSLog(@"type: %@",[p objectForKey:key]);
             }
-            [categoryAndType setObject:converted forKey:i];
+            NSLog(@"converted: %@",converted);
+            [types addObjectsFromArray:converted];
             
             [osmKeyandValue setObject:osmValues forKey:osmKey];
         }
+        [categoryAndType setObject:types forKey:i];
     }
     //categoryAndType = [categoryAndType  ;
     //[osmKeyandValue initWithDictionary: osmKeyandValue];

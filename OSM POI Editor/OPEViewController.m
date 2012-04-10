@@ -11,6 +11,7 @@
 #import "RMFoundation.h"
 #import "RMMarker.h"
 #import "RMMarkerManager.h"
+#import "OPEStamenTerrain.h"
 
 
 @implementation OPEViewController
@@ -77,6 +78,10 @@
     [mapView moveToLatLong: initLocation];
     
     [mapView.contents setZoom: 18];
+    id <RMTileSource> newTileSource = nil;
+    newTileSource = [[OPEStamenTerrain alloc] init];
+
+    [self setTileSource:newTileSource at:0];
     [self addMarkerAt:initLocation withNode:nil];
     
     RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
@@ -122,7 +127,7 @@
         rectSize = imgSize.height;
     }
     UIView * view;
-    view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, rectSize+2,rectSize+2)];
+    view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, rectSize+4,rectSize+4)];
     UIImageView * imageView = [[UIImageView alloc] initWithImage:source];  
     
     [view addSubview:imageView];
@@ -148,7 +153,7 @@
     NSLog(@"start addMarkerAt %@",node.image);
     UIImage *icon = [UIImage imageNamed:node.image];   //Get image from stored value in node
     //UIImage * icon = [UIImage imageNamed:@"restaurant"];
-    if (node.ident>0) {
+    if (node.ident>0 && ![node.image isEqualToString:@"none.png"]) {
          icon = [self imageWithBorderFromImage:icon]; //center image inside box
     }
    

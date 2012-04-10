@@ -83,6 +83,8 @@
     self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
     self.HUD.delegate = self;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadComplete:) name:@"uploadComplete" object:nil];
+    
     
 }
 
@@ -248,7 +250,7 @@
     {
         [self showOauthError];
     }
-    else if ([theNewNode isEqualToNode:node]) 
+    else if (![theNewNode isEqualToNode:node]) 
     {
         [self.view addSubview:HUD];
         [HUD setLabelText:@"Saving..."];
@@ -335,7 +337,9 @@
         {
             NSLog(@"Button OK was selected.");
             
-            
+            [self.view addSubview:HUD];
+            [HUD setLabelText:@"Deleting..."];
+            [HUD show:YES];
             dispatch_queue_t q = dispatch_queue_create("queue", NULL);
             dispatch_async(q, ^{
                 OPEOSMData* data = [[OPEOSMData alloc] init];
@@ -349,9 +353,6 @@
             
             dispatch_release(q);
             
-            
-            
-            [self.navigationController popViewControllerAnimated:YES];
         }
         else if([title isEqualToString:@"Cancel"])
         {
@@ -454,6 +455,14 @@
     else {
         self.saveButton.enabled = YES;
     }
+}
+-(void) uploadComplete:(NSNotification *)notification
+{
+    NSLog(@"got notification");
+    [self.HUD hide:YES];
+    node = theNewNode;
+    [self checkSaveButton];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) viewDidAppear:(BOOL)animated

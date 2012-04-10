@@ -60,7 +60,7 @@
 			<key>college</key>
 			<string>College</string>
 			<key>kindergarten</key>
-			<string>Kindergarden/Playschool/Nursery School</string>
+			<string>Kindergarden</string>
 			<key>library</key>
 			<string>Library</string>
 			<key>school</key>
@@ -86,7 +86,7 @@
 			<key>car_wash</key>
 			<string>Car Wash</string>
 			<key>ev_charging</key>
-			<string>Electric Vehicle Charging Facility</string>
+			<string>Electric Vehicle Charging</string>
 			<key>ferry_terminal</key>
 			<string>Ferry Terminal</string>
 			<key>fuel</key>
@@ -154,7 +154,7 @@
 			<key>stripclub</key>
 			<string>Stripclub</string>
 			<key>studio</key>
-			<string>TV, Radio or Recording Studio</string>
+			<string>Recording Studio</string>
 			<key>theatre</key>
 			<string>Theater or Opera House</string>
 		</dict>
@@ -208,7 +208,7 @@
 			<key>ruins</key>
 			<string>Ruins</string>
 			<key>wreck</key>
-			<string>Nautical Craft Sunken or Destroyed</string>
+			<string>Nautical Craft Wreck</string>
 		</dict>
 	</dict>
 	<key>Outdoors and Natural</key>
@@ -295,7 +295,7 @@
 			<key>lawyer</key>
 			<string>Lawyer</string>
 			<key>ngo</key>
-			<string>Non-Government Orginization</string>
+			<string>NGO</string>
 			<key>travel_agent</key>
 			<string>Travel Agency</string>
 		</dict>
@@ -342,7 +342,7 @@
 			<key>bed</key>
 			<string>Matress Store</string>
 			<key>beverages</key>
-			<string>Alcoholic and Non-Alcoholic Drinks</string>
+			<string>Beverages</string>
 			<key>bicycle</key>
 			<string>Bicycle Shop</string>
 			<key>books</key>
@@ -376,7 +376,7 @@
 			<key>department_store</key>
 			<string>Department Store</string>
 			<key>dive</key>
-			<string>Diving Equipment Store</string>
+			<string>Diving Store</string>
 			<key>dry_cleaning</key>
 			<string>Dry Cleaning</string>
 			<key>electronics</key>
@@ -412,7 +412,7 @@
 			<key>motorcycle</key>
 			<string>Motorcycle Dealership</string>
 			<key>musical_instruments</key>
-			<string>Music Store for instruments</string>
+			<string>Music Store for Instruments</string>
 			<key>newsagent</key>
 			<string>Newsstand </string>
 			<key>optician</key>

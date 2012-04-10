@@ -224,10 +224,10 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tileIdentifier];
         }
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"Default OSM";
+            cell.textLabel.text = @"Terrain";
         }
         else if (indexPath.row == 1) {
-            cell.textLabel.text = @"Terrain";
+            cell.textLabel.text = @"OSM Default";
         }
         else if (indexPath.row == 2){
             cell.textLabel.text = @"Toner";
@@ -272,10 +272,10 @@
         
         id <RMTileSource> newTileSource = nil;
         if (indexPath.row == 0) {
-            newTileSource = [[RMOpenStreetMapSource alloc] init];
+            newTileSource = [[OPEStamenTerrain alloc] init];
         }
         else if (indexPath.row == 1) {
-            newTileSource = [[OPEStamenTerrain alloc] init];
+            newTileSource = [[RMOpenStreetMapSource alloc] init];
         }
         else if (indexPath.row == 2) {
             newTileSource = [[OPEStamenToner alloc] init];
@@ -284,6 +284,7 @@
             newTileSource = [[OPEMapquestAerial alloc] init];
         }
         [delegate setTileSource:newTileSource at:indexPath.row ];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

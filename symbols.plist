@@ -11,19 +11,19 @@
 			<key>cafe</key>
 			<string>cafe.png</string>
 			<key>pub</key>
-			<string>icon.png</string>
+			<string>beer.png</string>
 			<key>fast_food</key>
 			<string>fast_food.png</string>
 			<key>bar</key>
 			<string>bar.png</string>
 			<key>biergarten</key>
-			<string>icon.png</string>
+			<string>beer.png</string>
 			<key>drinking_water</key>
 			<string>drinking_water.png</string>
 			<key>food_court</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>ice_cream</key>
-			<string>icon.png</string>
+			<string>ice_cream.png</string>
 		</dict>
 	</dict>
 	<key>Government</key>
@@ -31,21 +31,21 @@
 		<key>amenity</key>
 		<dict>
 			<key>townhall</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>embassy</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>fire_station</key>
 			<string>fire_statoin.png</string>
 			<key>police</key>
 			<string>police.png</string>
 			<key>post_office</key>
-			<string>icon.png</string>
+			<string>letter.png</string>
 			<key>prison</key>
 			<string>police.png</string>
 			<key>post_box</key>
-			<string>icon.png</string>
+			<string>letter.png</string>
 			<key>courthouse</key>
-			<string>icon.png</string>
+			<string>gavel.png</string>
 		</dict>
 		<key>office</key>
 		<dict>
@@ -58,15 +58,15 @@
 		<key>amenity</key>
 		<dict>
 			<key>college</key>
-			<string>icon.png</string>
+			<string>college.png</string>
 			<key>kindergarten</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>library</key>
-			<string>icon.png</string>
+			<string>book.png</string>
 			<key>school</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>university</key>
-			<string>icon.png</string>
+			<string>college.png</string>
 		</dict>
 	</dict>
 	<key>Transportation</key>
@@ -84,7 +84,7 @@
 			<key>car_sharing</key>
 			<string>car_rental.png</string>
 			<key>car_wash</key>
-			<string>icon.png</string>
+			<string>car_wash.png</string>
 			<key>ev_charging</key>
 			<string>EV.png</string>
 			<key>ferry_terminal</key>
@@ -99,7 +99,7 @@
 		<key>highway</key>
 		<dict>
 			<key>bus_stop</key>
-			<string>icon.png</string>
+			<string>bus.png</string>
 		</dict>
 		<key>railway</key>
 		<dict>
@@ -108,7 +108,7 @@
 			<key>subway_entrance</key>
 			<string>subway_entrance.png</string>
 			<key>tram_stop</key>
-			<string>icon.png</string>
+			<string>tram.png</string>
 		</dict>
 	</dict>
 	<key>Healthcare</key>
@@ -116,23 +116,23 @@
 		<key>amenity</key>
 		<dict>
 			<key>baby_hatch</key>
-			<string>icon.png</string>
+			<string>baby_hatch.png</string>
 			<key>clinic</key>
-			<string>icon.png</string>
+			<string>first_aid.png</string>
 			<key>dentist</key>
 			<string>dentist.png</string>
 			<key>doctors</key>
-			<string>icon.png</string>
+			<string>doctor.png</string>
 			<key>hospital</key>
 			<string>hospital.png</string>
 			<key>nursing_home</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>pharmacy</key>
 			<string>first_aid.png</string>
 			<key>social_facility</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>veterinary</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 		</dict>
 	</dict>
 	<key>Entertainment and Art</key>
@@ -140,28 +140,28 @@
 		<key>amenity</key>
 		<dict>
 			<key>arts_centre</key>
-			<string>icon.png</string>
+			<string>art.png</string>
 			<key>cinema</key>
-			<string>icon.png</string>
+			<string>movie.png</string>
 			<key>community_centre</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>fountain</key>
-			<string>icon.png</string>
+			<string>fountain.png</string>
 			<key>nightclub</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>social_centre</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>stripclub</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>studio</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>theatre</key>
-			<string>icon.png</string>
+			<string>theater.png</string>
 		</dict>
 		<key>tourism</key>
 		<dict>
 			<key>artwork</key>
-			<string>icon.png</string>
+			<string>art.png</string>
 		</dict>
 	</dict>
 	<key>Tourism</key>
@@ -169,46 +169,46 @@
 		<key>tourism</key>
 		<dict>
 			<key>apine_hut</key>
-			<string>icon.png</string>
+			<string>cabin.png</string>
 			<key>camp_site</key>
-			<string>icon.png</string>
+			<string>tent.png</string>
 			<key>caravan_site</key>
-			<string>icon.png</string>
+			<string>trailer.png</string>
 			<key>chalet</key>
-			<string>icon.png</string>
+			<string>bed.png</string>
 			<key>guest_house</key>
-			<string>icon.png</string>
+			<string>bed.png</string>
 			<key>hostel</key>
-			<string>icon.png</string>
+			<string>bed.png</string>
 			<key>hotel</key>
-			<string>icon.png</string>
+			<string>bed.png</string>
 			<key>motel</key>
-			<string>icon.png</string>
+			<string>bed.png</string>
 			<key>museum</key>
-			<string>icon.png</string>
+			<string>museum.png</string>
 			<key>theme_park</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>zoo</key>
-			<string>icon.png</string>
+			<string>zoo.png</string>
 		</dict>
 		<key>historic</key>
 		<dict>
 			<key>battlefield</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>boundry_stone</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>castle</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>fort</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>memorial</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>monument</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>ruins</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>wreck</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 		</dict>
 	</dict>
 	<key>Outdoors and Natural</key>
@@ -216,29 +216,29 @@
 		<key>tourism</key>
 		<dict>
 			<key>viewpoint</key>
-			<string>icon.png</string>
+			<string>viewpoint.png</string>
 			<key>picnic_site</key>
-			<string>icon.png</string>
+			<string>picnic.png</string>
 		</dict>
 		<key>natural</key>
 		<dict>
 			<key>beach</key>
-			<string>icon.png</string>
+			<string>beach.png</string>
 			<key>peak</key>
-			<string>icon.png</string>
+			<string>peak.png</string>
 			<key>spring</key>
-			<string>icon.png</string>
+			<string>water.png</string>
 			<key>tree</key>
-			<string>icon.png</string>
+			<string>tree.png</string>
 			<key>volcano</key>
-			<string>icon.png</string>
+			<string>volvano.png</string>
 			<key>water</key>
-			<string>icon.png</string>
+			<string>water.png</string>
 		</dict>
 		<key>amenity</key>
 		<dict>
 			<key>bench</key>
-			<string>icon.png</string>
+			<string>bench.png</string>
 		</dict>
 	</dict>
 	<key>Man Made</key>
@@ -246,27 +246,27 @@
 		<key>man_made</key>
 		<dict>
 			<key>flagpole</key>
-			<string>icon.png</string>
+			<string>flag.png</string>
 			<key>lighthouse</key>
-			<string>icon.png</string>
-			<key>storag	e_tank</key>
-			<string>icon.png</string>
+			<string>lighthouse.png</string>
+			<key>storage_tank</key>
+			<string>tank.png</string>
 			<key>tower</key>
-			<string>icon.png</string>
+			<string>tower.png</string>
 			<key>water_tower</key>
-			<string>icon.png</string>
+			<string>tank.png</string>
 			<key>windmill</key>
-			<string>icon.png</string>
+			<string>windmill.png</string>
 		</dict>
 		<key>emergency</key>
 		<dict>
 			<key>siren</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 		</dict>
 		<key>amenity</key>
 		<dict>
 			<key>clock</key>
-			<string>icon.png</string>
+			<string>clock.png</string>
 		</dict>
 	</dict>
 	<key>Services</key>
@@ -274,11 +274,11 @@
 		<key>amenity</key>
 		<dict>
 			<key>atm</key>
-			<string>icon.png</string>
+			<string>atm.png</string>
 			<key>bank</key>
-			<string>icon.png</string>
+			<string>bank.png</string>
 			<key>bureau_de_change</key>
-			<string>currency</string>
+			<string>currency.png</string>
 		</dict>
 		<key>office</key>
 		<dict>
@@ -305,24 +305,24 @@
 		<key>emergency</key>
 		<dict>
 			<key>fire_hydrant</key>
-			<string>icon.png</string>
+			<string>fire_hydrant.png</string>
 			<key>phone</key>
-			<string>icon.png</string>
+			<string>phone.png</string>
 		</dict>
 		<key>amenity</key>
 		<dict>
 			<key>phone</key>
-			<string>icon.png</string>
+			<string>phone.png</string>
 			<key>waste_basket</key>
-			<string>icon.png</string>
+			<string>trash.png</string>
 			<key>recycling</key>
-			<string>icon.png</string>
+			<string>recycle.png</string>
 			<key>telephone</key>
-			<string>icon.png</string>
+			<string>phone.png</string>
 			<key>toilets</key>
-			<string>icon.png</string>
+			<string>toilet.png</string>
 			<key>vending_machine</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 		</dict>
 	</dict>
 	<key>Shopping</key>
@@ -332,117 +332,117 @@
 			<key>alcohol</key>
 			<string>alcohol.png</string>
 			<key>art</key>
-			<string>icon.png</string>
+			<string>art.png</string>
 			<key>baby_goods</key>
-			<string>icon.png</string>
+			<string>baby_hatch.png</string>
 			<key>bakery</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>beauty</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>bed</key>
-			<string>icon.png</string>
+			<string>hotel.png</string>
 			<key>beverages</key>
 			<string>alcohol.png</string>
 			<key>bicycle</key>
 			<string>bicycle.png</string>
 			<key>books</key>
-			<string>icon.png</string>
+			<string>book.png</string>
 			<key>boutique</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>butcher</key>
-			<string>icon.png</string>
+			<string>butcher.png</string>
 			<key>car</key>
-			<string>icon.png</string>
+			<string>car.png</string>
 			<key>car_repair</key>
-			<string>icon.png</string>
+			<string>wrench.png</string>
 			<key>car_parts</key>
-			<string>icon.png</string>
+			<string>wrench.png</string>
 			<key>carpet</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>chemist</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>clothes</key>
-			<string>icon.png</string>
+			<string>shirt.png</string>
 			<key>computer</key>
-			<string>icon.png</string>
+			<string>computer.png</string>
 			<key>confectionery</key>
-			<string>icon.png</string>
+			<string>candy.png</string>
 			<key>convenience</key>
-			<string>icon.png</string>
+			<string>shop.png</string>
 			<key>copyshop</key>
-			<string>icon.png</string>
+			<string>paperclip.png</string>
 			<key>deli</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>department_store</key>
-			<string>icon.png</string>
+			<string>shop.png</string>
 			<key>dive</key>
-			<string>icon.png</string>
+			<string>scuba.png</string>
 			<key>dry_cleaning</key>
-			<string>icon.png</string>
+			<string>shirt.png</string>
 			<key>electronics</key>
-			<string>icon.png</string>
+			<string>computer.png</string>
 			<key>erotic</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>farm</key>
-			<string>icon.png</string>
+			<string>farm.png</string>
 			<key>florist</key>
-			<string>icon.png</string>
+			<string>flower.png</string>
 			<key>frame</key>
-			<string>icon.png</string>
+			<string>frame.png</string>
 			<key>furniture</key>
-			<string>icon.png</string>
+			<string>chair.png</string>
 			<key>garden_centre</key>
-			<string>icon.png</string>
+			<string>flower.png</string>
 			<key>general</key>
-			<string>icon.png</string>
+			<string>shop.png</string>
 			<key>gift</key>
-			<string>icon.png</string>
+			<string>gift.png</string>
 			<key>hairdresser</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>hardware</key>
-			<string>icon.png</string>
+			<string>wrench.png</string>
 			<key>jewelry</key>
-			<string>icon.png</string>
+			<string>ring.png</string>
 			<key>laundry</key>
-			<string>icon.png</string>
+			<string>shirt.png</string>
 			<key>mall</key>
-			<string>icon.png</string>
+			<string>shop.png</string>
 			<key>money_lender</key>
-			<string>icon.png</string>
+			<string>money.png</string>
 			<key>motorcycle</key>
-			<string>icon.png</string>
+			<string>motorcycle.png</string>
 			<key>musical_instruments</key>
-			<string>icon.png</string>
+			<string>trumpet.png</string>
 			<key>newsagent</key>
-			<string>icon.png</string>
+			<string>news.png</string>
 			<key>optician</key>
-			<string>icon.png</string>
+			<string>glasses.png</string>
 			<key>outdoor</key>
-			<string>icon.png</string>
+			<string>tree.png</string>
 			<key>paint</key>
-			<string>icon.png</string>
+			<string>paint_brush.png</string>
 			<key>pawnbroker</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>pet</key>
-			<string>icon.png</string>
+			<string>dog.png</string>
 			<key>second_hand</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>shoes</key>
-			<string>icon.png</string>
+			<string>shoe.png</string>
 			<key>sports</key>
-			<string>icon.png</string>
+			<string>basketball.png</string>
 			<key>stationery</key>
-			<string>icon.png</string>
+			<string>paperclip.png</string>
 			<key>supermarket</key>
-			<string>icon.png</string>
+			<string>shop.png</string>
 			<key>tattoo</key>
-			<string>icon.png</string>
+			<string>none.png</string>
 			<key>tobacco</key>
-			<string>icon.png</string>
+			<string>pipe.png</string>
 			<key>toys</key>
-			<string>icon.png</string>
+			<string>teddybear.png</string>
 			<key>video</key>
-			<string>icon.png</string>
+			<string>movie.png</string>
 		</dict>
 	</dict>
 </dict>

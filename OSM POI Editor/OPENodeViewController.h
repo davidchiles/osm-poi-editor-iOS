@@ -42,6 +42,7 @@
 - (void) saveButtonPressed;
 - (void) deleteButtonPressed;
 - (void) checkSaveButton;
+- (void) uploadComplete:(NSNotification *)notification;
 
 
 
