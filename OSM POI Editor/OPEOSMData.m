@@ -92,14 +92,16 @@
                     if ([self.allNodes objectForKey:[NSNumber numberWithInt:newNode.ident]] ==nil && [self.ignoreNodes objectForKey:[NSNumber numberWithInt:newNode.ident]] == nil) 
                     {
                         NSLog(@"add to node dictionary");
+                        if([newNode.tags objectForKey:@"name"])
+                        {
+                            NSLog(@"Name: %@",[newNode.tags objectForKey:@"name"]);
+                            NSString * newName = [OPEOSMData HTMLFix:[newNode.tags objectForKey:@"name"]];
+                            NSLog(@"New Name: %@",newName);
+                            [newNode.tags setObject:newName forKey:@"name"];
+                        }
                         [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
                         [newNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
                     }
-                }
-                
-                for (id key in newNode.tags) { //Used to Log all keys and values stored
-                    
-                    //NSLog(@"dkey: %@, dvalue: %@", key, [newNode.tags objectForKey:key]);
                 }
                 node = [TBXML nextSiblingNamed:@"node" searchFromElement:node];
             }
@@ -380,5 +382,23 @@
      postNotificationName:@"uploadComplete"
      object:self
      userInfo:nil];
+}
++(NSString *)backToHTML:(NSString *)string
+{
+    
+    string = [string stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
+    return string;
+}
+
+
++(NSString *)HTMLFix:(NSString *)string
+{
+    string = [string stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+    //string = [string stringByReplacingOccurrencesOfString:@"&apos;" withString:@"'"];
+    //string = [string stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
+    //string = [string stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+    //string = [string stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+    return string;
+
 }
 @end

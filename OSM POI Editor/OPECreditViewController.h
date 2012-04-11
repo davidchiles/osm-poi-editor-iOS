@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OPECreditViewController : UIViewController
+@interface OPECreditViewController : UIViewController <UIWebViewDelegate>
+
+@property (nonatomic, strong) IBOutlet UIWebView * webView;
+
+-(IBAction)doneButtonPressed:(id)sender;
 
 @end

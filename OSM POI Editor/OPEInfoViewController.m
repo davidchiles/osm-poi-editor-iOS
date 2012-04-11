@@ -318,6 +318,11 @@
     [self.loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.loginButton.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
     
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    [button addTarget:self action:@selector(infoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *info = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    self.navigationItem.rightBarButtonItem = info;
     
     [self checkButtonStatus];
     
@@ -360,6 +365,12 @@
     else {
         [self signOutOfOSM];
     }
+}
+-(void)infoButtonPressed:(id)sender
+{
+    OPECreditViewController * view = [[OPECreditViewController alloc] init];
+    view.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:view animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated

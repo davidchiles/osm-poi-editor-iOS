@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GTMOAuthViewControllerTouch.h"
 #import "RMMapView.h"
+#import "OPECreditViewController.h"
 
 @protocol OPEInfoViewControllerDelegate
 @optional
@@ -29,6 +30,7 @@
 - (IBAction)logoutButtonPressed:(id)sender;
 
 -(void)osmButtonPressed:(id)sender;
+-(void)infoButtonPressed:(id)sender;
 
 - (void) signInToOSM;
 - (GTMOAuthAuthentication *)osmAuth;

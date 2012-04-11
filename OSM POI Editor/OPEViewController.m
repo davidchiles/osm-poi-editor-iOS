@@ -180,7 +180,10 @@
 
 -(void) tapOnMarker:(RMMarker *)marker onMap:(RMMapView *)map
 {
+    
     [openMarker hideLabel];
+    openMarker.zPosition = 0.5;
+    marker.zPosition = 1.0;
     OPENode * tempNode = (OPENode *)marker.data;
     
     if(tempNode.ident == -1)
@@ -421,6 +424,7 @@
     [mapView.markerManager removeMarker:nodeInfo];
     [self addMarkerAt:newNode.coordinate withNode:newNode];
     [self.osmData.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+    theNewMarker = nil;
     
 }
 -(void) deletedNode:(OPENode *)newNode
@@ -490,7 +494,7 @@
     [viewer setDelegate:self];
     [viewer setCurrentNumber:currentTile];
     viewer.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    viewer.title = @"Info";
+    viewer.title = @"Settings";
     [[self navigationController] pushViewController:viewer animated:YES];
 }
 
