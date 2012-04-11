@@ -216,11 +216,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEInfoViewController.m"
-         timestampString = "355784839.896999"
+         timestampString = "355872432.273062"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "353"
-         endingLineNumber = "353"
+         startingLineNumber = "360"
+         endingLineNumber = "360"
          landmarkName = "-checkButtonStatus"
          landmarkType = "5">
       </FileBreakpoint>

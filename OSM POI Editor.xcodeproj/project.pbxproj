@@ -225,7 +225,6 @@
 		6330AC0314DB547D00448852 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0214DB547D00448852 /* libstdc++.6.dylib */; };
 		6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0414DB54A200448852 /* QuartzCore.framework */; };
 		6330AC0714DB5E4D00448852 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0614DB5E4D00448852 /* CoreLocation.framework */; };
-		6345E57C14E2FD1200F55486 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6345E57B14E2FD1200F55486 /* icon.png */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
 		6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6345E57F14E3122900F55486 /* OPENodeViewController.xib */; };
 		6345E58D14E347E800F55486 /* Tags.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6345E58C14E347E800F55486 /* Tags.plist */; };
@@ -291,15 +290,15 @@
 		63E4BF3214E0728200E0BD46 /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E4BF3014E0728200E0BD46 /* TBXML.m */; };
 		63E525C01534C44A00D2DA35 /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525BA1534C44A00D2DA35 /* icon-29.png */; };
 		63E525C11534C44A00D2DA35 /* icon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525BB1534C44A00D2DA35 /* icon-29@2x.png */; };
-		63E525C21534C44A00D2DA35 /* icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525BC1534C44A00D2DA35 /* icon-57.png */; };
-		63E525C31534C44A00D2DA35 /* icon-57@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525BD1534C44A00D2DA35 /* icon-57@2x.png */; };
 		63E525C41534C44A00D2DA35 /* icon-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525BE1534C44A00D2DA35 /* icon-512.png */; };
 		63E525C51534C44A00D2DA35 /* icon-512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525BF1534C44A00D2DA35 /* icon-512@2x.png */; };
-		63E525CD1534D57400D2DA35 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525CB1534D57400D2DA35 /* default.png */; };
-		63E525CE1534D57400D2DA35 /* default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525CC1534D57400D2DA35 /* default@2x.png */; };
 		63E525D21534D90500D2DA35 /* OPECreditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E525D01534D90200D2DA35 /* OPECreditViewController.m */; };
 		63E525D31534D90500D2DA35 /* OPECreditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63E525D11534D90200D2DA35 /* OPECreditViewController.xib */; };
 		63E525D91534E66500D2DA35 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 63E525D81534E66500D2DA35 /* about.html */; };
+		63E525E0153627B700D2DA35 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525DE153627B700D2DA35 /* default.png */; };
+		63E525E1153627B700D2DA35 /* default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525DF153627B700D2DA35 /* default@2x.png */; };
+		63E525E415362B7100D2DA35 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525E215362B7100D2DA35 /* icon.png */; };
+		63E525E515362B7100D2DA35 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63E525E315362B7100D2DA35 /* icon@2x.png */; };
 		63ED79A6151C1AF60076940F /* libMapView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63ED799E151C1AD10076940F /* libMapView.a */; };
 		63F9CCA514F32B2E00308DE1 /* iphone_delete_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */; };
 		63FFDC6614E480DF00701DEC /* OPETagInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */; };
@@ -566,7 +565,6 @@
 		6330AC0214DB547D00448852 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		6330AC0414DB54A200448852 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6330AC0614DB5E4D00448852 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		6345E57B14E2FD1200F55486 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
 		6345E57F14E3122900F55486 /* OPENodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPENodeViewController.xib; sourceTree = "<group>"; };
@@ -701,16 +699,16 @@
 		63E4BF3014E0728200E0BD46 /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
 		63E525BA1534C44A00D2DA35 /* icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29.png"; sourceTree = "<group>"; };
 		63E525BB1534C44A00D2DA35 /* icon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29@2x.png"; sourceTree = "<group>"; };
-		63E525BC1534C44A00D2DA35 /* icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-57.png"; sourceTree = "<group>"; };
-		63E525BD1534C44A00D2DA35 /* icon-57@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-57@2x.png"; sourceTree = "<group>"; };
 		63E525BE1534C44A00D2DA35 /* icon-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-512.png"; sourceTree = "<group>"; };
 		63E525BF1534C44A00D2DA35 /* icon-512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-512@2x.png"; sourceTree = "<group>"; };
-		63E525CB1534D57400D2DA35 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
-		63E525CC1534D57400D2DA35 /* default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default@2x.png"; sourceTree = "<group>"; };
 		63E525CF1534D90200D2DA35 /* OPECreditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECreditViewController.h; sourceTree = "<group>"; };
 		63E525D01534D90200D2DA35 /* OPECreditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECreditViewController.m; sourceTree = "<group>"; };
 		63E525D11534D90200D2DA35 /* OPECreditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPECreditViewController.xib; sourceTree = "<group>"; };
 		63E525D81534E66500D2DA35 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
+		63E525DE153627B700D2DA35 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
+		63E525DF153627B700D2DA35 /* default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default@2x.png"; sourceTree = "<group>"; };
+		63E525E215362B7100D2DA35 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		63E525E315362B7100D2DA35 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		63ED798D151C1AD00076940F /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = "Library/route-me-original/MapView/MapView.xcodeproj"; sourceTree = "<group>"; };
 		63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone_delete_button.png; sourceTree = "<group>"; };
 		63FFDC6414E480DF00701DEC /* OPETagInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPETagInterpreter.h; path = ../OPETagInterpreter.h; sourceTree = "<group>"; };
@@ -974,8 +972,8 @@
 				636D781A152E58FD005E31A3 /* MBProgressHUD */,
 				6330AB7414DB519A00448852 /* OSM POI Editor */,
 				6383948A14EC7D8C00C74A57 /* OAuth */,
-				63E525CB1534D57400D2DA35 /* default.png */,
-				63E525CC1534D57400D2DA35 /* default@2x.png */,
+				63E525DE153627B700D2DA35 /* default.png */,
+				63E525DF153627B700D2DA35 /* default@2x.png */,
 				637A89FB14E1B426003F656F /* Resources */,
 				63E279E514E1F32B009D02BD /* Reachability */,
 				63E2796D14E1F31B009D02BD /* Classes */,
@@ -1104,7 +1102,6 @@
 				63A2DB4415226CF6000C095D /* gear@2x.png */,
 				63A2DB3B152257FA000C095D /* userLocation.png */,
 				63A2DB3C152257FA000C095D /* userLocation@2x.png */,
-				6345E57B14E2FD1200F55486 /* icon.png */,
 				63E279EF14E2073C009D02BD /* Blue_Marker.png */,
 				637A89FD14E1C340003F656F /* SPOI.bundle */,
 				6345E58C14E347E800F55486 /* Tags.plist */,
@@ -1270,10 +1267,10 @@
 		63E525C61534C45100D2DA35 /* App Icon */ = {
 			isa = PBXGroup;
 			children = (
+				63E525E215362B7100D2DA35 /* icon.png */,
+				63E525E315362B7100D2DA35 /* icon@2x.png */,
 				63E525BA1534C44A00D2DA35 /* icon-29.png */,
 				63E525BB1534C44A00D2DA35 /* icon-29@2x.png */,
-				63E525BC1534C44A00D2DA35 /* icon-57.png */,
-				63E525BD1534C44A00D2DA35 /* icon-57@2x.png */,
 				63E525BE1534C44A00D2DA35 /* icon-512.png */,
 				63E525BF1534C44A00D2DA35 /* icon-512@2x.png */,
 			);
@@ -1376,7 +1373,6 @@
 				6330AB8814DB519A00448852 /* OPEViewController_iPad.xib in Resources */,
 				637A89FE14E1C340003F656F /* SPOI.bundle in Resources */,
 				63E279F014E2073C009D02BD /* Blue_Marker.png in Resources */,
-				6345E57C14E2FD1200F55486 /* icon.png in Resources */,
 				6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */,
 				6345E58D14E347E800F55486 /* Tags.plist in Resources */,
 				63CB49D414E9C5A0008C4551 /* OPETextEdit.xib in Resources */,
@@ -1600,14 +1596,14 @@
 				6325B4461534B28B00C8691F /* location@2x.png in Resources */,
 				63E525C01534C44A00D2DA35 /* icon-29.png in Resources */,
 				63E525C11534C44A00D2DA35 /* icon-29@2x.png in Resources */,
-				63E525C21534C44A00D2DA35 /* icon-57.png in Resources */,
-				63E525C31534C44A00D2DA35 /* icon-57@2x.png in Resources */,
 				63E525C41534C44A00D2DA35 /* icon-512.png in Resources */,
 				63E525C51534C44A00D2DA35 /* icon-512@2x.png in Resources */,
-				63E525CD1534D57400D2DA35 /* default.png in Resources */,
-				63E525CE1534D57400D2DA35 /* default@2x.png in Resources */,
 				63E525D31534D90500D2DA35 /* OPECreditViewController.xib in Resources */,
 				63E525D91534E66500D2DA35 /* about.html in Resources */,
+				63E525E0153627B700D2DA35 /* default.png in Resources */,
+				63E525E1153627B700D2DA35 /* default@2x.png in Resources */,
+				63E525E415362B7100D2DA35 /* icon.png in Resources */,
+				63E525E515362B7100D2DA35 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1768,6 +1764,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$SDK_DIR/usr/include/libxml2 \"$(PROJECT_DIR)/alpstein-route-me/MapView\"/**";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1790,6 +1787,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$SDK_DIR/usr/include/libxml2 \"$(PROJECT_DIR)/alpstein-route-me/MapView\"/**";
 				WRAPPER_EXTENSION = app;
 			};

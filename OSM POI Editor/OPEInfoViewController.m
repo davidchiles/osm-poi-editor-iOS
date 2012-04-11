@@ -190,7 +190,7 @@
 #pragma - TableView
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -217,6 +217,7 @@
     UITableViewCell * cell;
     static NSString * tileIdentifier = @"Cell";
     static NSString * buttonIdentifier = @"Cell1";
+    static NSString * aboutIdentifier = @"Cell2";
     if (indexPath.section == 0) {
         
         //cell = [tableView dequeueReusableCellWithIdentifier:tileIdentifier];
@@ -254,6 +255,14 @@
         
         [cell.contentView addSubview:loginButton];
     }
+    else if (indexPath.section == 2)
+    {
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:aboutIdentifier];
+        }
+        cell.textLabel.text = @"About POI+";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
 
     return cell;
     
@@ -286,6 +295,10 @@
         [delegate setTileSource:newTileSource at:indexPath.row ];
         [self.navigationController popViewControllerAnimated:YES];
     }
+    if (indexPath.section == 2) {
+        [self infoButtonPressed:nil];
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 #pragma - TileSource
@@ -317,12 +330,6 @@
     self.loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [self.loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.loginButton.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    [button addTarget:self action:@selector(infoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *info = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-    self.navigationItem.rightBarButtonItem = info;
     
     [self checkButtonStatus];
     
@@ -369,8 +376,10 @@
 -(void)infoButtonPressed:(id)sender
 {
     OPECreditViewController * view = [[OPECreditViewController alloc] init];
-    view.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentModalViewController:view animated:YES];
+    //view.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    //[self presentModalViewController:view animated:YES];
+    view.title = @"About";
+    [self.navigationController pushViewController:view animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
