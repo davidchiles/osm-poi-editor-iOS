@@ -2,481 +2,1891 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Food and Drink</key>
-	<dict>
-		<key>amenity</key>
-		<dict>
-			<key>restaurant</key>
-			<string>Restaurant</string>
-			<key>cafe</key>
-			<string>Cafe</string>
-			<key>pub</key>
-			<string>Pub</string>
-			<key>fast_food</key>
-			<string>Fast Food</string>
-			<key>bar</key>
-			<string>Bar</string>
-			<key>biergarten</key>
-			<string>Beer Garden</string>
-			<key>drinking_water</key>
-			<string>Drinking Water</string>
-			<key>food_court</key>
-			<string>Food Court</string>
-			<key>ice_cream</key>
-			<string>Ice Cream Shop</string>
-		</dict>
-	</dict>
-	<key>Government</key>
-	<dict>
-		<key>amenity</key>
-		<dict>
-			<key>townhall</key>
-			<string>Townhall or Cityhall</string>
-			<key>embassy</key>
-			<string>Embassy</string>
-			<key>fire_station</key>
-			<string>Fire Station</string>
-			<key>police</key>
-			<string>Police Station</string>
-			<key>post_office</key>
-			<string>Post Office</string>
-			<key>prison</key>
-			<string>Prison</string>
-			<key>post_box</key>
-			<string>Post Box</string>
-			<key>courthouse</key>
-			<string>Courthouse</string>
-		</dict>
-		<key>office</key>
-		<dict>
-			<key>government</key>
-			<string>Office Building</string>
-		</dict>
-	</dict>
 	<key>Education</key>
 	<dict>
-		<key>amenity</key>
+		<key>College</key>
 		<dict>
-			<key>college</key>
-			<string>College</string>
-			<key>kindergarten</key>
-			<string>Kindergarden</string>
-			<key>library</key>
-			<string>Library</string>
-			<key>school</key>
-			<string>School</string>
-			<key>university</key>
-			<string>University</string>
+			<key>image</key>
+			<string>college.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>college</string>
+			</dict>
 		</dict>
-	</dict>
-	<key>Transportation</key>
-	<dict>
-		<key>amenity</key>
+		<key>Kindergarden</key>
 		<dict>
-			<key>bicycle_parking</key>
-			<string>Bicycle Parking</string>
-			<key>bicycle_rental</key>
-			<string>Bicycle Rental</string>
-			<key>bus_station</key>
-			<string>Bus Station</string>
-			<key>car_rental</key>
-			<string>Car Rental</string>
-			<key>car_sharing</key>
-			<string>Car Sharing</string>
-			<key>car_wash</key>
-			<string>Car Wash</string>
-			<key>ev_charging</key>
-			<string>Electric Vehicle Charging</string>
-			<key>ferry_terminal</key>
-			<string>Ferry Terminal</string>
-			<key>fuel</key>
-			<string>Gas Station</string>
-			<key>parking</key>
-			<string>Parking</string>
-			<key>taxi</key>
-			<string>Taxi Stand</string>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>kindergarten</string>
+			</dict>
 		</dict>
-		<key>highway</key>
+		<key>Library</key>
 		<dict>
-			<key>bus_stop</key>
-			<string>Bus Stop</string>
+			<key>image</key>
+			<string>book.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>library</string>
+			</dict>
 		</dict>
-		<key>railway</key>
+		<key>School</key>
 		<dict>
-			<key>station</key>
-			<string>Rail Station</string>
-			<key>subway_entrance</key>
-			<string>Subway Entrance</string>
-			<key>tram_stop</key>
-			<string>Tram Stop</string>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>school</string>
+			</dict>
 		</dict>
-	</dict>
-	<key>Healthcare</key>
-	<dict>
-		<key>amenity</key>
+		<key>University</key>
 		<dict>
-			<key>baby_hatch</key>
-			<string>Baby Hatch</string>
-			<key>clinic</key>
-			<string>Clinic</string>
-			<key>dentist</key>
-			<string>Dentist</string>
-			<key>doctors</key>
-			<string>Doctor</string>
-			<key>hospital</key>
-			<string>Hospital</string>
-			<key>nursing_home</key>
-			<string>Nursing Home</string>
-			<key>pharmacy</key>
-			<string>Pharmacy</string>
-			<key>social_facility</key>
-			<string>Social Facility</string>
-			<key>veterinary</key>
-			<string>Veterinary</string>
+			<key>image</key>
+			<string>college.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>university</string>
+			</dict>
 		</dict>
 	</dict>
 	<key>Entertainment and Art</key>
 	<dict>
-		<key>amenity</key>
+		<key>Arts Center</key>
 		<dict>
-			<key>arts_centre</key>
-			<string>Arts Center</string>
-			<key>cinema</key>
-			<string>Movie Theater</string>
-			<key>community_centre</key>
-			<string>Community Center</string>
-			<key>fountain</key>
-			<string>Fountain</string>
-			<key>nightclub</key>
-			<string>Nightclub</string>
-			<key>social_centre</key>
-			<string>Social Center</string>
-			<key>stripclub</key>
-			<string>Stripclub</string>
-			<key>studio</key>
-			<string>Recording Studio</string>
-			<key>theatre</key>
-			<string>Theater or Opera House</string>
+			<key>image</key>
+			<string>art.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>arts_centre</string>
+			</dict>
 		</dict>
-		<key>tourism</key>
+		<key>Community Center</key>
 		<dict>
-			<key>artwork</key>
-			<string>Public Artwork</string>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>community_centre</string>
+			</dict>
+		</dict>
+		<key>Fountain</key>
+		<dict>
+			<key>image</key>
+			<string>fountain.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>fountain</string>
+			</dict>
+		</dict>
+		<key>Movie Theater</key>
+		<dict>
+			<key>image</key>
+			<string>movie.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>cinema</string>
+			</dict>
+		</dict>
+		<key>Nightclub</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>nightclub</string>
+			</dict>
+		</dict>
+		<key>Public Artwork</key>
+		<dict>
+			<key>image</key>
+			<string>art.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>artwork</string>
+			</dict>
+		</dict>
+		<key>Recording Studio</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>studio</string>
+			</dict>
+		</dict>
+		<key>Social Center</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>social_centre</string>
+			</dict>
+		</dict>
+		<key>Stripclub</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>stripclub</string>
+			</dict>
+		</dict>
+		<key>Theater or Opera House</key>
+		<dict>
+			<key>image</key>
+			<string>theater.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>theatre</string>
+			</dict>
 		</dict>
 	</dict>
-	<key>Tourism</key>
+	<key>Food and Drink</key>
 	<dict>
-		<key>tourism</key>
+		<key>Bar</key>
 		<dict>
-			<key>apine_hut</key>
-			<string>Mountain Hut</string>
-			<key>camp_site</key>
-			<string>Camp Site</string>
-			<key>caravan_site</key>
-			<string>RV Park</string>
-			<key>chalet</key>
-			<string>Chalet</string>
-			<key>guest_house</key>
-			<string>Bed and Breakfast</string>
-			<key>hostel</key>
-			<string>Hostel</string>
-			<key>hotel</key>
-			<string>Hotel</string>
-			<key>motel</key>
-			<string>Motel</string>
-			<key>museum</key>
-			<string>Museum</string>
-			<key>theme_park</key>
-			<string>Theme Park</string>
-			<key>zoo</key>
-			<string>Zoo</string>
+			<key>image</key>
+			<string>bar.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>bar</string>
+			</dict>
 		</dict>
-		<key>historic</key>
+		<key>Beer Garden</key>
 		<dict>
-			<key>battlefield</key>
-			<string>Historic Battlefield</string>
-			<key>boundry_stone</key>
-			<string>Historic Boundry Stone</string>
-			<key>castle</key>
-			<string>Castle</string>
-			<key>fort</key>
-			<string>Military Fort</string>
-			<key>memorial</key>
-			<string>Memorial</string>
-			<key>monument</key>
-			<string>Monument</string>
-			<key>ruins</key>
-			<string>Ruins</string>
-			<key>wreck</key>
-			<string>Nautical Craft Wreck</string>
+			<key>image</key>
+			<string>beer.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>biergarten</string>
+			</dict>
+		</dict>
+		<key>Cafe</key>
+		<dict>
+			<key>image</key>
+			<string>cafe.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>cafe</string>
+			</dict>
+		</dict>
+		<key>Drinking Water</key>
+		<dict>
+			<key>image</key>
+			<string>drinking_water.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>drinking_water</string>
+			</dict>
+		</dict>
+		<key>Fast Food</key>
+		<dict>
+			<key>image</key>
+			<string>fast_food.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>fast_food</string>
+			</dict>
+		</dict>
+		<key>Food Court</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>food_court</string>
+			</dict>
+		</dict>
+		<key>Ice Cream Shop</key>
+		<dict>
+			<key>image</key>
+			<string>ice_cream.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>ice_cream</string>
+			</dict>
+		</dict>
+		<key>Pub</key>
+		<dict>
+			<key>image</key>
+			<string>beer.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>pub</string>
+			</dict>
+		</dict>
+		<key>Restaurant</key>
+		<dict>
+			<key>image</key>
+			<string>restaurant.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>restaurant</string>
+			</dict>
 		</dict>
 	</dict>
-	<key>Outdoors and Natural</key>
+	<key>Government</key>
 	<dict>
-		<key>tourism</key>
+		<key>Courthouse</key>
 		<dict>
-			<key>viewpoint</key>
-			<string>Scenic Viewpoint</string>
-			<key>picnic_site</key>
-			<string>Picnic Site</string>
+			<key>image</key>
+			<string>gavel.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>courthouse</string>
+			</dict>
 		</dict>
-		<key>natural</key>
+		<key>Embassy</key>
 		<dict>
-			<key>beach</key>
-			<string>Beach</string>
-			<key>peak</key>
-			<string>Peak</string>
-			<key>spring</key>
-			<string>Spring</string>
-			<key>tree</key>
-			<string>Tree</string>
-			<key>volcano</key>
-			<string>Volcano</string>
-			<key>water</key>
-			<string>Lake</string>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>embassy</string>
+			</dict>
 		</dict>
-		<key>amenity</key>
+		<key>Fire Station</key>
 		<dict>
-			<key>bench</key>
-			<string>Bench</string>
+			<key>image</key>
+			<string>fire_statoin.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>fire_station</string>
+			</dict>
+		</dict>
+		<key>Office Building</key>
+		<dict>
+			<key>image</key>
+			<string>building.png</string>
+			<key>tags</key>
+			<dict>
+				<key>office</key>
+				<string>government</string>
+			</dict>
+		</dict>
+		<key>Police Station</key>
+		<dict>
+			<key>image</key>
+			<string>police.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>police</string>
+			</dict>
+		</dict>
+		<key>Post Box</key>
+		<dict>
+			<key>image</key>
+			<string>letter.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>post_box</string>
+			</dict>
+		</dict>
+		<key>Post Office</key>
+		<dict>
+			<key>image</key>
+			<string>letter.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>post_office</string>
+			</dict>
+		</dict>
+		<key>Prison</key>
+		<dict>
+			<key>image</key>
+			<string>police.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>prison</string>
+			</dict>
+		</dict>
+		<key>Townhall or Cityhall</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>townhall</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>Healthcare</key>
+	<dict>
+		<key>Baby Hatch</key>
+		<dict>
+			<key>image</key>
+			<string>baby_hatch.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>baby_hatch</string>
+			</dict>
+		</dict>
+		<key>Clinic</key>
+		<dict>
+			<key>image</key>
+			<string>first_aid.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>clinic</string>
+			</dict>
+		</dict>
+		<key>Dentist</key>
+		<dict>
+			<key>image</key>
+			<string>dentist.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>dentist</string>
+			</dict>
+		</dict>
+		<key>Doctor</key>
+		<dict>
+			<key>image</key>
+			<string>doctor.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>doctors</string>
+			</dict>
+		</dict>
+		<key>Hospital</key>
+		<dict>
+			<key>image</key>
+			<string>hospital.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>hospital</string>
+			</dict>
+		</dict>
+		<key>Nursing Home</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>nursing_home</string>
+			</dict>
+		</dict>
+		<key>Pharmacy</key>
+		<dict>
+			<key>image</key>
+			<string>first_aid.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>pharmacy</string>
+			</dict>
+		</dict>
+		<key>Social Facility</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>social_facility</string>
+			</dict>
+		</dict>
+		<key>Veterinary</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>veterinary</string>
+			</dict>
 		</dict>
 	</dict>
 	<key>Man Made</key>
 	<dict>
-		<key>man_made</key>
+		<key>Emergency Siren</key>
 		<dict>
-			<key>flagpole</key>
-			<string>Flagpole</string>
-			<key>lighthouse</key>
-			<string>Lighthouse</string>
-			<key>storage_tank</key>
-			<string>Storage Tank</string>
-			<key>tower</key>
-			<string>Tower</string>
-			<key>water_tower</key>
-			<string>Water Tower</string>
-			<key>windmill</key>
-			<string>Windmill</string>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>emergency</key>
+				<string>siren</string>
+			</dict>
 		</dict>
-		<key>emergency</key>
+		<key>Flagpole</key>
 		<dict>
-			<key>siren</key>
-			<string>Emergency Siren</string>
+			<key>image</key>
+			<string>flag.png</string>
+			<key>tags</key>
+			<dict>
+				<key>man_made</key>
+				<string>flagpole</string>
+			</dict>
 		</dict>
-		<key>amenity</key>
+		<key>Lighthouse</key>
 		<dict>
-			<key>clock</key>
-			<string>Publicly Visible Clock</string>
+			<key>image</key>
+			<string>lighthouse.png</string>
+			<key>tags</key>
+			<dict>
+				<key>man_made</key>
+				<string>lighthouse</string>
+			</dict>
 		</dict>
-	</dict>
-	<key>Services</key>
-	<dict>
-		<key>amenity</key>
+		<key>Publicly Visible Clock</key>
 		<dict>
-			<key>atm</key>
-			<string>ATM</string>
-			<key>bank</key>
-			<string>Bank</string>
-			<key>bureau_de_change</key>
-			<string>Currency Exchange</string>
+			<key>image</key>
+			<string>clock.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>clock</string>
+			</dict>
 		</dict>
-		<key>office</key>
+		<key>Storage Tank</key>
 		<dict>
-			<key>accountant</key>
-			<string>Accountant</string>
-			<key>architect</key>
-			<string>Architect</string>
-			<key>estate_agent</key>
-			<string>Realtor</string>
-			<key>insurance</key>
-			<string>Insurance</string>
-			<key>it</key>
-			<string>IT Specialist</string>
-			<key>lawyer</key>
-			<string>Lawyer</string>
-			<key>ngo</key>
-			<string>NGO</string>
-			<key>travel_agent</key>
-			<string>Travel Agency</string>
+			<key>image</key>
+			<string>tank.png</string>
+			<key>tags</key>
+			<dict>
+				<key>man_made</key>
+				<string>storage_tank</string>
+			</dict>
+		</dict>
+		<key>Tower</key>
+		<dict>
+			<key>image</key>
+			<string>tower.png</string>
+			<key>tags</key>
+			<dict>
+				<key>man_made</key>
+				<string>tower</string>
+			</dict>
+		</dict>
+		<key>Water Tower</key>
+		<dict>
+			<key>image</key>
+			<string>tank.png</string>
+			<key>tags</key>
+			<dict>
+				<key>man_made</key>
+				<string>water_tower</string>
+			</dict>
+		</dict>
+		<key>Windmill</key>
+		<dict>
+			<key>image</key>
+			<string>windmill.png</string>
+			<key>tags</key>
+			<dict>
+				<key>man_made</key>
+				<string>windmill</string>
+			</dict>
 		</dict>
 	</dict>
 	<key>Other</key>
 	<dict>
-		<key>emergency</key>
+		<key>Emergency Phone</key>
 		<dict>
-			<key>fire_hydrant</key>
-			<string>Fire Hydrant</string>
-			<key>phone</key>
-			<string>Emergency Phone</string>
+			<key>image</key>
+			<string>phone.png</string>
+			<key>tags</key>
+			<dict>
+				<key>emergency</key>
+				<string>phone</string>
+			</dict>
 		</dict>
-		<key>amenity</key>
+		<key>Fire Hydrant</key>
 		<dict>
-			<key>phone</key>
-			<string>Public Telephone</string>
-			<key>waste_basket</key>
-			<string>Trash Can</string>
-			<key>recycling</key>
-			<string>Recycling Can</string>
-			<key>telephone</key>
-			<string>Public Telephone</string>
-			<key>toilets</key>
-			<string>Public Toilets</string>
-			<key>vending_machine</key>
-			<string>Vending Machine</string>
+			<key>image</key>
+			<string>fire_hydrant.png</string>
+			<key>tags</key>
+			<dict>
+				<key>emergency</key>
+				<string>fire_hydrant</string>
+			</dict>
+		</dict>
+		<key>Public Telephone</key>
+		<dict>
+			<key>image</key>
+			<string>phone.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>telephone</string>
+			</dict>
+		</dict>
+		<key>Public Toilets</key>
+		<dict>
+			<key>image</key>
+			<string>toilet.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>toilets</string>
+			</dict>
+		</dict>
+		<key>Recycling Can</key>
+		<dict>
+			<key>image</key>
+			<string>recycle.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>recycling</string>
+			</dict>
+		</dict>
+		<key>Trash Can</key>
+		<dict>
+			<key>image</key>
+			<string>trash.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>waste_basket</string>
+			</dict>
+		</dict>
+		<key>Vending Machine</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>vending_machine</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>Outdoors and Natural</key>
+	<dict>
+		<key>Beach</key>
+		<dict>
+			<key>image</key>
+			<string>beach.png</string>
+			<key>tags</key>
+			<dict>
+				<key>natural</key>
+				<string>beach</string>
+			</dict>
+		</dict>
+		<key>Bench</key>
+		<dict>
+			<key>image</key>
+			<string>bench.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>bench</string>
+			</dict>
+		</dict>
+		<key>Lake</key>
+		<dict>
+			<key>image</key>
+			<string>water.png</string>
+			<key>tags</key>
+			<dict>
+				<key>natural</key>
+				<string>water</string>
+			</dict>
+		</dict>
+		<key>Peak</key>
+		<dict>
+			<key>image</key>
+			<string>peak.png</string>
+			<key>tags</key>
+			<dict>
+				<key>natural</key>
+				<string>peak</string>
+			</dict>
+		</dict>
+		<key>Picnic Site</key>
+		<dict>
+			<key>image</key>
+			<string>picnic.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>picnic_site</string>
+			</dict>
+		</dict>
+		<key>Scenic Viewpoint</key>
+		<dict>
+			<key>image</key>
+			<string>viewpoint.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>viewpoint</string>
+			</dict>
+		</dict>
+		<key>Spring</key>
+		<dict>
+			<key>image</key>
+			<string>water.png</string>
+			<key>tags</key>
+			<dict>
+				<key>natural</key>
+				<string>spring</string>
+			</dict>
+		</dict>
+		<key>Tree</key>
+		<dict>
+			<key>image</key>
+			<string>tree.png</string>
+			<key>tags</key>
+			<dict>
+				<key>natural</key>
+				<string>tree</string>
+			</dict>
+		</dict>
+		<key>Volcano</key>
+		<dict>
+			<key>image</key>
+			<string>volvano.png</string>
+			<key>tags</key>
+			<dict>
+				<key>natural</key>
+				<string>volcano</string>
+			</dict>
 		</dict>
 	</dict>
 	<key>Place of Worship</key>
 	<dict>
-		<key>religion</key>
+		<key>Buddhist</key>
 		<dict>
-			<key>buddhist</key>
-			<string>Buddhist</string>
-			<key>christian</key>
-			<string>Christian</string>
-			<key>hindu</key>
-			<string>Hindu</string>
-			<key>jewish</key>
-			<string>Jewish</string>
-			<key>multifaith</key>
-			<string>Multifaith</string>
-			<key>muslim</key>
-			<string>Muslim</string>
-			<key>pagan</key>
-			<string>Pagan</string>
-			<key>scientologist</key>
-			<string>Scientologist</string>
-			<key>shinto</key>
-			<string>Shinto</string>
-			<key>sikh</key>
-			<string>Sikh</string>
-			<key>spiritualist</key>
-			<string>Spiritualist</string>
-			<key>taoist</key>
-			<string>Taoist</string>
-			<key>unitarian</key>
-			<string>Unitarian</string>
-			<key>voodoo</key>
-			<string>Voodoo</string>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>buddhist</string>
+			</dict>
+		</dict>
+		<key>Christian</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>christian</string>
+			</dict>
+		</dict>
+		<key>Hindu</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>hindu</string>
+			</dict>
+		</dict>
+		<key>Jewish</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>jewish</string>
+			</dict>
+		</dict>
+		<key>Multifaith</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>multifaith</string>
+			</dict>
+		</dict>
+		<key>Muslim</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>muslim</string>
+			</dict>
+		</dict>
+		<key>Pagan</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>pagan</string>
+			</dict>
+		</dict>
+		<key>Scientologist</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>scientologist</string>
+			</dict>
+		</dict>
+		<key>Shinto</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>shinto</string>
+			</dict>
+		</dict>
+		<key>Sikh</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>sikh</string>
+			</dict>
+		</dict>
+		<key>Spiritualist</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>spiritualist</string>
+			</dict>
+		</dict>
+		<key>Taoist</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>taoist</string>
+			</dict>
+		</dict>
+		<key>Unitarian</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>unitarian</string>
+			</dict>
+		</dict>
+		<key>Voodoo</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>place_of_worship</string>
+				<key>religion</key>
+				<string>voodoo</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>Services</key>
+	<dict>
+		<key>ATM</key>
+		<dict>
+			<key>image</key>
+			<string>atm.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>atm</string>
+			</dict>
+		</dict>
+		<key>Accountant</key>
+		<dict>
+			<key>image</key>
+			<string>building.png</string>
+			<key>tags</key>
+			<dict>
+				<key>office</key>
+				<string>accountant</string>
+			</dict>
+		</dict>
+		<key>Architect</key>
+		<dict>
+			<key>image</key>
+			<string>building.png</string>
+			<key>tags</key>
+			<dict>
+				<key>office</key>
+				<string>architect</string>
+			</dict>
+		</dict>
+		<key>Bank</key>
+		<dict>
+			<key>image</key>
+			<string>bank.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>bank</string>
+			</dict>
+		</dict>
+		<key>Currency Exchange</key>
+		<dict>
+			<key>image</key>
+			<string>currency.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>bureau_de_change</string>
+			</dict>
+		</dict>
+		<key>IT Specialist</key>
+		<dict>
+			<key>image</key>
+			<string>building.png</string>
+			<key>tags</key>
+			<dict>
+				<key>office</key>
+				<string>it</string>
+			</dict>
+		</dict>
+		<key>Insurance</key>
+		<dict>
+			<key>image</key>
+			<string>building.png</string>
+			<key>tags</key>
+			<dict>
+				<key>office</key>
+				<string>insurance</string>
+			</dict>
+		</dict>
+		<key>Lawyer</key>
+		<dict>
+			<key>image</key>
+			<string>building.png</string>
+			<key>tags</key>
+			<dict>
+				<key>office</key>
+				<string>lawyer</string>
+			</dict>
+		</dict>
+		<key>NGO</key>
+		<dict>
+			<key>image</key>
+			<string>building.png</string>
+			<key>tags</key>
+			<dict>
+				<key>office</key>
+				<string>ngo</string>
+			</dict>
+		</dict>
+		<key>Realtor</key>
+		<dict>
+			<key>image</key>
+			<string>building.png</string>
+			<key>tags</key>
+			<dict>
+				<key>office</key>
+				<string>estate_agent</string>
+			</dict>
+		</dict>
+		<key>Travel Agency</key>
+		<dict>
+			<key>image</key>
+			<string>building.png</string>
+			<key>tags</key>
+			<dict>
+				<key>office</key>
+				<string>travel_agent</string>
+			</dict>
 		</dict>
 	</dict>
 	<key>Shopping</key>
 	<dict>
-		<key>shop</key>
+		<key>Alcohol</key>
 		<dict>
-			<key>alcohol</key>
-			<string>Alcohol</string>
-			<key>art</key>
-			<string>Art</string>
-			<key>baby_goods</key>
-			<string>Baby Goods</string>
-			<key>bakery</key>
-			<string>Bakery</string>
-			<key>beauty</key>
-			<string>Spa or Nail Salon</string>
-			<key>bed</key>
-			<string>Matress Store</string>
-			<key>beverages</key>
-			<string>Beverages</string>
-			<key>bicycle</key>
-			<string>Bicycle Shop</string>
-			<key>books</key>
-			<string>Book Store</string>
-			<key>boutique</key>
-			<string>Boutique</string>
-			<key>butcher</key>
-			<string>Butcher</string>
-			<key>car</key>
-			<string>Car Dealership</string>
-			<key>car_repair</key>
-			<string>Car Repair</string>
-			<key>car_parts</key>
-			<string>Car Parts Store</string>
-			<key>carpet</key>
-			<string>Carpet</string>
-			<key>chemist</key>
-			<string>Cosmetics</string>
-			<key>clothes</key>
-			<string>Clothes</string>
-			<key>computer</key>
-			<string>Computer</string>
-			<key>confectionery</key>
-			<string>Candy Shop</string>
-			<key>convenience</key>
-			<string>Convenience Store</string>
-			<key>copyshop</key>
-			<string>Copy and Fax Shop</string>
-			<key>deli</key>
-			<string>Deli</string>
-			<key>department_store</key>
-			<string>Department Store</string>
-			<key>dive</key>
-			<string>Diving Store</string>
-			<key>dry_cleaning</key>
-			<string>Dry Cleaning</string>
-			<key>electronics</key>
-			<string>Electronics</string>
-			<key>erotic</key>
-			<string>XXX/Adult Store</string>
-			<key>farm</key>
-			<string>Farm Store</string>
-			<key>florist</key>
-			<string>Florist</string>
-			<key>frame</key>
-			<string>Frame Store</string>
-			<key>furniture</key>
-			<string>Furniture Store</string>
-			<key>garden_centre</key>
-			<string>Garden Center</string>
-			<key>general</key>
-			<string>General Store</string>
-			<key>gift</key>
-			<string>Gift Shop</string>
-			<key>hairdresser</key>
-			<string>Hairdresser</string>
-			<key>hardware</key>
-			<string>Hardware Store</string>
-			<key>jewelry</key>
-			<string>Jewelry Store</string>
-			<key>laundry</key>
-			<string>Laundromat</string>
-			<key>mall</key>
-			<string>Shopping Mall</string>
-			<key>money_lender</key>
-			<string>Loans</string>
-			<key>motorcycle</key>
-			<string>Motorcycle Dealership</string>
-			<key>musical_instruments</key>
-			<string>Music Store for Instruments</string>
-			<key>newsagent</key>
-			<string>Newsstand </string>
-			<key>optician</key>
-			<string>Optician</string>
-			<key>outdoor</key>
-			<string>Outdoor Store</string>
-			<key>paint</key>
-			<string>Paint</string>
-			<key>pawnbroker</key>
-			<string>Pawn Shop</string>
-			<key>pet</key>
-			<string>Pet Store</string>
-			<key>second_hand</key>
-			<string>Second Hand Store</string>
-			<key>shoes</key>
-			<string>Shoe Store</string>
-			<key>sports</key>
-			<string>Sporting Goods</string>
-			<key>stationery</key>
-			<string>Office Supplies</string>
-			<key>supermarket</key>
-			<string>Supermarket</string>
-			<key>tattoo</key>
-			<string>Tattoo Parlor</string>
-			<key>tobacco</key>
-			<string>Tobacco Shop</string>
-			<key>toys</key>
-			<string>Toy Store</string>
-			<key>video</key>
-			<string>Video Rental</string>
+			<key>image</key>
+			<string>alcohol.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>alcohol</string>
+			</dict>
+		</dict>
+		<key>Art</key>
+		<dict>
+			<key>image</key>
+			<string>art.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>art</string>
+			</dict>
+		</dict>
+		<key>Baby Goods</key>
+		<dict>
+			<key>image</key>
+			<string>baby_hatch.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>baby_goods</string>
+			</dict>
+		</dict>
+		<key>Bakery</key>
+		<dict>
+			<key>image</key>
+			<string>bread.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>bakery</string>
+			</dict>
+		</dict>
+		<key>Beverages</key>
+		<dict>
+			<key>image</key>
+			<string>alcohol.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>beverages</string>
+			</dict>
+		</dict>
+		<key>Bicycle Shop</key>
+		<dict>
+			<key>image</key>
+			<string>bicycle.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>bicycle</string>
+			</dict>
+		</dict>
+		<key>Book Store</key>
+		<dict>
+			<key>image</key>
+			<string>book.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>books</string>
+			</dict>
+		</dict>
+		<key>Boutique</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>boutique</string>
+			</dict>
+		</dict>
+		<key>Butcher</key>
+		<dict>
+			<key>image</key>
+			<string>butcher.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>butcher</string>
+			</dict>
+		</dict>
+		<key>Candy Shop</key>
+		<dict>
+			<key>image</key>
+			<string>candy.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>confectionery</string>
+			</dict>
+		</dict>
+		<key>Car Dealership</key>
+		<dict>
+			<key>image</key>
+			<string>car.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>car</string>
+			</dict>
+		</dict>
+		<key>Car Parts Store</key>
+		<dict>
+			<key>image</key>
+			<string>wrench.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>car_parts</string>
+			</dict>
+		</dict>
+		<key>Car Repair</key>
+		<dict>
+			<key>image</key>
+			<string>wrench.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>car_repair</string>
+			</dict>
+		</dict>
+		<key>Carpet</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>carpet</string>
+			</dict>
+		</dict>
+		<key>Clothes</key>
+		<dict>
+			<key>image</key>
+			<string>shirt.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>clothes</string>
+			</dict>
+		</dict>
+		<key>Computer</key>
+		<dict>
+			<key>image</key>
+			<string>computer.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>computer</string>
+			</dict>
+		</dict>
+		<key>Convenience Store</key>
+		<dict>
+			<key>image</key>
+			<string>shop.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>convenience</string>
+			</dict>
+		</dict>
+		<key>Copy and Fax Shop</key>
+		<dict>
+			<key>image</key>
+			<string>paperclip.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>copyshop</string>
+			</dict>
+		</dict>
+		<key>Cosmetics</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>chemist</string>
+			</dict>
+		</dict>
+		<key>Deli</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>deli</string>
+			</dict>
+		</dict>
+		<key>Department Store</key>
+		<dict>
+			<key>image</key>
+			<string>shop.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>department_store</string>
+			</dict>
+		</dict>
+		<key>Diving Store</key>
+		<dict>
+			<key>image</key>
+			<string>scuba.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>dive</string>
+			</dict>
+		</dict>
+		<key>Dry Cleaning</key>
+		<dict>
+			<key>image</key>
+			<string>shirt.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>dry_cleaning</string>
+			</dict>
+		</dict>
+		<key>Electronics</key>
+		<dict>
+			<key>image</key>
+			<string>computer.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>electronics</string>
+			</dict>
+		</dict>
+		<key>Farm Store</key>
+		<dict>
+			<key>image</key>
+			<string>farm.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>farm</string>
+			</dict>
+		</dict>
+		<key>Florist</key>
+		<dict>
+			<key>image</key>
+			<string>flower.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>florist</string>
+			</dict>
+		</dict>
+		<key>Frame Store</key>
+		<dict>
+			<key>image</key>
+			<string>frame.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>frame</string>
+			</dict>
+		</dict>
+		<key>Furniture Store</key>
+		<dict>
+			<key>image</key>
+			<string>chair.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>furniture</string>
+			</dict>
+		</dict>
+		<key>Garden Center</key>
+		<dict>
+			<key>image</key>
+			<string>flower.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>garden_centre</string>
+			</dict>
+		</dict>
+		<key>General Store</key>
+		<dict>
+			<key>image</key>
+			<string>shop.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>general</string>
+			</dict>
+		</dict>
+		<key>Gift Shop</key>
+		<dict>
+			<key>image</key>
+			<string>gift.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>gift</string>
+			</dict>
+		</dict>
+		<key>Hairdresser</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>hairdresser</string>
+			</dict>
+		</dict>
+		<key>Hardware Store</key>
+		<dict>
+			<key>image</key>
+			<string>wrench.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>hardware</string>
+			</dict>
+		</dict>
+		<key>Jewelry Store</key>
+		<dict>
+			<key>image</key>
+			<string>ring.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>jewelry</string>
+			</dict>
+		</dict>
+		<key>Laundromat</key>
+		<dict>
+			<key>image</key>
+			<string>shirt.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>laundry</string>
+			</dict>
+		</dict>
+		<key>Loans</key>
+		<dict>
+			<key>image</key>
+			<string>money.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>money_lender</string>
+			</dict>
+		</dict>
+		<key>Matress Store</key>
+		<dict>
+			<key>image</key>
+			<string>hotel.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>bed</string>
+			</dict>
+		</dict>
+		<key>Motorcycle Dealership</key>
+		<dict>
+			<key>image</key>
+			<string>motorcycle.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>motorcycle</string>
+			</dict>
+		</dict>
+		<key>Music Store for Instruments</key>
+		<dict>
+			<key>image</key>
+			<string>trumpet.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>musical_instruments</string>
+			</dict>
+		</dict>
+		<key>Newsstand </key>
+		<dict>
+			<key>image</key>
+			<string>news.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>newsagent</string>
+			</dict>
+		</dict>
+		<key>Office Supplies</key>
+		<dict>
+			<key>image</key>
+			<string>paperclip.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>stationery</string>
+			</dict>
+		</dict>
+		<key>Optician</key>
+		<dict>
+			<key>image</key>
+			<string>glasses.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>optician</string>
+			</dict>
+		</dict>
+		<key>Outdoor Store</key>
+		<dict>
+			<key>image</key>
+			<string>tree.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>outdoor</string>
+			</dict>
+		</dict>
+		<key>Paint</key>
+		<dict>
+			<key>image</key>
+			<string>paint_brush.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>paint</string>
+			</dict>
+		</dict>
+		<key>Pawn Shop</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>pawnbroker</string>
+			</dict>
+		</dict>
+		<key>Pet Store</key>
+		<dict>
+			<key>image</key>
+			<string>dog.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>pet</string>
+			</dict>
+		</dict>
+		<key>Second Hand Store</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>second_hand</string>
+			</dict>
+		</dict>
+		<key>Shoe Store</key>
+		<dict>
+			<key>image</key>
+			<string>shoe.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>shoes</string>
+			</dict>
+		</dict>
+		<key>Shopping Mall</key>
+		<dict>
+			<key>image</key>
+			<string>shop.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>mall</string>
+			</dict>
+		</dict>
+		<key>Spa or Nail Salon</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>beauty</string>
+			</dict>
+		</dict>
+		<key>Sporting Goods</key>
+		<dict>
+			<key>image</key>
+			<string>basketball.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>sports</string>
+			</dict>
+		</dict>
+		<key>Supermarket</key>
+		<dict>
+			<key>image</key>
+			<string>shop.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>supermarket</string>
+			</dict>
+		</dict>
+		<key>Tattoo Parlor</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>tattoo</string>
+			</dict>
+		</dict>
+		<key>Tobacco Shop</key>
+		<dict>
+			<key>image</key>
+			<string>pipe.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>tobacco</string>
+			</dict>
+		</dict>
+		<key>Toy Store</key>
+		<dict>
+			<key>image</key>
+			<string>teddybear.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>toys</string>
+			</dict>
+		</dict>
+		<key>Video Rental</key>
+		<dict>
+			<key>image</key>
+			<string>movie.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>video</string>
+			</dict>
+		</dict>
+		<key>XXX/Adult Store</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>erotic</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>Tourism</key>
+	<dict>
+		<key>Bed and Breakfast</key>
+		<dict>
+			<key>image</key>
+			<string>bed.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>guest_house</string>
+			</dict>
+		</dict>
+		<key>Camp Site</key>
+		<dict>
+			<key>image</key>
+			<string>tent.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>camp_site</string>
+			</dict>
+		</dict>
+		<key>Castle</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>historic</key>
+				<string>castle</string>
+			</dict>
+		</dict>
+		<key>Chalet</key>
+		<dict>
+			<key>image</key>
+			<string>bed.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>chalet</string>
+			</dict>
+		</dict>
+		<key>Historic Battlefield</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>historic</key>
+				<string>battlefield</string>
+			</dict>
+		</dict>
+		<key>Historic Boundry Stone</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>historic</key>
+				<string>boundry_stone</string>
+			</dict>
+		</dict>
+		<key>Hostel</key>
+		<dict>
+			<key>image</key>
+			<string>bed.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>hostel</string>
+			</dict>
+		</dict>
+		<key>Hotel</key>
+		<dict>
+			<key>image</key>
+			<string>bed.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>hotel</string>
+			</dict>
+		</dict>
+		<key>Memorial</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>historic</key>
+				<string>memorial</string>
+			</dict>
+		</dict>
+		<key>Military Fort</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>historic</key>
+				<string>fort</string>
+			</dict>
+		</dict>
+		<key>Monument</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>historic</key>
+				<string>monument</string>
+			</dict>
+		</dict>
+		<key>Motel</key>
+		<dict>
+			<key>image</key>
+			<string>bed.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>motel</string>
+			</dict>
+		</dict>
+		<key>Mountain Hut</key>
+		<dict>
+			<key>image</key>
+			<string>cabin.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>apine_hut</string>
+			</dict>
+		</dict>
+		<key>Museum</key>
+		<dict>
+			<key>image</key>
+			<string>museum.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>museum</string>
+			</dict>
+		</dict>
+		<key>Nautical Craft Wreck</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>historic</key>
+				<string>wreck</string>
+			</dict>
+		</dict>
+		<key>RV Park</key>
+		<dict>
+			<key>image</key>
+			<string>trailer.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>caravan_site</string>
+			</dict>
+		</dict>
+		<key>Ruins</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>historic</key>
+				<string>ruins</string>
+			</dict>
+		</dict>
+		<key>Theme Park</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>theme_park</string>
+			</dict>
+		</dict>
+		<key>Zoo</key>
+		<dict>
+			<key>image</key>
+			<string>zoo.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>zoo</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>Transportation</key>
+	<dict>
+		<key>Bicycle Parking</key>
+		<dict>
+			<key>image</key>
+			<string>bicycle.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>bicycle_parking</string>
+			</dict>
+		</dict>
+		<key>Bicycle Rental</key>
+		<dict>
+			<key>image</key>
+			<string>bicycle.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>bicycle_rental</string>
+			</dict>
+		</dict>
+		<key>Bus Station</key>
+		<dict>
+			<key>image</key>
+			<string>bus_stop.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>bus_station</string>
+			</dict>
+		</dict>
+		<key>Bus Stop</key>
+		<dict>
+			<key>image</key>
+			<string>bus.png</string>
+			<key>tags</key>
+			<dict>
+				<key>highway</key>
+				<string>bus_stop</string>
+			</dict>
+		</dict>
+		<key>Car Rental</key>
+		<dict>
+			<key>image</key>
+			<string>car_rental.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>car_rental</string>
+			</dict>
+		</dict>
+		<key>Car Sharing</key>
+		<dict>
+			<key>image</key>
+			<string>car_rental.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>car_sharing</string>
+			</dict>
+		</dict>
+		<key>Car Wash</key>
+		<dict>
+			<key>image</key>
+			<string>car_wash.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>car_wash</string>
+			</dict>
+		</dict>
+		<key>Electric Vehicle Charging</key>
+		<dict>
+			<key>image</key>
+			<string>EV.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>ev_charging</string>
+			</dict>
+		</dict>
+		<key>Ferry Terminal</key>
+		<dict>
+			<key>image</key>
+			<string>ferry.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>ferry_terminal</string>
+			</dict>
+		</dict>
+		<key>Gas Station</key>
+		<dict>
+			<key>image</key>
+			<string>fuel.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>fuel</string>
+			</dict>
+		</dict>
+		<key>Parking</key>
+		<dict>
+			<key>image</key>
+			<string>parking.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>parking</string>
+			</dict>
+		</dict>
+		<key>Rail Station</key>
+		<dict>
+			<key>image</key>
+			<string>train.png</string>
+			<key>tags</key>
+			<dict>
+				<key>railway</key>
+				<string>station</string>
+			</dict>
+		</dict>
+		<key>Subway Entrance</key>
+		<dict>
+			<key>image</key>
+			<string>subway_entrance.png</string>
+			<key>tags</key>
+			<dict>
+				<key>railway</key>
+				<string>subway_entrance</string>
+			</dict>
+		</dict>
+		<key>Taxi Stand</key>
+		<dict>
+			<key>image</key>
+			<string>taxi.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>taxi</string>
+			</dict>
+		</dict>
+		<key>Tram Stop</key>
+		<dict>
+			<key>image</key>
+			<string>tram.png</string>
+			<key>tags</key>
+			<dict>
+				<key>railway</key>
+				<string>tram_stop</string>
+			</dict>
 		</dict>
 	</dict>
 </dict>
