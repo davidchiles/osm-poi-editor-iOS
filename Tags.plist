@@ -691,7 +691,7 @@
 		<key>Buddhist</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>prayer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -703,7 +703,7 @@
 		<key>Christian</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>prayer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -715,7 +715,7 @@
 		<key>Hindu</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>hindu.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -727,7 +727,7 @@
 		<key>Jewish</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>stardavid.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -739,7 +739,7 @@
 		<key>Multifaith</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>prayer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -751,7 +751,7 @@
 		<key>Muslim</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>crescent.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -763,7 +763,7 @@
 		<key>Pagan</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>prayer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -775,7 +775,7 @@
 		<key>Scientologist</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>prayer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -787,7 +787,7 @@
 		<key>Shinto</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>prayer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -799,7 +799,7 @@
 		<key>Sikh</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>prayer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -811,7 +811,7 @@
 		<key>Spiritualist</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>prayer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -823,7 +823,7 @@
 		<key>Taoist</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>prayer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -835,7 +835,7 @@
 		<key>Unitarian</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>prayer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -847,7 +847,7 @@
 		<key>Voodoo</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>prayer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>

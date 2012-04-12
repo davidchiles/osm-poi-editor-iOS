@@ -40,8 +40,12 @@ static OPETagInterpreter *sharedManager = nil;
 
 -(NSDictionary *)getCategoryandType:(OPENode *)node
 {   
+    
+    NSMutableDictionary * finalCatAndType = [[NSMutableDictionary alloc] init];;
+    dispatch_queue_t q = dispatch_queue_create("queue", NULL);
+    dispatch_async(q,  ^{
+    
     NSDictionary * catAndType;
-    NSMutableDictionary * finalCatAndType = [[NSMutableDictionary alloc] init];
     for(catAndType in CategoryTypeandOsmKV)
     {
         NSDictionary * osmKeysValues = [CategoryTypeandOsmKV objectForKey:catAndType];
@@ -61,6 +65,10 @@ static OPETagInterpreter *sharedManager = nil;
         }
         
     }
+    });
+    dispatch_sync(q, ^{});
+    dispatch_release(q);
+    
     if ([finalCatAndType count]>0)
     {
         //NSLog(@"finalCatAndType; %@",finalCatAndType);
@@ -80,8 +88,8 @@ static OPETagInterpreter *sharedManager = nil;
 
 - (void) readPlist
 {
-    //NSLog(@"start reading plist");
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"newTags" ofType:@"plist"];
+    NSLog(@"start reading plist");
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"plist"];
     
     
     NSDictionary* plistDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
@@ -90,11 +98,7 @@ static OPETagInterpreter *sharedManager = nil;
     
     //NSLog(@"Number of dictionaries in plist: %d",[plistDict count]);
     
-    NSDictionary* categories = [[NSDictionary alloc] initWithDictionary:[plistDict objectForKey:@"Government"]];
-    
     //NSLog(@"Number of keys in Government: %d",[categories count]);
-    
-    NSDictionary* type = [[NSDictionary alloc] initWithDictionary:[categories objectForKey:@"amenity"]];
     
     //NSLog(@"Number of keys in amenity: %d",[type count]);	
     

@@ -23,6 +23,7 @@
 @synthesize openMarker,theNewMarker, label, calloutLabel;
 @synthesize addedNode,nodeInfo,currentLocationMarker;
 @synthesize currentTile;
+@synthesize HUD,message;
 
 - (void)didReceiveMemoryWarning
 {
@@ -96,14 +97,23 @@
     
     osmData = [[OPEOSMData alloc] init];
     
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    message = [[OPEMessage alloc] init];
+    message.alpha = 0.0;
+    [self.navigationController.view addSubview:HUD];
     dispatch_queue_t q = dispatch_queue_create("queue", NULL);
     
-    dispatch_async(q, ^{
         if (mapView.contents.zoom > MINZOOM) {
-            [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+            [self removeZoomWarning];
+            dispatch_async(q, ^{
+                [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+             });
+        }
+        else {
+            [self showZoomWarning];
         }
         
-    });
+   
     
     dispatch_release(q);
     
@@ -330,6 +340,38 @@
     
 }
 
+-(void) showZoomWarning
+{
+    [self.navigationController.view addSubview:message];
+    [UIView beginAnimations:nil context:nil];
+	[UIView setAnimationDuration:1.0];
+	//[UIView setAnimationDelegate:self];
+    //[UIView setAnimationDidStopSelector:@selector(finishedFadIn)];
+	
+	[message setAlpha:0.8];
+	
+	[UIView commitAnimations];
+    
+}
+-(void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
+{
+    [message removeFromSuperview];
+    
+}
+-(void) removeZoomWarning
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDelegate:self];
+	[UIView setAnimationDuration:1.0];
+	[UIView setAnimationDidStopSelector:@selector(fadeAnimationDidStop:finished:context:)];
+	
+	
+	[message setAlpha:0.0];
+	
+	[UIView commitAnimations];
+    
+}
+
 
 /*
 - (RMMarker *) addNewMarkerAt:(CLLocationCoordinate2D) markerPosition withNode: (OPENode *) node
@@ -358,13 +400,19 @@
     
     dispatch_queue_t q = dispatch_queue_create("queue", NULL);
     
-    dispatch_async(q, ^{
+    
         RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
         if (mapView.contents.zoom > MINZOOM) {
-            [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+            [self removeZoomWarning];
+            dispatch_async(q, ^{
+                [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+            });
+        }
+        else {
+            [self showZoomWarning];
         }
         
-    });
+    
     
     dispatch_release(q);
 }
