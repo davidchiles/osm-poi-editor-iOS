@@ -23,7 +23,8 @@
 @synthesize openMarker,theNewMarker, label, calloutLabel;
 @synthesize addedNode,nodeInfo,currentLocationMarker;
 @synthesize currentTile;
-@synthesize HUD,message;
+@synthesize message;
+@synthesize imagesDic;
 
 - (void)didReceiveMemoryWarning
 {
@@ -88,19 +89,28 @@
     
     [mapView.contents setZoom: 18];
     id <RMTileSource> newTileSource = nil;
-    newTileSource = [[OPEStamenTerrain alloc] init];
+    int num = 0;
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    NSLog(@"stored TileSource: %@",[settings objectForKey:@"tileSourceNumber"]);
+    if ([settings objectForKey:@"tileSourceNumber"]) {
+        num = [[settings objectForKey:@"tileSourceNumber"] intValue] ;
+        newTileSource = [OPEInfoViewController getTileSourceFromNumber:num];
+        
+    }
+    else {
+        newTileSource = [[OPEStamenTerrain alloc] init];
+    }
+    
 
-    [self setTileSource:newTileSource at:0];
+    [self setTileSource:newTileSource at:num];
     [self addMarkerAt:initLocation withNode:nil];
     
     RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
     
     osmData = [[OPEOSMData alloc] init];
     
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     message = [[OPEMessage alloc] init];
     message.alpha = 0.0;
-    [self.navigationController.view addSubview:HUD];
     dispatch_queue_t q = dispatch_queue_create("queue", NULL);
     
         if (mapView.contents.zoom > MINZOOM) {
@@ -117,6 +127,7 @@
     
     dispatch_release(q);
     
+    imagesDic = [[NSMutableDictionary alloc] init];
     //[mapView moveToLatLong: initLocation];
     //[mapView.contents setZoom: 16];
     
@@ -172,14 +183,21 @@
     UIImage *icon = [UIImage imageNamed:node.image];   //Get image from stored value in node
     //UIImage * icon = [UIImage imageNamed:@"restaurant"];
     if (node.ident>0 && ![node.image isEqualToString:@"none.png"]) {
-         icon = [self imageWithBorderFromImage:icon]; //center image inside box
+        if ([imagesDic objectForKey:node.image]) {
+            icon = [imagesDic objectForKey:node.image];
+        }
+        else {
+            icon = [self imageWithBorderFromImage:icon]; //center image inside box
+            [imagesDic setObject:icon forKey:node.image];
+        }
+
     }
    
     //RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 1.0)];
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
     
     newMarker.data = node;
-    
+    newMarker.zPosition = 0.2;
     [mapView.markerManager addMarker:newMarker AtLatLong:node.coordinate];
     
     
@@ -342,7 +360,8 @@
 
 -(void) showZoomWarning
 {
-    [self.navigationController.view addSubview:message];
+    [self.view addSubview:message];
+    message.userInteractionEnabled = NO;
     [UIView beginAnimations:nil context:nil];
 	[UIView setAnimationDuration:1.0];
 	//[UIView setAnimationDelegate:self];

@@ -36,4 +36,6 @@
 - (GTMOAuthAuthentication *)osmAuth;
 - (void) signOutOfOSM;
 
++ (id)getTileSourceFromNumber:(int) num;
+
 @end

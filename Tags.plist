@@ -276,7 +276,7 @@
 		<key>Fire Station</key>
 		<dict>
 			<key>image</key>
-			<string>fire_statoin.png</string>
+			<string>fire_station.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>

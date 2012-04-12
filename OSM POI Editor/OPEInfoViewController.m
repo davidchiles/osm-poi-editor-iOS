@@ -279,19 +279,11 @@
         currentNumber = indexPath.row;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        id <RMTileSource> newTileSource = nil;
-        if (indexPath.row == 0) {
-            newTileSource = [[OPEStamenTerrain alloc] init];
-        }
-        else if (indexPath.row == 1) {
-            newTileSource = [[RMOpenStreetMapSource alloc] init];
-        }
-        else if (indexPath.row == 2) {
-            newTileSource = [[OPEStamenToner alloc] init];
-        }
-        else if (indexPath.row == 3) {
-            newTileSource = [[OPEMapquestAerial alloc] init];
-        }
+        id <RMTileSource> newTileSource = [OPEInfoViewController getTileSourceFromNumber:indexPath.row];
+        
+        NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+        [settings setObject:[NSNumber numberWithInt:indexPath.row] forKey:@"tileSourceNumber"];
+        [settings synchronize];
         [delegate setTileSource:newTileSource at:indexPath.row ];
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -380,6 +372,23 @@
     //[self presentModalViewController:view animated:YES];
     view.title = @"About";
     [self.navigationController pushViewController:view animated:YES];
+}
+
++ (id)getTileSourceFromNumber:(int) num
+{
+    if (num == 0) {
+        return [[OPEStamenTerrain alloc] init];
+    }
+    else if (num == 1) {
+        return [[RMOpenStreetMapSource alloc] init];
+    }
+    else if (num == 2) {
+        return [[OPEStamenToner alloc] init];
+    }
+    else if (num == 3) {
+        return [[OPEMapquestAerial alloc] init];
+    }
+    return nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -96,6 +96,7 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
 @synthesize signIn = signIn_;
 @synthesize userData = userData_;
 @synthesize webView = webView_;
+@synthesize activityIndicator = activityIndicator_;
 
 #if !GTM_OAUTH_SKIP_GOOGLE_SUPPORT
 - (id)initWithScope:(NSString *)scope
@@ -244,6 +245,7 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
   [signIn_ release];
   [request_ release];
   [delegate_ release];
+    [activityIndicator_ release];
 #if NS_BLOCKS_AVAILABLE
   [completionBlock_ release];
 #endif
@@ -377,6 +379,7 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
     CGRectMake(0, 0, kButtonXMargin + 2*kButtonWidth, kButtonHeight);
   UIView *navButtonsView = [[[UIView alloc] initWithFrame:navFrame] autorelease];
   [navButtonsView setBackgroundColor:[UIColor clearColor]];
+/*
   [navButtonsView addSubview:backButton];
   [navButtonsView addSubview:forwardButton];
   [self setNavButtonsView:navButtonsView];
@@ -385,6 +388,7 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
     [[[UIBarButtonItem alloc] initWithCustomView:navButtonsView] autorelease];
   [self setRightBarButtonItem:rightBarButtonItem];
   [[self navigationItem] setRightBarButtonItem:rightBarButtonItem];
+ */
 #endif
 }
 
@@ -416,6 +420,9 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
 
   [rightBarButtonItem_ setCustomView:navButtonsView_];
   [[self navigationItem] setRightBarButtonItem:rightBarButtonItem_];
+    self.activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]autorelease];
+    self.activityIndicator.frame = CGRectMake(0, 0, 44, 44);
+    [rightBarButtonItem_ setCustomView:self.activityIndicator];
 }
 
 - (void)popView {
@@ -678,10 +685,13 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
   [self updateUI];
+    [self.activityIndicator startAnimating];
+    
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
   [self updateUI];
+    [self.activityIndicator stopAnimating];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

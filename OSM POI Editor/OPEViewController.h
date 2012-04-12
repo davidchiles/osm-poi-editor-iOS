@@ -14,7 +14,6 @@
 #import "OPEOSMData.h"
 #import "OPEInfoViewController.h"
 #import "OPENodeViewController.h"
-#import "MBProgressHUD.h"
 #import "OPEMessage.h"
 
 @interface OPEViewController : UIViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate > {
@@ -37,8 +36,8 @@
 @property (nonatomic,strong) RMMarker * nodeInfo;
 @property (nonatomic,strong) RMMarker * currentLocationMarker;
 @property (nonatomic) int currentTile;
-@property (nonatomic, strong) MBProgressHUD * HUD;
 @property (nonatomic, strong) OPEMessage * message;
+@property (nonatomic, strong) NSMutableDictionary * imagesDic;
 
 
 - (RMMarker *) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;

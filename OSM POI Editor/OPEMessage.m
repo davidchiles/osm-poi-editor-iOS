@@ -45,10 +45,6 @@
     }
     return self;
 }
--(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-{
-    return [self.superview hitTest:point withEvent:event];
-}
 
 /*
 // Only override drawRect: if you perform custom drawing.

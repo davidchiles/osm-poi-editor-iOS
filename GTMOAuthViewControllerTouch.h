@@ -182,6 +182,8 @@ _EXTERN NSString* const kGTLOAuthKeychainErrorDomain       _INITIALIZE_AS(@"com.
 
 @property (nonatomic, retain) id userData;
 
+@property (nonatomic, retain) UIActivityIndicatorView * activityIndicator;
+
 #if !GTM_OAUTH_SKIP_GOOGLE_SUPPORT
 // init method for authenticating to Google services
 //
