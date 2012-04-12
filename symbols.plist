@@ -445,5 +445,44 @@
 			<string>movie.png</string>
 		</dict>
 	</dict>
+	<key>Place of Worship</key>
+	<dict>
+		<key>religion</key>
+		<dict>
+			<key>buddhist</key>
+			<string>none.png</string>
+			<key>christian</key>
+			<string>none.png</string>
+			<key>hindu</key>
+			<string>none.png</string>
+			<key>jewish</key>
+			<string>none.png</string>
+			<key>multifaith</key>
+			<string>none.png</string>
+			<key>muslim</key>
+			<string>none.png</string>
+			<key>pagan</key>
+			<string>none.png</string>
+			<key>scientologist</key>
+			<string>none.png</string>
+			<key>shinto</key>
+			<string>none.png</string>
+			<key>sikh</key>
+			<string>none.png</string>
+			<key>spiritualist</key>
+			<string>none.png</string>
+			<key>taoist</key>
+			<string>none.png</string>
+			<key>unitarian</key>
+			<string>none.png</string>
+			<key>voodoo</key>
+			<string>none.png</string>
+		</dict>
+		<key>amenity</key>
+		<dict>
+			<key>place_of_worship</key>
+			<string>none.png</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

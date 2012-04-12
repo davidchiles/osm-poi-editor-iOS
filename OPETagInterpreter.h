@@ -11,19 +11,24 @@
 
 @interface OPETagInterpreter : NSObject
 
-@property (nonatomic, retain) NSMutableDictionary * categoryAndType;
-@property (nonatomic, retain) NSMutableDictionary * osmKeyandValue;
-@property (nonatomic, retain) NSMutableDictionary * osmKVandCategoryType;
+@property (nonatomic, strong) NSMutableDictionary * categoryAndType;
+@property (nonatomic, strong) NSMutableDictionary * osmKeyandValue;
+@property (nonatomic, strong) NSMutableDictionary * osmKVandCategoryType;
+@property (nonatomic, strong) NSMutableDictionary * CategoryTypeandOsmKV;
+@property (nonatomic, strong) NSMutableDictionary * CategoryTypeandImg;
 
 - (id) init;
-- (BOOL) nodeHasRecognizedTags:(OPENode *)n;
-- (NSDictionary *) getPrimaryKeyValue: (OPENode *)n;
+//- (BOOL) nodeHasRecognizedTags:(OPENode *)n;
+//- (NSDictionary *) getPrimaryKeyValue: (OPENode *)n;
 - (NSString *) getCategory: (OPENode *)n;
 - (NSString *) getType: (OPENode *)n;
-- (NSArray *) getOsmKeyValue: (NSDictionary *) catAndTyp;
 - (void) readPlist;
 - (NSString *) getName: (OPENode *) node;
 - (NSString *) getImageForNode: (OPENode *) node;
+- (void)removeCatAndType:(NSDictionary *) catType fromNode:(OPENode *)node;
+- (NSDictionary *)getCategoryandType:(OPENode *)node;
+- (NSDictionary *) getOSmKeysValues: (NSDictionary *) catAndType;
+
 
 +(OPETagInterpreter *)sharedInstance;
 

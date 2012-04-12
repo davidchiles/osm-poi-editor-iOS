@@ -54,8 +54,8 @@
         TBXMLElement * root = tbxml.rootXMLElement;
         if(root)
         {
-            NSLog(@"root: %@",[TBXML elementName:root]);
-            NSLog(@"version: %@",[TBXML valueOfAttributeNamed:@"version" forElement:root]);
+            //NSLog(@"root: %@",[TBXML elementName:root]);
+            //NSLog(@"version: %@",[TBXML valueOfAttributeNamed:@"version" forElement:root]);
             TBXMLElement* node = [TBXML childElementNamed:@"node" parentElement:root];
             while (node!=nil) {
                 
@@ -84,19 +84,20 @@
                     tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
                 }
                 OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
-                if([tagInterpreter nodeHasRecognizedTags:newNode]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
+    
+                if([tagInterpreter getCategoryandType:newNode]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
                 {
-                    NSLog(@"New Node Id: %d",newNode.ident);
-                    NSLog(@"all nodes: %@",[self.allNodes objectForKey:[NSNumber numberWithInt:newNode.ident]]);
+                    //NSLog(@"New Node Id: %d",newNode.ident);
+                    //NSLog(@"all nodes: %@",[self.allNodes objectForKey:[NSNumber numberWithInt:newNode.ident]]);
                     newNode.image = [tagInterpreter getImageForNode:newNode];
                     if ([self.allNodes objectForKey:[NSNumber numberWithInt:newNode.ident]] ==nil && [self.ignoreNodes objectForKey:[NSNumber numberWithInt:newNode.ident]] == nil) 
                     {
-                        NSLog(@"add to node dictionary");
+                        //NSLog(@"add to node dictionary");
                         if([newNode.tags objectForKey:@"name"])
                         {
-                            NSLog(@"Name: %@",[newNode.tags objectForKey:@"name"]);
+                            //NSLog(@"Name: %@",[newNode.tags objectForKey:@"name"]);
                             NSString * newName = [OPEOSMData HTMLFix:[newNode.tags objectForKey:@"name"]];
-                            NSLog(@"New Name: %@",newName);
+                            //NSLog(@"New Name: %@",newName);
                             [newNode.tags setObject:newName forKey:@"name"];
                         }
                         [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];

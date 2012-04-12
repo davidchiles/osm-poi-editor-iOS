@@ -325,6 +325,40 @@
 			<string>Vending Machine</string>
 		</dict>
 	</dict>
+	<key>Place of Worship</key>
+	<dict>
+		<key>religion</key>
+		<dict>
+			<key>buddhist</key>
+			<string>Buddhist</string>
+			<key>christian</key>
+			<string>Christian</string>
+			<key>hindu</key>
+			<string>Hindu</string>
+			<key>jewish</key>
+			<string>Jewish</string>
+			<key>multifaith</key>
+			<string>Multifaith</string>
+			<key>muslim</key>
+			<string>Muslim</string>
+			<key>pagan</key>
+			<string>Pagan</string>
+			<key>scientologist</key>
+			<string>Scientologist</string>
+			<key>shinto</key>
+			<string>Shinto</string>
+			<key>sikh</key>
+			<string>Sikh</string>
+			<key>spiritualist</key>
+			<string>Spiritualist</string>
+			<key>taoist</key>
+			<string>Taoist</string>
+			<key>unitarian</key>
+			<string>Unitarian</string>
+			<key>voodoo</key>
+			<string>Voodoo</string>
+		</dict>
+	</dict>
 	<key>Shopping</key>
 	<dict>
 		<key>shop</key>

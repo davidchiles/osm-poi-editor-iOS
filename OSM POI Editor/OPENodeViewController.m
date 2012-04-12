@@ -77,8 +77,10 @@
     
     tagInterpreter = [OPETagInterpreter sharedInstance];
     
+    NSLog(@"Tags: %@",theNewNode.tags);
+    NSLog(@"new Category and Type: %@",[tagInterpreter getCategoryandType:theNewNode]);
     catAndType = [[NSArray alloc] initWithObjects:[tagInterpreter getCategory:theNewNode],[tagInterpreter getType:theNewNode], nil];
-    osmKeyValue =  [[NSDictionary alloc] initWithDictionary: [tagInterpreter getPrimaryKeyValue:theNewNode]];
+    //osmKeyValue =  [[NSDictionary alloc] initWithDictionary: [tagInterpreter getPrimaryKeyValue:theNewNode]];
     
     self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
     self.HUD.delegate = self;
@@ -416,18 +418,14 @@
 
 - (void) setCategoryAndType:(NSArray *)cAndT
 {
-    catAndType = cAndT;
-    NSArray * KV = [tagInterpreter getOsmKeyValue:[[NSDictionary alloc] initWithObjectsAndKeys:[cAndT objectAtIndex:1],[cAndT objectAtIndex:0], nil]];
-    NSLog(@"catAndType: %@",catAndType);
-    NSLog(@"KV: %@",osmKeyValue);
-    NSString * theNewKey;
-    NSString * theNewValue;
-    
-    for (NSString * k in [KV objectAtIndex:0])
-    {
-        theNewKey = k;
-        theNewValue = [[KV objectAtIndex:0] objectForKey:k];
+    if ([catAndType count]==2) {
+        [tagInterpreter removeCatAndType:[[NSDictionary alloc] initWithObjectsAndKeys:[catAndType objectAtIndex:1],[catAndType objectAtIndex:0], nil] fromNode:theNewNode];
     }
+    
+    catAndType = cAndT;
+    NSDictionary * KV = [tagInterpreter getOSmKeysValues:[[NSDictionary alloc] initWithObjectsAndKeys:[cAndT objectAtIndex:1],[cAndT objectAtIndex:0], nil]];
+    NSLog(@"catAndType: %@",catAndType);
+    //NSLog(@"KV: %@",osmKeyValue);
     
     
     NSLog(@"ID: %d",theNewNode.ident);
@@ -436,14 +434,7 @@
     NSLog(@"Lon: %f",theNewNode.coordinate.longitude);
     NSLog(@"Tags: %@",theNewNode.tags);
     
-    if (![osmKeyValue isEqualToDictionary:[KV objectAtIndex:0]]) {
-        [theNewNode.tags removeObjectsForKeys:[osmKeyValue allKeys]];
-        [theNewNode.tags setObject:theNewValue forKey:theNewKey];
-        nodeIsEdited = YES;
-    }
-    
-    
-    
+    [theNewNode.tags addEntriesFromDictionary:KV];
     
     
     //NSLog(@"id: %@ \n version: %@ \n lat: %f \n lon: %f \n newTags: %@ \n ",theNewNode.ident,theNewNode.version,theNewNode.coordinate.latitude,theNewNode.coordinate.longitude,theNewNode.tags);
@@ -458,6 +449,8 @@
     //[self.tableView reloadData];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }
+
+
 
 - (void)checkSaveButton
 {

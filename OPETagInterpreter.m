@@ -15,191 +15,138 @@ static OPETagInterpreter *sharedManager = nil;
 @synthesize categoryAndType;
 @synthesize osmKeyandValue;
 @synthesize osmKVandCategoryType;
+@synthesize CategoryTypeandOsmKV;
+@synthesize CategoryTypeandImg;
 
 - (id) init
 {
     self = [super init];
-    [self readPlist];
-    
+    if(self)
+    {
+        [self readPlist];
+    }
     return self;
-}
-
-- (BOOL) nodeHasRecognizedTags:(OPENode *)node
-{
-    NSString * nodeValue;
-    for(NSString * nodeKey in node.tags)
-    {
-        nodeValue = [node.tags objectForKey:nodeKey];
-        NSArray * osmValues = [osmKeyandValue objectForKey:nodeKey];
-        
-        if(osmValues && [osmValues containsObject:nodeValue])
-        {
-            //NSLog(@"Does contain nodeValue %@",nodeValue);
-            return YES;
-        }
-    }
-    //NSLog(@"Doesn't contain nodeValue %@",nodeValue);
-    return NO;
-}
-
-- (NSDictionary *) getPrimaryKeyValue: (OPENode *)node //Returns primay OSM key and value for given node based on supported types
-{
-    for(NSString * nodeKey in node.tags)
-    {
-        NSString * nodeValue = [node.tags objectForKey:nodeKey];
-        NSMutableArray * values = [osmKeyandValue objectForKey:nodeKey];
-        if(values)
-        {
-            if([values containsObject:nodeValue])
-            {
-                NSDictionary * primaryKeyValue = [[NSDictionary alloc] initWithObjectsAndKeys:nodeValue,nodeKey, nil];
-                return primaryKeyValue;
-            }
-        }
-    }
-         
-    return nil;
 }
 
 - (NSString *) getCategory: (OPENode *)node
 {
-    NSDictionary * primaryKeyValue = [[NSDictionary alloc] initWithDictionary:[self getPrimaryKeyValue:node]];
-    //NSLog(@"primaryKeyValue: %@",primaryKeyValue);
-    if(primaryKeyValue)
-    {
-        //NSLog(@"Cat and Type keys: %@",[osmKVandCategoryType objectForKey:primaryKeyValue]);
-        NSDictionary * catAndType = [[NSDictionary alloc] initWithDictionary:[osmKVandCategoryType objectForKey:primaryKeyValue]];
-        for(NSString * cat in catAndType)
-        {
-            //NSLog(@"Category %@",cat);
-            return cat;
-        }
-    }
-    return nil;
+    return [[[self getCategoryandType:node] allKeys]objectAtIndex:0];
 }
 
 - (NSString *) getType: (OPENode *)node
 {
-    NSDictionary * primaryKeyValue = [[NSDictionary alloc] initWithDictionary:[self getPrimaryKeyValue:node]];
-    if(primaryKeyValue)
+    return [[[self getCategoryandType:node] allValues] objectAtIndex:0];
+}
+
+-(NSDictionary *)getCategoryandType:(OPENode *)node
+{   
+    NSDictionary * catAndType;
+    NSMutableDictionary * finalCatAndType = [[NSMutableDictionary alloc] init];
+    for(catAndType in CategoryTypeandOsmKV)
     {
-        NSDictionary * catAndType = [[NSDictionary alloc] initWithDictionary:[osmKVandCategoryType objectForKey:primaryKeyValue]];
-        for(NSString * cat in catAndType)
+        NSDictionary * osmKeysValues = [CategoryTypeandOsmKV objectForKey:catAndType];
+        //int numValues = [osmKeyandValue count];
+        int matches = 0;
+        //NSLog(@"Number of Values: %d",numValues);
+        for( NSString * osmKey in osmKeysValues)
         {
-            //NSLog(@"Type: %@",[catAndType objectForKey:cat]);
-            return [catAndType objectForKey:cat];
+            if([[node.tags objectForKey:osmKey] isEqualToString:[osmKeysValues objectForKey:osmKey]])
+            {
+                matches++;
+            }
         }
+        if(matches >0)
+        {
+            [finalCatAndType setObject:[[NSNumber alloc] initWithInt:matches] forKey:catAndType];
+        }
+        
     }
+    if ([finalCatAndType count]>0)
+    {
+        //NSLog(@"finalCatAndType; %@",finalCatAndType);
+        NSArray * sortedKeys = [finalCatAndType keysSortedByValueUsingSelector:@selector(compare:)];
+        //NSLog(@"sorted Array: %@",sortedKeys);
+        return [sortedKeys objectAtIndex:([sortedKeys count]-1)];
+    }
+    //NSLog(@"NO CATEGORY OR TYPE: %@",node.tags);
     return nil;
-}
-
-- (NSArray *) getOsmKeyValue: (NSDictionary *) catAndTyp
-{
-    /*
-    NSString * key;
-    NSString * value;
-    for (key in catAndTyp)
-    {
-        value = [catAndTyp objectForKey:key];
-    }
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"plist"];
-    NSDictionary* plistDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-    NSDictionary* categories = [[NSDictionary alloc] initWithDictionary:[plistDict objectForKey:key]];
-    
-    for (NSString * osmKey in categories)
-    {
-        NSDictionary * type = [categories objectForKey:osmKey];
-        if([type allKeysForObject:value])
-        {
-            NSDictionary * osmKeyValue = [[NSDictionary alloc] initWithObjectsAndKeys: [type allKeysForObject:value],osmKey,nil];
-            return osmKeyValue;
-        }
-    }
-    return nil;*/
-    //NSLog(@"getOSMKEYVALUE: %@",[osmKVandCategoryType allKeysForObject:catAndTyp]);
-    return [osmKVandCategoryType allKeysForObject:catAndTyp];
     
 }
 
-- (void) setImageforNode: (OPENode *) node
+- (NSDictionary *) getOSmKeysValues: (NSDictionary *) catAndType
 {
-    //NSString * filePath = [[NSBundle mainBundle] pathForResource:@"Symbols" ofType:@"plist"];
-    //NSDictionary* symbolDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-    
-    //NSString * key;
-    //NSString * value;
-    
-    
+    return [self.CategoryTypeandOsmKV objectForKey:catAndType];
 }
 
 - (void) readPlist
 {
-    NSLog(@"start reading plist");
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"plist"];
+    //NSLog(@"start reading plist");
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"newTags" ofType:@"plist"];
+    
+    
     NSDictionary* plistDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
     
     
-    NSLog(@"Number of dictionaries in plist: %d",[plistDict count]);
+    //NSLog(@"Number of dictionaries in plist: %d",[plistDict count]);
     
     NSDictionary* categories = [[NSDictionary alloc] initWithDictionary:[plistDict objectForKey:@"Government"]];
     
-    NSLog(@"Number of keys in Government: %d",[categories count]);
+    //NSLog(@"Number of keys in Government: %d",[categories count]);
     
     NSDictionary* type = [[NSDictionary alloc] initWithDictionary:[categories objectForKey:@"amenity"]];
     
-    NSLog(@"Number of keys in amenity: %d",[type count]);	
+    //NSLog(@"Number of keys in amenity: %d",[type count]);	
     
-    NSLog(@"gov: %@",[type objectForKey:@"courthouse"]);
+    //NSLog(@"gov: %@",[type objectForKey:@"courthouse"]);
     
     categoryAndType = [[NSMutableDictionary alloc] init];
     osmKeyandValue  = [[NSMutableDictionary alloc] init];
     osmKVandCategoryType = [[NSMutableDictionary alloc] init];
+    CategoryTypeandOsmKV = [[NSMutableDictionary alloc] init]; //for each category type pair : all osm keys
+    CategoryTypeandImg = [[NSMutableDictionary alloc] init];
+    
     
     // load dictionary categoryAndType with Key=category and Value= array of types
     // load dictionary osmKeyandValue with Key = key and Value = array of values (supported types)
-    for (NSString * i in plistDict)
+    for (NSString * cat in plistDict)
     {
-        //NSLog(@"NAME: %@",i);
-        NSMutableArray * types = [[NSMutableArray alloc] init];
-        NSDictionary * categories = [plistDict objectForKey:i];
-        for (NSString * osmKey in categories)
+        //NSLog(@"Category: %@",cat);
+        NSMutableSet * types = [[NSMutableSet alloc] init];
+        NSDictionary * categories = [plistDict objectForKey:cat];
+        for (NSString * type in categories)
         {
-            NSMutableArray * converted = [[NSMutableArray alloc] init];
-            NSMutableArray * osmValues;
+            //NSLog(@"Type: %@",type);
+            NSDictionary * typeDictionary = [categories objectForKey:type];
+            NSDictionary * tags = [typeDictionary objectForKey:@"tags"];
+            NSString * img = [typeDictionary objectForKey:@"image"];
+            [CategoryTypeandOsmKV setObject:tags forKey:[[NSDictionary alloc] initWithObjectsAndKeys:type,cat, nil]];
+            [CategoryTypeandImg setObject:img forKey:[[NSDictionary alloc] initWithObjectsAndKeys:type,cat, nil]];
+            [types addObject:type]; 
             
-            //check if already exists an array with values 
-            if(!([osmKeyandValue objectForKey:osmKey]))
+            for (NSString * osmKey in tags)
             {
-                osmValues = [[NSMutableArray alloc] init];
-            }
-            else
-            {
-                osmValues = [[NSMutableArray alloc] initWithArray:[osmKeyandValue objectForKey:osmKey]];
+                if ([osmKeyandValue objectForKey:osmKey]) {
+                    NSMutableSet * tempValues = [osmKeyandValue objectForKey:osmKey];
+                    [tempValues addObject:[tags objectForKey:osmKey]];
+                    [osmKeyandValue setObject: tempValues forKey:osmKey];
+                }
+                else {
+                    NSMutableSet * values = [[NSMutableSet alloc] initWithObjects:[tags objectForKey:osmKey], nil];
+                    [osmKeyandValue setObject:values forKey:osmKey];
+                }
+                
             }
             
-            NSDictionary * p = [categories objectForKey:osmKey];
-            
-            for (NSString * osmValue in p)
-            {
-                [osmValues addObject:osmValue];
-                [converted addObject:[p objectForKey:osmValue]];
-                //[osmKVandCategoryType setObject:[[NSDictionary alloc] initWithObjectsAndKeys:osmValue,osmKey, nil] forKey:[[NSDictionary alloc] initWithObjectsAndKeys:[p objectForKey:osmValue],i,nil]];
-                [osmKVandCategoryType setObject:[[NSDictionary alloc] initWithObjectsAndKeys:[p objectForKey:osmValue],i, nil] forKey:[[NSDictionary alloc] initWithObjectsAndKeys:osmValue,osmKey,nil]];
-                //NSLog(@"type: %@",[p objectForKey:key]);
-            }
-            NSLog(@"converted: %@",converted);
-            [types addObjectsFromArray:converted];
-            
-            [osmKeyandValue setObject:osmValues forKey:osmKey];
+        [categoryAndType setObject:types forKey:cat];
+             
         }
-        [categoryAndType setObject:types forKey:i];
     }
     //categoryAndType = [categoryAndType  ;
     //[osmKeyandValue initWithDictionary: osmKeyandValue];
-    NSLog(@"categoryAndType count: %d",[categoryAndType count]);
-    NSLog(@"osmkeyandValue count: %d",[osmKeyandValue count]);
-    NSLog(@"osmKVandCategoryType count: %d",[osmKVandCategoryType count]);
+    //NSLog(@"categoryAndType count: %@",categoryAndType);
+    //NSLog(@"osmkeyandValue count: %@",[osmKeyandValue objectForKey:@"amenity"]);
+    //NSLog(@"CategoryTypeandOsmKV count: %@",CategoryTypeandOsmKV );
 
 }
 
@@ -219,25 +166,14 @@ static OPETagInterpreter *sharedManager = nil;
 
 - (NSString *) getImageForNode: (OPENode *) node
 {
-    NSString * category = [self getCategory:node];
-    NSDictionary * osmKeyValue = [self getPrimaryKeyValue:node];
-    NSString * key = [[osmKeyValue allKeys] objectAtIndex:0];
-    NSString * value = [osmKeyValue objectForKey:key];
+    NSDictionary * catAndType = [self getCategoryandType:node];
+    return [self.CategoryTypeandImg objectForKey:catAndType];
+}
+
+- (void)removeCatAndType:(NSDictionary *) catType fromNode:(OPENode *)node
+{
+    [node.tags removeObjectsForKeys:[[self getOSmKeysValues:catType] allKeys]];
     
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"symbols" ofType:@"plist"];
-    NSDictionary * symbolsDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-    NSDictionary * categoryDict = [symbolsDict objectForKey:category];
-    NSDictionary * keyDict = [categoryDict objectForKey:key];
-    NSString * image = [keyDict objectForKey:value];
-    
-    NSLog(@"Image: %@",image);
-    return image;
-    
-    
-    
-    
-    
-    //return @"";
 }
 
 +(OPETagInterpreter *)sharedInstance

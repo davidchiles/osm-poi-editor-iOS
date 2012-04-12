@@ -102,7 +102,7 @@
     }
     
     OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
-    NSArray * types = [[tagInterpreter.categoryAndType objectForKey:category]sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    NSArray * types = [[[tagInterpreter.categoryAndType objectForKey:category] allObjects] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     
     cell.textLabel.text = [types objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

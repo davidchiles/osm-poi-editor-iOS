@@ -75,6 +75,14 @@
    
     initLocation = [[locationManager location] coordinate];
     
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] && [[UIScreen mainScreen] scale] == 2){
+        mapView.contentScaleFactor = 2.0;
+    }
+    else {
+        mapView.contentScaleFactor = 1.0;
+    }
+    
+    [mapView setDelegate:self];
     [mapView moveToLatLong: initLocation];
     
     [mapView.contents setZoom: 18];
@@ -104,7 +112,7 @@
     
     //[self addMarkerAt: initLocation];
 
-    [mapView setDelegate:self];
+    
     /*
     RMAnnotation * annotation = [RMAnnotation annotationWithMapView:mapView coordinate: initLocation andTitle:@"Hello"];
     annotation.anchorPoint = CGPointMake(0.5, 1.0);
@@ -150,7 +158,7 @@
 
 -(RMMarker *) addMarkerAt:(CLLocationCoordinate2D) position withNode: (OPENode *) node
 {
-    NSLog(@"start addMarkerAt %@",node.image);
+    //NSLog(@"start addMarkerAt %@",node.image);
     UIImage *icon = [UIImage imageNamed:node.image];   //Get image from stored value in node
     //UIImage * icon = [UIImage imageNamed:@"restaurant"];
     if (node.ident>0 && ![node.image isEqualToString:@"none.png"]) {
