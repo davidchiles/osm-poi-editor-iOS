@@ -78,7 +78,7 @@
     tagInterpreter = [OPETagInterpreter sharedInstance];
     
     NSLog(@"Tags: %@",theNewNode.tags);
-    NSLog(@"new Category and Type: %@",[tagInterpreter getCategoryandType:theNewNode]);
+    //NSLog(@"new Category and Type: %@",[tagInterpreter getCategoryandType:theNewNode]);
     catAndType = [[NSArray alloc] initWithObjects:[tagInterpreter getCategory:theNewNode],[tagInterpreter getType:theNewNode], nil];
     //osmKeyValue =  [[NSDictionary alloc] initWithDictionary: [tagInterpreter getPrimaryKeyValue:theNewNode]];
     

@@ -42,8 +42,7 @@ static OPETagInterpreter *sharedManager = nil;
 {   
     
     NSMutableDictionary * finalCatAndType = [[NSMutableDictionary alloc] init];;
-    dispatch_queue_t q = dispatch_queue_create("queue", NULL);
-    dispatch_async(q,  ^{
+    
     
     NSDictionary * catAndType;
     for(catAndType in CategoryTypeandOsmKV)
@@ -65,9 +64,6 @@ static OPETagInterpreter *sharedManager = nil;
         }
         
     }
-    });
-    dispatch_sync(q, ^{});
-    dispatch_release(q);
     
     if ([finalCatAndType count]>0)
     {

@@ -40,6 +40,8 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
+    dispatch_queue_t q = dispatch_queue_create("queue", NULL);
+    dispatch_async(q,  ^{
     NSLog(@"Request Type: %@",[request.userInfo objectForKey:@"type"]);
     // Use when fetching text data
     //NSString *responseString = [request responseString];
@@ -110,12 +112,17 @@
             
         }
         
+        dispatch_async(dispatch_get_main_queue(), ^{
         
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"DownloadComplete"
          object:self
          userInfo:newNodes];
+        });
+        
     }
+    });
+    dispatch_release(q);
 
 }
 
