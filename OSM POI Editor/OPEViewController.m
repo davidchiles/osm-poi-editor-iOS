@@ -34,7 +34,7 @@
 
 #pragma mark - View lifecycle
 
-#define MINZOOM 16.0
+#define MINZOOM 17.0
 
 - (void)viewDidLoad
 {
@@ -182,7 +182,8 @@
     //NSLog(@"start addMarkerAt %@",node.image);
     UIImage *icon = [UIImage imageNamed:node.image];   //Get image from stored value in node
     //UIImage * icon = [UIImage imageNamed:@"restaurant"];
-    if (node.ident>0 && ![node.image isEqualToString:@"none.png"]) {
+    //if (node.ident>0 && ![node.image isEqualToString:@"none.png"]) {
+    if(node.ident > 0) {
         if ([imagesDic objectForKey:node.image]) {
             icon = [imagesDic objectForKey:node.image];
         }
@@ -224,7 +225,9 @@
     
     if(tempNode.ident == -1)
     {
-        ((OPENode *)marker.data).coordinate = [map.markerManager latitudeLongitudeForMarker:marker];
+        //[marker setProjectedLocation:[[mapView.contents projection] latLongToPoint:[mapView pixelToLatLong:marker.position]]]; 
+        
+        ((OPENode *)marker.data).coordinate = [mapView pixelToLatLong:CGPointMake(marker.position.x, marker.bounds.size.height/2+marker.position.y)];
         [self tapOnLabelForMarker:marker onMap:mapView onLayer:nil];
     }
     else if (marker.label) {
@@ -496,6 +499,7 @@
 }
 -(void) createdNode:(OPENode *)newNode
 {
+    NSLog(@"Created New Node: %d",newNode.ident);
     [mapView.markerManager removeMarker:nodeInfo];
     [self addMarkerAt:newNode.coordinate withNode:newNode];
     [self.osmData.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
@@ -506,6 +510,7 @@
 {
     [mapView.markerManager removeMarker:nodeInfo];
     [self.osmData.allNodes removeObjectForKey:[NSNumber numberWithInt:newNode.ident]];
+    [self.osmData.ignoreNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
 }
 
 #pragma - InfoViewDelegate

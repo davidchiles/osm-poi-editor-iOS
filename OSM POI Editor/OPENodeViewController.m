@@ -279,7 +279,9 @@
                         NSString * newName = [OPEOSMData HTMLFix:[theNewNode.tags objectForKey:@"name"]];
                         [theNewNode.tags setObject:newName forKey:@"name"];
                     }
+                    dispatch_async(dispatch_get_main_queue(), ^{
                     [delegate createdNode:node];
+                    });
                 }
             }
             else
@@ -295,7 +297,9 @@
                         NSString * newName = [OPEOSMData HTMLFix:[theNewNode.tags objectForKey:@"name"]];
                         [theNewNode.tags setObject:newName forKey:@"name"];
                     }
+                    dispatch_async(dispatch_get_main_queue(), ^{
                     [delegate updatedNode:node];
+                    });
                 }
             }
             
@@ -363,7 +367,9 @@
                 [data deleteNode:node];
                 if(delegate)
                 {
+                    dispatch_async(dispatch_get_main_queue(), ^{
                     [delegate deletedNode:node];
+                    });
                     
                 }
             });
@@ -467,10 +473,13 @@
 -(void) uploadComplete:(NSNotification *)notification
 {
     NSLog(@"got notification");
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
     [self.HUD hide:YES];
     node = theNewNode;
     [self checkSaveButton];
     [self.navigationController popViewControllerAnimated:YES];
+    });
 }
 
 - (void) viewDidAppear:(BOOL)animated
