@@ -43,6 +43,7 @@
     
     [[textView layer] setCornerRadius:7.0];
     textView.text = text;
+    textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
     [textView becomeFirstResponder];
     
     
