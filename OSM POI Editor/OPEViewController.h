@@ -38,6 +38,7 @@
 @property (nonatomic) int currentTile;
 @property (nonatomic, strong) OPEMessage * message;
 @property (nonatomic, strong) NSMutableDictionary * imagesDic;
+@property (nonatomic) RMSphericalTrapezium currentSquare;
 
 
 - (RMMarker *) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;

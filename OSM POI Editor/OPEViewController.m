@@ -25,6 +25,7 @@
 @synthesize currentTile;
 @synthesize message;
 @synthesize imagesDic;
+@synthesize currentSquare;
 
 - (void)didReceiveMemoryWarning
 {
@@ -53,10 +54,6 @@
     
     interpreter = [[OPETagInterpreter alloc] init];
     [interpreter readPlist];
-    
-    
-    
-    currentTile = 0;
    
     //36079
     
@@ -93,12 +90,13 @@
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     NSLog(@"stored TileSource: %@",[settings objectForKey:@"tileSourceNumber"]);
     if ([settings objectForKey:@"tileSourceNumber"]) {
-        num = [[settings objectForKey:@"tileSourceNumber"] intValue] ;
-        newTileSource = [OPEInfoViewController getTileSourceFromNumber:num];
+        currentTile = [[settings objectForKey:@"tileSourceNumber"] intValue] ;
+        newTileSource = [OPEInfoViewController getTileSourceFromNumber:currentTile];
         
     }
     else {
         newTileSource = [[OPEStamenTerrain alloc] init];
+        currentTile = 0;
     }
     
 
@@ -106,6 +104,7 @@
     [self addMarkerAt:initLocation withNode:nil];
     
     RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
+    currentSquare = [mapView latitudeLongitudeBoundingBoxForScreen];
     
     osmData = [[OPEOSMData alloc] init];
     
@@ -423,20 +422,21 @@
     dispatch_queue_t q = dispatch_queue_create("queue", NULL);
     
     
-        RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
-        if (mapView.contents.zoom > MINZOOM) {
-            [self removeZoomWarning];
-            dispatch_async(q, ^{
-                [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
-            });
-        }
-        else {
-            [self showZoomWarning];
-        }
+    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
+    if (mapView.contents.zoom > MINZOOM) {
+        [self removeZoomWarning];
+        dispatch_async(q, ^{
+            [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+        });
+        dispatch_release(q);
+    }
+    else {
+        [self showZoomWarning];
+    }
         
     
     
-    dispatch_release(q);
+    
 }
 
 - (void) addMarkers:(NSNotification*)notification 
