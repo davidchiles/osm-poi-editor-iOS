@@ -93,12 +93,16 @@
             //NSLog(@"CurrentString: %@",currentString);
             if ([currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location != NSNotFound)
             {
-                NSLog(@"Match");
-                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"type",[types objectForKey:currentString],@"category", nil];
+                NSLog(@"Match: %d",[currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location);
+                NSNumber * location = [NSNumber numberWithInteger: [currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location];
+                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"type",[types objectForKey:currentString],@"category",location,@"location", nil];
                 [searchResults addObject:match];
                 
             }
         }
+        NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"location"  ascending:YES];
+        NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
+        [searchResults sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nameDescriptor,nil]];
     }
 }
 
@@ -194,9 +198,6 @@
      */
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
      if (tableView == [[self searchDisplayController] searchResultsTableView]) {
-         if (!delegate) {
-             NSLog(@"delegate is nil");
-         }
          [[self delegate] setCategoryAndType: [searchResults objectAtIndex:indexPath.row]];
          [self.navigationController popViewControllerAnimated:YES];
      }
