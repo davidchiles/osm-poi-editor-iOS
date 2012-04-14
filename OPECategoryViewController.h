@@ -9,6 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "OPETypeViewController.h"
 
-@interface OPECategoryViewController : UITableViewController
+@interface OPECategoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate>
+
+@property (nonatomic,strong) IBOutlet UITableView * mainTableView;
+@property (nonatomic,strong) UISearchDisplayController * searchDisplayController;
+@property (nonatomic,strong) IBOutlet UISearchBar * searchBar;
+@property (nonatomic,strong) NSDictionary * categoriesAndTypes;
+@property (nonatomic,strong) NSDictionary * types;
+
+@property (nonatomic, strong) id <PassCategoryAndType> delegate;
+
+@property (nonatomic, retain) NSMutableArray *searchResults;
 
 @end

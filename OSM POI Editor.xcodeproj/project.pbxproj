@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6310F4B6153736D000C65FD8 /* OPEMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310F4B5153736D000C65FD8 /* OPEMessage.m */; };
-		6310F4C115378FCB00C65FD8 /* none.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4BF15378FCB00C65FD8 /* none.png */; };
-		6310F4C215378FCB00C65FD8 /* none@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4C015378FCB00C65FD8 /* none@2x.png */; };
 		6310F4C71537A43C00C65FD8 /* newNodeMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4C51537A43C00C65FD8 /* newNodeMarker.png */; };
 		6310F4C81537A43C00C65FD8 /* newNodeMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4C61537A43C00C65FD8 /* newNodeMarker@2x.png */; };
 		6310F59B1537A46D00C65FD8 /* airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4CE1537A46D00C65FD8 /* airplane.png */; };
@@ -347,8 +345,6 @@
 /* Begin PBXFileReference section */
 		6310F4B4153736D000C65FD8 /* OPEMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMessage.h; sourceTree = "<group>"; };
 		6310F4B5153736D000C65FD8 /* OPEMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMessage.m; sourceTree = "<group>"; };
-		6310F4BF15378FCB00C65FD8 /* none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = none.png; sourceTree = "<group>"; };
-		6310F4C015378FCB00C65FD8 /* none@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "none@2x.png"; sourceTree = "<group>"; };
 		6310F4C51537A43C00C65FD8 /* newNodeMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newNodeMarker.png; sourceTree = "<group>"; };
 		6310F4C61537A43C00C65FD8 /* newNodeMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newNodeMarker@2x.png"; sourceTree = "<group>"; };
 		6310F4CE1537A46D00C65FD8 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplane.png; sourceTree = "<group>"; };
@@ -1124,8 +1120,6 @@
 				6310F4C51537A43C00C65FD8 /* newNodeMarker.png */,
 				6310F4C61537A43C00C65FD8 /* newNodeMarker@2x.png */,
 				63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */,
-				6310F4BF15378FCB00C65FD8 /* none.png */,
-				6310F4C015378FCB00C65FD8 /* none@2x.png */,
 				63A2DB4315226CF6000C095D /* gear.png */,
 				63A2DB4415226CF6000C095D /* gear@2x.png */,
 				63A2DB3B152257FA000C095D /* userLocation.png */,
@@ -1431,8 +1425,6 @@
 				63E525E415362B7100D2DA35 /* icon.png in Resources */,
 				63E525E515362B7100D2DA35 /* icon@2x.png in Resources */,
 				63E525EB1536560300D2DA35 /* Tags.plist in Resources */,
-				6310F4C115378FCB00C65FD8 /* none.png in Resources */,
-				6310F4C215378FCB00C65FD8 /* none@2x.png in Resources */,
 				6310F4C71537A43C00C65FD8 /* newNodeMarker.png in Resources */,
 				6310F4C81537A43C00C65FD8 /* newNodeMarker@2x.png in Resources */,
 				6310F59B1537A46D00C65FD8 /* airplane.png in Resources */,

@@ -215,6 +215,7 @@
             else {
                 OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
                 viewer.title = @"Category";
+                [viewer setDelegate:self];
                 
                 [self.navigationController pushViewController:viewer animated:YES];
             }
@@ -225,6 +226,7 @@
         {
             OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
             viewer.title = @"Category";
+            [viewer setDelegate:self];
             
             [self.navigationController pushViewController:viewer animated:YES];
         }
@@ -422,15 +424,17 @@
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 }
 
-- (void) setCategoryAndType:(NSArray *)cAndT
+- (void) setCategoryAndType:(NSDictionary *)cAndT
 {
     if ([catAndType count]==2) {
         [tagInterpreter removeCatAndType:[[NSDictionary alloc] initWithObjectsAndKeys:[catAndType objectAtIndex:1],[catAndType objectAtIndex:0], nil] fromNode:theNewNode];
     }
+    NSString * newCategory = [cAndT objectForKey:@"category"];
+    NSString * newType = [cAndT objectForKey:@"type"];
     
-    catAndType = cAndT;
-    NSDictionary * KV = [tagInterpreter getOSmKeysValues:[[NSDictionary alloc] initWithObjectsAndKeys:[cAndT objectAtIndex:1],[cAndT objectAtIndex:0], nil]];
-    NSLog(@"catAndType: %@",catAndType);
+    
+    NSDictionary * KV = [tagInterpreter getOSmKeysValues:[[NSDictionary alloc] initWithObjectsAndKeys:newType,newCategory, nil]];
+    NSLog(@"catAndType: %@",cAndT);
     //NSLog(@"KV: %@",osmKeyValue);
     
     
@@ -451,7 +455,7 @@
     NSLog(@"Tags: %@",theNewNode.tags);
     theNewNode.image = [tagInterpreter getImageForNode:theNewNode];
     
-    catAndType = cAndT;
+    catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
     //[self.tableView reloadData];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
 }

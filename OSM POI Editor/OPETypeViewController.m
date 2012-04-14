@@ -160,7 +160,8 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
-    NSArray * cAndT = [[NSArray alloc] initWithObjects:category,[self.tableView cellForRowAtIndexPath:indexPath].textLabel.text ,nil];
+    //NSArray * cAndT = [[NSArray alloc] initWithObjects:category,[self.tableView cellForRowAtIndexPath:indexPath].textLabel.text ,nil];
+    NSDictionary * cAndT = [[NSDictionary alloc] initWithObjectsAndKeys:[self.tableView cellForRowAtIndexPath:indexPath].textLabel.text,@"type",category,@"category", nil];
     [[self delegate] setCategoryAndType: cAndT];
     //[[self navigationController] popViewControllerAnimated:YES];
     [[self navigationController] popToViewController:[[[self navigationController] viewControllers] objectAtIndex:1] animated:YES];

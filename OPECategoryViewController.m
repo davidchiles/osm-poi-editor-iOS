@@ -11,15 +11,9 @@
 
 @implementation OPECategoryViewController
 
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize mainTableView,searchBar,searchDisplayController;
+@synthesize categoriesAndTypes,searchResults,types;
+@synthesize delegate;
 
 - (void)didReceiveMemoryWarning
 {
@@ -39,7 +33,21 @@
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
+    categoriesAndTypes = tagInterpreter.categoryAndType;
+    NSMutableDictionary * tempTypes = [[NSMutableDictionary alloc] init];
+    for (NSString * category in categoriesAndTypes)
+    {
+        for (NSString * type in [categoriesAndTypes objectForKey:category]) {
+            [tempTypes setObject:category forKey:type];
+        }
+        
+    }
+    types = [tempTypes copy];
+    //NSLog(@"Types: %@",types);
+    
 }
 
 - (void)viewDidUnload
@@ -75,6 +83,25 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)handleSearchForTerm:(NSString *)searchTerm
+{
+    searchResults = [[NSMutableArray alloc] init];
+    if ([searchTerm length] != 0)
+    {
+        for (NSString * currentString in types)
+        {
+            //NSLog(@"CurrentString: %@",currentString);
+            if ([currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location != NSNotFound)
+            {
+                NSLog(@"Match");
+                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"type",[types objectForKey:currentString],@"category", nil];
+                [searchResults addObject:match];
+                
+            }
+        }
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -86,22 +113,28 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
-    return [tagInterpreter.categoryAndType count];
+    if (tableView == [[self searchDisplayController] searchResultsTableView]) {
+        
+        return [searchResults count];
+    }
+    return [categoriesAndTypes count];
     //return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
-    NSArray * categories = [[tagInterpreter.categoryAndType allKeys]sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    if (tableView == [[self searchDisplayController] searchResultsTableView]) {
+        cell.textLabel.text = [[self.searchResults objectAtIndex:indexPath.row] objectForKey:@"type"];
+        return cell;
+    }
+    
+    NSArray * categories = [[categoriesAndTypes allKeys]sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     
     cell.textLabel.text = [categories objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -159,15 +192,36 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+     if (tableView == [[self searchDisplayController] searchResultsTableView]) {
+         if (!delegate) {
+             NSLog(@"delegate is nil");
+         }
+         [[self delegate] setCategoryAndType: [searchResults objectAtIndex:indexPath.row]];
+         [self.navigationController popViewControllerAnimated:YES];
+     }
+     else {
+         OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:nil];
+         viewer.title = @"Type";
+         viewer.category = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+         [viewer setDelegate: [[[self navigationController] viewControllers] objectAtIndex:1]];
+         [self.navigationController pushViewController:viewer animated:YES];
+     }
     
-    OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:nil];
-    viewer.title = @"Type";
-    viewer.category = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
-    [viewer setDelegate: [[[self navigationController] viewControllers] objectAtIndex:1]];
     
     
     
-    [self.navigationController pushViewController:viewer animated:YES];
+    
 }
+
+#pragma mark - search delegate
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller 
+shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self handleSearchForTerm:searchString];
+    
+    return YES;
+}
+
 
 @end

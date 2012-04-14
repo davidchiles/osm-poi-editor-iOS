@@ -10,12 +10,12 @@
 
 @protocol PassCategoryAndType <NSObject>
 @required
-- (void) setCategoryAndType:(NSArray *)cAndT;
+- (void) setCategoryAndType:(NSDictionary *)cAndT;
 @end
 
 @interface OPETypeViewController : UITableViewController
 
 @property (nonatomic,retain) NSString * category;
-@property (retain) id delegate;
+@property (nonatomic, strong) id delegate;
 
 @end
