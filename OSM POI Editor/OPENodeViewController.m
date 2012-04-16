@@ -288,10 +288,8 @@
         dispatch_async(q, ^{
             NSLog(@"saveBottoPressed");
             
-            if ([theNewNode.tags objectForKey:@"name"]) {
-                NSString * newName = [OPEOSMData backToHTML:[theNewNode.tags objectForKey:@"name"]];
-                [theNewNode.tags setObject:newName forKey:@"name"];
-            }
+            [OPEOSMData backToHTML:theNewNode];
+            
             if(theNewNode.ident<0)
             {
                 NSLog(@"Create Node");
@@ -302,10 +300,8 @@
                 node = theNewNode;
                 if(delegate)
                 {
-                    if ([theNewNode.tags objectForKey:@"name"]) {
-                        NSString * newName = [OPEOSMData HTMLFix:[theNewNode.tags objectForKey:@"name"]];
-                        [theNewNode.tags setObject:newName forKey:@"name"];
-                    }
+                    [OPEOSMData HTMLFix:theNewNode];
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                     [delegate createdNode:node];
                     });
@@ -320,10 +316,8 @@
                 node = theNewNode;
                 if(delegate)
                 {
-                    if ([theNewNode.tags objectForKey:@"name"]) {
-                        NSString * newName = [OPEOSMData HTMLFix:[theNewNode.tags objectForKey:@"name"]];
-                        [theNewNode.tags setObject:newName forKey:@"name"];
-                    }
+                    [OPEOSMData HTMLFix:theNewNode];
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                     [delegate updatedNode:node];
                     });
@@ -386,10 +380,8 @@
             [HUD show:YES];
             dispatch_queue_t q = dispatch_queue_create("queue", NULL);
             dispatch_async(q, ^{
-                if ([node.tags objectForKey:@"name"]) {
-                    NSString * newName = [OPEOSMData backToHTML:[node.tags objectForKey:@"name"]];
-                    [theNewNode.tags setObject:newName forKey:@"name"];
-                }
+                [OPEOSMData backToHTML:node];
+                
                 OPEOSMData* data = [[OPEOSMData alloc] init];
                 [data deleteNode:node];
                 if(delegate)

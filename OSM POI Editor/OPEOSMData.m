@@ -96,13 +96,7 @@
                     if ([self.allNodes objectForKey:[NSNumber numberWithInt:newNode.ident]] ==nil && [self.ignoreNodes objectForKey:[NSNumber numberWithInt:newNode.ident]] == nil) 
                     {
                         //NSLog(@"add to node dictionary");
-                        if([newNode.tags objectForKey:@"name"])
-                        {
-                            //NSLog(@"Name: %@",[newNode.tags objectForKey:@"name"]);
-                            NSString * newName = [OPEOSMData HTMLFix:[newNode.tags objectForKey:@"name"]];
-                            //NSLog(@"New Name: %@",newName);
-                            [newNode.tags setObject:newName forKey:@"name"];
-                        }
+                        [OPEOSMData HTMLFix:newNode];
                         [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
                         [newNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
                     }
@@ -392,22 +386,26 @@
      object:self
      userInfo:nil];
 }
-+(NSString *)backToHTML:(NSString *)string
++(void) backToHTML:(OPENode *)node
 {
+    NSMutableDictionary * fixedTags = [[NSMutableDictionary alloc] init];
+    for(id item in node.tags)
+    {
+        NSString * fixed = [[node.tags objectForKey:item] stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
+        [fixedTags setObject:fixed forKey:item];
+    }
+    node.tags = [[NSMutableDictionary alloc] initWithDictionary:fixedTags];
     
-    string = [string stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
-    return string;
 }
 
-
-+(NSString *)HTMLFix:(NSString *)string
++(void) HTMLFix:(OPENode *)node
 {
-    string = [string stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
-    //string = [string stringByReplacingOccurrencesOfString:@"&apos;" withString:@"'"];
-    //string = [string stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
-    //string = [string stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
-    //string = [string stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
-    return string;
-
+    NSMutableDictionary * fixedTags = [[NSMutableDictionary alloc] init];
+    for(id item in node.tags)
+    {
+        NSString * fixed = [[node.tags objectForKey:item] stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+        [fixedTags setObject:fixed forKey:item];
+    }
+    node.tags = [[NSMutableDictionary alloc] initWithDictionary:fixedTags];
 }
 @end

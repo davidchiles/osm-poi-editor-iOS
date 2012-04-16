@@ -33,8 +33,8 @@
 - (int) updateNode: (OPENode *) node;
 - (int) deleteNode: (OPENode *) node;
 - (void) uploadComplete;
-+ (NSString *)HTMLFix:(NSString *)string;
-+ (NSString *)backToHTML:(NSString *)string;
++ (void) HTMLFix:(OPENode *)node;
++(void) backToHTML:(OPENode *)node;
 
 
 

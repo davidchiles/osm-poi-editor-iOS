@@ -43,8 +43,7 @@
    
     [[self navigationItem] setRightBarButtonItem:saveButton];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed)];
-    //self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:nil action:nil];
-    NSLog(@"back Bar title: %@",self.navigationItem.backBarButtonItem.title);
+    
     [[textView layer] setCornerRadius:7.0];
     textView.text = osmValue;
     if ([osmKey isEqualToString:@"name"]) {
