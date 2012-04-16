@@ -94,10 +94,10 @@
     // Return the number of sections.
     if(theNewNode.ident<0)
     {
-        return 2;
+        return 3;
     }
     else {
-        return 3;
+        return 4;
     }
 }
 
@@ -115,7 +115,10 @@
 	else if (section == 1) {
 		return @"Category";
 	}
-	else if (section == 2) {
+    else if (section == 2){
+        return @"Note";
+    }
+	else if (section == 3) {
 		return @""; //Delete Button Header
 	}
 	else {
@@ -163,7 +166,17 @@
         
         //cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",indexPath.row];
 	}
-    else if (indexPath.section == 2) {
+    else if (indexPath.section == 2)
+    {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier1];
+		if (cell == nil) {
+			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier1];
+		}
+        cell.textLabel.text = [theNewNode.tags objectForKey:@"note"];
+        cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
+        
+    }
+    else if (indexPath.section == 3) {
         cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier3];
         if(cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier3];
@@ -191,7 +204,8 @@
         OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
         
         viewer.title = @"Name";
-        viewer.text = [theNewNode.tags objectForKey:@"name"];
+        viewer.osmValue = [theNewNode.tags objectForKey:@"name"];
+        viewer.osmKey = @"name";
         [viewer setDelegate:self];
         
         [self.navigationController pushViewController:viewer animated:YES];
@@ -230,6 +244,17 @@
             
             [self.navigationController pushViewController:viewer animated:YES];
         }
+    }
+    else if (indexPath.section == 2)
+    {
+        OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
+        
+        viewer.title = @"Note";
+        viewer.osmValue = [theNewNode.tags objectForKey:@"note"];
+        viewer.osmKey = @"note";
+        [viewer setDelegate:self];
+        
+        [self.navigationController pushViewController:viewer animated:YES];
     }
 }
 -(void) showOauthError
@@ -389,6 +414,22 @@
     
 }
 
+- (void) newTag:(NSDictionary *)tag
+{
+    NSString * osmKey = [tag objectForKey:@"osmKey"];
+    NSString * osmValue = [tag objectForKey:@"osmValue"];
+    
+    if (![osmValue isEqualToString:@""]) 
+    {
+        [theNewNode.tags setObject:osmValue forKey:osmKey];
+    }
+    else {
+        [theNewNode.tags removeObjectForKey:osmKey];
+    }
+    [self.tableView reloadData];
+    NSLog(@"NewNode: %@",theNewNode.tags);
+}
+/*
 - (void) setText:(NSString *)text
 {
     NSString * newName = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -423,7 +464,7 @@
     //[self.tableView reloadData];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 }
-
+*/
 - (void) setCategoryAndType:(NSDictionary *)cAndT
 {
     if ([catAndType count]==2) {

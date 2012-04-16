@@ -8,16 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol PassText <NSObject>
+@protocol editTextDelegate <NSObject>
 @required
-- (void) setText:(NSString *)text;
+- (void) newTag:(NSDictionary *)text;
 @end
 
-@interface OPETextEdit : UIViewController
+@interface OPETextEdit : UIViewController <UITextViewDelegate>
 
 
-@property (nonatomic, retain) NSString * text;
+@property (nonatomic, retain) NSString * osmValue;
 @property (nonatomic, retain) IBOutlet UITextView * textView;
+@property (nonatomic, strong) NSString * osmKey;
 
 @property (retain) id delegate;
 

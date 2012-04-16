@@ -21,7 +21,7 @@
 @end
 
 
-@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, PassText, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate>
+@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, editTextDelegate, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate>
 {
     UITableView *tableView;
     OPETagInterpreter * tagInterpreter;

@@ -11,9 +11,10 @@
 
 @implementation OPETextEdit
 
-@synthesize text;
+@synthesize osmValue;
 @synthesize textView;
 @synthesize delegate;
+@synthesize osmKey;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,13 +39,21 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Done" style:  UIBarButtonItemStyleDone target: self action: @selector(saveButtonPressed)];
+   
     [[self navigationItem] setRightBarButtonItem:saveButton];
-    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed)];
+    //self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:nil action:nil];
+    NSLog(@"back Bar title: %@",self.navigationItem.backBarButtonItem.title);
     [[textView layer] setCornerRadius:7.0];
-    textView.text = text;
-    textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    textView.text = osmValue;
+    if ([osmKey isEqualToString:@"name"]) {
+        textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    }
+    textView.returnKeyType = UIReturnKeyDone;
+    textView.delegate = self;
     [textView becomeFirstResponder];
+    
     
     
     
@@ -52,7 +61,7 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    textView.text = text;
+    textView.text = osmValue;
     [textView becomeFirstResponder];
 }
 
@@ -78,8 +87,26 @@
 
 - (void) saveButtonPressed
 {
-    [[self delegate] setText:textView.text];
+    
+    [[self delegate] newTag:[[NSDictionary alloc] initWithObjectsAndKeys:osmKey,@"osmKey",textView.text,@"osmValue", nil]];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void) cancelButtonPressed
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqual:@"\n"])
+    {
+        [self saveButtonPressed];
+        return NO;
+    }
+        
+    
+    return YES;
+    
 }
 
 @end
