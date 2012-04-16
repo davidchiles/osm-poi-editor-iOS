@@ -572,7 +572,7 @@
     NSLog(@"info button pressed");
     OPEInfoViewController * viewer = [[OPEInfoViewController alloc] initWithNibName:@"OPEInfoViewController" bundle:nil];
     [viewer setDelegate:self];
-    [viewer setCurrentNumber:currentTile];
+    //[viewer setCurrentNumber:currentTile];
     viewer.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     viewer.title = @"Settings";
     [[self navigationController] pushViewController:viewer animated:YES];

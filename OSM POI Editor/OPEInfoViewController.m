@@ -326,6 +326,14 @@
     [self checkButtonStatus];
     
     [self.loginButton addTarget:self action:@selector(osmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    if ([settings objectForKey:@"tileSourceNumber"]) {
+         currentNumber = [[settings objectForKey:@"tileSourceNumber"] intValue];
+    }
+    else {
+        currentNumber = 0;
+    }
+   
     
 }
 
