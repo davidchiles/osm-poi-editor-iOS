@@ -1082,7 +1082,7 @@
 	</dict>
 	<key>Shopping</key>
 	<dict>
-		<key>Art</key>
+		<key>Art Store</key>
 		<dict>
 			<key>image</key>
 			<string>art.png</string>
@@ -1172,7 +1172,7 @@
 				<string>car_repair</string>
 			</dict>
 		</dict>
-		<key>Carpet</key>
+		<key>Carpet Store</key>
 		<dict>
 			<key>image</key>
 			<string>none.png</string>
@@ -1182,7 +1182,7 @@
 				<string>carpet</string>
 			</dict>
 		</dict>
-		<key>Clothes</key>
+		<key>Clothing Store</key>
 		<dict>
 			<key>image</key>
 			<string>shirt.png</string>
@@ -1192,7 +1192,7 @@
 				<string>clothes</string>
 			</dict>
 		</dict>
-		<key>Computer</key>
+		<key>Computer Store</key>
 		<dict>
 			<key>image</key>
 			<string>computer.png</string>
@@ -1422,7 +1422,7 @@
 				<string>outdoor</string>
 			</dict>
 		</dict>
-		<key>Paint</key>
+		<key>Paint Store</key>
 		<dict>
 			<key>image</key>
 			<string>paint_brush.png</string>
@@ -1482,7 +1482,7 @@
 				<string>mall</string>
 			</dict>
 		</dict>
-		<key>Sporting Goods</key>
+		<key>Sporting Goods Store</key>
 		<dict>
 			<key>image</key>
 			<string>basketball.png</string>
