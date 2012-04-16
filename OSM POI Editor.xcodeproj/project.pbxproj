@@ -216,6 +216,8 @@
 		6310F6661537A46D00C65FD8 /* zoo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F59A1537A46D00C65FD8 /* zoo@2x.png */; };
 		631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E014DC98D0000236F0 /* OPEOSMData.m */; };
 		631539E514DCA29B000236F0 /* OPENode.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E414DCA29B000236F0 /* OPENode.m */; };
+		63214B2D153CB382001C9A58 /* stardavid.png in Resources */ = {isa = PBXBuildFile; fileRef = 63214B2C153CB382001C9A58 /* stardavid.png */; };
+		63214B2F153CB390001C9A58 /* stardavid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63214B2E153CB390001C9A58 /* stardavid@2x.png */; };
 		632573B11520FFB200478B78 /* tileSource.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632573B01520FFB100478B78 /* tileSource.plist */; };
 		632573DB152108BD00478B78 /* OPEStamenTerrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 632573DA152108BD00478B78 /* OPEStamenTerrain.m */; };
 		632573DF15211A1C00478B78 /* OPEStamenToner.m in Sources */ = {isa = PBXBuildFile; fileRef = 632573DE15211A1C00478B78 /* OPEStamenToner.m */; };
@@ -555,6 +557,8 @@
 		631539E014DC98D0000236F0 /* OPEOSMData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMData.m; sourceTree = "<group>"; };
 		631539E314DCA29B000236F0 /* OPENode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENode.h; sourceTree = "<group>"; };
 		631539E414DCA29B000236F0 /* OPENode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENode.m; sourceTree = "<group>"; };
+		63214B2C153CB382001C9A58 /* stardavid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stardavid.png; sourceTree = "<group>"; };
+		63214B2E153CB390001C9A58 /* stardavid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stardavid@2x.png"; sourceTree = "<group>"; };
 		632573B01520FFB100478B78 /* tileSource.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tileSource.plist; sourceTree = "<group>"; };
 		632573D9152108BD00478B78 /* OPEStamenTerrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEStamenTerrain.h; sourceTree = "<group>"; };
 		632573DA152108BD00478B78 /* OPEStamenTerrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEStamenTerrain.m; sourceTree = "<group>"; };
@@ -608,6 +612,7 @@
 		6383949214EC7DAC00C74A57 /* GTMHTTPFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMHTTPFetcher.m; sourceTree = "<group>"; };
 		6383949314EC7DAC00C74A57 /* GTMOAuthViewTouch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTMOAuthViewTouch.xib; sourceTree = "<group>"; };
 		6383949914EC85C100C74A57 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		63968298153CB8B4008F4C0E /* OPEAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAPIConstants.h; sourceTree = "<group>"; };
 		63A2DB3B152257FA000C095D /* userLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userLocation.png; sourceTree = "<group>"; };
 		63A2DB3C152257FA000C095D /* userLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "userLocation@2x.png"; sourceTree = "<group>"; };
 		63A2DB4315226CF6000C095D /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
@@ -841,6 +846,7 @@
 				6310F51E1537A46D00C65FD8 /* shoe.png */,
 				6310F51F1537A46D00C65FD8 /* shop.png */,
 				6310F5201537A46D00C65FD8 /* subway_entrance.png */,
+				63214B2C153CB382001C9A58 /* stardavid.png */,
 				6310F5211537A46D00C65FD8 /* tank.png */,
 				6310F5221537A46D00C65FD8 /* taxi.png */,
 				6310F5231537A46D00C65FD8 /* teddybear.png */,
@@ -950,6 +956,7 @@
 				6310F5851537A46D00C65FD8 /* shoe@2x.png */,
 				6310F5861537A46D00C65FD8 /* shop@2x.png */,
 				6310F5871537A46D00C65FD8 /* subway_entrance@2x.png */,
+				63214B2E153CB390001C9A58 /* stardavid@2x.png */,
 				6310F5881537A46D00C65FD8 /* tank@2x.png */,
 				6310F5891537A46D00C65FD8 /* taxi@2x.png */,
 				6310F58A1537A46D00C65FD8 /* teddybear@2x.png */,
@@ -1036,6 +1043,7 @@
 		6330AB7414DB519A00448852 /* OSM POI Editor */ = {
 			isa = PBXGroup;
 			children = (
+				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
 				631539E314DCA29B000236F0 /* OPENode.h */,
 				631539E414DCA29B000236F0 /* OPENode.m */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,
@@ -1631,6 +1639,8 @@
 				6310F6641537A46D00C65FD8 /* windmill@2x.png in Resources */,
 				6310F6651537A46D00C65FD8 /* wrench@2x.png in Resources */,
 				6310F6661537A46D00C65FD8 /* zoo@2x.png in Resources */,
+				63214B2D153CB382001C9A58 /* stardavid.png in Resources */,
+				63214B2F153CB390001C9A58 /* stardavid@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -250,6 +250,66 @@
 				<string>restaurant</string>
 			</dict>
 		</dict>
+		<key>Bakery</key>
+		<dict>
+			<key>image</key>
+			<string>bread.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>bakery</string>
+			</dict>
+		</dict>
+		<key>Deli</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>deli</string>
+			</dict>
+		</dict>
+		<key>Butcher</key>
+		<dict>
+			<key>image</key>
+			<string>butcher.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>butcher</string>
+			</dict>
+		</dict>
+		<key>Beverage Shop</key>
+		<dict>
+			<key>image</key>
+			<string>alcohol.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>beverages</string>
+			</dict>
+		</dict>
+		<key>Alcohol Shop</key>
+		<dict>
+			<key>image</key>
+			<string>alcohol.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>alcohol</string>
+			</dict>
+		</dict>
+		<key>Craft Brewery</key>
+		<dict>
+			<key>image</key>
+			<string>beer.png</string>
+			<key>tags</key>
+			<dict>
+				<key>craft</key>
+				<string>bewery</string>
+			</dict>
+		</dict>
 	</dict>
 	<key>Government</key>
 	<dict>
@@ -869,6 +929,26 @@
 				<string>atm</string>
 			</dict>
 		</dict>
+		<key>Hairdresser</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>hairdresser</string>
+			</dict>
+		</dict>
+		<key>Loans</key>
+		<dict>
+			<key>image</key>
+			<string>money.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>money_lender</string>
+			</dict>
+		</dict>
 		<key>Accountant</key>
 		<dict>
 			<key>image</key>
@@ -929,6 +1009,16 @@
 				<string>insurance</string>
 			</dict>
 		</dict>
+		<key>Spa or Nail Salon</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>beauty</string>
+			</dict>
+		</dict>
 		<key>Lawyer</key>
 		<dict>
 			<key>image</key>
@@ -969,19 +1059,29 @@
 				<string>travel_agent</string>
 			</dict>
 		</dict>
-	</dict>
-	<key>Shopping</key>
-	<dict>
-		<key>Alcohol</key>
+		<key>Dry Cleaning</key>
 		<dict>
 			<key>image</key>
-			<string>alcohol.png</string>
+			<string>shirt.png</string>
 			<key>tags</key>
 			<dict>
 				<key>shop</key>
-				<string>alcohol</string>
+				<string>dry_cleaning</string>
 			</dict>
 		</dict>
+		<key>Laundromat</key>
+		<dict>
+			<key>image</key>
+			<string>shirt.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>laundry</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>Shopping</key>
+	<dict>
 		<key>Art</key>
 		<dict>
 			<key>image</key>
@@ -1000,26 +1100,6 @@
 			<dict>
 				<key>shop</key>
 				<string>baby_goods</string>
-			</dict>
-		</dict>
-		<key>Bakery</key>
-		<dict>
-			<key>image</key>
-			<string>bread.png</string>
-			<key>tags</key>
-			<dict>
-				<key>shop</key>
-				<string>bakery</string>
-			</dict>
-		</dict>
-		<key>Beverages</key>
-		<dict>
-			<key>image</key>
-			<string>alcohol.png</string>
-			<key>tags</key>
-			<dict>
-				<key>shop</key>
-				<string>beverages</string>
 			</dict>
 		</dict>
 		<key>Bicycle Shop</key>
@@ -1050,16 +1130,6 @@
 			<dict>
 				<key>shop</key>
 				<string>boutique</string>
-			</dict>
-		</dict>
-		<key>Butcher</key>
-		<dict>
-			<key>image</key>
-			<string>butcher.png</string>
-			<key>tags</key>
-			<dict>
-				<key>shop</key>
-				<string>butcher</string>
 			</dict>
 		</dict>
 		<key>Candy Shop</key>
@@ -1162,16 +1232,6 @@
 				<string>chemist</string>
 			</dict>
 		</dict>
-		<key>Deli</key>
-		<dict>
-			<key>image</key>
-			<string>none.png</string>
-			<key>tags</key>
-			<dict>
-				<key>shop</key>
-				<string>deli</string>
-			</dict>
-		</dict>
 		<key>Department Store</key>
 		<dict>
 			<key>image</key>
@@ -1182,7 +1242,7 @@
 				<string>department_store</string>
 			</dict>
 		</dict>
-		<key>Diving Store</key>
+		<key>Diving Equipment</key>
 		<dict>
 			<key>image</key>
 			<string>scuba.png</string>
@@ -1190,16 +1250,6 @@
 			<dict>
 				<key>shop</key>
 				<string>dive</string>
-			</dict>
-		</dict>
-		<key>Dry Cleaning</key>
-		<dict>
-			<key>image</key>
-			<string>shirt.png</string>
-			<key>tags</key>
-			<dict>
-				<key>shop</key>
-				<string>dry_cleaning</string>
 			</dict>
 		</dict>
 		<key>Electronics</key>
@@ -1282,16 +1332,6 @@
 				<string>gift</string>
 			</dict>
 		</dict>
-		<key>Hairdresser</key>
-		<dict>
-			<key>image</key>
-			<string>none.png</string>
-			<key>tags</key>
-			<dict>
-				<key>shop</key>
-				<string>hairdresser</string>
-			</dict>
-		</dict>
 		<key>Hardware Store</key>
 		<dict>
 			<key>image</key>
@@ -1310,26 +1350,6 @@
 			<dict>
 				<key>shop</key>
 				<string>jewelry</string>
-			</dict>
-		</dict>
-		<key>Laundromat</key>
-		<dict>
-			<key>image</key>
-			<string>shirt.png</string>
-			<key>tags</key>
-			<dict>
-				<key>shop</key>
-				<string>laundry</string>
-			</dict>
-		</dict>
-		<key>Loans</key>
-		<dict>
-			<key>image</key>
-			<string>money.png</string>
-			<key>tags</key>
-			<dict>
-				<key>shop</key>
-				<string>money_lender</string>
 			</dict>
 		</dict>
 		<key>Matress Store</key>
@@ -1460,16 +1480,6 @@
 			<dict>
 				<key>shop</key>
 				<string>mall</string>
-			</dict>
-		</dict>
-		<key>Spa or Nail Salon</key>
-		<dict>
-			<key>image</key>
-			<string>none.png</string>
-			<key>tags</key>
-			<dict>
-				<key>shop</key>
-				<string>beauty</string>
 			</dict>
 		</dict>
 		<key>Sporting Goods</key>
