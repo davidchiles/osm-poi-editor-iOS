@@ -47,10 +47,10 @@
     [[textView layer] setCornerRadius:7.0];
     textView.text = osmValue;
     
-    if ([osmKey isEqualToString:@"name"] || [osmKey isEqualToString:@"addr:city"] || [osmKey isEqualToString:@"addr:country"] || [osmKey isEqualToString:@"addr:province"]) {
+    if ([osmKey isEqualToString:@"name"] || [osmKey isEqualToString:@"addr:city"]  || [osmKey isEqualToString:@"addr:province"]|| [osmKey isEqualToString:@"addr:street"]) {
         textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
     }
-    else if ([osmKey isEqualToString:@"city:state"]){
+    else if ([osmKey isEqualToString:@"addr:state"] || [osmKey isEqualToString:@"addr:country"]){
         textView.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
     }
              

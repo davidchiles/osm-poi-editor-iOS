@@ -366,9 +366,6 @@
         }
     }
     //NSString * cellText = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
-    if (!([self.tableView cellForRowAtIndexPath:indexPath].textLabel.text)) {
-        return NO;
-    }
   
     return YES;
 }
@@ -546,52 +543,35 @@
         [theNewNode.tags removeObjectForKey:osmKey];
     }
     [self reloadTags];
+    [self checkSaveButton];
     [self.tableView reloadData];
     NSLog(@"NewNode: %@",theNewNode.tags);
 }
-/*
-- (void) setText:(NSString *)text
+-(void) removeOptionalTags
 {
-    NSString * newName = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    NSString * oldName = [theNewNode.tags objectForKey:@"name"];
-    if (![newName isEqualToString:@""]) 
+    for(int i = 2; i<[tableSections count]-2; i++)
     {
-        NSLog(@"check string: %@",newName);
-        if (oldName) 
-        {
-            if(![oldName isEqualToString:newName])
+        NSDictionary * sectionDictionary = [tableSections objectAtIndex:i];
+        if (![[sectionDictionary objectForKey:@"section"] isEqualToString:@"Address"]) {
+            NSArray * rowArray = [ sectionDictionary objectForKey:@"rows"];
+            for (NSDictionary * rowDictionary in rowArray)
             {
-                [theNewNode.tags setObject:text forKey:@"name"];
-                nodeIsEdited = YES;
+                [theNewNode.tags removeObjectForKey:[rowDictionary objectForKey:@"osmKey"]];
             }
         }
-        else {
-            [theNewNode.tags setObject:text forKey:@"name"];
-            nodeIsEdited = YES;
-        }
     }
-    else {
-        if (oldName) {
-            [theNewNode.tags removeObjectForKey:@"name"];
-            nodeIsEdited = YES;
-        }
-        NSLog(@"emptyString");
-        
-    }
-    NSLog(@"NewNode: %@",theNewNode.tags);
-    
-    //NSLog(@"we're back %@", text);
-    //[self.tableView reloadData];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 }
-*/
 - (void) setCategoryAndType:(NSDictionary *)cAndT
 {
-    if ([catAndType count]==2) {
-        [tagInterpreter removeCatAndType:[[NSDictionary alloc] initWithObjectsAndKeys:[catAndType objectAtIndex:1],[catAndType objectAtIndex:0], nil] fromNode:theNewNode];
-    }
     NSString * newCategory = [cAndT objectForKey:@"category"];
     NSString * newType = [cAndT objectForKey:@"type"];
+    
+    if ([catAndType count]==2) {
+        if (!([newCategory isEqualToString:[catAndType objectAtIndex:0]] && [newType isEqualToString:[catAndType objectAtIndex:1]])) {
+            [tagInterpreter removeCatAndType:[[NSDictionary alloc] initWithObjectsAndKeys:[catAndType objectAtIndex:1],[catAndType objectAtIndex:0], nil] fromNode:theNewNode];
+            [self removeOptionalTags];
+        }
+    }
     
     
     NSDictionary * KV = [tagInterpreter getOSmKeysValues:[[NSDictionary alloc] initWithObjectsAndKeys:newType,newCategory, nil]];
