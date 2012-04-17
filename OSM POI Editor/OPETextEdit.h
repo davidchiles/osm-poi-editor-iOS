@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol editTextDelegate <NSObject>
+@protocol editTagDelegate <NSObject>
 @required
 - (void) newTag:(NSDictionary *)text;
 @end

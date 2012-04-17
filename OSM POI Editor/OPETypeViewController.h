@@ -15,7 +15,7 @@
 
 @interface OPETypeViewController : UITableViewController
 
-@property (nonatomic,retain) NSString * category;
+@property (nonatomic,strong) NSString * category;
 @property (nonatomic, strong) id delegate;
 
 @end

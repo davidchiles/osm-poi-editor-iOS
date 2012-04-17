@@ -12,6 +12,7 @@
 #import "OPETextEdit.h"
 #import "OPETypeViewController.h"
 #import "MBProgressHUD.h"
+#import "OPETagValueList.h"
 
 @protocol OPENodeViewDelegate
 @optional
@@ -21,7 +22,7 @@
 @end
 
 
-@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, editTextDelegate, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate>
+@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, editTagDelegate, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate>
 {
     UITableView *tableView;
     OPETagInterpreter * tagInterpreter;

@@ -89,7 +89,7 @@
     
     
     
-    NSDictionary * nameSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Name",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"text",@"values",@"name",@"osmKey", nil]],@"rows", nil];
+    NSDictionary * nameSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Name",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"text",@"values",@"name",@"osmKey",@"Name",@"name", nil]],@"rows", nil];
     tableSections = [NSMutableArray arrayWithObject:nameSection];
     
     NSArray * ct = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"category",@"values", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"category",@"values", nil], nil];
@@ -99,7 +99,7 @@
     //add optional
     [self addOptionalTags];
     
-    NSDictionary * noteSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Note",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"text",@"values",@"note",@"osmKey", nil]],@"rows", nil];
+    NSDictionary * noteSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Note",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"text",@"values",@"note",@"osmKey",@"Note",@"name", nil]],@"rows", nil];
     [tableSections addObject: noteSection];
     
     if (node.ident>0) {
@@ -179,7 +179,13 @@
 		if (cell == nil) {
 			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
         }
-        cell.detailTextLabel.text = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+        if ([[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] count]) {
+            cell.detailTextLabel.text = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
+        }
+        else {
+            cell.detailTextLabel.text = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+        }
+        
         cell.textLabel.text = [cellDictionary objectForKey:@"name"];
         
         
@@ -305,27 +311,67 @@
     NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
     if([[cellDictionary objectForKey:@"values"] isKindOfClass:[NSDictionary class]])
     {
-        //list view cell        
+        //list view cell 
+        OPETagValueList * viewer = [[OPETagValueList alloc] initWithNibName:@"OPETagValueList" bundle:nil];
+        viewer.title = [cellDictionary objectForKey:@"name"];
+        viewer.osmValue = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+        viewer.osmKey = [cellDictionary objectForKey:@"osmKey"];
+        viewer.values = [cellDictionary objectForKey:@"values"];
+        [viewer setDelegate:self];
+        [self.navigationController pushViewController:viewer animated:YES];
+
+        
     }
     else {
-        if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"text"]) { //Text editing
+        if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"text"] || [[cellDictionary objectForKey:@"values"] isEqualToString:@"label"] ) { //Text editing
             OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
             viewer.title = [cellDictionary objectForKey:@"name"];
             viewer.osmValue = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             viewer.osmKey = [cellDictionary objectForKey:@"osmKey"];
             [viewer setDelegate:self];
-            
-            
+            [self.navigationController pushViewController:viewer animated:YES];
+        }
+        else if([[cellDictionary objectForKey:@"values"] isEqualToString:@"category"])
+        {
+            if(indexPath.row == 1)
+            {
+                if ([catAndType count]==2) 
+                {
+                    OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:[NSBundle mainBundle]];
+                    viewer.title = @"Type";
+                    
+                    viewer.category = [catAndType objectAtIndex:0];
+                    [viewer setDelegate:self];
+                    NSLog(@"category previous: %@",viewer.category);
+                    
+                    [self.navigationController pushViewController:viewer animated:YES];
+                }
+                else {
+                    OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
+                    viewer.title = @"Category";
+                    [viewer setDelegate:self];
+                    
+                    [self.navigationController pushViewController:viewer animated:YES];
+                }
+            }
+            else
+            {
+                OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
+                viewer.title = @"Category";
+                [viewer setDelegate:self];
+                
+                [self.navigationController pushViewController:viewer animated:YES];
+            }
         }
     }
 
     
-    
+    /*
     if (indexPath.section == 0) {
         
        
         
-        [self.navigationController pushViewController:viewer animated:YES];
+        
     }
     else if(indexPath.section == 1)
     {
@@ -373,6 +419,7 @@
         
         [self.navigationController pushViewController:viewer animated:YES];
     }
+     */
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 -(void) showOauthError
