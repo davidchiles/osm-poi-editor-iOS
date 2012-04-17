@@ -87,8 +87,13 @@
     self.HUD.delegate = self;
     
     
+    [self reloadTags];
     
     
+    
+}
+-(void) reloadTags
+{
     NSDictionary * nameSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Name",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"text",@"values",@"name",@"osmKey",@"Name",@"name", nil]],@"rows", nil];
     tableSections = [NSMutableArray arrayWithObject:nameSection];
     
@@ -242,67 +247,7 @@
             [cell.contentView addSubview:deleteButton];
         }
     }
-    
-    
-    
-    /*
-	if (indexPath.section == 0) {
-		cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
-		if (cell == nil) {
-			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
-		}
-        cell.textLabel.text = [theNewNode.tags objectForKey:@"name"];
-        cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
 
-	}
-	else if (indexPath.section == 1) {
-		cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
-		if (cell == nil) {
-			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
-        }
-        cell.textLabel.text = [catAndTypeName objectAtIndex:indexPath.row];
-        cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
-        if ([catAndType count]==2) {
-            cell.detailTextLabel.text = [catAndType objectAtIndex:indexPath.row];
-        }
-        else
-        {
-            cell.detailTextLabel.text =@"";
-        }
-        
-        
-        
-        //cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",indexPath.row];
-	}
-    else if (indexPath.section == 2)
-    {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
-		if (cell == nil) {
-			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
-		}
-        cell.textLabel.text = [theNewNode.tags objectForKey:@"note"];
-        cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
-        
-    }
-    else if (indexPath.section == 3) {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierDelete];
-        if(cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierDelete];
-        }
-        
-        deleteButton.frame = cell.contentView.bounds;
-        NSLog(@"bounds: %f",cell.contentView.bounds.size.width);
-        NSLog(@"button: %f",deleteButton.frame.size.width);
-        deleteButton.frame = CGRectMake(deleteButton.frame.origin.x, deleteButton.frame.origin.y, 300.0f, deleteButton.frame.size.height);
-        
-        [cell.contentView addSubview:deleteButton];
-    }
-    
-	
-	// Configure the cell...
-	//cell.textLabel.text = @"Text Label";
-	//cell.detailTextLabel.text = @"Detail Text Label";
-    */
     return cell;
 }
 
@@ -364,62 +309,6 @@
             }
         }
     }
-
-    
-    /*
-    if (indexPath.section == 0) {
-        
-       
-        
-        
-    }
-    else if(indexPath.section == 1)
-    {
-        
-        if(indexPath.row == 1)
-        {
-            if ([catAndType count]==2) 
-            {
-                OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:[NSBundle mainBundle]];
-                viewer.title = @"Type";
-                
-                viewer.category = [catAndType objectAtIndex:0];
-                [viewer setDelegate:self];
-                NSLog(@"category previous: %@",viewer.category);
-                
-                [self.navigationController pushViewController:viewer animated:YES];
-            }
-            else {
-                OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
-                viewer.title = @"Category";
-                [viewer setDelegate:self];
-                
-                [self.navigationController pushViewController:viewer animated:YES];
-            }
-            
-            
-        }
-        else
-        {
-            OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
-            viewer.title = @"Category";
-            [viewer setDelegate:self];
-            
-            [self.navigationController pushViewController:viewer animated:YES];
-        }
-    }
-    else if (indexPath.section == 2)
-    {
-        OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
-        
-        viewer.title = @"Note";
-        viewer.osmValue = [theNewNode.tags objectForKey:@"note"];
-        viewer.osmKey = @"note";
-        [viewer setDelegate:self];
-        
-        [self.navigationController pushViewController:viewer animated:YES];
-    }
-     */
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 -(void) showOauthError
@@ -583,6 +472,7 @@
     else {
         [theNewNode.tags removeObjectForKey:osmKey];
     }
+    [self reloadTags];
     [self.tableView reloadData];
     NSLog(@"NewNode: %@",theNewNode.tags);
 }
@@ -655,7 +545,8 @@
     
     catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
     //[self.tableView reloadData];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+    [self reloadTags];
+    [self.tableView reloadData];
 }
 
 
