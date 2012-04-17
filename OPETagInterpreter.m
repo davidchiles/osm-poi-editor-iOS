@@ -210,7 +210,7 @@ static OPETagInterpreter *sharedManager = nil;
     }
     NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     NSSortDescriptor *sectionDescriptor = [[NSSortDescriptor alloc] initWithKey:@"section" ascending:YES];
-    [tempFinalArray sortUsingDescriptors:[NSArray arrayWithObjects:sectionDescriptor, nameDescriptor,nil]];
+    [tempFinalArray sortUsingDescriptors:[NSArray arrayWithObjects:sectionDescriptor ,nameDescriptor,nil]];
     
     
     return [tempFinalArray copy];

@@ -251,7 +251,7 @@
                 }
             }
             else {
-                [aCell.binaryControl setSelectedSegmentIndex:2];
+                [aCell.binaryControl setSelectedSegmentIndex:UISegmentedControlNoSegment];
             }
             [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
             aCell.tag = indexPath.section;
@@ -291,10 +291,6 @@
         else if ([sender selectedSegmentIndex] == 1){
             //No
             [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",@"no",@"osmValue", nil]];
-        }
-        else if ([sender selectedSegmentIndex] == 2){
-            //Unknown
-            [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",@"",@"osmValue", nil]];
         }
     }
     
@@ -359,6 +355,30 @@
         }
     }
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+     NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
+    if ([[cellDictionary objectForKey:@"values"] isKindOfClass:[NSString class]]) {
+        if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"category"]) {
+            return NO;
+        }
+    }
+  
+    return YES;
+}
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Remove";
+}
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+         NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
+        [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"osmValue",[cellDictionary objectForKey:@"osmKey"],@"osmKey", nil]];
+    }
+    
 }
 -(void) showOauthError
 {
