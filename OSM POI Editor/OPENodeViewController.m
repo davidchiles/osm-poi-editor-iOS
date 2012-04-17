@@ -12,6 +12,7 @@
 #import "OPECategoryViewController.h"
 #import "OPEOSMData.h"
 #import "OPEInfoViewController.h"
+#import "OPEBinaryCell.h"
 
 
 
@@ -172,6 +173,7 @@
     NSString *CellIdentifierText = @"Cell_Section_1";
     NSString *CellIdentifierCategory = @"Cell_Section_2";
     NSString *CellIdentifierDelete = @"Cell_Section_3";
+    NSString *CellIdentifierBinary = @"Cell_Section_4";
     
     NSArray * catAndTypeName = [[NSArray alloc] initWithObjects:@"Category",@"Type", nil];
     
@@ -231,6 +233,15 @@
             cell.textLabel.text = [cellDictionary objectForKey:@"name"];
             
             cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"binary"])
+        {
+            OPEBinaryCell * aCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierBinary];
+            if (aCell == nil) {
+                aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierBinary];
+            }
+            [aCell setLeftText: [cellDictionary objectForKey:@"name"]];
+            return aCell;
         }
         else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"deleteButton"])
         {

@@ -11,12 +11,7 @@
 		<key>section</key>
 		<string>Other</string>
 		<key>values</key>
-		<dict>
-			<key>No</key>
-			<string>no</string>
-			<key>Yes</key>
-			<string>yes</string>
-		</dict>
+		<string>binary</string>
 	</dict>
 	<key>cuisine</key>
 	<dict>
@@ -87,12 +82,7 @@
 		<key>section</key>
 		<string>Other</string>
 		<key>values</key>
-		<dict>
-			<key>No</key>
-			<string>no</string>
-			<key>Yes</key>
-			<string>yes</string>
-		</dict>
+		<string>binary</string>
 	</dict>
 	<key>smoking</key>
 	<dict>

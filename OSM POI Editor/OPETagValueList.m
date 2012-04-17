@@ -72,7 +72,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = [[values allKeys] objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[[values allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] objectAtIndex:indexPath.row];
     
     // Configure the cell...
     
