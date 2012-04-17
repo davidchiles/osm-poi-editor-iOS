@@ -24,6 +24,7 @@
 @synthesize delegate;
 @synthesize nodeIsEdited;
 @synthesize HUD;
+@synthesize optionalTags;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

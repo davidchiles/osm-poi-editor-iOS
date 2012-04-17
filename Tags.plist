@@ -249,6 +249,13 @@
 				<key>amenity</key>
 				<string>restaurant</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>cuisine</string>
+				<string>microbrewery</string>
+				<string>smoking</string>
+				<string>drive_in</string>
+			</array>
 		</dict>
 		<key>Bakery</key>
 		<dict>

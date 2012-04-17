@@ -38,6 +38,7 @@
 @property (nonatomic, strong) id <OPENodeViewDelegate> delegate;
 @property (nonatomic) BOOL nodeIsEdited;
 @property (nonatomic, strong) MBProgressHUD * HUD;
+@property (nonatomic, strong) NSArray * optionalTags;
 
 - (void) saveButtonPressed;
 - (void) deleteButtonPressed;
