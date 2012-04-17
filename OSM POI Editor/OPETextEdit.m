@@ -46,9 +46,14 @@
     
     [[textView layer] setCornerRadius:7.0];
     textView.text = osmValue;
-    if ([osmKey isEqualToString:@"name"]) {
+    
+    if ([osmKey isEqualToString:@"name"] || [osmKey isEqualToString:@"addr:city"] || [osmKey isEqualToString:@"addr:country"] || [osmKey isEqualToString:@"addr:province"]) {
         textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
     }
+    else if ([osmKey isEqualToString:@"city:state"]){
+        textView.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+    }
+             
     textView.returnKeyType = UIReturnKeyDone;
     textView.delegate = self;
     [textView becomeFirstResponder];
@@ -86,7 +91,7 @@
 
 - (void) saveButtonPressed
 {
-    
+    textView.text = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     [[self delegate] newTag:[[NSDictionary alloc] initWithObjectsAndKeys:osmKey,@"osmKey",textView.text,@"osmValue", nil]];
     [self.navigationController popViewControllerAnimated:YES];
 }

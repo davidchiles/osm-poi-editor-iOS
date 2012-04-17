@@ -365,6 +365,10 @@
             return NO;
         }
     }
+    //NSString * cellText = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+    if (!([self.tableView cellForRowAtIndexPath:indexPath].textLabel.text)) {
+        return NO;
+    }
   
     return YES;
 }
