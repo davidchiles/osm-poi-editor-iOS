@@ -193,10 +193,24 @@ static OPETagInterpreter *sharedManager = nil;
     NSDictionary* optionalDictionary = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
     for (NSString * osmKey in tagArray) {
-        [tempFinalArray addObject:[optionalDictionary objectForKey:osmKey]];
+        if( [osmKey isEqualToString:@"address"])
+        {
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:housenumber"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:street"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:city"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:postcode"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:state"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:country"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:province"]];
+        }
+        else {
+            [tempFinalArray addObject:[optionalDictionary objectForKey:osmKey]];
+
+        }
     }
     NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    [tempFinalArray sortUsingDescriptors:[NSArray arrayWithObjects:nameDescriptor,nil]];
+    NSSortDescriptor *sectionDescriptor = [[NSSortDescriptor alloc] initWithKey:@"section" ascending:YES];
+    [tempFinalArray sortUsingDescriptors:[NSArray arrayWithObjects:sectionDescriptor, nameDescriptor,nil]];
     
     
     return [tempFinalArray copy];

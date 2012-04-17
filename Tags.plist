@@ -255,6 +255,7 @@
 				<string>microbrewery</string>
 				<string>smoking</string>
 				<string>drive_in</string>
+				<string>address</string>
 			</array>
 		</dict>
 		<key>Bakery</key>
