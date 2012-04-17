@@ -241,6 +241,21 @@
                 aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierBinary];
             }
             [aCell setLeftText: [cellDictionary objectForKey:@"name"]];
+            if ([theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
+                if ([[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"yes"]) {
+                     [aCell.binaryControl setSelectedSegmentIndex:0];
+                }
+                else if([[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"no"])
+                {
+                     [aCell.binaryControl setSelectedSegmentIndex:1];
+                }
+            }
+            else {
+                [aCell.binaryControl setSelectedSegmentIndex:2];
+            }
+            [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
+            aCell.tag = indexPath.section;
+            aCell.binaryControl.tag = indexPath.row;
             return aCell;
         }
         else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"deleteButton"])
@@ -260,6 +275,29 @@
     }
 
     return cell;
+}
+
+-(void)binaryChanged:(id)sender
+{
+    if (sender) {
+        
+        
+        NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:[[sender superview] tag]] objectForKey:@"rows"] objectAtIndex:[sender tag]]];
+        NSLog(@"Binary Changed: %@",cellDictionary);
+        if ([sender selectedSegmentIndex] == 0) {
+            //Yes
+            [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",@"yes",@"osmValue", nil]];
+        }
+        else if ([sender selectedSegmentIndex] == 1){
+            //No
+            [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",@"no",@"osmValue", nil]];
+        }
+        else if ([sender selectedSegmentIndex] == 2){
+            //Unknown
+            [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",@"",@"osmValue", nil]];
+        }
+    }
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

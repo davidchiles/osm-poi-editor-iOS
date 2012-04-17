@@ -15,5 +15,6 @@
 
 
 @property (nonatomic,strong) NSString * leftText;
+@property (nonatomic,strong) UISegmentedControl * binaryControl;
 
 @end

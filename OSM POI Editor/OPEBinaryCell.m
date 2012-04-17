@@ -10,7 +10,7 @@
 
 @implementation OPEBinaryCell
 
-@synthesize leftText;
+@synthesize leftText,binaryControl;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -25,11 +25,19 @@
         leftLabel.textAlignment = UITextAlignmentRight;
         [self addSubview:leftLabel];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        UISwitch * theSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+        //UISwitch * theSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+        NSArray *itemArray = [NSArray arrayWithObjects: @"Yes", @"No", @"Unknown", nil];
+        binaryControl = [[UISegmentedControl alloc] initWithItems:itemArray];
+        binaryControl.frame = CGRectMake(0, 0, 200, 35);
+        [binaryControl setWidth:50 forSegmentAtIndex:0];
+        [binaryControl setWidth:50 forSegmentAtIndex:1];
+        [binaryControl setWidth:100 forSegmentAtIndex:2];
+        binaryControl.segmentedControlStyle = UISegmentedControlStylePlain;
+        //binaryControl.selectedSegmentIndex = 1;
         //RCSwitchOnOff *theSwitch = [[RCSwitchOnOff alloc] initWithFrame:CGRectMake(220, 8, 94, 27)];
         //RCSwitch * theSwitch = [[RCSwitch alloc] initWithFrame:CGRectMake(0, 0, 94, 27)];
         //[[RCSwitch alloc] initWithFrame:CGRectMake(0, 0, 94, 27)];
-        self.accessoryView = theSwitch;
+        self.accessoryView = binaryControl;
     }
     return self;
 }
