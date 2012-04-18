@@ -189,6 +189,12 @@
 				<key>amenity</key>
 				<string>cafe</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>cuisine</string>
+				<string>smoking</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Drinking Water</key>
 		<dict>

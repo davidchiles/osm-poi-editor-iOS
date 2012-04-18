@@ -112,7 +112,7 @@
         NSDictionary * deleteSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"deleteButton",@"values", nil]],@"rows", nil];
         [tableSections addObject: deleteSection];
     }
-    NSLog(@"Table sections: %@",tableSections);
+    //NSLog(@"Table sections: %@",tableSections);
     
 }
 
@@ -547,20 +547,45 @@
     [self.tableView reloadData];
     NSLog(@"NewNode: %@",theNewNode.tags);
 }
--(void) removeOptionalTags
+-(void) removeOptionalTags:(NSArray *)oldTableSections
 {
-    for(int i = 2; i<[tableSections count]-2; i++)
+    for(int i = 2; i<[oldTableSections count]-2; i++)
     {
-        NSDictionary * sectionDictionary = [tableSections objectAtIndex:i];
-        if (![[sectionDictionary objectForKey:@"section"] isEqualToString:@"Address"]) {
-            NSArray * rowArray = [ sectionDictionary objectForKey:@"rows"];
-            for (NSDictionary * rowDictionary in rowArray)
+        NSDictionary * oldSectionDictionary = [oldTableSections objectAtIndex:i];
+        if (![[oldSectionDictionary objectForKey:@"section"] isEqualToString:@"Address"]) {
+            NSArray * oldRowArray = [ oldSectionDictionary objectForKey:@"rows"];
+            for (NSDictionary * oldRowDictionary in oldRowArray)
             {
-                [theNewNode.tags removeObjectForKey:[rowDictionary objectForKey:@"osmKey"]];
+                if(![self tableSectionsContainsOsmKey:[oldRowDictionary objectForKey:@"osmKey"]])
+                {
+                    [self.theNewNode.tags removeObjectForKey:[oldRowDictionary objectForKey:@"osmKey"]];
+                    NSLog(@"Removed: %@",[oldRowDictionary objectForKey:@"osmKey"]);
+                }
+                    
             }
+            
         }
     }
 }
+-(BOOL) tableSectionsContainsOsmKey:(NSString *)osmKey
+{
+    for(int i = 2; i<[tableSections count]-2; i++)
+    {
+        NSDictionary * sectionDictioanry = [tableSections objectAtIndex:i];
+        if (![[sectionDictioanry objectForKey:@"section"] isEqualToString:@"Address"]) {
+            NSArray * rowArray = [ sectionDictioanry objectForKey:@"rows"];
+            for (NSDictionary * rowDictionary in rowArray)
+            {
+                if ([[rowDictionary objectForKey:@"osmKey"] isEqualToString:osmKey]) {
+                    return YES;
+                }
+            }
+            
+        }
+    }
+    return NO;
+}
+
 - (void) setCategoryAndType:(NSDictionary *)cAndT
 {
     NSString * newCategory = [cAndT objectForKey:@"category"];
@@ -569,10 +594,14 @@
     if ([catAndType count]==2) {
         if (!([newCategory isEqualToString:[catAndType objectAtIndex:0]] && [newType isEqualToString:[catAndType objectAtIndex:1]])) {
             [tagInterpreter removeCatAndType:[[NSDictionary alloc] initWithObjectsAndKeys:[catAndType objectAtIndex:1],[catAndType objectAtIndex:0], nil] fromNode:theNewNode];
-            [self removeOptionalTags];
+            
         }
     }
     
+    catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
+    NSArray * oldTableSections = [tableSections copy];
+    [self reloadTags];
+    [self removeOptionalTags:oldTableSections];
     
     NSDictionary * KV = [tagInterpreter getOSmKeysValues:[[NSDictionary alloc] initWithObjectsAndKeys:newType,newCategory, nil]];
     NSLog(@"catAndType: %@",cAndT);
@@ -598,7 +627,7 @@
     
     catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
     //[self.tableView reloadData];
-    [self reloadTags];
+    
     [self.tableView reloadData];
 }
 
