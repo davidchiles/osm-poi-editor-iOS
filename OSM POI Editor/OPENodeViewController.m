@@ -12,6 +12,7 @@
 #import "OPECategoryViewController.h"
 #import "OPEOSMData.h"
 #import "OPEInfoViewController.h"
+#import "OPEAPIConstants.h"
 
 
 
@@ -183,8 +184,8 @@
         }
         
         deleteButton.frame = cell.contentView.bounds;
-        NSLog(@"bounds: %f",cell.contentView.bounds.size.width);
-        NSLog(@"button: %f",deleteButton.frame.size.width);
+        //NSLog(@"bounds: %f",cell.contentView.bounds.size.width);
+        //NSLog(@"button: %f",deleteButton.frame.size.width);
         deleteButton.frame = CGRectMake(deleteButton.frame.origin.x, deleteButton.frame.origin.y, 300.0f, deleteButton.frame.size.height);
         
         [cell.contentView addSubview:deleteButton];
@@ -583,8 +584,8 @@
 
 
 - (GTMOAuthAuthentication *)osmAuth {
-    NSString *myConsumerKey = @"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
-    NSString *myConsumerSecret = @"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
+    NSString *myConsumerKey = osmConsumerKey //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
+    NSString *myConsumerSecret = osmConsumerSecret //@"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
     
     GTMOAuthAuthentication *auth;
     auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1

@@ -11,6 +11,7 @@
 #import "OPEStamenToner.h"
 #import "OPEMapquestAerial.h"
 #import "RMOpenStreetMapSource.h"
+#import "OPEAPIConstants.h"
 
 
 @implementation OPEInfoViewController
@@ -108,8 +109,8 @@
 
 
 - (GTMOAuthAuthentication *)osmAuth {
-    NSString *myConsumerKey = @"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
-    NSString *myConsumerSecret = @"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
+    NSString *myConsumerKey = osmConsumerKey //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
+    NSString *myConsumerSecret = osmConsumerSecret //@"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
     
     GTMOAuthAuthentication *auth;
     auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1

@@ -569,7 +569,7 @@
 
 - (IBAction)infoButtonPressed:(id)sender
 {
-    NSLog(@"info button pressed");
+    //NSLog(@"info button pressed");
     OPEInfoViewController * viewer = [[OPEInfoViewController alloc] initWithNibName:@"OPEInfoViewController" bundle:nil];
     [viewer setDelegate:self];
     //[viewer setCurrentNumber:currentTile];
