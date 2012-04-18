@@ -546,6 +546,7 @@
             OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
             node.image = @"newNodeMarker.png";
             theNewMarker = [self addMarkerAt:center withNode:node];
+            theNewMarker.zPosition = 1.0;
         }
     }
     else {

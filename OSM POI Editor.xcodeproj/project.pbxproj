@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6310F4B6153736D000C65FD8 /* OPEMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310F4B5153736D000C65FD8 /* OPEMessage.m */; };
-		6310F4C71537A43C00C65FD8 /* newNodeMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4C51537A43C00C65FD8 /* newNodeMarker.png */; };
-		6310F4C81537A43C00C65FD8 /* newNodeMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4C61537A43C00C65FD8 /* newNodeMarker@2x.png */; };
 		6310F59B1537A46D00C65FD8 /* airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4CE1537A46D00C65FD8 /* airplane.png */; };
 		6310F59C1537A46D00C65FD8 /* alcohol.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4CF1537A46D00C65FD8 /* alcohol.png */; };
 		6310F59D1537A46D00C65FD8 /* art.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4D01537A46D00C65FD8 /* art.png */; };
@@ -225,6 +223,8 @@
 		6325B4451534B28B00C8691F /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 6325B4431534B28A00C8691F /* location.png */; };
 		6325B4461534B28B00C8691F /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6325B4441534B28B00C8691F /* location@2x.png */; };
 		632FD8A6153E0F2C00BC405C /* OPEBinaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 632FD8A5153E0F2C00BC405C /* OPEBinaryCell.m */; };
+		632FD8AD153E649E00BC405C /* newNodeMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = 632FD8AB153E649E00BC405C /* newNodeMarker.png */; };
+		632FD8AE153E649E00BC405C /* newNodeMarker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 632FD8AC153E649E00BC405C /* newNodeMarker@2x.png */; };
 		6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB6E14DB519A00448852 /* UIKit.framework */; };
 		6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7014DB519A00448852 /* Foundation.framework */; };
 		6330AB7314DB519A00448852 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7214DB519A00448852 /* CoreGraphics.framework */; };
@@ -351,8 +351,6 @@
 /* Begin PBXFileReference section */
 		6310F4B4153736D000C65FD8 /* OPEMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMessage.h; sourceTree = "<group>"; };
 		6310F4B5153736D000C65FD8 /* OPEMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMessage.m; sourceTree = "<group>"; };
-		6310F4C51537A43C00C65FD8 /* newNodeMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newNodeMarker.png; sourceTree = "<group>"; };
-		6310F4C61537A43C00C65FD8 /* newNodeMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newNodeMarker@2x.png"; sourceTree = "<group>"; };
 		6310F4CE1537A46D00C65FD8 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplane.png; sourceTree = "<group>"; };
 		6310F4CF1537A46D00C65FD8 /* alcohol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alcohol.png; sourceTree = "<group>"; };
 		6310F4D01537A46D00C65FD8 /* art.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = art.png; sourceTree = "<group>"; };
@@ -574,6 +572,8 @@
 		6325B4441534B28B00C8691F /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "location@2x.png"; path = "icons/location@2x.png"; sourceTree = "<group>"; };
 		632FD8A4153E0F2C00BC405C /* OPEBinaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBinaryCell.h; sourceTree = "<group>"; };
 		632FD8A5153E0F2C00BC405C /* OPEBinaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBinaryCell.m; sourceTree = "<group>"; };
+		632FD8AB153E649E00BC405C /* newNodeMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newNodeMarker.png; sourceTree = "<group>"; };
+		632FD8AC153E649E00BC405C /* newNodeMarker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newNodeMarker@2x.png"; sourceTree = "<group>"; };
 		6330AB6A14DB519A00448852 /* OSM POI Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSM POI Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6330AB6E14DB519A00448852 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6330AB7014DB519A00448852 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1140,8 +1140,8 @@
 				6325B4431534B28A00C8691F /* location.png */,
 				6325B4441534B28B00C8691F /* location@2x.png */,
 				635E0297151BB95400B6BBCE /* callout */,
-				6310F4C51537A43C00C65FD8 /* newNodeMarker.png */,
-				6310F4C61537A43C00C65FD8 /* newNodeMarker@2x.png */,
+				632FD8AB153E649E00BC405C /* newNodeMarker.png */,
+				632FD8AC153E649E00BC405C /* newNodeMarker@2x.png */,
 				63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */,
 				63A2DB4315226CF6000C095D /* gear.png */,
 				63A2DB4415226CF6000C095D /* gear@2x.png */,
@@ -1448,8 +1448,6 @@
 				63E525E415362B7100D2DA35 /* icon.png in Resources */,
 				63E525E515362B7100D2DA35 /* icon@2x.png in Resources */,
 				63E525EB1536560300D2DA35 /* Tags.plist in Resources */,
-				6310F4C71537A43C00C65FD8 /* newNodeMarker.png in Resources */,
-				6310F4C81537A43C00C65FD8 /* newNodeMarker@2x.png in Resources */,
 				6310F59B1537A46D00C65FD8 /* airplane.png in Resources */,
 				6310F59C1537A46D00C65FD8 /* alcohol.png in Resources */,
 				6310F59D1537A46D00C65FD8 /* art.png in Resources */,
@@ -1662,6 +1660,8 @@
 				639682A2153CBD82008F4C0E /* icon-512@2x.png in Resources */,
 				63EC06E5153CE3C600475485 /* Optional.plist in Resources */,
 				63EC06F0153D329200475485 /* OPETagValueList.xib in Resources */,
+				632FD8AD153E649E00BC405C /* newNodeMarker.png in Resources */,
+				632FD8AE153E649E00BC405C /* newNodeMarker@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

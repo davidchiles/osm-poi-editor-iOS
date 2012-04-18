@@ -861,6 +861,7 @@
 			<key>optional</key>
 			<array>
 				<string>wheelchair</string>
+				<string>fee</string>
 			</array>
 		</dict>
 		<key>Recycling Can</key>
@@ -1253,6 +1254,7 @@
 			<key>optional</key>
 			<array>
 				<string>wheelchair</string>
+				<string>operator</string>
 			</array>
 		</dict>
 		<key>Hairdresser</key>
@@ -2479,6 +2481,10 @@
 				<key>amenity</key>
 				<string>bicycle_parking</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>fee</string>
+			</array>
 		</dict>
 		<key>Bicycle Rental</key>
 		<dict>
@@ -2619,6 +2625,10 @@
 				<key>amenity</key>
 				<string>parking</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>fee</string>
+			</array>
 		</dict>
 		<key>Rail Station</key>
 		<dict>

@@ -182,6 +182,28 @@
 		<key>values</key>
 		<string>label</string>
 	</dict>
+	<key>operator</key>
+	<dict>
+		<key>name</key>
+		<string>Operator</string>
+		<key>osmKey</key>
+		<string>operator</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<string>label</string>
+	</dict>
+	<key>fee</key>
+	<dict>
+		<key>name</key>
+		<string>Fee</string>
+		<key>osmKey</key>
+		<string>fee</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<string>binary</string>
+	</dict>
 	<key>dispensing</key>
 	<dict>
 		<key>name</key>
