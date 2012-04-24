@@ -82,6 +82,12 @@
 			<string>barbecue</string>
 			<key>Lebanese</key>
 			<string>lebanese</string>
+			<key>Persian</key>
+			<string>persian</string>
+			<key>Mediterranean</key>
+			<string>mediterranean</string>
+			<key>Ethiopian</key>
+			<string>ethiopian</string>
 		</dict>
 	</dict>
 	<key>bicycle_parking</key>
