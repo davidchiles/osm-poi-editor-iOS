@@ -349,6 +349,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		630EA0301540EE1800318525 /* OPEConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEConstants.h; sourceTree = "<group>"; };
 		6310F4B4153736D000C65FD8 /* OPEMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMessage.h; sourceTree = "<group>"; };
 		6310F4B5153736D000C65FD8 /* OPEMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMessage.m; sourceTree = "<group>"; };
 		6310F4CE1537A46D00C65FD8 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplane.png; sourceTree = "<group>"; };
@@ -1054,6 +1055,7 @@
 			isa = PBXGroup;
 			children = (
 				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
+				630EA0301540EE1800318525 /* OPEConstants.h */,
 				631539E314DCA29B000236F0 /* OPENode.h */,
 				631539E414DCA29B000236F0 /* OPENode.m */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,

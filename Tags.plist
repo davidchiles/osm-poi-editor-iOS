@@ -295,6 +295,7 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>cuisine</string>
 			</array>
 		</dict>
 		<key>Food Court</key>
@@ -338,7 +339,9 @@
 			</dict>
 			<key>optional</key>
 			<array>
+				<string>cuisine</string>
 				<string>wheelchair</string>
+				<string>microbrewery</string>
 				<string>address</string>
 			</array>
 		</dict>
@@ -681,7 +684,7 @@
 				<key>amenity</key>
 				<string>pharmacy</string>
 			</dict>
-			<key>New item</key>
+			<key>optional</key>
 			<array>
 				<string>dispensing</string>
 				<string>address</string>
@@ -2484,6 +2487,7 @@
 			<key>optional</key>
 			<array>
 				<string>fee</string>
+				<string>bicycle_parking</string>
 			</array>
 		</dict>
 		<key>Bicycle Rental</key>

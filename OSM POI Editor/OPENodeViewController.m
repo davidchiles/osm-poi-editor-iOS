@@ -318,6 +318,7 @@
             viewer.title = [cellDictionary objectForKey:@"name"];
             viewer.osmValue = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             viewer.osmKey = [cellDictionary objectForKey:@"osmKey"];
+            viewer.type = [cellDictionary objectForKey:@"values"];
             [viewer setDelegate:self];
             [self.navigationController pushViewController:viewer animated:YES];
         }

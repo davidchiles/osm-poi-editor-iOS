@@ -50,7 +50,7 @@
 			<key>Ice Cream</key>
 			<string>ice_cream</string>
 			<key>French</key>
-			<string>French</string>
+			<string>french</string>
 			<key>Thai</key>
 			<string>thai</string>
 			<key>Fish and Chips</key>
@@ -69,6 +69,32 @@
 			<string>vietnamese</string>
 			<key>Barbecue</key>
 			<string>barbecue</string>
+			<key>Lebanese</key>
+			<string>lebanese</string>
+		</dict>
+	</dict>
+	<key>bicycle_parking</key>
+	<dict>
+		<key>name</key>
+		<string>Type</string>
+		<key>osmKey</key>
+		<string>bicycle_parking</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Shed</key>
+			<string>shed</string>
+			<key>Building</key>
+			<string>building</string>
+			<key>Lockers</key>
+			<string>lockers</string>
+			<key>Stands</key>
+			<string>stands</string>
+			<key>Wall Loops</key>
+			<string>wall_loops</string>
+			<key>Informal</key>
+			<string>informal</string>
 			<key>Lebanese</key>
 			<string>lebanese</string>
 		</dict>
