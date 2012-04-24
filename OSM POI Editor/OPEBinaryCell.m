@@ -17,7 +17,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         //cell.textLabel.text = [cellDictionary objectForKey:@"name"];
-        leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, 79, 30)];
+        leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, 80, 30)];
         leftLabel.backgroundColor = [UIColor clearColor];
         leftLabel.text = leftText;
         leftLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12.0];

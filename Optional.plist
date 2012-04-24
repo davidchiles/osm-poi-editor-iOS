@@ -156,7 +156,7 @@
 	<key>drive_through</key>
 	<dict>
 		<key>name</key>
-		<string>Drive Through</string>
+		<string>Drive-through</string>
 		<key>osmKey</key>
 		<string>drive_through</string>
 		<key>section</key>
