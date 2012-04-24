@@ -136,6 +136,9 @@
                     tempArray = [[NSMutableArray alloc] init];
                 }
                 [sectionDictionary setObject:[tagDictionary objectForKey:@"section"] forKey:@"section"];
+                if ([tagDictionary objectForKey:@"section_order"]) {
+                     [sectionDictionary setObject:[tagDictionary objectForKey:@"section_order"] forKey:@"section_order"];
+                }
                 [tempArray addObject:tagDictionary];
             }
             else {
@@ -143,7 +146,10 @@
             }
             
         }
-        [sectionDictionary setObject:tempArray forKey:@"rows"];
+        NSSortDescriptor *sortByNumber = [NSSortDescriptor sortDescriptorWithKey:@"section_order" ascending:YES];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByNumber];
+        NSArray *sortedArray = [tempArray sortedArrayUsingDescriptors:sortDescriptors];
+        [sectionDictionary setObject:sortedArray forKey:@"rows"];
         [tableSections addObject:sectionDictionary];
 
         

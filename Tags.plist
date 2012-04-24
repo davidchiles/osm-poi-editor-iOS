@@ -296,6 +296,8 @@
 				<string>wheelchair</string>
 				<string>address</string>
 				<string>cuisine</string>
+				<string>drive_through</string>
+				<string>drive_in</string>
 			</array>
 		</dict>
 		<key>Food Court</key>
@@ -437,6 +439,7 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>drive_through</string>
 			</array>
 		</dict>
 		<key>Craft Brewery</key>
@@ -541,6 +544,12 @@
 				<key>amenity</key>
 				<string>post_box</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>operator</string>
+				<string>drive_through</string>
+				<string>ref</string>
+			</array>
 		</dict>
 		<key>Post Office</key>
 		<dict>
@@ -689,6 +698,7 @@
 				<string>dispensing</string>
 				<string>address</string>
 				<string>wheelchair</string>
+				<string>drive_through</string>
 			</array>
 		</dict>
 		<key>Social Facility</key>
@@ -1258,6 +1268,7 @@
 			<array>
 				<string>wheelchair</string>
 				<string>operator</string>
+				<string>drive_through</string>
 			</array>
 		</dict>
 		<key>Hairdresser</key>
@@ -1333,6 +1344,7 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>drive_through</string>
 			</array>
 		</dict>
 		<key>Currency Exchange</key>
@@ -1511,6 +1523,21 @@
 			<dict>
 				<key>shop</key>
 				<string>baby_goods</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Antiques</key>
+		<dict>
+			<key>image</key>
+			<string>chair.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>antiques</string>
 			</dict>
 			<key>optional</key>
 			<array>
@@ -1923,7 +1950,7 @@
 				<string>address</string>
 			</array>
 		</dict>
-		<key>Music Store for Instruments</key>
+		<key>Musical Instrument Store</key>
 		<dict>
 			<key>image</key>
 			<string>trumpet.png</string>
@@ -2209,6 +2236,21 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+			</array>
+		</dict>
+		<key>Tourism Information</key>
+		<dict>
+			<key>image</key>
+			<string>info.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>information</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>address</string>
+				<string>information</string>
 			</array>
 		</dict>
 		<key>Camp Site</key>

@@ -116,12 +116,49 @@
 			<string>lebanese</string>
 		</dict>
 	</dict>
+	<key>information</key>
+	<dict>
+		<key>name</key>
+		<string>Type</string>
+		<key>osmKey</key>
+		<string>information</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Office</key>
+			<string>office</string>
+			<key>Audio Guide</key>
+			<string>audioguide</string>
+			<key>Guidepost</key>
+			<string>guidepost</string>
+			<key>Map</key>
+			<string>map</string>
+			<key>Tactile Map</key>
+			<string>tactile_map</string>
+			<key>Tactile Model</key>
+			<string>tactilve_model</string>
+			<key>Board</key>
+			<string>board</string>
+		</dict>
+	</dict>
 	<key>drive_in</key>
 	<dict>
 		<key>name</key>
 		<string>Drive In</string>
 		<key>osmKey</key>
 		<string>drive_in</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<string>binary</string>
+	</dict>
+	<key>drive_through</key>
+	<dict>
+		<key>name</key>
+		<string>Drive Through</string>
+		<key>osmKey</key>
+		<string>drive_through</string>
 		<key>section</key>
 		<string>Other</string>
 		<key>values</key>
@@ -396,6 +433,8 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
+		<key>section_order</key>
+		<string>1</string>
 	</dict>
 	<key>addr:street</key>
 	<dict>
@@ -407,6 +446,8 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
+		<key>section_order</key>
+		<string>2</string>
 	</dict>
 	<key>addr:postcode</key>
 	<dict>
@@ -418,6 +459,8 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
+		<key>section_order</key>
+		<string>6</string>
 	</dict>
 	<key>addr:city</key>
 	<dict>
@@ -429,6 +472,8 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
+		<key>section_order</key>
+		<string>3</string>
 	</dict>
 	<key>addr:state</key>
 	<dict>
@@ -440,6 +485,8 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
+		<key>section_order</key>
+		<string>4</string>
 	</dict>
 	<key>addr:province</key>
 	<dict>
@@ -451,6 +498,8 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
+		<key>section_order</key>
+		<string>5</string>
 	</dict>
 	<key>addr:country</key>
 	<dict>
@@ -462,6 +511,8 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
+		<key>section_order</key>
+		<string>7</string>
 	</dict>
 </dict>
 </plist>

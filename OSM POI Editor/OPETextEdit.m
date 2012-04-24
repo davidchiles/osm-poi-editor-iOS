@@ -289,7 +289,7 @@
         }
         else if([osmKey isEqualToString:@"addr:housenumber"])
         {
-            string = @"House or building number";
+            string = @"House or building number \nExample: 1600, 10, 221B ...";
         }
         else {
             string = @"";
@@ -328,6 +328,7 @@
         recentControl.frame = CGRectMake(0, 0, tempSize.width, tempSize.height);
         recentControl.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [cell.contentView addSubview:recentControl];
+        cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
         
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
