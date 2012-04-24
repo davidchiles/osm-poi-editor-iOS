@@ -2488,6 +2488,7 @@
 			<array>
 				<string>fee</string>
 				<string>bicycle_parking</string>
+				<string>capacity</string>
 			</array>
 		</dict>
 		<key>Bicycle Rental</key>
@@ -2632,6 +2633,7 @@
 			<key>optional</key>
 			<array>
 				<string>fee</string>
+				<string>capacity</string>
 			</array>
 		</dict>
 		<key>Rail Station</key>

@@ -53,12 +53,17 @@
     
     
     
-    if ([type isEqualToString:kTypeLabel]) {
+    if ([type isEqualToString:kTypeLabel] || [type isEqualToString:kTypeNumber]) {
         NSLog(@"It's a label");
         self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35)];
         self.textField.font = [UIFont systemFontOfSize:24.0];
         //[self.textField setBorderStyle:UITextBorderStyleRoundedRect];
         self.textField.returnKeyType = UIReturnKeyDone;
+        
+        if([type isEqualToString:kTypeNumber])
+        {
+            self.textField.keyboardType = UIKeyboardTypeNumberPad;
+        }
         
         textField.text = osmValue;
         
@@ -85,6 +90,7 @@
         [textView becomeFirstResponder];
         
     }
+    
     
     //Setup recenty used tags
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -267,11 +273,11 @@
         NSString * string = @"Example: ";
         if([osmKey isEqualToString:@"addr:state"])
         {
-            string = [string stringByAppendingFormat:@"CA, PA, NY ..."];
+            string = [string stringByAppendingFormat:@"CA, PA, NY, MA ..."];
         }
         else if([osmKey isEqualToString:@"addr:country"])
         {
-            string = [string stringByAppendingFormat:@"US, CA, GB ..."];
+            string = [string stringByAppendingFormat:@"US, CA, MX, GB ..."];
         }
         else if([osmKey isEqualToString:@"addr:province"])
         {
@@ -280,6 +286,10 @@
         else if([osmKey isEqualToString:@"addr:postcode"])
         {
             string = @"In US use 5 digit ZIP Code";
+        }
+        else if([osmKey isEqualToString:@"addr:housenumber"])
+        {
+            string = @"House or building number";
         }
         else {
             string = @"";
@@ -320,7 +330,7 @@
         [cell.contentView addSubview:recentControl];
         
     }
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
     

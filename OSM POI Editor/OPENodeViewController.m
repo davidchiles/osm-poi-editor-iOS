@@ -223,7 +223,7 @@
                 cell.detailTextLabel.text =@"";
             }
         }
-        else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"label"])
+        else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"label"] || [[cellDictionary objectForKey:@"values"] isEqualToString:@"number"])
         {
             cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
             if (cell == nil) {
@@ -313,7 +313,7 @@
         
     }
     else {
-        if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"text"] || [[cellDictionary objectForKey:@"values"] isEqualToString:@"label"] ) { //Text editing
+        if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"text"] || [[cellDictionary objectForKey:@"values"] isEqualToString:@"label"] || [[cellDictionary objectForKey:@"values"] isEqualToString:@"number"]) { //Text editing
             OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
             viewer.title = [cellDictionary objectForKey:@"name"];
             viewer.osmValue = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];

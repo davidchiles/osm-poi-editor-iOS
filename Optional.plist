@@ -13,6 +13,17 @@
 		<key>values</key>
 		<string>binary</string>
 	</dict>
+	<key>capacity</key>
+	<dict>
+		<key>name</key>
+		<string>Capacity</string>
+		<key>osmKey</key>
+		<string>capacity</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<string>number</string>
+	</dict>
 	<key>cuisine</key>
 	<dict>
 		<key>name</key>
