@@ -281,11 +281,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEViewController.m"
-         timestampString = "355969989.872133"
+         timestampString = "356979431.726464"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "502"
-         endingLineNumber = "502"
+         startingLineNumber = "500"
+         endingLineNumber = "500"
          landmarkName = "-createdNode:"
          landmarkType = "5">
       </FileBreakpoint>

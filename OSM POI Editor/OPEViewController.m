@@ -384,8 +384,6 @@
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDelegate:self];
 	[UIView setAnimationDuration:1.0];
-	[UIView setAnimationDidStopSelector:@selector(fadeAnimationDidStop:finished:context:)];
-	
 	
 	[message setAlpha:0.0];
 	
