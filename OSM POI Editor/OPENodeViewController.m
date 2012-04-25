@@ -13,6 +13,7 @@
 #import "OPEOSMData.h"
 #import "OPEInfoViewController.h"
 #import "OPEBinaryCell.h"
+#import "OPEConstants.h"
 
 
 
@@ -206,7 +207,7 @@
         
     }
     else {
-        if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"text"]) { //Text editing
+        if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText]) { //Text editing
             cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
@@ -229,7 +230,7 @@
                 cell.detailTextLabel.text =@"";
             }
         }
-        else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"label"] || [[cellDictionary objectForKey:@"values"] isEqualToString:@"number"])
+        else if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] ||[[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone])
         {
             cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
             if (cell == nil) {
@@ -240,7 +241,7 @@
             
             cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         }
-        else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"binary"])
+        else if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeBinary])
         {
             OPEBinaryCell * aCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierBinary];
             if (aCell == nil) {
@@ -319,7 +320,7 @@
         
     }
     else {
-        if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"text"] || [[cellDictionary objectForKey:@"values"] isEqualToString:@"label"] || [[cellDictionary objectForKey:@"values"] isEqualToString:@"number"]) { //Text editing
+        if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone]) { //Text editing
             OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
             viewer.title = [cellDictionary objectForKey:@"name"];
             viewer.osmValue = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];

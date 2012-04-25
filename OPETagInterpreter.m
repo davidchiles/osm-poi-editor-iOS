@@ -202,6 +202,8 @@ static OPETagInterpreter *sharedManager = nil;
             [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:state"]];
             [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:country"]];
             [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:province"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"website"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"phone"]];
         }
         else {
             [tempFinalArray addObject:[optionalDictionary objectForKey:osmKey]];

@@ -9,6 +9,7 @@
 #import "OPETextEdit.h"
 #import <QuartzCore/QuartzCore.h>
 #import "OPEConstants.h"
+#import "OPEPhoneCell.h"
 
 @implementation OPETextEdit
 
@@ -53,10 +54,12 @@
     
     
     
-    if ([type isEqualToString:kTypeLabel] || [type isEqualToString:kTypeNumber]) {
+    if ([type isEqualToString:kTypeLabel] || [type isEqualToString:kTypeNumber] || [type isEqualToString:kTypePhone] || [type isEqualToString:kTypeUrl]) {
         NSLog(@"It's a label");
         self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35)];
+        self.textField.delegate = self;
         self.textField.font = [UIFont systemFontOfSize:24.0];
+        textField.text = osmValue;
         //[self.textField setBorderStyle:UITextBorderStyleRoundedRect];
         self.textField.returnKeyType = UIReturnKeyDone;
         
@@ -64,8 +67,41 @@
         {
             self.textField.keyboardType = UIKeyboardTypeNumberPad;
         }
+        else if([osmKey isEqualToString:@"addr:housenumber"])
+        {
+            self.textField.keyboardType = UIKeyboardTypeNamePhonePad;
+            self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+        }
+        else if([type isEqualToString:kTypeUrl])
+        {
+            self.textField.keyboardType = UIKeyboardTypeURL;
+            self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+            if ([self.textField.text isEqualToString:@""] || !self.textField.text) {
+                self.textField.text = @"www.";
+            }
+        }
+        else if([type isEqualToString:kTypePhone])
+        {
+            self.textField.keyboardType = UIKeyboardTypeNumberPad;
+            phoneTextFieldArray = [[NSMutableArray alloc]init];
+            for( int i = 0; i<3; i++)
+            {
+                UITextField * tempText = [[UITextField alloc] init];
+                tempText.keyboardType = UIKeyboardTypeNumberPad;
+                [phoneTextFieldArray addObject:tempText];
+            }
+            [[phoneTextFieldArray objectAtIndex:0] becomeFirstResponder];
+            if (osmValue) {
+                [self fillPhoneNumber:osmValue];
+            }
+            
+            
+        }
         
-        textField.text = osmValue;
+        
+        
+        
         
         //[self.view addSubview:self.textField];
         [textField becomeFirstResponder];
@@ -132,6 +168,27 @@
     
     
 }
+-(NSArray *)breakUpPhoneNumber:(NSString *)string
+{
+    return [[string stringByReplacingOccurrencesOfString:@"+" withString:@""]  componentsSeparatedByString:@" "];
+}
+
+-(void) fillPhoneNumber:(NSString *)string
+{
+    NSArray * phoneArray = [self breakUpPhoneNumber:string];
+    for(int i =0; i<3 && [phoneArray count]; i++)
+    {
+        ((UITextField *)[phoneTextFieldArray objectAtIndex:2-i]).text = [phoneArray objectAtIndex:([phoneArray count]-i-1)];
+    }
+}
+
+-(NSString *)formatPhoneNumber
+{
+    int cc = [[[phoneTextFieldArray objectAtIndex:0] text] intValue];
+    int ac = [[[phoneTextFieldArray objectAtIndex:1] text] intValue];
+    int ln = [[[phoneTextFieldArray objectAtIndex:2] text] intValue];
+    return [NSString stringWithFormat:@"+%d %d %d",cc,ac,ln];
+}
 
 - (void) viewDidAppear:(BOOL)animated
 {
@@ -162,7 +219,10 @@
 - (void) saveButtonPressed
 {
     NSString * newOsmValue;
-    if( self.textView)
+    if ([type isEqualToString:kTypePhone]) {
+        newOsmValue = [self formatPhoneNumber];
+    }
+    else if(self.textView)
     {
         textView.text = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         newOsmValue = textView.text;
@@ -175,9 +235,17 @@
         newOsmValue = textField.text;
         
     }
+    
+    
+    
     if ([osmKeysStoreRecent containsObject:osmKey]) {
         [self saveToRecentlyUsed:newOsmValue];
     }
+    
+    if ([newOsmValue isEqualToString:@"www."]) {
+        newOsmValue = @"";
+    }
+    
     [[self delegate] newTag:[[NSDictionary alloc] initWithObjectsAndKeys:osmKey,@"osmKey",newOsmValue,@"osmValue", nil]];
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -243,7 +311,21 @@
         
     
     return YES;
+}
+
+-(BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([string isEqual:@"\n"])
+    {
+        [self saveButtonPressed];
+        return NO;
+    }
+    else {
+        [recentControl setSelectedSegmentIndex:UISegmentedControlNoSegment];
+    }
     
+    
+    return YES;
 }
 
 #pragma - tableView
@@ -256,6 +338,9 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ([type isEqualToString:kTypePhone]) {
+        return 3;
+    }
     return 1;
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -291,6 +376,11 @@
         {
             string = @"House or building number \nExample: 1600, 10, 221B ...";
         }
+        else if([type isEqualToString:kTypePhone])
+        {
+            string = @"US and Canada country code is 1";
+        }
+
         else {
             string = @"";
         }
@@ -307,14 +397,44 @@
     
     if(indexPath.section == 0)
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
-		if (cell == nil) {
-			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
+        if ([type isEqualToString:kTypePhone]) {
+            OPEPhoneCell * phoneCell;
+            phoneCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
+            if (phoneCell == nil) {
+                phoneCell = [[OPEPhoneCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierText];
+            }
+            switch (indexPath.row) {
+                case 0:
+                    [phoneCell setLeftText:@"Country Code"];
+                    [phoneCell setTextField:[phoneTextFieldArray objectAtIndex:indexPath.row]];
+                    break;
+                case 1:
+                    [phoneCell setLeftText:@"Area Code"];
+                    [phoneCell setTextField:[phoneTextFieldArray objectAtIndex:indexPath.row]];
+                    break;
+                case 2:
+                    [phoneCell setLeftText:@"Local Number"];
+                    [phoneCell setTextField:[phoneTextFieldArray objectAtIndex:indexPath.row]];
+                    break;
+                default:
+                    break;
+            }
+            return phoneCell;
+            
+            
+        }       
+        else {
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
+            }
+            textField.frame = CGRectMake(10, 9, cell.contentView.frame.size.width-10.0, cell.contentView.frame.size.height-9.0);
+            textField.adjustsFontSizeToFitWidth = YES;
+            textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            [cell.contentView addSubview:textField];
         }
-        textField.frame = CGRectMake(10, 9, cell.contentView.frame.size.width-10.0, cell.contentView.frame.size.height-9.0);
-        textField.adjustsFontSizeToFitWidth = YES;
-        textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [cell.contentView addSubview:textField];
+        
+        
 
         
     }

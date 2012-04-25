@@ -514,5 +514,31 @@
 		<key>section_order</key>
 		<string>7</string>
 	</dict>
+	<key>website</key>
+	<dict>
+		<key>name</key>
+		<string>Website</string>
+		<key>osmKey</key>
+		<string>website</string>
+		<key>section</key>
+		<string>Address</string>
+		<key>values</key>
+		<string>url</string>
+		<key>section_order</key>
+		<string>8</string>
+	</dict>
+	<key>phone</key>
+	<dict>
+		<key>name</key>
+		<string>Phone #</string>
+		<key>osmKey</key>
+		<string>phone</string>
+		<key>section</key>
+		<string>Address</string>
+		<key>values</key>
+		<string>phone</string>
+		<key>section_order</key>
+		<string>9</string>
+	</dict>
 </dict>
 </plist>

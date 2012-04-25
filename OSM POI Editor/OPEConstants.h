@@ -17,3 +17,5 @@
 #define kTypeList @"list"
 #define kTypeLabel @"label"
 #define kTypeNumber @"number"
+#define kTypeUrl @"url"
+#define kTypePhone @"phone"

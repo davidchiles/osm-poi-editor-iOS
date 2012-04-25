@@ -264,6 +264,7 @@
 		63A2DB3E152257FA000C095D /* userLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63A2DB3C152257FA000C095D /* userLocation@2x.png */; };
 		63A2DB4515226CF6000C095D /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 63A2DB4315226CF6000C095D /* gear.png */; };
 		63A2DB4615226CF6000C095D /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63A2DB4415226CF6000C095D /* gear@2x.png */; };
+		63A7C56E15478EBC004ECCAB /* OPEPhoneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A7C56D15478EBC004ECCAB /* OPEPhoneCell.m */; };
 		63C986B915463C18000A88B8 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C986B815463C18000A88B8 /* info.png */; };
 		63C986BB15463C21000A88B8 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C986BA15463C21000A88B8 /* info@2x.png */; };
 		63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49D114E9C5A0008C4551 /* OPETextEdit.m */; };
@@ -630,6 +631,8 @@
 		63A2DB3C152257FA000C095D /* userLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "userLocation@2x.png"; sourceTree = "<group>"; };
 		63A2DB4315226CF6000C095D /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
 		63A2DB4415226CF6000C095D /* gear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gear@2x.png"; sourceTree = "<group>"; };
+		63A7C56C15478EBC004ECCAB /* OPEPhoneCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEPhoneCell.h; sourceTree = "<group>"; };
+		63A7C56D15478EBC004ECCAB /* OPEPhoneCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEPhoneCell.m; sourceTree = "<group>"; };
 		63C986B815463C18000A88B8 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		63C986BA15463C21000A88B8 /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
 		63CB49D014E9C5A0008C4551 /* OPETextEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETextEdit.h; sourceTree = "<group>"; };
@@ -1081,6 +1084,8 @@
 				6345E57F14E3122900F55486 /* OPENodeViewController.xib */,
 				632FD8A4153E0F2C00BC405C /* OPEBinaryCell.h */,
 				632FD8A5153E0F2C00BC405C /* OPEBinaryCell.m */,
+				63A7C56C15478EBC004ECCAB /* OPEPhoneCell.h */,
+				63A7C56D15478EBC004ECCAB /* OPEPhoneCell.m */,
 				63CB49D014E9C5A0008C4551 /* OPETextEdit.h */,
 				63CB49D114E9C5A0008C4551 /* OPETextEdit.m */,
 				63CB49D214E9C5A0008C4551 /* OPETextEdit.xib */,
@@ -1730,6 +1735,7 @@
 				6310F4B6153736D000C65FD8 /* OPEMessage.m in Sources */,
 				63EC06EF153D329200475485 /* OPETagValueList.m in Sources */,
 				632FD8A6153E0F2C00BC405C /* OPEBinaryCell.m in Sources */,
+				63A7C56E15478EBC004ECCAB /* OPEPhoneCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

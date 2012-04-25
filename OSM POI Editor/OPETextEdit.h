@@ -13,7 +13,10 @@
 - (void) newTag:(NSDictionary *)text;
 @end
 
-@interface OPETextEdit : UIViewController <UITextViewDelegate, UITableViewDelegate,UITableViewDataSource>
+@interface OPETextEdit : UIViewController <UITextViewDelegate,UITextFieldDelegate, UITableViewDelegate,UITableViewDataSource>
+{
+    NSMutableArray * phoneTextFieldArray;
+}
 
 
 @property (nonatomic, retain) NSString * osmValue;
