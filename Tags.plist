@@ -861,6 +861,11 @@
 				<key>amenity</key>
 				<string>telephone</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>phone</string>
+				<string>covered</string>
+			</array>
 		</dict>
 		<key>Public Toilets</key>
 		<dict>
@@ -1345,6 +1350,7 @@
 				<string>wheelchair</string>
 				<string>address</string>
 				<string>drive_through</string>
+				<string>atm</string>
 			</array>
 		</dict>
 		<key>Currency Exchange</key>
@@ -2531,6 +2537,7 @@
 				<string>fee</string>
 				<string>bicycle_parking</string>
 				<string>capacity</string>
+				<string>covered</string>
 			</array>
 		</dict>
 		<key>Bicycle Rental</key>
@@ -2556,6 +2563,10 @@
 			<dict>
 				<key>amenity</key>
 				<string>bus_station</string>
+				<key>bus</key>
+				<string>yes</string>
+				<key>public_transport</key>
+				<string>station</string>
 			</dict>
 			<key>optional</key>
 			<array>
@@ -2571,6 +2582,10 @@
 			<dict>
 				<key>highway</key>
 				<string>bus_stop</string>
+				<key>public_transport</key>
+				<string>platform</string>
+				<key>bus</key>
+				<string>yes</string>
 			</dict>
 			<key>optional</key>
 			<array>
@@ -2641,11 +2656,16 @@
 			<dict>
 				<key>amenity</key>
 				<string>ferry_terminal</string>
+				<key>public_transport</key>
+				<string>platform</string>
+				<key>ferry</key>
+				<string>yes</string>
 			</dict>
 			<key>optional</key>
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>ref</string>
 			</array>
 		</dict>
 		<key>Gas Station</key>
@@ -2676,9 +2696,10 @@
 			<array>
 				<string>fee</string>
 				<string>capacity</string>
+				<string>covered</string>
 			</array>
 		</dict>
-		<key>Rail Station</key>
+		<key>Train Station</key>
 		<dict>
 			<key>image</key>
 			<string>train.png</string>
@@ -2686,11 +2707,32 @@
 			<dict>
 				<key>railway</key>
 				<string>station</string>
+				<key>public_transport</key>
+				<string>station</string>
+				<key>train</key>
+				<string>yes</string>
 			</dict>
 			<key>optional</key>
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+			</array>
+		</dict>
+		<key>Train Platform</key>
+		<dict>
+			<key>image</key>
+			<string>train.png</string>
+			<key>tags</key>
+			<dict>
+				<key>public_transport</key>
+				<string>platform</string>
+				<key>train</key>
+				<string>yes</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>covered</string>
 			</array>
 		</dict>
 		<key>Subway Entrance</key>
@@ -2705,6 +2747,8 @@
 			<key>optional</key>
 			<array>
 				<string>wheelchair</string>
+				<string>bicycle</string>
+				<string>elevator</string>
 			</array>
 		</dict>
 		<key>Taxi Stand</key>
@@ -2729,6 +2773,10 @@
 			<dict>
 				<key>railway</key>
 				<string>tram_stop</string>
+				<key>public_transport</key>
+				<string>platform</string>
+				<key>tram</key>
+				<string>yes</string>
 			</dict>
 			<key>optional</key>
 			<array>

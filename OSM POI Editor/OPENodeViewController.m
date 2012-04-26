@@ -181,6 +181,7 @@
     NSString *CellIdentifierCategory = @"Cell_Section_2";
     NSString *CellIdentifierDelete = @"Cell_Section_3";
     NSString *CellIdentifierBinary = @"Cell_Section_4";
+    NSString *CellIdentifierSpecialBinary = @"Cell_Section_5";
     
     NSArray * catAndTypeName = [[NSArray alloc] initWithObjects:@"Category",@"Type", nil];
     
@@ -189,21 +190,46 @@
     UITableViewCell *cell;
     if([[cellDictionary objectForKey:@"values"] isKindOfClass:[NSDictionary class]])
     {
-        cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
-		if (cell == nil) {
-			cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
-        }
-        if ([[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] count]) {
-            cell.detailTextLabel.text = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
+        if ([[cellDictionary objectForKey:@"values"]  count] <= 3)
+        {
+            OPEBinaryCell * aCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
+            if (aCell == nil) {
+                aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[[cellDictionary objectForKey:@"values"] allKeys]];
+            }
+            [aCell setLeftText: [cellDictionary objectForKey:@"name"]];
+            //aCell.controlArray = [[cellDictionary objectForKey:@"values"] allKeys];
+            
+            [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
+            aCell.tag = indexPath.section;
+            aCell.binaryControl.tag = indexPath.row;
+            if ([theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
+                //[aCell selectSegmentWithTitle:[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]objectAtIndex:0]];
+                NSString * title = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
+                [aCell selectSegmentWithTitle:title];
+            }
+            else {
+                aCell.binaryControl.selectedSegmentIndex = UISegmentedControlNoSegment;
+            }
+            return aCell;
         }
         else {
-            cell.detailTextLabel.text = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+            cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
+            }
+            if ([[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] count]) {
+                cell.detailTextLabel.text = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
+            }
+            else {
+                cell.detailTextLabel.text = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+            }
+            
+            cell.textLabel.text = [cellDictionary objectForKey:@"name"];
+            
+            
+            cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         }
         
-        cell.textLabel.text = [cellDictionary objectForKey:@"name"];
-        
-        
-        cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         
     }
     else {
@@ -249,6 +275,9 @@
             }
             [aCell setLeftText: [cellDictionary objectForKey:@"name"]];
             if ([theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
+                
+                [aCell selectSegmentWithTitle:[cellDictionary objectForKey:@"osmKey"]];
+                /*
                 if ([[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"yes"]) {
                      [aCell.binaryControl setSelectedSegmentIndex:0];
                 }
@@ -256,6 +285,7 @@
                 {
                      [aCell.binaryControl setSelectedSegmentIndex:1];
                 }
+                 */
             }
             else {
                 [aCell.binaryControl setSelectedSegmentIndex:UISegmentedControlNoSegment];
@@ -291,6 +321,8 @@
         
         NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:[[sender superview] tag]] objectForKey:@"rows"] objectAtIndex:[sender tag]]];
         NSLog(@"Binary Changed: %@",cellDictionary);
+        [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",[[cellDictionary objectForKey:@"values"] objectForKey:[sender titleForSegmentAtIndex:[sender selectedSegmentIndex]]],@"osmValue", nil]];
+        /*
         if ([sender selectedSegmentIndex] == 0) {
             //Yes
             [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",@"yes",@"osmValue", nil]];
@@ -299,6 +331,10 @@
             //No
             [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",@"no",@"osmValue", nil]];
         }
+        else if([sender selectedSegmentIndex] ==2){
+            [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",[[cellDictionary objectForKey:@"values"] objectForKey:[sender titleForSegmentAtIndex:[sender selectedSegmentIndex]]],@"osmValue", nil]];
+        }
+        */
     }
     
 }
@@ -306,7 +342,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
-    if([[cellDictionary objectForKey:@"values"] isKindOfClass:[NSDictionary class]])
+    if ([[self.tableView cellForRowAtIndexPath:indexPath] isKindOfClass:[OPEBinaryCell class]])
+    {
+        //binary or 3 way type
+    }
+    else if([[cellDictionary objectForKey:@"values"] isKindOfClass:[NSDictionary class]])
     {
         //list view cell 
         OPETagValueList * viewer = [[OPETagValueList alloc] initWithNibName:@"OPETagValueList" bundle:nil];

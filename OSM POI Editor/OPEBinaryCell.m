@@ -35,10 +35,89 @@
         //RCSwitch * theSwitch = [[RCSwitch alloc] initWithFrame:CGRectMake(0, 0, 94, 27)];
         //[[RCSwitch alloc] initWithFrame:CGRectMake(0, 0, 94, 27)];
         self.accessoryView = binaryControl;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier array:(NSArray *)array
+{
+    self = [self initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier];
+    if(self)
+    {
+        NSArray * controlArray = [NSArray arrayWithArray:[self orderArray:array]];
+        binaryControl = [[UISegmentedControl alloc] initWithItems:controlArray];
+        binaryControl.segmentedControlStyle = UISegmentedControlStylePlain;
+        switch ([controlArray count]) {
+            case 1:
+                binaryControl.frame = CGRectMake(0, 0, 50, 35);
+                break;
+            case 2:
+                 binaryControl.frame = CGRectMake(0, 0, 100, 35);
+                break;
+            case 3:
+                binaryControl.frame = CGRectMake(0, 0, 200, 35);
+                [binaryControl setWidth:50 forSegmentAtIndex:0];
+                [binaryControl setWidth:50 forSegmentAtIndex:1];
+                [binaryControl setWidth:100 forSegmentAtIndex:2];
+                break;
+            default:
+                break;
+        }
+        self.accessoryView = binaryControl;
+        
+        
+    }
+    return self;
+    
+    
+}
+-(NSArray *)orderArray:(NSArray *) array
+{
+    NSMutableArray * tempArray = [array mutableCopy];
+    NSMutableArray * resultArray = [[NSMutableArray alloc] init ];
+    
+    NSString *search = @"Yes";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[c] %@", search];
+    [resultArray addObjectsFromArray: [array filteredArrayUsingPredicate:predicate]];
+    
+    search = @"No";
+    predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[c] %@", search];
+    [resultArray addObjectsFromArray: [array filteredArrayUsingPredicate:predicate]];
+    
+    for (NSString * item in resultArray) {
+        [tempArray removeObject:item];
+    }
+    
+    [resultArray addObjectsFromArray:tempArray];
+    return [resultArray copy];
+}
+-(void)selectSegmentWithTitle:(NSString *)title
+{
+    int item = -1;
+    for( int i =0; i < [binaryControl numberOfSegments]; i++)
+    {
+        if([title isEqualToString:[binaryControl titleForSegmentAtIndex:i]])
+        {
+            item = i;
+        }
+    }
+    if( item != -1)
+    {
+        binaryControl.selectedSegmentIndex = item;
+    }
+    else if ([title isEqualToString:@"yes"])
+    {
+        binaryControl.selectedSegmentIndex = 0;
+    }
+    else if ([title isEqualToString:@"no"])
+    {
+        binaryControl.selectedSegmentIndex = 0;
+    }
+    else {
+        binaryControl.selectedSegmentIndex = UISegmentedControlNoSegment;
+    }
+}
 -(void) setLeftText:(NSString *)txt
 {
     leftLabel.text=txt;

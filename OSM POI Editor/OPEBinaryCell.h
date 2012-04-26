@@ -17,4 +17,7 @@
 @property (nonatomic,strong) NSString * leftText;
 @property (nonatomic,strong) UISegmentedControl * binaryControl;
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier array:(NSArray *)array;
+-(void)selectSegmentWithTitle:(NSString *)title;
+
 @end

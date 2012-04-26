@@ -11,7 +11,12 @@
 		<key>section</key>
 		<string>Other</string>
 		<key>values</key>
-		<string>binary</string>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
 	</dict>
 	<key>capacity</key>
 	<dict>
@@ -116,6 +121,54 @@
 			<string>lebanese</string>
 		</dict>
 	</dict>
+	<key>bicycle</key>
+	<dict>
+		<key>name</key>
+		<string>Bicycle</string>
+		<key>osmKey</key>
+		<string>bicycle</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>atm</key>
+	<dict>
+		<key>name</key>
+		<string>ATM</string>
+		<key>osmKey</key>
+		<string>atm</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>covered</key>
+	<dict>
+		<key>name</key>
+		<string>Covered</string>
+		<key>osmKey</key>
+		<string>covered</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
 	<key>information</key>
 	<dict>
 		<key>name</key>
@@ -142,6 +195,20 @@
 			<string>board</string>
 		</dict>
 	</dict>
+	<key>elevator</key>
+	<dict>
+		<key>name</key>
+		<string>Elevator</string>
+		<key>osmKey</key>
+		<string>highway</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>elevator</string>
+		</dict>
+	</dict>
 	<key>drive_in</key>
 	<dict>
 		<key>name</key>
@@ -151,7 +218,12 @@
 		<key>section</key>
 		<string>Other</string>
 		<key>values</key>
-		<string>binary</string>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
 	</dict>
 	<key>drive_through</key>
 	<dict>
@@ -162,7 +234,12 @@
 		<key>section</key>
 		<string>Other</string>
 		<key>values</key>
-		<string>binary</string>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
 	</dict>
 	<key>smoking</key>
 	<dict>
@@ -174,10 +251,10 @@
 		<string>Other</string>
 		<key>values</key>
 		<dict>
-			<key>No</key>
-			<string>no</string>
 			<key>Yes</key>
 			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
 			<key>Separated</key>
 			<string>separated</string>
 		</dict>
@@ -249,7 +326,12 @@
 		<key>section</key>
 		<string>Other</string>
 		<key>values</key>
-		<string>binary</string>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
 	</dict>
 	<key>ref</key>
 	<dict>
@@ -282,7 +364,12 @@
 		<key>section</key>
 		<string>Other</string>
 		<key>values</key>
-		<string>binary</string>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
 	</dict>
 	<key>dispensing</key>
 	<dict>
@@ -293,7 +380,12 @@
 		<key>section</key>
 		<string>Other</string>
 		<key>values</key>
-		<string>binary</string>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
 	</dict>
 	<key>denomination:christian</key>
 	<dict>

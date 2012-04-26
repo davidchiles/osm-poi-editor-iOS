@@ -176,7 +176,7 @@
 -(void) fillPhoneNumber:(NSString *)string
 {
     NSArray * phoneArray = [self breakUpPhoneNumber:string];
-    for(int i =0; i<3 && [phoneArray count]; i++)
+    for(int i =0; i<3 && i<[phoneArray count]; i++)
     {
         ((UITextField *)[phoneTextFieldArray objectAtIndex:2-i]).text = [phoneArray objectAtIndex:([phoneArray count]-i-1)];
     }
@@ -187,7 +187,10 @@
     int cc = [[[phoneTextFieldArray objectAtIndex:0] text] intValue];
     int ac = [[[phoneTextFieldArray objectAtIndex:1] text] intValue];
     int ln = [[[phoneTextFieldArray objectAtIndex:2] text] intValue];
-    return [NSString stringWithFormat:@"+%d %d %d",cc,ac,ln];
+    NSString * finalString = [NSString stringWithFormat:@"+%d %d %d",cc,ac,ln];
+    finalString = [[finalString stringByReplacingOccurrencesOfString:@"+0" withString:@""] stringByReplacingOccurrencesOfString:@" 0" withString:@""];
+    finalString = [finalString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return finalString;
 }
 
 - (void) viewDidAppear:(BOOL)animated
