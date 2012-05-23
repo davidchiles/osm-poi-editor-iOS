@@ -13,6 +13,7 @@
 @end
 
 #define kTypeText @"text"
+#define KTypeName @"name"
 #define kTypeBinary @"binary"
 #define kTypeList @"list"
 #define kTypeLabel @"label"

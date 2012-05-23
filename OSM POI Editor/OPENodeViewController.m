@@ -14,6 +14,7 @@
 #import "OPEInfoViewController.h"
 #import "OPEBinaryCell.h"
 #import "OPEConstants.h"
+#import "OPESpecialCell2.h"
 
 
 
@@ -85,7 +86,7 @@
     catAndType = [[NSArray alloc] initWithObjects:[tagInterpreter getCategory:theNewNode],[tagInterpreter getType:theNewNode], nil];
     //osmKeyValue =  [[NSDictionary alloc] initWithDictionary: [tagInterpreter getPrimaryKeyValue:theNewNode]];
     
-    self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     self.HUD.delegate = self;
     
     
@@ -96,7 +97,7 @@
 }
 -(void) reloadTags
 {
-    NSDictionary * nameSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Name",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"text",@"values",@"name",@"osmKey",@"Name",@"name", nil]],@"rows", nil];
+    NSDictionary * nameSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Name",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:KTypeName,@"values",@"name",@"osmKey",@"Name",@"name", nil]],@"rows", nil];
     tableSections = [NSMutableArray arrayWithObject:nameSection];
     
     NSArray * ct = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"category",@"values", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"category",@"values", nil], nil];
@@ -182,6 +183,7 @@
     NSString *CellIdentifierDelete = @"Cell_Section_3";
     NSString *CellIdentifierBinary = @"Cell_Section_4";
     NSString *CellIdentifierSpecialBinary = @"Cell_Section_5";
+    NSString *CellIdentifierSpecial2 = @"Cell_Section_6";
     
     NSArray * catAndTypeName = [[NSArray alloc] initWithObjects:@"Category",@"Type", nil];
     
@@ -213,27 +215,28 @@
             return aCell;
         }
         else {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
+            OPESpecialCell2 * specialCell;
+            specialCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
+            if (specialCell == nil) {
+                //cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
+                specialCell = [[OPESpecialCell2 alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecial2];
             }
             if ([[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] count]) {
-                cell.detailTextLabel.text = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
+                specialCell.rightText = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
             }
             else {
-                cell.detailTextLabel.text = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+                specialCell.rightText = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             }
             
-            cell.textLabel.text = [cellDictionary objectForKey:@"name"];
+            specialCell.leftText = [cellDictionary objectForKey:@"name"];
             
-            
-            cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
+            return specialCell;
         }
         
         
     }
     else {
-        if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText]) { //Text editing
+        if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:KTypeName]) { //Text editing
             cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
@@ -360,7 +363,7 @@
         
     }
     else {
-        if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone]) { //Text editing
+        if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone] || [[cellDictionary objectForKey:@"values"] isEqualToString:KTypeName] ){ //Text editing
             OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
             viewer.title = [cellDictionary objectForKey:@"name"];
             viewer.osmValue = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
@@ -453,7 +456,7 @@
     }
     else if (![theNewNode isEqualToNode:node]) 
     {
-        [self.view addSubview:HUD];
+        [self.navigationController.view addSubview:HUD];
         [HUD setLabelText:@"Saving..."];
         [HUD show:YES];
         dispatch_queue_t q = dispatch_queue_create("queue", NULL);
@@ -547,7 +550,7 @@
         {
             NSLog(@"Button OK was selected.");
             
-            [self.view addSubview:HUD];
+            [self.navigationController.view addSubview:HUD];
             [HUD setLabelText:@"Deleting..."];
             [HUD show:YES];
             dispatch_queue_t q = dispatch_queue_create("queue", NULL);

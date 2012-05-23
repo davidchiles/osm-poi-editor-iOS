@@ -67,7 +67,7 @@
         {
             self.textField.keyboardType = UIKeyboardTypeNumberPad;
         }
-        else if([osmKey isEqualToString:@"addr:housenumber"])
+        else if([osmKey isEqualToString:@"addr:housenumber"] || [osmKey isEqualToString:@"addr:postcode"])
         {
             self.textField.keyboardType = UIKeyboardTypeNamePhonePad;
             self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -111,6 +111,22 @@
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.scrollEnabled = NO;
         [self.view addSubview:tableView];
+    }
+    else if ([type isEqualToString:KTypeName])
+    {
+        textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 20, 300, 150)];
+        [textView setFont:[UIFont systemFontOfSize:14.0]];
+        textView.returnKeyType = UIReturnKeyDone;
+        self.textView.delegate = self;
+        
+        [[textView layer] setCornerRadius:7.0];
+        textView.text = osmValue;
+        textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
+        
+        [self.view addSubview:self.textView];
+        [textView becomeFirstResponder];
+        
+        
     }
     else if ([type isEqualToString:kTypeText]) 
     {

@@ -270,6 +270,7 @@
 				<string>smoking</string>
 				<string>address</string>
 				<string>wheelchair</string>
+				<string>wifi</string>
 			</array>
 		</dict>
 		<key>Drinking Water</key>
@@ -364,6 +365,7 @@
 				<string>drive_in</string>
 				<string>address</string>
 				<string>wheelchair</string>
+				<string>wifi</string>
 			</array>
 		</dict>
 		<key>Bakery</key>
@@ -923,6 +925,16 @@
 			<dict>
 				<key>natural</key>
 				<string>beach</string>
+			</dict>
+		</dict>
+		<key>Waterfall</key>
+		<dict>
+			<key>image</key>
+			<string>water.png</string>
+			<key>tags</key>
+			<dict>
+				<key>waterway</key>
+				<string>waterfall</string>
 			</dict>
 		</dict>
 		<key>Bench</key>
@@ -1564,6 +1576,13 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>bicycle_second_hand</string>
+				<string>bicycle_cleaning</string>
+				<string>bicycle_diy</string>
+				<string>bicycle_pump</string>
+				<string>bicycle_rental</string>
+				<string>bicycle_retail</string>
+				<string>bicycle_repair</string>
 			</array>
 		</dict>
 		<key>Book Store</key>
@@ -2242,6 +2261,7 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>wifi</string>
 			</array>
 		</dict>
 		<key>Tourism Information</key>
@@ -2272,6 +2292,24 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>tents</string>
+				<string>maxtents</string>
+			</array>
+		</dict>
+		<key>Shower</key>
+		<dict>
+			<key>image</key>
+			<string>shower.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>shower</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>fee</string>
+				<string>maxtents</string>
 			</array>
 		</dict>
 		<key>Castle</key>
@@ -2346,6 +2384,7 @@
 			<key>optional</key>
 			<array>
 				<string>wheelchair</string>
+				<string>wifi</string>
 				<string>address</string>
 			</array>
 		</dict>
@@ -2361,6 +2400,7 @@
 			<key>optional</key>
 			<array>
 				<string>wheelchair</string>
+				<string>wifi</string>
 				<string>address</string>
 			</array>
 		</dict>
@@ -2419,6 +2459,7 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>wifi</string>
 			</array>
 		</dict>
 		<key>Mountain Hut</key>
@@ -2681,6 +2722,7 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>fuel_type</string>
 			</array>
 		</dict>
 		<key>Parking</key>
@@ -2716,6 +2758,7 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>wifi</string>
 			</array>
 		</dict>
 		<key>Train Platform</key>

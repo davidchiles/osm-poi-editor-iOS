@@ -17,10 +17,10 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         //cell.textLabel.text = [cellDictionary objectForKey:@"name"];
-        leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, 80, 30)];
+        leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, 104, 30)];
         leftLabel.backgroundColor = [UIColor clearColor];
         leftLabel.text = leftText;
-        leftLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12.0];
+        leftLabel.font = [UIFont boldSystemFontOfSize:12.0];
         leftLabel.textColor = [UIColor colorWithRed:.32 green:.4 blue:.57 alpha:1];
         leftLabel.textAlignment = UITextAlignmentRight;
         [self addSubview:leftLabel];
@@ -50,15 +50,15 @@
         binaryControl.segmentedControlStyle = UISegmentedControlStylePlain;
         switch ([controlArray count]) {
             case 1:
-                binaryControl.frame = CGRectMake(0, 0, 50, 35);
+                binaryControl.frame = CGRectMake(0, 0, 50, 40);
                 break;
             case 2:
-                 binaryControl.frame = CGRectMake(0, 0, 100, 35);
+                 binaryControl.frame = CGRectMake(0, 0, 100, 40);
                 break;
             case 3:
-                binaryControl.frame = CGRectMake(0, 0, 200, 35);
-                [binaryControl setWidth:50 forSegmentAtIndex:0];
-                [binaryControl setWidth:50 forSegmentAtIndex:1];
+                binaryControl.frame = CGRectMake(0, 0, 190, 40);
+                [binaryControl setWidth:44 forSegmentAtIndex:0];
+                [binaryControl setWidth:44 forSegmentAtIndex:1];
                 [binaryControl setWidth:100 forSegmentAtIndex:2];
                 break;
             default:

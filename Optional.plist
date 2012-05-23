@@ -29,6 +29,101 @@
 		<key>values</key>
 		<string>number</string>
 	</dict>
+	<key>maxtents</key>
+	<dict>
+		<key>name</key>
+		<string>Max Tents</string>
+		<key>osmKey</key>
+		<string>maxtents</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<string>number</string>
+	</dict>
+	<key>fuel_type</key>
+	<dict>
+		<key>name</key>
+		<string>Fuel Type</string>
+		<key>osmKey</key>
+		<string>fuel:</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>Diesel</string>
+				<key>osmKey</key>
+				<string>fuel:diesel</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Octane 87</string>
+				<key>osmKey</key>
+				<string>fuel:octane_87</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Compressed Natural Gas</string>
+				<key>osmKey</key>
+				<string>fuel:cng</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Octane 100</string>
+				<key>osmKey</key>
+				<string>fuel:octane_100</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Octane 92</string>
+				<key>osmKey</key>
+				<string>fuel:octane_92</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>E85</string>
+				<key>osmKey</key>
+				<string>fuel:e85</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>E10</string>
+				<key>osmKey</key>
+				<string>fuel:e10</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Octane 91</string>
+				<key>osmKey</key>
+				<string>fuel:octane_91</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Biodiesel</string>
+				<key>osmKey</key>
+				<string>fuel:biodiesel</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Propane</string>
+				<key>osmKey</key>
+				<string>fuel:lpg</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Octane 98</string>
+				<key>osmKey</key>
+				<string>fuel:octane_98</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>Octane 95</string>
+				<key>osmKey</key>
+				<string>fuel:octane_95</string>
+			</dict>
+		</array>
+	</dict>
 	<key>cuisine</key>
 	<dict>
 		<key>name</key>
@@ -41,6 +136,8 @@
 		<dict>
 			<key>Regional</key>
 			<string>regional</string>
+			<key>Coffee Shop</key>
+			<string>coffee_shop</string>
 			<key>Crêpes</key>
 			<string>crepe</string>
 			<key>Burger</key>
@@ -119,8 +216,6 @@
 			<string>wall_loops</string>
 			<key>Informal</key>
 			<string>informal</string>
-			<key>Lebanese</key>
-			<string>lebanese</string>
 		</dict>
 	</dict>
 	<key>bicycle</key>
@@ -153,6 +248,152 @@
 			<string>yes</string>
 			<key>No</key>
 			<string>no</string>
+		</dict>
+	</dict>
+	<key>bicycle_second_hand</key>
+	<dict>
+		<key>name</key>
+		<string>Used Bikes Sold</string>
+		<key>osmKey</key>
+		<string>service:bicycle:second_hand</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>bicycle_cleaning</key>
+	<dict>
+		<key>name</key>
+		<string>Bicycles Cleaned</string>
+		<key>osmKey</key>
+		<string>service:bicycle:cleaning</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>bicycle_diy</key>
+	<dict>
+		<key>name</key>
+		<string>Bicycle DIY</string>
+		<key>osmKey</key>
+		<string>service:bicycle:diy</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>bicycle_pump</key>
+	<dict>
+		<key>name</key>
+		<string>Bicycle Pump</string>
+		<key>osmKey</key>
+		<string>service:bicycle:pump</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>bicycle_rental</key>
+	<dict>
+		<key>name</key>
+		<string>Bicycles Rented</string>
+		<key>osmKey</key>
+		<string>service:bicycle:rental</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>bicycle_retail</key>
+	<dict>
+		<key>name</key>
+		<string>Bicycles Sold</string>
+		<key>osmKey</key>
+		<string>service:bicycle:retail</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>bicycle_repair</key>
+	<dict>
+		<key>name</key>
+		<string>Bicycles Repaired</string>
+		<key>osmKey</key>
+		<string>service:bicycle:repair</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>tents</key>
+	<dict>
+		<key>name</key>
+		<string>Tents</string>
+		<key>osmKey</key>
+		<string>tents</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>wifi</key>
+	<dict>
+		<key>name</key>
+		<string>Wifi</string>
+		<key>osmKey</key>
+		<string>wifi</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+			<key>Free</key>
+			<string>free</string>
 		</dict>
 	</dict>
 	<key>covered</key>

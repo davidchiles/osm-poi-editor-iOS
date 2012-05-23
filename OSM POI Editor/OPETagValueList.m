@@ -18,6 +18,7 @@
 
 @synthesize osmKey,osmValue,osmValues,values;
 @synthesize delegate;
+@synthesize valuesCheckmarkArray,selectedArray;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -60,8 +61,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
-    return [values count];
+    if (values)
+    {
+        return [values count];
+    }
+    else if (valuesCheckmarkArray)
+    {
+        return [valuesCheckmarkArray count];
+    }
+    return 0;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -71,7 +80,21 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    cell.textLabel.text = [[[values allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]  objectAtIndex:indexPath.row];
+    if(values)
+    {
+        
+        cell.textLabel.text = [[[values allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]  objectAtIndex:indexPath.row];
+        
+    }
+    else if (valuesCheckmarkArray) {
+        
+        cell.textLabel.text = [[valuesCheckmarkArray objectAtIndex:indexPath.row] objectForKey:@"Name"];
+        if ([selectedArray containsObject:[[valuesCheckmarkArray objectAtIndex:indexPath.row] objectForKey:@"osmKey"]]) {
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+        
+    }
+    
     
     // Configure the cell...
     
@@ -116,14 +139,37 @@
     return YES;
 }
 */
+-(void) donePressed:(id)sender
+{
+    for (NSString * omsKey in selectedArray)
+    {
+        [self.delegate newTag:[NSDictionary dictionaryWithObjectsAndKeys:@"yes",@"osmValue",osmKey,@"osmKey", nil]];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString * value = [values objectForKey: [tableView cellForRowAtIndexPath:indexPath].textLabel.text];
-    [delegate newTag:[NSDictionary dictionaryWithObjectsAndKeys:value,@"osmValue",osmKey,@"osmKey", nil]];
-    [self.navigationController popViewControllerAnimated:YES];
+    if (values) {
+        NSString * value = [values objectForKey: [tableView cellForRowAtIndexPath:indexPath].textLabel.text];
+        [delegate newTag:[NSDictionary dictionaryWithObjectsAndKeys:value,@"osmValue",osmKey,@"osmKey", nil]];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else if(valuesCheckmarkArray)
+    {
+        /////
+        NSDictionary * selectedRowDictionary = [valuesCheckmarkArray objectAtIndex:indexPath.row];
+        if ([selectedArray containsObject:[selectedRowDictionary objectForKey:@"osmKey"]]) {
+            [selectedArray removeObject:[selectedRowDictionary objectForKey:@"osmKey"]];
+            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone; 
+        }
+        else {
+            [selectedArray addObject:[selectedRowDictionary objectForKey:@"osmKey"]];
+            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark; 
+        }
+    }
     
 }
 
