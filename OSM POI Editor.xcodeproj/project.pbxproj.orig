@@ -1884,7 +1884,6 @@
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C0714256-3241-4325-BEEA-D9039828CAB9";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$SDK_DIR/usr/include/libxml2 \"$(PROJECT_DIR)/alpstein-route-me/MapView\"/** \"$SRCROOT/Library/RCSwitch\"/**";
 				WRAPPER_EXTENSION = app;

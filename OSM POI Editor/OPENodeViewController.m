@@ -14,6 +14,7 @@
 #import "OPEInfoViewController.h"
 #import "OPEBinaryCell.h"
 #import "OPEConstants.h"
+#import "OPEAPIConstants.h"
 #import "OPESpecialCell2.h"
 
 
@@ -787,8 +788,8 @@
 
 
 - (GTMOAuthAuthentication *)osmAuth {
-    NSString *myConsumerKey = osmConsumerKey //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
-    NSString *myConsumerSecret = osmConsumerSecret //@"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
+    NSString *myConsumerKey = osmConsumerKey     // pre-registered with service
+    NSString *myConsumerSecret = osmConsumerSecret // pre-assigned by service
     
     GTMOAuthAuthentication *auth;
     auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
