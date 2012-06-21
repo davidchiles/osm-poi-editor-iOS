@@ -746,6 +746,53 @@
 				<string>siren</string>
 			</dict>
 		</dict>
+		<key>Power Generator</key>
+		<dict>
+			<key>image</key>
+			<string>lightning.png</string>
+			<key>tags</key>
+			<dict>
+				<key>power</key>
+				<string>generator</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>operator</string>
+				<string>address</string>
+				<string>generator-source</string>
+				<string>generator-method</string>
+			</array>
+		</dict>
+		<key>Power Station</key>
+		<dict>
+			<key>image</key>
+			<string>lightning.png</string>
+			<key>tags</key>
+			<dict>
+				<key>power</key>
+				<string>generator</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>voltage</string>
+				<string>operator</string>
+			</array>
+		</dict>
+		<key>Power Substation</key>
+		<dict>
+			<key>image</key>
+			<string>lightning.png</string>
+			<key>tags</key>
+			<dict>
+				<key>power</key>
+				<string>generator</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>voltage</string>
+				<string>operator</string>
+			</array>
+		</dict>
 		<key>Flagpole</key>
 		<dict>
 			<key>image</key>
@@ -925,6 +972,16 @@
 			<dict>
 				<key>natural</key>
 				<string>beach</string>
+			</dict>
+		</dict>
+		<key>Playground</key>
+		<dict>
+			<key>image</key>
+			<string>playground.png</string>
+			<key>tags</key>
+			<dict>
+				<key>leisure</key>
+				<string>playground</string>
 			</dict>
 		</dict>
 		<key>Waterfall</key>
@@ -2386,6 +2443,7 @@
 				<string>wheelchair</string>
 				<string>wifi</string>
 				<string>address</string>
+				<string>smoking</string>
 			</array>
 		</dict>
 		<key>Hotel</key>
@@ -2402,6 +2460,7 @@
 				<string>wheelchair</string>
 				<string>wifi</string>
 				<string>address</string>
+				<string>smoking</string>
 			</array>
 		</dict>
 		<key>Memorial</key>
@@ -2460,6 +2519,7 @@
 				<string>wheelchair</string>
 				<string>address</string>
 				<string>wifi</string>
+				<string>smoking</string>
 			</array>
 		</dict>
 		<key>Mountain Hut</key>
@@ -2632,6 +2692,7 @@
 			<array>
 				<string>shelter</string>
 				<string>ref</string>
+				<string>route_ref</string>
 			</array>
 		</dict>
 		<key>Car Rental</key>
@@ -2722,10 +2783,25 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
-				<string>fuel_type</string>
 			</array>
 		</dict>
 		<key>Parking</key>
+		<dict>
+			<key>image</key>
+			<string>parking.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>parking</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>fee</string>
+				<string>capacity</string>
+				<string>covered</string>
+			</array>
+		</dict>
+		<key>Motorcycle Parking</key>
 		<dict>
 			<key>image</key>
 			<string>parking.png</string>

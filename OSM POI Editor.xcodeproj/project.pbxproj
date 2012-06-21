@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		630DB2981593D9BF00BFB881 /* playground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 630DB2971593D9BF00BFB881 /* playground@2x.png */; };
+		630DB29A1593D9C700BFB881 /* playground.png in Resources */ = {isa = PBXBuildFile; fileRef = 630DB2991593D9C700BFB881 /* playground.png */; };
+		630DB29C1593E20900BFB881 /* lightning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 630DB29B1593E20900BFB881 /* lightning@2x.png */; };
+		630DB29E1593E20F00BFB881 /* lightning.png in Resources */ = {isa = PBXBuildFile; fileRef = 630DB29D1593E20F00BFB881 /* lightning.png */; };
 		6310F4B6153736D000C65FD8 /* OPEMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310F4B5153736D000C65FD8 /* OPEMessage.m */; };
 		6310F59B1537A46D00C65FD8 /* airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4CE1537A46D00C65FD8 /* airplane.png */; };
 		6310F59C1537A46D00C65FD8 /* alcohol.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4CF1537A46D00C65FD8 /* alcohol.png */; };
@@ -355,6 +359,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		630DB2971593D9BF00BFB881 /* playground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playground@2x.png"; sourceTree = "<group>"; };
+		630DB2991593D9C700BFB881 /* playground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playground.png; sourceTree = "<group>"; };
+		630DB29B1593E20900BFB881 /* lightning@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightning@2x.png"; sourceTree = "<group>"; };
+		630DB29D1593E20F00BFB881 /* lightning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightning.png; sourceTree = "<group>"; };
 		630EA0301540EE1800318525 /* OPEConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEConstants.h; sourceTree = "<group>"; };
 		6310F4B4153736D000C65FD8 /* OPEMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMessage.h; sourceTree = "<group>"; };
 		6310F4B5153736D000C65FD8 /* OPEMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMessage.m; sourceTree = "<group>"; };
@@ -788,6 +796,8 @@
 		6310F4CD1537A46D00C65FD8 /* @1x */ = {
 			isa = PBXGroup;
 			children = (
+				630DB29D1593E20F00BFB881 /* lightning.png */,
+				630DB2991593D9C700BFB881 /* playground.png */,
 				63128B76154F6A2100BE9D22 /* shower.png */,
 				63C986B815463C18000A88B8 /* info.png */,
 				6310F4CE1537A46D00C65FD8 /* airplane.png */,
@@ -900,6 +910,8 @@
 		6310F5341537A46D00C65FD8 /* @2x */ = {
 			isa = PBXGroup;
 			children = (
+				630DB29B1593E20900BFB881 /* lightning@2x.png */,
+				630DB2971593D9BF00BFB881 /* playground@2x.png */,
 				63128B78154F6A2F00BE9D22 /* shower@2x.png */,
 				63C986BA15463C21000A88B8 /* info@2x.png */,
 				6310F5351537A46D00C65FD8 /* airplane@2x.png */,
@@ -1690,6 +1702,10 @@
 				63C986BB15463C21000A88B8 /* info@2x.png in Resources */,
 				63128B77154F6A2100BE9D22 /* shower.png in Resources */,
 				63128B79154F6A2F00BE9D22 /* shower@2x.png in Resources */,
+				630DB2981593D9BF00BFB881 /* playground@2x.png in Resources */,
+				630DB29A1593D9C700BFB881 /* playground.png in Resources */,
+				630DB29C1593E20900BFB881 /* lightning@2x.png in Resources */,
+				630DB29E1593E20F00BFB881 /* lightning.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1857,7 +1873,6 @@
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6EF2E80F-3407-4FB3-8CE7-98BDC7A21848";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$SDK_DIR/usr/include/libxml2 \"$(PROJECT_DIR)/alpstein-route-me/MapView\"/** \"$SRCROOT/Library/RCSwitch\"/**";
 				WRAPPER_EXTENSION = app;

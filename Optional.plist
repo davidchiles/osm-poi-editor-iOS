@@ -29,6 +29,17 @@
 		<key>values</key>
 		<string>number</string>
 	</dict>
+	<key>voltage</key>
+	<dict>
+		<key>name</key>
+		<string>Voltage</string>
+		<key>osmKey</key>
+		<string>voltage</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<string>number</string>
+	</dict>
 	<key>maxtents</key>
 	<dict>
 		<key>name</key>
@@ -39,90 +50,6 @@
 		<string>Other</string>
 		<key>values</key>
 		<string>number</string>
-	</dict>
-	<key>fuel_type</key>
-	<dict>
-		<key>name</key>
-		<string>Fuel Type</string>
-		<key>osmKey</key>
-		<string>fuel:</string>
-		<key>section</key>
-		<string>Other</string>
-		<key>values</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>Diesel</string>
-				<key>osmKey</key>
-				<string>fuel:diesel</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Octane 87</string>
-				<key>osmKey</key>
-				<string>fuel:octane_87</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Compressed Natural Gas</string>
-				<key>osmKey</key>
-				<string>fuel:cng</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Octane 100</string>
-				<key>osmKey</key>
-				<string>fuel:octane_100</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Octane 92</string>
-				<key>osmKey</key>
-				<string>fuel:octane_92</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>E85</string>
-				<key>osmKey</key>
-				<string>fuel:e85</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>E10</string>
-				<key>osmKey</key>
-				<string>fuel:e10</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Octane 91</string>
-				<key>osmKey</key>
-				<string>fuel:octane_91</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Biodiesel</string>
-				<key>osmKey</key>
-				<string>fuel:biodiesel</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Propane</string>
-				<key>osmKey</key>
-				<string>fuel:lpg</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Octane 98</string>
-				<key>osmKey</key>
-				<string>fuel:octane_98</string>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>Octane 95</string>
-				<key>osmKey</key>
-				<string>fuel:octane_95</string>
-			</dict>
-		</array>
 	</dict>
 	<key>cuisine</key>
 	<dict>
@@ -192,6 +119,88 @@
 			<string>mediterranean</string>
 			<key>Ethiopian</key>
 			<string>ethiopian</string>
+		</dict>
+	</dict>
+	<key>generator-source</key>
+	<dict>
+		<key>name</key>
+		<string>Source</string>
+		<key>osmKey</key>
+		<string>generator:source</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Biomass</key>
+			<string>biomass</string>
+			<key>Biofuel</key>
+			<string>biofuel</string>
+			<key>Biogas</key>
+			<string>biogas</string>
+			<key>Coal</key>
+			<string>coal</string>
+			<key>Natural Gass</key>
+			<string>gas</string>
+			<key>Oil</key>
+			<string>oil</string>
+			<key>Diesel</key>
+			<string>diesel</string>
+			<key>Gasoline</key>
+			<string>gasoline</string>
+			<key>Waste</key>
+			<string>waste</string>
+			<key>Wind</key>
+			<string>wind</string>
+			<key>Solar</key>
+			<string>solar</string>
+			<key>Hydro</key>
+			<string>hydro</string>
+			<key>Tidal</key>
+			<string>tidal</string>
+			<key>Wave</key>
+			<string>wave</string>
+			<key>Geothermal</key>
+			<string>geothermal</string>
+			<key>Osmotic</key>
+			<string>osmotic</string>
+			<key>Nuclear</key>
+			<string>nuclear</string>
+		</dict>
+	</dict>
+	<key>generator-method</key>
+	<dict>
+		<key>name</key>
+		<string>Method</string>
+		<key>osmKey</key>
+		<string>generator:method</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Cumbustion</key>
+			<string>combustion</string>
+			<key>Fission</key>
+			<string>fission</string>
+			<key>Fusion</key>
+			<string>fusion</string>
+			<key>Thermal</key>
+			<string>thermal</string>
+			<key>Pumping</key>
+			<string>pumping</string>
+			<key>Photovoltaic</key>
+			<string>photovoltaic</string>
+			<key>Gasification</key>
+			<string>gasification</string>
+			<key>Anaerobic Digestion</key>
+			<string>anaerobic_digestion</string>
+			<key>Pyrolysis</key>
+			<string>Pyrolysis</string>
+			<key>Dam</key>
+			<string>dam</string>
+			<key>Pumped-Storage</key>
+			<string>pumped-storage</string>
+			<key>Run of the River</key>
+			<string>run-of-the-river</string>
 		</dict>
 	</dict>
 	<key>bicycle_parking</key>
@@ -582,6 +591,17 @@
 		<string>Ref</string>
 		<key>osmKey</key>
 		<string>ref</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<string>label</string>
+	</dict>
+	<key>route_ref</key>
+	<dict>
+		<key>name</key>
+		<string>Route Ref</string>
+		<key>osmKey</key>
+		<string>route_ref</string>
 		<key>section</key>
 		<string>Other</string>
 		<key>values</key>

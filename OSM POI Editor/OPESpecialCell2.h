@@ -14,6 +14,8 @@
     UILabel * rightLabel;
 }
 
+-(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withTextWidth:(float)textWidth;
+
 @property (nonatomic, strong) NSString * leftText;
 @property (nonatomic, strong) NSString * rightText;
 

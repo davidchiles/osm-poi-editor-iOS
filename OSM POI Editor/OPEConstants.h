@@ -20,3 +20,5 @@
 #define kTypeNumber @"number"
 #define kTypeUrl @"url"
 #define kTypePhone @"phone"
+
+#define kLeftTextDefaultSize 76

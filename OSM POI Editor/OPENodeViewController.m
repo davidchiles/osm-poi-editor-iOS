@@ -157,8 +157,23 @@
         
         NSLog(@"Optional tags: %@",optionalTags);
         
+        optionalTagWidth = [self getWidth:optionalTags];
+    }
+}
+
+-(float)getWidth:(NSArray *)optionalTags
+{
+    float maxWidth = 0.0;
+    
+    for(NSDictionary * keyDictionary in optionalTags)
+    {
+        NSString * name = [keyDictionary objectForKey:@"name"];
+        float currentWidth = [name sizeWithFont:[UIFont boldSystemFontOfSize:12.0]].width;
+        maxWidth = MAX(maxWidth, currentWidth);
         
     }
+    return maxWidth;
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -196,7 +211,8 @@
         {
             OPEBinaryCell * aCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
             if (aCell == nil) {
-                aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[[cellDictionary objectForKey:@"values"] allKeys]];
+                aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[[cellDictionary objectForKey:@"values"] allKeys] withTextWidth:optionalTagWidth];
+                
             }
             [aCell setLeftText: [cellDictionary objectForKey:@"name"]];
             //aCell.controlArray = [[cellDictionary objectForKey:@"values"] allKeys];
@@ -218,8 +234,7 @@
             OPESpecialCell2 * specialCell;
             specialCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
             if (specialCell == nil) {
-                //cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
-                specialCell = [[OPESpecialCell2 alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecial2];
+                specialCell = [[OPESpecialCell2 alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecial2 withTextWidth:optionalTagWidth];
             }
             if ([[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] count]) {
                 specialCell.rightText = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];

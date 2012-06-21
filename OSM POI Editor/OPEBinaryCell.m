@@ -7,17 +7,26 @@
 //
 
 #import "OPEBinaryCell.h"
+#import "OPEConstants.h"
 
 @implementation OPEBinaryCell
 
 @synthesize leftText,binaryControl;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withTextWidth:(float)textWidth
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         //cell.textLabel.text = [cellDictionary objectForKey:@"name"];
-        leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, 104, 30)];
+        if(textWidth > kLeftTextDefaultSize)
+        {
+            leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, textWidth, 30)];
+        }
+        else {
+            leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, kLeftTextDefaultSize, 30)];
+        }
+        
+        
         leftLabel.backgroundColor = [UIColor clearColor];
         leftLabel.text = leftText;
         leftLabel.font = [UIFont boldSystemFontOfSize:12.0];
@@ -25,24 +34,14 @@
         leftLabel.textAlignment = UITextAlignmentRight;
         [self addSubview:leftLabel];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-        //UISwitch * theSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-        NSArray *itemArray = [NSArray arrayWithObjects: @"Yes", @"No", nil];
-        binaryControl = [[UISegmentedControl alloc] initWithItems:itemArray];
-        binaryControl.frame = CGRectMake(0, 0, 100, 35);
-        binaryControl.segmentedControlStyle = UISegmentedControlStylePlain;
-        //binaryControl.selectedSegmentIndex = 1;
-        //RCSwitchOnOff *theSwitch = [[RCSwitchOnOff alloc] initWithFrame:CGRectMake(220, 8, 94, 27)];
-        //RCSwitch * theSwitch = [[RCSwitch alloc] initWithFrame:CGRectMake(0, 0, 94, 27)];
-        //[[RCSwitch alloc] initWithFrame:CGRectMake(0, 0, 94, 27)];
-        self.accessoryView = binaryControl;
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+
     }
     return self;
 }
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier array:(NSArray *)array
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier array:(NSArray *)array withTextWidth:(float)textWidth
 {
-    self = [self initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier];
+    self = [self initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withTextWidth:(float)textWidth];
     if(self)
     {
         NSArray * controlArray = [NSArray arrayWithArray:[self orderArray:array]];

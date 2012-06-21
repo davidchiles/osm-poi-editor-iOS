@@ -27,6 +27,7 @@
     UITableView *tableView;
     OPETagInterpreter * tagInterpreter;
     NSDictionary * osmKeyValue;
+    float optionalTagWidth;
 }
 
 @property (nonatomic, strong) OPENode * node;
