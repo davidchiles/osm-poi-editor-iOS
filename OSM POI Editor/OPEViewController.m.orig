@@ -384,6 +384,10 @@
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDelegate:self];
 	[UIView setAnimationDuration:1.0];
+<<<<<<< HEAD
+=======
+	
+>>>>>>> optionalTags
 	
 	[message setAlpha:0.0];
 	

@@ -1697,6 +1697,9 @@
 				639682A0153CBD82008F4C0E /* icon-29@2x.png in Resources */,
 				639682A1153CBD82008F4C0E /* icon-512.png in Resources */,
 				639682A2153CBD82008F4C0E /* icon-512@2x.png in Resources */,
+<<<<<<< HEAD
+				6335840A153E686800DF2641 /* about.css in Resources */,
+=======
 				63EC06E5153CE3C600475485 /* Optional.plist in Resources */,
 				63EC06F0153D329200475485 /* OPETagValueList.xib in Resources */,
 				632FD8AD153E649E00BC405C /* newNodeMarker.png in Resources */,
@@ -1709,6 +1712,7 @@
 				630DB29A1593D9C700BFB881 /* playground.png in Resources */,
 				630DB29C1593E20900BFB881 /* lightning@2x.png in Resources */,
 				630DB29E1593E20F00BFB881 /* lightning.png in Resources */,
+>>>>>>> optionalTags
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1862,7 +1866,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+<<<<<<< HEAD
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: David Chiles";
+=======
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: David Chiles (8TSMC84YJV)";
+>>>>>>> optionalTags
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
 				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
@@ -1888,7 +1896,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+<<<<<<< HEAD
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: David Chiles";
+=======
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: David Chiles (8TSMC84YJV)";
+>>>>>>> optionalTags
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
 				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
@@ -1902,7 +1914,11 @@
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+<<<<<<< HEAD
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C0714256-3241-4325-BEEA-D9039828CAB9";
+=======
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6EF2E80F-3407-4FB3-8CE7-98BDC7A21848";
+>>>>>>> optionalTags
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$SDK_DIR/usr/include/libxml2 \"$(PROJECT_DIR)/alpstein-route-me/MapView\"/** \"$SRCROOT/Library/RCSwitch\"/**";
 				WRAPPER_EXTENSION = app;

@@ -12,9 +12,13 @@
 #import "OPECategoryViewController.h"
 #import "OPEOSMData.h"
 #import "OPEInfoViewController.h"
+<<<<<<< HEAD
+#import "OPEAPIConstants.h"
+=======
 #import "OPEBinaryCell.h"
 #import "OPEConstants.h"
 #import "OPESpecialCell2.h"
+>>>>>>> optionalTags
 
 
 
@@ -336,6 +340,13 @@
 {
     if (sender) {
         
+<<<<<<< HEAD
+        deleteButton.frame = cell.contentView.bounds;
+        //NSLog(@"bounds: %f",cell.contentView.bounds.size.width);
+        //NSLog(@"button: %f",deleteButton.frame.size.width);
+        deleteButton.frame = CGRectMake(deleteButton.frame.origin.x, deleteButton.frame.origin.y, 300.0f, deleteButton.frame.size.height);
+=======
+>>>>>>> optionalTags
         
         NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:[[sender superview] tag]] objectForKey:@"rows"] objectAtIndex:[sender tag]]];
         NSLog(@"Binary Changed: %@",cellDictionary);

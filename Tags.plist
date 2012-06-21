@@ -13,6 +13,11 @@
 				<key>amenity</key>
 				<string>college</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Kindergarden</key>
 		<dict>
@@ -23,6 +28,11 @@
 				<key>amenity</key>
 				<string>kindergarten</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Library</key>
 		<dict>
@@ -33,6 +43,11 @@
 				<key>amenity</key>
 				<string>library</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>School</key>
 		<dict>
@@ -43,6 +58,11 @@
 				<key>amenity</key>
 				<string>school</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>University</key>
 		<dict>
@@ -53,6 +73,11 @@
 				<key>amenity</key>
 				<string>university</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 	</dict>
 	<key>Entertainment and Art</key>
@@ -66,6 +91,11 @@
 				<key>amenity</key>
 				<string>arts_centre</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Community Center</key>
 		<dict>
@@ -76,6 +106,11 @@
 				<key>amenity</key>
 				<string>community_centre</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Fountain</key>
 		<dict>
@@ -96,6 +131,11 @@
 				<key>amenity</key>
 				<string>cinema</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Nightclub</key>
 		<dict>
@@ -106,6 +146,11 @@
 				<key>amenity</key>
 				<string>nightclub</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Public Artwork</key>
 		<dict>
@@ -126,6 +171,11 @@
 				<key>amenity</key>
 				<string>studio</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Social Center</key>
 		<dict>
@@ -136,6 +186,11 @@
 				<key>amenity</key>
 				<string>social_centre</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Stripclub</key>
 		<dict>
@@ -146,6 +201,11 @@
 				<key>amenity</key>
 				<string>stripclub</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Theater or Opera House</key>
 		<dict>
@@ -156,6 +216,11 @@
 				<key>amenity</key>
 				<string>theatre</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 	</dict>
 	<key>Food and Drink</key>
@@ -169,6 +234,11 @@
 				<key>amenity</key>
 				<string>bar</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Beer Garden</key>
 		<dict>
@@ -179,6 +249,11 @@
 				<key>amenity</key>
 				<string>biergarten</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Cafe</key>
 		<dict>
@@ -189,6 +264,14 @@
 				<key>amenity</key>
 				<string>cafe</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>cuisine</string>
+				<string>smoking</string>
+				<string>address</string>
+				<string>wheelchair</string>
+				<string>wifi</string>
+			</array>
 		</dict>
 		<key>Drinking Water</key>
 		<dict>
@@ -209,6 +292,14 @@
 				<key>amenity</key>
 				<string>fast_food</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>cuisine</string>
+				<string>drive_through</string>
+				<string>drive_in</string>
+			</array>
 		</dict>
 		<key>Food Court</key>
 		<dict>
@@ -219,6 +310,11 @@
 				<key>amenity</key>
 				<string>food_court</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Ice Cream Shop</key>
 		<dict>
@@ -229,6 +325,11 @@
 				<key>amenity</key>
 				<string>ice_cream</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Pub</key>
 		<dict>
@@ -239,6 +340,13 @@
 				<key>amenity</key>
 				<string>pub</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>cuisine</string>
+				<string>wheelchair</string>
+				<string>microbrewery</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Restaurant</key>
 		<dict>
@@ -249,6 +357,16 @@
 				<key>amenity</key>
 				<string>restaurant</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>cuisine</string>
+				<string>microbrewery</string>
+				<string>smoking</string>
+				<string>drive_in</string>
+				<string>address</string>
+				<string>wheelchair</string>
+				<string>wifi</string>
+			</array>
 		</dict>
 		<key>Bakery</key>
 		<dict>
@@ -259,6 +377,11 @@
 				<key>shop</key>
 				<string>bakery</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Deli</key>
 		<dict>
@@ -269,6 +392,11 @@
 				<key>shop</key>
 				<string>deli</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Butcher</key>
 		<dict>
@@ -279,6 +407,11 @@
 				<key>shop</key>
 				<string>butcher</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Beverage Shop</key>
 		<dict>
@@ -289,6 +422,11 @@
 				<key>shop</key>
 				<string>beverages</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Alcohol Shop</key>
 		<dict>
@@ -299,6 +437,12 @@
 				<key>shop</key>
 				<string>alcohol</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>drive_through</string>
+			</array>
 		</dict>
 		<key>Craft Brewery</key>
 		<dict>
@@ -309,6 +453,11 @@
 				<key>craft</key>
 				<string>bewery</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 	</dict>
 	<key>Government</key>
@@ -322,6 +471,11 @@
 				<key>amenity</key>
 				<string>courthouse</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Embassy</key>
 		<dict>
@@ -332,6 +486,11 @@
 				<key>amenity</key>
 				<string>embassy</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Fire Station</key>
 		<dict>
@@ -342,6 +501,11 @@
 				<key>amenity</key>
 				<string>fire_station</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Office Building</key>
 		<dict>
@@ -352,6 +516,11 @@
 				<key>office</key>
 				<string>government</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Police Station</key>
 		<dict>
@@ -362,6 +531,11 @@
 				<key>amenity</key>
 				<string>police</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Post Box</key>
 		<dict>
@@ -372,6 +546,12 @@
 				<key>amenity</key>
 				<string>post_box</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>operator</string>
+				<string>drive_through</string>
+				<string>ref</string>
+			</array>
 		</dict>
 		<key>Post Office</key>
 		<dict>
@@ -382,6 +562,11 @@
 				<key>amenity</key>
 				<string>post_office</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Prison</key>
 		<dict>
@@ -392,6 +577,11 @@
 				<key>amenity</key>
 				<string>prison</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Townhall or Cityhall</key>
 		<dict>
@@ -402,6 +592,11 @@
 				<key>amenity</key>
 				<string>townhall</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 	</dict>
 	<key>Healthcare</key>
@@ -425,6 +620,11 @@
 				<key>amenity</key>
 				<string>clinic</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Dentist</key>
 		<dict>
@@ -435,6 +635,11 @@
 				<key>amenity</key>
 				<string>dentist</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Doctor</key>
 		<dict>
@@ -445,6 +650,11 @@
 				<key>amenity</key>
 				<string>doctors</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Hospital</key>
 		<dict>
@@ -455,6 +665,11 @@
 				<key>amenity</key>
 				<string>hospital</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Nursing Home</key>
 		<dict>
@@ -465,6 +680,11 @@
 				<key>amenity</key>
 				<string>nursing_home</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Pharmacy</key>
 		<dict>
@@ -475,6 +695,13 @@
 				<key>amenity</key>
 				<string>pharmacy</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>dispensing</string>
+				<string>address</string>
+				<string>wheelchair</string>
+				<string>drive_through</string>
+			</array>
 		</dict>
 		<key>Social Facility</key>
 		<dict>
@@ -485,6 +712,11 @@
 				<key>amenity</key>
 				<string>social_facility</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Veterinary</key>
 		<dict>
@@ -495,6 +727,11 @@
 				<key>amenity</key>
 				<string>veterinary</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 	</dict>
 	<key>Man Made</key>
@@ -508,6 +745,53 @@
 				<key>emergency</key>
 				<string>siren</string>
 			</dict>
+		</dict>
+		<key>Power Generator</key>
+		<dict>
+			<key>image</key>
+			<string>lightning.png</string>
+			<key>tags</key>
+			<dict>
+				<key>power</key>
+				<string>generator</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>operator</string>
+				<string>address</string>
+				<string>generator-source</string>
+				<string>generator-method</string>
+			</array>
+		</dict>
+		<key>Power Station</key>
+		<dict>
+			<key>image</key>
+			<string>lightning.png</string>
+			<key>tags</key>
+			<dict>
+				<key>power</key>
+				<string>generator</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>voltage</string>
+				<string>operator</string>
+			</array>
+		</dict>
+		<key>Power Substation</key>
+		<dict>
+			<key>image</key>
+			<string>lightning.png</string>
+			<key>tags</key>
+			<dict>
+				<key>power</key>
+				<string>generator</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>voltage</string>
+				<string>operator</string>
+			</array>
 		</dict>
 		<key>Flagpole</key>
 		<dict>
@@ -528,6 +812,11 @@
 				<key>man_made</key>
 				<string>lighthouse</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Publicly Visible Clock</key>
 		<dict>
@@ -578,6 +867,11 @@
 				<key>man_made</key>
 				<string>windmill</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 	</dict>
 	<key>Other</key>
@@ -601,6 +895,11 @@
 				<key>emergency</key>
 				<string>fire_hydrant</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>fire_hydrant:type</string>
+				<string>fire_hydrant:position</string>
+			</array>
 		</dict>
 		<key>Public Telephone</key>
 		<dict>
@@ -611,6 +910,11 @@
 				<key>amenity</key>
 				<string>telephone</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>phone</string>
+				<string>covered</string>
+			</array>
 		</dict>
 		<key>Public Toilets</key>
 		<dict>
@@ -621,6 +925,11 @@
 				<key>amenity</key>
 				<string>toilets</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>fee</string>
+			</array>
 		</dict>
 		<key>Recycling Can</key>
 		<dict>
@@ -665,6 +974,26 @@
 				<string>beach</string>
 			</dict>
 		</dict>
+		<key>Playground</key>
+		<dict>
+			<key>image</key>
+			<string>playground.png</string>
+			<key>tags</key>
+			<dict>
+				<key>leisure</key>
+				<string>playground</string>
+			</dict>
+		</dict>
+		<key>Waterfall</key>
+		<dict>
+			<key>image</key>
+			<string>water.png</string>
+			<key>tags</key>
+			<dict>
+				<key>waterway</key>
+				<string>waterfall</string>
+			</dict>
+		</dict>
 		<key>Bench</key>
 		<dict>
 			<key>image</key>
@@ -704,6 +1033,10 @@
 				<key>tourism</key>
 				<string>picnic_site</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+			</array>
 		</dict>
 		<key>Scenic Viewpoint</key>
 		<dict>
@@ -714,6 +1047,10 @@
 				<key>tourism</key>
 				<string>viewpoint</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+			</array>
 		</dict>
 		<key>Spring</key>
 		<dict>
@@ -759,6 +1096,11 @@
 				<key>religion</key>
 				<string>buddhist</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Christian</key>
 		<dict>
@@ -771,6 +1113,12 @@
 				<key>religion</key>
 				<string>christian</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>denomination:christian</string>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Hindu</key>
 		<dict>
@@ -783,6 +1131,11 @@
 				<key>religion</key>
 				<string>hindu</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Jewish</key>
 		<dict>
@@ -795,6 +1148,12 @@
 				<key>religion</key>
 				<string>jewish</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>denomination:jewish</string>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Multifaith</key>
 		<dict>
@@ -807,6 +1166,11 @@
 				<key>religion</key>
 				<string>multifaith</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Muslim</key>
 		<dict>
@@ -819,6 +1183,12 @@
 				<key>religion</key>
 				<string>muslim</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>denomination:muslim</string>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Pagan</key>
 		<dict>
@@ -831,6 +1201,11 @@
 				<key>religion</key>
 				<string>pagan</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Scientologist</key>
 		<dict>
@@ -843,6 +1218,11 @@
 				<key>religion</key>
 				<string>scientologist</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Shinto</key>
 		<dict>
@@ -855,6 +1235,11 @@
 				<key>religion</key>
 				<string>shinto</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Sikh</key>
 		<dict>
@@ -867,6 +1252,11 @@
 				<key>religion</key>
 				<string>sikh</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Spiritualist</key>
 		<dict>
@@ -879,6 +1269,11 @@
 				<key>religion</key>
 				<string>spiritualist</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Taoist</key>
 		<dict>
@@ -891,6 +1286,11 @@
 				<key>religion</key>
 				<string>taoist</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Unitarian</key>
 		<dict>
@@ -903,6 +1303,11 @@
 				<key>religion</key>
 				<string>unitarian</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Voodoo</key>
 		<dict>
@@ -915,6 +1320,11 @@
 				<key>religion</key>
 				<string>voodoo</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 	</dict>
 	<key>Services</key>
@@ -928,6 +1338,12 @@
 				<key>amenity</key>
 				<string>atm</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>operator</string>
+				<string>drive_through</string>
+			</array>
 		</dict>
 		<key>Hairdresser</key>
 		<dict>
@@ -938,6 +1354,11 @@
 				<key>shop</key>
 				<string>hairdresser</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Loans</key>
 		<dict>
@@ -948,6 +1369,11 @@
 				<key>shop</key>
 				<string>money_lender</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Accountant</key>
 		<dict>
@@ -958,6 +1384,11 @@
 				<key>office</key>
 				<string>accountant</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Architect</key>
 		<dict>
@@ -968,6 +1399,11 @@
 				<key>office</key>
 				<string>architect</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Bank</key>
 		<dict>
@@ -978,6 +1414,13 @@
 				<key>amenity</key>
 				<string>bank</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>drive_through</string>
+				<string>atm</string>
+			</array>
 		</dict>
 		<key>Currency Exchange</key>
 		<dict>
@@ -988,6 +1431,11 @@
 				<key>amenity</key>
 				<string>bureau_de_change</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>IT Specialist</key>
 		<dict>
@@ -998,6 +1446,11 @@
 				<key>office</key>
 				<string>it</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Insurance</key>
 		<dict>
@@ -1008,6 +1461,11 @@
 				<key>office</key>
 				<string>insurance</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Spa or Nail Salon</key>
 		<dict>
@@ -1018,6 +1476,11 @@
 				<key>shop</key>
 				<string>beauty</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Lawyer</key>
 		<dict>
@@ -1028,6 +1491,11 @@
 				<key>office</key>
 				<string>lawyer</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>NGO</key>
 		<dict>
@@ -1038,6 +1506,11 @@
 				<key>office</key>
 				<string>ngo</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Realtor</key>
 		<dict>
@@ -1048,6 +1521,11 @@
 				<key>office</key>
 				<string>estate_agent</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Travel Agency</key>
 		<dict>
@@ -1058,6 +1536,11 @@
 				<key>office</key>
 				<string>travel_agent</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Dry Cleaning</key>
 		<dict>
@@ -1068,6 +1551,11 @@
 				<key>shop</key>
 				<string>dry_cleaning</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Laundromat</key>
 		<dict>
@@ -1078,6 +1566,11 @@
 				<key>shop</key>
 				<string>laundry</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 	</dict>
 	<key>Shopping</key>
@@ -1091,6 +1584,11 @@
 				<key>shop</key>
 				<string>art</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Baby Goods</key>
 		<dict>
@@ -1101,6 +1599,26 @@
 				<key>shop</key>
 				<string>baby_goods</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Antiques</key>
+		<dict>
+			<key>image</key>
+			<string>chair.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>antiques</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Bicycle Shop</key>
 		<dict>
@@ -1111,6 +1629,18 @@
 				<key>shop</key>
 				<string>bicycle</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>bicycle_second_hand</string>
+				<string>bicycle_cleaning</string>
+				<string>bicycle_diy</string>
+				<string>bicycle_pump</string>
+				<string>bicycle_rental</string>
+				<string>bicycle_retail</string>
+				<string>bicycle_repair</string>
+			</array>
 		</dict>
 		<key>Book Store</key>
 		<dict>
@@ -1121,6 +1651,11 @@
 				<key>shop</key>
 				<string>books</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Boutique</key>
 		<dict>
@@ -1131,6 +1666,11 @@
 				<key>shop</key>
 				<string>boutique</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Candy Shop</key>
 		<dict>
@@ -1141,6 +1681,11 @@
 				<key>shop</key>
 				<string>confectionery</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Car Dealership</key>
 		<dict>
@@ -1151,6 +1696,11 @@
 				<key>shop</key>
 				<string>car</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Car Parts Store</key>
 		<dict>
@@ -1161,6 +1711,11 @@
 				<key>shop</key>
 				<string>car_parts</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Car Repair</key>
 		<dict>
@@ -1171,6 +1726,11 @@
 				<key>shop</key>
 				<string>car_repair</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Carpet Store</key>
 		<dict>
@@ -1181,6 +1741,11 @@
 				<key>shop</key>
 				<string>carpet</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Clothing Store</key>
 		<dict>
@@ -1191,6 +1756,11 @@
 				<key>shop</key>
 				<string>clothes</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Computer Store</key>
 		<dict>
@@ -1201,6 +1771,11 @@
 				<key>shop</key>
 				<string>computer</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Convenience Store</key>
 		<dict>
@@ -1211,6 +1786,11 @@
 				<key>shop</key>
 				<string>convenience</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Copy and Fax Shop</key>
 		<dict>
@@ -1221,6 +1801,11 @@
 				<key>shop</key>
 				<string>copyshop</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Cosmetics</key>
 		<dict>
@@ -1231,6 +1816,11 @@
 				<key>shop</key>
 				<string>chemist</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Department Store</key>
 		<dict>
@@ -1241,6 +1831,11 @@
 				<key>shop</key>
 				<string>department_store</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Diving Equipment</key>
 		<dict>
@@ -1251,6 +1846,11 @@
 				<key>shop</key>
 				<string>dive</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Electronics</key>
 		<dict>
@@ -1261,6 +1861,11 @@
 				<key>shop</key>
 				<string>electronics</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Farm Store</key>
 		<dict>
@@ -1271,6 +1876,11 @@
 				<key>shop</key>
 				<string>farm</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Florist</key>
 		<dict>
@@ -1281,6 +1891,11 @@
 				<key>shop</key>
 				<string>florist</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Frame Store</key>
 		<dict>
@@ -1291,6 +1906,11 @@
 				<key>shop</key>
 				<string>frame</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Furniture Store</key>
 		<dict>
@@ -1301,6 +1921,11 @@
 				<key>shop</key>
 				<string>furniture</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Garden Center</key>
 		<dict>
@@ -1311,6 +1936,11 @@
 				<key>shop</key>
 				<string>garden_centre</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>General Store</key>
 		<dict>
@@ -1321,6 +1951,11 @@
 				<key>shop</key>
 				<string>general</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Gift Shop</key>
 		<dict>
@@ -1331,6 +1966,11 @@
 				<key>shop</key>
 				<string>gift</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Hardware Store</key>
 		<dict>
@@ -1341,6 +1981,11 @@
 				<key>shop</key>
 				<string>hardware</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Jewelry Store</key>
 		<dict>
@@ -1351,6 +1996,11 @@
 				<key>shop</key>
 				<string>jewelry</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Matress Store</key>
 		<dict>
@@ -1361,6 +2011,11 @@
 				<key>shop</key>
 				<string>bed</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Motorcycle Dealership</key>
 		<dict>
@@ -1371,8 +2026,13 @@
 				<key>shop</key>
 				<string>motorcycle</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
-		<key>Music Store for Instruments</key>
+		<key>Musical Instrument Store</key>
 		<dict>
 			<key>image</key>
 			<string>trumpet.png</string>
@@ -1381,6 +2041,11 @@
 				<key>shop</key>
 				<string>musical_instruments</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Newsstand </key>
 		<dict>
@@ -1391,6 +2056,11 @@
 				<key>shop</key>
 				<string>newsagent</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Office Supplies</key>
 		<dict>
@@ -1401,6 +2071,11 @@
 				<key>shop</key>
 				<string>stationery</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Optician</key>
 		<dict>
@@ -1411,6 +2086,11 @@
 				<key>shop</key>
 				<string>optician</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Outdoor Store</key>
 		<dict>
@@ -1421,6 +2101,11 @@
 				<key>shop</key>
 				<string>outdoor</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Paint Store</key>
 		<dict>
@@ -1431,6 +2116,11 @@
 				<key>shop</key>
 				<string>paint</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Pawn Shop</key>
 		<dict>
@@ -1441,6 +2131,11 @@
 				<key>shop</key>
 				<string>pawnbroker</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Pet Store</key>
 		<dict>
@@ -1451,6 +2146,11 @@
 				<key>shop</key>
 				<string>pet</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Second Hand Store</key>
 		<dict>
@@ -1461,6 +2161,11 @@
 				<key>shop</key>
 				<string>second_hand</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Shoe Store</key>
 		<dict>
@@ -1471,6 +2176,11 @@
 				<key>shop</key>
 				<string>shoes</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Shopping Mall</key>
 		<dict>
@@ -1481,6 +2191,11 @@
 				<key>shop</key>
 				<string>mall</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Sporting Goods Store</key>
 		<dict>
@@ -1491,6 +2206,11 @@
 				<key>shop</key>
 				<string>sports</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Supermarket</key>
 		<dict>
@@ -1501,6 +2221,11 @@
 				<key>shop</key>
 				<string>supermarket</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Tattoo Parlor</key>
 		<dict>
@@ -1511,6 +2236,11 @@
 				<key>shop</key>
 				<string>tattoo</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Tobacco Shop</key>
 		<dict>
@@ -1521,6 +2251,11 @@
 				<key>shop</key>
 				<string>tobacco</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Toy Store</key>
 		<dict>
@@ -1531,6 +2266,11 @@
 				<key>shop</key>
 				<string>toys</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Video Rental</key>
 		<dict>
@@ -1541,6 +2281,11 @@
 				<key>shop</key>
 				<string>video</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>XXX/Adult Store</key>
 		<dict>
@@ -1551,6 +2296,11 @@
 				<key>shop</key>
 				<string>erotic</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 	</dict>
 	<key>Tourism</key>
@@ -1564,6 +2314,27 @@
 				<key>tourism</key>
 				<string>guest_house</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>wifi</string>
+			</array>
+		</dict>
+		<key>Tourism Information</key>
+		<dict>
+			<key>image</key>
+			<string>info.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>information</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>address</string>
+				<string>information</string>
+			</array>
 		</dict>
 		<key>Camp Site</key>
 		<dict>
@@ -1574,6 +2345,29 @@
 				<key>tourism</key>
 				<string>camp_site</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>tents</string>
+				<string>maxtents</string>
+			</array>
+		</dict>
+		<key>Shower</key>
+		<dict>
+			<key>image</key>
+			<string>shower.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>shower</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>fee</string>
+				<string>maxtents</string>
+			</array>
 		</dict>
 		<key>Castle</key>
 		<dict>
@@ -1584,6 +2378,11 @@
 				<key>historic</key>
 				<string>castle</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Chalet</key>
 		<dict>
@@ -1594,6 +2393,11 @@
 				<key>tourism</key>
 				<string>chalet</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Historic Battlefield</key>
 		<dict>
@@ -1604,6 +2408,11 @@
 				<key>historic</key>
 				<string>battlefield</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Historic Boundry Stone</key>
 		<dict>
@@ -1614,6 +2423,11 @@
 				<key>historic</key>
 				<string>boundry_stone</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Hostel</key>
 		<dict>
@@ -1624,6 +2438,13 @@
 				<key>tourism</key>
 				<string>hostel</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>wifi</string>
+				<string>address</string>
+				<string>smoking</string>
+			</array>
 		</dict>
 		<key>Hotel</key>
 		<dict>
@@ -1634,6 +2455,13 @@
 				<key>tourism</key>
 				<string>hotel</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>wifi</string>
+				<string>address</string>
+				<string>smoking</string>
+			</array>
 		</dict>
 		<key>Memorial</key>
 		<dict>
@@ -1644,6 +2472,10 @@
 				<key>historic</key>
 				<string>memorial</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+			</array>
 		</dict>
 		<key>Military Fort</key>
 		<dict>
@@ -1654,6 +2486,10 @@
 				<key>historic</key>
 				<string>fort</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+			</array>
 		</dict>
 		<key>Monument</key>
 		<dict>
@@ -1664,6 +2500,10 @@
 				<key>historic</key>
 				<string>monument</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+			</array>
 		</dict>
 		<key>Motel</key>
 		<dict>
@@ -1674,6 +2514,13 @@
 				<key>tourism</key>
 				<string>motel</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>wifi</string>
+				<string>smoking</string>
+			</array>
 		</dict>
 		<key>Mountain Hut</key>
 		<dict>
@@ -1684,6 +2531,11 @@
 				<key>tourism</key>
 				<string>apine_hut</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Museum</key>
 		<dict>
@@ -1694,6 +2546,11 @@
 				<key>tourism</key>
 				<string>museum</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Nautical Craft Wreck</key>
 		<dict>
@@ -1714,6 +2571,11 @@
 				<key>tourism</key>
 				<string>caravan_site</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Ruins</key>
 		<dict>
@@ -1724,6 +2586,10 @@
 				<key>historic</key>
 				<string>ruins</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+			</array>
 		</dict>
 		<key>Theme Park</key>
 		<dict>
@@ -1734,6 +2600,11 @@
 				<key>tourism</key>
 				<string>theme_park</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Zoo</key>
 		<dict>
@@ -1744,6 +2615,11 @@
 				<key>tourism</key>
 				<string>zoo</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 	</dict>
 	<key>Transportation</key>
@@ -1757,6 +2633,13 @@
 				<key>amenity</key>
 				<string>bicycle_parking</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>fee</string>
+				<string>bicycle_parking</string>
+				<string>capacity</string>
+				<string>covered</string>
+			</array>
 		</dict>
 		<key>Bicycle Rental</key>
 		<dict>
@@ -1767,6 +2650,11 @@
 				<key>amenity</key>
 				<string>bicycle_rental</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Bus Station</key>
 		<dict>
@@ -1776,7 +2664,16 @@
 			<dict>
 				<key>amenity</key>
 				<string>bus_station</string>
+				<key>bus</key>
+				<string>yes</string>
+				<key>public_transport</key>
+				<string>station</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Bus Stop</key>
 		<dict>
@@ -1786,7 +2683,17 @@
 			<dict>
 				<key>highway</key>
 				<string>bus_stop</string>
+				<key>public_transport</key>
+				<string>platform</string>
+				<key>bus</key>
+				<string>yes</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>shelter</string>
+				<string>ref</string>
+				<string>route_ref</string>
+			</array>
 		</dict>
 		<key>Car Rental</key>
 		<dict>
@@ -1797,6 +2704,11 @@
 				<key>amenity</key>
 				<string>car_rental</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Car Sharing</key>
 		<dict>
@@ -1807,6 +2719,11 @@
 				<key>amenity</key>
 				<string>car_sharing</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Car Wash</key>
 		<dict>
@@ -1817,6 +2734,11 @@
 				<key>amenity</key>
 				<string>car_wash</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Electric Vehicle Charging</key>
 		<dict>
@@ -1836,7 +2758,17 @@
 			<dict>
 				<key>amenity</key>
 				<string>ferry_terminal</string>
+				<key>public_transport</key>
+				<string>platform</string>
+				<key>ferry</key>
+				<string>yes</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>ref</string>
+			</array>
 		</dict>
 		<key>Gas Station</key>
 		<dict>
@@ -1847,6 +2779,11 @@
 				<key>amenity</key>
 				<string>fuel</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
 		</dict>
 		<key>Parking</key>
 		<dict>
@@ -1857,8 +2794,30 @@
 				<key>amenity</key>
 				<string>parking</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>fee</string>
+				<string>capacity</string>
+				<string>covered</string>
+			</array>
 		</dict>
-		<key>Rail Station</key>
+		<key>Motorcycle Parking</key>
+		<dict>
+			<key>image</key>
+			<string>parking.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>parking</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>fee</string>
+				<string>capacity</string>
+				<string>covered</string>
+			</array>
+		</dict>
+		<key>Train Station</key>
 		<dict>
 			<key>image</key>
 			<string>train.png</string>
@@ -1866,7 +2825,34 @@
 			<dict>
 				<key>railway</key>
 				<string>station</string>
+				<key>public_transport</key>
+				<string>station</string>
+				<key>train</key>
+				<string>yes</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>wifi</string>
+			</array>
+		</dict>
+		<key>Train Platform</key>
+		<dict>
+			<key>image</key>
+			<string>train.png</string>
+			<key>tags</key>
+			<dict>
+				<key>public_transport</key>
+				<string>platform</string>
+				<key>train</key>
+				<string>yes</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>covered</string>
+			</array>
 		</dict>
 		<key>Subway Entrance</key>
 		<dict>
@@ -1877,6 +2863,12 @@
 				<key>railway</key>
 				<string>subway_entrance</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>bicycle</string>
+				<string>elevator</string>
+			</array>
 		</dict>
 		<key>Taxi Stand</key>
 		<dict>
@@ -1887,6 +2879,10 @@
 				<key>amenity</key>
 				<string>taxi</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>capacity</string>
+			</array>
 		</dict>
 		<key>Tram Stop</key>
 		<dict>
@@ -1896,7 +2892,15 @@
 			<dict>
 				<key>railway</key>
 				<string>tram_stop</string>
+				<key>public_transport</key>
+				<string>platform</string>
+				<key>tram</key>
+				<string>yes</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+			</array>
 		</dict>
 	</dict>
 </dict>

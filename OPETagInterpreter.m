@@ -17,6 +17,7 @@ static OPETagInterpreter *sharedManager = nil;
 @synthesize osmKVandCategoryType;
 @synthesize CategoryTypeandOsmKV;
 @synthesize CategoryTypeandImg;
+@synthesize CategoryTypeandOptionalTags;
 
 - (id) init
 {
@@ -105,6 +106,7 @@ static OPETagInterpreter *sharedManager = nil;
     osmKVandCategoryType = [[NSMutableDictionary alloc] init];
     CategoryTypeandOsmKV = [[NSMutableDictionary alloc] init]; //for each category type pair : all osm keys
     CategoryTypeandImg = [[NSMutableDictionary alloc] init];
+    CategoryTypeandOptionalTags = [[NSMutableDictionary alloc] init];
     
     
     // load dictionary categoryAndType with Key=category and Value= array of types
@@ -120,9 +122,17 @@ static OPETagInterpreter *sharedManager = nil;
             NSDictionary * typeDictionary = [categories objectForKey:type];
             NSDictionary * tags = [typeDictionary objectForKey:@"tags"];
             NSString * img = [typeDictionary objectForKey:@"image"];
+            NSArray * optionalTags = [typeDictionary objectForKey:@"optional"];
             [CategoryTypeandOsmKV setObject:tags forKey:[[NSDictionary alloc] initWithObjectsAndKeys:type,cat, nil]];
             [CategoryTypeandImg setObject:img forKey:[[NSDictionary alloc] initWithObjectsAndKeys:type,cat, nil]];
+            if (optionalTags) {
+                [CategoryTypeandOptionalTags setObject:optionalTags forKey:[[NSDictionary alloc] initWithObjectsAndKeys:type,cat, nil]];
+                //NSLog(@"Optional tags: %@",optionalTags);
+            }
+            
             [types addObject:type]; 
+            
+            
             
             for (NSString * osmKey in tags)
             {
@@ -174,6 +184,38 @@ static OPETagInterpreter *sharedManager = nil;
 {
     [node.tags removeObjectsForKeys:[[self getOSmKeysValues:catType] allKeys]];
     
+}
+
++ (NSArray *) getOptionalTagsDictionaries: (NSArray *) tagArray
+{
+    NSMutableArray * tempFinalArray = [[NSMutableArray alloc] init];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"plist"];
+    NSDictionary* optionalDictionary = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    
+    for (NSString * osmKey in tagArray) {
+        if( [osmKey isEqualToString:@"address"])
+        {
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:housenumber"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:street"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:city"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:postcode"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:state"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:country"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"addr:province"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"website"]];
+            [tempFinalArray addObject:[optionalDictionary objectForKey:@"phone"]];
+        }
+        else {
+            [tempFinalArray addObject:[optionalDictionary objectForKey:osmKey]];
+
+        }
+    }
+    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSSortDescriptor *sectionDescriptor = [[NSSortDescriptor alloc] initWithKey:@"section" ascending:NO];
+    [tempFinalArray sortUsingDescriptors:[NSArray arrayWithObjects:sectionDescriptor ,nameDescriptor,nil]];
+    
+    
+    return [tempFinalArray copy];
 }
 
 +(OPETagInterpreter *)sharedInstance

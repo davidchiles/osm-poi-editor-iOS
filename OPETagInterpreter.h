@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSMutableDictionary * osmKVandCategoryType;
 @property (nonatomic, strong) NSMutableDictionary * CategoryTypeandOsmKV;
 @property (nonatomic, strong) NSMutableDictionary * CategoryTypeandImg;
+@property (nonatomic, strong) NSMutableDictionary * CategoryTypeandOptionalTags;
 
 - (id) init;
 //- (BOOL) nodeHasRecognizedTags:(OPENode *)n;
@@ -29,7 +30,7 @@
 - (NSDictionary *)getCategoryandType:(OPENode *)node;
 - (NSDictionary *) getOSmKeysValues: (NSDictionary *) catAndType;
 
-
++ (NSArray *) getOptionalTagsDictionaries: (NSArray *) array;
 +(OPETagInterpreter *)sharedInstance;
 
 @end
