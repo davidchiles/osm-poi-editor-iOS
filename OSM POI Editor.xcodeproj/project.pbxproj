@@ -214,6 +214,7 @@
 		6310F6641537A46D00C65FD8 /* windmill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F5981537A46D00C65FD8 /* windmill@2x.png */; };
 		6310F6651537A46D00C65FD8 /* wrench@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F5991537A46D00C65FD8 /* wrench@2x.png */; };
 		6310F6661537A46D00C65FD8 /* zoo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F59A1537A46D00C65FD8 /* zoo@2x.png */; };
+		6312813915A88FD7000BDA25 /* Optional.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6312813815A88FD7000BDA25 /* Optional.plist */; };
 		631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E014DC98D0000236F0 /* OPEOSMData.m */; };
 		631539E514DCA29B000236F0 /* OPENode.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E414DCA29B000236F0 /* OPENode.m */; };
 		63214B2D153CB382001C9A58 /* stardavid.png in Resources */ = {isa = PBXBuildFile; fileRef = 63214B2C153CB382001C9A58 /* stardavid.png */; };
@@ -558,6 +559,7 @@
 		6310F5981537A46D00C65FD8 /* windmill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "windmill@2x.png"; sourceTree = "<group>"; };
 		6310F5991537A46D00C65FD8 /* wrench@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wrench@2x.png"; sourceTree = "<group>"; };
 		6310F59A1537A46D00C65FD8 /* zoo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoo@2x.png"; sourceTree = "<group>"; };
+		6312813815A88FD7000BDA25 /* Optional.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Optional.plist; sourceTree = "<group>"; };
 		631539DF14DC98D0000236F0 /* OPEOSMData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMData.h; sourceTree = "<group>"; };
 		631539E014DC98D0000236F0 /* OPEOSMData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMData.m; sourceTree = "<group>"; };
 		631539E314DCA29B000236F0 /* OPENode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENode.h; sourceTree = "<group>"; };
@@ -1180,6 +1182,7 @@
 				63E279EF14E2073C009D02BD /* Blue_Marker.png */,
 				637A89FD14E1C340003F656F /* SPOI.bundle */,
 				63E525EA1536560200D2DA35 /* Tags.plist */,
+				6312813815A88FD7000BDA25 /* Optional.plist */,
 				632573B01520FFB100478B78 /* tileSource.plist */,
 			);
 			name = Resources;
@@ -1687,6 +1690,7 @@
 				639682A1153CBD82008F4C0E /* icon-512.png in Resources */,
 				639682A2153CBD82008F4C0E /* icon-512@2x.png in Resources */,
 				63292E6F1593ED670010A11B /* OPETagValueList.xib in Resources */,
+				6312813915A88FD7000BDA25 /* Optional.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
