@@ -13,9 +13,9 @@
 
 @property int ident;
 @property (nonatomic) CLLocationCoordinate2D coordinate;
-@property (strong) NSMutableDictionary* tags;
+@property (nonatomic, strong) NSMutableDictionary* tags;
 @property int version; 
-@property (strong) NSString * image;
+@property (nonatomic, strong) NSString * image;
 
 -(id) initWithId: (int) i coordinate: (CLLocationCoordinate2D) coordinate keyValues: (NSMutableDictionary *) tag;
 -(id) initWithId:(int)i latitude:(double) la longitude:(double) lo;

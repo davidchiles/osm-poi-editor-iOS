@@ -13,6 +13,7 @@
 #import "ASIFormDataRequest.h"
 #import "GTMOAuthViewControllerTouch.h"
 #import "OPEAPIConstants.h"
+#import "OPEWay.h"
 
 @implementation OPEOSMData
 
@@ -51,6 +52,7 @@
     if ([request.userInfo objectForKey:@"type"] == @"download" )
     {
         NSMutableDictionary * newNodes = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary * allNewNodes = [[NSMutableDictionary alloc] init];
         NSData *responseData = [request responseData];
         TBXML* tbxml = [TBXML tbxmlWithXMLData:responseData];
         
@@ -86,6 +88,8 @@
                     [newNode.tags setObject:value forKey:key];
                     tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
                 }
+                [allNewNodes setObject:newNode forKey:[NSNumber numberWithInt: newNode.ident]];
+                
                 OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     
                 if([tagInterpreter getCategoryandType:newNode]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
@@ -149,6 +153,56 @@
     return didAuth && canAuth;
 
     
+}
+
+-(NSArray *)findNodes:(TBXML *)xml {
+    
+    
+    return [NSArray array];
+}
+
+-(NSArray *)findWays:(TBXML *)xml nodes:(NSDictionary *)nodes{
+    NSMutableArray * wayArray = [[NSMutableArray alloc] init];
+    TBXMLElement * root = xml.rootXMLElement;
+    if(root)
+    {
+        
+        NSMutableArray * nodeArray = [[NSMutableArray alloc] init];
+        TBXMLElement* xmlWay = [TBXML childElementNamed:@"way" parentElement:root];
+        while (xmlWay!=nil) {
+            NSString * identString = [TBXML valueOfAttributeNamed:@"id" forElement:xmlWay];
+            NSString * versionString = [TBXML valueOfAttributeNamed:@"version" forElement:xmlWay];
+            int ident = [identString intValue];
+            int version = [versionString intValue];
+                                        
+            
+            TBXMLElement* nodeXml = [TBXML childElementNamed:@"nd" parentElement:xmlWay];
+            
+            while (nodeXml!=nil) {
+                NSString * nodeIdentString = [TBXML valueOfAttributeNamed:@"ref" forElement:nodeXml];
+                [nodeArray addObject: [nodes objectForKey: [NSNumber numberWithInt:[nodeIdentString intValue]]]];
+                
+                nodeXml = [TBXML nextSiblingNamed:@"nd" searchFromElement:nodeXml];
+            }
+            
+            OPEWay * newWay = [[OPEWay alloc] initWithArrayOfNodes:nodeArray ID:ident version:version];
+            
+            TBXMLElement* tagXml = [TBXML childElementNamed:@"tag" parentElement:xmlWay];
+            while (tagXml!=nil) {
+                NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tagXml];
+                NSString* value = [TBXML valueOfAttributeNamed:@"v" forElement:tagXml];
+                //NSLog(@"key: %@, value: %@",key,value);
+                [newWay.tags setObject:value forKey:key];
+                tagXml = [TBXML nextSiblingNamed:@"tag" searchFromElement:tagXml];
+            }
+            [wayArray addObject:newWay];
+            xmlWay = [TBXML nextSiblingNamed:@"way" searchFromElement:xmlWay];
+        }
+        
+        
+
+    }
+    return wayArray;
 }
 /*
 -(void) getData

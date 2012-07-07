@@ -43,8 +43,8 @@
 
 - (RMMarker *) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;
 - (void) addMarkers:(NSNotification *) notification;
-- (void) pushMapAnnotationDetailedViewControllerDelegate:(id) sender;
-- (void) buttonEvent:(id)sender;
+//- (void) pushMapAnnotationDetailedViewControllerDelegate:(id) sender;
+//- (void) buttonEvent:(id)sender;
 
 -(IBAction)infoButtonPressed:(id)sender;
 -(IBAction)addPointButtonPressed:(id)sender;
