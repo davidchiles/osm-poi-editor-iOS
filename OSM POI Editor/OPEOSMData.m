@@ -155,54 +155,34 @@
     
 }
 
--(NSArray *)findNodes:(TBXML *)xml {
-    
-    
-    return [NSArray array];
-}
-
--(NSArray *)findWays:(TBXML *)xml nodes:(NSDictionary *)nodes{
-    NSMutableArray * wayArray = [[NSMutableArray alloc] init];
+-(NSDictionary *)findNodes:(TBXML *)xml {
+    NSMutableDictionary * nodeDictionary = [[NSMutableDictionary alloc] init];
     TBXMLElement * root = xml.rootXMLElement;
     if(root)
     {
-        
-        NSMutableArray * nodeArray = [[NSMutableArray alloc] init];
+        TBXMLElement* xmlNode = [TBXML childElementNamed:@"node" parentElement:root];
+        while (xmlNode!=nil) {
+            OPENode * newNode = [OPENode createPointWithXML:xmlNode];
+            [nodeDictionary setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+            xmlNode = [TBXML nextSiblingNamed:@"node" searchFromElement:xmlNode];
+        }
+    }
+    return nodeDictionary;
+}
+
+-(NSDictionary *)findWays:(TBXML *)xml nodes:(NSDictionary *)nodes{
+    NSMutableDictionary * wayDictionary = [[NSMutableDictionary alloc] init];
+    TBXMLElement * root = xml.rootXMLElement;
+    if(root)
+    {
         TBXMLElement* xmlWay = [TBXML childElementNamed:@"way" parentElement:root];
         while (xmlWay!=nil) {
-            NSString * identString = [TBXML valueOfAttributeNamed:@"id" forElement:xmlWay];
-            NSString * versionString = [TBXML valueOfAttributeNamed:@"version" forElement:xmlWay];
-            int ident = [identString intValue];
-            int version = [versionString intValue];
-                                        
-            
-            TBXMLElement* nodeXml = [TBXML childElementNamed:@"nd" parentElement:xmlWay];
-            
-            while (nodeXml!=nil) {
-                NSString * nodeIdentString = [TBXML valueOfAttributeNamed:@"ref" forElement:nodeXml];
-                [nodeArray addObject: [nodes objectForKey: [NSNumber numberWithInt:[nodeIdentString intValue]]]];
-                
-                nodeXml = [TBXML nextSiblingNamed:@"nd" searchFromElement:nodeXml];
-            }
-            
-            OPEWay * newWay = [[OPEWay alloc] initWithArrayOfNodes:nodeArray ID:ident version:version];
-            
-            TBXMLElement* tagXml = [TBXML childElementNamed:@"tag" parentElement:xmlWay];
-            while (tagXml!=nil) {
-                NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tagXml];
-                NSString* value = [TBXML valueOfAttributeNamed:@"v" forElement:tagXml];
-                //NSLog(@"key: %@, value: %@",key,value);
-                [newWay.tags setObject:value forKey:key];
-                tagXml = [TBXML nextSiblingNamed:@"tag" searchFromElement:tagXml];
-            }
-            [wayArray addObject:newWay];
+            OPEWay * newWay = [OPEWay createPointWithXML:xmlWay nodes:nodes];
+            [wayDictionary setObject:newWay forKey:[NSNumber numberWithInt:newWay.ident]];
             xmlWay = [TBXML nextSiblingNamed:@"way" searchFromElement:xmlWay];
         }
-        
-        
-
     }
-    return wayArray;
+    return wayDictionary;
 }
 /*
 -(void) getData
