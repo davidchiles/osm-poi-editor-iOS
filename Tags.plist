@@ -1062,16 +1062,6 @@
 				<string>spring</string>
 			</dict>
 		</dict>
-		<key>Tree</key>
-		<dict>
-			<key>image</key>
-			<string>tree.png</string>
-			<key>tags</key>
-			<dict>
-				<key>natural</key>
-				<string>tree</string>
-			</dict>
-		</dict>
 		<key>Volcano</key>
 		<dict>
 			<key>image</key>
