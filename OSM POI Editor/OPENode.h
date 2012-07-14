@@ -16,11 +16,7 @@
 -(id) initWithId:(int)i latitude:(double) la longitude:(double) lo;
 -(id) initWithId:(int)i latitude:(double) la longitude:(double) lo version:(int) ve;
 -(id) initWithNode: (OPENode *) node;
--(void)addKey: (NSString*) key Value: (NSString*) val;
 -(BOOL)onlyTagCreatedBy;
--(BOOL) isEqualToNode:(OPENode *) node;
-
--(NSString *)basicXML;
 
 + (id) createPointWithXML:(TBXMLElement *)xml;
 

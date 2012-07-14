@@ -20,6 +20,10 @@
 - (void) addKey: (NSString *) key value: (NSString *)value;
 - (NSString *) name;
 - (BOOL) isequaltToPoint:(id <OPEPoint>)point;
+- (NSString *)type;
+- (NSString *)uniqueIdentifier;
 
 - (NSString *) exportXMLforChangset: (NSInteger) changesetNumber;
+
++ (NSString *)uniqueIdentifierForID:(int)ident;
 @end

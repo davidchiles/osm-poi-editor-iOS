@@ -7,6 +7,7 @@
 //
 
 #import "OPENode.h"
+#import "OPEConstants.h"
 
 @implementation OPENode
 
@@ -94,11 +95,9 @@
     return newNode;
 }
 
-
-
--(void)addKey: (NSString*) key Value: (NSString*) val
+-(void) addKey:(NSString *)key value:(NSString *)value
 {
-    [tags setValue:val forKey:key];
+    [tags setValue:value forKey:key];
 }
 
 -(NSString *)name
@@ -133,15 +132,15 @@
     return NO;
 }
 
--(BOOL) isEqualToNode:(OPENode *)node
+-(BOOL) isequaltToPoint:(id<OPEPoint>)point
 {
-    if(self.ident != node.ident)
+    if(self.ident != point.ident)
         return NO;
-    else if (self.coordinate.latitude != node.coordinate.latitude)
+    else if (self.coordinate.latitude != point.coordinate.latitude)
         return NO;
-    else if (self.coordinate.longitude != node.coordinate.longitude)
+    else if (self.coordinate.longitude != point.coordinate.longitude)
         return NO;
-    else if (![self.tags isEqualToDictionary:node.tags])
+    else if (![self.tags isEqualToDictionary:point.tags])
         return NO;
     
     return YES;
@@ -162,6 +161,20 @@
     
     
     return xml;
+}
+
+-(NSString *)type
+{
+    return kPointTypeNode;
+}
+
+-(NSString *)uniqueIdentifier
+{
+    return [NSString stringWithFormat:@"%@%d",[self type],self.ident];
+}
++(NSString *)uniqueIdentifierForID:(int)ident
+{
+    return [NSString stringWithFormat:@"%@%d",kPointTypeNode,ident];
 }
 
 

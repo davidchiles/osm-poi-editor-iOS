@@ -7,10 +7,11 @@
 //
 
 #import "OPEWay.h"
+#import "OPEConstants.h"
 
 @implementation OPEWay
 
-@synthesize nodes,ident,tags,coordinate,version;
+@synthesize nodes,ident,tags,coordinate,version,image;
 
 -(id)init
 {
@@ -56,7 +57,7 @@
     
     while (nodeXml!=nil) {
         NSString * nodeIdentString = [TBXML valueOfAttributeNamed:@"ref" forElement:nodeXml];
-        [nodeArray addObject: [nodes objectForKey: [NSNumber numberWithInt:[nodeIdentString intValue]]]];
+        [nodeArray addObject: [nodes objectForKey:[OPENode uniqueIdentifierForID:[nodeIdentString intValue]]]];
         
         nodeXml = [TBXML nextSiblingNamed:@"nd" searchFromElement:nodeXml];
     }
@@ -109,6 +110,21 @@
     
     return xml;
 
+}
+
+-(NSString *)type
+{
+    return kPointTypeWay;
+}
+
+-(NSString *)uniqueIdentifier
+{
+   return [NSString stringWithFormat:@"%@%d",[self type],self.ident];
+}
+
++(NSString *)uniqueIdentifierForID:(int)ident
+{
+    return [NSString stringWithFormat:@"%@%d",kPointTypeWay,ident];
 }
 
 

@@ -470,7 +470,7 @@
     {
         [self showOauthError];
     }
-    else if (![theNewNode isEqualToNode:node]) 
+    else if (![theNewNode isequaltToPoint:node]) 
     {
         [self.navigationController.view addSubview:HUD];
         [HUD setLabelText:@"Saving..."];
@@ -703,7 +703,7 @@
 - (void)checkSaveButton
 {
     NSLog(@"cAndT count %d",[catAndType count]);
-    if([theNewNode isEqualToNode:node] || [catAndType count]!=2)
+    if([theNewNode isequaltToPoint:node] || [catAndType count]!=2)
     {
         NSLog(@"NO CHANGES YET");
         self.saveButton.enabled= NO;

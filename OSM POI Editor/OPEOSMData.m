@@ -14,6 +14,7 @@
 #import "GTMOAuthViewControllerTouch.h"
 #import "OPEAPIConstants.h"
 #import "OPEWay.h"
+#import "OPEConstants.h"
 
 @implementation OPEOSMData
 
@@ -51,11 +52,20 @@
     // Use when fetching binary data
     if ([request.userInfo objectForKey:@"type"] == @"download" )
     {
-        NSMutableDictionary * newNodes = [[NSMutableDictionary alloc] init];
-        NSMutableDictionary * allNewNodes = [[NSMutableDictionary alloc] init];
+        //NSMutableDictionary * newNodes = [[NSMutableDictionary alloc] init];
+        //NSMutableDictionary * allNewNodes = [[NSMutableDictionary alloc] init];
         NSData *responseData = [request responseData];
         TBXML* tbxml = [TBXML tbxmlWithXMLData:responseData];
         
+        NSMutableDictionary * tempNodes = [self findNodes:tbxml];
+        NSMutableDictionary * tempWays = [self findWays:tbxml nodes:tempNodes];
+        
+        [tempNodes addEntriesFromDictionary:tempWays];
+        
+        [tempNodes removeObjectsForKeys:[allNodes allKeys]];
+        [tempNodes removeObjectsForKeys:[ignoreNodes allKeys]];
+        
+        /*
         TBXMLElement * root = tbxml.rootXMLElement;
         if(root)
         {
@@ -110,13 +120,13 @@
             NSLog(@"allNodes size: %d",[allNodes count]);
             
         }
-        
+        */
         dispatch_async(dispatch_get_main_queue(), ^{
         
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"DownloadComplete"
          object:self
-         userInfo:newNodes];
+         userInfo:tempNodes];
         });
         
     }
@@ -155,22 +165,28 @@
     
 }
 
--(NSDictionary *)findNodes:(TBXML *)xml {
+-(NSMutableDictionary *)findNodes:(TBXML *)xml {
     NSMutableDictionary * nodeDictionary = [[NSMutableDictionary alloc] init];
     TBXMLElement * root = xml.rootXMLElement;
+    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     if(root)
     {
         TBXMLElement* xmlNode = [TBXML childElementNamed:@"node" parentElement:root];
         while (xmlNode!=nil) {
             OPENode * newNode = [OPENode createPointWithXML:xmlNode];
-            [nodeDictionary setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+            if([tagInterpreter getCategoryandType:newNode])
+                //Checks that node to be added has recognized tags and then adds it to set of all nodes
+            {
+                [nodeDictionary setObject:newNode forKey:[newNode uniqueIdentifier] ];
+            }
+            
             xmlNode = [TBXML nextSiblingNamed:@"node" searchFromElement:xmlNode];
         }
     }
     return nodeDictionary;
 }
 
--(NSDictionary *)findWays:(TBXML *)xml nodes:(NSDictionary *)nodes{
+-(NSMutableDictionary *)findWays:(TBXML *)xml nodes:(NSDictionary *)nodes{
     NSMutableDictionary * wayDictionary = [[NSMutableDictionary alloc] init];
     TBXMLElement * root = xml.rootXMLElement;
     if(root)
@@ -178,7 +194,7 @@
         TBXMLElement* xmlWay = [TBXML childElementNamed:@"way" parentElement:root];
         while (xmlWay!=nil) {
             OPEWay * newWay = [OPEWay createPointWithXML:xmlWay nodes:nodes];
-            [wayDictionary setObject:newWay forKey:[NSNumber numberWithInt:newWay.ident]];
+            [wayDictionary setObject:newWay forKey:[newWay uniqueIdentifier]];
             xmlWay = [TBXML nextSiblingNamed:@"way" searchFromElement:xmlWay];
         }
     }
@@ -205,7 +221,7 @@
     double boxright = northEast.longitude;
     double boxtop = northEast.latitude;
     
-    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[bbox=%f,%f,%f,%f][@meta]",boxleft,boxbottom,boxright,boxtop]];
+    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",kOPEAPIURL,boxleft,boxbottom,boxright,boxtop]];
     NSLog(@"Download URL %@",url);
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"download",@"type", nil];
