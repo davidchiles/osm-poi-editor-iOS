@@ -307,17 +307,17 @@
 {
     NSLog(@"hello %@",layer.name);
     nodeInfo = marker;
-    OPENodeViewController * viewer = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
+    OPENodeViewController * nodeVC = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
     
-    viewer.title = @"Node Info";
-    viewer.node = (OPENode *)marker.data;
-    [viewer setDelegate:self];
+    nodeVC.title = @"Node Info";
+    nodeVC.node = (OPENode *)marker.data;
+    [nodeVC setDelegate:self];
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
     
     [[self navigationItem] setBackBarButtonItem: newBackButton];
     
-    [self.navigationController pushViewController:viewer animated:YES];
+    [self.navigationController pushViewController:nodeVC animated:YES];
 }
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event

@@ -13,12 +13,13 @@
 #import "OPETypeViewController.h"
 #import "MBProgressHUD.h"
 #import "OPETagValueList.h"
+#import "OPEPoint.h"
 
 @protocol OPENodeViewDelegate
 @optional
--(void)createdNode:(OPENode *)newNode;
--(void)updatedNode:(OPENode *)newNode;
--(void)deletedNode:(OPENode *)newNode;
+-(void)createdNode:(id <OPEPoint>) newPoint;
+-(void)updatedNode:(id <OPEPoint>) newPoint;
+-(void)deletedNode:(id <OPEPoint>) newPoint;
 @end
 
 
@@ -30,8 +31,8 @@
     float optionalTagWidth;
 }
 
-@property (nonatomic, strong) OPENode * node;
-@property (nonatomic, strong) OPENode * theNewNode;
+@property (nonatomic, strong) id<OPEPoint> point;
+@property (nonatomic, strong) id<OPEPoint> theNewPoint;
 @property (nonatomic, strong) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) NSArray * catAndType;
 @property (nonatomic, strong) NSString * type;

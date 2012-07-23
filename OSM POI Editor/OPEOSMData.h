@@ -14,6 +14,7 @@
 @interface OPEOSMData : NSObject 
 {
     GTMOAuthAuthentication *auth;
+    OPETagInterpreter * tagInterpreter;
     
 }
 

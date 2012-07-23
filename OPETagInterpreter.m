@@ -41,6 +41,10 @@ static OPETagInterpreter *sharedManager = nil;
 
 -(NSDictionary *)getCategoryandType:(OPENode *)node
 {   
+    if([node hasNoTags])
+    {
+        return nil;
+    }
     
     NSMutableDictionary * finalCatAndType = [[NSMutableDictionary alloc] init];;
     
@@ -177,7 +181,9 @@ static OPETagInterpreter *sharedManager = nil;
 - (NSString *) getImageForNode: (OPENode *) node
 {
     NSDictionary * catAndType = [self getCategoryandType:node];
-    return [self.CategoryTypeandImg objectForKey:catAndType];
+    if (catAndType)
+        return [self.CategoryTypeandImg objectForKey:catAndType];
+    return @"";
 }
 
 - (void)removeCatAndType:(NSDictionary *) catType fromNode:(OPENode *)node

@@ -31,6 +31,6 @@
 - (NSDictionary *) getOSmKeysValues: (NSDictionary *) catAndType;
 
 + (NSArray *) getOptionalTagsDictionaries: (NSArray *) array;
-+(OPETagInterpreter *)sharedInstance;
++ (OPETagInterpreter *)sharedInstance;
 
 @end

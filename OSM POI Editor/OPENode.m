@@ -97,7 +97,7 @@
 
 -(void) addKey:(NSString *)key value:(NSString *)value
 {
-    [tags setValue:value forKey:key];
+    [self.tags setValue:value forKey:key];
 }
 
 -(NSString *)name
@@ -149,8 +149,8 @@
 
 - (NSString *) exportXMLforChangset: (NSInteger) changesetNumber
 {
-    NSMutableString * xml = [NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
-    [xml appendString:[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"]];
+    NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
+    [xml appendString:@"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"];
     [xml appendFormat:@"<node id=\"%d\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\">",self.ident,self.coordinate.latitude,self.coordinate.longitude,self.version, changesetNumber];
     
     for(NSString * key in self.tags)
@@ -166,6 +166,19 @@
 -(NSString *)type
 {
     return kPointTypeNode;
+}
+
+-(BOOL)hasNoTags
+{
+    if(![self.tags count])
+    {
+        return YES;
+    }
+    return NO;
+}
+
+-(NSString *)description{
+    return [NSString stringWithFormat:@"%@: %@",[self uniqueIdentifier],self.tags];
 }
 
 -(NSString *)uniqueIdentifier

@@ -36,6 +36,8 @@
                                                             privateKey:myConsumerSecret];
         allNodes = [[NSMutableDictionary alloc] init];
         ignoreNodes = [[NSMutableDictionary alloc] init];
+        
+        tagInterpreter = [OPETagInterpreter sharedInstance];
     }
     
     return self;
@@ -62,8 +64,18 @@
         
         [tempNodes addEntriesFromDictionary:tempWays];
         
+        for (NSString *key in [tempNodes allKeys])
+        {
+            if(![tagInterpreter getCategoryandType:[tempNodes objectForKey:key]]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
+            {
+                [tempNodes removeObjectForKey:key];
+            }
+            
+        }
+        
         [tempNodes removeObjectsForKeys:[allNodes allKeys]];
         [tempNodes removeObjectsForKeys:[ignoreNodes allKeys]];
+        [allNodes addEntriesFromDictionary:tempNodes];
         
         /*
         TBXMLElement * root = tbxml.rootXMLElement;
@@ -166,19 +178,16 @@
 }
 
 -(NSMutableDictionary *)findNodes:(TBXML *)xml {
+    
     NSMutableDictionary * nodeDictionary = [[NSMutableDictionary alloc] init];
     TBXMLElement * root = xml.rootXMLElement;
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     if(root)
     {
         TBXMLElement* xmlNode = [TBXML childElementNamed:@"node" parentElement:root];
         while (xmlNode!=nil) {
             OPENode * newNode = [OPENode createPointWithXML:xmlNode];
-            if([tagInterpreter getCategoryandType:newNode])
-                //Checks that node to be added has recognized tags and then adds it to set of all nodes
-            {
-                [nodeDictionary setObject:newNode forKey:[newNode uniqueIdentifier] ];
-            }
+            [nodeDictionary setObject:newNode forKey:[newNode uniqueIdentifier] ];
+            newNode.image = [tagInterpreter getImageForNode:newNode];
             
             xmlNode = [TBXML nextSiblingNamed:@"node" searchFromElement:xmlNode];
         }
@@ -194,6 +203,7 @@
         TBXMLElement* xmlWay = [TBXML childElementNamed:@"way" parentElement:root];
         while (xmlWay!=nil) {
             OPEWay * newWay = [OPEWay createPointWithXML:xmlWay nodes:nodes];
+            newWay.image = [tagInterpreter getImageForNode:newWay];
             [wayDictionary setObject:newWay forKey:[newWay uniqueIdentifier]];
             xmlWay = [TBXML nextSiblingNamed:@"way" searchFromElement:xmlWay];
         }
@@ -231,7 +241,6 @@
 
 - (int) createNode: (OPENode *) node
 {
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Created new POI: %@",[tagInterpreter getName:node]]];
     int newIdent = [self createXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
@@ -240,7 +249,6 @@
 }
 - (int) updateNode: (OPENode *) node
 {
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Updated existing POI: %@",[tagInterpreter getName:node]]];
     int version = [self updateXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
@@ -250,7 +258,6 @@
 }
 - (int) deleteNode: (OPENode *) node
 {
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Deleted POI: %@",[tagInterpreter getName:node]]];
     int version = [self deleteXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
@@ -320,8 +327,12 @@
     NSLog(@"upload lon: %f",lon);
     NSLog(@"changeset number: %d",changesetNumber);
     
-    NSMutableData *nodeXML = [NSMutableData data];
+    //NSMutableData *nodeXML = [NSMutableData data];
     
+    NSData * nodeXML = [[node exportXMLforChangset:changesetNumber] dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    /*
     [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
     [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
     [nodeXML appendData: [[NSString stringWithFormat: @"<node id=\"%d\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\">",node.ident,lat,lon,node.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
@@ -333,6 +344,7 @@
     
     [nodeXML appendData: [[NSString stringWithFormat: @"</node>"] dataUsingEncoding: NSUTF8StringEncoding]];
     [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
+     */
     
     NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
     
@@ -343,7 +355,7 @@
     [urlRequest setHTTPMethod: @"PUT"];
     [auth authorizeRequest:urlRequest];
     NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
-    //NSData * returnData = nil;
+
     NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
     return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
     

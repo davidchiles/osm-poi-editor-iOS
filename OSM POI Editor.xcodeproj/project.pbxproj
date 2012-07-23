@@ -274,6 +274,8 @@
 		63CB49DE14E9DE7B008C4551 /* OPECategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49DC14E9DE7B008C4551 /* OPECategoryViewController.xib */; };
 		63CB49E214E9E3BF008C4551 /* OPETypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */; };
 		63CB49E314E9E3BF008C4551 /* OPETypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49E114E9E3BF008C4551 /* OPETypeViewController.xib */; };
+		63CE5DBE15BE061700C84B90 /* OPETag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CE5DBD15BE061700C84B90 /* OPETag.m */; };
+		63CE5DC115BE085E00C84B90 /* OPEOptionalTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */; };
 		63E2796814E1F274009D02BD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796714E1F274009D02BD /* CFNetwork.framework */; };
 		63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796914E1F281009D02BD /* SystemConfiguration.framework */; };
 		63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */; };
@@ -657,6 +659,10 @@
 		63CB49DF14E9E3BE008C4551 /* OPETypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETypeViewController.h; sourceTree = "<group>"; };
 		63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETypeViewController.m; sourceTree = "<group>"; };
 		63CB49E114E9E3BF008C4551 /* OPETypeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPETypeViewController.xib; sourceTree = "<group>"; };
+		63CE5DBC15BE061700C84B90 /* OPETag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETag.h; sourceTree = "<group>"; };
+		63CE5DBD15BE061700C84B90 /* OPETag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETag.m; sourceTree = "<group>"; };
+		63CE5DBF15BE085E00C84B90 /* OPEOptionalTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOptionalTag.h; sourceTree = "<group>"; };
+		63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOptionalTag.m; sourceTree = "<group>"; };
 		63E2796714E1F274009D02BD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		63E2796914E1F281009D02BD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -1098,6 +1104,10 @@
 				631539E414DCA29B000236F0 /* OPENode.m */,
 				63F1F28415A7AD630027829B /* OPEWay.h */,
 				63F1F28515A7AD630027829B /* OPEWay.m */,
+				63CE5DBC15BE061700C84B90 /* OPETag.h */,
+				63CE5DBD15BE061700C84B90 /* OPETag.m */,
+				63CE5DBF15BE085E00C84B90 /* OPEOptionalTag.h */,
+				63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,
 				631539E014DC98D0000236F0 /* OPEOSMData.m */,
 				63FFDC6414E480DF00701DEC /* OPETagInterpreter.h */,
@@ -1755,6 +1765,8 @@
 				63292E6D1593ED670010A11B /* OPESpecialCell2.m in Sources */,
 				63292E6E1593ED670010A11B /* OPETagValueList.m in Sources */,
 				63F1F28615A7AD630027829B /* OPEWay.m in Sources */,
+				63CE5DBE15BE061700C84B90 /* OPETag.m in Sources */,
+				63CE5DC115BE085E00C84B90 /* OPEOptionalTag.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

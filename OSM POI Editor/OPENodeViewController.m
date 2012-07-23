@@ -21,7 +21,7 @@
 
 @implementation OPENodeViewController
 
-@synthesize node, theNewNode, type;
+@synthesize point, theNewPoint, type;
 @synthesize tableView;
 @synthesize catAndType;
 @synthesize deleteButton, saveButton;
@@ -76,7 +76,7 @@
     [self.deleteButton addTarget:self action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     
-    theNewNode = [[OPENode alloc] initWithNode:node];
+
     [self checkSaveButton];
     
     

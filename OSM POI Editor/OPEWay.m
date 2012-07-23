@@ -39,7 +39,7 @@
     nodes = arrayOfNodes;
     [self setLattitudeandLongitude];
     self.ident = i;
-    self.tags = [NSMutableArray array];
+    self.tags = [NSMutableDictionary dictionary];
     
     return self;
 }
@@ -69,7 +69,7 @@
         NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tagXml];
         NSString* value = [TBXML valueOfAttributeNamed:@"v" forElement:tagXml];
         //NSLog(@"key: %@, value: %@",key,value);
-        [newWay.tags setObject:value forKey:key];
+        [newWay addKey:key value:value];
         tagXml = [TBXML nextSiblingNamed:@"tag" searchFromElement:tagXml];
     }
     
