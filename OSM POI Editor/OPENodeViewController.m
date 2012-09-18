@@ -82,6 +82,8 @@
     
     tagInterpreter = [OPETagInterpreter sharedInstance];
     
+    theNewPoint = [point copy];
+    
     NSLog(@"Tags: %@",theNewPoint.tags);
     //NSLog(@"new Category and Type: %@",[tagInterpreter getCategoryandType:theNewPoint]);
     nodeType = [tagInterpreter type:theNewPoint];
@@ -667,13 +669,14 @@
         }
     }
     
+    
+    
 
     nodeType = newType;
     NSArray * oldTableSections = [tableSections copy];
     [self reloadTags];
     [self removeOptionalTags:oldTableSections];
     
-    NSDictionary * KV = [[tagInterpreter typeAndOsmKeyValue] objectForKey:newType];
     NSLog(@"catAndType: %@",newType.description);
     //NSLog(@"KV: %@",osmKeyValue);
     
@@ -684,8 +687,7 @@
     NSLog(@"Lon: %f",theNewPoint.coordinate.longitude);
     NSLog(@"Tags: %@",theNewPoint.tags);
     
-    [theNewPoint.tags addEntriesFromDictionary:KV];
-    
+    [self.theNewPoint.tags addEntriesFromDictionary:newType.tags];
     
     //NSLog(@"id: %@ \n version: %@ \n lat: %f \n lon: %f \n newTags: %@ \n ",theNewPoint.ident,theNewPoint.version,theNewPoint.coordinate.latitude,theNewPoint.coordinate.longitude,theNewPoint.tags);
     NSLog(@"ID: %d",theNewPoint.ident);

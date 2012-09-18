@@ -190,5 +190,16 @@
     return [NSString stringWithFormat:@"%@%d",kPointTypeNode,ident];
 }
 
+-(id)copy
+{
+    OPENode * nodeCopy = [[OPENode alloc] init];
+    nodeCopy.coordinate = self.coordinate;
+    nodeCopy.ident = self.ident;
+    nodeCopy.tags = [self.tags mutableCopy];
+    nodeCopy.version = self.version;
+    nodeCopy.image = [self.image mutableCopy];
+    
+    return nodeCopy;
+}
 
 @end

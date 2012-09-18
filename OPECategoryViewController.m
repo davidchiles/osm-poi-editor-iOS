@@ -94,13 +94,13 @@
             {
                 NSLog(@"Match: %d",[currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location);
                 NSNumber * location = [NSNumber numberWithInteger: [currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location];
-                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"type",[typesDictionary objectForKey:currentString],@"category",location,@"location", nil];
+                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",[typesDictionary objectForKey:currentString],@"type",location,@"location", nil];
                 [searchResults addObject:match];
                 
             }
         }
         NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"location"  ascending:YES];
-        NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
+        NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"typeName" ascending:YES];
         [searchResults sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nameDescriptor,nil]];
     }
 }
@@ -133,7 +133,7 @@
     }
     
     if (tableView == [[self searchDisplayController] searchResultsTableView]) {
-        cell.textLabel.text = [[self.searchResults objectAtIndex:indexPath.row] objectForKey:@"type"];
+        cell.textLabel.text = [[self.searchResults objectAtIndex:indexPath.row] objectForKey:@"typeName"];
         return cell;
     }
     
@@ -196,7 +196,7 @@
      */
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
      if (tableView == [[self searchDisplayController] searchResultsTableView]) {
-         [[self delegate] setNewType: [searchResults objectAtIndex:indexPath.row]];
+         [[self delegate] setNewType: [[searchResults objectAtIndex:indexPath.row] objectForKey:@"type"]];
          [self.navigationController popViewControllerAnimated:YES];
      }
      else {

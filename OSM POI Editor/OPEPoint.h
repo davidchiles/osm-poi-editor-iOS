@@ -24,6 +24,7 @@
 - (NSString *)uniqueIdentifier;
 
 - (NSString *) exportXMLforChangset: (NSInteger) changesetNumber;
+- (id)copy;
 
 + (NSString *)uniqueIdentifierForID:(int)ident;
 @end

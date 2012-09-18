@@ -158,6 +158,20 @@
    return [NSString stringWithFormat:@"%@%d",[self type],self.ident];
 }
 
+-(id)copy
+{
+    OPEWay * wayCopy = [[OPEWay alloc] init];
+    wayCopy.coordinate = self.coordinate;
+    wayCopy.ident = self.ident;
+    wayCopy.tags = [self.tags mutableCopy];
+    wayCopy.version = self.version;
+    wayCopy.image = [self.image mutableCopy];
+    wayCopy.nodes = [self.nodes copy];
+    
+    
+    return wayCopy;
+}
+
 +(NSString *)uniqueIdentifierForID:(int)ident
 {
     return [NSString stringWithFormat:@"%@%d",kPointTypeWay,ident];
