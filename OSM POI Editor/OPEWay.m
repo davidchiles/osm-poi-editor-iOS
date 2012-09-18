@@ -99,7 +99,7 @@
     
     for(OPENode * node in nodes)
     {
-        [xml appendFormat:@"<nd ref=\"%@\"/>",node.ident];
+        [xml appendFormat:@"<nd ref=\"%d\"/>",node.ident];
     }
     
     for(NSString * key in self.tags)
@@ -110,6 +110,42 @@
     
     return xml;
 
+}
+
+-(BOOL)isequaltToPoint:(id<OPEPoint>)point
+{
+    if ([[self type] isEqualToString:[point type]])
+        return NO;
+    else if(self.ident != point.ident)
+        return NO;
+    else if (self.coordinate.latitude != point.coordinate.latitude)
+        return NO;
+    else if (self.coordinate.longitude != point.coordinate.longitude)
+        return NO;
+    else if (![self.tags isEqualToDictionary:point.tags])
+        return NO;
+    
+    return YES;
+    
+}
+
+-(void)addKey:(NSString *)key value:(NSString *)value
+{
+    [self.tags setValue:value forKey:key];
+}
+
+-(NSString *)name
+{
+    if(tags)
+    {
+        NSString* name = [tags objectForKey:@"name"];
+        if(name)
+            return name;
+        else
+            return @"no name";
+    }
+    else
+        return @"no name";
 }
 
 -(NSString *)type

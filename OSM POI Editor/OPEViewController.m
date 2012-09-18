@@ -12,6 +12,7 @@
 #import "RMMarker.h"
 #import "RMMarkerManager.h"
 #import "OPEStamenTerrain.h"
+#import "OPEPoint.h"
 
 
 @implementation OPEViewController
@@ -310,7 +311,7 @@
     OPENodeViewController * nodeVC = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
     
     nodeVC.title = @"Node Info";
-    nodeVC.node = (OPENode *)marker.data;
+    nodeVC.point = (id<OPEPoint>)marker.data;
     [nodeVC setDelegate:self];
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];

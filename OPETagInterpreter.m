@@ -12,12 +12,13 @@
 @implementation OPETagInterpreter
 static OPETagInterpreter *sharedManager = nil;
 
-@synthesize categoryAndType;
+@synthesize nameAndCategory;
 @synthesize osmKeyandValue;
-@synthesize osmKVandCategoryType;
-@synthesize CategoryTypeandOsmKV;
-@synthesize CategoryTypeandImg;
-@synthesize CategoryTypeandOptionalTags;
+@synthesize osmKeyValueAndType;
+@synthesize typeAndOsmKeyValue;
+@synthesize typeAndImg;
+@synthesize typeandOptionalTags;
+@synthesize nameAndType;
 
 - (id) init
 {
@@ -29,43 +30,35 @@ static OPETagInterpreter *sharedManager = nil;
     return self;
 }
 
-- (NSString *) getCategory: (OPENode *)node
+- (NSString *) category: (OPENode *)node
 {
-    return [[[self getCategoryandType:node] allKeys]objectAtIndex:0];
+    return [[self type:node] categoryName];
 }
 
-- (NSString *) getType: (OPENode *)node
+-(OPEType *)type:(OPENode *)node
 {
-    return [[[self getCategoryandType:node] allValues] objectAtIndex:0];
-}
-
--(NSDictionary *)getCategoryandType:(OPENode *)node
-{   
     if([node hasNoTags])
     {
         return nil;
     }
+    NSMutableDictionary * finalCatAndType = [[NSMutableDictionary alloc] init];
     
-    NSMutableDictionary * finalCatAndType = [[NSMutableDictionary alloc] init];;
+    NSArray * allOsmKeyValue =[osmKeyValueAndType allKeys];
     
-    
-    NSDictionary * catAndType;
-    for(catAndType in CategoryTypeandOsmKV)
+    for(NSDictionary * osmKeyValues in allOsmKeyValue)
     {
-        NSDictionary * osmKeysValues = [CategoryTypeandOsmKV objectForKey:catAndType];
-        //int numValues = [osmKeyandValue count];
         int matches = 0;
         //NSLog(@"Number of Values: %d",numValues);
-        for( NSString * osmKey in osmKeysValues)
+        for( NSString * osmKey in osmKeyValues)
         {
-            if([[node.tags objectForKey:osmKey] isEqualToString:[osmKeysValues objectForKey:osmKey]])
+            if([[node.tags objectForKey:osmKey] isEqualToString:[osmKeyValues objectForKey:osmKey]])
             {
                 matches++;
             }
         }
-        if(matches >0)
+        if(matches == [osmKeyValues count])
         {
-            [finalCatAndType setObject:[[NSNumber alloc] initWithInt:matches] forKey:catAndType];
+            [finalCatAndType setObject:[[NSNumber alloc] initWithInt:matches] forKey:osmKeyValues];
         }
         
     }
@@ -75,16 +68,13 @@ static OPETagInterpreter *sharedManager = nil;
         //NSLog(@"finalCatAndType; %@",finalCatAndType);
         NSArray * sortedKeys = [finalCatAndType keysSortedByValueUsingSelector:@selector(compare:)];
         //NSLog(@"sorted Array: %@",sortedKeys);
-        return [sortedKeys objectAtIndex:([sortedKeys count]-1)];
+        return (OPEType *)[osmKeyValueAndType objectForKey: [sortedKeys objectAtIndex:([sortedKeys count]-1)]];
     }
     //NSLog(@"NO CATEGORY OR TYPE: %@",node.tags);
     return nil;
     
-}
-
-- (NSDictionary *) getOSmKeysValues: (NSDictionary *) catAndType
-{
-    return [self.CategoryTypeandOsmKV objectForKey:catAndType];
+    
+    
 }
 
 - (void) readPlist
@@ -105,56 +95,40 @@ static OPETagInterpreter *sharedManager = nil;
     
     //NSLog(@"gov: %@",[type objectForKey:@"courthouse"]);
     
-    categoryAndType = [[NSMutableDictionary alloc] init];
+    nameAndCategory = [[NSMutableDictionary alloc] init];
     osmKeyandValue  = [[NSMutableDictionary alloc] init];
-    osmKVandCategoryType = [[NSMutableDictionary alloc] init];
-    CategoryTypeandOsmKV = [[NSMutableDictionary alloc] init]; //for each category type pair : all osm keys
-    CategoryTypeandImg = [[NSMutableDictionary alloc] init];
-    CategoryTypeandOptionalTags = [[NSMutableDictionary alloc] init];
+    osmKeyValueAndType = [[NSMutableDictionary alloc] init];
+    typeAndOsmKeyValue = [[NSMutableDictionary alloc] init]; //for each category type pair : all osm keys
+    typeAndImg = [[NSMutableDictionary alloc] init];
+    typeandOptionalTags = [[NSMutableDictionary alloc] init];
+    nameAndType = [[NSMutableDictionary alloc]init];
     
     
     // load dictionary categoryAndType with Key=category and Value= array of types
     // load dictionary osmKeyandValue with Key = key and Value = array of values (supported types)
     for (NSString * cat in plistDict)
     {
+        OPECategory * category = [[OPECategory alloc] init];
+        category.name = cat;
+        NSMutableDictionary * tempTypes = [[NSMutableDictionary alloc] init];
         //NSLog(@"Category: %@",cat);
-        NSMutableSet * types = [[NSMutableSet alloc] init];
         NSDictionary * categories = [plistDict objectForKey:cat];
-        for (NSString * type in categories)
+        for (NSString * typeName in categories)
         {
             //NSLog(@"Type: %@",type);
-            NSDictionary * typeDictionary = [categories objectForKey:type];
-            NSDictionary * tags = [typeDictionary objectForKey:@"tags"];
-            NSString * img = [typeDictionary objectForKey:@"image"];
-            NSArray * optionalTags = [typeDictionary objectForKey:@"optional"];
-            [CategoryTypeandOsmKV setObject:tags forKey:[[NSDictionary alloc] initWithObjectsAndKeys:type,cat, nil]];
-            [CategoryTypeandImg setObject:img forKey:[[NSDictionary alloc] initWithObjectsAndKeys:type,cat, nil]];
-            if (optionalTags) {
-                [CategoryTypeandOptionalTags setObject:optionalTags forKey:[[NSDictionary alloc] initWithObjectsAndKeys:type,cat, nil]];
-                //NSLog(@"Optional tags: %@",optionalTags);
-            }
+            OPEType * type = [[OPEType alloc] initWithName:typeName categoryName:category.name dictionary:[categories objectForKey:typeName]];
             
-            [types addObject:type]; 
+            [osmKeyValueAndType setObject:type forKey:type.tags];
+            [nameAndType setObject:type forKey:type.displayName];
             
+            [tempTypes setObject:type forKey:type.displayName];
             
+        
             
-            for (NSString * osmKey in tags)
-            {
-                if ([osmKeyandValue objectForKey:osmKey]) {
-                    NSMutableSet * tempValues = [osmKeyandValue objectForKey:osmKey];
-                    [tempValues addObject:[tags objectForKey:osmKey]];
-                    [osmKeyandValue setObject: tempValues forKey:osmKey];
-                }
-                else {
-                    NSMutableSet * values = [[NSMutableSet alloc] initWithObjects:[tags objectForKey:osmKey], nil];
-                    [osmKeyandValue setObject:values forKey:osmKey];
-                }
-                
-            }
-            
-        [categoryAndType setObject:types forKey:cat];
+            [nameAndCategory setObject:category forKey:category.name];
              
         }
+        category.types = tempTypes;
     }
     //categoryAndType = [categoryAndType  ;
     //[osmKeyandValue initWithDictionary: osmKeyandValue];
@@ -173,24 +147,29 @@ static OPETagInterpreter *sharedManager = nil;
     }
     else
     {
-        return [self getType:node];
+        return [[self type:node] displayName];
     }
     return @"Unknown";
 }
 
 - (NSString *) getImageForNode: (OPENode *) node
 {
-    NSDictionary * catAndType = [self getCategoryandType:node];
-    if (catAndType)
-        return [self.CategoryTypeandImg objectForKey:catAndType];
-    return @"";
+    return [[self type:node] imageString];
 }
 
-- (void)removeCatAndType:(NSDictionary *) catType fromNode:(OPENode *)node
+- (void)removeTagsForType:(OPEType *)type withNode:(OPENode *)node
 {
-    [node.tags removeObjectsForKeys:[[self getOSmKeysValues:catType] allKeys]];
-    
+    [node.tags removeObjectsForKeys:type.tags.allKeys];
+    //[node.tags removeObjectsForKeys:type.optionalTags];
 }
+
+- (BOOL)isSupported:(OPENode *)node
+{
+    if([self type:node])
+        return YES;
+    return NO;
+}
+
 
 + (NSArray *) getOptionalTagsDictionaries: (NSArray *) tagArray
 {
@@ -222,6 +201,16 @@ static OPETagInterpreter *sharedManager = nil;
     
     
     return [tempFinalArray copy];
+}
+
+-(NSDictionary *)allCategories
+{
+    return nameAndCategory;
+}
+
+-(NSDictionary *)allTypes
+{
+    return nameAndType;
 }
 
 +(OPETagInterpreter *)sharedInstance

@@ -7,15 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OPECategory.h"
+#import "OPEType.h"
 
 @protocol PassCategoryAndType <NSObject>
 @required
-- (void) setCategoryAndType:(NSDictionary *)cAndT;
+- (void) setNewType:(OPEType *)type;
 @end
 
 @interface OPETypeViewController : UITableViewController
 
-@property (nonatomic,strong) NSString * category;
+@property (nonatomic, strong) OPECategory * category;
+@property (nonatomic, strong) NSArray * typeArray;
 @property (nonatomic, strong) id delegate;
 
 @end

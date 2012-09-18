@@ -14,8 +14,9 @@
 @property (nonatomic,strong) IBOutlet UITableView * mainTableView;
 @property (nonatomic,strong) UISearchDisplayController * searchDisplayController;
 @property (nonatomic,strong) IBOutlet UISearchBar * searchBar;
-@property (nonatomic,strong) NSDictionary * categoriesAndTypes;
-@property (nonatomic,strong) NSDictionary * types;
+//@property (nonatomic,strong) NSDictionary * categoriesAndTypes;
+@property (nonatomic,strong) NSArray * categoriesArray;
+@property (nonatomic,strong) NSDictionary * typesDictionary;
 
 @property (nonatomic, strong) id <PassCategoryAndType> delegate;
 

@@ -14,6 +14,7 @@
 #import "MBProgressHUD.h"
 #import "OPETagValueList.h"
 #import "OPEPoint.h"
+#import "OPEType.h"
 
 @protocol OPENodeViewDelegate
 @optional
@@ -34,7 +35,7 @@
 @property (nonatomic, strong) id<OPEPoint> point;
 @property (nonatomic, strong) id<OPEPoint> theNewPoint;
 @property (nonatomic, strong) IBOutlet UITableView* tableView;
-@property (nonatomic, strong) NSArray * catAndType;
+@property (nonatomic, strong) OPEType * nodeType;
 @property (nonatomic, strong) NSString * type;
 @property (nonatomic, strong) IBOutlet UIButton * deleteButton;
 @property (nonatomic, strong) UIBarButtonItem * saveButton;

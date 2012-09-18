@@ -66,7 +66,7 @@
         
         for (NSString *key in [tempNodes allKeys])
         {
-            if(![tagInterpreter getCategoryandType:[tempNodes objectForKey:key]]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
+            if(![tagInterpreter isSupported:[tempNodes objectForKey:key]]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
             {
                 [tempNodes removeObjectForKey:key];
             }

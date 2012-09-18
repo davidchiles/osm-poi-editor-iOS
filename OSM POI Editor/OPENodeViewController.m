@@ -21,14 +21,14 @@
 
 @implementation OPENodeViewController
 
-@synthesize point, theNewPoint, type;
+@synthesize point, theNewPoint;
 @synthesize tableView;
-@synthesize catAndType;
 @synthesize deleteButton, saveButton;
 @synthesize delegate;
 @synthesize nodeIsEdited;
 @synthesize HUD;
 @synthesize tableSections;
+@synthesize nodeType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -82,16 +82,18 @@
     
     tagInterpreter = [OPETagInterpreter sharedInstance];
     
-    NSLog(@"Tags: %@",theNewNode.tags);
-    //NSLog(@"new Category and Type: %@",[tagInterpreter getCategoryandType:theNewNode]);
-    catAndType = [[NSArray alloc] initWithObjects:[tagInterpreter getCategory:theNewNode],[tagInterpreter getType:theNewNode], nil];
-    //osmKeyValue =  [[NSDictionary alloc] initWithDictionary: [tagInterpreter getPrimaryKeyValue:theNewNode]];
+    NSLog(@"Tags: %@",theNewPoint.tags);
+    //NSLog(@"new Category and Type: %@",[tagInterpreter getCategoryandType:theNewPoint]);
+    nodeType = [tagInterpreter type:theNewPoint];
+    //osmKeyValue =  [[NSDictionary alloc] initWithDictionary: [tagInterpreter getPrimaryKeyValue:theNewPoint]];
     
     self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     self.HUD.delegate = self;
     
     
     [self reloadTags];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadComplete:) name:@"uploadComplete" object:nil];
     
     
     
@@ -111,7 +113,7 @@
     NSDictionary * noteSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Note",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"text",@"values",@"note",@"osmKey",@"Note",@"name", nil]],@"rows", nil];
     [tableSections addObject: noteSection];
     
-    if (node.ident>0) {
+    if (point.ident>0) {
         NSDictionary * deleteSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"deleteButton",@"values", nil]],@"rows", nil];
         [tableSections addObject: deleteSection];
     }
@@ -121,9 +123,8 @@
 
 -(void) addOptionalTags
 {
-    if ([catAndType count] ) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadComplete:) name:@"uploadComplete" object:nil];
-        NSArray * optionalTags = [[NSArray alloc] initWithArray: [OPETagInterpreter getOptionalTagsDictionaries: [tagInterpreter.CategoryTypeandOptionalTags objectForKey:[NSDictionary dictionaryWithObject:[catAndType objectAtIndex:1] forKey:[catAndType objectAtIndex:0]]]]];
+    if (nodeType) {
+        NSArray * optionalTags = [OPETagInterpreter getOptionalTagsDictionaries:nodeType.optionalTags];
         
         NSMutableArray * tempArray = [[NSMutableArray alloc] init];
         
@@ -221,9 +222,9 @@
             [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
             aCell.tag = indexPath.section;
             aCell.binaryControl.tag = indexPath.row;
-            if ([theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
-                //[aCell selectSegmentWithTitle:[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]objectAtIndex:0]];
-                NSString * title = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
+            if ([theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
+                //[aCell selectSegmentWithTitle:[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]objectAtIndex:0]];
+                NSString * title = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
                 [aCell selectSegmentWithTitle:title];
             }
             else {
@@ -237,11 +238,11 @@
             if (specialCell == nil) {
                 specialCell = [[OPESpecialCell2 alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecial2 withTextWidth:optionalTagWidth];
             }
-            if ([[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] count]) {
-                specialCell.rightText = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
+            if ([[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] count]) {
+                specialCell.rightText = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
             }
             else {
-                specialCell.rightText = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+                specialCell.rightText = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             }
             
             specialCell.leftText = [cellDictionary objectForKey:@"name"];
@@ -257,7 +258,7 @@
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
             }
-            cell.textLabel.text = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+            cell.textLabel.text = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         }
         else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"category"]) { //special category
@@ -267,8 +268,11 @@
             }
             cell.textLabel.text = [catAndTypeName objectAtIndex:indexPath.row];
             cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
-            if ([catAndType count]==2) {
-                cell.detailTextLabel.text = [catAndType objectAtIndex:indexPath.row];
+            if (nodeType) {
+                if (indexPath.row == 0)
+                    cell.detailTextLabel.text = nodeType.categoryName;
+                else
+                    cell.detailTextLabel.text = nodeType.displayName;
             }
             else
             {
@@ -281,7 +285,7 @@
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
             }
-            cell.detailTextLabel.text = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+            cell.detailTextLabel.text = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             cell.textLabel.text = [cellDictionary objectForKey:@"name"];
             
             cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
@@ -293,14 +297,14 @@
                 aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierBinary];
             }
             [aCell setLeftText: [cellDictionary objectForKey:@"name"]];
-            if ([theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
+            if ([theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
                 
                 [aCell selectSegmentWithTitle:[cellDictionary objectForKey:@"osmKey"]];
                 /*
-                if ([[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"yes"]) {
+                if ([[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"yes"]) {
                      [aCell.binaryControl setSelectedSegmentIndex:0];
                 }
-                else if([[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"no"])
+                else if([[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"no"])
                 {
                      [aCell.binaryControl setSelectedSegmentIndex:1];
                 }
@@ -370,7 +374,7 @@
         //list view cell 
         OPETagValueList * viewer = [[OPETagValueList alloc] initWithNibName:@"OPETagValueList" bundle:nil];
         viewer.title = [cellDictionary objectForKey:@"name"];
-        viewer.osmValue = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+        viewer.osmValue = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
         viewer.osmKey = [cellDictionary objectForKey:@"osmKey"];
         viewer.values = [cellDictionary objectForKey:@"values"];
         [viewer setDelegate:self];
@@ -382,7 +386,7 @@
         if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone] || [[cellDictionary objectForKey:@"values"] isEqualToString:KTypeName] ){ //Text editing
             OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
             viewer.title = [cellDictionary objectForKey:@"name"];
-            viewer.osmValue = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+            viewer.osmValue = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             viewer.osmKey = [cellDictionary objectForKey:@"osmKey"];
             viewer.type = [cellDictionary objectForKey:@"values"];
             [viewer setDelegate:self];
@@ -392,12 +396,12 @@
         {
             if(indexPath.row == 1)
             {
-                if ([catAndType count]==2) 
+                if (nodeType)
                 {
                     OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:[NSBundle mainBundle]];
                     viewer.title = @"Type";
                     
-                    viewer.category = [catAndType objectAtIndex:0];
+                    viewer.category = [tagInterpreter.nameAndCategory objectForKey:nodeType.categoryName];
                     [viewer setDelegate:self];
                     NSLog(@"category previous: %@",viewer.category);
                     
@@ -470,7 +474,7 @@
     {
         [self showOauthError];
     }
-    else if (![theNewNode isequaltToPoint:node]) 
+    else if (![theNewPoint isequaltToPoint:point]) 
     {
         [self.navigationController.view addSubview:HUD];
         [HUD setLabelText:@"Saving..."];
@@ -479,38 +483,38 @@
         dispatch_async(q, ^{
             NSLog(@"saveBottoPressed");
             
-            [OPEOSMData backToHTML:theNewNode];
+            [OPEOSMData backToHTML:theNewPoint];
             
-            if(theNewNode.ident<0)
+            if(theNewPoint.ident<0)
             {
                 NSLog(@"Create Node");
-                int newIdent = [data createNode:theNewNode];
+                int newIdent = [data createNode:theNewPoint];
                 NSLog(@"New Id: %d", newIdent);
-                theNewNode.ident = newIdent;
-                theNewNode.version = 1;
-                node = theNewNode;
+                theNewPoint.ident = newIdent;
+                theNewPoint.version = 1;
+                point = theNewPoint;
                 if(delegate)
                 {
-                    [OPEOSMData HTMLFix:theNewNode];
+                    [OPEOSMData HTMLFix:theNewPoint];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                    [delegate createdNode:node];
+                    [delegate createdNode:point];
                     });
                 }
             }
             else
             {
                 NSLog(@"Update Node");
-                int version = [data updateNode:theNewNode];
+                int version = [data updateNode:theNewPoint];
                 NSLog(@"Version after update: %d",version);
-                theNewNode.version = version;
-                node = theNewNode;
+                theNewPoint.version = version;
+                point = theNewPoint;
                 if(delegate)
                 {
-                    [OPEOSMData HTMLFix:theNewNode];
+                    [OPEOSMData HTMLFix:theNewPoint];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                    [delegate updatedNode:node];
+                    [delegate updatedNode:point];
                     });
                 }
             }
@@ -571,14 +575,14 @@
             [HUD show:YES];
             dispatch_queue_t q = dispatch_queue_create("queue", NULL);
             dispatch_async(q, ^{
-                [OPEOSMData backToHTML:node];
+                [OPEOSMData backToHTML:point];
                 
                 OPEOSMData* data = [[OPEOSMData alloc] init];
-                [data deleteNode:node];
+                [data deleteNode:point];
                 if(delegate)
                 {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                    [delegate deletedNode:node];
+                    [delegate deletedNode:point];
                     });
                     
                 }
@@ -604,15 +608,15 @@
     
     if (![osmValue isEqualToString:@""]) 
     {
-        [theNewNode.tags setObject:osmValue forKey:osmKey];
+        [theNewPoint.tags setObject:osmValue forKey:osmKey];
     }
     else {
-        [theNewNode.tags removeObjectForKey:osmKey];
+        [theNewPoint.tags removeObjectForKey:osmKey];
     }
     [self reloadTags];
     [self checkSaveButton];
     [self.tableView reloadData];
-    NSLog(@"NewNode: %@",theNewNode.tags);
+    NSLog(@"NewNode: %@",theNewPoint.tags);
 }
 -(void) removeOptionalTags:(NSArray *)oldTableSections
 {
@@ -625,7 +629,7 @@
             {
                 if(![self tableSectionsContainsOsmKey:[oldRowDictionary objectForKey:@"osmKey"]])
                 {
-                    [self.theNewNode.tags removeObjectForKey:[oldRowDictionary objectForKey:@"osmKey"]];
+                    [self.theNewPoint.tags removeObjectForKey:[oldRowDictionary objectForKey:@"osmKey"]];
                     NSLog(@"Removed: %@",[oldRowDictionary objectForKey:@"osmKey"]);
                 }
                     
@@ -653,46 +657,45 @@
     return NO;
 }
 
-- (void) setCategoryAndType:(NSDictionary *)cAndT
+- (void) setNewType:(OPEType *)newType
 {
-    NSString * newCategory = [cAndT objectForKey:@"category"];
-    NSString * newType = [cAndT objectForKey:@"type"];
     
-    if ([catAndType count]==2) {
-        if (!([newCategory isEqualToString:[catAndType objectAtIndex:0]] && [newType isEqualToString:[catAndType objectAtIndex:1]])) {
-            [tagInterpreter removeCatAndType:[[NSDictionary alloc] initWithObjectsAndKeys:[catAndType objectAtIndex:1],[catAndType objectAtIndex:0], nil] fromNode:theNewNode];
+    if (nodeType) {
+        if (![nodeType isEqual:newType]) {
+            [tagInterpreter removeTagsForType:nodeType withNode:theNewPoint];
             
         }
     }
     
-    catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
+
+    nodeType = newType;
     NSArray * oldTableSections = [tableSections copy];
     [self reloadTags];
     [self removeOptionalTags:oldTableSections];
     
-    NSDictionary * KV = [tagInterpreter getOSmKeysValues:[[NSDictionary alloc] initWithObjectsAndKeys:newType,newCategory, nil]];
-    NSLog(@"catAndType: %@",cAndT);
+    NSDictionary * KV = [[tagInterpreter typeAndOsmKeyValue] objectForKey:newType];
+    NSLog(@"catAndType: %@",newType.description);
     //NSLog(@"KV: %@",osmKeyValue);
     
     
-    NSLog(@"ID: %d",theNewNode.ident);
-    NSLog(@"Version: %d",theNewNode.version);
-    NSLog(@"Lat: %f",theNewNode.coordinate.latitude);
-    NSLog(@"Lon: %f",theNewNode.coordinate.longitude);
-    NSLog(@"Tags: %@",theNewNode.tags);
+    NSLog(@"ID: %d",theNewPoint.ident);
+    NSLog(@"Version: %d",theNewPoint.version);
+    NSLog(@"Lat: %f",theNewPoint.coordinate.latitude);
+    NSLog(@"Lon: %f",theNewPoint.coordinate.longitude);
+    NSLog(@"Tags: %@",theNewPoint.tags);
     
-    [theNewNode.tags addEntriesFromDictionary:KV];
+    [theNewPoint.tags addEntriesFromDictionary:KV];
     
     
-    //NSLog(@"id: %@ \n version: %@ \n lat: %f \n lon: %f \n newTags: %@ \n ",theNewNode.ident,theNewNode.version,theNewNode.coordinate.latitude,theNewNode.coordinate.longitude,theNewNode.tags);
-    NSLog(@"ID: %d",theNewNode.ident);
-    NSLog(@"Version: %d",theNewNode.version);
-    NSLog(@"Lat: %f",theNewNode.coordinate.latitude);
-    NSLog(@"Lon: %f",theNewNode.coordinate.longitude);
-    NSLog(@"Tags: %@",theNewNode.tags);
-    theNewNode.image = [tagInterpreter getImageForNode:theNewNode];
+    //NSLog(@"id: %@ \n version: %@ \n lat: %f \n lon: %f \n newTags: %@ \n ",theNewPoint.ident,theNewPoint.version,theNewPoint.coordinate.latitude,theNewPoint.coordinate.longitude,theNewPoint.tags);
+    NSLog(@"ID: %d",theNewPoint.ident);
+    NSLog(@"Version: %d",theNewPoint.version);
+    NSLog(@"Lat: %f",theNewPoint.coordinate.latitude);
+    NSLog(@"Lon: %f",theNewPoint.coordinate.longitude);
+    NSLog(@"Tags: %@",theNewPoint.tags);
+    theNewPoint.image = [tagInterpreter getImageForNode:theNewPoint];
     
-    catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
+    //catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
     //[self.tableView reloadData];
     
     [self.tableView reloadData];
@@ -702,8 +705,8 @@
 
 - (void)checkSaveButton
 {
-    NSLog(@"cAndT count %d",[catAndType count]);
-    if([theNewNode isequaltToPoint:node] || [catAndType count]!=2)
+    //NSLog(@"cAndT count %d",[catAndType count]);
+    if([theNewPoint isequaltToPoint:point] || !nodeType)
     {
         NSLog(@"NO CHANGES YET");
         self.saveButton.enabled= NO;
@@ -718,7 +721,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
     [self.HUD hide:YES];
-    node = theNewNode;
+    point = theNewPoint;
     [self checkSaveButton];
     [self.navigationController popViewControllerAnimated:YES];
     });
