@@ -17,7 +17,6 @@
 -(id) initWithId:(int)i latitude:(double) la longitude:(double) lo version:(int) ve;
 -(id) initWithNode: (OPENode *) node;
 -(BOOL)onlyTagCreatedBy;
--(BOOL)hasNoTags;
 
 + (id) createPointWithXML:(TBXMLElement *)xml;
 

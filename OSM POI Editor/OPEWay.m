@@ -172,6 +172,15 @@
     return wayCopy;
 }
 
+-(BOOL)hasNoTags
+{
+    if(![self.tags count])
+    {
+        return YES;
+    }
+    return NO;
+}
+
 +(NSString *)uniqueIdentifierForID:(int)ident
 {
     return [NSString stringWithFormat:@"%@%d",kPointTypeWay,ident];

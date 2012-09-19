@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OPENode.h"
+#import "OPEpoint.h"
 #import "OPECategory.h"
 #import "OPEType.h"
 
@@ -24,13 +24,13 @@
 - (id) init;
 //- (BOOL) nodeHasRecognizedTags:(OPENode *)n;
 //- (NSDictionary *) getPrimaryKeyValue: (OPENode *)n;
-- (NSString *) category: (OPENode *)n; //getCategory
-- (OPEType *) type: (OPENode *)n; //getType
+- (NSString *) category: (id<OPEPoint>)n; //getCategory
+- (OPEType *) type: (id<OPEPoint>)n; //getType
 - (void) readPlist;
-- (NSString *) getName: (OPENode *) node;
-- (NSString *) getImageForNode: (OPENode *) node;
-- (void)removeTagsForType:(OPEType *)type withNode:(OPENode *)node;
-- (BOOL)isSupported:(OPENode *)node;
+- (NSString *) getName: (id<OPEPoint>) node;
+- (NSString *) getImageForNode: (id<OPEPoint>) node;
+- (void)removeTagsForType:(OPEType *)type withNode:(id<OPEPoint>)node;
+- (BOOL)isSupported:(id<OPEPoint>)node;
 - (NSDictionary *) allCategories;
 - (NSDictionary *) allTypes;
 

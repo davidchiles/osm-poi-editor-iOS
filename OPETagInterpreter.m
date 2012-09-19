@@ -30,12 +30,12 @@ static OPETagInterpreter *sharedManager = nil;
     return self;
 }
 
-- (NSString *) category: (OPENode *)node
+- (NSString *) category: (id<OPEPoint>)node
 {
     return [[self type:node] categoryName];
 }
 
--(OPEType *)type:(OPENode *)node
+-(OPEType *)type:(id<OPEPoint>)node
 {
     if([node hasNoTags])
     {
@@ -138,7 +138,7 @@ static OPETagInterpreter *sharedManager = nil;
 
 }
 
-- (NSString *) getName:(OPENode *)node
+- (NSString *) getName:(id<OPEPoint>)node
 {
     NSString * name = [node.tags objectForKey:@"name"];
     if(name)
@@ -152,18 +152,18 @@ static OPETagInterpreter *sharedManager = nil;
     return @"Unknown";
 }
 
-- (NSString *) getImageForNode: (OPENode *) node
+- (NSString *) getImageForNode: (id<OPEPoint>) node
 {
     return [[self type:node] imageString];
 }
 
-- (void)removeTagsForType:(OPEType *)type withNode:(OPENode *)node
+- (void)removeTagsForType:(OPEType *)type withNode:(id<OPEPoint>)node
 {
     [node.tags removeObjectsForKeys:type.tags.allKeys];
     //[node.tags removeObjectsForKeys:type.optionalTags];
 }
 
-- (BOOL)isSupported:(OPENode *)node
+- (BOOL)isSupported:(id<OPEPoint>)node
 {
     if([self type:node])
         return YES;
