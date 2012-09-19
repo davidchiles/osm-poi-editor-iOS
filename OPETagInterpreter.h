@@ -38,6 +38,7 @@
 //- (NSDictionary *) getOSmKeysValues: (NSDictionary *) catAndType;
 
 + (NSArray *) getOptionalTagsDictionaries: (NSArray *) array;
++ (NSArray *) getOptionalTagsKeys:(NSArray *)array;
 + (OPETagInterpreter *)sharedInstance;
 
 @end

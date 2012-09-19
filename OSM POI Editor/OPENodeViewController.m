@@ -16,6 +16,7 @@
 #import "OPEConstants.h"
 #import "OPEAPIConstants.h"
 #import "OPESpecialCell2.h"
+#import "OPEWay.h"
 
 
 
@@ -575,6 +576,49 @@
             [self.navigationController.view addSubview:HUD];
             [HUD setLabelText:@"Deleting..."];
             [HUD show:YES];
+            
+            if ([theNewPoint isKindOfClass:[OPEWay class]]) {
+                OPEOSMData* data = [[OPEOSMData alloc] init];
+                NSMutableArray * keysToRemove = [NSMutableArray arrayWithArray:[nodeType.tags allKeys]];
+                [keysToRemove addObject:@"name"];
+                [keysToRemove addObjectsFromArray:[OPETagInterpreter getOptionalTagsKeys:nodeType.optionalTags]];
+                [theNewPoint.tags removeObjectsForKeys:keysToRemove];
+                NSLog(@"Update Node");
+                int version = [data updateNode:theNewPoint];
+                NSLog(@"Version after update: %d",version);
+                theNewPoint.version = version;
+                point = theNewPoint;
+                if(delegate)
+                {
+                    [OPEOSMData HTMLFix:theNewPoint];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [delegate updatedNode:point];
+                    });
+                }
+
+            }
+            else
+            {
+                dispatch_queue_t q = dispatch_queue_create("queue", NULL);
+                dispatch_async(q, ^{
+                    [OPEOSMData backToHTML:point];
+                    
+                    OPEOSMData* data = [[OPEOSMData alloc] init];
+                    [data deleteNode:point];
+                    if(delegate)
+                    {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [delegate deletedNode:point];
+                        });
+                        
+                    }
+                });
+                
+                dispatch_release(q);
+            }
+            
+            
             dispatch_queue_t q = dispatch_queue_create("queue", NULL);
             dispatch_async(q, ^{
                 [OPEOSMData backToHTML:point];

@@ -170,6 +170,19 @@ static OPETagInterpreter *sharedManager = nil;
     return NO;
 }
 
++(NSArray *) getOptionalTagsKeys:(NSArray *)array
+{
+    NSArray * dictArray = [OPETagInterpreter getOptionalTagsDictionaries:array];
+    
+    NSMutableArray * finalArray = [[NSMutableArray alloc] init];
+    
+    for( NSDictionary * dict in dictArray)
+    {
+        [finalArray addObject:[dict objectForKey:@"osmKey"]];
+    }
+    return finalArray;
+}
+
 
 + (NSArray *) getOptionalTagsDictionaries: (NSArray *) tagArray
 {

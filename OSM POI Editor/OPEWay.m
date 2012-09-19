@@ -181,6 +181,11 @@
     return NO;
 }
 
+-(NSString *)deleteXMLWithChageset:(NSInteger) changesetNumber
+{
+    
+}
+
 +(NSString *)uniqueIdentifierForID:(int)ident
 {
     return [NSString stringWithFormat:@"%@%d",kPointTypeWay,ident];
