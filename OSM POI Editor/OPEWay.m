@@ -20,7 +20,7 @@
     return self;
 }
 
--(id)initWithArrayOfNodes:(NSArray *)arrayOfNodes tags:(NSMutableDictionary *)tagDictioanry ID:(int)i version:(int)version
+-(id)initWithArrayOfNodes:(NSArray *)arrayOfNodes tags:(NSMutableDictionary *)tagDictioanry ID:(int)i version:(int) newVersion
 {
     self = [self init];
     nodes = arrayOfNodes;
@@ -28,18 +28,19 @@
     
     self.ident = i;
     self.tags = tagDictioanry;
-    
+    self.version = newVersion;
     
     return self;
 }
 
--(id)initWithArrayOfNodes:(NSArray *)arrayOfNodes ID:(int)i version:(int)version
+-(id)initWithArrayOfNodes:(NSArray *)arrayOfNodes ID:(int)i version:(int)newVersion
 {
     self = [self init];
     nodes = arrayOfNodes;
     [self setLattitudeandLongitude];
     self.ident = i;
     self.tags = [NSMutableDictionary dictionary];
+    self.version = newVersion;
     
     return self;
 }
@@ -91,9 +92,9 @@
     }
 }
 
--(NSString *)exportXMLforChangset:(NSInteger)changesetNumber
+- (NSData * )XMLrepresentation:(NSInteger) changesetNumber;
 {
-    NSMutableString * xml = [NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
+    NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
     [xml appendString:[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"]];
     [xml appendFormat:@"<way id=\"%d\" version=\"%d\" changeset=\"%d\">",self.ident,self.version, changesetNumber];
     
@@ -108,7 +109,13 @@
     }
     [xml appendFormat: @"</way> @</osm>"];
     
-    return xml;
+    return [xml dataUsingEncoding:NSUTF8StringEncoding];
+    
+}
+
+- (NSData *) updateXMLforChangset: (NSInteger) changesetNumber;
+{
+    return  [self XMLrepresentation:changesetNumber];
 
 }
 

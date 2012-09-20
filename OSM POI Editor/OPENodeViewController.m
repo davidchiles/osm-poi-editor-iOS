@@ -593,7 +593,7 @@
                     [OPEOSMData HTMLFix:theNewPoint];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [delegate updatedNode:point];
+                        [delegate deletedNode:point];
                     });
                 }
 
@@ -617,24 +617,6 @@
                 
                 dispatch_release(q);
             }
-            
-            
-            dispatch_queue_t q = dispatch_queue_create("queue", NULL);
-            dispatch_async(q, ^{
-                [OPEOSMData backToHTML:point];
-                
-                OPEOSMData* data = [[OPEOSMData alloc] init];
-                [data deleteNode:point];
-                if(delegate)
-                {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                    [delegate deletedNode:point];
-                    });
-                    
-                }
-            });
-            
-            dispatch_release(q);
             
         }
         else if([title isEqualToString:@"Cancel"])

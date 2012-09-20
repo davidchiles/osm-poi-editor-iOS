@@ -147,7 +147,7 @@
     
 }
 
-- (NSString *) exportXMLforChangset: (NSInteger) changesetNumber
+- (NSData *) updateXMLforChangset: (NSInteger) changesetNumber
 {
     NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
     [xml appendString:@"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"];
@@ -160,7 +160,52 @@
     [xml appendFormat: @"</node> @</osm>"];
     
     
-    return xml;
+    return [xml dataUsingEncoding:NSUTF8StringEncoding];
+}
+
+- (NSData *) createXMLforChangset: (NSInteger) changesetNumber
+{
+    double lat = self.coordinate.latitude;
+    double lon = self.coordinate.longitude;
+    NSLog(@"upload lat: %f",lat);
+    NSLog(@"upload lon: %f",lon);
+    NSLog(@"changeset number: %d",changesetNumber);
+    
+    NSMutableData *nodeXML = [NSMutableData data];
+    
+    [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"<node lat=\"%f\" lon=\"%f\" changeset=\"%d\">",lat,lon, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
+    
+    for (NSString *k in self.tags)
+    {
+        [nodeXML appendData: [[NSString stringWithFormat: @"<tag k=\"%@\" v=\"%@\"/>",k,[self.tags objectForKey:k]] dataUsingEncoding: NSUTF8StringEncoding]];
+    }
+    
+    [nodeXML appendData: [[NSString stringWithFormat: @"</node>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    
+    return nodeXML;
+    
+}
+
+- (NSData *) deleteXMLforChangset: (NSInteger) changesetNumber
+{
+    double lat = self.coordinate.latitude;
+    double lon = self.coordinate.longitude;
+    NSLog(@"upload lat: %f",lat);
+    NSLog(@"upload lon: %f",lon);
+    NSLog(@"changeset number: %d",changesetNumber);
+    
+    NSMutableData *nodeXML = [NSMutableData data];
+    
+    [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"<node id=\"%d\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\"/>",self.ident,lat,lon,self.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    
+    return nodeXML;
+    
 }
 
 -(NSString *)type

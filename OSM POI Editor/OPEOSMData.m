@@ -239,10 +239,10 @@
     [request startAsynchronous];
 }
 
-- (int) createNode: (OPENode *) node
+- (int) createNode: (id<OPEPoint>) newPoint
 {
-    NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Created new POI: %@",[tagInterpreter getName:node]]];
-    int newIdent = [self createXmlNode:node withChangeset:changeset];
+    NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Created new POI: %@",[tagInterpreter getName:newPoint]]];
+    int newIdent = [self createXmlNode:newPoint withChangeset:changeset];
     [self closeChangeset:changeset];
     return newIdent;
     
@@ -256,7 +256,7 @@
     return version;
     
 }
-- (int) deleteNode: (OPENode *) node
+- (int) deleteNode: (id<OPEPoint>) node
 {
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Deleted POI: %@",[tagInterpreter getName:node]]];
     int version = [self deleteXmlNode:node withChangeset:changeset];
@@ -319,36 +319,24 @@
     return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
 }
 
-- (int) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
+- (int) updateXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber
 {
-    double lat = node.coordinate.latitude;
-    double lon = node.coordinate.longitude;
-    NSLog(@"upload lat: %f",lat);
-    NSLog(@"upload lon: %f",lon);
-    NSLog(@"changeset number: %d",changesetNumber);
     
-    //NSMutableData *nodeXML = [NSMutableData data];
+    NSData * nodeXML = [node updateXMLforChangset:changesetNumber];
     
-    NSData * nodeXML = [[node exportXMLforChangset:changesetNumber] dataUsingEncoding:NSUTF8StringEncoding];
-    
-    
-    /*
-    [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<node id=\"%d\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\">",node.ident,lat,lon,node.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
-    
-    for (NSString *k in node.tags)
-    {
-        [nodeXML appendData: [[NSString stringWithFormat: @"<tag k=\"%@\" v=\"%@\"/>",k,[node.tags objectForKey:k]] dataUsingEncoding: NSUTF8StringEncoding]];
-    }
-    
-    [nodeXML appendData: [[NSString stringWithFormat: @"</node>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
-     */
     
     NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
+    NSURL * url;
     
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%d",node.ident]];
+    if([node isKindOfClass:[OPENode class]] )
+    {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%d",node.ident]];
+    }
+    else
+    {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/way/%d",node.ident]];
+    }
+    
     NSLog(@"URL: %@",[url absoluteURL]);
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody: nodeXML];
@@ -361,27 +349,10 @@
     
 }
 
-- (int) createXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
+- (int) createXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber
 {
-    double lat = node.coordinate.latitude;
-    double lon = node.coordinate.longitude;
-    NSLog(@"upload lat: %f",lat);
-    NSLog(@"upload lon: %f",lon);
-    NSLog(@"changeset number: %d",changesetNumber);
     
-    NSMutableData *nodeXML = [NSMutableData data];
-    
-    [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<node lat=\"%f\" lon=\"%f\" changeset=\"%d\">",lat,lon, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
-    
-    for (NSString *k in node.tags)
-    {
-        [nodeXML appendData: [[NSString stringWithFormat: @"<tag k=\"%@\" v=\"%@\"/>",k,[node.tags objectForKey:k]] dataUsingEncoding: NSUTF8StringEncoding]];
-    }
-    
-    [nodeXML appendData: [[NSString stringWithFormat: @"</node>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    NSData *nodeXML = [node createXMLforChangset:changesetNumber];
     
     NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
     
@@ -397,22 +368,11 @@
     return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
 }
     
-- (int) deleteXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
+- (int) deleteXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber
 {
-    double lat = node.coordinate.latitude;
-    double lon = node.coordinate.longitude;
-    NSLog(@"upload lat: %f",lat);
-    NSLog(@"upload lon: %f",lon);
-    NSLog(@"changeset number: %d",changesetNumber);
     
-    NSMutableData *nodeXML = [NSMutableData data];
+    NSData *nodeXML = [node deleteXMLforChangset:changesetNumber];
     
-    [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<node id=\"%d\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\"/>",node.ident,lat,lon,node.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    
-    NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
     
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%d",node.ident]];
     NSLog(@"URL: %@",[url absoluteURL]);
@@ -460,7 +420,7 @@
     
 }
 
-+(void) HTMLFix:(OPENode *)node
++(void) HTMLFix:(id<OPEPoint>)node
 {
     NSMutableDictionary * fixedTags = [[NSMutableDictionary alloc] init];
     for(id item in node.tags)

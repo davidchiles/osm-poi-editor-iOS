@@ -12,6 +12,7 @@
 
 @protocol OPEPoint <NSObject>
 
+
 @property (nonatomic,assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) NSMutableDictionary* tags;
 @property int version;
@@ -25,8 +26,16 @@
 - (NSString *)uniqueIdentifier;
 - (BOOL)hasNoTags;
 
-- (NSString *) exportXMLforChangset: (NSInteger) changesetNumber;
+
+- (NSData *) updateXMLforChangset: (NSInteger) changesetNumber;
+
+
+
 - (id)copy;
 
 + (NSString *)uniqueIdentifierForID:(int)ident;
+
+@optional
+- (NSData *) createXMLforChangset: (NSInteger) changesetNumber;
+- (NSData *) deleteXMLforChangset: (NSInteger) changesetNumber;
 @end
