@@ -210,19 +210,6 @@
     }
     return wayDictionary;
 }
-/*
--(void) getData
-{
-    NSLog(@"box: %f,%f,%f,%f",bboxleft,bboxbottom,bboxright,bboxtop);
-    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[bbox=%f,%f,%f,%f][@meta]",bboxleft,bboxbottom,bboxright,bboxtop]];
-    NSLog(@"url: %@",[url absoluteString]);
-    
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"download",@"type", nil];
-    [request setDelegate:self];
-    [request startAsynchronous];
-}
-*/
  
 -(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
 {
@@ -247,12 +234,12 @@
     return newIdent;
     
 }
-- (int) updateNode: (OPENode *) node
+- (int) updateNode: (id<OPEPoint>) node
 {
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Updated existing POI: %@",[tagInterpreter getName:node]]];
     int version = [self updateXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
-    [ignoreNodes setObject:node forKey:[NSNumber numberWithInt:node.ident]];
+    [ignoreNodes setObject:node forKey:[node uniqueIdentifier]];
     return version;
     
 }

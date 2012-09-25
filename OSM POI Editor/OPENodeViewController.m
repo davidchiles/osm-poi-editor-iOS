@@ -571,7 +571,7 @@
     else if (alertView.tag == 1) {
         if([title isEqualToString:@"Yes"])
         {
-            NSLog(@"Button OK was selected.");
+            NSLog(@"Button YES was selected.");
             
             [self.navigationController.view addSubview:HUD];
             [HUD setLabelText:@"Deleting..."];

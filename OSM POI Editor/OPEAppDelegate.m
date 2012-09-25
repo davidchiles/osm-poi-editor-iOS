@@ -12,27 +12,26 @@
 @implementation OPEAppDelegate
 
 @synthesize window = _window;
-@synthesize viewController = _viewController;
 @synthesize navController = _navController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    /*
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         self.viewController = [[OPEViewController alloc] initWithNibName:@"OPEViewController_iPhone" bundle:nil];
     } else {
         self.viewController = [[OPEViewController alloc] initWithNibName:@"OPEViewController_iPad" bundle:nil];
     }
+     */
+    UIViewController *rootView = [[OPEViewController alloc] init];
+    //rootView.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    UIViewController *rootView = [[OPEViewController alloc]
-                                  initWithNibName:@"OPEViewController_iPhone"
-                                  bundle:nil];
     self.navController = [[UINavigationController alloc] initWithRootViewController:rootView];
     [[self window] setRootViewController:self.navController];
     
     
-    //self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     return YES;
 }

@@ -324,6 +324,8 @@
     [self.loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.loginButton.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
     
+    loginButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
     [self checkButtonStatus];
     
     [self.loginButton addTarget:self action:@selector(osmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
