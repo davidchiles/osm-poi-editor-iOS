@@ -20,18 +20,15 @@
 @interface OPEInfoViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UIButton * loginButton;
-@property (nonatomic, strong) IBOutlet UIButton * logoutButton;
-@property (nonatomic, strong) IBOutlet UITextView * textBox;
+@property (nonatomic, strong) UITableView * settingsTableView;
 @property (nonatomic, strong) id<OPEInfoViewControllerDelegate> delegate;
 @property (nonatomic) int currentNumber;
 
 - (IBAction)doneButtonPressed:(id)sender;
-- (IBAction)loginButtonPressed:(id)sender;
-- (IBAction)logoutButtonPressed:(id)sender;
 
--(void)osmButtonPressed:(id)sender;
 -(void)infoButtonPressed:(id)sender;
 
+- (BOOL)loggedIn;
 - (void) signInToOSM;
 - (GTMOAuthAuthentication *)osmAuth;
 - (void) signOutOfOSM;

@@ -16,16 +16,30 @@
 
 @implementation OPEInfoViewController
 
-@synthesize loginButton, logoutButton, textBox;
-@synthesize delegate, currentNumber;
+@synthesize delegate;
+@synthesize currentNumber;
+@synthesize settingsTableView;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)viewDidLoad
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    [super viewDidLoad];
+    
+    settingsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    [settingsTableView setDataSource:self];
+    [settingsTableView setDelegate:self];
+    settingsTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    
+    [self.loginButton addTarget:self action:@selector(osmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
+    if ([settings objectForKey:@"tileSourceNumber"]) {
+        currentNumber = [[settings objectForKey:@"tileSourceNumber"] intValue];
     }
-    return self;
+    else {
+        currentNumber = 0;
+    }
+    
+    [self.view addSubview:settingsTableView];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,22 +62,6 @@
     }
     NSLog(@"didAuth %d",didAuth);
     NSLog(@"canAuth %d",canAuth);
-}
-
-- (IBAction)loginButtonPressed:(id)sender
-{
-    NSLog(@"Login Button Pressed");
-    [self signInToOSM];
-    loginButton.hidden = YES;
-    logoutButton.hidden = NO;
-}
-
-- (IBAction)logoutButtonPressed:(id)sender
-{
-    NSLog(@"Logout Button Pressed");
-    [self signOutOfOSM];
-    loginButton.hidden = NO;
-    logoutButton.hidden = YES;
 }
 
 - (void)viewController:(GTMOAuthViewControllerTouch *)viewController
@@ -164,29 +162,7 @@
     [GTMOAuthViewControllerTouch removeParamsFromKeychainForName:@"OSMPOIEditor"];
     self.loginButton.tag = 0;
     [self.loginButton setTitle:@"Login to OSM" forState:UIControlStateNormal];
-}
-
-- (void) setLoginButtons
-{
-    GTMOAuthAuthentication *auth = [self osmAuth];
-    BOOL didAuth= NO;
-    BOOL canAuth= NO;
-    if (auth) {
-        didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor"
-                                                             authentication:auth];
-        canAuth = [auth canAuthorize];
-    }
-    if (didAuth && canAuth) {
-        loginButton.hidden = YES;
-        logoutButton.hidden = NO;
-    }
-    else
-    {
-        loginButton.hidden = NO;
-        logoutButton.hidden = YES; 
-    }
-
-    
+    [settingsTableView reloadData];
 }
 #pragma - TableView
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -249,12 +225,15 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:buttonIdentifier];
         }
-        loginButton.frame = cell.contentView.bounds;
-        NSLog(@"bounds: %f",cell.contentView.bounds.size.width);
-        NSLog(@"button: %f",loginButton.frame.size.width);
-        loginButton.frame = CGRectMake(loginButton.frame.origin.x, loginButton.frame.origin.y, 300.0f, loginButton.frame.size.height);
         
-        [cell.contentView addSubview:loginButton];
+        if(![self loggedIn])
+        {
+            cell.textLabel.text = @"Login to OpenStreetMap";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else
+            cell.textLabel.text = @"Logout of OpenStreetMap";
+        
     }
     else if (indexPath.section == 2)
     {
@@ -288,10 +267,21 @@
         [delegate setTileSource:newTileSource at:indexPath.row ];
         [self.navigationController popViewControllerAnimated:YES];
     }
-    if (indexPath.section == 2) {
+    else if (indexPath.section == 1)
+    {
+        if(![self loggedIn])
+        {
+            [self signInToOSM];
+        }
+        else
+            [self signOutOfOSM];
+        
+    }
+    else if (indexPath.section == 2) {
         [self infoButtonPressed:nil];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma - TileSource
@@ -307,40 +297,7 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    //[self setLoginButtons];
-    
-        // if the auth object contains an access token, didAuth is now true
-    
-    // retain the authentication object, which holds the auth tokens
-    //
-    // we can determine later if the auth object contains an access token
-    // by calling its -canAuthorize method
-    //[self setAuthentication:auth];
-    
-    self.loginButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [self.loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.loginButton.titleLabel.font = [UIFont boldSystemFontOfSize:17.0];
-    
-    loginButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    
-    [self checkButtonStatus];
-    
-    [self.loginButton addTarget:self action:@selector(osmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
-    if ([settings objectForKey:@"tileSourceNumber"]) {
-         currentNumber = [[settings objectForKey:@"tileSourceNumber"] intValue];
-    }
-    else {
-        currentNumber = 0;
-    }
-   
-    
-}
-
--(void)checkButtonStatus
+-(BOOL)loggedIn
 {
     GTMOAuthAuthentication *auth = [self osmAuth];
     BOOL didAuth= NO;
@@ -355,27 +312,16 @@
     if (didAuth && canAuth && hasAuth) {
         NSLog(@"All three true");
         
-        [self.loginButton setTitle:@"Logout of OSM" forState:UIControlStateNormal];
-        loginButton.tag = 1;
+        return YES;
     }
     else
     {
         NSLog(@"did: %@ can: %@ has: %@",(didAuth ? @"YES" : @"NO"),(canAuth ? @"YES" : @"NO"),(hasAuth ? @"YES" : @"NO"));
-        [self.loginButton setTitle:@"Login to OSM" forState:UIControlStateNormal];
-        loginButton.tag = 0;
+        return NO;
     }
     
 }
 
--(void)osmButtonPressed:(id)sender
-{
-    if (loginButton.tag == 0) {
-        [self signInToOSM];
-    }
-    else {
-        [self signOutOfOSM];
-    }
-}
 -(void)infoButtonPressed:(id)sender
 {
     OPECreditViewController * view = [[OPECreditViewController alloc] init];
@@ -402,11 +348,16 @@
     return nil;
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    
+    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
         
 }
 

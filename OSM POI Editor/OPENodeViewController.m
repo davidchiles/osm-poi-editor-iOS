@@ -23,7 +23,7 @@
 @implementation OPENodeViewController
 
 @synthesize point, theNewPoint;
-@synthesize tableView;
+@synthesize nodeInfoTableView;
 @synthesize deleteButton, saveButton;
 @synthesize delegate;
 @synthesize nodeIsEdited;
@@ -61,25 +61,45 @@
     
     [[self navigationItem] setRightBarButtonItem:saveButton];
     
+    nodeInfoTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    [nodeInfoTableView setDataSource:self];
+    [nodeInfoTableView setDelegate:self];
+    nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
-    [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
-                                           stretchableImageWithLeftCapWidth:8.0f
-                                           topCapHeight:0.0f]
-                                 forState:UIControlStateNormal];
     
-    [self.deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.deleteButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    self.deleteButton.titleLabel.shadowColor = [UIColor lightGrayColor];
-    self.deleteButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
-    //self.deleteButton.frame = CGRectMake(0, 0, 300, 44);
-    [self.deleteButton addTarget:self action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    if (point.ident>0) {
+        deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
+        [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
+                                               stretchableImageWithLeftCapWidth:8.0f
+                                               topCapHeight:0.0f]
+                                     forState:UIControlStateNormal];
+        
+        [self.deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.deleteButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+        self.deleteButton.titleLabel.shadowColor = [UIColor lightGrayColor];
+        self.deleteButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
+        //self.deleteButton.frame = CGRectMake(0, 0, 300, 44);
+        [self.deleteButton addTarget:self action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        self.deleteButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        
+        UIView * footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, nodeInfoTableView.frame.size.width, 50)];
+        self.deleteButton.frame = CGRectMake(10, 0, nodeInfoTableView.frame.size.width-20, 46);
+        footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [footerView addSubview:deleteButton];
+        
+        
+        self.nodeInfoTableView.tableFooterView = footerView;
+        //self.nodeInfoTableView.tableFooterView.frame = CGRectMake(0, 0, 300, 50);
+        //[nodeInfoTableView setContentOffset:CGPointMake(0, nodeInfoTableView.contentSize.height-50) animated:YES];
+    }
+    
     
     
 
     [self checkSaveButton];
     
+    [self.view addSubview:nodeInfoTableView];
     
     tagInterpreter = [OPETagInterpreter sharedInstance];
     
@@ -116,10 +136,7 @@
     NSDictionary * noteSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Note",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"text",@"values",@"note",@"osmKey",@"Note",@"name", nil]],@"rows", nil];
     [tableSections addObject: noteSection];
     
-    if (point.ident>0) {
-        NSDictionary * deleteSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"deleteButton",@"values", nil]],@"rows", nil];
-        [tableSections addObject: deleteSection];
-    }
+    
     //NSLog(@"Table sections: %@",tableSections);
     
 }
@@ -214,7 +231,7 @@
     {
         if ([[cellDictionary objectForKey:@"values"]  count] <= 3)
         {
-            OPEBinaryCell * aCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
+            OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
             if (aCell == nil) {
                 aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[[cellDictionary objectForKey:@"values"] allKeys] withTextWidth:optionalTagWidth];
                 
@@ -237,7 +254,7 @@
         }
         else {
             OPESpecialCell2 * specialCell;
-            specialCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
+            specialCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
             if (specialCell == nil) {
                 specialCell = [[OPESpecialCell2 alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecial2 withTextWidth:optionalTagWidth];
             }
@@ -257,7 +274,7 @@
     }
     else {
         if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:KTypeName]) { //Text editing
-            cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
             }
@@ -265,7 +282,7 @@
             cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         }
         else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"category"]) { //special category
-            cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
             }
@@ -284,7 +301,7 @@
         }
         else if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] ||[[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone])
         {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
             }
@@ -295,7 +312,7 @@
         }
         else if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeBinary])
         {
-            OPEBinaryCell * aCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierBinary];
+            OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierBinary];
             if (aCell == nil) {
                 aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierBinary];
             }
@@ -323,17 +340,17 @@
         }
         else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"deleteButton"])
         {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierDelete];
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierDelete];
             if(cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierDelete];
             }
             
-            deleteButton.frame = cell.contentView.bounds;
+            //deleteButton.frame = cell.contentView.bounds;
             NSLog(@"bounds: %f",cell.contentView.bounds.size.width);
             NSLog(@"button: %f",deleteButton.frame.size.width);
-            deleteButton.frame = CGRectMake(deleteButton.frame.origin.x, deleteButton.frame.origin.y, 300.0f, deleteButton.frame.size.height);
+            //deleteButton.frame = CGRectMake(deleteButton.frame.origin.x, deleteButton.frame.origin.y, 300.0f, deleteButton.frame.size.height);
             
-            [cell.contentView addSubview:deleteButton];
+            //[cell.contentView addSubview:deleteButton];
         }
     }
 
@@ -368,7 +385,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
-    if ([[self.tableView cellForRowAtIndexPath:indexPath] isKindOfClass:[OPEBinaryCell class]])
+    if ([[tableView cellForRowAtIndexPath:indexPath] isKindOfClass:[OPEBinaryCell class]])
     {
         //binary or 3 way type
     }
@@ -428,9 +445,8 @@
             }
         }
     }
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
      NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
@@ -643,7 +659,7 @@
     }
     [self reloadTags];
     [self checkSaveButton];
-    [self.tableView reloadData];
+    [nodeInfoTableView reloadData];
     NSLog(@"NewNode: %@",theNewPoint.tags);
 }
 -(void) removeOptionalTags:(NSArray *)oldTableSections
@@ -726,7 +742,7 @@
     //catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
     //[self.tableView reloadData];
     
-    [self.tableView reloadData];
+    [nodeInfoTableView reloadData];
 }
 
 
@@ -757,7 +773,7 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    [self.tableView reloadData];
+    [nodeInfoTableView reloadData];
     [self checkSaveButton];
     
 }

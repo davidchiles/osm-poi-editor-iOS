@@ -17,7 +17,7 @@
 #import "OPEMessage.h"
 
 @interface OPEViewController : UIViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate > {
-    IBOutlet RMMapView* mapView;
+    RMMapView* mapView;
     
 }
 
@@ -25,9 +25,9 @@
 @property (nonatomic,strong) CLLocationManager* locationManager;
 @property (nonatomic,strong) OPETagInterpreter * interpreter;
 
-@property (nonatomic,strong) IBOutlet UIBarButtonItem * infoButton;
-@property (nonatomic,strong) IBOutlet UIBarButtonItem * location;
-@property (nonatomic,strong) IBOutlet UIBarButtonItem * addOPEPoint;
+@property (nonatomic,strong) UIBarButtonItem * infoButton;
+@property (nonatomic,strong) UIBarButtonItem * location;
+@property (nonatomic,strong) UIBarButtonItem * addOPEPoint;
 @property (nonatomic,strong) RMMarker *openMarker;
 @property (nonatomic,strong) RMMarker *theNewMarker;
 @property (nonatomic,strong) UIView * label;

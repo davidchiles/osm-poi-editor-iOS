@@ -241,7 +241,6 @@
 		6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0414DB54A200448852 /* QuartzCore.framework */; };
 		6330AC0714DB5E4D00448852 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0614DB5E4D00448852 /* CoreLocation.framework */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
-		6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6345E57F14E3122900F55486 /* OPENodeViewController.xib */; };
 		635E0291151BB94F00B6BBCE /* center.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E028B151BB94F00B6BBCE /* center.png */; };
 		635E0292151BB94F00B6BBCE /* center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E028C151BB94F00B6BBCE /* center@2x.png */; };
 		635E0293151BB94F00B6BBCE /* left.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E028D151BB94F00B6BBCE /* left.png */; };
@@ -252,7 +251,6 @@
 		6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6370D354151A8BAE0081206A /* libsqlite3.dylib */; };
 		637A89FE14E1C340003F656F /* SPOI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 637A89FD14E1C340003F656F /* SPOI.bundle */; };
 		6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */; };
-		6383948214EC4DDD00C74A57 /* OPEInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6383948014EC4DDD00C74A57 /* OPEInfoViewController.xib */; };
 		6383949414EC7DAC00C74A57 /* GTMOAuthViewControllerTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383948C14EC7DAC00C74A57 /* GTMOAuthViewControllerTouch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6383949514EC7DAC00C74A57 /* GTMOAuthAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383948E14EC7DAC00C74A57 /* GTMOAuthAuthentication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6383949614EC7DAC00C74A57 /* GTMOAuthSignIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383949014EC7DAC00C74A57 /* GTMOAuthSignIn.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -617,7 +615,6 @@
 		6330AC0614DB5E4D00448852 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
-		6345E57F14E3122900F55486 /* OPENodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPENodeViewController.xib; sourceTree = "<group>"; };
 		635E028B151BB94F00B6BBCE /* center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = center.png; sourceTree = "<group>"; };
 		635E028C151BB94F00B6BBCE /* center@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "center@2x.png"; sourceTree = "<group>"; };
 		635E028D151BB94F00B6BBCE /* left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left.png; sourceTree = "<group>"; };
@@ -630,7 +627,6 @@
 		637A89FD14E1C340003F656F /* SPOI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SPOI.bundle; sourceTree = "<group>"; };
 		6383947E14EC4DDD00C74A57 /* OPEInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEInfoViewController.h; sourceTree = "<group>"; };
 		6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEInfoViewController.m; sourceTree = "<group>"; };
-		6383948014EC4DDD00C74A57 /* OPEInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPEInfoViewController.xib; sourceTree = "<group>"; };
 		6383948B14EC7DAC00C74A57 /* GTMOAuthViewControllerTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuthViewControllerTouch.h; sourceTree = "<group>"; };
 		6383948C14EC7DAC00C74A57 /* GTMOAuthViewControllerTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMOAuthViewControllerTouch.m; sourceTree = "<group>"; };
 		6383948D14EC7DAC00C74A57 /* GTMOAuthAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuthAuthentication.h; sourceTree = "<group>"; };
@@ -1125,7 +1121,6 @@
 				6330AB8114DB519A00448852 /* OPEViewController.m */,
 				6345E57D14E3122900F55486 /* OPENodeViewController.h */,
 				6345E57E14E3122900F55486 /* OPENodeViewController.m */,
-				6345E57F14E3122900F55486 /* OPENodeViewController.xib */,
 				63CB49D014E9C5A0008C4551 /* OPETextEdit.h */,
 				63CB49D114E9C5A0008C4551 /* OPETextEdit.m */,
 				63CB49D214E9C5A0008C4551 /* OPETextEdit.xib */,
@@ -1139,7 +1134,6 @@
 				6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */,
 				63E525CF1534D90200D2DA35 /* OPECreditViewController.h */,
 				63E525D01534D90200D2DA35 /* OPECreditViewController.m */,
-				6383948014EC4DDD00C74A57 /* OPEInfoViewController.xib */,
 				6330AB7514DB519A00448852 /* Supporting Files */,
 				632573DC152108C300478B78 /* MapSources */,
 			);
@@ -1470,11 +1464,9 @@
 				6330AB7914DB519A00448852 /* InfoPlist.strings in Resources */,
 				637A89FE14E1C340003F656F /* SPOI.bundle in Resources */,
 				63E279F014E2073C009D02BD /* Blue_Marker.png in Resources */,
-				6345E58114E3122900F55486 /* OPENodeViewController.xib in Resources */,
 				63CB49D414E9C5A0008C4551 /* OPETextEdit.xib in Resources */,
 				63CB49DE14E9DE7B008C4551 /* OPECategoryViewController.xib in Resources */,
 				63CB49E314E9E3BF008C4551 /* OPETypeViewController.xib in Resources */,
-				6383948214EC4DDD00C74A57 /* OPEInfoViewController.xib in Resources */,
 				6383949814EC7DAC00C74A57 /* GTMOAuthViewTouch.xib in Resources */,
 				63F9CCA514F32B2E00308DE1 /* iphone_delete_button.png in Resources */,
 				635E0291151BB94F00B6BBCE /* center.png in Resources */,

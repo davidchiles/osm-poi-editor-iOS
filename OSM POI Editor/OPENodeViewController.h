@@ -26,7 +26,6 @@
 
 @interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, editTagDelegate, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate>
 {
-    UITableView *tableView;
     OPETagInterpreter * tagInterpreter;
     NSDictionary * osmKeyValue;
     float optionalTagWidth;
@@ -34,10 +33,10 @@
 
 @property (nonatomic, strong) id<OPEPoint> point;
 @property (nonatomic, strong) id<OPEPoint> theNewPoint;
-@property (nonatomic, strong) IBOutlet UITableView* tableView;
+@property (nonatomic, strong) UITableView * nodeInfoTableView;
 @property (nonatomic, strong) OPEType * nodeType;
 @property (nonatomic, strong) NSString * type;
-@property (nonatomic, strong) IBOutlet UIButton * deleteButton;
+@property (nonatomic, strong) UIButton * deleteButton;
 @property (nonatomic, strong) UIBarButtonItem * saveButton;
 @property (nonatomic, strong) id <OPENodeViewDelegate> delegate;
 @property (nonatomic) BOOL nodeIsEdited;

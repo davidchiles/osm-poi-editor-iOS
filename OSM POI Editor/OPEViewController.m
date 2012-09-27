@@ -335,7 +335,7 @@
 {
     NSLog(@"hello %@",layer.name);
     nodeInfo = marker;
-    OPENodeViewController * nodeVC = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
+    OPENodeViewController * nodeVC = [[OPENodeViewController alloc] init];
     
     nodeVC.title = @"Node Info";
     nodeVC.point = (id<OPEPoint>)marker.data;
@@ -597,7 +597,7 @@
 - (IBAction)infoButtonPressed:(id)sender
 {
     //NSLog(@"info button pressed");
-    OPEInfoViewController * viewer = [[OPEInfoViewController alloc] initWithNibName:@"OPEInfoViewController" bundle:nil];
+    OPEInfoViewController * viewer = [[OPEInfoViewController alloc] init];
     [viewer setDelegate:self];
     //[viewer setCurrentNumber:currentTile];
     viewer.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
