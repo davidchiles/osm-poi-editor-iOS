@@ -16,6 +16,8 @@
 -(id)initWithArrayOfNodes:(NSArray *)arrayOfNodes tags:(NSMutableDictionary *)tagDictioanry ID: (int) i version:(int) version ;
 -(id)initWithArrayOfNodes:(NSArray *)arrayOfNodes ID: (int) i version:(int) version;
 
+-(void)prepareToDelete:(NSArray *)keys;
+
 + (id)createPointWithXML:(TBXMLElement *)xml nodes:(NSDictionary *)nodes;
 
 

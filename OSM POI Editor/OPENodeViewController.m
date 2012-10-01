@@ -598,7 +598,7 @@
                 NSMutableArray * keysToRemove = [NSMutableArray arrayWithArray:[nodeType.tags allKeys]];
                 [keysToRemove addObject:@"name"];
                 [keysToRemove addObjectsFromArray:[OPETagInterpreter getOptionalTagsKeys:nodeType.optionalTags]];
-                [theNewPoint.tags removeObjectsForKeys:keysToRemove];
+                [((OPEWay *)theNewPoint) prepareToDelete:keysToRemove];
                 NSLog(@"Update Node");
                 int version = [data updateNode:theNewPoint];
                 NSLog(@"Version after update: %d",version);
@@ -664,10 +664,10 @@
 }
 -(void) removeOptionalTags:(NSArray *)oldTableSections
 {
-    for(int i = 2; i<[oldTableSections count]-2; i++)
+    for(int i = 2; i<[oldTableSections count]; i++)
     {
         NSDictionary * oldSectionDictionary = [oldTableSections objectAtIndex:i];
-        if (![[oldSectionDictionary objectForKey:@"section"] isEqualToString:@"Address"]) {
+        if (!([[oldSectionDictionary objectForKey:@"section"] isEqualToString:@"Address"] | [[oldSectionDictionary objectForKey:@"section"] isEqualToString:@"Note"] | [[oldSectionDictionary objectForKey:@"section"] isEqualToString:@"Name"])) {
             NSArray * oldRowArray = [ oldSectionDictionary objectForKey:@"rows"];
             for (NSDictionary * oldRowDictionary in oldRowArray)
             {

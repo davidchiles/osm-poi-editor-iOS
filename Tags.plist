@@ -270,7 +270,9 @@
 				<string>smoking</string>
 				<string>address</string>
 				<string>wheelchair</string>
-				<string>wifi</string>
+				<string>internet_access</string>
+				<string>internet_access_fee</string>
+				<string>takeaway</string>
 			</array>
 		</dict>
 		<key>Drinking Water</key>
@@ -346,6 +348,7 @@
 				<string>wheelchair</string>
 				<string>microbrewery</string>
 				<string>address</string>
+				<string>takeaway</string>
 			</array>
 		</dict>
 		<key>Restaurant</key>
@@ -365,7 +368,9 @@
 				<string>drive_in</string>
 				<string>address</string>
 				<string>wheelchair</string>
-				<string>wifi</string>
+				<string>internet_access</string>
+				<string>internet_access_fee</string>
+				<string>takeaway</string>
 			</array>
 		</dict>
 		<key>Bakery</key>
@@ -840,6 +845,10 @@
 		</dict>
 		<key>Tower</key>
 		<dict>
+			<key>optional</key>
+			<array>
+				<string>tower:type</string>
+			</array>
 			<key>image</key>
 			<string>tower.png</string>
 			<key>tags</key>
@@ -876,6 +885,21 @@
 	</dict>
 	<key>Other</key>
 	<dict>
+		<key>Fitness Center/Gym</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>leisure</key>
+				<string>sports_centre</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
 		<key>Emergency Phone</key>
 		<dict>
 			<key>image</key>
@@ -1071,6 +1095,34 @@
 				<key>natural</key>
 				<string>volcano</string>
 			</dict>
+		</dict>
+		<key>Swimming Pool</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>leisure</key>
+				<string>swimming_pool</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>swimming_pool_access</string>
+			</array>
+		</dict>
+		<key>Shelter</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>shelter</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>shelter_type</string>
+			</array>
 		</dict>
 	</dict>
 	<key>Place of Worship</key>
@@ -2308,10 +2360,11 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
-				<string>wifi</string>
+				<string>internet_access</string>
+				<string>internet_access_fee</string>
 			</array>
 		</dict>
-		<key>Tourism Information</key>
+		<key>Guidepost</key>
 		<dict>
 			<key>image</key>
 			<string>info.png</string>
@@ -2319,11 +2372,63 @@
 			<dict>
 				<key>tourism</key>
 				<string>information</string>
+				<key>information</key>
+				<string>guidepost</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>ski_guidepost</string>
+				<string>hiking_guidepost</string>
+				<string>bicycle_guidepost</string>
+			</array>
+		</dict>
+		<key>Map</key>
+		<dict>
+			<key>image</key>
+			<string>info.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>information</string>
+				<key>information</key>
+				<string>map</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>map_type</string>
+				<string>map_size</string>
+			</array>
+		</dict>
+		<key>Information Board</key>
+		<dict>
+			<key>image</key>
+			<string>info.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>information</string>
+				<key>information</key>
+				<string>board</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>board_type</string>
+			</array>
+		</dict>
+		<key>Tourism Information Office</key>
+		<dict>
+			<key>image</key>
+			<string>info.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>information</string>
+				<key>information</key>
+				<string>office</string>
 			</dict>
 			<key>optional</key>
 			<array>
 				<string>address</string>
-				<string>information</string>
 			</array>
 		</dict>
 		<key>Camp Site</key>
@@ -2431,7 +2536,8 @@
 			<key>optional</key>
 			<array>
 				<string>wheelchair</string>
-				<string>wifi</string>
+				<string>internet_access</string>
+				<string>internet_access_fee</string>
 				<string>address</string>
 				<string>smoking</string>
 			</array>
@@ -2448,7 +2554,8 @@
 			<key>optional</key>
 			<array>
 				<string>wheelchair</string>
-				<string>wifi</string>
+				<string>internet_access</string>
+				<string>internet_access_fee</string>
 				<string>address</string>
 				<string>smoking</string>
 			</array>
@@ -2508,7 +2615,8 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
-				<string>wifi</string>
+				<string>internet_access</string>
+				<string>internet_access_fee</string>
 				<string>smoking</string>
 			</array>
 		</dict>
@@ -2711,6 +2819,7 @@
 			</dict>
 			<key>optional</key>
 			<array>
+				<string>operator</string>
 				<string>wheelchair</string>
 				<string>address</string>
 			</array>
@@ -2824,7 +2933,8 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
-				<string>wifi</string>
+				<string>internet_access</string>
+				<string>internet_access_fee</string>
 			</array>
 		</dict>
 		<key>Train Platform</key>

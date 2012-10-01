@@ -188,8 +188,11 @@
     return NO;
 }
 
--(NSString *)deleteXMLWithChageset:(NSInteger) changesetNumber
+-(void)prepareToDelete:(NSArray *)keys
 {
+    NSMutableSet * tempSet = [NSMutableSet setWithArray:keys];
+    [tempSet minusSet:[NSSet setWithObjects:@"addr:housenumber",@"addr:street",@"addr:city",@"addr:postcode",@"addr:state",@"addr:country", @"addr:province",nil]];
+    [self.tags removeObjectsForKeys:[tempSet allObjects]];
     
 }
 
@@ -197,6 +200,8 @@
 {
     return [NSString stringWithFormat:@"%@%d",kPointTypeWay,ident];
 }
+
+
 
 
 @end

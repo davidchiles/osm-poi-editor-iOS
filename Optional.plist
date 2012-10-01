@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>tower:type</key>
+	<dict>
+		<key>name</key>
+		<string>Tower Type</string>
+		<key>osmKey</key>
+		<string>tower:type</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Communication</key>
+			<string>communication</string>
+			<key>Observation</key>
+			<string>observation</string>
+			<key>Bell Tower</key>
+			<string>bell_tower</string>
+			<key>Defensive</key>
+			<string>defensive</string>
+		</dict>
+	</dict>
 	<key>microbrewery</key>
 	<dict>
 		<key>name</key>
@@ -387,6 +407,108 @@
 			<string>no</string>
 		</dict>
 	</dict>
+	<key>internet_access</key>
+	<dict>
+		<key>name</key>
+		<string>Internet</string>
+		<key>osmKey</key>
+		<string>internet_access</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+			<key>Terminal</key>
+			<string>terminal</string>
+			<key>Wired</key>
+			<string>wired</string>
+			<key>Wifi</key>
+			<string>wlan</string>
+		</dict>
+	</dict>
+	<key>internet_access_fee</key>
+	<dict>
+		<key>name</key>
+		<string>Internet Fee</string>
+		<key>osmKey</key>
+		<string>internet_access:fee</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>takeaway</key>
+	<dict>
+		<key>name</key>
+		<string>Takeaway</string>
+		<key>osmKey</key>
+		<string>takeaway</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+			<key>Only</key>
+			<string>only</string>
+		</dict>
+	</dict>
+	<key>swimming_pool_access</key>
+	<dict>
+		<key>name</key>
+		<string>Access</string>
+		<key>osmKey</key>
+		<string>access</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Private</key>
+			<string>private</string>
+			<key>Permissive</key>
+			<string>permissive</string>
+			<key>Customer</key>
+			<string>customer</string>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>shelter_type</key>
+	<dict>
+		<key>name</key>
+		<string>Type</string>
+		<key>osmKey</key>
+		<string>shelter_type</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Weather Shelter</key>
+			<string>weather_shelter</string>
+			<key>Basic Hut</key>
+			<string>basic_hut</string>
+			<key>Lean-to</key>
+			<string>lean-to</string>
+			<key>Picnic Shelter</key>
+			<string>picnic_shelter</string>
+			<key>Rock Shelter</key>
+			<string>rock_shelter</string>
+			<key>Public Transport</key>
+			<string>public_transport</string>
+		</dict>
+	</dict>
 	<key>wifi</key>
 	<dict>
 		<key>name</key>
@@ -419,6 +541,126 @@
 			<string>yes</string>
 			<key>No</key>
 			<string>no</string>
+		</dict>
+	</dict>
+	<key>map_size</key>
+	<dict>
+		<key>name</key>
+		<string>Size</string>
+		<key>osmKey</key>
+		<string>map_size</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Building</key>
+			<string>building</string>
+			<key>Site</key>
+			<string>site</string>
+			<key>City</key>
+			<string>city</string>
+			<key>Region</key>
+			<string>region</string>
+			<key>Village</key>
+			<string>village</string>
+		</dict>
+	</dict>
+	<key>map_type</key>
+	<dict>
+		<key>name</key>
+		<string>Type</string>
+		<key>osmKey</key>
+		<string>map_type</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Topo</key>
+			<string>topo</string>
+			<key>Street</key>
+			<string>street</string>
+			<key>Scheme</key>
+			<string>scheme</string>
+			<key>Aerial Photograph</key>
+			<string>orthophoto</string>
+		</dict>
+	</dict>
+	<key>ski_guidepost</key>
+	<dict>
+		<key>name</key>
+		<string>Skiing</string>
+		<key>osmKey</key>
+		<string>ski</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>hiking_guidepost</key>
+	<dict>
+		<key>name</key>
+		<string>Hiking</string>
+		<key>osmKey</key>
+		<string>hiking</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>bicycle_guidepost</key>
+	<dict>
+		<key>name</key>
+		<string>Biking</string>
+		<key>osmKey</key>
+		<string>bicycle</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
+	<key>board_type</key>
+	<dict>
+		<key>name</key>
+		<string>Type</string>
+		<key>osmKey</key>
+		<string>board_type</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Art</key>
+			<string>art</string>
+			<key>Geology</key>
+			<string>geology</string>
+			<key>History</key>
+			<string>history</string>
+			<key>Nature</key>
+			<string>nature</string>
+			<key>Notice</key>
+			<string>notice</string>
+			<key>Plants</key>
+			<string>plants</string>
+			<key>Public Transport</key>
+			<string>public_transport</string>
+			<key>Wildlife</key>
+			<string>wildlife</string>
+			<key>Technology</key>
+			<string>technology</string>
 		</dict>
 	</dict>
 	<key>information</key>
