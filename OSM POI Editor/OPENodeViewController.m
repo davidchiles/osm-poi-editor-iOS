@@ -404,7 +404,7 @@
     }
     else {
         if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone] || [[cellDictionary objectForKey:@"values"] isEqualToString:KTypeName] ){ //Text editing
-            OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
+            OPETextEdit * viewer = [[OPETextEdit alloc] init];
             viewer.title = [cellDictionary objectForKey:@"name"];
             viewer.osmValue = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             viewer.osmKey = [cellDictionary objectForKey:@"osmKey"];
