@@ -12,6 +12,7 @@
 #import "RMMarker.h"
 #import "RMMarkerManager.h"
 #import "OPEStamenTerrain.h"
+#import "OPEPoint.h"
 
 
 @implementation OPEViewController
@@ -37,12 +38,39 @@
 
 #define MINZOOM 17.0
 
+-(void)setupButtons
+{
+    
+    UIBarButtonItem * locationBarButton;
+    UIBarButtonItem * addBarButton;
+    UIBarButtonItem * settingsBarButton;
+    
+    locationBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"location.png"]style:UIBarButtonItemStylePlain target:self action:@selector(locationButtonPressed:)];
+    
+    addBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPointButtonPressed:)];
+    
+    settingsBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gear.png"] style:UIBarButtonItemStylePlain target:self action:@selector(infoButtonPressed:)];
+    
+    UIBarButtonItem * flexibleSpaceBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    mapView = [[RMMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
+    mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    [self.view addSubview:mapView];
+    
+    
+    self.toolbarItems = [NSArray arrayWithObjects:locationBarButton,flexibleSpaceBarItem,addBarButton,flexibleSpaceBarItem,settingsBarButton, nil];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    [self setupButtons];
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.navigationController setToolbarHidden:NO animated:NO];
     //Check OAuth
     
     
@@ -307,17 +335,17 @@
 {
     NSLog(@"hello %@",layer.name);
     nodeInfo = marker;
-    OPENodeViewController * viewer = [[OPENodeViewController alloc] initWithNibName:@"OPENodeViewController" bundle:nil];
+    OPENodeViewController * nodeVC = [[OPENodeViewController alloc] init];
     
-    viewer.title = @"Node Info";
-    viewer.node = (OPENode *)marker.data;
-    [viewer setDelegate:self];
+    nodeVC.title = @"Node Info";
+    nodeVC.point = (id<OPEPoint>)marker.data;
+    [nodeVC setDelegate:self];
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
     
     [[self navigationItem] setBackBarButtonItem: newBackButton];
     
-    [self.navigationController pushViewController:viewer animated:YES];
+    [self.navigationController pushViewController:nodeVC animated:YES];
 }
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
@@ -493,22 +521,22 @@
 {
     [mapView.markerManager removeMarker:nodeInfo];
     [self addMarkerAt:newNode.coordinate withNode:newNode];
-    [self.osmData.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+    [self.osmData.allNodes setObject:newNode forKey:[newNode uniqueIdentifier]];
 }
 -(void) createdNode:(OPENode *)newNode
 {
-    NSLog(@"Created New Node: %d",newNode.ident);
+    NSLog(@"Created New Node: %@",[newNode uniqueIdentifier]);
     [mapView.markerManager removeMarker:nodeInfo];
     [self addMarkerAt:newNode.coordinate withNode:newNode];
-    [self.osmData.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+    [self.osmData.allNodes setObject:newNode forKey:[newNode uniqueIdentifier]];
     theNewMarker = nil;
     
 }
 -(void) deletedNode:(OPENode *)newNode
 {
     [mapView.markerManager removeMarker:nodeInfo];
-    [self.osmData.allNodes removeObjectForKey:[NSNumber numberWithInt:newNode.ident]];
-    [self.osmData.ignoreNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
+    [self.osmData.allNodes removeObjectForKey:[newNode uniqueIdentifier]];
+    [self.osmData.ignoreNodes setObject:newNode forKey:[newNode uniqueIdentifier]];
 }
 
 #pragma - InfoViewDelegate
@@ -569,7 +597,7 @@
 - (IBAction)infoButtonPressed:(id)sender
 {
     //NSLog(@"info button pressed");
-    OPEInfoViewController * viewer = [[OPEInfoViewController alloc] initWithNibName:@"OPEInfoViewController" bundle:nil];
+    OPEInfoViewController * viewer = [[OPEInfoViewController alloc] init];
     [viewer setDelegate:self];
     //[viewer setCurrentNumber:currentTile];
     viewer.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
@@ -591,6 +619,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController setToolbarHidden:NO animated:YES];
     
 }
 
@@ -603,6 +632,7 @@
 {
 	[super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

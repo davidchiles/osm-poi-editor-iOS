@@ -13,6 +13,8 @@
 #import "ASIFormDataRequest.h"
 #import "GTMOAuthViewControllerTouch.h"
 #import "OPEAPIConstants.h"
+#import "OPEWay.h"
+#import "OPEConstants.h"
 
 @implementation OPEOSMData
 
@@ -34,6 +36,8 @@
                                                             privateKey:myConsumerSecret];
         allNodes = [[NSMutableDictionary alloc] init];
         ignoreNodes = [[NSMutableDictionary alloc] init];
+        
+        tagInterpreter = [OPETagInterpreter sharedInstance];
     }
     
     return self;
@@ -50,10 +54,30 @@
     // Use when fetching binary data
     if ([request.userInfo objectForKey:@"type"] == @"download" )
     {
-        NSMutableDictionary * newNodes = [[NSMutableDictionary alloc] init];
+        //NSMutableDictionary * newNodes = [[NSMutableDictionary alloc] init];
+        //NSMutableDictionary * allNewNodes = [[NSMutableDictionary alloc] init];
         NSData *responseData = [request responseData];
         TBXML* tbxml = [TBXML tbxmlWithXMLData:responseData];
         
+        NSMutableDictionary * tempNodes = [self findNodes:tbxml];
+        NSMutableDictionary * tempWays = [self findWays:tbxml nodes:tempNodes];
+        
+        [tempNodes addEntriesFromDictionary:tempWays];
+        
+        for (NSString *key in [tempNodes allKeys])
+        {
+            if(![tagInterpreter isSupported:[tempNodes objectForKey:key]]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
+            {
+                [tempNodes removeObjectForKey:key];
+            }
+            
+        }
+        
+        [tempNodes removeObjectsForKeys:[allNodes allKeys]];
+        [tempNodes removeObjectsForKeys:[ignoreNodes allKeys]];
+        [allNodes addEntriesFromDictionary:tempNodes];
+        
+        /*
         TBXMLElement * root = tbxml.rootXMLElement;
         if(root)
         {
@@ -86,6 +110,8 @@
                     [newNode.tags setObject:value forKey:key];
                     tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
                 }
+                [allNewNodes setObject:newNode forKey:[NSNumber numberWithInt: newNode.ident]];
+                
                 OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     
                 if([tagInterpreter getCategoryandType:newNode]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
@@ -106,13 +132,13 @@
             NSLog(@"allNodes size: %d",[allNodes count]);
             
         }
-        
+        */
         dispatch_async(dispatch_get_main_queue(), ^{
         
         [[NSNotificationCenter defaultCenter]
          postNotificationName:@"DownloadComplete"
          object:self
-         userInfo:newNodes];
+         userInfo:tempNodes];
         });
         
     }
@@ -150,19 +176,40 @@
 
     
 }
-/*
--(void) getData
-{
-    NSLog(@"box: %f,%f,%f,%f",bboxleft,bboxbottom,bboxright,bboxtop);
-    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[bbox=%f,%f,%f,%f][@meta]",bboxleft,bboxbottom,bboxright,bboxtop]];
-    NSLog(@"url: %@",[url absoluteString]);
+
+-(NSMutableDictionary *)findNodes:(TBXML *)xml {
     
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"download",@"type", nil];
-    [request setDelegate:self];
-    [request startAsynchronous];
+    NSMutableDictionary * nodeDictionary = [[NSMutableDictionary alloc] init];
+    TBXMLElement * root = xml.rootXMLElement;
+    if(root)
+    {
+        TBXMLElement* xmlNode = [TBXML childElementNamed:@"node" parentElement:root];
+        while (xmlNode!=nil) {
+            OPENode * newNode = [OPENode createPointWithXML:xmlNode];
+            [nodeDictionary setObject:newNode forKey:[newNode uniqueIdentifier] ];
+            newNode.image = [tagInterpreter getImageForNode:newNode];
+            
+            xmlNode = [TBXML nextSiblingNamed:@"node" searchFromElement:xmlNode];
+        }
+    }
+    return nodeDictionary;
 }
-*/
+
+-(NSMutableDictionary *)findWays:(TBXML *)xml nodes:(NSDictionary *)nodes{
+    NSMutableDictionary * wayDictionary = [[NSMutableDictionary alloc] init];
+    TBXMLElement * root = xml.rootXMLElement;
+    if(root)
+    {
+        TBXMLElement* xmlWay = [TBXML childElementNamed:@"way" parentElement:root];
+        while (xmlWay!=nil) {
+            OPEWay * newWay = [OPEWay createPointWithXML:xmlWay nodes:nodes];
+            newWay.image = [tagInterpreter getImageForNode:newWay];
+            [wayDictionary setObject:newWay forKey:[newWay uniqueIdentifier]];
+            xmlWay = [TBXML nextSiblingNamed:@"way" searchFromElement:xmlWay];
+        }
+    }
+    return wayDictionary;
+}
  
 -(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
 {
@@ -171,7 +218,7 @@
     double boxright = northEast.longitude;
     double boxtop = northEast.latitude;
     
-    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"http://www.overpass-api.de/api/xapi?node[bbox=%f,%f,%f,%f][@meta]",boxleft,boxbottom,boxright,boxtop]];
+    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",kOPEAPIURL,boxleft,boxbottom,boxright,boxtop]];
     NSLog(@"Download URL %@",url);
     ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
     request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"download",@"type", nil];
@@ -179,28 +226,25 @@
     [request startAsynchronous];
 }
 
-- (int) createNode: (OPENode *) node
+- (int) createNode: (id<OPEPoint>) newPoint
 {
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
-    NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Created new POI: %@",[tagInterpreter getName:node]]];
-    int newIdent = [self createXmlNode:node withChangeset:changeset];
+    NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Created new POI: %@",[tagInterpreter getName:newPoint]]];
+    int newIdent = [self createXmlNode:newPoint withChangeset:changeset];
     [self closeChangeset:changeset];
     return newIdent;
     
 }
-- (int) updateNode: (OPENode *) node
+- (int) updateNode: (id<OPEPoint>) node
 {
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Updated existing POI: %@",[tagInterpreter getName:node]]];
     int version = [self updateXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
-    [ignoreNodes setObject:node forKey:[NSNumber numberWithInt:node.ident]];
+    [ignoreNodes setObject:node forKey:[node uniqueIdentifier]];
     return version;
     
 }
-- (int) deleteNode: (OPENode *) node
+- (int) deleteNode: (id<OPEPoint>) node
 {
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Deleted POI: %@",[tagInterpreter getName:node]]];
     int version = [self deleteXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
@@ -262,64 +306,40 @@
     return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
 }
 
-- (int) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
+- (int) updateXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber
 {
-    double lat = node.coordinate.latitude;
-    double lon = node.coordinate.longitude;
-    NSLog(@"upload lat: %f",lat);
-    NSLog(@"upload lon: %f",lon);
-    NSLog(@"changeset number: %d",changesetNumber);
     
-    NSMutableData *nodeXML = [NSMutableData data];
+    NSData * nodeXML = [node updateXMLforChangset:changesetNumber];
     
-    [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<node id=\"%d\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\">",node.ident,lat,lon,node.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
-    
-    for (NSString *k in node.tags)
-    {
-        [nodeXML appendData: [[NSString stringWithFormat: @"<tag k=\"%@\" v=\"%@\"/>",k,[node.tags objectForKey:k]] dataUsingEncoding: NSUTF8StringEncoding]];
-    }
-    
-    [nodeXML appendData: [[NSString stringWithFormat: @"</node>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
     
     NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
+    NSURL * url;
     
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%d",node.ident]];
+    if([node isKindOfClass:[OPENode class]] )
+    {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%d",node.ident]];
+    }
+    else
+    {
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/way/%d",node.ident]];
+    }
+    
     NSLog(@"URL: %@",[url absoluteURL]);
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody: nodeXML];
     [urlRequest setHTTPMethod: @"PUT"];
     [auth authorizeRequest:urlRequest];
     NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
-    //NSData * returnData = nil;
+
     NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
     return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
     
 }
 
-- (int) createXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
+- (int) createXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber
 {
-    double lat = node.coordinate.latitude;
-    double lon = node.coordinate.longitude;
-    NSLog(@"upload lat: %f",lat);
-    NSLog(@"upload lon: %f",lon);
-    NSLog(@"changeset number: %d",changesetNumber);
     
-    NSMutableData *nodeXML = [NSMutableData data];
-    
-    [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<node lat=\"%f\" lon=\"%f\" changeset=\"%d\">",lat,lon, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
-    
-    for (NSString *k in node.tags)
-    {
-        [nodeXML appendData: [[NSString stringWithFormat: @"<tag k=\"%@\" v=\"%@\"/>",k,[node.tags objectForKey:k]] dataUsingEncoding: NSUTF8StringEncoding]];
-    }
-    
-    [nodeXML appendData: [[NSString stringWithFormat: @"</node>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
+    NSData *nodeXML = [node createXMLforChangset:changesetNumber];
     
     NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
     
@@ -335,22 +355,11 @@
     return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
 }
     
-- (int) deleteXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber
+- (int) deleteXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber
 {
-    double lat = node.coordinate.latitude;
-    double lon = node.coordinate.longitude;
-    NSLog(@"upload lat: %f",lat);
-    NSLog(@"upload lon: %f",lon);
-    NSLog(@"changeset number: %d",changesetNumber);
     
-    NSMutableData *nodeXML = [NSMutableData data];
+    NSData *nodeXML = [node deleteXMLforChangset:changesetNumber];
     
-    [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<node id=\"%d\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\"/>",node.ident,lat,lon,node.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    
-    NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
     
     NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%d",node.ident]];
     NSLog(@"URL: %@",[url absoluteURL]);
@@ -398,7 +407,7 @@
     
 }
 
-+(void) HTMLFix:(OPENode *)node
++(void) HTMLFix:(id<OPEPoint>)node
 {
     NSMutableDictionary * fixedTags = [[NSMutableDictionary alloc] init];
     for(id item in node.tags)

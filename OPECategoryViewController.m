@@ -12,7 +12,7 @@
 @implementation OPECategoryViewController
 
 @synthesize mainTableView,searchBar,searchDisplayController;
-@synthesize categoriesAndTypes,searchResults,types;
+@synthesize categoriesArray,typesDictionary,searchResults;
 @synthesize delegate;
 
 - (void)didReceiveMemoryWarning
@@ -36,16 +36,15 @@
     
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
-    categoriesAndTypes = tagInterpreter.categoryAndType;
-    NSMutableDictionary * tempTypes = [[NSMutableDictionary alloc] init];
-    for (NSString * category in categoriesAndTypes)
-    {
-        for (NSString * type in [categoriesAndTypes objectForKey:category]) {
-            [tempTypes setObject:category forKey:type];
-        }
-        
-    }
-    types = [tempTypes copy];
+    //categoriesAndTypes = tagInterpreter.categoryAndType;
+    categoriesArray = [[tagInterpreter allCategories] allValues];
+    
+    categoriesArray = [[[tagInterpreter allCategories] allValues] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+        NSString *first = [(OPECategory*)a name];
+        NSString *second = [(OPECategory*)b name];
+        return [first compare:second];
+    }];
+    typesDictionary = [tagInterpreter allTypes];
     //NSLog(@"Types: %@",types);
     
 }
@@ -88,20 +87,20 @@
     searchResults = [[NSMutableArray alloc] init];
     if ([searchTerm length] != 0)
     {
-        for (NSString * currentString in types)
+        for (NSString * currentString in typesDictionary)
         {
             //NSLog(@"CurrentString: %@",currentString);
             if ([currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location != NSNotFound)
             {
                 NSLog(@"Match: %d",[currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location);
                 NSNumber * location = [NSNumber numberWithInteger: [currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location];
-                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"type",[types objectForKey:currentString],@"category",location,@"location", nil];
+                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",[typesDictionary objectForKey:currentString],@"type",location,@"location", nil];
                 [searchResults addObject:match];
                 
             }
         }
         NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"location"  ascending:YES];
-        NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
+        NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"typeName" ascending:YES];
         [searchResults sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nameDescriptor,nil]];
     }
 }
@@ -121,7 +120,7 @@
         
         return [searchResults count];
     }
-    return [categoriesAndTypes count];
+    return [categoriesArray count];
     //return 0;
 }
 
@@ -134,13 +133,12 @@
     }
     
     if (tableView == [[self searchDisplayController] searchResultsTableView]) {
-        cell.textLabel.text = [[self.searchResults objectAtIndex:indexPath.row] objectForKey:@"type"];
+        cell.textLabel.text = [[self.searchResults objectAtIndex:indexPath.row] objectForKey:@"typeName"];
         return cell;
     }
     
-    NSArray * categories = [[categoriesAndTypes allKeys]sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     
-    cell.textLabel.text = [categories objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[categoriesArray objectAtIndex:indexPath.row] name];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
@@ -198,13 +196,13 @@
      */
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
      if (tableView == [[self searchDisplayController] searchResultsTableView]) {
-         [[self delegate] setCategoryAndType: [searchResults objectAtIndex:indexPath.row]];
+         [[self delegate] setNewType: [[searchResults objectAtIndex:indexPath.row] objectForKey:@"type"]];
          [self.navigationController popViewControllerAnimated:YES];
      }
      else {
          OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:nil];
          viewer.title = @"Type";
-         viewer.category = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+         viewer.category = [categoriesArray objectAtIndex:indexPath.row];
          [viewer setDelegate: [[[self navigationController] viewControllers] objectAtIndex:1]];
          [self.navigationController pushViewController:viewer animated:YES];
      }

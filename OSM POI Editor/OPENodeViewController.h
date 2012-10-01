@@ -13,29 +13,30 @@
 #import "OPETypeViewController.h"
 #import "MBProgressHUD.h"
 #import "OPETagValueList.h"
+#import "OPEPoint.h"
+#import "OPEType.h"
 
 @protocol OPENodeViewDelegate
 @optional
--(void)createdNode:(OPENode *)newNode;
--(void)updatedNode:(OPENode *)newNode;
--(void)deletedNode:(OPENode *)newNode;
+-(void)createdNode:(id <OPEPoint>) newPoint;
+-(void)updatedNode:(id <OPEPoint>) newPoint;
+-(void)deletedNode:(id <OPEPoint>) newPoint;
 @end
 
 
 @interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, editTagDelegate, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate>
 {
-    UITableView *tableView;
     OPETagInterpreter * tagInterpreter;
     NSDictionary * osmKeyValue;
     float optionalTagWidth;
 }
 
-@property (nonatomic, strong) OPENode * node;
-@property (nonatomic, strong) OPENode * theNewNode;
-@property (nonatomic, strong) IBOutlet UITableView* tableView;
-@property (nonatomic, strong) NSArray * catAndType;
+@property (nonatomic, strong) id<OPEPoint> point;
+@property (nonatomic, strong) id<OPEPoint> theNewPoint;
+@property (nonatomic, strong) UITableView * nodeInfoTableView;
+@property (nonatomic, strong) OPEType * nodeType;
 @property (nonatomic, strong) NSString * type;
-@property (nonatomic, strong) IBOutlet UIButton * deleteButton;
+@property (nonatomic, strong) UIButton * deleteButton;
 @property (nonatomic, strong) UIBarButtonItem * saveButton;
 @property (nonatomic, strong) id <OPENodeViewDelegate> delegate;
 @property (nonatomic) BOOL nodeIsEdited;

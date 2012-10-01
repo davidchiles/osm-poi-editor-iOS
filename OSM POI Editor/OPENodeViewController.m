@@ -16,19 +16,20 @@
 #import "OPEConstants.h"
 #import "OPEAPIConstants.h"
 #import "OPESpecialCell2.h"
+#import "OPEWay.h"
 
 
 
 @implementation OPENodeViewController
 
-@synthesize node, theNewNode, type;
-@synthesize tableView;
-@synthesize catAndType;
+@synthesize point, theNewPoint;
+@synthesize nodeInfoTableView;
 @synthesize deleteButton, saveButton;
 @synthesize delegate;
 @synthesize nodeIsEdited;
 @synthesize HUD;
 @synthesize tableSections;
+@synthesize nodeType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -60,38 +61,62 @@
     
     [[self navigationItem] setRightBarButtonItem:saveButton];
     
-    
-    deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
-    [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
-                                           stretchableImageWithLeftCapWidth:8.0f
-                                           topCapHeight:0.0f]
-                                 forState:UIControlStateNormal];
-    
-    [self.deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.deleteButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    self.deleteButton.titleLabel.shadowColor = [UIColor lightGrayColor];
-    self.deleteButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
-    //self.deleteButton.frame = CGRectMake(0, 0, 300, 44);
-    [self.deleteButton addTarget:self action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    nodeInfoTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    [nodeInfoTableView setDataSource:self];
+    [nodeInfoTableView setDelegate:self];
+    nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     
-    theNewNode = [[OPENode alloc] initWithNode:node];
+    if (point.ident>0) {
+        deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
+        [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
+                                               stretchableImageWithLeftCapWidth:8.0f
+                                               topCapHeight:0.0f]
+                                     forState:UIControlStateNormal];
+        
+        [self.deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.deleteButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+        self.deleteButton.titleLabel.shadowColor = [UIColor lightGrayColor];
+        self.deleteButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
+        //self.deleteButton.frame = CGRectMake(0, 0, 300, 44);
+        [self.deleteButton addTarget:self action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        self.deleteButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        
+        UIView * footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, nodeInfoTableView.frame.size.width, 50)];
+        self.deleteButton.frame = CGRectMake(10, 0, nodeInfoTableView.frame.size.width-20, 46);
+        footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [footerView addSubview:deleteButton];
+        
+        
+        self.nodeInfoTableView.tableFooterView = footerView;
+        //self.nodeInfoTableView.tableFooterView.frame = CGRectMake(0, 0, 300, 50);
+        //[nodeInfoTableView setContentOffset:CGPointMake(0, nodeInfoTableView.contentSize.height-50) animated:YES];
+    }
+    
+    
+    
+
     [self checkSaveButton];
     
+    [self.view addSubview:nodeInfoTableView];
     
     tagInterpreter = [OPETagInterpreter sharedInstance];
     
-    NSLog(@"Tags: %@",theNewNode.tags);
-    //NSLog(@"new Category and Type: %@",[tagInterpreter getCategoryandType:theNewNode]);
-    catAndType = [[NSArray alloc] initWithObjects:[tagInterpreter getCategory:theNewNode],[tagInterpreter getType:theNewNode], nil];
-    //osmKeyValue =  [[NSDictionary alloc] initWithDictionary: [tagInterpreter getPrimaryKeyValue:theNewNode]];
+    theNewPoint = [point copy];
+    
+    NSLog(@"Tags: %@",theNewPoint.tags);
+    //NSLog(@"new Category and Type: %@",[tagInterpreter getCategoryandType:theNewPoint]);
+    nodeType = [tagInterpreter type:theNewPoint];
+    //osmKeyValue =  [[NSDictionary alloc] initWithDictionary: [tagInterpreter getPrimaryKeyValue:theNewPoint]];
     
     self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     self.HUD.delegate = self;
     
     
     [self reloadTags];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadComplete:) name:@"uploadComplete" object:nil];
     
     
     
@@ -111,19 +136,15 @@
     NSDictionary * noteSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Note",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"text",@"values",@"note",@"osmKey",@"Note",@"name", nil]],@"rows", nil];
     [tableSections addObject: noteSection];
     
-    if (node.ident>0) {
-        NSDictionary * deleteSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"deleteButton",@"values", nil]],@"rows", nil];
-        [tableSections addObject: deleteSection];
-    }
+    
     //NSLog(@"Table sections: %@",tableSections);
     
 }
 
 -(void) addOptionalTags
 {
-    if ([catAndType count] ) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadComplete:) name:@"uploadComplete" object:nil];
-        NSArray * optionalTags = [[NSArray alloc] initWithArray: [OPETagInterpreter getOptionalTagsDictionaries: [tagInterpreter.CategoryTypeandOptionalTags objectForKey:[NSDictionary dictionaryWithObject:[catAndType objectAtIndex:1] forKey:[catAndType objectAtIndex:0]]]]];
+    if (nodeType) {
+        NSArray * optionalTags = [OPETagInterpreter getOptionalTagsDictionaries:nodeType.optionalTags];
         
         NSMutableArray * tempArray = [[NSMutableArray alloc] init];
         
@@ -210,7 +231,7 @@
     {
         if ([[cellDictionary objectForKey:@"values"]  count] <= 3)
         {
-            OPEBinaryCell * aCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
+            OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
             if (aCell == nil) {
                 aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[[cellDictionary objectForKey:@"values"] allKeys] withTextWidth:optionalTagWidth];
                 
@@ -221,9 +242,9 @@
             [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
             aCell.tag = indexPath.section;
             aCell.binaryControl.tag = indexPath.row;
-            if ([theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
-                //[aCell selectSegmentWithTitle:[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]objectAtIndex:0]];
-                NSString * title = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
+            if ([theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
+                //[aCell selectSegmentWithTitle:[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]objectAtIndex:0]];
+                NSString * title = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
                 [aCell selectSegmentWithTitle:title];
             }
             else {
@@ -233,15 +254,15 @@
         }
         else {
             OPESpecialCell2 * specialCell;
-            specialCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
+            specialCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
             if (specialCell == nil) {
                 specialCell = [[OPESpecialCell2 alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecial2 withTextWidth:optionalTagWidth];
             }
-            if ([[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] count]) {
-                specialCell.rightText = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
+            if ([[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] count]) {
+                specialCell.rightText = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
             }
             else {
-                specialCell.rightText = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+                specialCell.rightText = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             }
             
             specialCell.leftText = [cellDictionary objectForKey:@"name"];
@@ -253,22 +274,25 @@
     }
     else {
         if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:KTypeName]) { //Text editing
-            cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
             }
-            cell.textLabel.text = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+            cell.textLabel.text = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         }
         else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"category"]) { //special category
-            cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
             }
             cell.textLabel.text = [catAndTypeName objectAtIndex:indexPath.row];
             cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
-            if ([catAndType count]==2) {
-                cell.detailTextLabel.text = [catAndType objectAtIndex:indexPath.row];
+            if (nodeType) {
+                if (indexPath.row == 0)
+                    cell.detailTextLabel.text = nodeType.categoryName;
+                else
+                    cell.detailTextLabel.text = nodeType.displayName;
             }
             else
             {
@@ -277,30 +301,30 @@
         }
         else if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] ||[[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone])
         {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
             }
-            cell.detailTextLabel.text = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+            cell.detailTextLabel.text = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             cell.textLabel.text = [cellDictionary objectForKey:@"name"];
             
             cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         }
         else if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeBinary])
         {
-            OPEBinaryCell * aCell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierBinary];
+            OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierBinary];
             if (aCell == nil) {
                 aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierBinary];
             }
             [aCell setLeftText: [cellDictionary objectForKey:@"name"]];
-            if ([theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
+            if ([theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
                 
                 [aCell selectSegmentWithTitle:[cellDictionary objectForKey:@"osmKey"]];
                 /*
-                if ([[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"yes"]) {
+                if ([[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"yes"]) {
                      [aCell.binaryControl setSelectedSegmentIndex:0];
                 }
-                else if([[theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"no"])
+                else if([[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"no"])
                 {
                      [aCell.binaryControl setSelectedSegmentIndex:1];
                 }
@@ -316,17 +340,17 @@
         }
         else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"deleteButton"])
         {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifierDelete];
+            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierDelete];
             if(cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierDelete];
             }
             
-            deleteButton.frame = cell.contentView.bounds;
+            //deleteButton.frame = cell.contentView.bounds;
             NSLog(@"bounds: %f",cell.contentView.bounds.size.width);
             NSLog(@"button: %f",deleteButton.frame.size.width);
-            deleteButton.frame = CGRectMake(deleteButton.frame.origin.x, deleteButton.frame.origin.y, 300.0f, deleteButton.frame.size.height);
+            //deleteButton.frame = CGRectMake(deleteButton.frame.origin.x, deleteButton.frame.origin.y, 300.0f, deleteButton.frame.size.height);
             
-            [cell.contentView addSubview:deleteButton];
+            //[cell.contentView addSubview:deleteButton];
         }
     }
 
@@ -361,7 +385,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
-    if ([[self.tableView cellForRowAtIndexPath:indexPath] isKindOfClass:[OPEBinaryCell class]])
+    if ([[tableView cellForRowAtIndexPath:indexPath] isKindOfClass:[OPEBinaryCell class]])
     {
         //binary or 3 way type
     }
@@ -370,7 +394,7 @@
         //list view cell 
         OPETagValueList * viewer = [[OPETagValueList alloc] initWithNibName:@"OPETagValueList" bundle:nil];
         viewer.title = [cellDictionary objectForKey:@"name"];
-        viewer.osmValue = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+        viewer.osmValue = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
         viewer.osmKey = [cellDictionary objectForKey:@"osmKey"];
         viewer.values = [cellDictionary objectForKey:@"values"];
         [viewer setDelegate:self];
@@ -380,9 +404,9 @@
     }
     else {
         if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone] || [[cellDictionary objectForKey:@"values"] isEqualToString:KTypeName] ){ //Text editing
-            OPETextEdit * viewer = [[OPETextEdit alloc] initWithNibName:@"OPETextEdit" bundle:nil];
+            OPETextEdit * viewer = [[OPETextEdit alloc] init];
             viewer.title = [cellDictionary objectForKey:@"name"];
-            viewer.osmValue = [theNewNode.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+            viewer.osmValue = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
             viewer.osmKey = [cellDictionary objectForKey:@"osmKey"];
             viewer.type = [cellDictionary objectForKey:@"values"];
             [viewer setDelegate:self];
@@ -392,12 +416,12 @@
         {
             if(indexPath.row == 1)
             {
-                if ([catAndType count]==2) 
+                if (nodeType)
                 {
                     OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:[NSBundle mainBundle]];
                     viewer.title = @"Type";
                     
-                    viewer.category = [catAndType objectAtIndex:0];
+                    viewer.category = [tagInterpreter.nameAndCategory objectForKey:nodeType.categoryName];
                     [viewer setDelegate:self];
                     NSLog(@"category previous: %@",viewer.category);
                     
@@ -421,9 +445,8 @@
             }
         }
     }
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
      NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
@@ -470,7 +493,7 @@
     {
         [self showOauthError];
     }
-    else if (![theNewNode isEqualToNode:node]) 
+    else if (![theNewPoint isequaltToPoint:point]) 
     {
         [self.navigationController.view addSubview:HUD];
         [HUD setLabelText:@"Saving..."];
@@ -479,38 +502,38 @@
         dispatch_async(q, ^{
             NSLog(@"saveBottoPressed");
             
-            [OPEOSMData backToHTML:theNewNode];
+            [OPEOSMData backToHTML:theNewPoint];
             
-            if(theNewNode.ident<0)
+            if(theNewPoint.ident<0)
             {
                 NSLog(@"Create Node");
-                int newIdent = [data createNode:theNewNode];
+                int newIdent = [data createNode:theNewPoint];
                 NSLog(@"New Id: %d", newIdent);
-                theNewNode.ident = newIdent;
-                theNewNode.version = 1;
-                node = theNewNode;
+                theNewPoint.ident = newIdent;
+                theNewPoint.version = 1;
+                point = theNewPoint;
                 if(delegate)
                 {
-                    [OPEOSMData HTMLFix:theNewNode];
+                    [OPEOSMData HTMLFix:theNewPoint];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                    [delegate createdNode:node];
+                    [delegate createdNode:point];
                     });
                 }
             }
             else
             {
                 NSLog(@"Update Node");
-                int version = [data updateNode:theNewNode];
+                int version = [data updateNode:theNewPoint];
                 NSLog(@"Version after update: %d",version);
-                theNewNode.version = version;
-                node = theNewNode;
+                theNewPoint.version = version;
+                point = theNewPoint;
                 if(delegate)
                 {
-                    [OPEOSMData HTMLFix:theNewNode];
+                    [OPEOSMData HTMLFix:theNewPoint];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                    [delegate updatedNode:node];
+                    [delegate updatedNode:point];
                     });
                 }
             }
@@ -564,27 +587,52 @@
     else if (alertView.tag == 1) {
         if([title isEqualToString:@"Yes"])
         {
-            NSLog(@"Button OK was selected.");
+            NSLog(@"Button YES was selected.");
             
             [self.navigationController.view addSubview:HUD];
             [HUD setLabelText:@"Deleting..."];
             [HUD show:YES];
-            dispatch_queue_t q = dispatch_queue_create("queue", NULL);
-            dispatch_async(q, ^{
-                [OPEOSMData backToHTML:node];
-                
+            
+            if ([theNewPoint isKindOfClass:[OPEWay class]]) {
                 OPEOSMData* data = [[OPEOSMData alloc] init];
-                [data deleteNode:node];
+                NSMutableArray * keysToRemove = [NSMutableArray arrayWithArray:[nodeType.tags allKeys]];
+                [keysToRemove addObject:@"name"];
+                [keysToRemove addObjectsFromArray:[OPETagInterpreter getOptionalTagsKeys:nodeType.optionalTags]];
+                [theNewPoint.tags removeObjectsForKeys:keysToRemove];
+                NSLog(@"Update Node");
+                int version = [data updateNode:theNewPoint];
+                NSLog(@"Version after update: %d",version);
+                theNewPoint.version = version;
+                point = theNewPoint;
                 if(delegate)
                 {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                    [delegate deletedNode:node];
-                    });
+                    [OPEOSMData HTMLFix:theNewPoint];
                     
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [delegate deletedNode:point];
+                    });
                 }
-            });
-            
-            dispatch_release(q);
+
+            }
+            else
+            {
+                dispatch_queue_t q = dispatch_queue_create("queue", NULL);
+                dispatch_async(q, ^{
+                    [OPEOSMData backToHTML:point];
+                    
+                    OPEOSMData* data = [[OPEOSMData alloc] init];
+                    [data deleteNode:point];
+                    if(delegate)
+                    {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [delegate deletedNode:point];
+                        });
+                        
+                    }
+                });
+                
+                dispatch_release(q);
+            }
             
         }
         else if([title isEqualToString:@"Cancel"])
@@ -604,15 +652,15 @@
     
     if (![osmValue isEqualToString:@""]) 
     {
-        [theNewNode.tags setObject:osmValue forKey:osmKey];
+        [theNewPoint.tags setObject:osmValue forKey:osmKey];
     }
     else {
-        [theNewNode.tags removeObjectForKey:osmKey];
+        [theNewPoint.tags removeObjectForKey:osmKey];
     }
     [self reloadTags];
     [self checkSaveButton];
-    [self.tableView reloadData];
-    NSLog(@"NewNode: %@",theNewNode.tags);
+    [nodeInfoTableView reloadData];
+    NSLog(@"NewNode: %@",theNewPoint.tags);
 }
 -(void) removeOptionalTags:(NSArray *)oldTableSections
 {
@@ -625,7 +673,7 @@
             {
                 if(![self tableSectionsContainsOsmKey:[oldRowDictionary objectForKey:@"osmKey"]])
                 {
-                    [self.theNewNode.tags removeObjectForKey:[oldRowDictionary objectForKey:@"osmKey"]];
+                    [self.theNewPoint.tags removeObjectForKey:[oldRowDictionary objectForKey:@"osmKey"]];
                     NSLog(@"Removed: %@",[oldRowDictionary objectForKey:@"osmKey"]);
                 }
                     
@@ -653,57 +701,56 @@
     return NO;
 }
 
-- (void) setCategoryAndType:(NSDictionary *)cAndT
+- (void) setNewType:(OPEType *)newType
 {
-    NSString * newCategory = [cAndT objectForKey:@"category"];
-    NSString * newType = [cAndT objectForKey:@"type"];
     
-    if ([catAndType count]==2) {
-        if (!([newCategory isEqualToString:[catAndType objectAtIndex:0]] && [newType isEqualToString:[catAndType objectAtIndex:1]])) {
-            [tagInterpreter removeCatAndType:[[NSDictionary alloc] initWithObjectsAndKeys:[catAndType objectAtIndex:1],[catAndType objectAtIndex:0], nil] fromNode:theNewNode];
+    if (nodeType) {
+        if (![nodeType isEqual:newType]) {
+            [tagInterpreter removeTagsForType:nodeType withNode:theNewPoint];
             
         }
     }
     
-    catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
+    
+    
+
+    nodeType = newType;
     NSArray * oldTableSections = [tableSections copy];
     [self reloadTags];
     [self removeOptionalTags:oldTableSections];
     
-    NSDictionary * KV = [tagInterpreter getOSmKeysValues:[[NSDictionary alloc] initWithObjectsAndKeys:newType,newCategory, nil]];
-    NSLog(@"catAndType: %@",cAndT);
+    NSLog(@"catAndType: %@",newType.description);
     //NSLog(@"KV: %@",osmKeyValue);
     
     
-    NSLog(@"ID: %d",theNewNode.ident);
-    NSLog(@"Version: %d",theNewNode.version);
-    NSLog(@"Lat: %f",theNewNode.coordinate.latitude);
-    NSLog(@"Lon: %f",theNewNode.coordinate.longitude);
-    NSLog(@"Tags: %@",theNewNode.tags);
+    NSLog(@"ID: %d",theNewPoint.ident);
+    NSLog(@"Version: %d",theNewPoint.version);
+    NSLog(@"Lat: %f",theNewPoint.coordinate.latitude);
+    NSLog(@"Lon: %f",theNewPoint.coordinate.longitude);
+    NSLog(@"Tags: %@",theNewPoint.tags);
     
-    [theNewNode.tags addEntriesFromDictionary:KV];
+    [self.theNewPoint.tags addEntriesFromDictionary:newType.tags];
     
+    //NSLog(@"id: %@ \n version: %@ \n lat: %f \n lon: %f \n newTags: %@ \n ",theNewPoint.ident,theNewPoint.version,theNewPoint.coordinate.latitude,theNewPoint.coordinate.longitude,theNewPoint.tags);
+    NSLog(@"ID: %d",theNewPoint.ident);
+    NSLog(@"Version: %d",theNewPoint.version);
+    NSLog(@"Lat: %f",theNewPoint.coordinate.latitude);
+    NSLog(@"Lon: %f",theNewPoint.coordinate.longitude);
+    NSLog(@"Tags: %@",theNewPoint.tags);
+    theNewPoint.image = [tagInterpreter getImageForNode:theNewPoint];
     
-    //NSLog(@"id: %@ \n version: %@ \n lat: %f \n lon: %f \n newTags: %@ \n ",theNewNode.ident,theNewNode.version,theNewNode.coordinate.latitude,theNewNode.coordinate.longitude,theNewNode.tags);
-    NSLog(@"ID: %d",theNewNode.ident);
-    NSLog(@"Version: %d",theNewNode.version);
-    NSLog(@"Lat: %f",theNewNode.coordinate.latitude);
-    NSLog(@"Lon: %f",theNewNode.coordinate.longitude);
-    NSLog(@"Tags: %@",theNewNode.tags);
-    theNewNode.image = [tagInterpreter getImageForNode:theNewNode];
-    
-    catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
+    //catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
     //[self.tableView reloadData];
     
-    [self.tableView reloadData];
+    [nodeInfoTableView reloadData];
 }
 
 
 
 - (void)checkSaveButton
 {
-    NSLog(@"cAndT count %d",[catAndType count]);
-    if([theNewNode isEqualToNode:node] || [catAndType count]!=2)
+    //NSLog(@"cAndT count %d",[catAndType count]);
+    if([theNewPoint isequaltToPoint:point] || !nodeType)
     {
         NSLog(@"NO CHANGES YET");
         self.saveButton.enabled= NO;
@@ -718,7 +765,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
     [self.HUD hide:YES];
-    node = theNewNode;
+    point = theNewPoint;
     [self checkSaveButton];
     [self.navigationController popViewControllerAnimated:YES];
     });
@@ -726,7 +773,7 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    [self.tableView reloadData];
+    [nodeInfoTableView reloadData];
     [self checkSaveButton];
     
 }

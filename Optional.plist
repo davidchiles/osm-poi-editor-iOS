@@ -789,7 +789,7 @@
 		<key>values</key>
 		<string>label</string>
 		<key>section_order</key>
-		<string>1</string>
+		<integer>1</integer>
 	</dict>
 	<key>addr:street</key>
 	<dict>
@@ -802,7 +802,7 @@
 		<key>values</key>
 		<string>label</string>
 		<key>section_order</key>
-		<string>2</string>
+		<integer>2</integer>
 	</dict>
 	<key>addr:postcode</key>
 	<dict>
@@ -815,7 +815,7 @@
 		<key>values</key>
 		<string>label</string>
 		<key>section_order</key>
-		<string>6</string>
+		<integer>6</integer>
 	</dict>
 	<key>addr:city</key>
 	<dict>
@@ -828,7 +828,7 @@
 		<key>values</key>
 		<string>label</string>
 		<key>section_order</key>
-		<string>3</string>
+		<integer>3</integer>
 	</dict>
 	<key>addr:state</key>
 	<dict>
@@ -841,7 +841,7 @@
 		<key>values</key>
 		<string>label</string>
 		<key>section_order</key>
-		<string>4</string>
+		<integer>4</integer>
 	</dict>
 	<key>addr:province</key>
 	<dict>
@@ -854,7 +854,7 @@
 		<key>values</key>
 		<string>label</string>
 		<key>section_order</key>
-		<string>5</string>
+		<integer>5</integer>
 	</dict>
 	<key>addr:country</key>
 	<dict>
@@ -867,7 +867,7 @@
 		<key>values</key>
 		<string>label</string>
 		<key>section_order</key>
-		<string>7</string>
+		<integer>7</integer>
 	</dict>
 	<key>website</key>
 	<dict>
@@ -880,7 +880,7 @@
 		<key>values</key>
 		<string>url</string>
 		<key>section_order</key>
-		<string>8</string>
+		<integer>8</integer>
 	</dict>
 	<key>phone</key>
 	<dict>
@@ -893,7 +893,7 @@
 		<key>values</key>
 		<string>phone</string>
 		<key>section_order</key>
-		<string>9</string>
+		<integer>9</integer>
 	</dict>
 </dict>
 </plist>

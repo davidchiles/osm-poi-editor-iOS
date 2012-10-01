@@ -2798,7 +2798,7 @@
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
-				<string>parking</string>
+				<string>motorcycle_parking</string>
 			</dict>
 			<key>optional</key>
 			<array>

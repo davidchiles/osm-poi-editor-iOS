@@ -8,22 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "OPEPoint.h"
 
-@interface OPENode : NSObject
-
-@property int ident;
-@property (nonatomic) CLLocationCoordinate2D coordinate;
-@property (strong) NSMutableDictionary* tags;
-@property int version; 
-@property (strong) NSString * image;
+@interface OPENode : NSObject <OPEPoint>
 
 -(id) initWithId: (int) i coordinate: (CLLocationCoordinate2D) coordinate keyValues: (NSMutableDictionary *) tag;
 -(id) initWithId:(int)i latitude:(double) la longitude:(double) lo;
 -(id) initWithId:(int)i latitude:(double) la longitude:(double) lo version:(int) ve;
 -(id) initWithNode: (OPENode *) node;
--(void)addKey: (NSString*) key Value: (NSString*) val;
 -(BOOL)onlyTagCreatedBy;
--(NSString *)getName;
--(BOOL) isEqualToNode:(OPENode *) node;
+
++ (id) createPointWithXML:(TBXMLElement *)xml;
+
 
 @end

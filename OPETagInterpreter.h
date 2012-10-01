@@ -7,30 +7,38 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OPENode.h"
+#import "OPEpoint.h"
+#import "OPECategory.h"
+#import "OPEType.h"
 
 @interface OPETagInterpreter : NSObject
 
-@property (nonatomic, strong) NSMutableDictionary * categoryAndType;
+@property (nonatomic, strong) NSMutableDictionary * nameAndCategory;
+@property (nonatomic, strong) NSMutableDictionary * nameAndType;
 @property (nonatomic, strong) NSMutableDictionary * osmKeyandValue;
-@property (nonatomic, strong) NSMutableDictionary * osmKVandCategoryType;
-@property (nonatomic, strong) NSMutableDictionary * CategoryTypeandOsmKV;
-@property (nonatomic, strong) NSMutableDictionary * CategoryTypeandImg;
-@property (nonatomic, strong) NSMutableDictionary * CategoryTypeandOptionalTags;
+@property (nonatomic, strong) NSMutableDictionary * osmKeyValueAndType;
+@property (nonatomic, strong) NSMutableDictionary * typeAndOsmKeyValue;
+@property (nonatomic, strong) NSMutableDictionary * typeAndImg;
+@property (nonatomic, strong) NSMutableDictionary * typeandOptionalTags;
 
 - (id) init;
 //- (BOOL) nodeHasRecognizedTags:(OPENode *)n;
 //- (NSDictionary *) getPrimaryKeyValue: (OPENode *)n;
-- (NSString *) getCategory: (OPENode *)n;
-- (NSString *) getType: (OPENode *)n;
+- (NSString *) category: (id<OPEPoint>)n; //getCategory
+- (OPEType *) type: (id<OPEPoint>)n; //getType
 - (void) readPlist;
-- (NSString *) getName: (OPENode *) node;
-- (NSString *) getImageForNode: (OPENode *) node;
-- (void)removeCatAndType:(NSDictionary *) catType fromNode:(OPENode *)node;
-- (NSDictionary *)getCategoryandType:(OPENode *)node;
-- (NSDictionary *) getOSmKeysValues: (NSDictionary *) catAndType;
+- (NSString *) getName: (id<OPEPoint>) node;
+- (NSString *) getImageForNode: (id<OPEPoint>) node;
+- (void)removeTagsForType:(OPEType *)type withNode:(id<OPEPoint>)node;
+- (BOOL)isSupported:(id<OPEPoint>)node;
+- (NSDictionary *) allCategories;
+- (NSDictionary *) allTypes;
+
+//- (NSDictionary *)getCategoryandType:(OPENode *)node;
+//- (NSDictionary *) getOSmKeysValues: (NSDictionary *) catAndType;
 
 + (NSArray *) getOptionalTagsDictionaries: (NSArray *) array;
-+(OPETagInterpreter *)sharedInstance;
++ (NSArray *) getOptionalTagsKeys:(NSArray *)array;
++ (OPETagInterpreter *)sharedInstance;
 
 @end

@@ -44,6 +44,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    [self.view setBackgroundColor:[UIColor colorWithRed:215.0/255.0 green:217.0/255.0 blue:223.0/255.0 alpha:1.0]];
+    //[self.view addSubview:[[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStyleGrouped]];
+    
     osmKeysStoreRecent = [NSSet setWithObjects:@"addr:country",@"addr:city",@"addr:postcode",@"addr:state",@"addr:province",@"addr:street", nil];
     
     
@@ -115,6 +119,7 @@
     else if ([type isEqualToString:KTypeName])
     {
         textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 20, 300, 150)];
+        textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [textView setFont:[UIFont systemFontOfSize:14.0]];
         textView.returnKeyType = UIReturnKeyDone;
         self.textView.delegate = self;

@@ -14,6 +14,7 @@
 @interface OPEOSMData : NSObject 
 {
     GTMOAuthAuthentication *auth;
+    OPETagInterpreter * tagInterpreter;
     
 }
 
@@ -23,18 +24,18 @@
 
 - (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 - (NSInteger) openChangesetWithMessage: (NSString *) message;
-- (int) createXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
-- (int) updateXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
-- (int) deleteXmlNode: (OPENode *) node withChangeset: (NSInteger) changesetNumber;
+- (int) createXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber;
+- (int) updateXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber;
+- (int) deleteXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber;
 - (void) closeChangeset: (NSInteger) changesetNumber;
 - (BOOL) canAuth;
 
-- (int) createNode: (OPENode *) node;
-- (int) updateNode: (OPENode *) node;
-- (int) deleteNode: (OPENode *) node;
+- (int) createNode: (id<OPEPoint>) node;
+- (int) updateNode: (id<OPEPoint>) node;
+- (int) deleteNode: (id<OPEPoint>) node;
 - (void) uploadComplete;
-+ (void) HTMLFix:(OPENode *)node;
-+(void) backToHTML:(OPENode *)node;
++ (void) HTMLFix:(id<OPEPoint>)node;
++(void) backToHTML:(id<OPEPoint>)node;
 
 
 
