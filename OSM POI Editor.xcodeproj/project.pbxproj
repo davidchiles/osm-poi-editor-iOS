@@ -1842,6 +1842,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: David Chiles";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
 				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
@@ -1854,6 +1855,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "C0714256-3241-4325-BEEA-D9039828CAB9";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$SDK_DIR/usr/include/libxml2 \"$(PROJECT_DIR)/alpstein-route-me/MapView\"/**";
 				WRAPPER_EXTENSION = app;
@@ -1865,6 +1867,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: David Chiles";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
 				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
@@ -1877,6 +1880,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "C0714256-3241-4325-BEEA-D9039828CAB9";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$SDK_DIR/usr/include/libxml2 \"$(PROJECT_DIR)/alpstein-route-me/MapView\"/**";
 				WRAPPER_EXTENSION = app;

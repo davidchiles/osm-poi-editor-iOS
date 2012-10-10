@@ -37,6 +37,10 @@ static OPETagInterpreter *sharedManager = nil;
 
 -(OPEType *)type:(id<OPEPoint>)node
 {
+    if([[node.tags objectForKey:@"highway"] isEqualToString:@"bus_stop"] )
+    {
+        NSLog(@"bus stop");
+    }
     if([node hasNoTags])
     {
         return nil;
@@ -44,6 +48,7 @@ static OPETagInterpreter *sharedManager = nil;
     NSMutableDictionary * finalCatAndType = [[NSMutableDictionary alloc] init];
     
     NSArray * allOsmKeyValue =[osmKeyValueAndType allKeys];
+    int maxMatches = 0;
     
     for(NSDictionary * osmKeyValues in allOsmKeyValue)
     {
@@ -56,11 +61,11 @@ static OPETagInterpreter *sharedManager = nil;
                 matches++;
             }
         }
-        if(matches == [osmKeyValues count])
+        if(matches > maxMatches)
         {
+            maxMatches = matches;
             [finalCatAndType setObject:[[NSNumber alloc] initWithInt:matches] forKey:osmKeyValues];
         }
-        
     }
     
     if ([finalCatAndType count]>0)

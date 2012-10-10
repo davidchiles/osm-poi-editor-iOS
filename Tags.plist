@@ -45,8 +45,10 @@
 			</dict>
 			<key>optional</key>
 			<array>
+				<string>internet_access</string>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>internet_access_fee</string>
 			</array>
 		</dict>
 		<key>School</key>
@@ -1625,6 +1627,36 @@
 			<dict>
 				<key>shop</key>
 				<string>art</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Sewing Shop</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>sewing</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Luggage/Bag Shop</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>bag</string>
 			</dict>
 			<key>optional</key>
 			<array>
