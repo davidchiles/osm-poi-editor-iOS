@@ -255,6 +255,7 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>outdoor_seating</string>
 			</array>
 		</dict>
 		<key>Cafe</key>
@@ -275,6 +276,7 @@
 				<string>internet_access</string>
 				<string>internet_access_fee</string>
 				<string>takeaway</string>
+				<string>outdoor_seating</string>
 			</array>
 		</dict>
 		<key>Drinking Water</key>
@@ -318,6 +320,7 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+				<string>outdoor_seating</string>
 			</array>
 		</dict>
 		<key>Ice Cream Shop</key>
@@ -332,6 +335,7 @@
 			<key>optional</key>
 			<array>
 				<string>wheelchair</string>
+				<string>outdoor_seating</string>
 				<string>address</string>
 			</array>
 		</dict>
@@ -364,6 +368,7 @@
 			</dict>
 			<key>optional</key>
 			<array>
+				<string>outdoor_seating</string>
 				<string>cuisine</string>
 				<string>microbrewery</string>
 				<string>smoking</string>
@@ -988,7 +993,54 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>Outdoors and Natural</key>
+	<key>Fun &amp; Leisure</key>
+	<dict>
+		<key>Swimming Pool</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>leisure</key>
+				<string>swimming_pool</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>swimming_pool_access</string>
+			</array>
+		</dict>
+		<key>Water Park</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>leisure</key>
+				<string>water_park</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>operator</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Amusement Park</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>theme_park</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>operator</string>
+				<string>address</string>
+			</array>
+		</dict>
+	</dict>
+	<key>Outdoors &amp; Natural</key>
 	<dict>
 		<key>Beach</key>
 		<dict>
@@ -1097,20 +1149,6 @@
 				<key>natural</key>
 				<string>volcano</string>
 			</dict>
-		</dict>
-		<key>Swimming Pool</key>
-		<dict>
-			<key>image</key>
-			<string>none.png</string>
-			<key>tags</key>
-			<dict>
-				<key>leisure</key>
-				<string>swimming_pool</string>
-			</dict>
-			<key>optional</key>
-			<array>
-				<string>swimming_pool_access</string>
-			</array>
 		</dict>
 		<key>Shelter</key>
 		<dict>

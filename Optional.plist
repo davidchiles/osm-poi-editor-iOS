@@ -527,6 +527,22 @@
 			<string>free</string>
 		</dict>
 	</dict>
+	<key>outdoor_seating</key>
+	<dict>
+		<key>name</key>
+		<string>Outdoor Seating</string>
+		<key>osmKey</key>
+		<string>outdoor_seating</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
 	<key>covered</key>
 	<dict>
 		<key>name</key>
