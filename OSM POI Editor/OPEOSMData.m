@@ -395,7 +395,7 @@
      object:self
      userInfo:nil];
 }
-+(void) backToHTML:(OPENode *)node
++(void) backToHTML:(id<OPEPoint>)node
 {
     NSMutableDictionary * fixedTags = [[NSMutableDictionary alloc] init];
     for(id item in node.tags)
