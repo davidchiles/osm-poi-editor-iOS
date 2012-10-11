@@ -1,7 +1,9 @@
 # POI+
 #### iOS App
 
-POI+ is a simple and straightforward iPhone app that can add or edit exisiting nodes and ways in [Open Street Map](http://openstreetmap.org) 
+POI+ is a simple and straightforward iPhone app that can add or edit exisiting nodes and ways in [Open Street Map](http://openstreetmap.org)
+
+You can find the app on [App Store](https://itunes.apple.com/us/app/poi+-open-street-map-poi-editor/id518401562?ls=1&mt=8)
 
 ##Thrid-party Libraries
 

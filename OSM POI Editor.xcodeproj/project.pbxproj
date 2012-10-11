@@ -1918,7 +1918,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
 				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
@@ -1943,7 +1943,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
 				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
