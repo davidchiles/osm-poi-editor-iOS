@@ -22,7 +22,7 @@
 		<key>Kindergarden</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>school.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -54,7 +54,7 @@
 		<key>School</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>school.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -895,7 +895,7 @@
 		<key>Fitness Center/Gym</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>gym.png</string>
 			<key>tags</key>
 			<dict>
 				<key>leisure</key>
@@ -998,7 +998,7 @@
 		<key>Swimming Pool</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>swimmer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>leisure</key>
@@ -1012,7 +1012,7 @@
 		<key>Water Park</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>swimmer.png</string>
 			<key>tags</key>
 			<dict>
 				<key>leisure</key>
@@ -1027,7 +1027,7 @@
 		<key>Amusement Park</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>carousel.png</string>
 			<key>tags</key>
 			<dict>
 				<key>tourism</key>
@@ -1065,7 +1065,7 @@
 		<key>Waterfall</key>
 		<dict>
 			<key>image</key>
-			<string>water.png</string>
+			<string>waterfall.png</string>
 			<key>tags</key>
 			<dict>
 				<key>waterway</key>

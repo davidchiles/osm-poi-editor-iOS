@@ -8,6 +8,7 @@
 
 #import "OPECreditViewController.h"
 
+
 @interface OPECreditViewController ()
 
 @end
@@ -16,6 +17,7 @@
 @implementation OPECreditViewController
 
 @synthesize webView;
+@synthesize lastURL;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,11 +33,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     
     [self.view addSubview:webView];
     
     [self loadWebView];
+    [webView setDelegate:self];
 }
 
 -(IBAction)doneButtonPressed:(id)sender
@@ -64,16 +72,33 @@
 #pragma - WebView
 -(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    if ([request.URL.absoluteString rangeOfString:@"file:///"].location !=NSNotFound) {
+        return YES;
+    }
     if ([[[request URL] scheme] isEqual:@"mailto"]) {
         NSLog(@"mailto tapped");
         [[UIApplication sharedApplication] openURL:[request URL]];
+        
         return NO;
     }
-    else if ( navigationType == UIWebViewNavigationTypeLinkClicked ) {
-        [[UIApplication sharedApplication] openURL:[request URL]];
+    else if ([[UIApplication sharedApplication] canOpenURL:request.URL])
+    {
+        self.lastURL = request.URL;
+        UIActionSheet * action = [[UIActionSheet alloc] initWithTitle:[[request.URL absoluteURL] description] delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Open in Safari", nil];
+        [action showInView:self.view];
         return NO;
     }
-    return YES;
+    return NO;
     
 }
+
+#pragma ActionSheet
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != actionSheet.cancelButtonIndex)
+    {
+        [[UIApplication sharedApplication] openURL:[lastURL absoluteURL]];
+    }
+}   
 @end

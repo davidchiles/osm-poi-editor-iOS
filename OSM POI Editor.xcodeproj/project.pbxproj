@@ -240,6 +240,19 @@
 		6330AC0314DB547D00448852 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0214DB547D00448852 /* libstdc++.6.dylib */; };
 		6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0414DB54A200448852 /* QuartzCore.framework */; };
 		6330AC0714DB5E4D00448852 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0614DB5E4D00448852 /* CoreLocation.framework */; };
+		6332CB4216262D670088F5B0 /* gym@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB4116262D670088F5B0 /* gym@2x.png */; };
+		6332CB4416262D6F0088F5B0 /* gym.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB4316262D6F0088F5B0 /* gym.png */; };
+		6332CB46162631D80088F5B0 /* swimmer.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB45162631D80088F5B0 /* swimmer.png */; };
+		6332CB48162631E70088F5B0 /* swimmer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB47162631E70088F5B0 /* swimmer@2x.png */; };
+		6332CB4A1626320A0088F5B0 /* carousel.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB491626320A0088F5B0 /* carousel.png */; };
+		6332CB4C162632130088F5B0 /* carousel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB4B162632130088F5B0 /* carousel@2x.png */; };
+		6332CB4E1626321C0088F5B0 /* waterfall.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB4D1626321C0088F5B0 /* waterfall.png */; };
+		6332CB50162632250088F5B0 /* waterfall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB4F162632250088F5B0 /* waterfall@2x.png */; };
+		6332CB52162633970088F5B0 /* playground.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB51162633970088F5B0 /* playground.png */; };
+		6332CB58162633CA0088F5B0 /* playground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB57162633CA0088F5B0 /* playground@2x.png */; };
+		6332CB5A162635F90088F5B0 /* school.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB59162635F90088F5B0 /* school.png */; };
+		6332CB5C162636000088F5B0 /* school@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB5B162636000088F5B0 /* school@2x.png */; };
+		6332CB6716263FFA0088F5B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6332CB6616263FFA0088F5B0 /* MessageUI.framework */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
 		635E0291151BB94F00B6BBCE /* center.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E028B151BB94F00B6BBCE /* center.png */; };
 		635E0292151BB94F00B6BBCE /* center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E028C151BB94F00B6BBCE /* center@2x.png */; };
@@ -612,6 +625,19 @@
 		6330AC0214DB547D00448852 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		6330AC0414DB54A200448852 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6330AC0614DB5E4D00448852 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		6332CB4116262D670088F5B0 /* gym@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gym@2x.png"; sourceTree = "<group>"; };
+		6332CB4316262D6F0088F5B0 /* gym.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gym.png; sourceTree = "<group>"; };
+		6332CB45162631D80088F5B0 /* swimmer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swimmer.png; sourceTree = "<group>"; };
+		6332CB47162631E70088F5B0 /* swimmer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "swimmer@2x.png"; sourceTree = "<group>"; };
+		6332CB491626320A0088F5B0 /* carousel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = carousel.png; sourceTree = "<group>"; };
+		6332CB4B162632130088F5B0 /* carousel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "carousel@2x.png"; sourceTree = "<group>"; };
+		6332CB4D1626321C0088F5B0 /* waterfall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waterfall.png; sourceTree = "<group>"; };
+		6332CB4F162632250088F5B0 /* waterfall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "waterfall@2x.png"; sourceTree = "<group>"; };
+		6332CB51162633970088F5B0 /* playground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playground.png; sourceTree = "<group>"; };
+		6332CB57162633CA0088F5B0 /* playground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playground@2x.png"; sourceTree = "<group>"; };
+		6332CB59162635F90088F5B0 /* school.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = school.png; sourceTree = "<group>"; };
+		6332CB5B162636000088F5B0 /* school@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "school@2x.png"; sourceTree = "<group>"; };
+		6332CB6616263FFA0088F5B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
 		635E028B151BB94F00B6BBCE /* center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = center.png; sourceTree = "<group>"; };
@@ -774,6 +800,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6332CB6716263FFA0088F5B0 /* MessageUI.framework in Frameworks */,
 				63ED79A6151C1AF60076940F /* libMapView.a in Frameworks */,
 				6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */,
 				6383949A14EC85C100C74A57 /* Security.framework in Frameworks */,
@@ -797,6 +824,11 @@
 		6310F4CD1537A46D00C65FD8 /* @1x */ = {
 			isa = PBXGroup;
 			children = (
+				6332CB59162635F90088F5B0 /* school.png */,
+				6332CB4D1626321C0088F5B0 /* waterfall.png */,
+				6332CB491626320A0088F5B0 /* carousel.png */,
+				6332CB45162631D80088F5B0 /* swimmer.png */,
+				6332CB4316262D6F0088F5B0 /* gym.png */,
 				6310F4CE1537A46D00C65FD8 /* airplane.png */,
 				6310F4CF1537A46D00C65FD8 /* alcohol.png */,
 				6310F4D01537A46D00C65FD8 /* art.png */,
@@ -869,6 +901,7 @@
 				6310F5131537A46D00C65FD8 /* peak.png */,
 				6310F5141537A46D00C65FD8 /* phone.png */,
 				6310F5151537A46D00C65FD8 /* picnic.png */,
+				6332CB51162633970088F5B0 /* playground.png */,
 				6310F5161537A46D00C65FD8 /* pipe.png */,
 				6310F5171537A46D00C65FD8 /* police.png */,
 				6310F5181537A46D00C65FD8 /* prayer.png */,
@@ -907,6 +940,11 @@
 		6310F5341537A46D00C65FD8 /* @2x */ = {
 			isa = PBXGroup;
 			children = (
+				6332CB5B162636000088F5B0 /* school@2x.png */,
+				6332CB4F162632250088F5B0 /* waterfall@2x.png */,
+				6332CB4B162632130088F5B0 /* carousel@2x.png */,
+				6332CB47162631E70088F5B0 /* swimmer@2x.png */,
+				6332CB4116262D670088F5B0 /* gym@2x.png */,
 				6310F5351537A46D00C65FD8 /* airplane@2x.png */,
 				6310F5361537A46D00C65FD8 /* alcohol@2x.png */,
 				6310F5371537A46D00C65FD8 /* art@2x.png */,
@@ -969,6 +1007,7 @@
 				6310F5701537A46D00C65FD8 /* money@2x.png */,
 				6310F5711537A46D00C65FD8 /* motorcycle@2x.png */,
 				6310F5721537A46D00C65FD8 /* movie@2x.png */,
+				6332CB57162633CA0088F5B0 /* playground@2x.png */,
 				6310F5731537A46D00C65FD8 /* museum@2x.png */,
 				6310F5741537A46D00C65FD8 /* news@2x.png */,
 				6310F5751537A46D00C65FD8 /* none@2x.png */,
@@ -1030,6 +1069,7 @@
 		6330AB5F14DB519A00448852 = {
 			isa = PBXGroup;
 			children = (
+				6332CB6616263FFA0088F5B0 /* MessageUI.framework */,
 				63ED798D151C1AD00076940F /* MapView.xcodeproj */,
 				6370D354151A8BAE0081206A /* libsqlite3.dylib */,
 				636D781A152E58FD005E31A3 /* MBProgressHUD */,
@@ -1709,6 +1749,18 @@
 				63DE6E521611332200C26B77 /* Default-568h@2x.png in Resources */,
 				63DE6E541611365D00C26B77 /* default-568h@2x.png in Resources */,
 				639953FE16113A200070CBAF /* about.css in Resources */,
+				6332CB4216262D670088F5B0 /* gym@2x.png in Resources */,
+				6332CB4416262D6F0088F5B0 /* gym.png in Resources */,
+				6332CB46162631D80088F5B0 /* swimmer.png in Resources */,
+				6332CB48162631E70088F5B0 /* swimmer@2x.png in Resources */,
+				6332CB4A1626320A0088F5B0 /* carousel.png in Resources */,
+				6332CB4C162632130088F5B0 /* carousel@2x.png in Resources */,
+				6332CB4E1626321C0088F5B0 /* waterfall.png in Resources */,
+				6332CB50162632250088F5B0 /* waterfall@2x.png in Resources */,
+				6332CB52162633970088F5B0 /* playground.png in Resources */,
+				6332CB58162633CA0088F5B0 /* playground@2x.png in Resources */,
+				6332CB5A162635F90088F5B0 /* school.png in Resources */,
+				6332CB5C162636000088F5B0 /* school@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1850,7 +1902,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: David Chiles";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
 				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
@@ -1863,7 +1915,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C0714256-3241-4325-BEEA-D9039828CAB9";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$SDK_DIR/usr/include/libxml2 \"$(PROJECT_DIR)/alpstein-route-me/MapView\"/**";
 				WRAPPER_EXTENSION = app;
@@ -1875,7 +1927,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: David Chiles";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
 				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
@@ -1888,7 +1940,7 @@
 				OTHER_LDFLAGS = "-all_load";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C0714256-3241-4325-BEEA-D9039828CAB9";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$SDK_DIR/usr/include/libxml2 \"$(PROJECT_DIR)/alpstein-route-me/MapView\"/**";
 				WRAPPER_EXTENSION = app;

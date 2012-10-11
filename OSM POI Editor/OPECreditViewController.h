@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OPECreditViewController : UIViewController <UIWebViewDelegate>
+@interface OPECreditViewController : UIViewController <UIWebViewDelegate, UIActionSheetDelegate>
 
-@property (nonatomic, strong) IBOutlet UIWebView * webView;
+@property (nonatomic, strong) UIWebView * webView;
+@property (nonatomic, strong) NSURL * lastURL;
 
 -(IBAction)doneButtonPressed:(id)sender;
 
