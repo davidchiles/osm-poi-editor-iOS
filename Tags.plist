@@ -492,7 +492,7 @@
 		<key>Embassy</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>embassy.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -598,7 +598,7 @@
 		<key>Townhall or Cityhall</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>townhall.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -2437,7 +2437,7 @@
 		<key>Guidepost</key>
 		<dict>
 			<key>image</key>
-			<string>info.png</string>
+			<string>guidepost.png</string>
 			<key>tags</key>
 			<dict>
 				<key>tourism</key>
@@ -2455,7 +2455,7 @@
 		<key>Map</key>
 		<dict>
 			<key>image</key>
-			<string>info.png</string>
+			<string>map.png</string>
 			<key>tags</key>
 			<dict>
 				<key>tourism</key>
@@ -2633,7 +2633,7 @@
 		<key>Memorial</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>memorial.png</string>
 			<key>tags</key>
 			<dict>
 				<key>historic</key>
