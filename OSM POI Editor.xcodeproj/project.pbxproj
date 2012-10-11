@@ -598,16 +598,6 @@
 		632573E115211CE200478B78 /* OPEMapquestAerial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMapquestAerial.m; sourceTree = "<group>"; };
 		6325B4431534B28A00C8691F /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = location.png; path = icons/location.png; sourceTree = "<group>"; };
 		6325B4441534B28B00C8691F /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "location@2x.png"; path = "icons/location@2x.png"; sourceTree = "<group>"; };
-		63292E571593ED590010A11B /* OPEBinaryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPEBinaryCell.h; sourceTree = "<group>"; };
-		63292E581593ED590010A11B /* OPEBinaryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPEBinaryCell.m; sourceTree = "<group>"; };
-		63292E591593ED590010A11B /* OPEConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPEConstants.h; sourceTree = "<group>"; };
-		63292E5A1593ED590010A11B /* OPEPhoneCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPEPhoneCell.h; sourceTree = "<group>"; };
-		63292E5B1593ED590010A11B /* OPEPhoneCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPEPhoneCell.m; sourceTree = "<group>"; };
-		63292E5C1593ED590010A11B /* OPESpecialCell2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPESpecialCell2.h; sourceTree = "<group>"; };
-		63292E5D1593ED590010A11B /* OPESpecialCell2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPESpecialCell2.m; sourceTree = "<group>"; };
-		63292E5E1593ED590010A11B /* OPETagValueList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPETagValueList.h; sourceTree = "<group>"; };
-		63292E5F1593ED590010A11B /* OPETagValueList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPETagValueList.m; sourceTree = "<group>"; };
-		63292E601593ED590010A11B /* OPETagValueList.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OPETagValueList.xib; sourceTree = "<group>"; };
 		63292E611593ED670010A11B /* OPEBinaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBinaryCell.h; sourceTree = "<group>"; };
 		63292E621593ED670010A11B /* OPEBinaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBinaryCell.m; sourceTree = "<group>"; };
 		63292E631593ED670010A11B /* OPEConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEConstants.h; sourceTree = "<group>"; };
@@ -1151,16 +1141,6 @@
 				63292E681593ED670010A11B /* OPETagValueList.h */,
 				63292E691593ED670010A11B /* OPETagValueList.m */,
 				63292E6A1593ED670010A11B /* OPETagValueList.xib */,
-				63292E571593ED590010A11B /* OPEBinaryCell.h */,
-				63292E581593ED590010A11B /* OPEBinaryCell.m */,
-				63292E591593ED590010A11B /* OPEConstants.h */,
-				63292E5A1593ED590010A11B /* OPEPhoneCell.h */,
-				63292E5B1593ED590010A11B /* OPEPhoneCell.m */,
-				63292E5C1593ED590010A11B /* OPESpecialCell2.h */,
-				63292E5D1593ED590010A11B /* OPESpecialCell2.m */,
-				63292E5E1593ED590010A11B /* OPETagValueList.h */,
-				63292E5F1593ED590010A11B /* OPETagValueList.m */,
-				63292E601593ED590010A11B /* OPETagValueList.xib */,
 				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
 				6332CB3716261E470088F5B0 /* Model */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,
