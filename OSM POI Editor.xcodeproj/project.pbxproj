@@ -237,7 +237,6 @@
 		6330AB7B14DB519A00448852 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6330AB7A14DB519A00448852 /* main.m */; };
 		6330AB7F14DB519A00448852 /* OPEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6330AB7E14DB519A00448852 /* OPEAppDelegate.m */; };
 		6330AB8214DB519A00448852 /* OPEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6330AB8114DB519A00448852 /* OPEViewController.m */; };
-		6330AC0314DB547D00448852 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0214DB547D00448852 /* libstdc++.6.dylib */; };
 		6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0414DB54A200448852 /* QuartzCore.framework */; };
 		6330AC0714DB5E4D00448852 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0614DB5E4D00448852 /* CoreLocation.framework */; };
 		6332CB4216262D670088F5B0 /* gym@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB4116262D670088F5B0 /* gym@2x.png */; };
@@ -253,6 +252,19 @@
 		6332CB5A162635F90088F5B0 /* school.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB59162635F90088F5B0 /* school.png */; };
 		6332CB5C162636000088F5B0 /* school@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB5B162636000088F5B0 /* school@2x.png */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
+		63570722163F613B0009D8A3 /* HeadingAngleSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 63570715163F613B0009D8A3 /* HeadingAngleSmall.png */; };
+		63570723163F613B0009D8A3 /* HeadingAngleSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63570716163F613B0009D8A3 /* HeadingAngleSmall@2x.png */; };
+		63570724163F613B0009D8A3 /* LoadingTile.png in Resources */ = {isa = PBXBuildFile; fileRef = 63570717163F613B0009D8A3 /* LoadingTile.png */; };
+		63570725163F613B0009D8A3 /* LoadingTileZoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 63570718163F613B0009D8A3 /* LoadingTileZoom.png */; };
+		63570726163F613B0009D8A3 /* TrackingDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 63570719163F613B0009D8A3 /* TrackingDot.png */; };
+		63570727163F613B0009D8A3 /* TrackingDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6357071A163F613B0009D8A3 /* TrackingDot@2x.png */; };
+		63570728163F613B0009D8A3 /* TrackingDotHalo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6357071B163F613B0009D8A3 /* TrackingDotHalo.png */; };
+		63570729163F613B0009D8A3 /* TrackingDotHalo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6357071C163F613B0009D8A3 /* TrackingDotHalo@2x.png */; };
+		6357072A163F613B0009D8A3 /* TrackingHeading.png in Resources */ = {isa = PBXBuildFile; fileRef = 6357071D163F613B0009D8A3 /* TrackingHeading.png */; };
+		6357072B163F613B0009D8A3 /* TrackingHeading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6357071E163F613B0009D8A3 /* TrackingHeading@2x.png */; };
+		6357072C163F613B0009D8A3 /* TrackingLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = 6357071F163F613B0009D8A3 /* TrackingLocation.png */; };
+		6357072D163F613B0009D8A3 /* TrackingLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63570720163F613B0009D8A3 /* TrackingLocation@2x.png */; };
+		63570A901640F3C00009D8A3 /* libMapView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63570A8C1640F3B10009D8A3 /* libMapView.a */; };
 		635E0291151BB94F00B6BBCE /* center.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E028B151BB94F00B6BBCE /* center.png */; };
 		635E0292151BB94F00B6BBCE /* center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E028C151BB94F00B6BBCE /* center@2x.png */; };
 		635E0293151BB94F00B6BBCE /* left.png in Resources */ = {isa = PBXBuildFile; fileRef = 635E028D151BB94F00B6BBCE /* left.png */; };
@@ -340,6 +352,23 @@
 		63F9CCA514F32B2E00308DE1 /* iphone_delete_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */; };
 		63FFDC6614E480DF00701DEC /* OPETagInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		63570A8B1640F3B10009D8A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63570A801640F3B10009D8A3 /* MapView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 17F31EFA1331050A00122B16;
+			remoteInfo = MapView;
+		};
+		63570A8E1640F3BA0009D8A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63570A801640F3B10009D8A3 /* MapView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B8C974130E8A19B2007D16AD;
+			remoteInfo = MapView;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		6310F4B4153736D000C65FD8 /* OPEMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMessage.h; sourceTree = "<group>"; };
@@ -606,6 +635,19 @@
 		6332CB5B162636000088F5B0 /* school@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "school@2x.png"; sourceTree = "<group>"; };
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
+		63570715163F613B0009D8A3 /* HeadingAngleSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HeadingAngleSmall.png; path = Resources/HeadingAngleSmall.png; sourceTree = "<group>"; };
+		63570716163F613B0009D8A3 /* HeadingAngleSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "HeadingAngleSmall@2x.png"; path = "Resources/HeadingAngleSmall@2x.png"; sourceTree = "<group>"; };
+		63570717163F613B0009D8A3 /* LoadingTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoadingTile.png; path = Resources/LoadingTile.png; sourceTree = "<group>"; };
+		63570718163F613B0009D8A3 /* LoadingTileZoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LoadingTileZoom.png; path = Resources/LoadingTileZoom.png; sourceTree = "<group>"; };
+		63570719163F613B0009D8A3 /* TrackingDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TrackingDot.png; path = Resources/TrackingDot.png; sourceTree = "<group>"; };
+		6357071A163F613B0009D8A3 /* TrackingDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TrackingDot@2x.png"; path = "Resources/TrackingDot@2x.png"; sourceTree = "<group>"; };
+		6357071B163F613B0009D8A3 /* TrackingDotHalo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TrackingDotHalo.png; path = Resources/TrackingDotHalo.png; sourceTree = "<group>"; };
+		6357071C163F613B0009D8A3 /* TrackingDotHalo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TrackingDotHalo@2x.png"; path = "Resources/TrackingDotHalo@2x.png"; sourceTree = "<group>"; };
+		6357071D163F613B0009D8A3 /* TrackingHeading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TrackingHeading.png; path = Resources/TrackingHeading.png; sourceTree = "<group>"; };
+		6357071E163F613B0009D8A3 /* TrackingHeading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TrackingHeading@2x.png"; path = "Resources/TrackingHeading@2x.png"; sourceTree = "<group>"; };
+		6357071F163F613B0009D8A3 /* TrackingLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TrackingLocation.png; path = Resources/TrackingLocation.png; sourceTree = "<group>"; };
+		63570720163F613B0009D8A3 /* TrackingLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TrackingLocation@2x.png"; path = "Resources/TrackingLocation@2x.png"; sourceTree = "<group>"; };
+		63570A801640F3B10009D8A3 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = "<group>"; };
 		635E028B151BB94F00B6BBCE /* center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = center.png; sourceTree = "<group>"; };
 		635E028C151BB94F00B6BBCE /* center@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "center@2x.png"; sourceTree = "<group>"; };
 		635E028D151BB94F00B6BBCE /* left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left.png; sourceTree = "<group>"; };
@@ -775,16 +817,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */,
-				6383949A14EC85C100C74A57 /* Security.framework in Frameworks */,
+				63570A901640F3C00009D8A3 /* libMapView.a in Frameworks */,
 				63E279EA14E1F87D009D02BD /* libxml2.dylib in Frameworks */,
+				6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */,
+				63E4BF1A14E068EC00E0BD46 /* libz.dylib in Frameworks */,
+				6383949A14EC85C100C74A57 /* Security.framework in Frameworks */,
 				63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */,
 				63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */,
 				63E2796814E1F274009D02BD /* CFNetwork.framework in Frameworks */,
-				63E4BF1A14E068EC00E0BD46 /* libz.dylib in Frameworks */,
 				6330AC0714DB5E4D00448852 /* CoreLocation.framework in Frameworks */,
 				6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */,
-				6330AC0314DB547D00448852 /* libstdc++.6.dylib in Frameworks */,
 				6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */,
 				6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */,
 				6330AB7314DB519A00448852 /* CoreGraphics.framework in Frameworks */,
@@ -1052,7 +1094,9 @@
 		6330AB5F14DB519A00448852 = {
 			isa = PBXGroup;
 			children = (
+				63570A801640F3B10009D8A3 /* MapView.xcodeproj */,
 				6370D354151A8BAE0081206A /* libsqlite3.dylib */,
+				63570721163F613B0009D8A3 /* Resources */,
 				636D781A152E58FD005E31A3 /* MBProgressHUD */,
 				6330AB7414DB519A00448852 /* OSM POI Editor */,
 				6383948A14EC7D8C00C74A57 /* OAuth */,
@@ -1167,6 +1211,34 @@
 				63AD8F7C15E8577E006F92B8 /* OPEType.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		63570721163F613B0009D8A3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				63570715163F613B0009D8A3 /* HeadingAngleSmall.png */,
+				63570716163F613B0009D8A3 /* HeadingAngleSmall@2x.png */,
+				63570717163F613B0009D8A3 /* LoadingTile.png */,
+				63570718163F613B0009D8A3 /* LoadingTileZoom.png */,
+				63570719163F613B0009D8A3 /* TrackingDot.png */,
+				6357071A163F613B0009D8A3 /* TrackingDot@2x.png */,
+				6357071B163F613B0009D8A3 /* TrackingDotHalo.png */,
+				6357071C163F613B0009D8A3 /* TrackingDotHalo@2x.png */,
+				6357071D163F613B0009D8A3 /* TrackingHeading.png */,
+				6357071E163F613B0009D8A3 /* TrackingHeading@2x.png */,
+				6357071F163F613B0009D8A3 /* TrackingLocation.png */,
+				63570720163F613B0009D8A3 /* TrackingLocation@2x.png */,
+			);
+			name = Resources;
+			path = lib/mapbox/MapView/Map;
+			sourceTree = "<group>";
+		};
+		63570A811640F3B10009D8A3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				63570A8C1640F3B10009D8A3 /* libMapView.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		635E0297151BB95400B6BBCE /* callout */ = {
@@ -1400,6 +1472,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				63570A8F1640F3BA0009D8A3 /* PBXTargetDependency */,
 			);
 			name = "OSM POI Editor";
 			productName = "OSM POI Editor";
@@ -1424,12 +1497,28 @@
 			mainGroup = 6330AB5F14DB519A00448852;
 			productRefGroup = 6330AB6B14DB519A00448852 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 63570A811640F3B10009D8A3 /* Products */;
+					ProjectRef = 63570A801640F3B10009D8A3 /* MapView.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				6330AB6914DB519A00448852 /* OSM POI Editor */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		63570A8C1640F3B10009D8A3 /* libMapView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMapView.a;
+			remoteRef = 63570A8B1640F3B10009D8A3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6330AB6814DB519A00448852 /* Resources */ = {
@@ -1701,6 +1790,18 @@
 				63B748B41627844E0052148E /* map.png in Resources */,
 				63B748B51627844E0052148E /* embassy.png in Resources */,
 				63B748B61627844E0052148E /* guidepost.png in Resources */,
+				63570722163F613B0009D8A3 /* HeadingAngleSmall.png in Resources */,
+				63570723163F613B0009D8A3 /* HeadingAngleSmall@2x.png in Resources */,
+				63570724163F613B0009D8A3 /* LoadingTile.png in Resources */,
+				63570725163F613B0009D8A3 /* LoadingTileZoom.png in Resources */,
+				63570726163F613B0009D8A3 /* TrackingDot.png in Resources */,
+				63570727163F613B0009D8A3 /* TrackingDot@2x.png in Resources */,
+				63570728163F613B0009D8A3 /* TrackingDotHalo.png in Resources */,
+				63570729163F613B0009D8A3 /* TrackingDotHalo@2x.png in Resources */,
+				6357072A163F613B0009D8A3 /* TrackingHeading.png in Resources */,
+				6357072B163F613B0009D8A3 /* TrackingHeading@2x.png in Resources */,
+				6357072C163F613B0009D8A3 /* TrackingLocation.png in Resources */,
+				6357072D163F613B0009D8A3 /* TrackingLocation@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1770,6 +1871,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		63570A8F1640F3BA0009D8A3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MapView;
+			targetProxy = 63570A8E1640F3BA0009D8A3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		6330AB7714DB519A00448852 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -1832,24 +1941,27 @@
 		6330AB8C14DB519A00448852 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
-				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
-				"HEADER_SEARCH_PATHS[arch=*]" = (
-					$SDK_DIR/usr/include/libxml2,
-					"\"$(PROJECT_DIR)/Library/route-me-original\"/**",
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					"lib/**",
+					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = "-all_load";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/OSM_POI_Editor-eqgolvplfdafjffvryvwtjldlhbj/Build/Products/Debug-iphoneos\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$SDK_DIR/usr/include/libxml2 \"$(PROJECT_DIR)/alpstein-route-me/MapView\"/**";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1857,24 +1969,27 @@
 		6330AB8D14DB519A00448852 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
-				HEADER_SEARCH_PATHS = $SDK_DIR/usr/include/libxml2;
-				"HEADER_SEARCH_PATHS[arch=*]" = (
-					$SDK_DIR/usr/include/libxml2,
-					"\"$SRCROOT/Library/route-me-original\"/**",
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				HEADER_SEARCH_PATHS = (
+					"lib/**",
+					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = "-all_load";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/OSM_POI_Editor-eqgolvplfdafjffvryvwtjldlhbj/Build/Products/Debug-iphoneos\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
-				USER_HEADER_SEARCH_PATHS = "$SDK_DIR/usr/include/libxml2 \"$(PROJECT_DIR)/alpstein-route-me/MapView\"/**";
+				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

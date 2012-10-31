@@ -24,7 +24,8 @@
 #import "GTMOAuthViewControllerTouch.h"
 #import "RMFoundation.h"
 #import "RMMarker.h"
-#import "RMMarkerManager.h"
+#import "RMAnnotation.h"
+#import "RMMarker.h"
 #import "OPEStamenTerrain.h"
 #import "OPEPoint.h"
 
@@ -124,9 +125,9 @@
     }
     
     [mapView setDelegate:self];
-    [mapView moveToLatLong: initLocation];
+    [mapView setCenterCoordinate:initLocation animated:YES];
     
-    [mapView.contents setZoom: 18];
+    [mapView setZoom: 18];
     id <RMTileSource> newTileSource = nil;
     int num = 0;
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
@@ -145,8 +146,8 @@
     [self setTileSource:newTileSource at:num];
     [self addMarkerAt:initLocation withNode:nil];
     
-    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
-    currentSquare = [mapView latitudeLongitudeBoundingBoxForScreen];
+    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBox];
+    currentSquare = [mapView latitudeLongitudeBoundingBox];
     
     osmData = [[OPEOSMData alloc] init];
     
@@ -154,10 +155,10 @@
     message.alpha = 0.0;
     dispatch_queue_t q = dispatch_queue_create("queue", NULL);
     
-        if (mapView.contents.zoom > MINZOOM) {
+        if (mapView.zoom > MINZOOM) {
             [self removeZoomWarning];
             dispatch_async(q, ^{
-                [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+                [osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
              });
         }
         else {
@@ -217,11 +218,33 @@
     return newImage;
 }
 
+-(RMMapLayer *) mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
+{
+    OPENode * node = (OPENode *)annotation.userInfo;
+    UIImage * icon;
+    if(node.ident > 0) {
+        if ([imagesDic objectForKey:node.image]) {
+            icon = [imagesDic objectForKey:node.image];
+        }
+        else {
+            icon = [self imageWithBorderFromImage:icon]; //center image inside box
+            [imagesDic setObject:icon forKey:node.image];
+        }
+        
+    }
+    
+    //RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 1.0)];
+    RMMarker * marker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
+    
+    
+    return marker;
+}
+
 
 -(RMMarker *) addMarkerAt:(CLLocationCoordinate2D) position withNode: (OPENode *) node
 {
     //NSLog(@"start addMarkerAt %@",node.image);
-    UIImage *icon = [UIImage imageNamed:node.image];   //Get image from stored value in node
+    UIImage * icon;   //Get image from stored value in node
     //UIImage * icon = [UIImage imageNamed:@"restaurant"];
     //if (node.ident>0 && ![node.image isEqualToString:@"none.png"]) {
     if(node.ident > 0) {
@@ -238,9 +261,9 @@
     //RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 1.0)];
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
     
-    newMarker.data = node;
+    newMarker.userInfo = node;
     newMarker.zPosition = 0.2;
-    [mapView.markerManager addMarker:newMarker AtLatLong:node.coordinate];
+    //[mapView.markerManager addMarker:newMarker AtLatLong:node.coordinate];
     
     
    
@@ -258,17 +281,17 @@
 
 -(void) tapOnMarker:(RMMarker *)marker onMap:(RMMapView *)map
 {
-    
+    /*
     [openMarker hideLabel];
     openMarker.zPosition = 0.5;
     marker.zPosition = 1.0;
-    OPENode * tempNode = (OPENode *)marker.data;
+    OPENode * tempNode = (OPENode *)marker.userInfo;
     
     if(tempNode.ident == -1)
     {
         //[marker setProjectedLocation:[[mapView.contents projection] latLongToPoint:[mapView pixelToLatLong:marker.position]]]; 
         
-        ((OPENode *)marker.data).coordinate = [mapView pixelToLatLong:CGPointMake(marker.position.x, marker.bounds.size.height/2+marker.position.y)];
+        ((OPENode *)marker.userInfo).coordinate = [mapView pixelToLatLong:CGPointMake(marker.position.x, marker.bounds.size.height/2+marker.position.y)];
         [self tapOnLabelForMarker:marker onMap:mapView onLayer:nil];
     }
     else if (marker.label) {
@@ -340,7 +363,9 @@
         
         openMarker = marker;
         [mapView bringSubviewToFront:marker.label];
+     
     }
+     */
     
 }
 
@@ -352,7 +377,7 @@
     OPENodeViewController * nodeVC = [[OPENodeViewController alloc] init];
     
     nodeVC.title = @"Node Info";
-    nodeVC.point = (id<OPEPoint>)marker.data;
+    nodeVC.point = (id<OPEPoint>)marker.userInfo;
     [nodeVC setDelegate:self];
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
@@ -364,7 +389,7 @@
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
 {   
-    OPENode * node = (OPENode *)marker.data;
+    OPENode * node = (OPENode *)marker.userInfo;
     if(node.ident<0)
     {
         return YES;
@@ -385,10 +410,10 @@
             //[mapView.markerManager moveMarker:marker AtXY: position];
             CGSize delta = CGSizeMake((position.x-(marker.position.x)), 
                                       (position.y-(marker.position.y))); 
-            [marker moveBy: delta];
+            //[marker moveBy: delta];
             //[marker setProjectedLocation:[[mapView.contents projection] latLongToPoint:[mapView pixelToLatLong:marker.position]]]; 
             //[marker setProjectedLocation: [[mapView projection] latLongToPoint:[mapView pixelToLatLong:marker.position]]];
-            [mapView.markerManager moveMarker:marker AtXY:position];
+            //[mapView.markerManager moveMarker:marker AtXY:position];
         }
     }
 }
@@ -462,11 +487,11 @@
     dispatch_queue_t q = dispatch_queue_create("queue", NULL);
     
     
-    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
-    if (mapView.contents.zoom > MINZOOM) {
+    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBox];
+    if (mapView.zoom > MINZOOM) {
         [self removeZoomWarning];
         dispatch_async(q, ^{
-            [osmData getDataWithSW:geoBox.southwest NE:geoBox.northeast];
+            [osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
         });
         dispatch_release(q);
     }
@@ -491,24 +516,6 @@
     }
 }
 
-
-- (CLLocationCoordinate2D) centerOfMap
-{
-    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBoxForScreen];
-    
-    double left = geoBox.southwest.longitude; 
-    double bottom = geoBox.southwest.latitude;
-    double right = geoBox.northeast.longitude;
-    double top = geoBox.northeast.latitude;
-    
-    CLLocationDegrees lat = (bottom + top)/2.0;
-    CLLocationDegrees lon = (left + right)/2.0;
-    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(lat, lon);
-    return center;
-    
-    
-}
-
 #pragma - LocationManagerDelegate
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -522,10 +529,10 @@
         UIImage *icon = [UIImage imageNamed:@"userLocation.png"]; 
         currentLocationMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
         
-        [mapView.markerManager addMarker:currentLocationMarker AtLatLong:newLocation.coordinate];
+        //[mapView.markerManager addMarker:currentLocationMarker AtLatLong:newLocation.coordinate];
     }
     else {
-        [mapView.markerManager moveMarker:currentLocationMarker AtLatLon:newLocation.coordinate];
+        //[mapView.markerManager moveMarker:currentLocationMarker AtLatLon:newLocation.coordinate];
     }
 }
 
@@ -533,14 +540,14 @@
 
 -(void) updatedNode:(OPENode *)newNode
 {
-    [mapView.markerManager removeMarker:nodeInfo];
+    //[mapView.markerManager removeMarker:nodeInfo];
     [self addMarkerAt:newNode.coordinate withNode:newNode];
     [self.osmData.allNodes setObject:newNode forKey:[newNode uniqueIdentifier]];
 }
 -(void) createdNode:(OPENode *)newNode
 {
     NSLog(@"Created New Node: %@",[newNode uniqueIdentifier]);
-    [mapView.markerManager removeMarker:nodeInfo];
+    //[mapView.markerManager removeMarker:nodeInfo];
     [self addMarkerAt:newNode.coordinate withNode:newNode];
     [self.osmData.allNodes setObject:newNode forKey:[newNode uniqueIdentifier]];
     theNewMarker = nil;
@@ -548,7 +555,7 @@
 }
 -(void) deletedNode:(OPENode *)newNode
 {
-    [mapView.markerManager removeMarker:nodeInfo];
+    //[mapView.markerManager removeMarker:nodeInfo];
     [self.osmData.allNodes removeObjectForKey:[newNode uniqueIdentifier]];
     [self.osmData.ignoreNodes setObject:newNode forKey:[newNode uniqueIdentifier]];
 }
@@ -559,8 +566,8 @@
 {
     if (tileSource) {
         currentTile = number;
-        [mapView.contents removeAllCachedImages];
-        [mapView.contents setTileSource:tileSource];
+        [mapView removeAllCachedImages];
+        [mapView setTileSource:tileSource];
     }
     NSLog(@"TileSource: %@",((id<RMTileSource>)tileSource));
     
@@ -570,8 +577,8 @@
 
 - (IBAction)addPointButtonPressed:(id)sender
 {
-    CLLocationCoordinate2D center = [self centerOfMap];
-    if (mapView.contents.zoom > MINZOOM) {
+    CLLocationCoordinate2D center = mapView.centerCoordinate;
+    if (mapView.zoom > MINZOOM) {
         if(openMarker) 
         {
             [openMarker hideLabel];
@@ -579,7 +586,7 @@
         }
         if(theNewMarker)
         {
-            [mapView.contents.markerManager moveMarker: theNewMarker AtLatLon:center];
+            //[mapView.contents.markerManager moveMarker: theNewMarker AtLatLon:center];
         }
         else
         {
@@ -604,8 +611,7 @@
 {
     CLLocationCoordinate2D currentLocation = [[locationManager location] coordinate];
     
-    //[mapView setCenterCoordinate: currentLocation animated:YES];
-    [mapView moveToLatLong:currentLocation];
+    [mapView setCenterCoordinate: currentLocation animated:YES];
 }
 
 - (IBAction)infoButtonPressed:(id)sender
