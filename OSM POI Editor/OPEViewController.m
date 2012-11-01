@@ -25,7 +25,7 @@
 #import "RMFoundation.h"
 #import "RMMarker.h"
 #import "RMAnnotation.h"
-#import "RMMarker.h"
+#import "OPEUserTrackingBarButtonItem.h"
 #import "OPEStamenTerrain.h"
 #import "OPEPoint.h"
 
@@ -55,12 +55,17 @@
 
 -(void)setupButtons
 {
+    mapView = [[RMMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
     UIBarButtonItem * locationBarButton;
     UIBarButtonItem * addBarButton;
     UIBarButtonItem * settingsBarButton;
     
-    locationBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"location.png"]style:UIBarButtonItemStylePlain target:self action:@selector(locationButtonPressed:)];
+    //locationBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"location.png"]style:UIBarButtonItemStylePlain target:self action:@selector(locationButtonPressed:)];
+    //locationBarButton = [[RMUserTrackingBarButtonItem alloc] initWithMapView:mapView];
+    locationBarButton = [[OPEUserTrackingBarButtonItem alloc] initWithMapView:mapView];
+    
+    
     
     addBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPointButtonPressed:)];
     
@@ -68,7 +73,6 @@
     
     UIBarButtonItem * flexibleSpaceBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    mapView = [[RMMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
     mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
