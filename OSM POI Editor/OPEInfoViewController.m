@@ -23,8 +23,9 @@
 #import "OPEInfoViewController.h"
 #import "OPEStamenTerrain.h"
 #import "OPEStamenToner.h"
-#import "OPEMapquestAerial.h"
+#import "RMMapQuestOpenAerialSource.h"
 #import "RMOpenStreetMapSource.h"
+#import "OPEBingTileSource.h"
 #import "OPEAPIConstants.h"
 
 
@@ -121,8 +122,8 @@
 
 
 - (GTMOAuthAuthentication *)osmAuth {
-    NSString *myConsumerKey = osmConsumerKey //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
-    NSString *myConsumerSecret = osmConsumerSecret //@"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
+    NSString *myConsumerKey = osmConsumerKey; //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
+    NSString *myConsumerSecret = osmConsumerSecret; //@"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
     
     GTMOAuthAuthentication *auth;
     auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
@@ -186,7 +187,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 4;
+        return 5;
     }
     else {
         return 1;
@@ -226,6 +227,9 @@
         }
         else if (indexPath.row == 3){
             cell.textLabel.text = @"OpenMapquest Aerial";
+        }
+        else if (indexPath.row == 4){
+            cell.textLabel.text = @"Bing Aerial";
         }
         
         if (indexPath.row == currentNumber) {
@@ -357,7 +361,10 @@
         return [[OPEStamenToner alloc] init];
     }
     else if (num == 3) {
-        return [[OPEMapquestAerial alloc] init];
+        return [[RMMapQuestOpenAerialSource alloc] init];
+    }
+    else if (num == 4) {
+        return [[OPEBingTileSource alloc] initWithMapsKey:bingMapsKey];
     }
     return nil;
 }

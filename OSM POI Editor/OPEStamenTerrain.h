@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "RMAbstractMercatorTileSource.h"
+#import "RMAbstractWebMapSource.h"
 
-@interface OPEStamenTerrain : RMAbstractMercatorTileSource {
+@interface OPEStamenTerrain : RMAbstractWebMapSource {
     
 }
 

@@ -167,7 +167,7 @@
         
    
     
-    dispatch_release(q);
+    //dispatch_release(q);
     
     imagesDic = [[NSMutableDictionary alloc] init];
     //[mapView moveToLatLong: initLocation];
@@ -493,7 +493,7 @@
         dispatch_async(q, ^{
             [osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
         });
-        dispatch_release(q);
+        //dispatch_release(q);
     }
     else {
         [self showZoomWarning];

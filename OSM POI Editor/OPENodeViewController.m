@@ -554,7 +554,7 @@
             
         });
         
-        dispatch_release(q);
+        //dispatch_release(q);
 
         
     }
@@ -645,7 +645,7 @@
                     }
                 });
                 
-                dispatch_release(q);
+                //dispatch_release(q);
             }
             
         }
@@ -849,8 +849,8 @@
 
 
 - (GTMOAuthAuthentication *)osmAuth {
-    NSString *myConsumerKey = osmConsumerKey     // pre-registered with service
-    NSString *myConsumerSecret = osmConsumerSecret // pre-assigned by service
+    NSString *myConsumerKey = osmConsumerKey;     // pre-registered with service
+    NSString *myConsumerSecret = osmConsumerSecret; // pre-assigned by service
     
     GTMOAuthAuthentication *auth;
     auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1

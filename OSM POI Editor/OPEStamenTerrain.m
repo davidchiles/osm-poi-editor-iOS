@@ -23,12 +23,14 @@
 	return self;
 } 
 
--(NSString*) tileURL: (RMTile) tile
+-(NSURL *)URLForTile:(RMTile)tile
 {
-	NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
-			  @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f", 
+    NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
+			  @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f",
 			  self, tile.zoom, self.minZoom, self.maxZoom);
-	return [NSString stringWithFormat:@"http://tile.stamen.com/terrain/%d/%d/%d.png", tile.zoom, tile.x, tile.y];
+    
+    return [NSURL URLWithString:[NSString stringWithFormat:@"http://tile.stamen.com/terrain/%d/%d/%d.png", tile.zoom, tile.x, tile.y]];
+    
 }
 
 -(NSString*) uniqueTilecacheKey

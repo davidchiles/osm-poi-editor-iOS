@@ -222,7 +222,6 @@
 		632573B11520FFB200478B78 /* tileSource.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632573B01520FFB100478B78 /* tileSource.plist */; };
 		632573DB152108BD00478B78 /* OPEStamenTerrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 632573DA152108BD00478B78 /* OPEStamenTerrain.m */; };
 		632573DF15211A1C00478B78 /* OPEStamenToner.m in Sources */ = {isa = PBXBuildFile; fileRef = 632573DE15211A1C00478B78 /* OPEStamenToner.m */; };
-		632573E215211CE300478B78 /* OPEMapquestAerial.m in Sources */ = {isa = PBXBuildFile; fileRef = 632573E115211CE200478B78 /* OPEMapquestAerial.m */; };
 		6325B4451534B28B00C8691F /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 6325B4431534B28A00C8691F /* location.png */; };
 		6325B4461534B28B00C8691F /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6325B4441534B28B00C8691F /* location@2x.png */; };
 		63292E6B1593ED670010A11B /* OPEBinaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E621593ED670010A11B /* OPEBinaryCell.m */; };
@@ -350,6 +349,7 @@
 		63E525EB1536560300D2DA35 /* Tags.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63E525EA1536560200D2DA35 /* Tags.plist */; };
 		63F1F28615A7AD630027829B /* OPEWay.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F1F28515A7AD630027829B /* OPEWay.m */; };
 		63F9CCA514F32B2E00308DE1 /* iphone_delete_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */; };
+		63FCA4421643127D00A28470 /* OPEBingTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FCA4411643127D00A28470 /* OPEBingTileSource.m */; };
 		63FFDC6614E480DF00701DEC /* OPETagInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */; };
 /* End PBXBuildFile section */
 
@@ -591,8 +591,6 @@
 		632573DA152108BD00478B78 /* OPEStamenTerrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEStamenTerrain.m; sourceTree = "<group>"; };
 		632573DD15211A1C00478B78 /* OPEStamenToner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEStamenToner.h; sourceTree = "<group>"; };
 		632573DE15211A1C00478B78 /* OPEStamenToner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEStamenToner.m; sourceTree = "<group>"; };
-		632573E015211CE200478B78 /* OPEMapquestAerial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMapquestAerial.h; sourceTree = "<group>"; };
-		632573E115211CE200478B78 /* OPEMapquestAerial.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMapquestAerial.m; sourceTree = "<group>"; };
 		6325B4431534B28A00C8691F /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = location.png; path = icons/location.png; sourceTree = "<group>"; };
 		6325B4441534B28B00C8691F /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "location@2x.png"; path = "icons/location@2x.png"; sourceTree = "<group>"; };
 		63292E611593ED670010A11B /* OPEBinaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBinaryCell.h; sourceTree = "<group>"; };
@@ -808,6 +806,8 @@
 		63F1F28415A7AD630027829B /* OPEWay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEWay.h; sourceTree = "<group>"; };
 		63F1F28515A7AD630027829B /* OPEWay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEWay.m; sourceTree = "<group>"; };
 		63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone_delete_button.png; sourceTree = "<group>"; };
+		63FCA4401643127D00A28470 /* OPEBingTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBingTileSource.h; sourceTree = "<group>"; };
+		63FCA4411643127D00A28470 /* OPEBingTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBingTileSource.m; sourceTree = "<group>"; };
 		63FFDC6414E480DF00701DEC /* OPETagInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPETagInterpreter.h; path = ../OPETagInterpreter.h; sourceTree = "<group>"; };
 		63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPETagInterpreter.m; path = ../OPETagInterpreter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1085,8 +1085,8 @@
 				632573DA152108BD00478B78 /* OPEStamenTerrain.m */,
 				632573DD15211A1C00478B78 /* OPEStamenToner.h */,
 				632573DE15211A1C00478B78 /* OPEStamenToner.m */,
-				632573E015211CE200478B78 /* OPEMapquestAerial.h */,
-				632573E115211CE200478B78 /* OPEMapquestAerial.m */,
+				63FCA4401643127D00A28470 /* OPEBingTileSource.h */,
+				63FCA4411643127D00A28470 /* OPEBingTileSource.m */,
 			);
 			name = MapSources;
 			sourceTree = "<group>";
@@ -1854,7 +1854,6 @@
 				6383949714EC7DAC00C74A57 /* GTMHTTPFetcher.m in Sources */,
 				632573DB152108BD00478B78 /* OPEStamenTerrain.m in Sources */,
 				632573DF15211A1C00478B78 /* OPEStamenToner.m in Sources */,
-				632573E215211CE300478B78 /* OPEMapquestAerial.m in Sources */,
 				636D7819152E58F8005E31A3 /* MBProgressHUD.m in Sources */,
 				63E525D21534D90500D2DA35 /* OPECreditViewController.m in Sources */,
 				6310F4B6153736D000C65FD8 /* OPEMessage.m in Sources */,
@@ -1866,6 +1865,7 @@
 				63CE5DC115BE085E00C84B90 /* OPEOptionalTag.m in Sources */,
 				63AD8F7A15E8570B006F92B8 /* OPECategory.m in Sources */,
 				63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */,
+				63FCA4421643127D00A28470 /* OPEBingTileSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1952,10 +1952,12 @@
 					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/OSM_POI_Editor-eqgolvplfdafjffvryvwtjldlhbj/Build/Products/Debug-iphoneos\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1980,10 +1982,12 @@
 					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/OSM_POI_Editor-eqgolvplfdafjffvryvwtjldlhbj/Build/Products/Debug-iphoneos\"",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_TEST_FLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
