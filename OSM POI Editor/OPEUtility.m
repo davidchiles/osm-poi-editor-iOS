@@ -12,7 +12,6 @@
 
 @implementation OPEUtility
 
-
 +(UIImage *)imageNamed:(NSString *)name withColor:(UIColor *)color
 {
     UIImage *img = [UIImage imageNamed:name];

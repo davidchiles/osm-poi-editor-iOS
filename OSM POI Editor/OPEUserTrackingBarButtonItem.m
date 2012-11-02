@@ -54,10 +54,7 @@ typedef enum {
     buttonImageView.center = self.customView.center;
     buttonImageView.userInteractionEnabled = NO;
     
-    
-    
-    
-    
+
     [self.customView addSubview:buttonImageView];
     
     activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];

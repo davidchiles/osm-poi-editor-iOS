@@ -42,7 +42,7 @@
 @property (nonatomic,strong) UIBarButtonItem * infoButton;
 @property (nonatomic,strong) UIBarButtonItem * location;
 @property (nonatomic,strong) UIBarButtonItem * addOPEPoint;
-@property (nonatomic,strong) RMMarker *openMarker;
+@property (nonatomic,strong) RMAnnotation *openMarker;
 @property (nonatomic,strong) RMMarker *theNewMarker;
 @property (nonatomic,strong) UIView * label;
 @property (nonatomic,strong) UILabel * calloutLabel;
