@@ -20,6 +20,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
+#ifdef CRITTERCISM_ENABLED
+#import "Crittercism.h"
+#import "OPEAPIConstants.h"
+#endif
+
 #import "OPEAppDelegate.h"
 #import "OPEViewController.h"
 
@@ -31,14 +36,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    /*
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        self.viewController = [[OPEViewController alloc] initWithNibName:@"OPEViewController_iPhone" bundle:nil];
-    } else {
-        self.viewController = [[OPEViewController alloc] initWithNibName:@"OPEViewController_iPad" bundle:nil];
-    }
-     */
+    
+#ifdef CRITTERCISM_ENABLED
+        [Crittercism initWithAppID:CRITTERCISM_APP_ID
+                            andKey:CRITTERCISM_KEY
+                         andSecret:CRITTERCISM_SECRET];
+#endif
+    
+    
     UIViewController *rootView = [[OPEViewController alloc] init];
     //rootView.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     

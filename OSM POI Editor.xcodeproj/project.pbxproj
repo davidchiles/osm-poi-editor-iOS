@@ -250,6 +250,9 @@
 		6332CB58162633CA0088F5B0 /* playground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB57162633CA0088F5B0 /* playground@2x.png */; };
 		6332CB5A162635F90088F5B0 /* school.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB59162635F90088F5B0 /* school.png */; };
 		6332CB5C162636000088F5B0 /* school@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6332CB5B162636000088F5B0 /* school@2x.png */; };
+		634205A716449197009C6BA4 /* libCrittercismCrashOnly_v3_3_4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6342058D16449197009C6BA4 /* libCrittercismCrashOnly_v3_3_4.a */; };
+		634205BE1645EA5C009C6BA4 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 634205BD1645EA5C009C6BA4 /* plus.png */; };
+		634205C01645EA62009C6BA4 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 634205BF1645EA62009C6BA4 /* plus@2x.png */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
 		63570722163F613B0009D8A3 /* HeadingAngleSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 63570715163F613B0009D8A3 /* HeadingAngleSmall.png */; };
 		63570723163F613B0009D8A3 /* HeadingAngleSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63570716163F613B0009D8A3 /* HeadingAngleSmall@2x.png */; };
@@ -633,6 +636,38 @@
 		6332CB57162633CA0088F5B0 /* playground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "playground@2x.png"; sourceTree = "<group>"; };
 		6332CB59162635F90088F5B0 /* school.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = school.png; sourceTree = "<group>"; };
 		6332CB5B162636000088F5B0 /* school@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "school@2x.png"; sourceTree = "<group>"; };
+		6342058916449197009C6BA4 /* CrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashReporter.h; sourceTree = "<group>"; };
+		6342058A16449197009C6BA4 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
+		6342058B16449197009C6BA4 /* CrittercismJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismJSONKit.h; sourceTree = "<group>"; };
+		6342058C16449197009C6BA4 /* CrittercismReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismReachability.h; sourceTree = "<group>"; };
+		6342058D16449197009C6BA4 /* libCrittercismCrashOnly_v3_3_4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercismCrashOnly_v3_3_4.a; sourceTree = "<group>"; };
+		6342058E16449197009C6BA4 /* PLCrashAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashAsync.h; sourceTree = "<group>"; };
+		6342058F16449197009C6BA4 /* PLCrashAsyncImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashAsyncImage.h; sourceTree = "<group>"; };
+		6342059016449197009C6BA4 /* PLCrashAsyncSignalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashAsyncSignalInfo.h; sourceTree = "<group>"; };
+		6342059116449197009C6BA4 /* PLCrashFrameWalker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker.h; sourceTree = "<group>"; };
+		6342059216449197009C6BA4 /* PLCrashFrameWalker_arm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_arm.h; sourceTree = "<group>"; };
+		6342059316449197009C6BA4 /* PLCrashFrameWalker_i386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_i386.h; sourceTree = "<group>"; };
+		6342059416449197009C6BA4 /* PLCrashFrameWalker_ppc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_ppc.h; sourceTree = "<group>"; };
+		6342059516449197009C6BA4 /* PLCrashFrameWalker_x86_64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_x86_64.h; sourceTree = "<group>"; };
+		6342059616449197009C6BA4 /* PLCrashLogWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashLogWriter.h; sourceTree = "<group>"; };
+		6342059716449197009C6BA4 /* PLCrashLogWriterEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashLogWriterEncoding.h; sourceTree = "<group>"; };
+		6342059816449197009C6BA4 /* PLCrashReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReport.h; sourceTree = "<group>"; };
+		6342059916449197009C6BA4 /* PLCrashReportApplicationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportApplicationInfo.h; sourceTree = "<group>"; };
+		6342059A16449197009C6BA4 /* PLCrashReportBinaryImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportBinaryImageInfo.h; sourceTree = "<group>"; };
+		6342059B16449197009C6BA4 /* PLCrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReporter.h; sourceTree = "<group>"; };
+		6342059C16449197009C6BA4 /* PLCrashReportExceptionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportExceptionInfo.h; sourceTree = "<group>"; };
+		6342059D16449197009C6BA4 /* PLCrashReportFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportFormatter.h; sourceTree = "<group>"; };
+		6342059E16449197009C6BA4 /* PLCrashReportMachineInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportMachineInfo.h; sourceTree = "<group>"; };
+		6342059F16449197009C6BA4 /* PLCrashReportProcessInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportProcessInfo.h; sourceTree = "<group>"; };
+		634205A016449197009C6BA4 /* PLCrashReportProcessorInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportProcessorInfo.h; sourceTree = "<group>"; };
+		634205A116449197009C6BA4 /* PLCrashReportSignalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportSignalInfo.h; sourceTree = "<group>"; };
+		634205A216449197009C6BA4 /* PLCrashReportSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportSystemInfo.h; sourceTree = "<group>"; };
+		634205A316449197009C6BA4 /* PLCrashReportTextFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportTextFormatter.h; sourceTree = "<group>"; };
+		634205A416449197009C6BA4 /* PLCrashReportThreadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportThreadInfo.h; sourceTree = "<group>"; };
+		634205A516449197009C6BA4 /* PLCrashSignalHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashSignalHandler.h; sourceTree = "<group>"; };
+		634205A616449197009C6BA4 /* PLCrashSysctl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashSysctl.h; sourceTree = "<group>"; };
+		634205BD1645EA5C009C6BA4 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		634205BF1645EA62009C6BA4 /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
 		63570715163F613B0009D8A3 /* HeadingAngleSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = HeadingAngleSmall.png; path = Resources/HeadingAngleSmall.png; sourceTree = "<group>"; };
@@ -836,6 +871,7 @@
 				6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */,
 				6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */,
 				6330AB7314DB519A00448852 /* CoreGraphics.framework in Frameworks */,
+				634205A716449197009C6BA4 /* libCrittercismCrashOnly_v3_3_4.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1105,8 +1141,9 @@
 				63570721163F613B0009D8A3 /* Resources */,
 				636D781A152E58FD005E31A3 /* MBProgressHUD */,
 				6330AB7414DB519A00448852 /* OSM POI Editor */,
-				6383948A14EC7D8C00C74A57 /* OAuth */,
 				637A89FB14E1B426003F656F /* Resources */,
+				6383948A14EC7D8C00C74A57 /* OAuth */,
+				6342058816449197009C6BA4 /* CrittercismSDK */,
 				63E279E514E1F32B009D02BD /* Reachability */,
 				63E2796D14E1F31B009D02BD /* Classes */,
 				6330AB6D14DB519A00448852 /* Frameworks */,
@@ -1223,6 +1260,44 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		6342058816449197009C6BA4 /* CrittercismSDK */ = {
+			isa = PBXGroup;
+			children = (
+				6342058916449197009C6BA4 /* CrashReporter.h */,
+				6342058A16449197009C6BA4 /* Crittercism.h */,
+				6342058B16449197009C6BA4 /* CrittercismJSONKit.h */,
+				6342058C16449197009C6BA4 /* CrittercismReachability.h */,
+				6342058D16449197009C6BA4 /* libCrittercismCrashOnly_v3_3_4.a */,
+				6342058E16449197009C6BA4 /* PLCrashAsync.h */,
+				6342058F16449197009C6BA4 /* PLCrashAsyncImage.h */,
+				6342059016449197009C6BA4 /* PLCrashAsyncSignalInfo.h */,
+				6342059116449197009C6BA4 /* PLCrashFrameWalker.h */,
+				6342059216449197009C6BA4 /* PLCrashFrameWalker_arm.h */,
+				6342059316449197009C6BA4 /* PLCrashFrameWalker_i386.h */,
+				6342059416449197009C6BA4 /* PLCrashFrameWalker_ppc.h */,
+				6342059516449197009C6BA4 /* PLCrashFrameWalker_x86_64.h */,
+				6342059616449197009C6BA4 /* PLCrashLogWriter.h */,
+				6342059716449197009C6BA4 /* PLCrashLogWriterEncoding.h */,
+				6342059816449197009C6BA4 /* PLCrashReport.h */,
+				6342059916449197009C6BA4 /* PLCrashReportApplicationInfo.h */,
+				6342059A16449197009C6BA4 /* PLCrashReportBinaryImageInfo.h */,
+				6342059B16449197009C6BA4 /* PLCrashReporter.h */,
+				6342059C16449197009C6BA4 /* PLCrashReportExceptionInfo.h */,
+				6342059D16449197009C6BA4 /* PLCrashReportFormatter.h */,
+				6342059E16449197009C6BA4 /* PLCrashReportMachineInfo.h */,
+				6342059F16449197009C6BA4 /* PLCrashReportProcessInfo.h */,
+				634205A016449197009C6BA4 /* PLCrashReportProcessorInfo.h */,
+				634205A116449197009C6BA4 /* PLCrashReportSignalInfo.h */,
+				634205A216449197009C6BA4 /* PLCrashReportSystemInfo.h */,
+				634205A316449197009C6BA4 /* PLCrashReportTextFormatter.h */,
+				634205A416449197009C6BA4 /* PLCrashReportThreadInfo.h */,
+				634205A516449197009C6BA4 /* PLCrashSignalHandler.h */,
+				634205A616449197009C6BA4 /* PLCrashSysctl.h */,
+			);
+			name = CrittercismSDK;
+			path = lib/CrittercismSDK;
+			sourceTree = "<group>";
+		};
 		63570721163F613B0009D8A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1287,6 +1362,8 @@
 				6325B4441534B28B00C8691F /* location@2x.png */,
 				635E0297151BB95400B6BBCE /* callout */,
 				6310F4C51537A43C00C65FD8 /* newNodeMarker.png */,
+				634205BF1645EA62009C6BA4 /* plus@2x.png */,
+				634205BD1645EA5C009C6BA4 /* plus.png */,
 				6310F4C61537A43C00C65FD8 /* newNodeMarker@2x.png */,
 				63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */,
 				63A2DB4315226CF6000C095D /* gear.png */,
@@ -1812,6 +1889,8 @@
 				6357072B163F613B0009D8A3 /* TrackingHeading@2x.png in Resources */,
 				6357072C163F613B0009D8A3 /* TrackingLocation.png in Resources */,
 				6357072D163F613B0009D8A3 /* TrackingLocation@2x.png in Resources */,
+				634205BE1645EA5C009C6BA4 /* plus.png in Resources */,
+				634205C01645EA62009C6BA4 /* plus@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1958,6 +2037,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"lib/**",
@@ -1968,6 +2051,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/OSM_POI_Editor-eqgolvplfdafjffvryvwtjldlhbj/Build/Products/Debug-iphoneos\"",
+					"\"$(SRCROOT)/lib/CrittercismSDK\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -1988,6 +2072,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = CRITTERCISM_ENABLED;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"lib/**",
@@ -1998,6 +2083,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/OSM_POI_Editor-eqgolvplfdafjffvryvwtjldlhbj/Build/Products/Debug-iphoneos\"",
+					"\"$(SRCROOT)/lib/CrittercismSDK\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";

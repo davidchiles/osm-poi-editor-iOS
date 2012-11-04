@@ -55,7 +55,9 @@
 
 -(void)setupButtons
 {
-    mapView = [[RMMapView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    mapView.frame = self.view.bounds;
+    
+    
     
     UIBarButtonItem * locationBarButton;
     UIBarButtonItem * addBarButton;
@@ -78,6 +80,10 @@
     
     [self.view addSubview:mapView];
     
+    plusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"plus.png"]];
+    plusImageView.center = mapView.center;
+    [self.view addSubview:plusImageView];
+    
     
     self.toolbarItems = [NSArray arrayWithObjects:locationBarButton,flexibleSpaceBarItem,addBarButton,flexibleSpaceBarItem,settingsBarButton, nil];
 }
@@ -86,11 +92,13 @@
 {
     [super viewDidLoad];
     
-    [self setupButtons];
+    //[self setupButtons];
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self.navigationController setToolbarHidden:NO animated:NO];
     //Check OAuth
+    
+    mapView = [[RMMapView alloc] init];
     
     
     [[NSNotificationCenter defaultCenter]
@@ -112,13 +120,12 @@
     
     [locationManager startUpdatingLocation];
     
-    
     CLLocationCoordinate2D initLocation;
     //NSLog(@"location Manager: %@",[locationManager location]);
     
     initLocation.latitude  = 37.871667;
     initLocation.longitude =  -122.272778;
-   
+    
     initLocation = [[locationManager location] coordinate];
     
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] && [[UIScreen mainScreen] scale] == 2){
@@ -146,9 +153,10 @@
         currentTile = 0;
     }
     
-
+    
     [self setTileSource:newTileSource at:num];
-    [self addMarkerAt:initLocation withNode:nil];
+    
+    
     
     RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBox];
     currentSquare = [mapView latitudeLongitudeBoundingBox];
@@ -174,19 +182,6 @@
     //dispatch_release(q);
     
     imagesDic = [[NSMutableDictionary alloc] init];
-    //[mapView moveToLatLong: initLocation];
-    //[mapView.contents setZoom: 16];
-    
-    //[self addMarkerAt: initLocation];
-
-    
-    /*
-    RMAnnotation * annotation = [RMAnnotation annotationWithMapView:mapView coordinate: initLocation andTitle:@"Hello"];
-    annotation.anchorPoint = CGPointMake(0.5, 1.0);
-    annotation.annotationIcon = [UIImage imageNamed:@"taxi.png"]; 
-     */
-    
-    //[mapView addAnnotation:annotation];
 }
 
 - (UIImage*)imageWithBorderFromImage:(UIImage*)source  //Draw box around centered image
@@ -247,6 +242,8 @@
     id<OPEPoint> node = annotation.userInfo;
     
     RMMarker * marker = [self markerWithNode:node];
+    marker.canShowCallout = YES;
+    marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     
     return marker;
 }
@@ -297,6 +294,7 @@
 #define LABEL_FONT_SIZE  20 
 #define ANCHOR_Y  80
 
+/*
 -(void) tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
     //[openMarker hideLabel];
@@ -377,15 +375,14 @@
     }
 
 }
+ */
 
--(void) tapOnLabelForMarker:(RMMarker *)marker onMap:(RMMapView *)map onLayer:(CALayer *)layer
+- (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
-    NSLog(@"hello %@",layer.name);
-    nodeInfo = marker;
     OPENodeViewController * nodeVC = [[OPENodeViewController alloc] init];
     
     nodeVC.title = @"Node Info";
-    nodeVC.point = (id<OPEPoint>)marker.userInfo;
+    nodeVC.point = (id<OPEPoint>)annotation.userInfo;
     [nodeVC setDelegate:self];
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
@@ -576,6 +573,8 @@
 - (IBAction)addPointButtonPressed:(id)sender
 {
     CLLocationCoordinate2D center = mapView.centerCoordinate;
+    
+    center = [mapView pixelToCoordinate:plusImageView.center];
     if (mapView.zoom > MINZOOM) {
         if(openMarker) 
         {
@@ -638,6 +637,8 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.navigationController setToolbarHidden:NO animated:YES];
+    
+    [self setupButtons];
     
 }
 

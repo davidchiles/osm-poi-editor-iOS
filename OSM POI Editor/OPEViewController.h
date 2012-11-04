@@ -32,6 +32,7 @@
 
 @interface OPEViewController : UIViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate > {
     RMMapView* mapView;
+    UIImageView * plusImageView;
     
 }
 
