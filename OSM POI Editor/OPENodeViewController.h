@@ -29,12 +29,13 @@
 #import "OPETagValueList.h"
 #import "OPEPoint.h"
 #import "OPEType.h"
+#import "RMAnnotation.h"
 
 @protocol OPENodeViewDelegate
 @optional
 -(void)createdNode:(id <OPEPoint>) newPoint;
--(void)updatedNode:(id <OPEPoint>) newPoint;
--(void)deletedNode:(id <OPEPoint>) newPoint;
+-(void)updatedNode:(id <OPEPoint>) newPoint withOriginalAnnotation:(RMAnnotation *)annotation;
+-(void)deletedNode:(id <OPEPoint>) newPoint withOriginalAnnotation:(RMAnnotation *)annotation;
 @end
 
 
@@ -56,6 +57,7 @@
 @property (nonatomic) BOOL nodeIsEdited;
 @property (nonatomic, strong) MBProgressHUD * HUD;
 @property (nonatomic, strong) NSMutableArray * tableSections;
+@property (nonatomic,strong) RMAnnotation * originalAnnotation;
 
 - (void) saveButtonPressed;
 - (void) deleteButtonPressed;

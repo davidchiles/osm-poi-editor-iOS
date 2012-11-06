@@ -24,6 +24,7 @@
 #import "GTMOAuthViewControllerTouch.h"
 #import "RMFoundation.h"
 #import "RMMarker.h"
+#import "RMUserLocation.h"
 #import "RMAnnotation.h"
 #import "OPEUserTrackingBarButtonItem.h"
 #import "OPEStamenTerrain.h"
@@ -379,17 +380,18 @@
 
 - (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
-    OPENodeViewController * nodeVC = [[OPENodeViewController alloc] init];
+    OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] init];
     
-    nodeVC.title = @"Node Info";
-    nodeVC.point = (id<OPEPoint>)annotation.userInfo;
-    [nodeVC setDelegate:self];
+    nodeViewController.title = @"Node Info";
+    nodeViewController.point = (id<OPEPoint>)annotation.userInfo;
+    nodeViewController.originalAnnotation = annotation;
+    [nodeViewController setDelegate:self];
     
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
     
     [[self navigationItem] setBackBarButtonItem: newBackButton];
     
-    [self.navigationController pushViewController:nodeVC animated:YES];
+    [self.navigationController pushViewController:nodeViewController animated:YES];
 }
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
@@ -533,26 +535,28 @@
 
 #pragma - NodeViewDelegate
 
--(void) updatedNode:(OPENode *)newNode
-{
-    //[mapView.markerManager removeMarker:nodeInfo];
-    [self addMarkerAt:newNode.coordinate withNode:newNode];
-    [self.osmData.allNodes setObject:newNode forKey:[newNode uniqueIdentifier]];
-}
 -(void) createdNode:(OPENode *)newNode
 {
     NSLog(@"Created New Node: %@",[newNode uniqueIdentifier]);
-    //[mapView.markerManager removeMarker:nodeInfo];
-    [self addMarkerAt:newNode.coordinate withNode:newNode];
     [self.osmData.allNodes setObject:newNode forKey:[newNode uniqueIdentifier]];
-    theNewMarker = nil;
+    RMAnnotation * newAnnotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[newNode coordinate] andTitle:[newNode name]];
+    newAnnotation.userInfo=newNode;
+    [mapView addAnnotation:newAnnotation];
     
 }
--(void) deletedNode:(OPENode *)newNode
+-(void)updatedNode:(id <OPEPoint>) newPoint withOriginalAnnotation:(RMAnnotation *)annotation
 {
-    //[mapView.markerManager removeMarker:nodeInfo];
-    [self.osmData.allNodes removeObjectForKey:[newNode uniqueIdentifier]];
-    [self.osmData.ignoreNodes setObject:newNode forKey:[newNode uniqueIdentifier]];
+    [self.osmData.allNodes setObject:newPoint forKey:[newPoint uniqueIdentifier]];
+    [mapView removeAnnotation:annotation];
+    RMAnnotation * newAnnotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[newPoint coordinate] andTitle:[newPoint name]];
+    newAnnotation.userInfo = newPoint;
+    [mapView addAnnotation:newAnnotation];
+}
+-(void)deletedNode:(id <OPEPoint>) newPoint withOriginalAnnotation:(RMAnnotation *)annotation
+{
+    [self.osmData.allNodes removeObjectForKey:[newPoint uniqueIdentifier]];
+    [self.osmData.ignoreNodes setObject:newPoint forKey:[newPoint uniqueIdentifier]];
+    [mapView removeAnnotation:annotation];
 }
 
 #pragma - InfoViewDelegate
@@ -574,24 +578,23 @@
 {
     CLLocationCoordinate2D center = mapView.centerCoordinate;
     
-    center = [mapView pixelToCoordinate:plusImageView.center];
+    
+    
+    
+    //center = [mapView pixelToCoordinate:plusImageView.center];
     if (mapView.zoom > MINZOOM) {
-        if(openMarker) 
-        {
-            //[openMarker hideLabel];
-            openMarker = nil;
-        }
-        if(theNewMarker)
-        {
-            //[mapView.contents.markerManager moveMarker: theNewMarker AtLatLon:center];
-        }
-        else
-        {
-            OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
-            node.image = @"newNodeMarker.png";
-            theNewMarker = [self addMarkerAt:center withNode:node];
-            theNewMarker.zPosition = 1.0;
-        }
+        OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
+        OPENodeViewController * nodeVC = [[OPENodeViewController alloc] init];
+        
+        nodeVC.title = @"Node Info";
+        nodeVC.point = node;
+        [nodeVC setDelegate:self];
+        
+        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
+        
+        [[self navigationItem] setBackBarButtonItem: newBackButton];
+        
+        [self.navigationController pushViewController:nodeVC animated:YES];
     }
     else {
         UIAlertView * zoomAlert = [[UIAlertView alloc]

@@ -44,6 +44,7 @@
 @synthesize HUD;
 @synthesize tableSections;
 @synthesize nodeType;
+@synthesize originalAnnotation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -66,7 +67,6 @@
 
 - (void)viewDidLoad
 {
-    
     [super viewDidLoad];
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
@@ -547,7 +547,7 @@
                     [OPEOSMData HTMLFix:theNewPoint];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                    [delegate updatedNode:point];
+                    [delegate updatedNode:point withOriginalAnnotation:originalAnnotation];
                     });
                 }
             }
@@ -623,7 +623,7 @@
                     [OPEOSMData HTMLFix:theNewPoint];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [delegate deletedNode:point];
+                        [delegate deletedNode:point withOriginalAnnotation:originalAnnotation];
                     });
                 }
 
@@ -639,7 +639,7 @@
                     if(delegate)
                     {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [delegate deletedNode:point];
+                            [delegate deletedNode:point withOriginalAnnotation:originalAnnotation];
                         });
                         
                     }
