@@ -23,7 +23,7 @@
 #import "OPENode.h"
 #import "OPEPoint.h"
 
-@interface OPEWay : NSObject <OPEPoint>
+@interface OPEWay : OPEPoint
 
 @property (nonatomic,strong) NSArray * nodes;
 

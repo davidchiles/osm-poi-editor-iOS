@@ -33,9 +33,9 @@
 
 @protocol OPENodeViewDelegate
 @optional
--(void)createdNode:(id <OPEPoint>) newPoint;
--(void)updatedNode:(id <OPEPoint>) newPoint withOriginalAnnotation:(RMAnnotation *)annotation;
--(void)deletedNode:(id <OPEPoint>) newPoint withOriginalAnnotation:(RMAnnotation *)annotation;
+-(void)createdNode:(OPEPoint *) newPoint;
+-(void)updatedNode:(OPEPoint *) newPoint withOriginalAnnotation:(RMAnnotation *)annotation;
+-(void)deletedNode:(OPEPoint *) newPoint withOriginalAnnotation:(RMAnnotation *)annotation;
 @end
 
 
@@ -46,8 +46,8 @@
     float optionalTagWidth;
 }
 
-@property (nonatomic, strong) id<OPEPoint> point;
-@property (nonatomic, strong) id<OPEPoint> theNewPoint;
+@property (nonatomic, strong) OPEPoint * point;
+@property (nonatomic, strong) OPEPoint * theNewPoint;
 @property (nonatomic, strong) UITableView * nodeInfoTableView;
 @property (nonatomic, strong) OPEType * nodeType;
 @property (nonatomic, strong) NSString * type;

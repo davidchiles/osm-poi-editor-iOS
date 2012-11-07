@@ -22,20 +22,19 @@
 
 #import "OPENode.h"
 #import "OPEConstants.h"
+#import "OPETagInterpreter.h"
 
 @implementation OPENode
-
-@synthesize ident, coordinate, tags, version, image;
 
 -(id) initWithId: (int) i coordinate: (CLLocationCoordinate2D) newCoordinate keyValues: (NSMutableDictionary *) tag
 {
     self = [super init];
     if(self)
     {
-        ident = i;
-        coordinate = newCoordinate;
-        tags = [[NSMutableDictionary alloc] initWithDictionary:tag];
-        image = [[NSString alloc] init];
+        self.ident = i;
+        self.coordinate = newCoordinate;
+        self.tags = [[NSMutableDictionary alloc] initWithDictionary:tag];
+        self.image = [[NSString alloc] init];
     }
     return self;
     
@@ -46,10 +45,10 @@
     self = [super init];
     if (self)
     {
-        ident = i;
-        coordinate = CLLocationCoordinate2DMake(la,lo);
-        tags = [[NSMutableDictionary alloc] init];
-        image = [[NSString alloc] init];
+        self.ident = i;
+        self.coordinate = CLLocationCoordinate2DMake(la,lo);
+        self.tags = [[NSMutableDictionary alloc] init];
+        self.image = [[NSString alloc] init];
     }
     return self;
 }
@@ -59,11 +58,11 @@
     self = [super init];
     if (self)
     {
-        version = v;
-        ident = i;
-        coordinate = CLLocationCoordinate2DMake(la,lo);
-        tags = [[NSMutableDictionary alloc] init];
-        image = [[NSString alloc] init];
+        self.version = v;
+        self.ident = i;
+        self.coordinate = CLLocationCoordinate2DMake(la,lo);
+        self.tags = [[NSMutableDictionary alloc] init];
+        self.image = [[NSString alloc] init];
     }
     return self;
 }
@@ -73,11 +72,11 @@
     self = [super init];
     if (self)
     {
-        version = node.version;
-        ident = node.ident;
-        coordinate = CLLocationCoordinate2DMake(node.coordinate.latitude, node.coordinate.longitude);
-        tags = [[NSMutableDictionary alloc] initWithDictionary:node.tags];
-        image = node.image;
+        self.version = node.version;
+        self.ident = node.ident;
+        self.coordinate = CLLocationCoordinate2DMake(node.coordinate.latitude, node.coordinate.longitude);
+        self.tags = [[NSMutableDictionary alloc] initWithDictionary:node.tags];
+        self.image = node.image;
     }
     return self;
 }
@@ -107,58 +106,6 @@
     }
     
     return newNode;
-}
-
--(void) addKey:(NSString *)key value:(NSString *)value
-{
-    [self.tags setValue:value forKey:key];
-}
-
--(NSString *)name
-{
-    if(tags)
-    {
-        NSString* name = [tags objectForKey:@"name"];
-        if(name)
-            return name;
-        else
-            return @"no name";
-    }
-    else
-        return @"no name";
-}
-
--(BOOL)onlyTagCreatedBy
-{
-    if(tags.count == 1)
-    {
-        for(NSString * key in tags)
-        {
-            if(key == @"created_by")
-                return YES;
-            else
-                return NO;
-        }
-    }
-    else
-        return NO;
-    
-    return NO;
-}
-
--(BOOL) isequaltToPoint:(id<OPEPoint>)point
-{
-    if(self.ident != point.ident)
-        return NO;
-    else if (self.coordinate.latitude != point.coordinate.latitude)
-        return NO;
-    else if (self.coordinate.longitude != point.coordinate.longitude)
-        return NO;
-    else if (![self.tags isEqualToDictionary:point.tags])
-        return NO;
-    
-    return YES;
-    
 }
 
 - (NSData *) updateXMLforChangset: (NSInteger) changesetNumber
@@ -227,28 +174,6 @@
     return kPointTypeNode;
 }
 
--(BOOL)hasNoTags
-{
-    if(![self.tags count])
-    {
-        return YES;
-    }
-    return NO;
-}
-
--(NSString *)description{
-    return [NSString stringWithFormat:@"%@: %@",[self uniqueIdentifier],self.tags];
-}
-
--(NSString *)uniqueIdentifier
-{
-    return [NSString stringWithFormat:@"%@%d",[self type],self.ident];
-}
-+(NSString *)uniqueIdentifierForID:(int)ident
-{
-    return [NSString stringWithFormat:@"%@%d",kPointTypeNode,ident];
-}
-
 -(id)copy
 {
     OPENode * nodeCopy = [[OPENode alloc] init];
@@ -259,6 +184,11 @@
     nodeCopy.image = [self.image mutableCopy];
     
     return nodeCopy;
+}
+
++ (NSString *)uniqueIdentifierForID:(int)ident
+{
+    return [NSString stringWithFormat:@"%@%d",kPointTypeNode,ident];
 }
 
 @end

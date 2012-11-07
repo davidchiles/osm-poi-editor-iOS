@@ -38,13 +38,13 @@
 - (id) init;
 //- (BOOL) nodeHasRecognizedTags:(OPENode *)n;
 //- (NSDictionary *) getPrimaryKeyValue: (OPENode *)n;
-- (NSString *) category: (id<OPEPoint>)n; //getCategory
-- (OPEType *) type: (id<OPEPoint>)n; //getType
+- (NSString *) category: (OPEPoint *)n; //getCategory
+- (OPEType *) type: (OPEPoint *)n; //getType
 - (void) readPlist;
-- (NSString *) getName: (id<OPEPoint>) node;
-- (NSString *) getImageForNode: (id<OPEPoint>) node;
-- (void)removeTagsForType:(OPEType *)type withNode:(id<OPEPoint>)node;
-- (BOOL)isSupported:(id<OPEPoint>)node;
+- (NSString *) getName: (OPEPoint *) node;
+- (NSString *) getImageForNode: (OPEPoint *) node;
+- (void)removeTagsForType:(OPEType *)type withNode:(OPEPoint *)node;
+- (BOOL)isSupported:(OPEPoint *)node;
 - (NSDictionary *) allCategories;
 - (NSDictionary *) allTypes;
 

@@ -215,7 +215,7 @@
     return newImage;
 }
 
--(RMMarker *)markerWithNode:(id<OPEPoint>)node
+-(RMMarker *)markerWithNode:(OPEPoint *)node
 {
     UIImage * icon;   //Get image from stored value in node
     //UIImage * icon = [UIImage imageNamed:@"restaurant"];
@@ -237,7 +237,7 @@
 
 -(RMMapLayer *) mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
 {
-    id<OPEPoint> node = annotation.userInfo;
+    OPEPoint * node = annotation.userInfo;
     
     RMMarker * marker = [self markerWithNode:node];
     marker.canShowCallout = YES;
@@ -246,7 +246,7 @@
     return marker;
 }
 
--(RMAnnotation *)annotationWithNode:(id<OPEPoint>)node
+-(RMAnnotation *)annotationWithNode:(OPEPoint *)node
 {
     RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:node.coordinate andTitle:node.name];
     annotation.userInfo = node;
@@ -298,7 +298,7 @@
     //[openMarker hideLabel];
     //openMarker.zPosition = 0.5;
     //marker.zPosition = 1.0;
-    id<OPEPoint> tempNode = annotation.userInfo;
+    OPEPoint * tempNode = annotation.userInfo;
     
     if(tempNode.ident == -1)
     {
@@ -498,7 +498,7 @@
     //[mapView removeAllAnnotations];
     for(id key in newNodes)
     {
-        id<OPEPoint> node = [osmData.allNodes objectForKey:key];
+        OPEPoint * node = [osmData.allNodes objectForKey:key];
         [mapView addAnnotation:[self annotationWithNode:node]];
     }
 }
@@ -534,7 +534,7 @@
     [mapView addAnnotation:newAnnotation];
     
 }
--(void)updatedNode:(id <OPEPoint>) newPoint withOriginalAnnotation:(RMAnnotation *)annotation
+-(void)updatedNode:(OPEPoint *) newPoint withOriginalAnnotation:(RMAnnotation *)annotation
 {
     [self.osmData.allNodes setObject:newPoint forKey:[newPoint uniqueIdentifier]];
     [mapView removeAnnotation:annotation];
@@ -542,7 +542,7 @@
     newAnnotation.userInfo = newPoint;
     [mapView addAnnotation:newAnnotation];
 }
--(void)deletedNode:(id <OPEPoint>) newPoint withOriginalAnnotation:(RMAnnotation *)annotation
+-(void)deletedNode:(OPEPoint *) newPoint withOriginalAnnotation:(RMAnnotation *)annotation
 {
     [self.osmData.allNodes removeObjectForKey:[newPoint uniqueIdentifier]];
     [self.osmData.ignoreNodes setObject:newPoint forKey:[newPoint uniqueIdentifier]];

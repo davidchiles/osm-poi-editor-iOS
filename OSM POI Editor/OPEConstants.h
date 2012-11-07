@@ -37,5 +37,7 @@
 
 #define kLeftTextDefaultSize 76
 #define kOPEAPIURL @"http://www.overpass-api.de/api/xapi?*"
+
 #define kPointTypeNode @"node"
 #define kPointTypeWay @"way"
+#define kPointTypePoint @"point"

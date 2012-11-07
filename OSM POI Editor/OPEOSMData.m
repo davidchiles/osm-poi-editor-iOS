@@ -240,7 +240,7 @@
     [request startAsynchronous];
 }
 
-- (int) createNode: (id<OPEPoint>) newPoint
+- (int) createNode: (OPEPoint *) newPoint
 {
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Created new POI: %@",[tagInterpreter getName:newPoint]]];
     int newIdent = [self createXmlNode:newPoint withChangeset:changeset];
@@ -248,7 +248,7 @@
     return newIdent;
     
 }
-- (int) updateNode: (id<OPEPoint>) node
+- (int) updateNode: (OPEPoint *) node
 {
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Updated existing POI: %@",[tagInterpreter getName:node]]];
     int version = [self updateXmlNode:node withChangeset:changeset];
@@ -257,7 +257,7 @@
     return version;
     
 }
-- (int) deleteNode: (id<OPEPoint>) node
+- (int) deleteNode: (OPEPoint *) node
 {
     NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Deleted POI: %@",[tagInterpreter getName:node]]];
     int version = [self deleteXmlNode:node withChangeset:changeset];
@@ -320,7 +320,7 @@
     return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
 }
 
-- (int) updateXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber
+- (int) updateXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber
 {
     
     NSData * nodeXML = [node updateXMLforChangset:changesetNumber];
@@ -350,7 +350,7 @@
     
 }
 
-- (int) createXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber
+- (int) createXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber
 {
     
     NSData *nodeXML = [node createXMLforChangset:changesetNumber];
@@ -369,7 +369,7 @@
     return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
 }
     
-- (int) deleteXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber
+- (int) deleteXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber
 {
     
     NSData *nodeXML = [node deleteXMLforChangset:changesetNumber];
@@ -409,7 +409,7 @@
      object:self
      userInfo:nil];
 }
-+(void) backToHTML:(id<OPEPoint>)node
++(void) backToHTML:(OPEPoint *)node
 {
     NSMutableDictionary * fixedTags = [[NSMutableDictionary alloc] init];
     for(id item in node.tags)
@@ -421,7 +421,7 @@
     
 }
 
-+(void) HTMLFix:(id<OPEPoint>)node
++(void) HTMLFix:(OPEPoint *)node
 {
     NSMutableDictionary * fixedTags = [[NSMutableDictionary alloc] init];
     for(id item in node.tags)

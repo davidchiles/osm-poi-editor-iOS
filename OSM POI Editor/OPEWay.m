@@ -25,7 +25,7 @@
 
 @implementation OPEWay
 
-@synthesize nodes,ident,tags,coordinate,version,image;
+@synthesize nodes;
 
 -(id)init
 {
@@ -133,7 +133,7 @@
 
 }
 
--(BOOL)isequaltToPoint:(id<OPEPoint>)point
+-(BOOL)isequaltToPoint:(OPEPoint*)point
 {
     if ([[self type] isEqualToString:[point type]])
         return NO;
@@ -150,33 +150,9 @@
     
 }
 
--(void)addKey:(NSString *)key value:(NSString *)value
-{
-    [self.tags setValue:value forKey:key];
-}
-
--(NSString *)name
-{
-    if(tags)
-    {
-        NSString* name = [tags objectForKey:@"name"];
-        if(name)
-            return name;
-        else
-            return @"no name";
-    }
-    else
-        return @"no name";
-}
-
 -(NSString *)type
 {
     return kPointTypeWay;
-}
-
--(NSString *)uniqueIdentifier
-{
-   return [NSString stringWithFormat:@"%@%d",[self type],self.ident];
 }
 
 -(id)copy
@@ -193,15 +169,6 @@
     return wayCopy;
 }
 
--(BOOL)hasNoTags
-{
-    if(![self.tags count])
-    {
-        return YES;
-    }
-    return NO;
-}
-
 -(void)prepareToDelete:(NSArray *)keys
 {
     NSMutableSet * tempSet = [NSMutableSet setWithArray:keys];
@@ -210,10 +177,11 @@
     
 }
 
-+(NSString *)uniqueIdentifierForID:(int)ident
++ (NSString *)uniqueIdentifierForID:(int)ident
 {
     return [NSString stringWithFormat:@"%@%d",kPointTypeWay,ident];
 }
+
 
 
 

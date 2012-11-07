@@ -304,6 +304,7 @@
 		63B748B41627844E0052148E /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B748B11627844E0052148E /* map.png */; };
 		63B748B51627844E0052148E /* embassy.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B748B21627844E0052148E /* embassy.png */; };
 		63B748B61627844E0052148E /* guidepost.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B748B31627844E0052148E /* guidepost.png */; };
+		63C2035A164B153200C0F1EF /* OPEPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C20359164B153200C0F1EF /* OPEPoint.m */; };
 		63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49D114E9C5A0008C4551 /* OPETextEdit.m */; };
 		63CB49DD14E9DE7B008C4551 /* OPECategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49DB14E9DE7B008C4551 /* OPECategoryViewController.m */; };
 		63CB49DE14E9DE7B008C4551 /* OPECategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49DC14E9DE7B008C4551 /* OPECategoryViewController.xib */; };
@@ -729,6 +730,7 @@
 		63B748B11627844E0052148E /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		63B748B21627844E0052148E /* embassy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = embassy.png; sourceTree = "<group>"; };
 		63B748B31627844E0052148E /* guidepost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guidepost.png; sourceTree = "<group>"; };
+		63C20359164B153200C0F1EF /* OPEPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEPoint.m; sourceTree = "<group>"; };
 		63CB49D014E9C5A0008C4551 /* OPETextEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETextEdit.h; sourceTree = "<group>"; };
 		63CB49D114E9C5A0008C4551 /* OPETextEdit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETextEdit.m; sourceTree = "<group>"; };
 		63CB49DA14E9DE7B008C4551 /* OPECategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPECategoryViewController.h; path = ../OPECategoryViewController.h; sourceTree = "<group>"; };
@@ -1241,6 +1243,7 @@
 			isa = PBXGroup;
 			children = (
 				63AFC7BC15ACE3DB00A50C29 /* OPEPoint.h */,
+				63C20359164B153200C0F1EF /* OPEPoint.m */,
 				631539E314DCA29B000236F0 /* OPENode.h */,
 				631539E414DCA29B000236F0 /* OPENode.m */,
 				63F1F28415A7AD630027829B /* OPEWay.h */,
@@ -1951,6 +1954,7 @@
 				63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */,
 				63FCA4421643127D00A28470 /* OPEBingTileSource.m in Sources */,
 				63FCA4511643363800A28470 /* OPEUtility.m in Sources */,
+				63C2035A164B153200C0F1EF /* OPEPoint.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

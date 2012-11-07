@@ -24,32 +24,26 @@
 #import "TBXML.h"
 #import "CoreLocation/CoreLocation.h"
 
-@protocol OPEPoint <NSObject>
-
+@interface OPEPoint : NSObject
 
 @property (nonatomic,assign) CLLocationCoordinate2D coordinate;
 @property (nonatomic, strong) NSMutableDictionary* tags;
 @property int version;
 @property (nonatomic, strong) NSString * image;
 @property int ident;
+@property (nonatomic,strong) NSString * name;
 
 - (void) addKey: (NSString *) key value: (NSString *)value;
-- (NSString *) name;
-- (BOOL) isequaltToPoint:(id <OPEPoint>)point;
+- (BOOL) isequaltToPoint:(OPEPoint*)point;
 - (NSString *)type;
 - (NSString *)uniqueIdentifier;
 - (BOOL)hasNoTags;
-
-
 - (NSData *) updateXMLforChangset: (NSInteger) changesetNumber;
-
-
-
 - (id)copy;
+- (NSData *) createXMLforChangset: (NSInteger) changesetNumber;
+- (NSData *) deleteXMLforChangset: (NSInteger) changesetNumber;
 
 + (NSString *)uniqueIdentifierForID:(int)ident;
 
-@optional
-- (NSData *) createXMLforChangset: (NSInteger) changesetNumber;
-- (NSData *) deleteXMLforChangset: (NSInteger) changesetNumber;
+
 @end

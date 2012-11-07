@@ -44,12 +44,12 @@ static OPETagInterpreter *sharedManager = nil;
     return self;
 }
 
-- (NSString *) category: (id<OPEPoint>)node
+- (NSString *) category: (OPEPoint *)node
 {
     return [[self type:node] categoryName];
 }
 
--(OPEType *)type:(id<OPEPoint>)node
+-(OPEType *)type:(OPEPoint *)node
 {
     if([[node.tags objectForKey:@"highway"] isEqualToString:@"bus_stop"] )
     {
@@ -157,7 +157,7 @@ static OPETagInterpreter *sharedManager = nil;
 
 }
 
-- (NSString *) getName:(id<OPEPoint>)node
+- (NSString *) getName:(OPEPoint *)node
 {
     NSString * name = [node.tags objectForKey:@"name"];
     if(name)
@@ -171,18 +171,18 @@ static OPETagInterpreter *sharedManager = nil;
     return @"Unknown";
 }
 
-- (NSString *) getImageForNode: (id<OPEPoint>) node
+- (NSString *) getImageForNode: (OPEPoint *) node
 {
     return [[self type:node] imageString];
 }
 
-- (void)removeTagsForType:(OPEType *)type withNode:(id<OPEPoint>)node
+- (void)removeTagsForType:(OPEType *)type withNode:(OPEPoint *)node
 {
     [node.tags removeObjectsForKeys:type.tags.allKeys];
     //[node.tags removeObjectsForKeys:type.optionalTags];
 }
 
-- (BOOL)isSupported:(id<OPEPoint>)node
+- (BOOL)isSupported:(OPEPoint *)node
 {
     if([self type:node])
         return YES;

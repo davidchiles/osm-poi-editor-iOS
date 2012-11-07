@@ -38,18 +38,18 @@
 
 - (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 - (NSInteger) openChangesetWithMessage: (NSString *) message;
-- (int) createXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber;
-- (int) updateXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber;
-- (int) deleteXmlNode: (id<OPEPoint>) node withChangeset: (NSInteger) changesetNumber;
+- (int) createXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber;
+- (int) updateXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber;
+- (int) deleteXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber;
 - (void) closeChangeset: (NSInteger) changesetNumber;
 - (BOOL) canAuth;
 
-- (int) createNode: (id<OPEPoint>) node;
-- (int) updateNode: (id<OPEPoint>) node;
-- (int) deleteNode: (id<OPEPoint>) node;
+- (int) createNode: (OPEPoint *) node;
+- (int) updateNode: (OPEPoint *) node;
+- (int) deleteNode: (OPEPoint *) node;
 - (void) uploadComplete;
-+ (void) HTMLFix:(id<OPEPoint>)node;
-+(void) backToHTML:(id<OPEPoint>)node;
++ (void) HTMLFix:(OPEPoint *)node;
++(void) backToHTML:(OPEPoint *)node;
 
 
 
