@@ -59,6 +59,8 @@
 @property (nonatomic, strong) NSMutableArray * tableSections;
 @property (nonatomic,strong) RMAnnotation * originalAnnotation;
 
+- (id)initWithAnnotation:(RMAnnotation *)annotation delegate:(id<OPENodeViewDelegate>)delegate;
+
 - (void) saveButtonPressed;
 - (void) deleteButtonPressed;
 - (void) checkSaveButton;

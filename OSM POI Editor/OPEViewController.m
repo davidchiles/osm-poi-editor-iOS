@@ -26,7 +26,6 @@
 #import "RMMarker.h"
 #import "RMUserLocation.h"
 #import "RMAnnotation.h"
-#import "OPEUserTrackingBarButtonItem.h"
 #import "OPEStamenTerrain.h"
 #import "OPEPoint.h"
 
@@ -64,10 +63,7 @@
     UIBarButtonItem * addBarButton;
     UIBarButtonItem * settingsBarButton;
     
-    //locationBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"location.png"]style:UIBarButtonItemStylePlain target:self action:@selector(locationButtonPressed:)];
-    //locationBarButton = [[RMUserTrackingBarButtonItem alloc] initWithMapView:mapView];
-    locationBarButton = [[OPEUserTrackingBarButtonItem alloc] initWithMapView:mapView];
-    
+    locationBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"location.png"]style:UIBarButtonItemStylePlain target:self action:@selector(locationButtonPressed:)];
     
     
     addBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPointButtonPressed:)];
@@ -100,6 +96,7 @@
     //Check OAuth
     
     mapView = [[RMMapView alloc] init];
+    mapView.userTrackingMode = RMUserTrackingModeFollow;
     
     
     [[NSNotificationCenter defaultCenter]
@@ -137,7 +134,7 @@
     }
     
     [mapView setDelegate:self];
-    [mapView setCenterCoordinate:initLocation animated:YES];
+    //[mapView setCenterCoordinate:initLocation animated:YES];
     
     [mapView setZoom: 18];
     id <RMTileSource> newTileSource = nil;
@@ -380,16 +377,9 @@
 
 - (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
-    OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] init];
+    OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithAnnotation:annotation delegate:self];
     
-    nodeViewController.title = @"Node Info";
-    nodeViewController.point = (id<OPEPoint>)annotation.userInfo;
-    nodeViewController.originalAnnotation = annotation;
-    [nodeViewController setDelegate:self];
     
-    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
-    
-    [[self navigationItem] setBackBarButtonItem: newBackButton];
     
     [self.navigationController pushViewController:nodeViewController animated:YES];
 }
@@ -586,7 +576,6 @@
         OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
         OPENodeViewController * nodeVC = [[OPENodeViewController alloc] init];
         
-        nodeVC.title = @"Node Info";
         nodeVC.point = node;
         [nodeVC setDelegate:self];
         
@@ -609,9 +598,7 @@
 
 -(IBAction)locationButtonPressed:(id)sender
 {
-    CLLocationCoordinate2D currentLocation = [[locationManager location] coordinate];
-    
-    [mapView setCenterCoordinate: currentLocation animated:YES];
+    [mapView setCenterCoordinate: mapView.userLocation.coordinate animated:YES];
 }
 
 - (IBAction)infoButtonPressed:(id)sender

@@ -46,11 +46,29 @@
 @synthesize nodeType;
 @synthesize originalAnnotation;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)init
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-       
+    self = [super init];
+    if(self){
+        self.title = @"Node Info";
+    }
+    return self;
+}
+
+-(id) initWithAnnotation:(RMAnnotation *)annotation delegate:(id<OPENodeViewDelegate>)newDelegate
+{
+    self = [self init];
+    if(self)
+    {
+        self.delegate = newDelegate;
+        self.originalAnnotation = annotation;
+        self.point = annotation.userInfo;
+        
+        
+        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
+        
+        [[self navigationItem] setBackBarButtonItem: newBackButton];
+        
     }
     return self;
 }

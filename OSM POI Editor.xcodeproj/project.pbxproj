@@ -353,7 +353,6 @@
 		63F1F28615A7AD630027829B /* OPEWay.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F1F28515A7AD630027829B /* OPEWay.m */; };
 		63F9CCA514F32B2E00308DE1 /* iphone_delete_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */; };
 		63FCA4421643127D00A28470 /* OPEBingTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FCA4411643127D00A28470 /* OPEBingTileSource.m */; };
-		63FCA44E164329BB00A28470 /* OPEUserTrackingBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FCA44D164329BB00A28470 /* OPEUserTrackingBarButtonItem.m */; };
 		63FCA4511643363800A28470 /* OPEUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FCA4501643363700A28470 /* OPEUtility.m */; };
 		63FFDC6614E480DF00701DEC /* OPETagInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */; };
 /* End PBXBuildFile section */
@@ -845,8 +844,6 @@
 		63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iphone_delete_button.png; sourceTree = "<group>"; };
 		63FCA4401643127D00A28470 /* OPEBingTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBingTileSource.h; sourceTree = "<group>"; };
 		63FCA4411643127D00A28470 /* OPEBingTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBingTileSource.m; sourceTree = "<group>"; };
-		63FCA44C164329BB00A28470 /* OPEUserTrackingBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEUserTrackingBarButtonItem.h; sourceTree = "<group>"; };
-		63FCA44D164329BB00A28470 /* OPEUserTrackingBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEUserTrackingBarButtonItem.m; sourceTree = "<group>"; };
 		63FCA44F1643363700A28470 /* OPEUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEUtility.h; sourceTree = "<group>"; };
 		63FCA4501643363700A28470 /* OPEUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEUtility.m; sourceTree = "<group>"; };
 		63FFDC6414E480DF00701DEC /* OPETagInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPETagInterpreter.h; path = ../OPETagInterpreter.h; sourceTree = "<group>"; };
@@ -1221,8 +1218,6 @@
 				6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */,
 				63E525CF1534D90200D2DA35 /* OPECreditViewController.h */,
 				63E525D01534D90200D2DA35 /* OPECreditViewController.m */,
-				63FCA44C164329BB00A28470 /* OPEUserTrackingBarButtonItem.h */,
-				63FCA44D164329BB00A28470 /* OPEUserTrackingBarButtonItem.m */,
 				6330AB7514DB519A00448852 /* Supporting Files */,
 				632573DC152108C300478B78 /* MapSources */,
 			);
@@ -1955,7 +1950,6 @@
 				63AD8F7A15E8570B006F92B8 /* OPECategory.m in Sources */,
 				63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */,
 				63FCA4421643127D00A28470 /* OPEBingTileSource.m in Sources */,
-				63FCA44E164329BB00A28470 /* OPEUserTrackingBarButtonItem.m in Sources */,
 				63FCA4511643363800A28470 /* OPEUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
