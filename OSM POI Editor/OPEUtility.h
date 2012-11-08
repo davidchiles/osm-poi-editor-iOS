@@ -14,5 +14,6 @@
 
 
 +(UIImage *)imageNamed:(NSString *)name withColor:(UIColor *)color;
++(NSString *)fileFromBundleOrDocumentsForResource:(NSString *)resource ofType:(NSString *)type;
 
 @end

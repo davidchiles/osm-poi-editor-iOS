@@ -394,27 +394,6 @@
     return NO;
 }
 
-- (void) mapView:(RMMapView *)map didDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
-{
-    NSSet* touches = [event allTouches];
-    
-    if([touches count] == 1)
-    {
-        UITouch* touch = [touches anyObject];
-        if(touch.phase == UITouchPhaseMoved)
-        {
-            CGPoint position = [touch locationInView: mapView ];
-            //[mapView.markerManager moveMarker:marker AtXY: position];
-            CGSize delta = CGSizeMake((position.x-(marker.position.x)), 
-                                      (position.y-(marker.position.y))); 
-            //[marker moveBy: delta];
-            //[marker setProjectedLocation:[[mapView.contents projection] latLongToPoint:[mapView pixelToLatLong:marker.position]]]; 
-            //[marker setProjectedLocation: [[mapView projection] latLongToPoint:[mapView pixelToLatLong:marker.position]]];
-            //[mapView.markerManager moveMarker:marker AtXY:position];
-        }
-    }
-}
-
 -(void) singleTapOnMap:(RMMapView *)map At:(CGPoint)point
 {
     if (openMarker) {

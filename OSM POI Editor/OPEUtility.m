@@ -48,4 +48,15 @@
     
 }
 
++(NSString *)fileFromBundleOrDocumentsForResource:(NSString *)resource ofType:(NSString *)type
+{
+    NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* filePath = [documentsPath stringByAppendingPathComponent:[resource stringByAppendingPathExtension:type]];
+    
+    if([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+        return filePath;
+    else
+        return [[NSBundle mainBundle] pathForResource:resource ofType:type];
+}
+
 @end

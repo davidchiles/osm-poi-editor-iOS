@@ -22,11 +22,14 @@
 
 #ifdef CRITTERCISM_ENABLED
 #import "Crittercism.h"
-#import "OPEAPIConstants.h"
 #endif
+#import "OPEAPIConstants.h"
+
 
 #import "OPEAppDelegate.h"
 #import "OPEViewController.h"
+#import "OPEFileUpdater.h"
+#import <Parse/Parse.h>
 
 @implementation OPEAppDelegate
 
@@ -42,6 +45,13 @@
                             andKey:CRITTERCISM_KEY
                          andSecret:CRITTERCISM_SECRET];
 #endif
+    
+    [Parse setApplicationId:PARSE_APPLICATION_ID clientKey:PARSE_CLIENT_KEY];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
+                                             (unsigned long)NULL), ^(void) {
+        [[[OPEFileUpdater alloc] init] downloadFiles];
+        [[OPETagInterpreter sharedInstance] readPlist];
+    });
     
     
     UIViewController *rootView = [[OPEViewController alloc] init];

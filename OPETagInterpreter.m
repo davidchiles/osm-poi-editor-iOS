@@ -21,6 +21,7 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPETagInterpreter.h"
+#import "OPEUtility.h"
 
 
 @implementation OPETagInterpreter
@@ -100,6 +101,7 @@ static OPETagInterpreter *sharedManager = nil;
 {
     NSLog(@"start reading plist");
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"plist"];
+    filePath = [OPEUtility fileFromBundleOrDocumentsForResource:@"Tags" ofType:@"plist"];
     
     
     NSDictionary* plistDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
@@ -207,6 +209,7 @@ static OPETagInterpreter *sharedManager = nil;
 {
     NSMutableArray * tempFinalArray = [[NSMutableArray alloc] init];
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"plist"];
+    filePath = [OPEUtility fileFromBundleOrDocumentsForResource:@"Optional" ofType:@"plist"];
     NSDictionary* optionalDictionary = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
     for (NSString * osmKey in tagArray) {
