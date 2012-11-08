@@ -7,6 +7,7 @@
 //
 
 #import "OPEFileUpdater.h"
+#import "OPEConstants.h"
 
 @implementation OPEFileUpdater
 
@@ -20,25 +21,32 @@
 
 -(BOOL)downloadFiles
 {
-    NSArray * files = [self availableFiles];
+    NSDate * lastDownload = [[NSUserDefaults standardUserDefaults] objectForKey:kLastDownloadedKey];
     
-    for(PFObject *item in files)
-    {
-        PFFile * file = [item objectForKey:@"file"];
-        NSString * fileName = [item objectForKey:@"name"];
-        NSString * fileType = [item objectForKey:@"type"];
+    if (!lastDownload || [[NSDate date] timeIntervalSinceDate:lastDownload]>(60.0*60.0*24.0*7.0)) {
+    
+        NSArray * files = [self availableFiles];
         
-        NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString * filePath = [documentsDirectory stringByAppendingPathComponent:[fileName stringByAppendingPathExtension:fileType]];
-        
-        
-        NSData * fileData = [file getData];
-        [fileData writeToFile:filePath atomically:YES];
+        for(PFObject *item in files)
+        {
+            PFFile * file = [item objectForKey:@"file"];
+            NSString * fileName = [item objectForKey:@"name"];
+            NSString * fileType = [item objectForKey:@"type"];
+            
+            NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            NSString * filePath = [documentsDirectory stringByAppendingPathComponent:[fileName stringByAppendingPathExtension:fileType]];
+            
+            
+            NSData * fileData = [file getData];
+            [fileData writeToFile:filePath atomically:YES];
+        }
+        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kLastDownloadedKey];
+        return YES;
     }
     
+    return NO;
     
-    return YES;
 }
 
 

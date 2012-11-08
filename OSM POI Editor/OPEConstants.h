@@ -41,3 +41,5 @@
 #define kPointTypeNode @"node"
 #define kPointTypeWay @"way"
 #define kPointTypePoint @"point"
+
+#define kLastDownloadedKey @"lastFileDownload"
