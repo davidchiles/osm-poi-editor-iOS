@@ -272,7 +272,7 @@
 		6357072B163F613B0009D8A3 /* TrackingHeading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6357071E163F613B0009D8A3 /* TrackingHeading@2x.png */; };
 		6357072C163F613B0009D8A3 /* TrackingLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = 6357071F163F613B0009D8A3 /* TrackingLocation.png */; };
 		6357072D163F613B0009D8A3 /* TrackingLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63570720163F613B0009D8A3 /* TrackingLocation@2x.png */; };
-		63570A901640F3C00009D8A3 /* libMapView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63570A8C1640F3B10009D8A3 /* libMapView.a */; };
+		63570A901640F3C00009D8A3 /* libMapBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63570A8C1640F3B10009D8A3 /* libMapBox.a */; };
 		636D7819152E58F8005E31A3 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D7818152E58F8005E31A3 /* MBProgressHUD.m */; };
 		6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6370D354151A8BAE0081206A /* libsqlite3.dylib */; };
 		637A89FE14E1C340003F656F /* SPOI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 637A89FD14E1C340003F656F /* SPOI.bundle */; };
@@ -284,6 +284,21 @@
 		6383949814EC7DAC00C74A57 /* GTMOAuthViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6383949314EC7DAC00C74A57 /* GTMOAuthViewTouch.xib */; };
 		6383949A14EC85C100C74A57 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6383949914EC85C100C74A57 /* Security.framework */; };
 		638445EA1665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */; };
+		638E99301665C38400C29F9A /* mapbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E99221665C38400C29F9A /* mapbox.png */; };
+		638E99311665C38400C29F9A /* mapbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E99231665C38400C29F9A /* mapbox@2x.png */; };
+		638E99321665C38400C29F9A /* HeadingAngleSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E99241665C38400C29F9A /* HeadingAngleSmall.png */; };
+		638E99331665C38400C29F9A /* HeadingAngleSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E99251665C38400C29F9A /* HeadingAngleSmall@2x.png */; };
+		638E99341665C38400C29F9A /* LoadingTile.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E99261665C38400C29F9A /* LoadingTile.png */; };
+		638E99351665C38400C29F9A /* LoadingTileZoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E99271665C38400C29F9A /* LoadingTileZoom.png */; };
+		638E99361665C38400C29F9A /* TrackingDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E99281665C38400C29F9A /* TrackingDot.png */; };
+		638E99371665C38400C29F9A /* TrackingDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E99291665C38400C29F9A /* TrackingDot@2x.png */; };
+		638E99381665C38400C29F9A /* TrackingDotHalo.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E992A1665C38400C29F9A /* TrackingDotHalo.png */; };
+		638E99391665C38400C29F9A /* TrackingDotHalo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E992B1665C38400C29F9A /* TrackingDotHalo@2x.png */; };
+		638E993A1665C38400C29F9A /* TrackingHeading.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E992C1665C38400C29F9A /* TrackingHeading.png */; };
+		638E993B1665C38400C29F9A /* TrackingHeading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E992D1665C38400C29F9A /* TrackingHeading@2x.png */; };
+		638E993C1665C38400C29F9A /* TrackingLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E992E1665C38400C29F9A /* TrackingLocation.png */; };
+		638E993D1665C38400C29F9A /* TrackingLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 638E992F1665C38400C29F9A /* TrackingLocation@2x.png */; };
+		638E994F1665C9FF00C29F9A /* MapBox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 638E99201665C2CC00C29F9A /* MapBox.bundle */; };
 		6396829F153CBD82008F4C0E /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 6396829B153CBD82008F4C0E /* icon-29.png */; };
 		639682A0153CBD82008F4C0E /* icon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6396829C153CBD82008F4C0E /* icon-29@2x.png */; };
 		639682A1153CBD82008F4C0E /* icon-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 6396829D153CBD82008F4C0E /* icon-512.png */; };
@@ -364,12 +379,12 @@
 			remoteGlobalIDString = 17F31EFA1331050A00122B16;
 			remoteInfo = MapView;
 		};
-		63570A8E1640F3BA0009D8A3 /* PBXContainerItemProxy */ = {
+		638E991F1665C2CC00C29F9A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 63570A801640F3B10009D8A3 /* MapView.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = B8C974130E8A19B2007D16AD;
-			remoteInfo = MapView;
+			proxyType = 2;
+			remoteGlobalIDString = DD6A83751644A20C0097F31F;
+			remoteInfo = Resources;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -706,6 +721,20 @@
 		6383949914EC85C100C74A57 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		638445E81665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOpenMapQuestAerialTileSource.h; sourceTree = "<group>"; };
 		638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpenMapQuestAerialTileSource.m; sourceTree = "<group>"; };
+		638E99221665C38400C29F9A /* mapbox.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = mapbox.png; path = lib/mapbox/MapView/Map/Resources/mapbox.png; sourceTree = "<group>"; };
+		638E99231665C38400C29F9A /* mapbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = "mapbox@2x.png"; path = "lib/mapbox/MapView/Map/Resources/mapbox@2x.png"; sourceTree = "<group>"; };
+		638E99241665C38400C29F9A /* HeadingAngleSmall.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = HeadingAngleSmall.png; path = lib/mapbox/MapView/Map/Resources/HeadingAngleSmall.png; sourceTree = "<group>"; };
+		638E99251665C38400C29F9A /* HeadingAngleSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = "HeadingAngleSmall@2x.png"; path = "lib/mapbox/MapView/Map/Resources/HeadingAngleSmall@2x.png"; sourceTree = "<group>"; };
+		638E99261665C38400C29F9A /* LoadingTile.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = LoadingTile.png; path = lib/mapbox/MapView/Map/Resources/LoadingTile.png; sourceTree = "<group>"; };
+		638E99271665C38400C29F9A /* LoadingTileZoom.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = LoadingTileZoom.png; path = lib/mapbox/MapView/Map/Resources/LoadingTileZoom.png; sourceTree = "<group>"; };
+		638E99281665C38400C29F9A /* TrackingDot.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = TrackingDot.png; path = lib/mapbox/MapView/Map/Resources/TrackingDot.png; sourceTree = "<group>"; };
+		638E99291665C38400C29F9A /* TrackingDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = "TrackingDot@2x.png"; path = "lib/mapbox/MapView/Map/Resources/TrackingDot@2x.png"; sourceTree = "<group>"; };
+		638E992A1665C38400C29F9A /* TrackingDotHalo.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = TrackingDotHalo.png; path = lib/mapbox/MapView/Map/Resources/TrackingDotHalo.png; sourceTree = "<group>"; };
+		638E992B1665C38400C29F9A /* TrackingDotHalo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = "TrackingDotHalo@2x.png"; path = "lib/mapbox/MapView/Map/Resources/TrackingDotHalo@2x.png"; sourceTree = "<group>"; };
+		638E992C1665C38400C29F9A /* TrackingHeading.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = TrackingHeading.png; path = lib/mapbox/MapView/Map/Resources/TrackingHeading.png; sourceTree = "<group>"; };
+		638E992D1665C38400C29F9A /* TrackingHeading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = "TrackingHeading@2x.png"; path = "lib/mapbox/MapView/Map/Resources/TrackingHeading@2x.png"; sourceTree = "<group>"; };
+		638E992E1665C38400C29F9A /* TrackingLocation.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = TrackingLocation.png; path = lib/mapbox/MapView/Map/Resources/TrackingLocation.png; sourceTree = "<group>"; };
+		638E992F1665C38400C29F9A /* TrackingLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = file; name = "TrackingLocation@2x.png"; path = "lib/mapbox/MapView/Map/Resources/TrackingLocation@2x.png"; sourceTree = "<group>"; };
 		63968298153CB8B4008F4C0E /* OPEAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAPIConstants.h; sourceTree = "<group>"; };
 		6396829B153CBD82008F4C0E /* icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29.png"; sourceTree = "<group>"; };
 		6396829C153CBD82008F4C0E /* icon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29@2x.png"; sourceTree = "<group>"; };
@@ -864,7 +893,7 @@
 				633CD86E164B24AA00678D58 /* AdSupport.framework in Frameworks */,
 				633CD86C164B249D00678D58 /* Accounts.framework in Frameworks */,
 				633CD86A164B249100678D58 /* AudioToolbox.framework in Frameworks */,
-				63570A901640F3C00009D8A3 /* libMapView.a in Frameworks */,
+				63570A901640F3C00009D8A3 /* libMapBox.a in Frameworks */,
 				63E279EA14E1F87D009D02BD /* libxml2.dylib in Frameworks */,
 				6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */,
 				63E4BF1A14E068EC00E0BD46 /* libz.dylib in Frameworks */,
@@ -1323,7 +1352,8 @@
 		63570A811640F3B10009D8A3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				63570A8C1640F3B10009D8A3 /* libMapView.a */,
+				63570A8C1640F3B10009D8A3 /* libMapBox.a */,
+				638E99201665C2CC00C29F9A /* MapBox.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1349,6 +1379,20 @@
 				63E525C61534C45100D2DA35 /* App Icon */,
 				6325B4431534B28A00C8691F /* location.png */,
 				6325B4441534B28B00C8691F /* location@2x.png */,
+				638E99221665C38400C29F9A /* mapbox.png */,
+				638E99231665C38400C29F9A /* mapbox@2x.png */,
+				638E99241665C38400C29F9A /* HeadingAngleSmall.png */,
+				638E99251665C38400C29F9A /* HeadingAngleSmall@2x.png */,
+				638E99261665C38400C29F9A /* LoadingTile.png */,
+				638E99271665C38400C29F9A /* LoadingTileZoom.png */,
+				638E99281665C38400C29F9A /* TrackingDot.png */,
+				638E99291665C38400C29F9A /* TrackingDot@2x.png */,
+				638E992A1665C38400C29F9A /* TrackingDotHalo.png */,
+				638E992B1665C38400C29F9A /* TrackingDotHalo@2x.png */,
+				638E992C1665C38400C29F9A /* TrackingHeading.png */,
+				638E992D1665C38400C29F9A /* TrackingHeading@2x.png */,
+				638E992E1665C38400C29F9A /* TrackingLocation.png */,
+				638E992F1665C38400C29F9A /* TrackingLocation@2x.png */,
 				63570715163F613B0009D8A3 /* HeadingAngleSmall.png */,
 				63570716163F613B0009D8A3 /* HeadingAngleSmall@2x.png */,
 				63570717163F613B0009D8A3 /* LoadingTile.png */,
@@ -1554,7 +1598,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				63570A8F1640F3BA0009D8A3 /* PBXTargetDependency */,
 			);
 			name = "OSM POI Editor";
 			productName = "OSM POI Editor";
@@ -1593,11 +1636,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		63570A8C1640F3B10009D8A3 /* libMapView.a */ = {
+		63570A8C1640F3B10009D8A3 /* libMapBox.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = libMapView.a;
+			path = libMapBox.a;
 			remoteRef = 63570A8B1640F3B10009D8A3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		638E99201665C2CC00C29F9A /* MapBox.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MapBox.bundle;
+			remoteRef = 638E991F1665C2CC00C29F9A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1607,6 +1657,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				638E994F1665C9FF00C29F9A /* MapBox.bundle in Resources */,
 				6330AB7914DB519A00448852 /* InfoPlist.strings in Resources */,
 				637A89FE14E1C340003F656F /* SPOI.bundle in Resources */,
 				63CB49DE14E9DE7B008C4551 /* OPECategoryViewController.xib in Resources */,
@@ -1875,6 +1926,20 @@
 				6357072D163F613B0009D8A3 /* TrackingLocation@2x.png in Resources */,
 				634205BE1645EA5C009C6BA4 /* plus.png in Resources */,
 				634205C01645EA62009C6BA4 /* plus@2x.png in Resources */,
+				638E99301665C38400C29F9A /* mapbox.png in Resources */,
+				638E99311665C38400C29F9A /* mapbox@2x.png in Resources */,
+				638E99321665C38400C29F9A /* HeadingAngleSmall.png in Resources */,
+				638E99331665C38400C29F9A /* HeadingAngleSmall@2x.png in Resources */,
+				638E99341665C38400C29F9A /* LoadingTile.png in Resources */,
+				638E99351665C38400C29F9A /* LoadingTileZoom.png in Resources */,
+				638E99361665C38400C29F9A /* TrackingDot.png in Resources */,
+				638E99371665C38400C29F9A /* TrackingDot@2x.png in Resources */,
+				638E99381665C38400C29F9A /* TrackingDotHalo.png in Resources */,
+				638E99391665C38400C29F9A /* TrackingDotHalo@2x.png in Resources */,
+				638E993A1665C38400C29F9A /* TrackingHeading.png in Resources */,
+				638E993B1665C38400C29F9A /* TrackingHeading@2x.png in Resources */,
+				638E993C1665C38400C29F9A /* TrackingLocation.png in Resources */,
+				638E993D1665C38400C29F9A /* TrackingLocation@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1947,14 +2012,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		63570A8F1640F3BA0009D8A3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MapView;
-			targetProxy = 63570A8E1640F3BA0009D8A3 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		6330AB7714DB519A00448852 /* InfoPlist.strings */ = {

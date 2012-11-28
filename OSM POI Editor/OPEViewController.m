@@ -96,6 +96,8 @@
     //Check OAuth
     
     mapView = [[RMMapView alloc] init];
+    mapView.showLogoBug = NO;
+    mapView.hideAttribution = YES;
     mapView.userTrackingMode = RMUserTrackingModeFollow;
     
     
