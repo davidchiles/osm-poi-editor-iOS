@@ -187,7 +187,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 5;
+        return 3;
     }
     else {
         return 1;
@@ -216,20 +216,15 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tileIdentifier];
         }
-        if (indexPath.row == 0) {
-            cell.textLabel.text = @"Terrain";
+        
+        if (indexPath.row == 0){
+            cell.textLabel.text = @"Bing Aerial";
         }
-        else if (indexPath.row == 1) {
-            cell.textLabel.text = @"OSM Default";
-        }
-        else if (indexPath.row == 2){
-            cell.textLabel.text = @"Toner";
-        }
-        else if (indexPath.row == 3){
+        else if (indexPath.row == 1){
             cell.textLabel.text = @"OpenMapquest Aerial";
         }
-        else if (indexPath.row == 4){
-            cell.textLabel.text = @"Bing Aerial";
+        else if (indexPath.row == 2) {
+            cell.textLabel.text = @"OSM Default";
         }
         
         if (indexPath.row == currentNumber) {
@@ -352,20 +347,16 @@
 + (id)getTileSourceFromNumber:(int) num
 {
     if (num == 0) {
-        return [[OPEStamenTerrain alloc] init];
-    }
-    else if (num == 1) {
-        return [[RMOpenStreetMapSource alloc] init];
-    }
-    else if (num == 2) {
-        return [[OPEStamenToner alloc] init];
-    }
-    else if (num == 3) {
-        return [[RMMapQuestOpenAerialSource alloc] init];
-    }
-    else if (num == 4) {
         return [[OPEBingTileSource alloc] initWithMapsKey:bingMapsKey];
     }
+    else if (num == 1) {
+        return [[RMMapQuestOpenAerialSource alloc] init];
+    }
+    else if (num == 2) {
+        return [[RMOpenStreetMapSource alloc] init];
+    }
+    
+    
     return nil;
 }
 
