@@ -23,7 +23,7 @@
 #import "OPEInfoViewController.h"
 #import "OPEStamenTerrain.h"
 #import "OPEStamenToner.h"
-#import "RMMapQuestOpenAerialSource.h"
+#import "OPEOpenMapQuestAerialTileSource.h"
 #import "RMOpenStreetMapSource.h"
 #import "OPEBingTileSource.h"
 #import "OPEAPIConstants.h"
@@ -350,7 +350,7 @@
         return [[OPEBingTileSource alloc] initWithMapsKey:bingMapsKey];
     }
     else if (num == 1) {
-        return [[RMMapQuestOpenAerialSource alloc] init];
+        return [[OPEOpenMapQuestAerialTileSource alloc] init];
     }
     else if (num == 2) {
         return [[RMOpenStreetMapSource alloc] init];

@@ -283,6 +283,7 @@
 		6383949714EC7DAC00C74A57 /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383949214EC7DAC00C74A57 /* GTMHTTPFetcher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6383949814EC7DAC00C74A57 /* GTMOAuthViewTouch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6383949314EC7DAC00C74A57 /* GTMOAuthViewTouch.xib */; };
 		6383949A14EC85C100C74A57 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6383949914EC85C100C74A57 /* Security.framework */; };
+		638445EA1665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */; };
 		6396829F153CBD82008F4C0E /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 6396829B153CBD82008F4C0E /* icon-29.png */; };
 		639682A0153CBD82008F4C0E /* icon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6396829C153CBD82008F4C0E /* icon-29@2x.png */; };
 		639682A1153CBD82008F4C0E /* icon-512.png in Resources */ = {isa = PBXBuildFile; fileRef = 6396829D153CBD82008F4C0E /* icon-512.png */; };
@@ -703,6 +704,8 @@
 		6383949214EC7DAC00C74A57 /* GTMHTTPFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMHTTPFetcher.m; sourceTree = "<group>"; };
 		6383949314EC7DAC00C74A57 /* GTMOAuthViewTouch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GTMOAuthViewTouch.xib; sourceTree = "<group>"; };
 		6383949914EC85C100C74A57 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		638445E81665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOpenMapQuestAerialTileSource.h; sourceTree = "<group>"; };
+		638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpenMapQuestAerialTileSource.m; sourceTree = "<group>"; };
 		63968298153CB8B4008F4C0E /* OPEAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAPIConstants.h; sourceTree = "<group>"; };
 		6396829B153CBD82008F4C0E /* icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29.png"; sourceTree = "<group>"; };
 		6396829C153CBD82008F4C0E /* icon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29@2x.png"; sourceTree = "<group>"; };
@@ -1130,6 +1133,8 @@
 				632573DE15211A1C00478B78 /* OPEStamenToner.m */,
 				63FCA4401643127D00A28470 /* OPEBingTileSource.h */,
 				63FCA4411643127D00A28470 /* OPEBingTileSource.m */,
+				638445E81665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.h */,
+				638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */,
 			);
 			name = MapSources;
 			sourceTree = "<group>";
@@ -1937,6 +1942,7 @@
 				63FCA4511643363800A28470 /* OPEUtility.m in Sources */,
 				63C2035A164B153200C0F1EF /* OPEPoint.m in Sources */,
 				633CD877164B28DA00678D58 /* OPEFileUpdater.m in Sources */,
+				638445EA1665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
