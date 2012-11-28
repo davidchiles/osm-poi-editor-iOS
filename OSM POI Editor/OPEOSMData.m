@@ -200,8 +200,10 @@
         TBXMLElement* xmlNode = [TBXML childElementNamed:@"node" parentElement:root];
         while (xmlNode!=nil) {
             OPENode * newNode = [OPENode createPointWithXML:xmlNode];
-            [nodeDictionary setObject:newNode forKey:[newNode uniqueIdentifier] ];
             newNode.image = [tagInterpreter getImageForNode:newNode];
+            [OPEOSMData HTMLFix:newNode];
+            [nodeDictionary setObject:newNode forKey:[newNode uniqueIdentifier] ];
+            
             
             xmlNode = [TBXML nextSiblingNamed:@"node" searchFromElement:xmlNode];
         }
@@ -218,6 +220,7 @@
         while (xmlWay!=nil) {
             OPEWay * newWay = [OPEWay createPointWithXML:xmlWay nodes:nodes];
             newWay.image = [tagInterpreter getImageForNode:newWay];
+            [OPEOSMData HTMLFix:newWay];
             [wayDictionary setObject:newWay forKey:[newWay uniqueIdentifier]];
             xmlWay = [TBXML nextSiblingNamed:@"way" searchFromElement:xmlWay];
         }
