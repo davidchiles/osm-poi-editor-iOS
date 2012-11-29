@@ -993,7 +993,85 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>Fun &amp; Leisure</key>
+	<key>Building (residence)</key>
+	<dict>
+		<key>House</key>
+		<dict>
+			<key>image</key>
+			<string>house.png</string>
+			<key>tags</key>
+			<dict>
+				<key>building</key>
+				<string>house</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Cabin</key>
+		<dict>
+			<key>image</key>
+			<string>house.png</string>
+			<key>tags</key>
+			<dict>
+				<key>building</key>
+				<string>cabin</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Hut</key>
+		<dict>
+			<key>image</key>
+			<string>house.png</string>
+			<key>tags</key>
+			<dict>
+				<key>building</key>
+				<string>hut</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Apartments</key>
+		<dict>
+			<key>image</key>
+			<string>apartment.png</string>
+			<key>tags</key>
+			<dict>
+				<key>building</key>
+				<string>apartments</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Dormitory</key>
+		<dict>
+			<key>image</key>
+			<string>apartment.png</string>
+			<key>tags</key>
+			<dict>
+				<key>building</key>
+				<string>dormitory</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+	</dict>
+	<key>Fun and Leisure</key>
 	<dict>
 		<key>Swimming Pool</key>
 		<dict>
@@ -1039,8 +1117,22 @@
 				<string>address</string>
 			</array>
 		</dict>
+		<key>Bowling Alley (10 pin)</key>
+		<dict>
+			<key>image</key>
+			<string>pin.png</string>
+			<key>tags</key>
+			<dict>
+				<key>sport</key>
+				<string>10pin</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>address</string>
+			</array>
+		</dict>
 	</dict>
-	<key>Outdoors &amp; Natural</key>
+	<key>Outdoors and Natural</key>
 	<dict>
 		<key>Beach</key>
 		<dict>
