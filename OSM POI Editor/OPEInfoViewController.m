@@ -34,6 +34,7 @@
 @synthesize delegate;
 @synthesize currentNumber;
 @synthesize settingsTableView;
+@synthesize attributionString;
 
 - (void)viewDidLoad
 {
@@ -202,6 +203,15 @@
     else {
         return @"";
     }
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    if(section == 0 && self.attributionString)
+    {
+        return self.attributionString;
+    }
+    return @"";
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
