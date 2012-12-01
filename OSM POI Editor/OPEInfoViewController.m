@@ -21,10 +21,8 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPEInfoViewController.h"
-#import "OPEStamenTerrain.h"
-#import "OPEStamenToner.h"
 #import "OPEOpenMapQuestAerialTileSource.h"
-#import "RMOpenStreetMapSource.h"
+#import "OPEOpenStreetMapSource.h"
 #import "OPEBingTileSource.h"
 #import "OPEAPIConstants.h"
 
@@ -45,7 +43,6 @@
     [settingsTableView setDelegate:self];
     settingsTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
-    [self.loginButton addTarget:self action:@selector(osmButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
     if ([settings objectForKey:@"tileSourceNumber"]) {
         currentNumber = [[settings objectForKey:@"tileSourceNumber"] intValue];
@@ -83,6 +80,7 @@
 - (void)viewController:(GTMOAuthViewControllerTouch *)viewController
       finishedWithAuth:(GTMOAuthAuthentication *)auth
                  error:(NSError *)error {
+    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
     if (error != nil) {
         // Authentication failed (perhaps the user denied access, or closed the
         // window before granting access)
@@ -114,8 +112,6 @@
         // Just to prove we're signed in, we'll attempt an authenticated fetch for the
         // signed-in user
         //[self doAnAuthenticatedAPIFetch];
-        [self.loginButton setTitle:@"Logout of OSM" forState:UIControlStateNormal];
-        self.loginButton.tag = 1;
     }
     
     //[self updateUI];
@@ -176,9 +172,7 @@
 - (void) signOutOfOSM
 {
     [GTMOAuthViewControllerTouch removeParamsFromKeychainForName:@"OSMPOIEditor"];
-    self.loginButton.tag = 0;
-    [self.loginButton setTitle:@"Login to OSM" forState:UIControlStateNormal];
-    [settingsTableView reloadData];
+    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 #pragma - TableView
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -312,7 +306,7 @@
 -(void)changeTileSourceTo:(NSString *) newSoureceName
 {
     id <RMTileSource> newTileSource = nil;
-    newTileSource = [[OPEStamenTerrain alloc] init];
+    newTileSource = [[OPEBingTileSource alloc] init];
     
     //[delegate setTileSource:newTileSource a];
     
@@ -356,14 +350,14 @@
 
 + (id)getTileSourceFromNumber:(int) num
 {
-    if (num == 0) {
-        return [[OPEBingTileSource alloc] initWithMapsKey:bingMapsKey];
-    }
-    else if (num == 1) {
+    if (num == 1) {
         return [[OPEOpenMapQuestAerialTileSource alloc] init];
     }
     else if (num == 2) {
-        return [[RMOpenStreetMapSource alloc] init];
+        return [[OPEOpenStreetMapSource alloc] init];
+    }
+    else{
+        return [[OPEBingTileSource alloc] initWithMapsKey:bingMapsKey];
     }
     
     
@@ -373,14 +367,12 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
 }
 
-- (void)viewDidAppear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
 }
 
 - (void)viewDidUnload

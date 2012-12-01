@@ -1,14 +1,14 @@
 //
-//  OPEOpenMapQuestAerialTileSource.m
+//  OPEOpenStreetMapSource.m
 //  OSM POI Editor
 //
-//  Created by David on 11/27/12.
+//  Created by David on 11/30/12.
 //
 //
 
-#import "OPEOpenMapQuestAerialTileSource.h"
+#import "OPEOpenStreetMapSource.h"
 
-@implementation OPEOpenMapQuestAerialTileSource
+@implementation OPEOpenStreetMapSource
 
 
 -(id) init

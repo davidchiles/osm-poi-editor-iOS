@@ -26,8 +26,9 @@
 #import "RMMarker.h"
 #import "RMUserLocation.h"
 #import "RMAnnotation.h"
-#import "OPEStamenTerrain.h"
 #import "OPEPoint.h"
+#import "OPEBingTileSource.h"
+#import "OPEAPIConstants.h"
 
 
 @implementation OPEViewController
@@ -149,7 +150,7 @@
         
     }
     else {
-        newTileSource = [[OPEStamenTerrain alloc] init];
+        newTileSource = [[OPEBingTileSource alloc] initWithMapsKey:bingMapsKey];
         currentTile = 0;
     }
     
@@ -227,7 +228,11 @@
             icon = [imagesDic objectForKey:node.image];
         }
         else {
-            icon = [self imageWithBorderFromImage:[UIImage imageNamed:node.image]]; //center image inside box
+            NSString * imageString = node.image;
+            if(![UIImage imageNamed:imageString])
+                imageString = @"none.png";
+            
+            icon = [self imageWithBorderFromImage:[UIImage imageNamed:imageString]]; //center image inside box
             [imagesDic setObject:icon forKey:node.image];
         }
     }
