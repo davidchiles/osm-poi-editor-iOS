@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="OPTIONAL" representedClassName="OPTIONAL" syncable="YES">
+        <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="section" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sectionSortOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OSMTAG" syncable="YES"/>
+    </entity>
+    <entity name="OSMTAG" representedClassName="OSMTAG" syncable="YES">
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="POI" representedClassName="POI" syncable="YES">
+        <attribute name="canAdd" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isLegacy" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="newTagMethod" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="POI" syncable="YES"/>
+        <relationship name="optional" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPTIONAL" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OSMTAG" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="OPTIONAL" positionX="160" positionY="74" width="128" height="118"/>
+        <element name="OSMTAG" positionX="162" positionY="225" width="128" height="88"/>
+        <element name="POI" positionX="387" positionY="63" width="135" height="163"/>
+    </elements>
+</model>

@@ -30,6 +30,8 @@
 #import "OPEViewController.h"
 #import "OPEFileUpdater.h"
 #import <Parse/Parse.h>
+#import "OPECoreDataImporter.h"
+#import "CoreData+MagicalRecord.h"
 
 @implementation OPEAppDelegate
 
@@ -52,6 +54,20 @@
         [[[OPEFileUpdater alloc] init] downloadFiles];
         [[OPETagInterpreter sharedInstance] readPlist];
     });
+    OPECoreDataImporter * importer = [[OPECoreDataImporter alloc] init];
+    
+    NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+    NSString * filePath = [documentsPath stringByAppendingPathComponent:@"coreData.sqlite"];
+    
+    NSURL * url = [NSURL fileURLWithPath:filePath];
+    UIManagedDocument* databaseDoc = [[UIManagedDocument alloc] initWithFileURL:url];
+    [databaseDoc saveToURL:databaseDoc.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
+        importer.managedObjectContext = databaseDoc.managedObjectContext;
+        [importer importOptionalTags];
+        [importer importTagsPlist];
+    }];
+    
     
     
     UIViewController *rootView = [[OPEViewController alloc] init];
