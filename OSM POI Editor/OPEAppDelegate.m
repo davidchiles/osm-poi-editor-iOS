@@ -40,6 +40,17 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // DATABASE TESTS
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"db.sqlite"];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    [context setRetainsRegisteredObjects:YES];
+    
+    OPECoreDataImporter * importer = [[OPECoreDataImporter alloc] init];
+
+    [importer importOptionalTags];
+    [importer importTagsPlist];
+
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
 #ifdef CRITTERCISM_ENABLED
@@ -54,19 +65,8 @@
         [[[OPEFileUpdater alloc] init] downloadFiles];
         [[OPETagInterpreter sharedInstance] readPlist];
     });
-    OPECoreDataImporter * importer = [[OPECoreDataImporter alloc] init];
     
-    NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-
-    NSString * filePath = [documentsPath stringByAppendingPathComponent:@"coreData.sqlite"];
     
-    NSURL * url = [NSURL fileURLWithPath:filePath];
-    UIManagedDocument* databaseDoc = [[UIManagedDocument alloc] initWithFileURL:url];
-    [databaseDoc saveToURL:databaseDoc.fileURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success) {
-        importer.managedObjectContext = databaseDoc.managedObjectContext;
-        [importer importOptionalTags];
-        [importer importTagsPlist];
-    }];
     
     
     
@@ -118,6 +118,7 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+    [MagicalRecord cleanUp];
 }
 
 @end

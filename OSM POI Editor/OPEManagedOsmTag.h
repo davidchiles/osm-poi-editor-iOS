@@ -1,8 +1,8 @@
 //
-//  OSMTAG.h
+//  OPEManagedOsmTag.h
 //  OSM POI Editor
 //
-//  Created by David on 12/18/12.
+//  Created by David on 1/21/13.
 //
 //
 
@@ -10,10 +10,9 @@
 #import <CoreData/CoreData.h>
 
 
-@interface OSMTAG : NSManagedObject
+@interface OPEManagedOsmTag : NSManagedObject
 
 @property (nonatomic, retain) NSString * key;
 @property (nonatomic, retain) NSString * value;
-@property (nonatomic, retain) NSString * name;
 
 @end

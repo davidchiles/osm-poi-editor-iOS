@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="OPEManagedOsmElement" representedClassName="OPEManagedOsmElement" syncable="YES">
+        <attribute name="osmID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedOsmTag" syncable="YES"/>
+        <relationship name="type" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="OPEManagedReferencePoi" syncable="YES"/>
+    </entity>
+    <entity name="OPEManagedOsmNode" representedClassName="OPEManagedOsmNode" parentEntity="OPEManagedOsmElement" syncable="YES">
+        <attribute name="lattitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+    </entity>
+    <entity name="OPEManagedOsmRelation" representedClassName="OPEManagedOsmRelation" parentEntity="OPEManagedOsmElement" syncable="YES">
+        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OpeManagedOsmRelationMember" syncable="YES"/>
+    </entity>
+    <entity name="OpeManagedOsmRelationMember" representedClassName="OpeManagedOsmRelationMember" syncable="YES">
+        <attribute name="role" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="member" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedOsmElement" syncable="YES"/>
+    </entity>
+    <entity name="OPEManagedOsmTag" representedClassName="OPEManagedOsmTag" syncable="YES">
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="OPEManagedOsmWay" representedClassName="OPEManagedOsmWay" parentEntity="OPEManagedOsmElement" syncable="YES">
+        <attribute name="isArea" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="nodes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedOsmNode" syncable="YES"/>
+    </entity>
+    <entity name="OPEManagedReferenceOptional" representedClassName="OPEManagedReferenceOptional" syncable="YES">
+        <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="section" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sectionSortOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedReferenceOsmTag" syncable="YES"/>
+    </entity>
+    <entity name="OPEManagedReferenceOsmTag" representedClassName="OPEManagedReferenceOsmTag" parentEntity="OPEManagedOsmTag" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="OPEManagedReferencePoi" representedClassName="OPEManagedReferencePoi" syncable="YES">
+        <attribute name="canAdd" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isLegacy" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="newTagMethod" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="OPEManagedReferencePoi" syncable="YES"/>
+        <relationship name="optional" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedReferenceOptional" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedReferenceOsmTag" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="OPEManagedOsmElement" positionX="441" positionY="257" width="128" height="103"/>
+        <element name="OPEManagedOsmNode" positionX="655" positionY="369" width="128" height="73"/>
+        <element name="OPEManagedOsmRelation" positionX="90" positionY="315" width="180" height="60"/>
+        <element name="OpeManagedOsmRelationMember" positionX="79" positionY="395" width="191" height="75"/>
+        <element name="OPEManagedOsmTag" positionX="601" positionY="126" width="128" height="75"/>
+        <element name="OPEManagedOsmWay" positionX="385" positionY="410" width="128" height="75"/>
+        <element name="OPEManagedReferenceOptional" positionX="160" positionY="74" width="128" height="120"/>
+        <element name="OPEManagedReferenceOsmTag" positionX="162" positionY="225" width="128" height="60"/>
+        <element name="OPEManagedReferencePoi" positionX="387" positionY="63" width="135" height="165"/>
+    </elements>
+</model>

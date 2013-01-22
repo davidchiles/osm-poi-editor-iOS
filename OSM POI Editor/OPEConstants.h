@@ -43,3 +43,7 @@
 #define kPointTypePoint @"point"
 
 #define kLastDownloadedKey @"lastFileDownload"
+
+
+#define kExpandedAddressArray [NSArray arrayWithObjects:@"addr:housenumber",@"addr:street",@"addr:city",@"addr:postcode",@"addr:state",@"addr:country",@"addr:province",@"website",@"phone", nil];
+
