@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "CoreLocation/CoreLocation.h"
 
 @class OPEManagedOsmTag, POI;
 
@@ -25,5 +26,7 @@
 - (void)removeTagsObject:(OPEManagedOsmTag *)value;
 - (void)addTags:(NSSet *)values;
 - (void)removeTags:(NSSet *)values;
+
+- (CLLocationCoordinate2D)center;
 
 @end

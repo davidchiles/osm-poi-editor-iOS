@@ -14,4 +14,10 @@
 @dynamic lattitude;
 @dynamic longitude;
 
+
+-(CLLocationCoordinate2D) center
+{
+    return CLLocationCoordinate2DMake([self.lattitude doubleValue], [self.longitude doubleValue]);
+}
+
 @end

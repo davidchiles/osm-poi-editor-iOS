@@ -7,10 +7,12 @@
 //
 
 #import "OPEManagedReferenceOsmTag.h"
+#import "OPEManagedOsmTag.h"
 
 
 @implementation OPEManagedReferenceOsmTag
 
 @dynamic name;
+@dynamic tag;
 
 @end

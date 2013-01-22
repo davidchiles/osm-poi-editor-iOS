@@ -2,7 +2,7 @@
 //  OpeManagedOsmRelationMember.h
 //  OSM POI Editor
 //
-//  Created by David on 1/21/13.
+//  Created by David on 1/22/13.
 //
 //
 
@@ -14,14 +14,6 @@
 @interface OpeManagedOsmRelationMember : NSManagedObject
 
 @property (nonatomic, retain) NSString * role;
-@property (nonatomic, retain) NSSet *member;
-@end
-
-@interface OpeManagedOsmRelationMember (CoreDataGeneratedAccessors)
-
-- (void)addMemberObject:(OPEManagedOsmElement *)value;
-- (void)removeMemberObject:(OPEManagedOsmElement *)value;
-- (void)addMember:(NSSet *)values;
-- (void)removeMember:(NSSet *)values;
+@property (nonatomic, retain) OPEManagedOsmElement *member;
 
 @end

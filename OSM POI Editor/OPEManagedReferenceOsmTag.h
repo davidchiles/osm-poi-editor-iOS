@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "OPEManagedOsmTag.h"
 
+@class OPEManagedOsmTag;
 
-@interface OPEManagedReferenceOsmTag : OPEManagedOsmTag
+@interface OPEManagedReferenceOsmTag : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) OPEManagedOsmTag *tag;
 
 @end

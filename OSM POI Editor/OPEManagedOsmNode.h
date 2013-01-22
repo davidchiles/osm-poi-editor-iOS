@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "OPEManagedOsmElement.h"
+#import "CoreLocation/CoreLocation.h"
 
 
 @interface OPEManagedOsmNode : OPEManagedOsmElement

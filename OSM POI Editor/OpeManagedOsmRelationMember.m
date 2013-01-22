@@ -2,7 +2,7 @@
 //  OpeManagedOsmRelationMember.m
 //  OSM POI Editor
 //
-//  Created by David on 1/21/13.
+//  Created by David on 1/22/13.
 //
 //
 
