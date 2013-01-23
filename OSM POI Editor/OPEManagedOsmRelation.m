@@ -28,7 +28,7 @@
         }
         return CLLocationCoordinate2DMake(centerLat/[self.members count], centerLon/[self.members count]);
     }
-    return nil;
+    return CLLocationCoordinate2DMake(0, 0);
 }
 
 @end

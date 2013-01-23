@@ -10,6 +10,7 @@
 #import "OPEOptionalTag.h"
 #import "CoreData+MagicalRecord.h"
 #import "OPEConstants.h"
+#import "OPEManagedOsmTag.h"
 
 
 @implementation OPECoreDataImporter
@@ -33,6 +34,7 @@
             
         }
     }
+    NSLog(@"Number of POIs: %u",[[OPEManagedOsmTag MR_findAll] count]);
 }
 
 -(void)importOptionalTags
@@ -54,40 +56,50 @@
 
 -(void)addPOIWithName:(NSString *)name  category:(NSString *)category imageString:(NSString *)imageString legacy:(BOOL )isLegacy optional:(NSArray *)optionalTags tags:(NSDictionary *) tagDictionary
 {
-    OPEManagedReferencePoi * newPoi = [OPEManagedReferencePoi MR_createEntity];
+    BOOL didCreate;
+    OPEManagedReferencePoi * newPoi = [OPEManagedReferencePoi fetchOrCreateWithName:name category:category didCreate:&didCreate];
     
-    newPoi.name = name;
-    newPoi.isLegacy = [NSNumber numberWithBool:isLegacy];
-    newPoi.imageString = imageString;
-    newPoi.category = category;
-    
-    NSMutableSet * optionalSet = [NSMutableSet set];
-    for(NSString * optional in optionalTags)
-    {
-        if([optional isEqualToString:@"address"])
+    if (didCreate) {
+        newPoi.name = name;
+        newPoi.isLegacy = [NSNumber numberWithBool:isLegacy];
+        newPoi.imageString = imageString;
+        newPoi.category = category;
+        
+        NSMutableSet * optionalSet = [NSMutableSet set];
+        for(NSString * optionalString in optionalTags)
         {
-            NSArray * exppandedAddress = kExpandedAddressArray;
-            for(NSString * addressString in exppandedAddress)
+            if([optionalString isEqualToString:@"address"])
             {
-                [optionalSet addObject:[self OptionalWithName:addressString]];
+                NSArray * exppandedAddress = kExpandedAddressArray;
+                for(NSString * addressString in exppandedAddress)
+                {
+                    didCreate = NO;
+                    OPEManagedReferenceOptional * optional = [OPEManagedReferenceOptional fetchOrCreateWithName:addressString didCreate:&didCreate];
+                    if (!didCreate) {
+                        [optionalSet addObject:optional];
+                    }
+                }
             }
-            
+            else
+            {
+                BOOL didCreate = NO;
+                OPEManagedReferenceOptional * optional = [OPEManagedReferenceOptional fetchOrCreateWithName:optionalString didCreate:&didCreate];
+                if (!didCreate) {
+                    [optionalSet addObject:optional];
+                }
+            }
         }
-        else
+        [newPoi setOptional:optionalSet];
+        
+        NSMutableSet * osmTagSet = [NSMutableSet set];
+        for (NSString * key in tagDictionary)
         {
-            [optionalSet addObject:[self OptionalWithName:optional]];
+            [osmTagSet addObject:[OPEManagedOsmTag fetchOrCreateWithKey:key value:[tagDictionary objectForKey:key]]];
         }
-            
-        //deal with address stuff here
+        [newPoi setTags:osmTagSet];
     }
-    [newPoi setOptional:optionalSet];
     
-    NSMutableSet * osmTagSet = [NSMutableSet set];
-    for (NSString * key in tagDictionary)
-    {
-        [osmTagSet addObject:[self osmKey:key value:[tagDictionary objectForKey:key] name:nil]];
-    }
-    [newPoi setTags:osmTagSet];
+    
     
    /* NSError *error;
     if (![self.managedObjectContext save:&error]) {
@@ -97,66 +109,32 @@
 
 }
 
--(OPEManagedReferenceOptional *)OptionalWithName:(NSString *)name
-{
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@",name];
-    
-    NSArray * results = [OPEManagedReferenceOptional MR_findAllWithPredicate:predicate];
-    
-    OPEManagedReferenceOptional * optional = [results objectAtIndex:0];
-    
-    return optional;
-    
-}
-
 -(OPEManagedReferenceOptional *)addOptionalWithName:(NSString *)name displayName:(NSString *)displayName section:(NSString *)section sectionSortOrder:(NSNumber *)sectionSortOrder osmkey:(NSString *)osmKey values:(NSDictionary *)tagValues
 {
     //OPTIONAL * newOptional = [NSEntityDescription insertNewObjectForEntityForName:OPTIONALEntity inManagedObjectContext:managedObjectContext];
-    OPEManagedReferenceOptional * newOptional = [OPEManagedReferenceOptional MR_createEntity];
     
-    newOptional.name = name;
-    newOptional.section = section;
-    newOptional.sectionSortOrder = sectionSortOrder;
+    BOOL didCreate = NO;
     
-    NSMutableSet * osmTags = [NSMutableSet set];
+    OPEManagedReferenceOptional * newOptional = [OPEManagedReferenceOptional fetchOrCreateWithName:name didCreate:&didCreate];
     
-    for(NSString * value in tagValues)
-    {
-        OPEManagedReferenceOsmTag * tag = [self osmKey:osmKey value:[tagValues objectForKey:value] name:value];
-        [osmTags addObject: tag];
+    if (didCreate) {
+        newOptional.name = name;
+        newOptional.section = section;
+        newOptional.sectionSortOrder = sectionSortOrder;
+        NSMutableSet * osmTags = [NSMutableSet set];
+        
+        for(NSString * value in tagValues)
+        {
+            OPEManagedReferenceOsmTag * tag = [OPEManagedReferenceOsmTag fetchOrCreateWithName:value key:osmKey value:[tagValues objectForKey:value]];
+            [osmTags addObject: tag];
+        }
+        [newOptional setTags:osmTags];
+        
+        NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+        [context MR_saveToPersistentStoreAndWait];
     }
-    [newOptional setTags:osmTags];
-    
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-    [context MR_saveToPersistentStoreAndWait];
-
     
     return newOptional;
-}
-
--(OPEManagedReferenceOsmTag *)osmKey:(NSString *)key value:(NSString *)value name:(NSString *)name
-{
-    NSPredicate *osmTagFilter = [NSPredicate predicateWithFormat:@"key == %@ AND value == %@",key,value];
-    NSArray * osmTags = [OPEManagedReferenceOsmTag MR_findAllWithPredicate:osmTagFilter];
-    
-    OPEManagedReferenceOsmTag * osmTag;
-    
-    if(![osmTags count])
-    {
-        osmTag = [OPEManagedReferenceOsmTag MR_createEntity];
-        osmTag.key = key;
-        osmTag.value = value;
-        osmTag.name = name;
-    }
-    else
-    {
-        osmTag = [osmTags objectAtIndex:0];
-    }
-    
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
-    [context MR_saveToPersistentStoreAndWait];
-    
-    return osmTag;
 }
 
 @end

@@ -34,7 +34,7 @@
     </entity>
     <entity name="OPEManagedReferenceOsmTag" representedClassName="OPEManagedReferenceOsmTag" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="tag" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="OPEManagedOsmTag" syncable="YES"/>
+        <relationship name="tag" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OPEManagedOsmTag" syncable="YES"/>
     </entity>
     <entity name="OPEManagedReferencePoi" representedClassName="OPEManagedReferencePoi" syncable="YES">
         <attribute name="canAdd" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -44,17 +44,17 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="newTagMethod" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="OPEManagedReferencePoi" syncable="YES"/>
         <relationship name="optional" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedReferenceOptional" syncable="YES"/>
-        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedReferenceOsmTag" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedOsmTag" syncable="YES"/>
     </entity>
     <elements>
-        <element name="OPEManagedOsmElement" positionX="441" positionY="257" width="128" height="103"/>
+        <element name="OPEManagedOsmElement" positionX="423" positionY="257" width="128" height="103"/>
         <element name="OPEManagedOsmNode" positionX="655" positionY="369" width="128" height="73"/>
         <element name="OPEManagedOsmRelation" positionX="90" positionY="315" width="180" height="58"/>
         <element name="OpeManagedOsmRelationMember" positionX="79" positionY="395" width="191" height="73"/>
         <element name="OPEManagedOsmTag" positionX="601" positionY="126" width="128" height="75"/>
         <element name="OPEManagedOsmWay" positionX="385" positionY="410" width="128" height="73"/>
-        <element name="OPEManagedReferenceOptional" positionX="160" positionY="74" width="128" height="120"/>
+        <element name="OPEManagedReferenceOptional" positionX="160" positionY="74" width="173" height="120"/>
         <element name="OPEManagedReferenceOsmTag" positionX="306" positionY="-82" width="128" height="73"/>
-        <element name="OPEManagedReferencePoi" positionX="405" positionY="-0" width="135" height="165"/>
+        <element name="OPEManagedReferencePoi" positionX="405" positionY="-0" width="135" height="163"/>
     </elements>
 </model>

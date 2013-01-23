@@ -2,14 +2,14 @@
 //  OPEManagedReferencePoi.h
 //  OSM POI Editor
 //
-//  Created by David on 1/21/13.
+//  Created by David on 1/22/13.
 //
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class OPEManagedReferenceOptional, OPEManagedReferenceOsmTag, OPEManagedReferencePoi;
+@class OPEManagedOsmTag, OPEManagedReferenceOptional, OPEManagedReferencePoi;
 
 @interface OPEManagedReferencePoi : NSManagedObject
 
@@ -30,9 +30,12 @@
 - (void)addOptional:(NSSet *)values;
 - (void)removeOptional:(NSSet *)values;
 
-- (void)addTagsObject:(OPEManagedReferenceOsmTag *)value;
-- (void)removeTagsObject:(OPEManagedReferenceOsmTag *)value;
+- (void)addTagsObject:(OPEManagedOsmTag *)value;
+- (void)removeTagsObject:(OPEManagedOsmTag *)value;
 - (void)addTags:(NSSet *)values;
 - (void)removeTags:(NSSet *)values;
+
+
++(OPEManagedReferencePoi *) fetchOrCreateWithName:(NSString *)name category:(NSString *)category didCreate:(BOOL *)didCreate;
 
 @end

@@ -29,7 +29,7 @@
         }
         return CLLocationCoordinate2DMake(centerLat/[self.nodes count], centerLon/[self.nodes count]);
     }
-    return nil;
+    return CLLocationCoordinate2DMake(0, 0);
 }
 
 @end

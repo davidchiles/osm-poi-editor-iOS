@@ -27,4 +27,6 @@
 - (void)addTags:(NSSet *)values;
 - (void)removeTags:(NSSet *)values;
 
++ (OPEManagedReferenceOptional *) fetchOrCreateWithName:(NSString *)name didCreate:(BOOL *)didCreate;
+
 @end

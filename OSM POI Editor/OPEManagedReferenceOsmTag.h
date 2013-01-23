@@ -16,4 +16,6 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) OPEManagedOsmTag *tag;
 
++(OPEManagedReferenceOsmTag *)fetchOrCreateWithName:(NSString *)name key:(NSString *)key value:(NSString *)value;
+
 @end
