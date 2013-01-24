@@ -30,6 +30,9 @@
 #import "OPEBingTileSource.h"
 #import "OPEAPIConstants.h"
 
+#import "OPEManagedOsmElement.h"
+#import "OPEManagedReferencePoi.h"
+
 
 @implementation OPEViewController
 
@@ -43,6 +46,9 @@
 @synthesize message;
 @synthesize imagesDic;
 @synthesize currentSquare;
+@synthesize firstDownload;
+
+@synthesize userPressedLocatoinButton;
 
 - (void)didReceiveMemoryWarning
 {
@@ -57,8 +63,6 @@
 -(void)setupButtons
 {
     mapView.frame = self.view.bounds;
-    
-    
     
     UIBarButtonItem * locationBarButton;
     UIBarButtonItem * addBarButton;
@@ -91,6 +95,7 @@
     [super viewDidLoad];
     
     //[self setupButtons];
+    firstDownload = NO;
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self.navigationController setToolbarHidden:NO animated:NO];
@@ -159,13 +164,14 @@
     
     
     
-    RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBox];
+    //RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBox];
     currentSquare = [mapView latitudeLongitudeBoundingBox];
     
     osmData = [[OPEOSMData alloc] init];
     
     message = [[OPEMessage alloc] init];
     message.alpha = 0.0;
+    /*
     dispatch_queue_t q = dispatch_queue_create("queue", NULL);
     
         if (mapView.zoom > MINZOOM) {
@@ -177,6 +183,7 @@
         else {
             [self showZoomWarning];
         }
+     */
         
    
     
@@ -218,6 +225,34 @@
     return newImage;
 }
 
+-(RMMarker *)markerWithManagedObjectID:(NSManagedObjectID *)managedObjectID
+{
+    NSError * error = nil;
+    OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)[[NSManagedObjectContext MR_contextForCurrentThread] existingObjectWithID:managedObjectID error:&error];
+    if (error) {
+        NSLog(@"Error: %@",error);
+    }
+    
+    UIImage * icon;
+    if (managedOsmElement.type) {
+        if ([imagesDic objectForKey:managedOsmElement.type.imageString]) {
+            icon = [imagesDic objectForKey:managedOsmElement.type.imageString];
+        }
+        else {
+            NSString * imageString = managedOsmElement.type.imageString;
+            if(![UIImage imageNamed:imageString])
+                imageString = @"none.png";
+            
+            icon = [self imageWithBorderFromImage:[UIImage imageNamed:imageString]]; //center image inside box
+            [imagesDic setObject:icon forKey:managedOsmElement.type.imageString];
+        }
+    }
+    RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
+    newMarker.userInfo = managedObjectID;
+    newMarker.zPosition = 0.2;
+    return newMarker;
+}
+
 -(RMMarker *)markerWithNode:(OPEPoint *)node
 {
     UIImage * icon;   //Get image from stored value in node
@@ -244,13 +279,21 @@
 
 -(RMMapLayer *) mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
 {
-    OPEPoint * node = annotation.userInfo;
+    NSManagedObjectID * managedObjectID = annotation.userInfo;
     
-    RMMarker * marker = [self markerWithNode:node];
+    RMMarker * marker = [self markerWithManagedObjectID:managedObjectID];
     marker.canShowCallout = YES;
     marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     
     return marker;
+}
+
+-(RMAnnotation *)annotationWithOsmElement:(OPEManagedOsmElement *)managedOsmElement
+{
+    RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[managedOsmElement center] andTitle:[managedOsmElement name]];
+    annotation.userInfo = [managedOsmElement objectID];
+    
+    return annotation;
 }
 
 -(RMAnnotation *)annotationWithNode:(OPEPoint *)node
@@ -260,127 +303,6 @@
     
     return annotation;
 }
-
-
-
-
--(RMMarker *) addMarkerAt:(CLLocationCoordinate2D) position withNode: (OPENode *) node
-{
-    //NSLog(@"start addMarkerAt %@",node.image);
-    UIImage * icon;   //Get image from stored value in node
-    //UIImage * icon = [UIImage imageNamed:@"restaurant"];
-    //if (node.ident>0 && ![node.image isEqualToString:@"none.png"]) {
-    if(node.ident > 0) {
-        if ([imagesDic objectForKey:node.image]) {
-            icon = [imagesDic objectForKey:node.image];
-        }
-        else {
-            icon = [self imageWithBorderFromImage:icon]; //center image inside box
-            [imagesDic setObject:icon forKey:node.image];
-        }
-
-    }
-   
-    //RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 1.0)];
-    RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
-    //[mapView.markerManager addMarker:newMarker AtLatLong:node.coordinate];
-    
-    
-   
-    return newMarker;
-
-}
-
-#define CENTER_IMAGE_WIDTH  31 
-#define CALLOUT_HEIGHT  45 
-#define MIN_LEFT_IMAGE_WIDTH  7 
-#define MIN_RIGHT_IMAGE_WIDTH  7 
-#define LABEL_HEIGHT  48 
-#define LABEL_FONT_SIZE  20 
-#define ANCHOR_Y  80
-
-/*
--(void) tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
-{
-    //[openMarker hideLabel];
-    //openMarker.zPosition = 0.5;
-    //marker.zPosition = 1.0;
-    OPEPoint * tempNode = annotation.userInfo;
-    
-    if(tempNode.ident == -1)
-    {
-        //[marker setProjectedLocation:[[mapView.contents projection] latLongToPoint:[mapView pixelToLatLong:marker.position]]];
-        
-        tempNode.coordinate = [mapView pixelToCoordinate:CGPointMake(annotation.position.x, +annotation.position.y)];
-        //[self tapOnLabelForMarker:marker onMap:mapView onLayer:nil];
-    }
-    else if (tempNode.ident > 0){
-        
-        //NSString * titulo = [((OPENode *)marker.data) getName];
-        NSString * titulo = [interpreter getName:tempNode];
-        CGSize size = [titulo sizeWithFont:[UIFont boldSystemFontOfSize:LABEL_FONT_SIZE]];
-        float sizes = size.width;
-        
-        int left_width2 = ((int)(sizes + CENTER_IMAGE_WIDTH)/2)-5;
-        int right_width2 = (int)(sizes + CENTER_IMAGE_WIDTH)/2;
-        
-        label=[[UIView alloc]initWithFrame:CGRectMake(((left_width2*2+21)/ 2)-18, 19 - ANCHOR_Y,0 , 0)];
-        label.backgroundColor = [UIColor clearColor];
-        label.userInteractionEnabled=YES;
-        
-        
-        
-        UIImage * CALLOUT_LEFT_IMAGE = [[UIImage imageNamed:@"left.png"]
-                                        stretchableImageWithLeftCapWidth:15 topCapHeight:0];
-        UIImage * CALLOUT_CENTER_IMAGE = [[UIImage
-                                           imageNamed:@"center.png"]stretchableImageWithLeftCapWidth:30
-                                          topCapHeight:0];
-        UIImage * CALLOUT_RIGHT_IMAGE = [[UIImage imageNamed:@"right.png"]
-                                         stretchableImageWithLeftCapWidth:1 topCapHeight:0];
-        UIImageView * calloutCenter = [[UIImageView alloc]
-                                       initWithFrame:CGRectMake(left_width2-5+5,0, right_width2+5+5,
-                                                                CALLOUT_HEIGHT)];
-        calloutCenter.image = CALLOUT_CENTER_IMAGE;
-        [label addSubview:calloutCenter];
-        UIImageView * calloutLeft = [[UIImageView alloc] initWithFrame:CGRectMake(round(0),
-                                                                                  round(0), left_width2-5+5, round(CALLOUT_HEIGHT))];
-        calloutLeft.image = CALLOUT_LEFT_IMAGE;
-        [label addSubview:calloutLeft];
-        UIImageView * calloutRight = [[UIImageView alloc]
-                                      initWithFrame:CGRectMake(left_width2*2+5+10, round(0), 16,
-                                                               round(CALLOUT_HEIGHT))];
-        calloutRight.image = CALLOUT_RIGHT_IMAGE;
-        [label addSubview:calloutRight];
-        
-        
-        
-        calloutLabel = [[UILabel alloc]
-                        initWithFrame:CGRectMake(MIN_LEFT_IMAGE_WIDTH-3,0 , sizes, LABEL_HEIGHT)];
-        calloutLabel.font = [UIFont boldSystemFontOfSize:LABEL_FONT_SIZE];
-        calloutLabel.text=titulo;
-        calloutLabel.textColor = [UIColor whiteColor];
-        calloutLabel.backgroundColor = [UIColor clearColor];
-        [label addSubview:calloutLabel];
-        
-        UIButton *buttongo= [UIButton
-                             buttonWithType:UIButtonTypeDetailDisclosure];
-        //[buttongo setTitle:@"TTT" forState:UIControlStateNormal];
-        //[buttongo addTarget:self action:@selector(testItOut) forControlEvents:UIControlEventTouchUpInside];
-        buttongo.frame=CGRectMake(left_width2*2-3, 8, 30, 30);
-        buttongo.userInteractionEnabled=YES;
-        buttongo.enabled=YES;
-        [label addSubview:buttongo];
-        [label bringSubviewToFront:buttongo];
-        
-        [mapView addSubview: label];
-        
-        
-    
-        
-    }
-
-}
- */
 
 - (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
@@ -470,22 +392,31 @@
 
 - (void)afterMapMove:(RMMapView *)map byUser:(BOOL)wasUserAction
 {
-    [self downloadNewArea:map];
+    if (wasUserAction || userPressedLocatoinButton) {
+        [self downloadNewArea:map];
+    }
+    
 }
 
 - (void)afterMapZoom:(RMMapView *)map byUser:(BOOL)wasUserAction
 {
-    [self downloadNewArea:map];
+    if (wasUserAction || userPressedLocatoinButton) {
+        [self downloadNewArea:map];
+    }
 }
 
 - (void) addMarkers:(NSNotification*)notification 
 {
-    NSDictionary * newNodes = notification.userInfo;
+    NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type.@count == 1"];
+    NSArray * results = [OPEManagedOsmElement MR_findAllWithPredicate:osmElementFilter];
+    //NSDictionary * newNodes = notification.userInfo;
     //[mapView removeAllAnnotations];
-    for(id key in newNodes)
+    
+    for(OPEManagedOsmElement * managedOsmElement in results)
     {
-        OPEPoint * node = [osmData.allNodes objectForKey:key];
-        [mapView addAnnotation:[self annotationWithNode:node]];
+        //OPEPoint * node = [osmData.allNodes objectForKey:key];
+        
+        [mapView addAnnotation:[self annotationWithOsmElement:managedOsmElement]];
     }
 }
 
@@ -498,14 +429,15 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    if (currentLocationMarker == nil) {
-        UIImage *icon = [UIImage imageNamed:@"userLocation.png"]; 
-        currentLocationMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
+    if(newLocation.horizontalAccuracy < 50 && newLocation.horizontalAccuracy >0 )
+    {
+        userPressedLocatoinButton = YES;
+        if(!firstDownload)
+        {
+            [self downloadNewArea:mapView];
+            firstDownload = YES;
+        }
         
-        //[mapView.markerManager addMarker:currentLocationMarker AtLatLong:newLocation.coordinate];
-    }
-    else {
-        //[mapView.markerManager moveMarker:currentLocationMarker AtLatLon:newLocation.coordinate];
     }
 }
 
@@ -584,6 +516,7 @@
 
 -(IBAction)locationButtonPressed:(id)sender
 {
+    userPressedLocatoinButton = YES;
     [mapView setCenterCoordinate: mapView.userLocation.coordinate animated:YES];
 }
 
@@ -629,6 +562,7 @@
     [self.navigationController setToolbarHidden:NO animated:YES];
     
     [self setupButtons];
+    userPressedLocatoinButton = NO;
     
 }
 

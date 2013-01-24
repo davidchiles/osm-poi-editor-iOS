@@ -18,6 +18,24 @@
     return CLLocationCoordinate2DMake(0, 0);
 }
 
+-(NSString *)name
+{
+    NSPredicate * nameFilter = [NSPredicate predicateWithFormat:@"key == 'name'"];
+    NSSet * filteredSet = [self.tags filteredSetUsingPredicate:nameFilter];
+    if ([filteredSet count]) {
+        OPEManagedOsmTag * tag = [filteredSet anyObject];
+        return tag.value;
+    }
+    else if (self.type)
+    {
+        return self.type.name;
+    }
+    else
+    {
+        return @"";
+    }
+}
+
 -(BOOL)findType
 {
     if ([self.tags count]) {
@@ -40,13 +58,20 @@
         
         if ([possibleMatches count]) {
             self.type = [possibleMatches anyObject];
+            
+            NSString * name = [self name];
+            NSLog(@"Name: %@",name);
+            return YES;
         }
         else if([possibleLegacyMatches count])
         {
             self.type = [possibleLegacyMatches anyObject];
+            return YES;
         }
         
+        
     }
+    return NO;
     
 }
 

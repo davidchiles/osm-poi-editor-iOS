@@ -5,5 +5,6 @@
 
 -(CLLocationCoordinate2D) center;
 -(BOOL) findType;
+-(NSString *)name;
 
 @end

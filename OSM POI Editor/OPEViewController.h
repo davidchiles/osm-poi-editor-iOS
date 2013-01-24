@@ -54,9 +54,9 @@
 @property (nonatomic, strong) OPEMessage * message;
 @property (nonatomic, strong) NSMutableDictionary * imagesDic;
 @property (nonatomic) RMSphericalTrapezium currentSquare;
+@property (nonatomic) BOOL userPressedLocatoinButton;
+@property (nonatomic) BOOL firstDownload;
 
-
-- (RMMarker *) addMarkerAt:(CLLocationCoordinate2D) markerPosition withNode:(OPENode *) node;
 - (void) addMarkers:(NSNotification *) notification;
 //- (void) pushMapAnnotationDetailedViewControllerDelegate:(id) sender;
 //- (void) buttonEvent:(id)sender;
