@@ -1,19 +1,15 @@
-//
-//  OPEManagedOsmWay.m
-//  OSM POI Editor
-//
-//  Created by David on 1/22/13.
-//
-//
-
 #import "OPEManagedOsmWay.h"
 #import "OPEManagedOsmNode.h"
 
 
-@implementation OPEManagedOsmWay
+@interface OPEManagedOsmWay ()
 
-@dynamic isArea;
-@dynamic nodes;
+// Private interface goes here.
+
+@end
+
+
+@implementation OPEManagedOsmWay
 
 -(CLLocationCoordinate2D)center
 {

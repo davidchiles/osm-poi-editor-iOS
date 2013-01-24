@@ -49,6 +49,7 @@
 - (int) deleteNode: (OPEPoint *) node;
 - (void) uploadComplete;
 + (void) HTMLFix:(OPEPoint *)node;
++ (NSString *)htmlFix:(NSString *)string;
 +(void) backToHTML:(OPEPoint *)node;
 
 

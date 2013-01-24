@@ -1,20 +1,7 @@
-//
-//  OPEManagedOsmNode.h
-//  OSM POI Editor
-//
-//  Created by David on 1/21/13.
-//
-//
-
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
-#import "OPEManagedOsmElement.h"
+#import "_OPEManagedOsmNode.h"
 #import "CoreLocation/CoreLocation.h"
 
+@interface OPEManagedOsmNode : _OPEManagedOsmNode {}
 
-@interface OPEManagedOsmNode : OPEManagedOsmElement
-
-@property (nonatomic, retain) NSNumber * lattitude;
-@property (nonatomic, retain) NSNumber * longitude;
-
++(OPEManagedOsmNode *)fetchNodeWithOsmId:(NSInteger)nodeId;
 @end

@@ -29,6 +29,9 @@
 #import "OPEAPIConstants.h"
 #import "OPEWay.h"
 #import "OPEConstants.h"
+#import "OPEManagedOsmNode.h"
+#import "OPEManagedOsmTag.h"
+#import "OPEManagedOsmWay.h"
 
 @implementation OPEOSMData
 
@@ -73,9 +76,16 @@
         NSData *responseData = [request responseData];
         TBXML* tbxml = [TBXML tbxmlWithXMLData:responseData];
         
-        NSMutableDictionary * tempNodes = [self findNodes:tbxml];
-        NSMutableDictionary * tempWays = [self findWays:tbxml nodes:tempNodes];
+        [self findNodes:tbxml];
+        [self findWays:tbxml];
         
+        NSInteger count = [OPEManagedOsmNode MR_countOfEntities];
+        count =  [OPEManagedOsmWay MR_countOfEntities];
+        
+        
+        
+        NSMutableDictionary * tempNodes; 
+        NSMutableDictionary * tempWays;        
         [tempNodes addEntriesFromDictionary:tempWays];
         
         for (NSString *key in [tempNodes allKeys])
@@ -91,62 +101,6 @@
         [tempNodes removeObjectsForKeys:[ignoreNodes allKeys]];
         [allNodes addEntriesFromDictionary:tempNodes];
         
-        /*
-        TBXMLElement * root = tbxml.rootXMLElement;
-        if(root)
-        {
-            //NSLog(@"root: %@",[TBXML elementName:root]);
-            //NSLog(@"version: %@",[TBXML valueOfAttributeNamed:@"version" forElement:root]);
-            TBXMLElement* node = [TBXML childElementNamed:@"node" parentElement:root];
-            while (node!=nil) {
-                
-                //NSLog(@"node: %@",[TBXML textForElement:node]);
-                NSString* identS = [TBXML valueOfAttributeNamed:@"id" forElement:node];
-                //NSLog(@"id %@",identS);
-                NSString* latS = [TBXML valueOfAttributeNamed:@"lat" forElement:node];
-                NSString* lonS = [TBXML valueOfAttributeNamed:@"lon" forElement:node];
-                NSString* verS = [TBXML valueOfAttributeNamed:@"version" forElement:node];
-                
-                double ident = [identS doubleValue];
-                double lat = [latS doubleValue];
-                double lon = [lonS doubleValue];
-                int ver = [verS intValue];
-                
-                OPENode * newNode = [[OPENode alloc] initWithId:ident latitude:lat longitude:lon version:ver];
-                //NSLog(@"lat: %f, lon: %f",lat,lon);
-                TBXMLElement* tag = [TBXML childElementNamed:@"tag" parentElement:node];
-                
-                while (tag!=nil) //Takes in tags and adds them to newNode
-                {
-                    NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tag];
-                    NSString* value = [TBXML valueOfAttributeNamed:@"v" forElement:tag];
-                    //NSLog(@"key: %@, value: %@",key,value);
-                    [newNode.tags setObject:value forKey:key];
-                    tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
-                }
-                [allNewNodes setObject:newNode forKey:[NSNumber numberWithInt: newNode.ident]];
-                
-                OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
-    
-                if([tagInterpreter getCategoryandType:newNode]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
-                {
-                    //NSLog(@"New Node Id: %d",newNode.ident);
-                    //NSLog(@"all nodes: %@",[self.allNodes objectForKey:[NSNumber numberWithInt:newNode.ident]]);
-                    newNode.image = [tagInterpreter getImageForNode:newNode];
-                    if ([self.allNodes objectForKey:[NSNumber numberWithInt:newNode.ident]] ==nil && [self.ignoreNodes objectForKey:[NSNumber numberWithInt:newNode.ident]] == nil) 
-                    {
-                        //NSLog(@"add to node dictionary");
-                        [OPEOSMData HTMLFix:newNode];
-                        [self.allNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
-                        [newNodes setObject:newNode forKey:[NSNumber numberWithInt:newNode.ident]];
-                    }
-                }
-                node = [TBXML nextSiblingNamed:@"node" searchFromElement:node];
-            }
-            NSLog(@"allNodes size: %d",[allNodes count]);
-            
-        }
-        */
         dispatch_async(dispatch_get_main_queue(), ^{
         
         [[NSNotificationCenter defaultCenter]
@@ -191,41 +145,95 @@
     
 }
 
--(NSMutableDictionary *)findNodes:(TBXML *)xml {
-    
-    NSMutableDictionary * nodeDictionary = [[NSMutableDictionary alloc] init];
+-(void)findNodes:(TBXML *)xml {
     TBXMLElement * root = xml.rootXMLElement;
     if(root)
     {
         TBXMLElement* xmlNode = [TBXML childElementNamed:@"node" parentElement:root];
         while (xmlNode!=nil) {
-            OPENode * newNode = [OPENode createPointWithXML:xmlNode];
-            newNode.image = [tagInterpreter getImageForNode:newNode];
-            [OPEOSMData HTMLFix:newNode];
-            [nodeDictionary setObject:newNode forKey:[newNode uniqueIdentifier] ];
             
+            OPEManagedOsmNode * newNode = [OPEManagedOsmNode fetchNodeWithOsmId:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlNode] integerValue]];
+            if (!newNode) {
+                newNode = [OPEManagedOsmNode MR_createEntity];
+            }
             
+            newNode.osmID = [NSNumber numberWithInteger:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlNode] integerValue]];
+            newNode.lattitude = [NSNumber numberWithFloat:[[TBXML valueOfAttributeNamed:@"lat" forElement:xmlNode] floatValue]];
+            newNode.longitude = [NSNumber numberWithFloat:[[TBXML valueOfAttributeNamed:@"lon" forElement:xmlNode] floatValue]];
+            newNode.version = [NSNumber numberWithInteger:[[TBXML valueOfAttributeNamed:@"version" forElement:xmlNode] integerValue]];
+            
+            TBXMLElement* tag = [TBXML childElementNamed:@"tag" parentElement:xmlNode];
+            
+            NSMutableSet * newTags = [NSMutableSet set];
+            
+            while (tag!=nil) //Takes in tags and adds them to newNode
+            {
+                NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tag];
+                NSString* value = [OPEOSMData htmlFix:[TBXML valueOfAttributeNamed:@"v" forElement:tag]];
+                OPEManagedOsmTag * newTag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
+                [newTags addObject:newTag];
+                
+                tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
+            }
+            [newNode setTags:newTags];
+            
+            [newNode findType];
+            
+
             xmlNode = [TBXML nextSiblingNamed:@"node" searchFromElement:xmlNode];
         }
     }
-    return nodeDictionary;
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+    [context MR_saveToPersistentStoreAndWait];
 }
 
--(NSMutableDictionary *)findWays:(TBXML *)xml nodes:(NSDictionary *)nodes{
-    NSMutableDictionary * wayDictionary = [[NSMutableDictionary alloc] init];
+-(void)findWays:(TBXML *)xml{
     TBXMLElement * root = xml.rootXMLElement;
     if(root)
     {
         TBXMLElement* xmlWay = [TBXML childElementNamed:@"way" parentElement:root];
         while (xmlWay!=nil) {
-            OPEWay * newWay = [OPEWay createPointWithXML:xmlWay nodes:nodes];
-            newWay.image = [tagInterpreter getImageForNode:newWay];
-            [OPEOSMData HTMLFix:newWay];
-            [wayDictionary setObject:newWay forKey:[newWay uniqueIdentifier]];
+            
+            OPEManagedOsmWay * newWay = [OPEManagedOsmWay MR_createEntity];
+            
+            newWay.osmID = [NSNumber numberWithInteger:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlWay] integerValue]];
+            newWay.version = [NSNumber numberWithInteger:[[TBXML valueOfAttributeNamed:@"version" forElement:xmlWay] integerValue]];
+            
+            TBXMLElement* nodeXml = [TBXML childElementNamed:@"nd" parentElement:xmlWay];
+            NSMutableOrderedSet * nodeSet = [NSMutableOrderedSet orderedSet];
+            
+            while (nodeXml!=nil) {
+                NSInteger nodeId = [[TBXML valueOfAttributeNamed:@"ref" forElement:nodeXml] integerValue];
+                OPEManagedOsmNode * node = [OPEManagedOsmNode fetchNodeWithOsmId:nodeId];
+                [nodeSet addObject:node];
+                
+                nodeXml = [TBXML nextSiblingNamed:@"nd" searchFromElement:nodeXml];
+            }
+            [newWay setNodes:nodeSet];
+            
+            
+            TBXMLElement* tag = [TBXML childElementNamed:@"tag" parentElement:xmlWay];
+            
+            NSMutableSet * newTags = [NSMutableSet set];
+            
+            while (tag!=nil) //Takes in tags and adds them to newNode
+            {
+                NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tag];
+                NSString* value = [OPEOSMData htmlFix:[TBXML valueOfAttributeNamed:@"v" forElement:tag]];
+                OPEManagedOsmTag * newTag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
+                [newTags addObject:newTag];
+                
+                tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
+            }
+            [newWay setTags:newTags];
+            
+            [newWay findType];
+            
             xmlWay = [TBXML nextSiblingNamed:@"way" searchFromElement:xmlWay];
         }
     }
-    return wayDictionary;
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+    [context MR_saveToPersistentStoreAndWait];
 }
  
 -(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
@@ -422,6 +430,11 @@
     }
     node.tags = [[NSMutableDictionary alloc] initWithDictionary:fixedTags];
     
+}
+
++ (NSString *)htmlFix:(NSString *)string
+{
+    return [string stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
 }
 
 +(void) HTMLFix:(OPEPoint *)node

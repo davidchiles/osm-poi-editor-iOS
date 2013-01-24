@@ -1,19 +1,14 @@
-//
-//  OPEManagedReferenceOsmTag.m
-//  OSM POI Editor
-//
-//  Created by David on 1/21/13.
-//
-//
-
 #import "OPEManagedReferenceOsmTag.h"
 #import "OPEManagedOsmTag.h"
 
+@interface OPEManagedReferenceOsmTag ()
+
+// Private interface goes here.
+
+@end
+
 
 @implementation OPEManagedReferenceOsmTag
-
-@dynamic name;
-@dynamic tag;
 
 +(OPEManagedReferenceOsmTag *)fetchOrCreateWithName:(NSString *)name key:(NSString *)key value:(NSString *)value;
 {
@@ -28,7 +23,7 @@
         referenceOsmTag.name = name;
         referenceOsmTag.tag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
         
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
         [context MR_saveToPersistentStoreAndWait];
     }
     else

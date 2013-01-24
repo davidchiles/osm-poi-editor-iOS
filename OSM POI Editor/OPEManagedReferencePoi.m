@@ -1,27 +1,14 @@
-//
-//  OPEManagedReferencePoi.m
-//  OSM POI Editor
-//
-//  Created by David on 1/22/13.
-//
-//
+#import "OPEManagedReferencePoi.h"
 
-#import "OPEManagedReferencePoi.h"
-#import "OPEManagedOsmTag.h"
-#import "OPEManagedReferenceOptional.h"
-#import "OPEManagedReferencePoi.h"
+
+@interface OPEManagedReferencePoi ()
+
+// Private interface goes here.
+
+@end
 
 
 @implementation OPEManagedReferencePoi
-
-@dynamic canAdd;
-@dynamic category;
-@dynamic imageString;
-@dynamic isLegacy;
-@dynamic name;
-@dynamic newTagMethod;
-@dynamic optional;
-@dynamic tags;
 
 +(OPEManagedReferencePoi *) fetchOrCreateWithName:(NSString *)name category:(NSString *)category didCreate:(BOOL *)didCreate
 {
@@ -36,7 +23,7 @@
         referencePoi.name = name;
         referencePoi.category = category;
         
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
         [context MR_saveToPersistentStoreAndWait];
         
         *didCreate = YES;

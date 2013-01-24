@@ -1,22 +1,14 @@
-//
-//  OPEManagedReferenceOptional.m
-//  OSM POI Editor
-//
-//  Created by David on 1/21/13.
-//
-//
-
 #import "OPEManagedReferenceOptional.h"
-#import "OPEManagedReferenceOsmTag.h"
+
+
+@interface OPEManagedReferenceOptional ()
+
+// Private interface goes here.
+
+@end
 
 
 @implementation OPEManagedReferenceOptional
-
-@dynamic displayName;
-@dynamic name;
-@dynamic section;
-@dynamic sectionSortOrder;
-@dynamic tags;
 
 +(OPEManagedReferenceOptional *)fetchOrCreateWithName:(NSString *)name didCreate:(BOOL *)didCreate
 {
@@ -32,7 +24,7 @@
         referenceOptional = [OPEManagedReferenceOptional MR_createEntity];
         referenceOptional.name = name;
         
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
         [context MR_saveToPersistentStoreAndWait];
     }
     else

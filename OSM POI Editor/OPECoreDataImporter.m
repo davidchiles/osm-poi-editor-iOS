@@ -130,7 +130,7 @@
         }
         [newOptional setTags:osmTags];
         
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
         [context MR_saveToPersistentStoreAndWait];
     }
     

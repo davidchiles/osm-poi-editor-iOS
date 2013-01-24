@@ -1,18 +1,15 @@
-//
-//  OpeManagedOsmRelationMember.m
-//  OSM POI Editor
-//
-//  Created by David on 1/22/13.
-//
-//
-
 #import "OpeManagedOsmRelationMember.h"
-#import "OPEManagedOsmElement.h"
+
+
+@interface OpeManagedOsmRelationMember ()
+
+// Private interface goes here.
+
+@end
 
 
 @implementation OpeManagedOsmRelationMember
 
-@dynamic role;
-@dynamic member;
+// Custom logic goes here.
 
 @end

@@ -32,6 +32,7 @@
 #import <Parse/Parse.h>
 #import "OPECoreDataImporter.h"
 #import "CoreData+MagicalRecord.h"
+#import "OPEMRUtility.h"
 
 @implementation OPEAppDelegate
 
@@ -42,7 +43,7 @@
 {
     // DATABASE TESTS
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"db.sqlite"];
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
     [context setRetainsRegisteredObjects:YES];
     
     OPECoreDataImporter * importer = [[OPECoreDataImporter alloc] init];
@@ -95,6 +96,7 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    //[OPEMRUtility deleteDownloaded];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -118,6 +120,8 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+    [OPEMRUtility deleteDownloaded];
+    
     [MagicalRecord cleanUp];
 }
 

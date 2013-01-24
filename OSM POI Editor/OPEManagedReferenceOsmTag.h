@@ -1,20 +1,7 @@
-//
-//  OPEManagedReferenceOsmTag.h
-//  OSM POI Editor
-//
-//  Created by David on 1/21/13.
-//
-//
+#import "_OPEManagedReferenceOsmTag.h"
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
+@interface OPEManagedReferenceOsmTag : _OPEManagedReferenceOsmTag {}
 
-@class OPEManagedOsmTag;
-
-@interface OPEManagedReferenceOsmTag : NSManagedObject
-
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) OPEManagedOsmTag *tag;
 
 +(OPEManagedReferenceOsmTag *)fetchOrCreateWithName:(NSString *)name key:(NSString *)key value:(NSString *)value;
 

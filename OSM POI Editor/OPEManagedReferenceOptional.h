@@ -1,32 +1,5 @@
-//
-//  OPEManagedReferenceOptional.h
-//  OSM POI Editor
-//
-//  Created by David on 1/21/13.
-//
-//
+#import "_OPEManagedReferenceOptional.h"
 
-#import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
-
-@class OPEManagedReferenceOsmTag;
-
-@interface OPEManagedReferenceOptional : NSManagedObject
-
-@property (nonatomic, retain) NSString * displayName;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSString * section;
-@property (nonatomic, retain) NSNumber * sectionSortOrder;
-@property (nonatomic, retain) NSSet *tags;
-@end
-
-@interface OPEManagedReferenceOptional (CoreDataGeneratedAccessors)
-
-- (void)addTagsObject:(OPEManagedReferenceOsmTag *)value;
-- (void)removeTagsObject:(OPEManagedReferenceOsmTag *)value;
-- (void)addTags:(NSSet *)values;
-- (void)removeTags:(NSSet *)values;
-
+@interface OPEManagedReferenceOptional : _OPEManagedReferenceOptional {}
 + (OPEManagedReferenceOptional *) fetchOrCreateWithName:(NSString *)name didCreate:(BOOL *)didCreate;
-
 @end

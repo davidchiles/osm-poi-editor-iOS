@@ -1,18 +1,15 @@
-//
-//  OPEManagedOsmRelation.m
-//  OSM POI Editor
-//
-//  Created by David on 1/22/13.
-//
-//
-
 #import "OPEManagedOsmRelation.h"
 #import "OpeManagedOsmRelationMember.h"
 
 
-@implementation OPEManagedOsmRelation
+@interface OPEManagedOsmRelation ()
 
-@dynamic members;
+// Private interface goes here.
+
+@end
+
+
+@implementation OPEManagedOsmRelation
 
 -(CLLocationCoordinate2D) center
 {
