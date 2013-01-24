@@ -4,6 +4,7 @@
 #import "_OPEManagedOsmElement.h"
 
 const struct OPEManagedOsmElementAttributes OPEManagedOsmElementAttributes = {
+	.isVisible = @"isVisible",
 	.osmID = @"osmID",
 	.version = @"version",
 };
@@ -43,6 +44,11 @@ const struct OPEManagedOsmElementFetchedProperties OPEManagedOsmElementFetchedPr
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"isVisibleValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isVisible"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"osmIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"osmID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -56,6 +62,32 @@ const struct OPEManagedOsmElementFetchedProperties OPEManagedOsmElementFetchedPr
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic isVisible;
+
+
+
+- (BOOL)isVisibleValue {
+	NSNumber *result = [self isVisible];
+	return [result boolValue];
+}
+
+- (void)setIsVisibleValue:(BOOL)value_ {
+	[self setIsVisible:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsVisibleValue {
+	NSNumber *result = [self primitiveIsVisible];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsVisibleValue:(BOOL)value_ {
+	[self setPrimitiveIsVisible:[NSNumber numberWithBool:value_]];
+}
+
 
 
 

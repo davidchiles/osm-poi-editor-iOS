@@ -32,6 +32,7 @@
 
 #import "OPEManagedOsmElement.h"
 #import "OPEManagedReferencePoi.h"
+#import "OPEMRUtility.h"
 
 
 @implementation OPEViewController
@@ -162,32 +163,12 @@
     
     [self setTileSource:newTileSource at:num];
     
-    
-    
-    //RMSphericalTrapezium geoBox = [mapView latitudeLongitudeBoundingBox];
     currentSquare = [mapView latitudeLongitudeBoundingBox];
     
     osmData = [[OPEOSMData alloc] init];
     
     message = [[OPEMessage alloc] init];
     message.alpha = 0.0;
-    /*
-    dispatch_queue_t q = dispatch_queue_create("queue", NULL);
-    
-        if (mapView.zoom > MINZOOM) {
-            [self removeZoomWarning];
-            dispatch_async(q, ^{
-                [osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
-             });
-        }
-        else {
-            [self showZoomWarning];
-        }
-     */
-        
-   
-    
-    //dispatch_release(q);
     
     imagesDic = [[NSMutableDictionary alloc] init];
 }
@@ -250,30 +231,7 @@
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
     newMarker.userInfo = managedObjectID;
     newMarker.zPosition = 0.2;
-    return newMarker;
-}
-
--(RMMarker *)markerWithNode:(OPEPoint *)node
-{
-    UIImage * icon;   //Get image from stored value in node
-    //UIImage * icon = [UIImage imageNamed:@"restaurant"];
-    //if (node.ident>0 && ![node.image isEqualToString:@"none.png"]) {
-    if(node.ident > 0) {
-        if ([imagesDic objectForKey:node.image]) {
-            icon = [imagesDic objectForKey:node.image];
-        }
-        else {
-            NSString * imageString = node.image;
-            if(![UIImage imageNamed:imageString])
-                imageString = @"none.png";
-            
-            icon = [self imageWithBorderFromImage:[UIImage imageNamed:imageString]]; //center image inside box
-            [imagesDic setObject:icon forKey:node.image];
-        }
-    }
-    RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
-    newMarker.userInfo = node;
-    newMarker.zPosition = 0.2;
+    [managedOsmElement setIsVisibleValue:YES];
     return newMarker;
 }
 
@@ -293,16 +251,10 @@
     RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[managedOsmElement center] andTitle:[managedOsmElement name]];
     annotation.userInfo = [managedOsmElement objectID];
     
-    return annotation;
-}
-
--(RMAnnotation *)annotationWithNode:(OPEPoint *)node
-{
-    RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:node.coordinate andTitle:node.name];
-    annotation.userInfo = node;
     
     return annotation;
 }
+
 
 - (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
@@ -315,21 +267,7 @@
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
 {   
-    OPENode * node = (OPENode *)marker.userInfo;
-    if(node.ident<0)
-    {
-        return YES;
-    }
     return NO;
-}
-
--(void) singleTapOnMap:(RMMapView *)map At:(CGPoint)point
-{
-    if (openMarker) {
-        //[openMarker hideLabel];
-        //openMarker = nil;
-    }
-    
 }
 
 -(void) showZoomWarning
@@ -361,15 +299,6 @@
 	
 	[UIView commitAnimations];
     
-}
-
-- (void) setText: (NSString*) text forMarker: (RMMarker*) marker
-{
-    CGSize textSize = [text sizeWithFont: [RMMarker defaultFont]]; 
-    
-    CGPoint position = CGPointMake(  -(textSize.width/2 - marker.bounds.size.width/2), -textSize.height );
-    
-    [marker changeLabelUsingText: text position: position ];    
 }
 
 -(void)downloadNewArea:(RMMapView *)map
@@ -407,17 +336,15 @@
 
 - (void) addMarkers:(NSNotification*)notification 
 {
-    NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type.@count == 1"];
+    NSInteger count = [mapView.annotations count];
+    NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type.@count == 1 AND isVisible == %@",[NSNumber numberWithBool:NO]];
     NSArray * results = [OPEManagedOsmElement MR_findAllWithPredicate:osmElementFilter];
-    //NSDictionary * newNodes = notification.userInfo;
-    //[mapView removeAllAnnotations];
     
     for(OPEManagedOsmElement * managedOsmElement in results)
     {
-        //OPEPoint * node = [osmData.allNodes objectForKey:key];
-        
         [mapView addAnnotation:[self annotationWithOsmElement:managedOsmElement]];
     }
+    [OPEMRUtility saveAll];
 }
 
 #pragma - LocationManagerDelegate
