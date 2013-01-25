@@ -11,6 +11,7 @@
 #import "CoreData+MagicalRecord.h"
 #import "OPEConstants.h"
 #import "OPEManagedOsmTag.h"
+#import "OPEManagedReferenceOptionalCategory.h"
 
 
 @implementation OPECoreDataImporter
@@ -37,8 +38,21 @@
     NSLog(@"Number of POIs: %u",[[OPEManagedOsmTag MR_findAll] count]);
 }
 
+-(void)importOptionalSection
+{
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"OptionalCategorySort" ofType:@"plist"];
+    NSDictionary* optionalDictionary = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    for (NSString * name in optionalDictionary)
+    {
+        [OPEManagedReferenceOptionalCategory fetchOrCreateWithName:name sortOrder:[[optionalDictionary objectForKey:name] intValue]];
+    }
+    
+    
+}
+
 -(void)importOptionalTags
 {
+    [self importOptionalSection];
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"plist"];
     NSDictionary* optionalDictionary = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
@@ -50,7 +64,8 @@
         
         [self addOptionalWithName:key displayName:optionalTag.displayName section:optionalTag.section sectionSortOrder:optionalTag.sectionSortOrder osmkey:optionalTag.osmKey values:optionalTag.possibleValues];
     }
-    
+    [self addOptionalWithName:@"note" displayName:@"Note" section:@"Note" sectionSortOrder:[NSNumber numberWithInt:1] osmkey:@"note" values:nil];
+    [self addOptionalWithName:@"source" displayName:@"Source" section:@"Note" sectionSortOrder:[NSNumber numberWithInt:2] osmkey:@"source" values:nil];
     
 }
 
@@ -82,12 +97,20 @@
             }
             else
             {
-                BOOL didCreate = NO;
+                didCreate = NO;
                 OPEManagedReferenceOptional * optional = [OPEManagedReferenceOptional fetchOrCreateWithName:optionalString didCreate:&didCreate];
                 if (!didCreate) {
                     [optionalSet addObject:optional];
                 }
             }
+        }
+        OPEManagedReferenceOptional * optionalNote = [OPEManagedReferenceOptional fetchOrCreateWithName:@"note" didCreate:&didCreate];
+        if (!didCreate) {
+            [optionalSet addObject:optionalNote];
+        }
+        OPEManagedReferenceOptional * optionalSource = [OPEManagedReferenceOptional fetchOrCreateWithName:@"source" didCreate:&didCreate];
+        if (!didCreate) {
+            [optionalSet addObject:optionalSource];
         }
         [newPoi setOptional:optionalSet];
         
@@ -112,19 +135,24 @@
 -(OPEManagedReferenceOptional *)addOptionalWithName:(NSString *)name displayName:(NSString *)displayName section:(NSString *)section sectionSortOrder:(NSNumber *)sectionSortOrder osmkey:(NSString *)osmKey values:(NSDictionary *)tagValues
 {
     //OPTIONAL * newOptional = [NSEntityDescription insertNewObjectForEntityForName:OPTIONALEntity inManagedObjectContext:managedObjectContext];
-    
+    NSLog(@"Tag Values: %@",tagValues);
     BOOL didCreate = NO;
     
     OPEManagedReferenceOptional * newOptional = [OPEManagedReferenceOptional fetchOrCreateWithName:name didCreate:&didCreate];
     
     if (didCreate) {
         newOptional.name = name;
-        newOptional.section = section;
+        newOptional.displayName = displayName;
+        [newOptional setReferenceSection:[OPEManagedReferenceOptionalCategory fetchWithName:section]];
         newOptional.sectionSortOrder = sectionSortOrder;
+        newOptional.osmKey = osmKey;
         NSMutableSet * osmTags = [NSMutableSet set];
+        
+        
         
         for(NSString * value in tagValues)
         {
+            
             OPEManagedReferenceOsmTag * tag = [OPEManagedReferenceOsmTag fetchOrCreateWithName:value key:osmKey value:[tagValues objectForKey:value]];
             [osmTags addObject: tag];
         }

@@ -12,5 +12,5 @@
 
 +(void)deleteDownloaded;
 +(void)saveAll;
-
++(NSManagedObject *)managedObjectWithID:(NSManagedObjectID *)managedObjectID;
 @end

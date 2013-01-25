@@ -7,12 +7,13 @@
 extern const struct OPEManagedReferenceOptionalAttributes {
 	__unsafe_unretained NSString *displayName;
 	__unsafe_unretained NSString *name;
-	__unsafe_unretained NSString *section;
+	__unsafe_unretained NSString *osmKey;
 	__unsafe_unretained NSString *sectionSortOrder;
 } OPEManagedReferenceOptionalAttributes;
 
 extern const struct OPEManagedReferenceOptionalRelationships {
 	__unsafe_unretained NSString *referencePois;
+	__unsafe_unretained NSString *referenceSection;
 	__unsafe_unretained NSString *tags;
 } OPEManagedReferenceOptionalRelationships;
 
@@ -20,6 +21,7 @@ extern const struct OPEManagedReferenceOptionalFetchedProperties {
 } OPEManagedReferenceOptionalFetchedProperties;
 
 @class OPEManagedReferencePoi;
+@class OPEManagedReferenceOptionalCategory;
 @class OPEManagedReferenceOsmTag;
 
 
@@ -60,11 +62,11 @@ extern const struct OPEManagedReferenceOptionalFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* section;
+@property (nonatomic, strong) NSString* osmKey;
 
 
 
-//- (BOOL)validateSection:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateOsmKey:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -87,6 +89,13 @@ extern const struct OPEManagedReferenceOptionalFetchedProperties {
 @property (nonatomic, strong) NSSet *referencePois;
 
 - (NSMutableSet*)referencePoisSet;
+
+
+
+
+@property (nonatomic, strong) OPEManagedReferenceOptionalCategory *referenceSection;
+
+//- (BOOL)validateReferenceSection:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -130,8 +139,8 @@ extern const struct OPEManagedReferenceOptionalFetchedProperties {
 
 
 
-- (NSString*)primitiveSection;
-- (void)setPrimitiveSection:(NSString*)value;
+- (NSString*)primitiveOsmKey;
+- (void)setPrimitiveOsmKey:(NSString*)value;
 
 
 
@@ -148,6 +157,11 @@ extern const struct OPEManagedReferenceOptionalFetchedProperties {
 
 - (NSMutableSet*)primitiveReferencePois;
 - (void)setPrimitiveReferencePois:(NSMutableSet*)value;
+
+
+
+- (OPEManagedReferenceOptionalCategory*)primitiveReferenceSection;
+- (void)setPrimitiveReferenceSection:(OPEManagedReferenceOptionalCategory*)value;
 
 
 

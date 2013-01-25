@@ -1,4 +1,5 @@
 #import "OPEManagedReferenceOptional.h"
+#import "OPEManagedReferenceOsmTag.h"
 
 
 @interface OPEManagedReferenceOptional ()
@@ -9,6 +10,31 @@
 
 
 @implementation OPEManagedReferenceOptional
+
+
+-(NSString *)displayNameForKey:(NSString *)osmKey withValue:(NSString *)osmValue
+{
+    NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"tag.key == %@ AND tag.value == %@",osmKey,osmValue];
+    NSSet * filteredSet = [self.tags filteredSetUsingPredicate:tagFilter];
+    
+    if ([filteredSet count]) {
+        OPEManagedReferenceOsmTag * managedReferenceOsmTag =  [filteredSet anyObject];
+        return managedReferenceOsmTag.name;
+    }
+    return osmValue;
+    
+}
+
+-(NSArray *)allDisplayNames
+{
+    NSMutableArray * finalArray = [NSMutableArray array];
+    for(OPEManagedReferenceOsmTag * managedReferecneOsmTag in self.tags)
+    {
+        [finalArray addObject:managedReferecneOsmTag.name];
+    }
+    return finalArray;
+    
+}
 
 +(OPEManagedReferenceOptional *)fetchOrCreateWithName:(NSString *)name didCreate:(BOOL *)didCreate
 {

@@ -30,6 +30,7 @@
 #import "OPEPoint.h"
 #import "OPEType.h"
 #import "RMAnnotation.h"
+#import "OPEManagedOsmElement.h"
 
 @protocol OPENodeViewDelegate
 @optional
@@ -57,7 +58,11 @@
 @property (nonatomic) BOOL nodeIsEdited;
 @property (nonatomic, strong) MBProgressHUD * HUD;
 @property (nonatomic, strong) NSMutableArray * tableSections;
-@property (nonatomic,strong) RMAnnotation * originalAnnotation;
+@property (nonatomic, strong) RMAnnotation * originalAnnotation;
+@property (nonatomic, strong) OPEManagedOsmElement * managedOsmElement;
+@property (nonatomic, strong) NSMutableSet * editableTags;
+@property (nonatomic) BOOL newElement;
+@property (nonatomic, strong) NSArray * optionalSectionsArray;
 
 - (id)initWithAnnotation:(RMAnnotation *)annotation delegate:(id<OPENodeViewDelegate>)delegate;
 

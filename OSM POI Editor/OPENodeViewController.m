@@ -31,6 +31,12 @@
 #import "OPEAPIConstants.h"
 #import "OPESpecialCell2.h"
 #import "OPEWay.h"
+#import "OPEMRUtility.h"
+#import "OPEManagedReferenceOptional.h"
+#import "OPEManagedReferencePoi.h"
+#import "OPEManagedReferenceOptional.h"
+#import "OPEManagedOsmTag.h"
+#import "OPEManagedReferenceOptionalCategory.h"
 
 
 
@@ -45,6 +51,10 @@
 @synthesize tableSections;
 @synthesize nodeType;
 @synthesize originalAnnotation;
+@synthesize managedOsmElement;
+@synthesize editableTags;
+@synthesize newElement;
+@synthesize optionalSectionsArray;
 
 -(id)init
 {
@@ -62,8 +72,12 @@
     {
         self.delegate = newDelegate;
         self.originalAnnotation = annotation;
-        self.point = annotation.userInfo;
         
+        if (annotation.userInfo) {
+            NSManagedObjectID * managedObjectID = (NSManagedObjectID *)annotation.userInfo;
+            self.managedOsmElement = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:managedObjectID];
+            self.editableTags = [managedOsmElement.tags mutableCopy];
+        }
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
         
@@ -99,7 +113,7 @@
     nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     
-    if (point.ident>0) {
+    if (!newElement) {
         deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
         [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
@@ -133,15 +147,6 @@
     
     [self.view addSubview:nodeInfoTableView];
     
-    tagInterpreter = [OPETagInterpreter sharedInstance];
-    
-    theNewPoint = [point copy];
-    
-    NSLog(@"Tags: %@",theNewPoint.tags);
-    //NSLog(@"new Category and Type: %@",[tagInterpreter getCategoryandType:theNewPoint]);
-    nodeType = [tagInterpreter type:theNewPoint];
-    //osmKeyValue =  [[NSDictionary alloc] initWithDictionary: [tagInterpreter getPrimaryKeyValue:theNewPoint]];
-    
     self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     self.HUD.delegate = self;
     
@@ -155,6 +160,8 @@
 }
 -(void) reloadTags
 {
+    self.optionalSectionsArray = [self.managedOsmElement.type optionalDisplayNames];
+    
     NSDictionary * nameSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Name",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:KTypeName,@"values",@"name",@"osmKey",@"Name",@"name", nil]],@"rows", nil];
     tableSections = [NSMutableArray arrayWithObject:nameSection];
     
@@ -232,16 +239,41 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return [tableSections count];
+    return [self.managedOsmElement.type numberOfOptionalSections] + 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [[[tableSections objectAtIndex:section] objectForKey:@"rows"] count];
+    
+    if(section == 0)
+    {
+       return 1;
+    }
+    else if(section == 1)
+    {
+        return 2;
+    }
+    else
+    {
+        return [[optionalSectionsArray objectAtIndex:(section - 2)] count];
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return [[tableSections objectAtIndex:section] objectForKey:@"section"];
+	if(section == 0)
+    {
+        return @"Name";
+    }
+    else if(section == 1)
+    {
+        return @"Category";
+    }
+    else
+    {
+        NSInteger index = section-2;
+        OPEManagedReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
+        return tempOptional.referenceSection.displayName;
+    }
 }
 
 // Customize the appearance of table view cells.
@@ -254,11 +286,98 @@
     NSString *CellIdentifierSpecialBinary = @"Cell_Section_5";
     NSString *CellIdentifierSpecial2 = @"Cell_Section_6";
     
-    NSArray * catAndTypeName = [[NSArray alloc] initWithObjects:@"Category",@"Type", nil];
-    
-    NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
-    
     UITableViewCell *cell;
+    
+    
+    ///ALWAYS NAME CELL
+    if (indexPath.section == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
+        }
+        NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"key == %@",@"name"];
+        NSSet * filteredSet = [self.editableTags filteredSetUsingPredicate:tagFilter];
+        NSString * displayValueForOptional = @"";
+        if ([filteredSet count]) {
+            OPEManagedOsmTag * elementTag = [filteredSet anyObject];
+            displayValueForOptional = elementTag.value;
+        }
+        
+        cell.textLabel.text = displayValueForOptional;
+        cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
+    }
+    ///ALWAYS CATEGORY AND TYPE
+    else if(indexPath.section == 1)
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
+        }
+        //cell.textLabel.text = [catAndTypeName objectAtIndex:indexPath.row];
+        cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"Category";
+            cell.detailTextLabel.text = self.managedOsmElement.type.category;
+        }
+        else{
+            cell.textLabel.text = @"Type";
+            cell.detailTextLabel.text = self.managedOsmElement.type.name;
+        }
+        return cell;
+    }
+    else if(indexPath.section>1 && indexPath.section<[self.optionalSectionsArray count]+2)
+    {
+        OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
+        
+        NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"key == %@",managedOptionalTag.osmKey];
+        NSSet * filteredSet = [self.editableTags filteredSetUsingPredicate:tagFilter];
+        NSString * valueForOptional = @"";
+        NSString * displayValueForOptional = @"";
+        if ([filteredSet count]) {
+            OPEManagedOsmTag * elementTag = [filteredSet anyObject];
+            valueForOptional = elementTag.value;
+            displayValueForOptional = [managedOptionalTag displayNameForKey:managedOptionalTag.osmKey withValue:valueForOptional];
+        }
+        
+        
+        if ([managedOptionalTag.tags count]>3 || ![managedOptionalTag.tags count]) {
+            OPESpecialCell2 * specialCell;
+            specialCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
+            if (specialCell == nil) {
+                specialCell = [[OPESpecialCell2 alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecial2 withTextWidth:optionalTagWidth];
+            }
+            specialCell.leftText = managedOptionalTag.displayName;
+            specialCell.rightText = displayValueForOptional;
+            return specialCell;
+        }
+        else if([managedOptionalTag.tags count] > 0)
+        {
+            OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
+            if (aCell == nil) {
+                aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[managedOptionalTag allDisplayNames] withTextWidth:optionalTagWidth];
+                
+            }
+            [aCell setLeftText: managedOptionalTag.displayName];
+            //aCell.controlArray = [[cellDictionary objectForKey:@"values"] allKeys];
+            
+            [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
+            aCell.tag = indexPath.section;
+            aCell.binaryControl.tag = indexPath.row;
+            if (![valueForOptional isEqualToString:displayValueForOptional] && [valueForOptional length]) {
+                [aCell selectSegmentWithTitle:displayValueForOptional];
+            }
+            else {
+                aCell.binaryControl.selectedSegmentIndex = UISegmentedControlNoSegment;
+            }
+            return aCell;
+            
+        }
+        
+        
+    }
+    
+    /*
     if([[cellDictionary objectForKey:@"values"] isKindOfClass:[NSDictionary class]])
     {
         if ([[cellDictionary objectForKey:@"values"]  count] <= 3)
@@ -361,6 +480,7 @@
                      [aCell.binaryControl setSelectedSegmentIndex:1];
                 }
                  */
+    /*
             }
             else {
                 [aCell.binaryControl setSelectedSegmentIndex:UISegmentedControlNoSegment];
@@ -385,6 +505,7 @@
             //[cell.contentView addSubview:deleteButton];
         }
     }
+    */
 
     return cell;
 }
@@ -481,14 +602,9 @@
 }
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-     NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
-    if ([[cellDictionary objectForKey:@"values"] isKindOfClass:[NSString class]]) {
-        if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"category"]) {
-            return NO;
-        }
+    if (indexPath.section == 1) {
+        return NO;
     }
-    //NSString * cellText = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
-  
     return YES;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath

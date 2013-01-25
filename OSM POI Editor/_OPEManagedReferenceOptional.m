@@ -6,12 +6,13 @@
 const struct OPEManagedReferenceOptionalAttributes OPEManagedReferenceOptionalAttributes = {
 	.displayName = @"displayName",
 	.name = @"name",
-	.section = @"section",
+	.osmKey = @"osmKey",
 	.sectionSortOrder = @"sectionSortOrder",
 };
 
 const struct OPEManagedReferenceOptionalRelationships OPEManagedReferenceOptionalRelationships = {
 	.referencePois = @"referencePois",
+	.referenceSection = @"referenceSection",
 	.tags = @"tags",
 };
 
@@ -70,7 +71,7 @@ const struct OPEManagedReferenceOptionalFetchedProperties OPEManagedReferenceOpt
 
 
 
-@dynamic section;
+@dynamic osmKey;
 
 
 
@@ -114,6 +115,10 @@ const struct OPEManagedReferenceOptionalFetchedProperties OPEManagedReferenceOpt
 	[self didAccessValueForKey:@"referencePois"];
 	return result;
 }
+	
+
+@dynamic referenceSection;
+
 	
 
 @dynamic tags;

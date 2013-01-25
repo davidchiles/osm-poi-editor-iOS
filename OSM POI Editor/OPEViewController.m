@@ -208,12 +208,7 @@
 
 -(RMMarker *)markerWithManagedObjectID:(NSManagedObjectID *)managedObjectID
 {
-    NSError * error = nil;
-    OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)[[NSManagedObjectContext MR_contextForCurrentThread] existingObjectWithID:managedObjectID error:&error];
-    if (error) {
-        NSLog(@"Error: %@",error);
-    }
-    
+    OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:managedObjectID];
     UIImage * icon;
     if (managedOsmElement.type) {
         if ([imagesDic objectForKey:managedOsmElement.type.imageString]) {

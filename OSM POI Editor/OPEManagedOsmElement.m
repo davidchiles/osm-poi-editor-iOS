@@ -18,13 +18,22 @@
     return CLLocationCoordinate2DMake(0, 0);
 }
 
--(NSString *)name
+-(NSString *)valueForOsmKey:(NSString *)osmKey
 {
-    NSPredicate * nameFilter = [NSPredicate predicateWithFormat:@"key == 'name'"];
-    NSSet * filteredSet = [self.tags filteredSetUsingPredicate:nameFilter];
+    NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"key == %@",osmKey];
+    NSSet * filteredSet = [self.tags filteredSetUsingPredicate:tagFilter];
     if ([filteredSet count]) {
         OPEManagedOsmTag * tag = [filteredSet anyObject];
         return tag.value;
+    }
+    return @"";
+}
+
+-(NSString *)name
+{
+    NSString * possibleName = [self valueForOsmKey:@"name"];
+    if ([possibleName length]) {
+        return possibleName;
     }
     else if (self.type)
     {
