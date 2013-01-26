@@ -63,6 +63,8 @@
     self = [super init];
     if(self){
         self.title = @"Node Info";
+        self.editableType = nil;
+        self.editableTags = [NSMutableSet set];
     }
     return self;
 }
@@ -74,7 +76,7 @@
     {
         self.delegate = newDelegate;
         self.originalAnnotation = annotation;
-        self.editableType = nil;
+        
         
         if (annotation.userInfo) {
             NSManagedObjectID * managedObjectID = (NSManagedObjectID *)annotation.userInfo;
@@ -166,77 +168,24 @@
 }
 -(void) reloadTags
 {
-    self.optionalSectionsArray = [self.managedOsmElement.type optionalDisplayNames];
+    self.optionalSectionsArray = [editableType optionalDisplayNames];
     
-    NSDictionary * nameSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Name",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:KTypeName,@"values",@"name",@"osmKey",@"Name",@"name", nil]],@"rows", nil];
-    tableSections = [NSMutableArray arrayWithObject:nameSection];
-    
-    NSArray * ct = [NSArray arrayWithObjects:[NSDictionary dictionaryWithObjectsAndKeys:@"category",@"values", nil],[NSDictionary dictionaryWithObjectsAndKeys:@"category",@"values", nil], nil];
-    NSDictionary * categorySection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Category",@"section",ct,@"rows", nil];
-    [tableSections addObject:categorySection];
-    
-    //add optional
-    [self addOptionalTags];
-    
-    NSDictionary * noteSection = [[NSDictionary alloc] initWithObjectsAndKeys:@"Note",@"section",[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:@"text",@"values",@"note",@"osmKey",@"Note",@"name", nil]],@"rows", nil];
-    [tableSections addObject: noteSection];
-    
-    
-    //NSLog(@"Table sections: %@",tableSections);
+    optionalTagWidth = [self getWidth];
     
 }
 
--(void) addOptionalTags
-{
-    if (nodeType) {
-        NSArray * optionalTags = [OPETagInterpreter getOptionalTagsDictionaries:nodeType.optionalTags];
-        
-        NSMutableArray * tempArray = [[NSMutableArray alloc] init];
-        
-        NSMutableDictionary * sectionDictionary = [[NSMutableDictionary alloc] init];
-        for(NSDictionary * tagDictionary in optionalTags)
-        {
-            
-            if (!([[tagDictionary objectForKey:@"section"] isEqualToString:[sectionDictionary objectForKey:@"section"]])) {
-                if ([sectionDictionary objectForKey:@"section"]) {
-                    [sectionDictionary setObject:tempArray forKey:@"rows"];
-                    [tableSections addObject:sectionDictionary];
-                    sectionDictionary = [[NSMutableDictionary alloc] init];
-                    tempArray = [[NSMutableArray alloc] init];
-                }
-                [sectionDictionary setObject:[tagDictionary objectForKey:@"section"] forKey:@"section"];
-                if ([tagDictionary objectForKey:@"section_order"]) {
-                     [sectionDictionary setObject:[tagDictionary objectForKey:@"section_order"] forKey:@"section_order"];
-                }
-                [tempArray addObject:tagDictionary];
-            }
-            else {
-                [tempArray addObject:tagDictionary];
-            }
-            
-        }
-        NSSortDescriptor *sortByNumber = [NSSortDescriptor sortDescriptorWithKey:@"section_order" ascending:YES];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByNumber];
-        NSArray *sortedArray = [tempArray sortedArrayUsingDescriptors:sortDescriptors];
-        [sectionDictionary setObject:sortedArray forKey:@"rows"];
-        [tableSections addObject:sectionDictionary];
-
-        
-        NSLog(@"Optional tags: %@",optionalTags);
-        
-        optionalTagWidth = [self getWidth:optionalTags];
-    }
-}
-
--(float)getWidth:(NSArray *)optionalTags
+-(float)getWidth;
 {
     float maxWidth = 0.0;
     
-    for(NSDictionary * keyDictionary in optionalTags)
+    for(NSArray * optionalArray in self.optionalSectionsArray)
     {
-        NSString * name = [keyDictionary objectForKey:@"name"];
-        float currentWidth = [name sizeWithFont:[UIFont boldSystemFontOfSize:12.0]].width;
-        maxWidth = MAX(maxWidth, currentWidth);
+        for(OPEManagedReferenceOptional * optional in optionalArray)
+        {
+            NSString * name = optional.displayName;
+            float currentWidth = [name sizeWithFont:[UIFont boldSystemFontOfSize:12.0]].width;
+            maxWidth = MAX(maxWidth, currentWidth);
+        }
         
     }
     return maxWidth;
@@ -245,7 +194,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return [self.managedOsmElement.type numberOfOptionalSections] + 2;
+    return [editableType numberOfOptionalSections] + 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -759,50 +708,20 @@
     return NO;
 }
 
-- (void) setNewType:(OPEType *)newType
+-(void)newType:(OPEManagedReferencePoi *)newType;
 {
-    
-    if (nodeType) {
-        if (![nodeType isEqual:newType]) {
-            [tagInterpreter removeTagsForType:nodeType withNode:theNewPoint];
-            
-        }
-    }
-    
-    
-    
-
-    nodeType = newType;
-    NSArray * oldTableSections = [tableSections copy];
-    [self reloadTags];
-    [self removeOptionalTags:oldTableSections];
-    
-    NSLog(@"catAndType: %@",newType.description);
-    //NSLog(@"KV: %@",osmKeyValue);
-    
-    
-    NSLog(@"ID: %d",theNewPoint.ident);
-    NSLog(@"Version: %d",theNewPoint.version);
-    NSLog(@"Lat: %f",theNewPoint.coordinate.latitude);
-    NSLog(@"Lon: %f",theNewPoint.coordinate.longitude);
-    NSLog(@"Tags: %@",theNewPoint.tags);
-    
-    [self.theNewPoint.tags addEntriesFromDictionary:newType.tags];
-    
-    //NSLog(@"id: %@ \n version: %@ \n lat: %f \n lon: %f \n newTags: %@ \n ",theNewPoint.ident,theNewPoint.version,theNewPoint.coordinate.latitude,theNewPoint.coordinate.longitude,theNewPoint.tags);
-    NSLog(@"ID: %d",theNewPoint.ident);
-    NSLog(@"Version: %d",theNewPoint.version);
-    NSLog(@"Lat: %f",theNewPoint.coordinate.latitude);
-    NSLog(@"Lon: %f",theNewPoint.coordinate.longitude);
-    NSLog(@"Tags: %@",theNewPoint.tags);
-    theNewPoint.image = [tagInterpreter getImageForNode:theNewPoint];
-    
-    //catAndType = [[NSArray alloc] initWithObjects: newCategory ,newType, nil];
-    //[self.tableView reloadData];
-    
-    [nodeInfoTableView reloadData];
+    [editableTags minusSet:editableType.tags];
+    [editableTags unionSet:newType.tags];
+    editableType = newType;
 }
 
+-(void)setNewType:(NSManagedObjectID *)managedReferencePoiID
+{
+    [self newType:(OPEManagedReferencePoi *)[OPEMRUtility managedObjectWithID:managedReferencePoiID]];
+    
+    [self reloadTags];
+    [nodeInfoTableView reloadData];
+}
 
 
 - (void)checkSaveButton

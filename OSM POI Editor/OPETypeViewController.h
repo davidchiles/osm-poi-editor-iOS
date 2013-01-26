@@ -27,7 +27,7 @@
 
 @protocol PassCategoryAndType <NSObject>
 @required
-- (void) setNewType:(OPEType *)type;
+- (void) setNewType:(NSManagedObjectID *)managedReferencePoiID;
 @end
 
 @interface OPETypeViewController : UITableViewController

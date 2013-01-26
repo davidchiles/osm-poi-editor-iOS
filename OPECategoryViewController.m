@@ -98,7 +98,7 @@
             {
                 NSLog(@"Match: %d",[currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location);
                 NSNumber * location = [NSNumber numberWithInteger: [currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location];
-                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",currentString,@"type",location,@"location", nil];
+                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",[currentPoi objectID],@"objectID",location,@"location", nil];
                 [searchResults addObject:match];
                 
             }
@@ -200,7 +200,7 @@
      */
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
      if (tableView == [[self searchDisplayController] searchResultsTableView]) {
-         [[self delegate] setNewType: [[searchResults objectAtIndex:indexPath.row] objectForKey:@"type"]];
+         [[self delegate] setNewType: [[searchResults objectAtIndex:indexPath.row] objectForKey:@"objectID"]];
          [self.navigationController popViewControllerAnimated:YES];
      }
      else {
