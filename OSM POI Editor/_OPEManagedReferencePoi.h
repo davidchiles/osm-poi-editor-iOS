@@ -6,13 +6,13 @@
 
 extern const struct OPEManagedReferencePoiAttributes {
 	__unsafe_unretained NSString *canAdd;
-	__unsafe_unretained NSString *category;
 	__unsafe_unretained NSString *imageString;
 	__unsafe_unretained NSString *isLegacy;
 	__unsafe_unretained NSString *name;
 } OPEManagedReferencePoiAttributes;
 
 extern const struct OPEManagedReferencePoiRelationships {
+	__unsafe_unretained NSString *category;
 	__unsafe_unretained NSString *newTagMethod;
 	__unsafe_unretained NSString *oldTagMethods;
 	__unsafe_unretained NSString *optional;
@@ -23,12 +23,12 @@ extern const struct OPEManagedReferencePoiRelationships {
 extern const struct OPEManagedReferencePoiFetchedProperties {
 } OPEManagedReferencePoiFetchedProperties;
 
+@class OPEManagedReferencePoiCategory;
 @class OPEManagedReferencePoi;
 @class OPEManagedReferencePoi;
 @class OPEManagedReferenceOptional;
 @class OPEManagedOsmElement;
 @class OPEManagedOsmTag;
-
 
 
 
@@ -57,16 +57,6 @@ extern const struct OPEManagedReferencePoiFetchedProperties {
 - (void)setCanAddValue:(BOOL)value_;
 
 //- (BOOL)validateCanAdd:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSString* category;
-
-
-
-//- (BOOL)validateCategory:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -102,6 +92,13 @@ extern const struct OPEManagedReferencePoiFetchedProperties {
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
+
+
+
+
+@property (nonatomic, strong) OPEManagedReferencePoiCategory *category;
+
+//- (BOOL)validateCategory:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -180,12 +177,6 @@ extern const struct OPEManagedReferencePoiFetchedProperties {
 
 
 
-- (NSString*)primitiveCategory;
-- (void)setPrimitiveCategory:(NSString*)value;
-
-
-
-
 - (NSString*)primitiveImageString;
 - (void)setPrimitiveImageString:(NSString*)value;
 
@@ -205,6 +196,11 @@ extern const struct OPEManagedReferencePoiFetchedProperties {
 - (void)setPrimitiveName:(NSString*)value;
 
 
+
+
+
+- (OPEManagedReferencePoiCategory*)primitiveCategory;
+- (void)setPrimitiveCategory:(OPEManagedReferencePoiCategory*)value;
 
 
 

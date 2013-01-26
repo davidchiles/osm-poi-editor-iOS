@@ -61,6 +61,7 @@
 @property (nonatomic, strong) RMAnnotation * originalAnnotation;
 @property (nonatomic, strong) OPEManagedOsmElement * managedOsmElement;
 @property (nonatomic, strong) NSMutableSet * editableTags;
+@property (nonatomic, strong) OPEManagedReferencePoi * editableType;
 @property (nonatomic) BOOL newElement;
 @property (nonatomic, strong) NSArray * optionalSectionsArray;
 

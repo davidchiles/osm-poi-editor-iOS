@@ -22,11 +22,13 @@
 
 #import "OPECategoryViewController.h"
 #import "OPETagInterpreter.h"
+#import "OPEManagedReferenceOptionalCategory.h"
+#import "OPEManagedReferencePoi.h"
 
 @implementation OPECategoryViewController
 
 @synthesize mainTableView,searchBar,searchDisplayController;
-@synthesize categoriesArray,typesDictionary,searchResults;
+@synthesize categoriesArray,typesArray,searchResults;
 @synthesize delegate;
 
 - (void)didReceiveMemoryWarning
@@ -43,22 +45,9 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    categoriesArray = [OPEManagedReferencePoiCategory allSortedCategories];
     
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    OPETagInterpreter * tagInterpreter = [OPETagInterpreter sharedInstance];
-    //categoriesAndTypes = tagInterpreter.categoryAndType;
-    categoriesArray = [[tagInterpreter allCategories] allValues];
-    
-    categoriesArray = [[[tagInterpreter allCategories] allValues] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSString *first = [(OPECategory*)a name];
-        NSString *second = [(OPECategory*)b name];
-        return [first compare:second];
-    }];
-    typesDictionary = [tagInterpreter allTypes];
+    typesArray = [OPEManagedReferencePoi allTypes];
     //NSLog(@"Types: %@",types);
     
 }
@@ -101,14 +90,15 @@
     searchResults = [[NSMutableArray alloc] init];
     if ([searchTerm length] != 0)
     {
-        for (NSString * currentString in typesDictionary)
+        for (OPEManagedReferencePoi * currentPoi in typesArray)
         {
             //NSLog(@"CurrentString: %@",currentString);
+            NSString * currentString = currentPoi.name;
             if ([currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location != NSNotFound)
             {
                 NSLog(@"Match: %d",[currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location);
                 NSNumber * location = [NSNumber numberWithInteger: [currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location];
-                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",[typesDictionary objectForKey:currentString],@"type",location,@"location", nil];
+                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",currentString,@"type",location,@"location", nil];
                 [searchResults addObject:match];
                 
             }
@@ -216,7 +206,8 @@
      else {
          OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:nil];
          viewer.title = @"Type";
-         viewer.category = [categoriesArray objectAtIndex:indexPath.row];
+         //viewer.category = [categoriesArray objectAtIndex:indexPath.row];
+         viewer.categoryManagedObjectID = [[categoriesArray objectAtIndex:indexPath.row] objectID];
          [viewer setDelegate: [[[self navigationController] viewControllers] objectAtIndex:1]];
          [self.navigationController pushViewController:viewer animated:YES];
      }

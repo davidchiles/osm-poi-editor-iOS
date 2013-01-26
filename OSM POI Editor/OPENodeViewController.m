@@ -37,6 +37,7 @@
 #import "OPEManagedReferenceOptional.h"
 #import "OPEManagedOsmTag.h"
 #import "OPEManagedReferenceOptionalCategory.h"
+#import "OPEManagedReferencePoiCategory.h"
 
 
 
@@ -55,6 +56,7 @@
 @synthesize editableTags;
 @synthesize newElement;
 @synthesize optionalSectionsArray;
+@synthesize editableType;
 
 -(id)init
 {
@@ -72,11 +74,15 @@
     {
         self.delegate = newDelegate;
         self.originalAnnotation = annotation;
+        self.editableType = nil;
         
         if (annotation.userInfo) {
             NSManagedObjectID * managedObjectID = (NSManagedObjectID *)annotation.userInfo;
             self.managedOsmElement = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:managedObjectID];
             self.editableTags = [managedOsmElement.tags mutableCopy];
+            if (managedOsmElement.type) {
+                editableType = managedOsmElement.type;
+            }
         }
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
@@ -281,8 +287,6 @@
     
     NSString *CellIdentifierText = @"Cell_Section_1";
     NSString *CellIdentifierCategory = @"Cell_Section_2";
-    NSString *CellIdentifierDelete = @"Cell_Section_3";
-    NSString *CellIdentifierBinary = @"Cell_Section_4";
     NSString *CellIdentifierSpecialBinary = @"Cell_Section_5";
     NSString *CellIdentifierSpecial2 = @"Cell_Section_6";
     
@@ -318,14 +322,15 @@
         cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         if (indexPath.row == 0) {
             cell.textLabel.text = @"Category";
-            cell.detailTextLabel.text = self.managedOsmElement.type.category;
+            cell.detailTextLabel.text = self.editableType.category.name;
         }
         else{
             cell.textLabel.text = @"Type";
-            cell.detailTextLabel.text = self.managedOsmElement.type.name;
+            cell.detailTextLabel.text = self.editableType.name;
         }
         return cell;
     }
+    //OPTIONAL TAGS
     else if(indexPath.section>1 && indexPath.section<[self.optionalSectionsArray count]+2)
     {
         OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
@@ -340,7 +345,7 @@
             displayValueForOptional = [managedOptionalTag displayNameForKey:managedOptionalTag.osmKey withValue:valueForOptional];
         }
         
-        
+        //more than 3 tags just show value not switch or Address
         if ([managedOptionalTag.tags count]>3 || ![managedOptionalTag.tags count]) {
             OPESpecialCell2 * specialCell;
             specialCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
@@ -351,6 +356,7 @@
             specialCell.rightText = displayValueForOptional;
             return specialCell;
         }
+        //Show switch
         else if([managedOptionalTag.tags count] > 0)
         {
             OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
@@ -376,136 +382,6 @@
         
         
     }
-    
-    /*
-    if([[cellDictionary objectForKey:@"values"] isKindOfClass:[NSDictionary class]])
-    {
-        if ([[cellDictionary objectForKey:@"values"]  count] <= 3)
-        {
-            OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
-            if (aCell == nil) {
-                aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[[cellDictionary objectForKey:@"values"] allKeys] withTextWidth:optionalTagWidth];
-                
-            }
-            [aCell setLeftText: [cellDictionary objectForKey:@"name"]];
-            //aCell.controlArray = [[cellDictionary objectForKey:@"values"] allKeys];
-            
-            [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
-            aCell.tag = indexPath.section;
-            aCell.binaryControl.tag = indexPath.row;
-            if ([theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
-                //[aCell selectSegmentWithTitle:[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]objectAtIndex:0]];
-                NSString * title = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
-                [aCell selectSegmentWithTitle:title];
-            }
-            else {
-                aCell.binaryControl.selectedSegmentIndex = UISegmentedControlNoSegment;
-            }
-            return aCell;
-        }
-        else {
-            OPESpecialCell2 * specialCell;
-            specialCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
-            if (specialCell == nil) {
-                specialCell = [[OPESpecialCell2 alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecial2 withTextWidth:optionalTagWidth];
-            }
-            if ([[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] count]) {
-                specialCell.rightText = [[[cellDictionary objectForKey:@"values"] allKeysForObject:[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]] objectAtIndex:0];
-            }
-            else {
-                specialCell.rightText = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
-            }
-            
-            specialCell.leftText = [cellDictionary objectForKey:@"name"];
-            
-            return specialCell;
-        }
-        
-        
-    }
-    else {
-        if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:KTypeName]) { //Text editing
-            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
-            }
-            cell.textLabel.text = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
-            cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
-        }
-        else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"category"]) { //special category
-            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
-            }
-            cell.textLabel.text = [catAndTypeName objectAtIndex:indexPath.row];
-            cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
-            if (nodeType) {
-                if (indexPath.row == 0)
-                    cell.detailTextLabel.text = nodeType.categoryName;
-                else
-                    cell.detailTextLabel.text = nodeType.displayName;
-            }
-            else
-            {
-                cell.detailTextLabel.text =@"";
-            }
-        }
-        else if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] ||[[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone])
-        {
-            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierCategory];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierCategory];
-            }
-            cell.detailTextLabel.text = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
-            cell.textLabel.text = [cellDictionary objectForKey:@"name"];
-            
-            cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
-        }
-        else if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeBinary])
-        {
-            OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierBinary];
-            if (aCell == nil) {
-                aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierBinary];
-            }
-            [aCell setLeftText: [cellDictionary objectForKey:@"name"]];
-            if ([theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]]) {
-                
-                [aCell selectSegmentWithTitle:[cellDictionary objectForKey:@"osmKey"]];
-                /*
-                if ([[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"yes"]) {
-                     [aCell.binaryControl setSelectedSegmentIndex:0];
-                }
-                else if([[theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]] isEqualToString:@"no"])
-                {
-                     [aCell.binaryControl setSelectedSegmentIndex:1];
-                }
-                 */
-    /*
-            }
-            else {
-                [aCell.binaryControl setSelectedSegmentIndex:UISegmentedControlNoSegment];
-            }
-            [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
-            aCell.tag = indexPath.section;
-            aCell.binaryControl.tag = indexPath.row;
-            return aCell;
-        }
-        else if ([[cellDictionary objectForKey:@"values"] isEqualToString:@"deleteButton"])
-        {
-            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierDelete];
-            if(cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierDelete];
-            }
-            
-            //deleteButton.frame = cell.contentView.bounds;
-            NSLog(@"bounds: %f",cell.contentView.bounds.size.width);
-            NSLog(@"button: %f",deleteButton.frame.size.width);
-            //deleteButton.frame = CGRectMake(deleteButton.frame.origin.x, deleteButton.frame.origin.y, 300.0f, deleteButton.frame.size.height);
-            
-            //[cell.contentView addSubview:deleteButton];
-        }
-    }
-    */
 
     return cell;
 }
@@ -536,6 +412,40 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Name Selected
+    if(indexPath.section == 0)
+    {
+        
+    }
+    else if(indexPath.section ==1)
+    {
+        if(indexPath.row == 1)
+        {
+            if (editableType)
+            {
+                OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:[NSBundle mainBundle]];
+                viewer.title = @"Type";
+                
+                //viewer.category = editableType.category;
+                viewer.categoryManagedObjectID = [editableType.category objectID];
+                [viewer setDelegate:self];
+                
+                [self.navigationController pushViewController:viewer animated:YES];
+            }
+        }
+        else
+        {
+            OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
+            viewer.title = @"Category";
+            [viewer setDelegate:self];
+            
+            [self.navigationController pushViewController:viewer animated:YES];
+        }
+    }
+    else
+    {
+        
+    }
     
     NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
     if ([[tableView cellForRowAtIndexPath:indexPath] isKindOfClass:[OPEBinaryCell class]])
@@ -574,9 +484,9 @@
                     OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:[NSBundle mainBundle]];
                     viewer.title = @"Type";
                     
-                    viewer.category = [tagInterpreter.nameAndCategory objectForKey:nodeType.categoryName];
+                    //viewer.category = [tagInterpreter.nameAndCategory objectForKey:nodeType.categoryName];
                     [viewer setDelegate:self];
-                    NSLog(@"category previous: %@",viewer.category);
+                    //NSLog(@"category previous: %@",viewer.category);
                     
                     [self.navigationController pushViewController:viewer animated:YES];
                 }

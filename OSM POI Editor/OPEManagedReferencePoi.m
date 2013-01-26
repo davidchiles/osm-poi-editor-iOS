@@ -1,5 +1,6 @@
 #import "OPEManagedReferencePoi.h"
 #import "OPEManagedReferenceOptionalCategory.h"
+#import "OPEManagedReferencePoiCategory.h"
 
 
 @interface OPEManagedReferencePoi ()
@@ -47,7 +48,12 @@
     return displayNameArray;
 }
 
-+(OPEManagedReferencePoi *) fetchOrCreateWithName:(NSString *)name category:(NSString *)category didCreate:(BOOL *)didCreate
++(NSArray *) allTypes
+{
+    return [OPEManagedReferencePoi MR_findAllSortedBy:@"name" ascending:YES];
+}
+
++(OPEManagedReferencePoi *) fetchOrCreateWithName:(NSString *)name category:(OPEManagedReferencePoiCategory *)category didCreate:(BOOL *)didCreate
 {
     NSPredicate *osmPoiFilter = [NSPredicate predicateWithFormat:@"name == %@ AND category == %@",name,category];
     NSArray * results = [OPEManagedReferencePoi MR_findAllWithPredicate:osmPoiFilter];
@@ -58,7 +64,7 @@
     {
         referencePoi = [OPEManagedReferencePoi MR_createEntity];
         referencePoi.name = name;
-        referencePoi.category = category;
+        referencePoi.category =  category;
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
         [context MR_saveToPersistentStoreAndWait];

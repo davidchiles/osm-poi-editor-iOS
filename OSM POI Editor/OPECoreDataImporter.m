@@ -12,6 +12,7 @@
 #import "OPEConstants.h"
 #import "OPEManagedOsmTag.h"
 #import "OPEManagedReferenceOptionalCategory.h"
+#import "OPEManagedReferencePoiCategory.h"
 
 
 @implementation OPECoreDataImporter
@@ -72,13 +73,16 @@
 -(void)addPOIWithName:(NSString *)name  category:(NSString *)category imageString:(NSString *)imageString legacy:(BOOL )isLegacy optional:(NSArray *)optionalTags tags:(NSDictionary *) tagDictionary
 {
     BOOL didCreate;
-    OPEManagedReferencePoi * newPoi = [OPEManagedReferencePoi fetchOrCreateWithName:name category:category didCreate:&didCreate];
+    OPEManagedReferencePoiCategory * poiCategory = [OPEManagedReferencePoiCategory fetchOrCreateWithName:category];
+    OPEManagedReferencePoi * newPoi = [OPEManagedReferencePoi fetchOrCreateWithName:name category:poiCategory didCreate:&didCreate];
     
     if (didCreate) {
         newPoi.name = name;
         newPoi.isLegacy = [NSNumber numberWithBool:isLegacy];
         newPoi.imageString = imageString;
-        newPoi.category = category;
+        [newPoi setCanAddValue:YES];
+        
+        newPoi.category = [OPEManagedReferencePoiCategory fetchOrCreateWithName:category];
         
         NSMutableSet * optionalSet = [NSMutableSet set];
         for(NSString * optionalString in optionalTags)

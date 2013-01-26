@@ -22,18 +22,20 @@
 
 #import "OPETypeViewController.h"
 #import "OPETagInterpreter.h"
+#import "OPEMRUtility.h"
+#import "OPEManagedReferencePoi.h"
 
 @implementation OPETypeViewController
 
-@synthesize category;
 @synthesize delegate;
 @synthesize typeArray;
+@synthesize categoryManagedObjectID;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        
     }
     return self;
 }
@@ -52,11 +54,8 @@
 {
     [super viewDidLoad];
     
-    typeArray = [[category.types allValues] sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-        NSString *first = [(OPEType*)a displayName];
-        NSString *second = [(OPEType*)b displayName];
-        return [first compare:second];
-    }];
+    managedReferencePoiCategory = (OPEManagedReferencePoiCategory *)[OPEMRUtility managedObjectWithID:categoryManagedObjectID];
+    allTypes = [managedReferencePoiCategory allSortedPois];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -107,7 +106,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [category.types count];
+    return [allTypes count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -118,8 +117,8 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    
-    cell.textLabel.text = [[typeArray objectAtIndex:indexPath.row] displayName];
+    OPEManagedReferencePoi * cellPoi = [allTypes objectAtIndex:indexPath.row];
+    cell.textLabel.text = cellPoi.name;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;

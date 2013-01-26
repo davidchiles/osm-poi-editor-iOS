@@ -232,6 +232,7 @@
 		6314515615BE092B00501CF3 /* Optional.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6314515515BE092B00501CF3 /* Optional.plist */; };
 		631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E014DC98D0000236F0 /* OPEOSMData.m */; };
 		631539E514DCA29B000236F0 /* OPENode.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E414DCA29B000236F0 /* OPENode.m */; };
+		631BAAB616B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 631BAAB516B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m */; };
 		63214B2D153CB382001C9A58 /* stardavid.png in Resources */ = {isa = PBXBuildFile; fileRef = 63214B2C153CB382001C9A58 /* stardavid.png */; };
 		63214B2F153CB390001C9A58 /* stardavid@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63214B2E153CB390001C9A58 /* stardavid@2x.png */; };
 		6325B4451534B28B00C8691F /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 6325B4431534B28A00C8691F /* location.png */; };
@@ -336,6 +337,7 @@
 		63B748B41627844E0052148E /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B748B11627844E0052148E /* map.png */; };
 		63B748B51627844E0052148E /* embassy.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B748B21627844E0052148E /* embassy.png */; };
 		63B748B61627844E0052148E /* guidepost.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B748B31627844E0052148E /* guidepost.png */; };
+		63BDDDFD16B367840083A30C /* _OPEManagedReferencePoiCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BDDDFC16B367840083A30C /* _OPEManagedReferencePoiCategory.m */; };
 		63C2035A164B153200C0F1EF /* OPEPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C20359164B153200C0F1EF /* OPEPoint.m */; };
 		63C3D0591666EBBF001585E1 /* pin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C3D0581666EBBF001585E1 /* pin@2x.png */; };
 		63C3D05B1666EBC9001585E1 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 63C3D05A1666EBC9001585E1 /* pin.png */; };
@@ -648,6 +650,8 @@
 		631539E014DC98D0000236F0 /* OPEOSMData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMData.m; sourceTree = "<group>"; };
 		631539E314DCA29B000236F0 /* OPENode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENode.h; sourceTree = "<group>"; };
 		631539E414DCA29B000236F0 /* OPENode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENode.m; sourceTree = "<group>"; };
+		631BAAB416B366AB00CF4DAA /* OPEManagedReferencePoiCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedReferencePoiCategory.h; sourceTree = "<group>"; };
+		631BAAB516B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedReferencePoiCategory.m; sourceTree = "<group>"; };
 		63214B2C153CB382001C9A58 /* stardavid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stardavid.png; sourceTree = "<group>"; };
 		63214B2E153CB390001C9A58 /* stardavid@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stardavid@2x.png"; sourceTree = "<group>"; };
 		6325B4431534B28A00C8691F /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = location.png; path = icons/location.png; sourceTree = "<group>"; };
@@ -835,6 +839,8 @@
 		63B748B11627844E0052148E /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		63B748B21627844E0052148E /* embassy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = embassy.png; sourceTree = "<group>"; };
 		63B748B31627844E0052148E /* guidepost.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guidepost.png; sourceTree = "<group>"; };
+		63BDDDFB16B367840083A30C /* _OPEManagedReferencePoiCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedReferencePoiCategory.h; sourceTree = "<group>"; };
+		63BDDDFC16B367840083A30C /* _OPEManagedReferencePoiCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedReferencePoiCategory.m; sourceTree = "<group>"; };
 		63C20359164B153200C0F1EF /* OPEPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEPoint.m; sourceTree = "<group>"; };
 		63C3D0581666EBBF001585E1 /* pin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin@2x.png"; sourceTree = "<group>"; };
 		63C3D05A1666EBC9001585E1 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin.png; sourceTree = "<group>"; };
@@ -1457,6 +1463,8 @@
 				63F03D2D16B09FD8004AF385 /* OPEManagedReferenceOsmTag.m */,
 				63F03D2E16B09FD8004AF385 /* OPEManagedReferencePoi.h */,
 				63F03D3716B0A2D0004AF385 /* OPEManagedReferencePoi.m */,
+				631BAAB416B366AB00CF4DAA /* OPEManagedReferencePoiCategory.h */,
+				631BAAB516B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m */,
 				6333D3AA16811F6700BF129E /* OPECoreDataImporter.h */,
 				6333D3AB16811F6800BF129E /* OPECoreDataImporter.m */,
 				63F03D3916B0A925004AF385 /* OPEMRUtility.h */,
@@ -1825,6 +1833,8 @@
 		63F03D0216B09EA6004AF385 /* MachineGenerated */ = {
 			isa = PBXGroup;
 			children = (
+				63BDDDFB16B367840083A30C /* _OPEManagedReferencePoiCategory.h */,
+				63BDDDFC16B367840083A30C /* _OPEManagedReferencePoiCategory.m */,
 				630190F916B32583007AB232 /* _OPEManagedReferenceOptionalCategory.h */,
 				630190FA16B32583007AB232 /* _OPEManagedReferenceOptionalCategory.m */,
 				63F03D0316B09EBE004AF385 /* _OPEManagedOsmElement.h */,
@@ -2318,6 +2328,8 @@
 				63F03D3B16B0A927004AF385 /* OPEMRUtility.m in Sources */,
 				630190FB16B32583007AB232 /* _OPEManagedReferenceOptionalCategory.m in Sources */,
 				630190FE16B3258F007AB232 /* OPEManagedReferenceOptionalCategory.m in Sources */,
+				631BAAB616B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m in Sources */,
+				63BDDDFD16B367840083A30C /* _OPEManagedReferencePoiCategory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

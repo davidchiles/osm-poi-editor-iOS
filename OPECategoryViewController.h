@@ -30,7 +30,7 @@
 @property (nonatomic,strong) IBOutlet UISearchBar * searchBar;
 //@property (nonatomic,strong) NSDictionary * categoriesAndTypes;
 @property (nonatomic,strong) NSArray * categoriesArray;
-@property (nonatomic,strong) NSDictionary * typesDictionary;
+@property (nonatomic,strong) NSArray * typesArray;
 
 @property (nonatomic, strong) id <PassCategoryAndType> delegate;
 

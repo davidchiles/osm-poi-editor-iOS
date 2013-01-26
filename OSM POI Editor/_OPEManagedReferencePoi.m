@@ -5,13 +5,13 @@
 
 const struct OPEManagedReferencePoiAttributes OPEManagedReferencePoiAttributes = {
 	.canAdd = @"canAdd",
-	.category = @"category",
 	.imageString = @"imageString",
 	.isLegacy = @"isLegacy",
 	.name = @"name",
 };
 
 const struct OPEManagedReferencePoiRelationships OPEManagedReferencePoiRelationships = {
+	.category = @"category",
 	.newTagMethod = @"newTagMethod",
 	.oldTagMethods = @"oldTagMethods",
 	.optional = @"optional",
@@ -91,13 +91,6 @@ const struct OPEManagedReferencePoiFetchedProperties OPEManagedReferencePoiFetch
 
 
 
-@dynamic category;
-
-
-
-
-
-
 @dynamic imageString;
 
 
@@ -137,6 +130,10 @@ const struct OPEManagedReferencePoiFetchedProperties OPEManagedReferencePoiFetch
 
 
 
+
+@dynamic category;
+
+	
 
 @dynamic newTagMethod;
 

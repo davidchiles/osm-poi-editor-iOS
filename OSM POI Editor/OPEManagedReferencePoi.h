@@ -5,5 +5,6 @@
 -(NSInteger)numberOfOptionalSections;
 -(NSArray *)optionalDisplayNames;
 
-+(OPEManagedReferencePoi *) fetchOrCreateWithName:(NSString *)name category:(NSString *)category didCreate:(BOOL *)didCreate;
++(NSArray *) allTypes;
++(OPEManagedReferencePoi *) fetchOrCreateWithName:(NSString *)name category:(OPEManagedReferencePoiCategory *)category didCreate:(BOOL *)didCreate;
 @end

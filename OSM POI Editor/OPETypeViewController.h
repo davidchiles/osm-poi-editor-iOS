@@ -23,6 +23,7 @@
 #import <UIKit/UIKit.h>
 #import "OPECategory.h"
 #import "OPEType.h"
+#import "OPEManagedReferencePoiCategory.h"
 
 @protocol PassCategoryAndType <NSObject>
 @required
@@ -30,8 +31,12 @@
 @end
 
 @interface OPETypeViewController : UITableViewController
+{
+    OPEManagedReferencePoiCategory * managedReferencePoiCategory;
+    NSArray * allTypes;
+}
 
-@property (nonatomic, strong) OPECategory * category;
+@property (nonatomic, strong) NSManagedObjectID * categoryManagedObjectID;
 @property (nonatomic, strong) NSArray * typeArray;
 @property (nonatomic, strong) id delegate;
 
