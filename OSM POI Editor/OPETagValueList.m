@@ -21,6 +21,9 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPETagValueList.h"
+#import "OPEMRUtility.h"
+#import "OPEManagedReferenceOptional.h"
+#import "OPEManagedReferenceOsmTag.h"
 
 @interface OPETagValueList ()
 
@@ -30,9 +33,10 @@
 @implementation OPETagValueList
 
 
-@synthesize osmKey,osmValue,osmValues,values;
+@synthesize osmKey,osmValue,osmValues,valuesArray;
 @synthesize delegate;
 @synthesize valuesCheckmarkArray,selectedArray;
+@synthesize referenceOptionalID;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -46,6 +50,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    OPEManagedReferenceOptional * referenceOptional = [OPEMRUtility managedObjectWithID:referenceOptionalID];
+    
+    valuesArray = [referenceOptional allSortedTags];
+    
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -75,15 +84,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (values)
-    {
-        return [values count];
-    }
-    else if (valuesCheckmarkArray)
-    {
-        return [valuesCheckmarkArray count];
-    }
-    return 0;
+    return [valuesArray count];
     
 }
 
@@ -94,23 +95,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    if(values)
-    {
-        
-        cell.textLabel.text = [[[values allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]  objectAtIndex:indexPath.row];
-        
-    }
-    else if (valuesCheckmarkArray) {
-        
-        cell.textLabel.text = [[valuesCheckmarkArray objectAtIndex:indexPath.row] objectForKey:@"Name"];
-        if ([selectedArray containsObject:[[valuesCheckmarkArray objectAtIndex:indexPath.row] objectForKey:@"osmKey"]]) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        }
-        
-    }
-    
-    
-    // Configure the cell...
+    cell.textLabel.text = [[valuesArray objectAtIndex:indexPath.row] name];
     
     return cell;
 }
@@ -166,24 +151,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (values) {
-        NSString * value = [values objectForKey: [tableView cellForRowAtIndexPath:indexPath].textLabel.text];
-        [delegate newTag:[NSDictionary dictionaryWithObjectsAndKeys:value,@"osmValue",osmKey,@"osmKey", nil]];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    else if(valuesCheckmarkArray)
-    {
-        /////
-        NSDictionary * selectedRowDictionary = [valuesCheckmarkArray objectAtIndex:indexPath.row];
-        if ([selectedArray containsObject:[selectedRowDictionary objectForKey:@"osmKey"]]) {
-            [selectedArray removeObject:[selectedRowDictionary objectForKey:@"osmKey"]];
-            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryNone; 
-        }
-        else {
-            [selectedArray addObject:[selectedRowDictionary objectForKey:@"osmKey"]];
-            [tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark; 
-        }
-    }
+   
+    [delegate newTag:[((OPEManagedReferenceOsmTag *)[valuesArray objectAtIndex:indexPath.row]).tag objectID]];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 

@@ -25,6 +25,12 @@
     
 }
 
+-(NSArray *)allSortedTags
+{
+    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    return [[self.tags allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:nameDescriptor,nil]];
+}
+
 -(NSArray *)allDisplayNames
 {
     NSMutableArray * finalArray = [NSMutableArray array];
@@ -33,6 +39,18 @@
         [finalArray addObject:managedReferecneOsmTag.name];
     }
     return finalArray;
+    
+}
+-(OPEManagedReferenceOsmTag *)managedReferenceOsmTagWithName:(NSString *)name;
+{
+    NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"name == %@",name];
+    NSSet * filteredSet = [self.tags filteredSetUsingPredicate:tagFilter];
+    OPEManagedReferenceOsmTag * managedReferenceOsmTag = nil;
+    
+    if ([filteredSet count]) {
+        managedReferenceOsmTag =  [filteredSet anyObject];
+    }
+    return managedReferenceOsmTag;
     
 }
 

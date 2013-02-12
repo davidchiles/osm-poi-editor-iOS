@@ -38,6 +38,7 @@
 #import "OPEManagedOsmTag.h"
 #import "OPEManagedReferenceOptionalCategory.h"
 #import "OPEManagedReferencePoiCategory.h"
+#import "OPEManagedReferenceOsmTag.h"
 
 
 
@@ -317,7 +318,7 @@
             //aCell.controlArray = [[cellDictionary objectForKey:@"values"] allKeys];
             
             [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
-            aCell.tag = indexPath.section;
+            aCell.tag = indexPath.section-2;
             aCell.binaryControl.tag = indexPath.row;
             if (![valueForOptional isEqualToString:displayValueForOptional] && [valueForOptional length]) {
                 [aCell selectSegmentWithTitle:displayValueForOptional];
@@ -335,14 +336,19 @@
     return cell;
 }
 
--(void)binaryChanged:(id)sender
+-(void)binaryChanged:(UISegmentedControl *)sender
 {
     if (sender) {
         
+        NSInteger section = [[sender superview] tag];
+        NSInteger row = sender.tag;
         
-        NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:[[sender superview] tag]] objectForKey:@"rows"] objectAtIndex:[sender tag]]];
-        NSLog(@"Binary Changed: %@",cellDictionary);
-        [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",[[cellDictionary objectForKey:@"values"] objectForKey:[sender titleForSegmentAtIndex:[sender selectedSegmentIndex]]],@"osmValue", nil]];
+        OPEManagedReferenceOptional * referenceOptional = [[self.optionalSectionsArray objectAtIndex:section] objectAtIndex:row];
+        NSString * title = [sender titleForSegmentAtIndex:[sender selectedSegmentIndex]];
+        OPEManagedReferenceOsmTag * managedReferenceOsmTag = [referenceOptional managedReferenceOsmTagWithName:title];
+        
+        [self newTag:managedReferenceOsmTag.tag.objectID];
+        
         /*
         if ([sender selectedSegmentIndex] == 0) {
             //Yes
@@ -391,9 +397,17 @@
             [self.navigationController pushViewController:viewer animated:YES];
         }
     }
-    else
+    else if(indexPath.section>1 && indexPath.section<[self.optionalSectionsArray count]+2)
     {
-        
+        OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
+        if ([managedOptionalTag.tags count]>3)
+        {
+            OPETagValueList * viewer = [[OPETagValueList alloc] initWithNibName:@"OPETagValueList" bundle:nil];
+            viewer.title = managedOptionalTag.displayName;
+            viewer.referenceOptionalID = managedOptionalTag.objectID;
+            [viewer setDelegate:self];
+            [self.navigationController pushViewController:viewer animated:YES];
+        }
     }
     
     NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
@@ -403,15 +417,7 @@
     }
     else if([[cellDictionary objectForKey:@"values"] isKindOfClass:[NSDictionary class]])
     {
-        //list view cell 
-        OPETagValueList * viewer = [[OPETagValueList alloc] initWithNibName:@"OPETagValueList" bundle:nil];
-        viewer.title = [cellDictionary objectForKey:@"name"];
-        viewer.osmValue = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
-        viewer.osmKey = [cellDictionary objectForKey:@"osmKey"];
-        viewer.values = [cellDictionary objectForKey:@"values"];
-        [viewer setDelegate:self];
-        [self.navigationController pushViewController:viewer animated:YES];
-
+        //list view cell
         
     }
     else {
@@ -423,38 +429,6 @@
             viewer.type = [cellDictionary objectForKey:@"values"];
             [viewer setDelegate:self];
             [self.navigationController pushViewController:viewer animated:YES];
-        }
-        else if([[cellDictionary objectForKey:@"values"] isEqualToString:@"category"])
-        {
-            if(indexPath.row == 1)
-            {
-                if (nodeType)
-                {
-                    OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:[NSBundle mainBundle]];
-                    viewer.title = @"Type";
-                    
-                    //viewer.category = [tagInterpreter.nameAndCategory objectForKey:nodeType.categoryName];
-                    [viewer setDelegate:self];
-                    //NSLog(@"category previous: %@",viewer.category);
-                    
-                    [self.navigationController pushViewController:viewer animated:YES];
-                }
-                else {
-                    OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
-                    viewer.title = @"Category";
-                    [viewer setDelegate:self];
-                    
-                    [self.navigationController pushViewController:viewer animated:YES];
-                }
-            }
-            else
-            {
-                OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
-                viewer.title = @"Category";
-                [viewer setDelegate:self];
-                
-                [self.navigationController pushViewController:viewer animated:YES];
-            }
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -652,22 +626,14 @@
     
 }
 
-- (void) newTag:(NSDictionary *)tag
+- (void) newTag:(NSManagedObjectID *)managedOsmTagID
 {
-    NSString * osmKey = [tag objectForKey:@"osmKey"];
-    NSString * osmValue = [tag objectForKey:@"osmValue"];
+    OPEManagedOsmTag * managedOsmTag = (OPEManagedOsmTag *)[OPEMRUtility managedObjectWithID:managedOsmTagID];
     
-    if (![osmValue isEqualToString:@""]) 
-    {
-        [theNewPoint.tags setObject:osmValue forKey:osmKey];
-    }
-    else {
-        [theNewPoint.tags removeObjectForKey:osmKey];
-    }
-    [self reloadTags];
-    [self checkSaveButton];
-    [nodeInfoTableView reloadData];
-    NSLog(@"NewNode: %@",theNewPoint.tags);
+    NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"key == %@",managedOsmTag.key];
+    NSSet * matchSet = [self.editableTags filteredSetUsingPredicate:tagFilter];
+    [self.editableTags minusSet:matchSet];
+    [self.editableTags addObject:managedOsmTagID];
 }
 -(void) removeOptionalTags:(NSArray *)oldTableSections
 {

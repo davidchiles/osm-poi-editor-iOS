@@ -21,10 +21,11 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
+#import "OPEManagedOsmTag.h"
 
 @protocol editTagDelegate <NSObject>
 @required
-- (void) newTag:(NSDictionary *)text;
+- (void) newTag:(NSManagedObjectID *)managedOsmTagID;
 @end
 
 @interface OPETextEdit : UIViewController <UITextViewDelegate,UITextFieldDelegate, UITableViewDelegate,UITableViewDataSource>

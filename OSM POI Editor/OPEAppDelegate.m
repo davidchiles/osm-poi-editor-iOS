@@ -50,6 +50,8 @@
 
     [importer importOptionalTags];
     [importer importTagsPlist];
+    
+    [OPEMRUtility deleteDownloaded];
 
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

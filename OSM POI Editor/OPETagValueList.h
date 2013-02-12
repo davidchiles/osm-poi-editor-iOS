@@ -25,13 +25,15 @@
 
 @interface OPETagValueList : UITableViewController 
 
-@property (nonatomic, strong) NSDictionary * values;
+@property (nonatomic, strong) NSArray * valuesArray;
 @property (nonatomic, strong) NSArray * valuesCheckmarkArray;
 @property (nonatomic, strong) NSMutableArray * selectedArray;
 @property (nonatomic, strong) NSArray * osmValues;
 @property (nonatomic, strong) NSString * osmKey;
 @property (nonatomic, strong) NSString * osmValue;
 @property (nonatomic, strong) id <editTagDelegate> delegate;
+
+@property (nonatomic, strong) NSManagedObjectID * referenceOptionalID;
 
 
 @end
