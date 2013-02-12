@@ -26,7 +26,7 @@
 
 @implementation OPENode
 
--(id) initWithId: (int) i coordinate: (CLLocationCoordinate2D) newCoordinate keyValues: (NSMutableDictionary *) tag
+-(id) initWithId: (int64_t) i coordinate: (CLLocationCoordinate2D) newCoordinate keyValues: (NSMutableDictionary *) tag
 {
     self = [super init];
     if(self)
@@ -40,7 +40,7 @@
     
 }
 
--(id) initWithId:(int)i latitude:(double) la longitude:(double) lo
+-(id) initWithId:(int64_t)i latitude:(double) la longitude:(double) lo
 {
     self = [super init];
     if (self)
@@ -53,7 +53,7 @@
     return self;
 }
 
--(id) initWithId:(int)i latitude:(double) la longitude:(double) lo version: (int) v
+-(id) initWithId:(int64_t)i latitude:(double) la longitude:(double) lo version: (int) v
 {
     self = [super init];
     if (self)
@@ -112,7 +112,7 @@
 {
     NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
     [xml appendString:@"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"];
-    [xml appendFormat:@"<node id=\"%d\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\">",self.ident,self.coordinate.latitude,self.coordinate.longitude,self.version, changesetNumber];
+    [xml appendFormat:@"<node id=\"%lld\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\">",self.ident,self.coordinate.latitude,self.coordinate.longitude,self.version, changesetNumber];
     
     for(NSString * key in self.tags)
     {
@@ -162,7 +162,7 @@
     
     [nodeXML appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
     [nodeXML appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [nodeXML appendData: [[NSString stringWithFormat: @"<node id=\"%d\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\"/>",self.ident,lat,lon,self.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
+    [nodeXML appendData: [[NSString stringWithFormat: @"<node id=\"%lld\" lat=\"%f\" lon=\"%f\" version=\"%d\" changeset=\"%d\"/>",self.ident,lat,lon,self.version, changesetNumber] dataUsingEncoding: NSUTF8StringEncoding]];
     [nodeXML appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
     
     return nodeXML;

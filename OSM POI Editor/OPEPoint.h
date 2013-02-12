@@ -30,7 +30,7 @@
 @property (nonatomic, strong) NSMutableDictionary* tags;
 @property int version;
 @property (nonatomic, strong) NSString * image;
-@property int ident;
+@property int64_t ident;
 @property (nonatomic,strong) NSString * name;
 
 - (void) addKey: (NSString *) key value: (NSString *)value;

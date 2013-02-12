@@ -34,7 +34,7 @@
     return self;
 }
 
--(id)initWithArrayOfNodes:(NSArray *)arrayOfNodes tags:(NSMutableDictionary *)tagDictioanry ID:(int)i version:(int) newVersion
+-(id)initWithArrayOfNodes:(NSArray *)arrayOfNodes tags:(NSMutableDictionary *)tagDictioanry ID:(int64_t)i version:(int) newVersion
 {
     self = [self init];
     nodes = arrayOfNodes;
@@ -47,7 +47,7 @@
     return self;
 }
 
--(id)initWithArrayOfNodes:(NSArray *)arrayOfNodes ID:(int)i version:(int)newVersion
+-(id)initWithArrayOfNodes:(NSArray *)arrayOfNodes ID:(int64_t)i version:(int)newVersion
 {
     self = [self init];
     nodes = arrayOfNodes;
@@ -110,11 +110,11 @@
 {
     NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
     [xml appendString:[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"]];
-    [xml appendFormat:@"<way id=\"%d\" version=\"%d\" changeset=\"%d\">",self.ident,self.version, changesetNumber];
+    [xml appendFormat:@"<way id=\"%lld\" version=\"%d\" changeset=\"%d\">",self.ident,self.version, changesetNumber];
     
     for(OPENode * node in nodes)
     {
-        [xml appendFormat:@"<nd ref=\"%d\"/>",node.ident];
+        [xml appendFormat:@"<nd ref=\"%lld\"/>",node.ident];
     }
     
     for(NSString * key in self.tags)

@@ -26,9 +26,9 @@
 
 @interface OPENode : OPEPoint
 
--(id) initWithId: (int) i coordinate: (CLLocationCoordinate2D) coordinate keyValues: (NSMutableDictionary *) tag;
--(id) initWithId:(int)i latitude:(double) la longitude:(double) lo;
--(id) initWithId:(int)i latitude:(double) la longitude:(double) lo version:(int) ve;
+-(id) initWithId: (int64_t) i coordinate: (CLLocationCoordinate2D) coordinate keyValues: (NSMutableDictionary *) tag;
+-(id) initWithId:(int64_t)i latitude:(double) la longitude:(double) lo;
+-(id) initWithId:(int64_t)i latitude:(double) la longitude:(double) lo version:(int) ve;
 -(id) initWithNode: (OPENode *) node;
 
 + (id) createPointWithXML:(TBXMLElement *)xml;

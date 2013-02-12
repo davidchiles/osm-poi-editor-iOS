@@ -66,7 +66,7 @@
     //NSString *responseString = [request responseString];
     
     // Use when fetching binary data
-    if ([request.userInfo objectForKey:@"type"] == @"download" )
+    if ([[request.userInfo objectForKey:@"type"] isEqualToString: @"download"] )
     {
         //NSMutableDictionary * newNodes = [[NSMutableDictionary alloc] init];
         //NSMutableDictionary * allNewNodes = [[NSMutableDictionary alloc] init];
@@ -334,11 +334,11 @@
     
     if([node isKindOfClass:[OPENode class]] )
     {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%d",node.ident]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%lld",node.ident]];
     }
     else
     {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/way/%d",node.ident]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/way/%lld",node.ident]];
     }
     
     NSLog(@"URL: %@",[url absoluteURL]);
@@ -378,7 +378,7 @@
     NSData *nodeXML = [node deleteXMLforChangset:changesetNumber];
     
     
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%d",node.ident]];
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%lld",node.ident]];
     NSLog(@"URL: %@",[url absoluteURL]);
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody: nodeXML];

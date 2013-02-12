@@ -755,7 +755,7 @@
     //NSLog(@"KV: %@",osmKeyValue);
     
     
-    NSLog(@"ID: %d",theNewPoint.ident);
+    NSLog(@"ID: %lld",theNewPoint.ident);
     NSLog(@"Version: %d",theNewPoint.version);
     NSLog(@"Lat: %f",theNewPoint.coordinate.latitude);
     NSLog(@"Lon: %f",theNewPoint.coordinate.longitude);
@@ -764,7 +764,7 @@
     [self.theNewPoint.tags addEntriesFromDictionary:newType.tags];
     
     //NSLog(@"id: %@ \n version: %@ \n lat: %f \n lon: %f \n newTags: %@ \n ",theNewPoint.ident,theNewPoint.version,theNewPoint.coordinate.latitude,theNewPoint.coordinate.longitude,theNewPoint.tags);
-    NSLog(@"ID: %d",theNewPoint.ident);
+    NSLog(@"ID: %lld",theNewPoint.ident);
     NSLog(@"Version: %d",theNewPoint.version);
     NSLog(@"Lat: %f",theNewPoint.coordinate.latitude);
     NSLog(@"Lon: %f",theNewPoint.coordinate.longitude);

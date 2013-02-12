@@ -63,7 +63,7 @@
 }
 - (NSString *)uniqueIdentifier
 {
-    return [NSString stringWithFormat:@"%@%d",[self type],self.ident];
+    return [NSString stringWithFormat:@"%@%lld",[self type],self.ident];
 }
 -(BOOL)hasNoTags
 {
