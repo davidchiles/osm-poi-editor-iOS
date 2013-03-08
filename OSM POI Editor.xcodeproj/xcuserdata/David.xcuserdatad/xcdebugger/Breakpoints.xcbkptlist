@@ -920,7 +920,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "720"
          endingLineNumber = "720"
-         landmarkName = "-tileSourceBoundsContainScreenPoint:"
+         landmarkName = "-tileSourceBoundsContainProjectedPoint:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

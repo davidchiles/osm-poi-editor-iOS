@@ -63,7 +63,7 @@
 
 -(void)setupButtons
 {
-    mapView.frame = self.view.bounds;
+    //mapView.frame = self.view.bounds;
     
     UIBarButtonItem * locationBarButton;
     UIBarButtonItem * addBarButton;
@@ -102,7 +102,7 @@
     [self.navigationController setToolbarHidden:NO animated:NO];
     //Check OAuth
     
-    mapView = [[RMMapView alloc] init];
+    mapView = [[RMMapView alloc] initWithFrame:self.view.bounds];
     mapView.showLogoBug = NO;
     mapView.hideAttribution = YES;
     mapView.userTrackingMode = RMUserTrackingModeFollow;
