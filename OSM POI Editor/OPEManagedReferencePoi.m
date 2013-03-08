@@ -66,9 +66,6 @@
         referencePoi.name = name;
         referencePoi.category =  category;
         
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-        [context MR_saveToPersistentStoreAndWait];
-        
         *didCreate = YES;
     }
     else

@@ -40,16 +40,13 @@
     count = [OPEManagedOsmNode MR_countOfEntities];
     count = [OPEManagedOsmWay MR_countOfEntities];
     
-    NSArray * result = [OPEManagedOsmTag MR_findAllWithPredicate:osmTagFilter];
-    for(OPEManagedOsmTag * tag in result)
-    {
-        [tag MR_deleteEntity];
-    }
-    [OPEManagedOsmElement MR_truncateAll];
-    [OPEManagedOsmNode MR_truncateAll];
-    [OPEManagedOsmWay MR_truncateAll];
-    [OPEManagedOsmRelation MR_truncateAll];
-    [OpeManagedOsmRelationMember MR_truncateAll];
+    [OPEManagedOsmTag MR_deleteAllMatchingPredicate:osmTagFilter];
+    
+    [OPEManagedOsmElement MR_deleteAllMatchingPredicate:nil];
+    [OPEManagedOsmNode MR_deleteAllMatchingPredicate:nil];
+    [OPEManagedOsmWay MR_deleteAllMatchingPredicate:nil];
+    [OPEManagedOsmRelation MR_deleteAllMatchingPredicate:nil];
+    [OpeManagedOsmRelationMember MR_deleteAllMatchingPredicate:nil];
     
     
     

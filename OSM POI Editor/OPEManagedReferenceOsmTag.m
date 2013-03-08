@@ -22,9 +22,6 @@
         referenceOsmTag = [OPEManagedReferenceOsmTag MR_createEntity];
         referenceOsmTag.name = name;
         referenceOsmTag.tag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
-        
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-        [context MR_saveToPersistentStoreAndWait];
     }
     else
     {

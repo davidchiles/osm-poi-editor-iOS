@@ -45,6 +45,7 @@
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"db.sqlite"];
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
     [context setRetainsRegisteredObjects:YES];
+
     
     OPECoreDataImporter * importer = [[OPECoreDataImporter alloc] init];
 

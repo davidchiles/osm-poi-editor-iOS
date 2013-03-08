@@ -55,9 +55,6 @@
     {
         referencePoiCategory = [OPEManagedReferencePoiCategory MR_createEntity];
         referencePoiCategory.name = name;
-        
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-        [context MR_saveToPersistentStoreAndWait];
     }
     else
     {

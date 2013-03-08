@@ -108,11 +108,14 @@
     mapView.userTrackingMode = RMUserTrackingModeFollow;
     
     
+    /*
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(addMarkers:)
      name:@"DownloadComplete"
      object:nil ];
+     */
+    [self osmElementFetchedResultsController];
     
     interpreter = [[OPETagInterpreter alloc] init];
     [interpreter readPlist];
@@ -331,7 +334,6 @@
 
 - (void) addMarkers:(NSNotification*)notification 
 {
-    NSInteger count = [mapView.annotations count];
     NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type.@count == 1 AND isVisible == %@",[NSNumber numberWithBool:NO]];
     NSArray * results = [OPEManagedOsmElement MR_findAllWithPredicate:osmElementFilter];
     
@@ -515,5 +517,72 @@
         return YES;
     }
 }
+
+#pragma FetchedResultsController
+
+-(void)removeAnnotationWithOsmElementID:(NSManagedObjectID *)objectID
+{
+    NSInteger index = [self indexOfOsmElementID:objectID];
+    if (index != NSNotFound) {
+        RMAnnotation* annotation = [mapView.annotations objectAtIndex:index];
+        [mapView removeAnnotation:annotation];
+    }
+    
+}
+
+-(NSInteger)indexOfOsmElementID:(NSManagedObjectID *)objectID
+{
+    return [mapView.annotations indexOfObjectPassingTest:^BOOL (id obj, NSUInteger idx, BOOL *stop) {
+        RMAnnotation * annotation = (RMAnnotation *)obj;
+        return [annotation.userInfo isEqual:objectID];
+    }];
+    
+}
+
+-(NSFetchedResultsController *)osmElementFetchedResultsController
+{
+    if(_osmElementFetchedResultsController)
+        return _osmElementFetchedResultsController;
+    
+    NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type != nil AND isVisible == %@",[NSNumber numberWithBool:NO]];
+    
+    _osmElementFetchedResultsController = [OPEManagedOsmElement MR_fetchAllGroupedBy:nil withPredicate:osmElementFilter sortedBy:nil ascending:NO delegate:self];
+    
+    return _osmElementFetchedResultsController;
+}
+
+-(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+{
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+        {
+            OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:newIndexPath];
+            [mapView addAnnotation:[self annotationWithOsmElement:managedOsmElement]];
+        }
+            break;
+        case NSFetchedResultsChangeMove:
+            break;
+        case NSFetchedResultsChangeUpdate:
+        {
+            OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:indexPath];
+            [self removeAnnotationWithOsmElementID:managedOsmElement.objectID];
+            managedOsmElement = [controller objectAtIndexPath:newIndexPath];
+            [mapView addAnnotation:[self annotationWithOsmElement:managedOsmElement]];
+        }
+            break;
+        case NSFetchedResultsChangeDelete:
+        {
+            OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:newIndexPath];
+            [self removeAnnotationWithOsmElementID:managedOsmElement.objectID];
+             
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+             
+             
 
 @end

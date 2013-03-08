@@ -68,8 +68,6 @@
         referenceOptional = [OPEManagedReferenceOptional MR_createEntity];
         referenceOptional.name = name;
         
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-        [context MR_saveToPersistentStoreAndWait];
     }
     else
     {

@@ -62,14 +62,14 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    dispatch_queue_t q = dispatch_queue_create("queue", NULL);
+    dispatch_queue_t q = dispatch_queue_create("Parse.Queue", NULL);
     dispatch_async(q,  ^{
     NSLog(@"Request Type: %@",[request.userInfo objectForKey:@"type"]);
     // Use when fetching text data
     //NSString *responseString = [request responseString];
     
     // Use when fetching binary data
-    if ([request.userInfo objectForKey:@"type"] == @"download" )
+    if ([[request.userInfo objectForKey:@"type"] isEqualToString: @"download"] )
     {
         //NSMutableDictionary * newNodes = [[NSMutableDictionary alloc] init];
         //NSMutableDictionary * allNewNodes = [[NSMutableDictionary alloc] init];
@@ -100,14 +100,10 @@
         [tempNodes removeObjectsForKeys:[allNodes allKeys]];
         [tempNodes removeObjectsForKeys:[ignoreNodes allKeys]];
         [allNodes addEntriesFromDictionary:tempNodes];
+    
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"DownloadComplete"
-         object:self
-         userInfo:tempNodes];
-        });
+        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+        [context MR_saveToPersistentStoreAndWait];
         
     }
     });
@@ -183,8 +179,6 @@
             xmlNode = [TBXML nextSiblingNamed:@"node" searchFromElement:xmlNode];
         }
     }
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    [context MR_saveToPersistentStoreAndWait];
 }
 
 -(void)findWays:(TBXML *)xml{
@@ -232,8 +226,6 @@
             xmlWay = [TBXML nextSiblingNamed:@"way" searchFromElement:xmlWay];
         }
     }
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    [context MR_saveToPersistentStoreAndWait];
 }
  
 -(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast

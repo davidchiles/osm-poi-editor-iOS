@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="OPEManagedOsmElement" representedClassName="OPEManagedOsmElement" syncable="YES">
         <attribute name="isVisible" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="osmID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -78,6 +78,6 @@
         <element name="OPEManagedReferenceOptionalCategory" positionX="72" positionY="-45" width="128" height="90"/>
         <element name="OPEManagedReferenceOsmTag" positionX="376" positionY="-108" width="128" height="88"/>
         <element name="OPEManagedReferencePoi" positionX="387" positionY="-0" width="135" height="193"/>
-        <element name="OPEManagedReferencePoiCategory" positionX="601" positionY="-81" width="128" height="73"/>
+        <element name="OPEManagedReferencePoiCategory" positionX="601" positionY="-81" width="200" height="73"/>
     </elements>
 </model>

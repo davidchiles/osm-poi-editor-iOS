@@ -30,7 +30,7 @@
 #import "OPENodeViewController.h"
 #import "OPEMessage.h"
 
-@interface OPEViewController : UIViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate > {
+@interface OPEViewController : UIViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,NSFetchedResultsControllerDelegate> {
     RMMapView* mapView;
     UIImageView * plusImageView;
     
@@ -56,6 +56,8 @@
 @property (nonatomic) RMSphericalTrapezium currentSquare;
 @property (nonatomic) BOOL userPressedLocatoinButton;
 @property (nonatomic) BOOL firstDownload;
+
+@property (nonatomic,strong) NSFetchedResultsController * osmElementFetchedResultsController;
 
 - (void) addMarkers:(NSNotification *) notification;
 //- (void) pushMapAnnotationDetailedViewControllerDelegate:(id) sender;
