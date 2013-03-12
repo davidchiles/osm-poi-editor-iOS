@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="OPEManagedOsmElement" representedClassName="OPEManagedOsmElement" syncable="YES">
+        <attribute name="changesetID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="isVisible" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="osmID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="parentRelations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OpeManagedOsmRelationMember" inverseName="member" inverseEntity="OpeManagedOsmRelationMember" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedOsmTag" inverseName="osmElements" inverseEntity="OPEManagedOsmTag" syncable="YES"/>
@@ -68,7 +72,7 @@
         <relationship name="referencePois" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedReferencePoi" inverseName="category" inverseEntity="OPEManagedReferencePoi" syncable="YES"/>
     </entity>
     <elements>
-        <element name="OPEManagedOsmElement" positionX="484" positionY="252" width="128" height="133"/>
+        <element name="OPEManagedOsmElement" positionX="484" positionY="243" width="128" height="193"/>
         <element name="OPEManagedOsmNode" positionX="655" positionY="369" width="128" height="88"/>
         <element name="OPEManagedOsmRelation" positionX="90" positionY="315" width="180" height="58"/>
         <element name="OpeManagedOsmRelationMember" positionX="79" positionY="422" width="191" height="88"/>

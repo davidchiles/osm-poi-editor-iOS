@@ -59,4 +59,13 @@
         return [[NSBundle mainBundle] pathForResource:resource ofType:type];
 }
 
++(NSString *)removeHTML:(NSString *)string
+{
+    return [string stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+}
++(NSString *)addHTML:(NSString *)string
+{
+    return [string stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
+}
+
 @end

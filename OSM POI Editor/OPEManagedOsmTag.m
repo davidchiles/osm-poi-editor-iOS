@@ -27,7 +27,7 @@
     }
     else
     {
-        osmTag = [results objectAtIndex:0];
+        osmTag = [results lastObject];
     }
     
     

@@ -1,5 +1,6 @@
 #import "OPEManagedOsmElement.h"
 #import "OPEManagedReferencePoi.h"
+#import "OPEUtility.h"
 
 #import "OPEManagedOsmTag.h"
 
@@ -45,6 +46,37 @@
     }
 }
 
+-(void)setMetaData:(TBXMLElement *)xmlElement
+{
+    self.version = [NSNumber numberWithInteger:[[TBXML valueOfAttributeNamed:@"version" forElement:xmlElement] integerValue]];
+    self.userName = [TBXML valueOfAttributeNamed:@"user" forElement:xmlElement];
+    self.userIDValue = [[TBXML valueOfAttributeNamed:@"uid" forElement:xmlElement] longLongValue];
+    self.changesetIDValue = [[TBXML valueOfAttributeNamed:@"changeset" forElement:xmlElement] longLongValue];
+    NSString * timeString = [TBXML valueOfAttributeNamed:@"timestamp" forElement:xmlElement];
+    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd'T'HH:mm:ssZ"];
+    NSDate * date = [dateFormatter dateFromString:timeString];
+    self.timeStamp = [dateFormatter dateFromString:timeString];
+    
+    TBXMLElement* tag = [TBXML childElementNamed:@"tag" parentElement:xmlElement];
+    
+    NSMutableSet * newTags = [NSMutableSet set];
+    
+    while (tag!=nil) //Takes in tags and adds them to newNode
+    {
+        NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tag];
+        NSString* value = [OPEUtility removeHTML:[TBXML valueOfAttributeNamed:@"v" forElement:tag]];
+        OPEManagedOsmTag * newTag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
+        [newTags addObject:newTag];
+        
+        tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
+    }
+    
+    [self setTags:newTags];
+
+    
+}
+
 -(BOOL)findType
 {
     if ([self.tags count]) {
@@ -77,11 +109,39 @@
             self.type = [possibleLegacyMatches anyObject];
             return YES;
         }
-        
-        
     }
     return NO;
-    
+}
+
+-(void)removeTagWithOsmKey:(NSString *)osmKey
+{
+    NSPredicate * keyFilter = [NSPredicate predicateWithFormat:@"%K == %@",OPEManagedOsmTagAttributes.key,osmKey];
+    NSSet * removeSet = [self.tags filteredSetUsingPredicate:keyFilter];
+    [self.tagsSet minusSet:removeSet];
+}
+
+-(void)newType:(OPEManagedReferencePoi *)newType
+{
+    if (self.type) {
+        [self.tagsSet minusSet:self.type.tags];
+    }
+    [self.tagsSet unionSet:newType.tags];
+    self.type = newType;
+}
+
+-(NSString *)tagsDescription
+{
+    NSMutableString * string = [NSMutableString stringWithString:@""];
+    for (OPEManagedOsmTag * tag in self.tags)
+    {
+        [string appendFormat:@"\n%@ = %@",tag.key,tag.value];
+    }
+    return string;
+}
+
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ %@",[super description],[self tagsDescription]];
 }
 
 @end

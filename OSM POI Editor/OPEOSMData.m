@@ -71,35 +71,18 @@
     // Use when fetching binary data
     if ([[request.userInfo objectForKey:@"type"] isEqualToString: @"download"] )
     {
-        //NSMutableDictionary * newNodes = [[NSMutableDictionary alloc] init];
-        //NSMutableDictionary * allNewNodes = [[NSMutableDictionary alloc] init];
         NSData *responseData = [request responseData];
         TBXML* tbxml = [TBXML tbxmlWithXMLData:responseData];
         
-        [self findNodes:tbxml];
-        [self findWays:tbxml];
+        TBXMLElement * root = tbxml.rootXMLElement;
+        if(root)
+        {
+            [self findNodes:root];
+            [self findWays:root];
+        }
         
         NSInteger count = [OPEManagedOsmNode MR_countOfEntities];
         count =  [OPEManagedOsmWay MR_countOfEntities];
-        
-        
-        
-        NSMutableDictionary * tempNodes; 
-        NSMutableDictionary * tempWays;        
-        [tempNodes addEntriesFromDictionary:tempWays];
-        
-        for (NSString *key in [tempNodes allKeys])
-        {
-            if(![tagInterpreter isSupported:[tempNodes objectForKey:key]]) //Checks that node to be added has recognized tags and then adds it to set of all nodes
-            {
-                [tempNodes removeObjectForKey:key];
-            }
-            
-        }
-        
-        [tempNodes removeObjectsForKeys:[allNodes allKeys]];
-        [tempNodes removeObjectsForKeys:[ignoreNodes allKeys]];
-        [allNodes addEntriesFromDictionary:tempNodes];
     
         
         NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
@@ -141,38 +124,19 @@
     
 }
 
--(void)findNodes:(TBXML *)xml {
-    TBXMLElement * root = xml.rootXMLElement;
+-(void)findNodes:(TBXMLElement *)root {
     if(root)
     {
         TBXMLElement* xmlNode = [TBXML childElementNamed:@"node" parentElement:root];
         while (xmlNode!=nil) {
             
-            OPEManagedOsmNode * newNode = [OPEManagedOsmNode fetchNodeWithOsmId:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlNode] integerValue]];
-            if (!newNode) {
-                newNode = [OPEManagedOsmNode MR_createEntity];
-            }
+            OPEManagedOsmNode * newNode = [OPEManagedOsmNode fetchOrCreateNodeWithOsmID:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlNode] longLongValue]];
             
-            newNode.osmID = [NSNumber numberWithInteger:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlNode] integerValue]];
             newNode.lattitude = [NSNumber numberWithFloat:[[TBXML valueOfAttributeNamed:@"lat" forElement:xmlNode] floatValue]];
             newNode.longitude = [NSNumber numberWithFloat:[[TBXML valueOfAttributeNamed:@"lon" forElement:xmlNode] floatValue]];
-            newNode.version = [NSNumber numberWithInteger:[[TBXML valueOfAttributeNamed:@"version" forElement:xmlNode] integerValue]];
             
-            TBXMLElement* tag = [TBXML childElementNamed:@"tag" parentElement:xmlNode];
             
-            NSMutableSet * newTags = [NSMutableSet set];
-            
-            while (tag!=nil) //Takes in tags and adds them to newNode
-            {
-                NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tag];
-                NSString* value = [OPEOSMData htmlFix:[TBXML valueOfAttributeNamed:@"v" forElement:tag]];
-                OPEManagedOsmTag * newTag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
-                [newTags addObject:newTag];
-                
-                tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
-            }
-            [newNode setTags:newTags];
-            
+            [newNode setMetaData:xmlNode];
             [newNode findType];
             
 
@@ -181,45 +145,28 @@
     }
 }
 
--(void)findWays:(TBXML *)xml{
-    TBXMLElement * root = xml.rootXMLElement;
+-(void)findWays:(TBXMLElement *)root{
     if(root)
     {
         TBXMLElement* xmlWay = [TBXML childElementNamed:@"way" parentElement:root];
         while (xmlWay!=nil) {
             
-            OPEManagedOsmWay * newWay = [OPEManagedOsmWay MR_createEntity];
+            OPEManagedOsmWay * newWay = [OPEManagedOsmWay fetchOrCreatWayWithOsmID:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlWay] longLongValue]];
             
-            newWay.osmID = [NSNumber numberWithInteger:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlWay] integerValue]];
-            newWay.version = [NSNumber numberWithInteger:[[TBXML valueOfAttributeNamed:@"version" forElement:xmlWay] integerValue]];
+            [newWay setMetaData:xmlWay];
             
             TBXMLElement* nodeXml = [TBXML childElementNamed:@"nd" parentElement:xmlWay];
             NSMutableOrderedSet * nodeSet = [NSMutableOrderedSet orderedSet];
             
             while (nodeXml!=nil) {
-                NSInteger nodeId = [[TBXML valueOfAttributeNamed:@"ref" forElement:nodeXml] integerValue];
-                OPEManagedOsmNode * node = [OPEManagedOsmNode fetchNodeWithOsmId:nodeId];
+                int64_t nodeId = [[TBXML valueOfAttributeNamed:@"ref" forElement:nodeXml] longLongValue];
+                OPEManagedOsmNode * node = [OPEManagedOsmNode fetchOrCreateNodeWithOsmID:nodeId];
                 [nodeSet addObject:node];
                 
                 nodeXml = [TBXML nextSiblingNamed:@"nd" searchFromElement:nodeXml];
             }
             [newWay setNodes:nodeSet];
             
-            
-            TBXMLElement* tag = [TBXML childElementNamed:@"tag" parentElement:xmlWay];
-            
-            NSMutableSet * newTags = [NSMutableSet set];
-            
-            while (tag!=nil) //Takes in tags and adds them to newNode
-            {
-                NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tag];
-                NSString* value = [OPEOSMData htmlFix:[TBXML valueOfAttributeNamed:@"v" forElement:tag]];
-                OPEManagedOsmTag * newTag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
-                [newTags addObject:newTag];
-                
-                tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
-            }
-            [newWay setTags:newTags];
             
             [newWay findType];
             
@@ -243,26 +190,26 @@
     [request startAsynchronous];
 }
 
-- (int) createNode: (OPEPoint *) newPoint
+- (int64_t) createNode: (OPEManagedOsmNode *) node
 {
-    NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Created new POI: %@",[tagInterpreter getName:newPoint]]];
-    int newIdent = [self createXmlNode:newPoint withChangeset:changeset];
+    int64_t changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Created new POI: %@",node.name]];
+    int64_t newIdent = [self createXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
     return newIdent;
     
 }
-- (int) updateNode: (OPEPoint *) node
+- (int64_t) updateNode: (OPEManagedOsmElement *) element
 {
-    NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Updated existing POI: %@",[tagInterpreter getName:node]]];
-    int version = [self updateXmlNode:node withChangeset:changeset];
+    int64_t changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Updated existing POI: %@",element.name]];
+    int version = [self updateXmlNode:element withChangeset:changeset];
     [self closeChangeset:changeset];
-    [ignoreNodes setObject:node forKey:[node uniqueIdentifier]];
+    //[ignoreNodes setObject:node forKey:[node uniqueIdentifier]];
     return version;
     
 }
-- (int) deleteNode: (OPEPoint *) node
+- (int64_t) deleteNode: (OPEManagedOsmNode *) node
 {
-    NSInteger changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Deleted POI: %@",[tagInterpreter getName:node]]];
+    int64_t changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Deleted POI: %@",node.name]];
     int version = [self deleteXmlNode:node withChangeset:changeset];
     [self closeChangeset:changeset];
     
@@ -270,7 +217,7 @@
     
 }
 
-- (NSInteger) openChangesetWithMessage: (NSString *) message
+- (int64_t) openChangesetWithMessage: (NSString *) message
 {    
     BOOL didAuth = NO;
     BOOL canAuth = NO;
@@ -320,25 +267,25 @@
     NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
     
     
-    return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
+    return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] longLongValue];
 }
 
-- (int) updateXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber
+- (int64_t) updateXmlNode: (OPEManagedOsmElement *) element withChangeset: (int64_t) changesetNumber
 {
     
-    NSData * nodeXML = [node updateXMLforChangset:changesetNumber];
+    NSData * nodeXML = [element updateXMLforChangset:changesetNumber];
     
     
     NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
     NSURL * url;
     
-    if([node isKindOfClass:[OPENode class]] )
+    if([element isKindOfClass:[OPENode class]] )
     {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%d",node.ident]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%lld",element.osmIDValue]];
     }
     else
     {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/way/%d",node.ident]];
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/way/%lld",element.osmIDValue]];
     }
     
     NSLog(@"URL: %@",[url absoluteURL]);
@@ -353,7 +300,7 @@
     
 }
 
-- (int) createXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber
+- (int64_t) createXmlNode: (OPEManagedOsmNode *) node withChangeset: (int64_t) changesetNumber
 {
     
     NSData *nodeXML = [node createXMLforChangset:changesetNumber];
@@ -372,13 +319,13 @@
     return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
 }
     
-- (int) deleteXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber
+- (int64_t) deleteXmlNode: (OPEManagedOsmNode *) node withChangeset: (int64_t) changesetNumber
 {
     
     NSData *nodeXML = [node deleteXMLforChangset:changesetNumber];
     
     
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%d",node.ident]];
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%lld",node.osmIDValue]];
     NSLog(@"URL: %@",[url absoluteURL]);
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPBody: nodeXML];
@@ -391,9 +338,9 @@
     
 }
 
-- (void) closeChangeset: (NSInteger) changesetNumber
+- (void) closeChangeset: (int64_t) changesetNumber
 {
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/changeset/%d/close",changesetNumber]];
+    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/changeset/%lld/close",changesetNumber]];
     NSLog(@"URL: %@",[url absoluteURL]);
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod: @"PUT"];
@@ -412,31 +359,6 @@
      object:self
      userInfo:nil];
 }
-+(void) backToHTML:(OPEPoint *)node
-{
-    NSMutableDictionary * fixedTags = [[NSMutableDictionary alloc] init];
-    for(id item in node.tags)
-    {
-        NSString * fixed = [[node.tags objectForKey:item] stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
-        [fixedTags setObject:fixed forKey:item];
-    }
-    node.tags = [[NSMutableDictionary alloc] initWithDictionary:fixedTags];
-    
-}
 
-+ (NSString *)htmlFix:(NSString *)string
-{
-    return [string stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
-}
 
-+(void) HTMLFix:(OPEPoint *)node
-{
-    NSMutableDictionary * fixedTags = [[NSMutableDictionary alloc] init];
-    for(id item in node.tags)
-    {
-        NSString * fixed = [[node.tags objectForKey:item] stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
-        [fixedTags setObject:fixed forKey:item];
-    }
-    node.tags = [[NSMutableDictionary alloc] initWithDictionary:fixedTags];
-}
 @end

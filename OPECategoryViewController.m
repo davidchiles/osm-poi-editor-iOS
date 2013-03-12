@@ -208,7 +208,7 @@
          viewer.title = @"Type";
          //viewer.category = [categoriesArray objectAtIndex:indexPath.row];
          viewer.categoryManagedObjectID = [[categoriesArray objectAtIndex:indexPath.row] objectID];
-         [viewer setDelegate: [[[self navigationController] viewControllers] objectAtIndex:1]];
+         [viewer setDelegate: [[[self navigationController] viewControllers] objectAtIndex:0]];
          [self.navigationController pushViewController:viewer animated:YES];
      }
     

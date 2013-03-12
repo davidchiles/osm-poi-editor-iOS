@@ -1,5 +1,6 @@
 #import "OPEManagedOsmWay.h"
 #import "OPEManagedOsmNode.h"
+#import "OPEManagedOsmTag.h"
 
 
 @interface OPEManagedOsmWay ()
@@ -26,6 +27,47 @@
         return CLLocationCoordinate2DMake(centerLat/[self.nodes count], centerLon/[self.nodes count]);
     }
     return CLLocationCoordinate2DMake(0, 0);
+}
+
+-(NSData *) updateXMLforChangset:(int64_t)changesetNumber
+{
+    NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
+    [xml appendString:[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"]];
+    [xml appendFormat:@"<way id=\"%lld\" version=\"%lld\" changeset=\"%lld\">",self.osmIDValue,self.versionValue, changesetNumber];
+    
+    for(OPEManagedOsmNode * node in self.nodes)
+    {
+        [xml appendFormat:@"<nd ref=\"%lld\"/>",node.osmIDValue];
+    }
+    
+    for(OPEManagedOsmTag * tag in self.tags)
+    {
+        [xml appendFormat:@"<tag k=\"%@\" v=\"%@\"/>",tag.key,tag.value];
+    }
+    [xml appendFormat: @"</way> @</osm>"];
+    
+    return [xml dataUsingEncoding:NSUTF8StringEncoding];
+    
+}
+
++(OPEManagedOsmWay *)fetchOrCreatWayWithOsmID:(int64_t)wayID
+{
+    NSPredicate *osmNodeFilter = [NSPredicate predicateWithFormat:@"osmID == %d",wayID];
+    
+    NSArray * results = [OPEManagedOsmWay MR_findAllWithPredicate:osmNodeFilter];
+    
+    OPEManagedOsmWay * osmWay = nil;
+    
+    if([results count])
+    {
+        osmWay = [results lastObject];
+    }
+    else{
+        osmWay = [OPEManagedOsmWay MR_createEntity];
+        osmWay.osmIDValue = wayID;
+    }
+    
+    return osmWay;
 }
 
 @end

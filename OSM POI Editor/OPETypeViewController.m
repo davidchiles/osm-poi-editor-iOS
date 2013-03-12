@@ -130,7 +130,7 @@
 {
     
     [[self delegate] setNewType:[[allTypes objectAtIndex:indexPath.row] objectID]];
-    [[self navigationController] popToViewController:[[[self navigationController] viewControllers] objectAtIndex:1] animated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

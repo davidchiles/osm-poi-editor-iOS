@@ -39,33 +39,27 @@
 #import "OPEManagedReferenceOptionalCategory.h"
 #import "OPEManagedReferencePoiCategory.h"
 #import "OPEManagedReferenceOsmTag.h"
+#import "OPEManagedOsmNode.h"
 
 
 
 @implementation OPENodeViewController
 
-@synthesize point, theNewPoint;
 @synthesize nodeInfoTableView;
 @synthesize deleteButton, saveButton;
 @synthesize delegate;
-@synthesize nodeIsEdited;
 @synthesize HUD;
 @synthesize tableSections;
-@synthesize nodeType;
 @synthesize originalAnnotation;
 @synthesize managedOsmElement;
-@synthesize editableTags;
 @synthesize newElement;
 @synthesize optionalSectionsArray;
-@synthesize editableType;
 
 -(id)init
 {
     self = [super init];
     if(self){
-        self.title = @"Node Info";
-        self.editableType = nil;
-        self.editableTags = [NSMutableSet set];
+        self.title = @"Info";
     }
     return self;
 }
@@ -81,16 +75,14 @@
         
         if (annotation.userInfo) {
             NSManagedObjectID * managedObjectID = (NSManagedObjectID *)annotation.userInfo;
-            self.managedOsmElement = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:managedObjectID];
-            self.editableTags = [managedOsmElement.tags mutableCopy];
-            if (managedOsmElement.type) {
-                editableType = managedOsmElement.type;
-            }
+            editContext = [NSManagedObjectContext MR_context];
+            self.managedOsmElement = (OPEManagedOsmElement *)[editContext existingObjectWithID:managedObjectID error:nil];
+            originalTags = [managedOsmElement.tags copy];
         }
         
-        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
+        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Canel" style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         
-        [[self navigationItem] setBackBarButtonItem: newBackButton];
+        [[self navigationItem] setLeftBarButtonItem: newBackButton];
         
     }
     return self;
@@ -102,6 +94,13 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
+-(void)cancelButtonPressed:(id)sender
+{
+    [editContext rollback];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+    
 }
 
 #pragma mark - View lifecycle
@@ -122,7 +121,7 @@
     nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     
-    if (!newElement) {
+    if (!newElement && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
         deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
         [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
@@ -169,7 +168,7 @@
 }
 -(void) reloadTags
 {
-    self.optionalSectionsArray = [editableType optionalDisplayNames];
+    self.optionalSectionsArray = [self.managedOsmElement.type optionalDisplayNames];
     
     optionalTagWidth = [self getWidth];
     
@@ -193,9 +192,14 @@
     
 }
 
+-(OPEManagedReferenceOptional *)optionalAtIndexPath:(NSIndexPath *)indexPath
+{
+    return self.optionalSectionsArray[indexPath.section-2][indexPath.row];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return [editableType numberOfOptionalSections] + 2;
+    return [self.managedOsmElement.type numberOfOptionalSections] + 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -250,7 +254,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
         }
         NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"key == %@",@"name"];
-        NSSet * filteredSet = [self.editableTags filteredSetUsingPredicate:tagFilter];
+        NSSet * filteredSet = [self.managedOsmElement.tags filteredSetUsingPredicate:tagFilter];
         NSString * displayValueForOptional = @"";
         if ([filteredSet count]) {
             OPEManagedOsmTag * elementTag = [filteredSet anyObject];
@@ -272,11 +276,11 @@
         cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         if (indexPath.row == 0) {
             cell.textLabel.text = @"Category";
-            cell.detailTextLabel.text = self.editableType.category.name;
+            cell.detailTextLabel.text = self.managedOsmElement.type.category.name;
         }
         else{
             cell.textLabel.text = @"Type";
-            cell.detailTextLabel.text = self.editableType.name;
+            cell.detailTextLabel.text = self.managedOsmElement.type.name;
         }
         return cell;
     }
@@ -286,7 +290,7 @@
         OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
         
         NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"key == %@",managedOptionalTag.osmKey];
-        NSSet * filteredSet = [self.editableTags filteredSetUsingPredicate:tagFilter];
+        NSSet * filteredSet = [self.managedOsmElement.tags filteredSetUsingPredicate:tagFilter];
         NSString * valueForOptional = @"";
         NSString * displayValueForOptional = @"";
         if ([filteredSet count]) {
@@ -376,13 +380,13 @@
     {
         if(indexPath.row == 1)
         {
-            if (editableType)
+            if (self.managedOsmElement.type)
             {
                 OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:[NSBundle mainBundle]];
                 viewer.title = @"Type";
                 
                 //viewer.category = editableType.category;
-                viewer.categoryManagedObjectID = [editableType.category objectID];
+                viewer.categoryManagedObjectID = [self.managedOsmElement.type.category objectID];
                 [viewer setDelegate:self];
                 
                 [self.navigationController pushViewController:viewer animated:YES];
@@ -424,7 +428,7 @@
         if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone] || [[cellDictionary objectForKey:@"values"] isEqualToString:KTypeName] ){ //Text editing
             OPETextEdit * viewer = [[OPETextEdit alloc] init];
             viewer.title = [cellDictionary objectForKey:@"name"];
-            viewer.osmValue = [theNewPoint.tags objectForKey:[cellDictionary objectForKey:@"osmKey"]];
+            viewer.osmValue = [self.managedOsmElement valueForOsmKey:[cellDictionary objectForKey:@"osmKey"]];
             viewer.osmKey = [cellDictionary objectForKey:@"osmKey"];
             viewer.type = [cellDictionary objectForKey:@"values"];
             [viewer setDelegate:self];
@@ -447,8 +451,11 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-         NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
-        [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:@"",@"osmValue",[cellDictionary objectForKey:@"osmKey"],@"osmKey", nil]];
+        OPEManagedReferenceOptional * optional = [self optionalAtIndexPath:indexPath];
+        NSString * osmKey = optional.osmKey;
+        [self.managedOsmElement removeTagWithOsmKey:osmKey];
+        [nodeInfoTableView reloadData];
+        [self checkSaveButton];
     }
     
 }
@@ -474,7 +481,7 @@
     {
         [self showOauthError];
     }
-    else if (![theNewPoint isequaltToPoint:point]) 
+    else if (self.managedOsmElement.isUpdated)
     {
         [self.navigationController.view addSubview:HUD];
         [HUD setLabelText:@"Saving..."];
@@ -483,41 +490,20 @@
         dispatch_async(q, ^{
             NSLog(@"saveBottoPressed");
             
-            [OPEOSMData backToHTML:theNewPoint];
-            
-            if(theNewPoint.ident<0)
+            if(self.managedOsmElement.osmIDValue<0 && [self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]])
             {
                 NSLog(@"Create Node");
-                int newIdent = [data createNode:theNewPoint];
-                NSLog(@"New Id: %d", newIdent);
-                theNewPoint.ident = newIdent;
-                theNewPoint.version = 1;
-                point = theNewPoint;
-                if(delegate)
-                {
-                    [OPEOSMData HTMLFix:theNewPoint];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                    [delegate createdNode:point];
-                    });
-                }
+                int64_t newID = [data createNode:(OPEManagedOsmNode *)self.managedOsmElement];
+                self.managedOsmElement.osmIDValue = newID;
             }
             else
             {
                 NSLog(@"Update Node");
-                int version = [data updateNode:theNewPoint];
-                NSLog(@"Version after update: %d",version);
-                theNewPoint.version = version;
-                point = theNewPoint;
-                if(delegate)
-                {
-                    [OPEOSMData HTMLFix:theNewPoint];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                    [delegate updatedNode:point withOriginalAnnotation:originalAnnotation];
-                    });
-                }
+                int64_t newVersion = [data updateNode:self.managedOsmElement];
+                NSLog(@"Version after update: %lld",newVersion);
+                self.managedOsmElement.versionValue = newVersion;
             }
+            
             
         });
         
@@ -528,7 +514,6 @@
     else {
         NSLog(@"NO CHANGES TO UPLOAD");
     }
-     nodeIsEdited = NO;
 }
 
 - (void) deleteButtonPressed
@@ -543,8 +528,8 @@
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Delete Point of Interest"
                                                           message:@"Are you Sure you want to delete this node?"
                                                          delegate:self
-                                                cancelButtonTitle:@"Yes"
-                                                otherButtonTitles:@"Cancel",nil];
+                                                cancelButtonTitle:@"Canel"
+                                                otherButtonTitles:@"Delete",nil];
         message.tag = 1;
         
         [message show];
@@ -566,7 +551,7 @@
         
     }
     else if (alertView.tag == 1) {
-        if([title isEqualToString:@"Yes"])
+        if(buttonIndex != alertView.cancelButtonIndex)
         {
             NSLog(@"Button YES was selected.");
             
@@ -574,49 +559,19 @@
             [HUD setLabelText:@"Deleting..."];
             [HUD show:YES];
             
-            if ([theNewPoint isKindOfClass:[OPEWay class]]) {
-                OPEOSMData* data = [[OPEOSMData alloc] init];
-                NSMutableArray * keysToRemove = [NSMutableArray arrayWithArray:[nodeType.tags allKeys]];
-                [keysToRemove addObject:@"name"];
-                [keysToRemove addObjectsFromArray:[OPETagInterpreter getOptionalTagsKeys:nodeType.optionalTags]];
-                [((OPEWay *)theNewPoint) prepareToDelete:keysToRemove];
-                NSLog(@"Update Node");
-                int version = [data updateNode:theNewPoint];
-                NSLog(@"Version after update: %d",version);
-                theNewPoint.version = version;
-                point = theNewPoint;
-                if(delegate)
-                {
-                    [OPEOSMData HTMLFix:theNewPoint];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [delegate deletedNode:point withOriginalAnnotation:originalAnnotation];
-                    });
-                }
-
-            }
-            else
-            {
+            if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
                 dispatch_queue_t q = dispatch_queue_create("queue", NULL);
                 dispatch_async(q, ^{
-                    [OPEOSMData backToHTML:point];
                     
                     OPEOSMData* data = [[OPEOSMData alloc] init];
-                    [data deleteNode:point];
-                    if(delegate)
-                    {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [delegate deletedNode:point withOriginalAnnotation:originalAnnotation];
-                        });
-                        
-                    }
+                    [data deleteNode:(OPEManagedOsmNode *)self.managedOsmElement];
                 });
                 
                 //dispatch_release(q);
             }
             
         }
-        else if([title isEqualToString:@"Cancel"])
+        else
         {
             NSLog(@"Button Cancel was selected.");
         }
@@ -628,89 +583,56 @@
 
 - (void) newTag:(NSManagedObjectID *)managedOsmTagID
 {
-    OPEManagedOsmTag * managedOsmTag = (OPEManagedOsmTag *)[OPEMRUtility managedObjectWithID:managedOsmTagID];
+    OPEManagedOsmTag * managedOsmTag = (OPEManagedOsmTag *)[editContext existingObjectWithID:managedOsmTagID error:nil];
     
-    NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"key == %@",managedOsmTag.key];
-    NSSet * matchSet = [self.editableTags filteredSetUsingPredicate:tagFilter];
-    [self.editableTags minusSet:matchSet];
-    [self.editableTags addObject:managedOsmTagID];
-}
--(void) removeOptionalTags:(NSArray *)oldTableSections
-{
-    for(int i = 2; i<[oldTableSections count]; i++)
-    {
-        NSDictionary * oldSectionDictionary = [oldTableSections objectAtIndex:i];
-        if (!([[oldSectionDictionary objectForKey:@"section"] isEqualToString:@"Address"] | [[oldSectionDictionary objectForKey:@"section"] isEqualToString:@"Note"] | [[oldSectionDictionary objectForKey:@"section"] isEqualToString:@"Name"])) {
-            NSArray * oldRowArray = [ oldSectionDictionary objectForKey:@"rows"];
-            for (NSDictionary * oldRowDictionary in oldRowArray)
-            {
-                if(![self tableSectionsContainsOsmKey:[oldRowDictionary objectForKey:@"osmKey"]])
-                {
-                    [self.theNewPoint.tags removeObjectForKey:[oldRowDictionary objectForKey:@"osmKey"]];
-                    NSLog(@"Removed: %@",[oldRowDictionary objectForKey:@"osmKey"]);
-                }
-                    
-            }
-            
-        }
-    }
-}
--(BOOL) tableSectionsContainsOsmKey:(NSString *)osmKey
-{
-    for(int i = 2; i<[tableSections count]-2; i++)
-    {
-        NSDictionary * sectionDictioanry = [tableSections objectAtIndex:i];
-        if (![[sectionDictioanry objectForKey:@"section"] isEqualToString:@"Address"]) {
-            NSArray * rowArray = [ sectionDictioanry objectForKey:@"rows"];
-            for (NSDictionary * rowDictionary in rowArray)
-            {
-                if ([[rowDictionary objectForKey:@"osmKey"] isEqualToString:osmKey]) {
-                    return YES;
-                }
-            }
-            
-        }
-    }
-    return NO;
+    [self.managedOsmElement removeTagWithOsmKey:managedOsmTag.key];
+    [self.managedOsmElement addTagsObject:managedOsmTag];
+    [self checkSaveButton];
+    [nodeInfoTableView reloadData];
 }
 
 -(void)newType:(OPEManagedReferencePoi *)newType;
 {
-    [editableTags minusSet:editableType.tags];
-    [editableTags unionSet:newType.tags];
-    editableType = newType;
+    [self.managedOsmElement newType:newType];
 }
 
 -(void)setNewType:(NSManagedObjectID *)managedReferencePoiID
 {
-    [self newType:(OPEManagedReferencePoi *)[OPEMRUtility managedObjectWithID:managedReferencePoiID]];
+    //[self newType:(OPEManagedReferencePoi *)[OPEMRUtility managedObjectWithID:managedReferencePoiID]];
+    [self newType:(OPEManagedReferencePoi *)[editContext existingObjectWithID:managedReferencePoiID error:nil]];
     
     [self reloadTags];
     [nodeInfoTableView reloadData];
+    [self checkSaveButton];
+}
+
+-(BOOL)tagsHaveChanged
+{
+    return ![originalTags isEqualToSet:self.managedOsmElement.tags];
 }
 
 
 - (void)checkSaveButton
 {
     //NSLog(@"cAndT count %d",[catAndType count]);
-    if([theNewPoint isequaltToPoint:point] || !nodeType)
-    {
-        NSLog(@"NO CHANGES YET");
-        self.saveButton.enabled= NO;
-    }
-    else {
+    if ([self tagsHaveChanged] && managedOsmElement.type) {
         self.saveButton.enabled = YES;
     }
+    else
+    {
+        self.saveButton.enabled= NO;
+    }
+
 }
 -(void) uploadComplete:(NSNotification *)notification
 {
     NSLog(@"got notification");
     
     dispatch_async(dispatch_get_main_queue(), ^{
-    [self.HUD hide:YES];
-    point = theNewPoint;
-    [self checkSaveButton];
-    [self.navigationController popViewControllerAnimated:YES];
+        [self.HUD hide:YES];
+        [editContext MR_saveToPersistentStoreAndWait];
+        [self checkSaveButton];
+        [self.navigationController popViewControllerAnimated:YES];
     });
 }
 
@@ -721,13 +643,11 @@
     
 }
 
-- (void)viewDidUnload
+-(void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    [super viewWillDisappear:animated];
+    
 }
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations

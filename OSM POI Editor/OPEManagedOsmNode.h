@@ -3,5 +3,10 @@
 
 @interface OPEManagedOsmNode : _OPEManagedOsmNode {}
 
-+(OPEManagedOsmNode *)fetchNodeWithOsmId:(NSInteger)nodeId;
+
+- (NSData *) createXMLforChangset: (int64_t) changesetNumber;
+- (NSData *) deleteXMLforChangset: (int64_t) changesetNumber;
+
+
++(OPEManagedOsmNode *)fetchOrCreateNodeWithOsmID:(int64_t)nodeId;
 @end

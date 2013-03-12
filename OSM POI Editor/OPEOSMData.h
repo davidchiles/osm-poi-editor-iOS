@@ -25,6 +25,9 @@
 #import "OPETagInterpreter.h"
 #import "GTMOAuthViewControllerTouch.h"
 
+@class OPEManagedOsmNode;
+@class OPEManagedOsmElement;
+
 @interface OPEOSMData : NSObject 
 {
     GTMOAuthAuthentication *auth;
@@ -37,20 +40,17 @@
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
 
 - (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
-- (NSInteger) openChangesetWithMessage: (NSString *) message;
-- (int) createXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber;
-- (int) updateXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber;
-- (int) deleteXmlNode: (OPEPoint *) node withChangeset: (NSInteger) changesetNumber;
-- (void) closeChangeset: (NSInteger) changesetNumber;
+- (int64_t) openChangesetWithMessage: (NSString *) message;
+- (int64_t) createXmlNode: (OPEManagedOsmNode *) node withChangeset: (int64_t) changesetNumber;
+- (int64_t) updateXmlNode: (OPEManagedOsmElement *) node withChangeset: (int64_t) changesetNumber;
+- (int64_t) deleteXmlNode: (OPEManagedOsmNode *) node withChangeset: (int64_t) changesetNumber;
+- (void) closeChangeset: (int64_t) changesetNumber;
 - (BOOL) canAuth;
 
-- (int) createNode: (OPEPoint *) node;
-- (int) updateNode: (OPEPoint *) node;
-- (int) deleteNode: (OPEPoint *) node;
+- (int64_t) createNode: (OPEManagedOsmNode *) node;
+- (int64_t) updateNode: (OPEManagedOsmElement *) element;
+- (int64_t) deleteNode: (OPEManagedOsmNode *) node;
 - (void) uploadComplete;
-+ (void) HTMLFix:(OPEPoint *)node;
-+ (NSString *)htmlFix:(NSString *)string;
-+(void) backToHTML:(OPEPoint *)node;
 
 
 

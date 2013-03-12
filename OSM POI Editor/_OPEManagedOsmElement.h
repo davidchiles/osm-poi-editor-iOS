@@ -5,8 +5,12 @@
 
 
 extern const struct OPEManagedOsmElementAttributes {
+	__unsafe_unretained NSString *changesetID;
 	__unsafe_unretained NSString *isVisible;
 	__unsafe_unretained NSString *osmID;
+	__unsafe_unretained NSString *timeStamp;
+	__unsafe_unretained NSString *userID;
+	__unsafe_unretained NSString *userName;
 	__unsafe_unretained NSString *version;
 } OPEManagedOsmElementAttributes;
 
@@ -27,6 +31,10 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 
 
 
+
+
+
+
 @interface OPEManagedOsmElementID : NSManagedObjectID {}
 @end
 
@@ -35,6 +43,20 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (OPEManagedOsmElementID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* changesetID;
+
+
+
+@property int64_t changesetIDValue;
+- (int64_t)changesetIDValue;
+- (void)setChangesetIDValue:(int64_t)value_;
+
+//- (BOOL)validateChangesetID:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -63,6 +85,40 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 - (void)setOsmIDValue:(int64_t)value_;
 
 //- (BOOL)validateOsmID:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSDate* timeStamp;
+
+
+
+//- (BOOL)validateTimeStamp:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* userID;
+
+
+
+@property int64_t userIDValue;
+- (int64_t)userIDValue;
+- (void)setUserIDValue:(int64_t)value_;
+
+//- (BOOL)validateUserID:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* userName;
+
+
+
+//- (BOOL)validateUserName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -123,6 +179,15 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 @interface _OPEManagedOsmElement (CoreDataGeneratedPrimitiveAccessors)
 
 
+- (NSNumber*)primitiveChangesetID;
+- (void)setPrimitiveChangesetID:(NSNumber*)value;
+
+- (int64_t)primitiveChangesetIDValue;
+- (void)setPrimitiveChangesetIDValue:(int64_t)value_;
+
+
+
+
 - (NSNumber*)primitiveIsVisible;
 - (void)setPrimitiveIsVisible:(NSNumber*)value;
 
@@ -137,6 +202,27 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 
 - (int64_t)primitiveOsmIDValue;
 - (void)setPrimitiveOsmIDValue:(int64_t)value_;
+
+
+
+
+- (NSDate*)primitiveTimeStamp;
+- (void)setPrimitiveTimeStamp:(NSDate*)value;
+
+
+
+
+- (NSNumber*)primitiveUserID;
+- (void)setPrimitiveUserID:(NSNumber*)value;
+
+- (int64_t)primitiveUserIDValue;
+- (void)setPrimitiveUserIDValue:(int64_t)value_;
+
+
+
+
+- (NSString*)primitiveUserName;
+- (void)setPrimitiveUserName:(NSString*)value;
 
 
 

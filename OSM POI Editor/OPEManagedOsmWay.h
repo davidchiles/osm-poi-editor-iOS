@@ -5,4 +5,6 @@
 // Custom logic goes here.
 
 
++(OPEManagedOsmWay *)fetchOrCreatWayWithOsmID:(int64_t)wayID;
+
 @end

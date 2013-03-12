@@ -45,23 +45,18 @@
     OPETagInterpreter * tagInterpreter;
     NSDictionary * osmKeyValue;
     float optionalTagWidth;
+    NSManagedObjectContext * editContext;
+    NSSet * originalTags;
 }
 
-@property (nonatomic, strong) OPEPoint * point;
-@property (nonatomic, strong) OPEPoint * theNewPoint;
 @property (nonatomic, strong) UITableView * nodeInfoTableView;
-@property (nonatomic, strong) OPEType * nodeType;
-@property (nonatomic, strong) NSString * type;
 @property (nonatomic, strong) UIButton * deleteButton;
 @property (nonatomic, strong) UIBarButtonItem * saveButton;
 @property (nonatomic, strong) id <OPENodeViewDelegate> delegate;
-@property (nonatomic) BOOL nodeIsEdited;
 @property (nonatomic, strong) MBProgressHUD * HUD;
 @property (nonatomic, strong) NSMutableArray * tableSections;
 @property (nonatomic, strong) RMAnnotation * originalAnnotation;
 @property (nonatomic, strong) OPEManagedOsmElement * managedOsmElement;
-@property (nonatomic, strong) NSMutableSet * editableTags;
-@property (nonatomic, strong) OPEManagedReferencePoi * editableType;
 @property (nonatomic) BOOL newElement;
 @property (nonatomic, strong) NSArray * optionalSectionsArray;
 

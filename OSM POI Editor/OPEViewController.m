@@ -258,9 +258,9 @@
 {
     OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithAnnotation:annotation delegate:self];
     
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:nodeViewController];
     
-    
-    [self.navigationController pushViewController:nodeViewController animated:YES];
+    [self.navigationController presentModalViewController:navController animated:YES];
 }
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
@@ -418,7 +418,7 @@
         OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
         OPENodeViewController * nodeVC = [[OPENodeViewController alloc] init];
         
-        nodeVC.point = node;
+        //nodeVC.point = node;
         [nodeVC setDelegate:self];
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
@@ -482,8 +482,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self.navigationController setToolbarHidden:NO animated:YES];
+    //[self.navigationController setNavigationBarHidden:YES animated:YES];
+    //[self.navigationController setToolbarHidden:NO animated:YES];
     
     [self setupButtons];
     userPressedLocatoinButton = NO;
@@ -498,8 +498,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self.navigationController setToolbarHidden:YES animated:YES];
+    //[self.navigationController setNavigationBarHidden:NO animated:YES];
+    //[self.navigationController setToolbarHidden:YES animated:YES];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

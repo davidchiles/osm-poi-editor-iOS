@@ -4,8 +4,12 @@
 #import "_OPEManagedOsmElement.h"
 
 const struct OPEManagedOsmElementAttributes OPEManagedOsmElementAttributes = {
+	.changesetID = @"changesetID",
 	.isVisible = @"isVisible",
 	.osmID = @"osmID",
+	.timeStamp = @"timeStamp",
+	.userID = @"userID",
+	.userName = @"userName",
 	.version = @"version",
 };
 
@@ -44,6 +48,11 @@ const struct OPEManagedOsmElementFetchedProperties OPEManagedOsmElementFetchedPr
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"changesetIDValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"changesetID"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 	if ([key isEqualToString:@"isVisibleValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"isVisible"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -51,6 +60,11 @@ const struct OPEManagedOsmElementFetchedProperties OPEManagedOsmElementFetchedPr
 	}
 	if ([key isEqualToString:@"osmIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"osmID"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"userIDValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"userID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -62,6 +76,32 @@ const struct OPEManagedOsmElementFetchedProperties OPEManagedOsmElementFetchedPr
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic changesetID;
+
+
+
+- (int64_t)changesetIDValue {
+	NSNumber *result = [self changesetID];
+	return [result longLongValue];
+}
+
+- (void)setChangesetIDValue:(int64_t)value_ {
+	[self setChangesetID:[NSNumber numberWithLongLong:value_]];
+}
+
+- (int64_t)primitiveChangesetIDValue {
+	NSNumber *result = [self primitiveChangesetID];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveChangesetIDValue:(int64_t)value_ {
+	[self setPrimitiveChangesetID:[NSNumber numberWithLongLong:value_]];
+}
+
 
 
 
@@ -113,6 +153,46 @@ const struct OPEManagedOsmElementFetchedProperties OPEManagedOsmElementFetchedPr
 - (void)setPrimitiveOsmIDValue:(int64_t)value_ {
 	[self setPrimitiveOsmID:[NSNumber numberWithLongLong:value_]];
 }
+
+
+
+
+
+@dynamic timeStamp;
+
+
+
+
+
+
+@dynamic userID;
+
+
+
+- (int64_t)userIDValue {
+	NSNumber *result = [self userID];
+	return [result longLongValue];
+}
+
+- (void)setUserIDValue:(int64_t)value_ {
+	[self setUserID:[NSNumber numberWithLongLong:value_]];
+}
+
+- (int64_t)primitiveUserIDValue {
+	NSNumber *result = [self primitiveUserID];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveUserIDValue:(int64_t)value_ {
+	[self setPrimitiveUserID:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
+
+@dynamic userName;
+
 
 
 
