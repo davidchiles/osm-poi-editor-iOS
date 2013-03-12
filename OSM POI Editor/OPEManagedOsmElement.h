@@ -16,6 +16,9 @@
 
 - (NSData *) updateXMLforChangset: (int64_t) changesetNumber;
 
++ (NSInteger)minID;
+
+
 //+(OPEManagedOsmElement *)fetchOrCreateElementWithOsmID:(int64_t)elementID;
 
 @end

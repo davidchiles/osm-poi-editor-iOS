@@ -93,4 +93,12 @@
     return osmNode;
 }
 
++(OPEManagedOsmNode *)newNode
+{
+    OPEManagedOsmNode * newNode = [OPEManagedOsmNode MR_createEntity];
+    newNode.osmIDValue = [OPEManagedOsmElement minID]-1;
+    
+    return newNode;
+}
+
 @end

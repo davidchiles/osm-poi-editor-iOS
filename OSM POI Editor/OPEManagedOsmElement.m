@@ -144,4 +144,20 @@
     return [NSString stringWithFormat:@"%@ %@",[super description],[self tagsDescription]];
 }
 
++(NSInteger) minID
+{
+    NSFetchRequest * request = [OPEManagedOsmElement MR_requestAllSortedBy:OPEManagedOsmElementAttributes.osmID ascending:YES];
+    request.fetchLimit = 1;
+    
+    NSArray * results = [OPEManagedOsmElement MR_executeFetchRequest:request];
+    if ([results count]) {
+        OPEManagedOsmElement * element = [results lastObject];
+        if (element.osmIDValue < 0) {
+            return  element.osmIDValue;
+        }
+    }
+    return 0;
+    
+}
+
 @end

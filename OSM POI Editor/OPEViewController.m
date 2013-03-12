@@ -33,6 +33,7 @@
 #import "OPEManagedOsmElement.h"
 #import "OPEManagedReferencePoi.h"
 #import "OPEMRUtility.h"
+#import "OPEManagedOsmNode.h"
 
 
 @implementation OPEViewController
@@ -415,8 +416,13 @@
     
     //center = [mapView pixelToCoordinate:plusImageView.center];
     if (mapView.zoom > MINZOOM) {
-        OPENode * node = [[OPENode alloc] initWithId:-1 latitude:center.latitude longitude:center.longitude version:1];
+        
+        OPEManagedOsmNode * node = [OPEManagedOsmNode newNode];
+        node.lattitudeValue = center.latitude;
+        node.longitudeValue = center.longitude;
+        
         OPENodeViewController * nodeVC = [[OPENodeViewController alloc] init];
+        nodeVC.managedOsmElement = node;
         
         //nodeVC.point = node;
         [nodeVC setDelegate:self];

@@ -9,4 +9,6 @@
 
 
 +(OPEManagedOsmNode *)fetchOrCreateNodeWithOsmID:(int64_t)nodeId;
++(OPEManagedOsmNode *)newNode;
+
 @end
