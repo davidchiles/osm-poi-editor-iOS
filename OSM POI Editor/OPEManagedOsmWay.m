@@ -40,10 +40,8 @@
         [xml appendFormat:@"<nd ref=\"%lld\"/>",node.osmIDValue];
     }
     
-    for(OPEManagedOsmTag * tag in self.tags)
-    {
-        [xml appendFormat:@"<tag k=\"%@\" v=\"%@\"/>",tag.key,tag.value];
-    }
+    [xml appendString:[self tagsXML]];
+    
     [xml appendFormat: @"</way> @</osm>"];
     
     return [xml dataUsingEncoding:NSUTF8StringEncoding];

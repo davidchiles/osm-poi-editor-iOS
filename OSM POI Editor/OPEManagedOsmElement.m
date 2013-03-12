@@ -77,6 +77,16 @@
     
 }
 
+-(NSString *)tagsXML
+{
+    NSMutableString * xml = [NSMutableString stringWithString:@""];
+    for (OPEManagedOsmTag *tag in self.tags)
+    {
+        [xml appendFormat:@"<tag k=\"%@\" v=\"%@\"/>",tag.key,[OPEUtility addHTML:tag.value]];
+    }
+    return xml;
+}
+
 -(BOOL)findType
 {
     if ([self.tags count]) {

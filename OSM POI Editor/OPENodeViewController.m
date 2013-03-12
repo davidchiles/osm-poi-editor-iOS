@@ -50,7 +50,7 @@
 @synthesize delegate;
 @synthesize HUD;
 @synthesize tableSections;
-@synthesize originalAnnotation;
+@synthesize annotation;
 @synthesize managedOsmElement;
 @synthesize newElement;
 @synthesize optionalSectionsArray;
@@ -63,24 +63,25 @@
     }
     return self;
 }
-
--(id) initWithAnnotation:(RMAnnotation *)annotation delegate:(id<OPENodeViewDelegate>)newDelegate
+- (id)initWithOsmElementObjectID:(NSManagedObjectID *)objectID delegate:(id<OPENodeViewDelegate>)newDelegate
 {
     self = [self init];
     if(self)
     {
         self.delegate = newDelegate;
-        self.originalAnnotation = annotation;
-        
-        
-        if (annotation.userInfo) {
-            NSManagedObjectID * managedObjectID = (NSManagedObjectID *)annotation.userInfo;
-            editContext = [NSManagedObjectContext MR_context];
-            self.managedOsmElement = (OPEManagedOsmElement *)[editContext existingObjectWithID:managedObjectID error:nil];
-            originalTags = [managedOsmElement.tags copy];
+        editContext = [NSManagedObjectContext MR_context];
+        if (objectID) {
+            
+            NSError * error = nil;
+            self.managedOsmElement = (OPEManagedOsmElement *)[editContext existingObjectWithID:objectID error:&error];
+            if (error) {
+                NSLog(@"Getting Element Error: %@",error);
+            }
         }
         
-        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Canel" style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
+        originalTags = [self.managedOsmElement.tags copy];
+        
+        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         
         [[self navigationItem] setLeftBarButtonItem: newBackButton];
         
@@ -98,9 +99,15 @@
 
 -(void)cancelButtonPressed:(id)sender
 {
-    [editContext rollback];
+    if (self.managedOsmElement.osmIDValue < 0) {
+        [self.managedOsmElement MR_deleteInContext:editContext];
+    }
+    else
+    {
+        [editContext rollback];
+    }
     [self.navigationController dismissModalViewControllerAnimated:YES];
-    
+    [editContext MR_saveToPersistentStoreAndWait];
 }
 
 #pragma mark - View lifecycle
@@ -121,7 +128,7 @@
     nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     
-    if (!newElement && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
+    if (self.managedOsmElement.osmIDValue > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
         deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
         [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
@@ -476,12 +483,13 @@
 
 - (void) saveButtonPressed
 {
+    [editContext MR_saveToPersistentStoreAndWait];
     OPEOSMData* data = [[OPEOSMData alloc] init];
     if (![data canAuth])
     {
         [self showOauthError];
     }
-    else if (self.managedOsmElement.isUpdated)
+    else if ([self tagsHaveChanged])
     {
         [self.navigationController.view addSubview:HUD];
         [HUD setLabelText:@"Saving..."];
@@ -490,20 +498,25 @@
         dispatch_async(q, ^{
             NSLog(@"saveBottoPressed");
             
-            if(self.managedOsmElement.osmIDValue<0 && [self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]])
+            NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
+            OPEManagedOsmElement * element = (OPEManagedOsmElement *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
+            
+            if(element.osmIDValue<0 && [element isKindOfClass:[OPEManagedOsmNode class]])
             {
                 NSLog(@"Create Node");
-                int64_t newID = [data createNode:(OPEManagedOsmNode *)self.managedOsmElement];
-                self.managedOsmElement.osmIDValue = newID;
+                int64_t newID = [data createNode:(OPEManagedOsmNode *)element];
+                element.osmIDValue = newID;
+                element.versionValue = 1;
             }
             else
             {
                 NSLog(@"Update Node");
-                int64_t newVersion = [data updateNode:self.managedOsmElement];
+                int64_t newVersion = [data updateNode:element];
                 NSLog(@"Version after update: %lld",newVersion);
-                self.managedOsmElement.versionValue = newVersion;
+                element.versionValue = newVersion;
             }
             
+            [context MR_saveToPersistentStoreAndWait];
             
         });
         
@@ -528,7 +541,7 @@
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Delete Point of Interest"
                                                           message:@"Are you Sure you want to delete this node?"
                                                          delegate:self
-                                                cancelButtonTitle:@"Canel"
+                                                cancelButtonTitle:@"Cancel"
                                                 otherButtonTitles:@"Delete",nil];
         message.tag = 1;
         
@@ -563,13 +576,24 @@
                 dispatch_queue_t q = dispatch_queue_create("queue", NULL);
                 dispatch_async(q, ^{
                     
+                    NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
+                    OPEManagedOsmNode * node = (OPEManagedOsmNode *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
+                    
                     OPEOSMData* data = [[OPEOSMData alloc] init];
-                    [data deleteNode:(OPEManagedOsmNode *)self.managedOsmElement];
+                    int64_t version = [data deleteNode:node];
+                    if (version) {
+                        node.versionValue = version;
+                    }
+                    node.isVisibleValue = NO;
+                    
+                    [context MR_saveToPersistentStoreAndWait];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.delegate removeAnnotation:annotation];
+                    });
                 });
-                
                 //dispatch_release(q);
             }
-            
         }
         else
         {
@@ -632,7 +656,7 @@
         [self.HUD hide:YES];
         [editContext MR_saveToPersistentStoreAndWait];
         [self checkSaveButton];
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController dismissModalViewControllerAnimated: YES];
     });
 }
 

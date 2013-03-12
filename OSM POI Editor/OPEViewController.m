@@ -257,11 +257,7 @@
 
 - (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
-    OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithAnnotation:annotation delegate:self];
-    
-    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:nodeViewController];
-    
-    [self.navigationController presentModalViewController:navController animated:YES];
+    [self presentNodeInfoViewControllerWithElement:annotation.userInfo withAnnotation:annotation];
 }
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
@@ -333,18 +329,6 @@
     }
 }
 
-- (void) addMarkers:(NSNotification*)notification 
-{
-    NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type.@count == 1 AND isVisible == %@",[NSNumber numberWithBool:NO]];
-    NSArray * results = [OPEManagedOsmElement MR_findAllWithPredicate:osmElementFilter];
-    
-    for(OPEManagedOsmElement * managedOsmElement in results)
-    {
-        [mapView addAnnotation:[self annotationWithOsmElement:managedOsmElement]];
-    }
-    [OPEMRUtility saveAll];
-}
-
 #pragma - LocationManagerDelegate
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -368,27 +352,8 @@
 
 #pragma - NodeViewDelegate
 
--(void) createdNode:(OPENode *)newNode
+-(void)removeAnnotation:(RMAnnotation *)annotation
 {
-    NSLog(@"Created New Node: %@",[newNode uniqueIdentifier]);
-    [self.osmData.allNodes setObject:newNode forKey:[newNode uniqueIdentifier]];
-    RMAnnotation * newAnnotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[newNode coordinate] andTitle:[newNode name]];
-    newAnnotation.userInfo=newNode;
-    [mapView addAnnotation:newAnnotation];
-    
-}
--(void)updatedNode:(OPEPoint *) newPoint withOriginalAnnotation:(RMAnnotation *)annotation
-{
-    [self.osmData.allNodes setObject:newPoint forKey:[newPoint uniqueIdentifier]];
-    [mapView removeAnnotation:annotation];
-    RMAnnotation * newAnnotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[newPoint coordinate] andTitle:[newPoint name]];
-    newAnnotation.userInfo = newPoint;
-    [mapView addAnnotation:newAnnotation];
-}
--(void)deletedNode:(OPEPoint *) newPoint withOriginalAnnotation:(RMAnnotation *)annotation
-{
-    [self.osmData.allNodes removeObjectForKey:[newPoint uniqueIdentifier]];
-    [self.osmData.ignoreNodes setObject:newPoint forKey:[newPoint uniqueIdentifier]];
     [mapView removeAnnotation:annotation];
 }
 
@@ -421,17 +386,9 @@
         node.lattitudeValue = center.latitude;
         node.longitudeValue = center.longitude;
         
-        OPENodeViewController * nodeVC = [[OPENodeViewController alloc] init];
-        nodeVC.managedOsmElement = node;
+        [OPEMRUtility saveAll];
         
-        //nodeVC.point = node;
-        [nodeVC setDelegate:self];
-        
-        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Map" style: UIBarButtonItemStyleBordered target: nil action: nil];
-        
-        [[self navigationItem] setBackBarButtonItem: newBackButton];
-        
-        [self.navigationController pushViewController:nodeVC animated:YES];
+        [self presentNodeInfoViewControllerWithElement:node.objectID withAnnotation:nil];
     }
     else {
         UIAlertView * zoomAlert = [[UIAlertView alloc]
@@ -473,6 +430,16 @@
     viewer.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     viewer.title = @"Settings";
     [[self navigationController] pushViewController:viewer animated:YES];
+}
+
+-(void)presentNodeInfoViewControllerWithElement:(NSManagedObjectID *)elementID withAnnotation:(RMAnnotation *)annotation
+{
+    OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithOsmElementObjectID:elementID delegate:self];
+    nodeViewController.annotation = annotation;
+    UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:nodeViewController];
+    
+    [self.navigationController presentModalViewController:navController animated:YES];
+    
 }
 
 - (void)viewDidUnload
@@ -550,9 +517,9 @@
     if(_osmElementFetchedResultsController)
         return _osmElementFetchedResultsController;
     
-    NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type != nil AND isVisible == %@",[NSNumber numberWithBool:NO]];
+    NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type != nil AND isVisible == NO"];
     
-    _osmElementFetchedResultsController = [OPEManagedOsmElement MR_fetchAllGroupedBy:nil withPredicate:osmElementFilter sortedBy:nil ascending:NO delegate:self];
+    _osmElementFetchedResultsController = [OPEManagedOsmElement MR_fetchAllGroupedBy:nil withPredicate:osmElementFilter sortedBy:OPEManagedOsmElementAttributes.osmID ascending:NO delegate:self];
     
     return _osmElementFetchedResultsController;
 }
@@ -577,11 +544,6 @@
         }
             break;
         case NSFetchedResultsChangeDelete:
-        {
-            OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:newIndexPath];
-            [self removeAnnotationWithOsmElementID:managedOsmElement.objectID];
-             
-        }
             break;
             
         default:

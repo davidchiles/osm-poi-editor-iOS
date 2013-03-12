@@ -34,9 +34,7 @@
 
 @protocol OPENodeViewDelegate
 @optional
--(void)createdNode:(OPEPoint *) newPoint;
--(void)updatedNode:(OPEPoint *) newPoint withOriginalAnnotation:(RMAnnotation *)annotation;
--(void)deletedNode:(OPEPoint *) newPoint withOriginalAnnotation:(RMAnnotation *)annotation;
+-(void)removeAnnotation:(RMAnnotation *)annotation;
 @end
 
 
@@ -55,12 +53,13 @@
 @property (nonatomic, strong) id <OPENodeViewDelegate> delegate;
 @property (nonatomic, strong) MBProgressHUD * HUD;
 @property (nonatomic, strong) NSMutableArray * tableSections;
-@property (nonatomic, strong) RMAnnotation * originalAnnotation;
+@property (nonatomic, strong) RMAnnotation * annotation;
 @property (nonatomic, strong) OPEManagedOsmElement * managedOsmElement;
 @property (nonatomic) BOOL newElement;
 @property (nonatomic, strong) NSArray * optionalSectionsArray;
 
 - (id)initWithAnnotation:(RMAnnotation *)annotation delegate:(id<OPENodeViewDelegate>)delegate;
+- (id)initWithOsmElementObjectID:(NSManagedObjectID *)objectID delegate:(id<OPENodeViewDelegate>)delegate;
 
 - (void) saveButtonPressed;
 - (void) deleteButtonPressed;

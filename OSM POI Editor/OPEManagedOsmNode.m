@@ -29,10 +29,7 @@
     [nodeXML appendString: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"];
     [nodeXML appendFormat:@"<node lat=\"%f\" lon=\"%f\" changeset=\"%lld\">",lat,lon, changesetNumber];
     
-    for (OPEManagedOsmTag *tag in self.tags)
-    {
-        [nodeXML appendFormat:@"<tag k=\"%@\" v=\"%@\"/>",tag.key,tag.value];
-    }
+    [nodeXML appendString:[self tagsXML]];
     
     [nodeXML appendString:@"</node> </osm>"];
     
@@ -45,10 +42,8 @@
     [xml appendString:@"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"];
     [xml appendFormat:@"<node id=\"%lld\" lat=\"%f\" lon=\"%f\" version=\"%lld\" changeset=\"%lld\">",self.osmIDValue,self.lattitudeValue,self.longitudeValue,self.versionValue, changesetNumber];
     
-    for(OPEManagedOsmTag *tag in self.tags)
-    {
-        [xml appendFormat:@"<tag k=\"%@\" v=\"%@\"/>",tag.key,tag.value];
-    }
+    [xml appendString:[self tagsXML]];
+    
     [xml appendFormat: @"</node> @</osm>"];
     
     
@@ -75,9 +70,13 @@
 
 +(OPEManagedOsmNode *)fetchOrCreateNodeWithOsmID:(int64_t)nodeId
 {
-    NSPredicate *osmNodeFilter = [NSPredicate predicateWithFormat:@"osmID == %d",nodeId];
+    NSPredicate *osmNodeFilter = [NSPredicate predicateWithFormat:@"%K == %lld",OPEManagedOsmElementAttributes.osmID,nodeId];
     
     NSArray * results = [OPEManagedOsmNode MR_findAllWithPredicate:osmNodeFilter];
+    
+    if (nodeId == 2198739325) {
+        NSLog(@"help");
+    }
     
     OPEManagedOsmNode * osmNode = nil;
     

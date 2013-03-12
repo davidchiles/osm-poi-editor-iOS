@@ -14,6 +14,8 @@
 
 -(void)setMetaData:(TBXMLElement *)xmlElement;
 
+-(NSString *)tagsXML;
+
 - (NSData *) updateXMLforChangset: (int64_t) changesetNumber;
 
 + (NSInteger)minID;
