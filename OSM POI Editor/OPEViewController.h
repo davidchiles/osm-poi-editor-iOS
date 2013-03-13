@@ -59,10 +59,6 @@
 
 @property (nonatomic,strong) NSFetchedResultsController * osmElementFetchedResultsController;
 
-- (void) addMarkers:(NSNotification *) notification;
-//- (void) pushMapAnnotationDetailedViewControllerDelegate:(id) sender;
-//- (void) buttonEvent:(id)sender;
-
 -(IBAction)infoButtonPressed:(id)sender;
 -(IBAction)addPointButtonPressed:(id)sender;
 -(IBAction)locationButtonPressed:(id)sender;

@@ -55,7 +55,6 @@
     NSString * timeString = [TBXML valueOfAttributeNamed:@"timestamp" forElement:xmlElement];
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"YYYY-MM-dd'T'HH:mm:ssZ"];
-    NSDate * date = [dateFormatter dateFromString:timeString];
     self.timeStamp = [dateFormatter dateFromString:timeString];
     
     TBXMLElement* tag = [TBXML childElementNamed:@"tag" parentElement:xmlElement];

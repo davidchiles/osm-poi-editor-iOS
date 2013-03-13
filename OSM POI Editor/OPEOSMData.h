@@ -35,8 +35,6 @@
     
 }
 
-@property (nonatomic, strong) NSMutableDictionary * allNodes;
-@property (nonatomic, strong) NSMutableDictionary * ignoreNodes;
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
 
 - (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;

@@ -35,8 +35,6 @@
 
 @implementation OPEOSMData
 
-@synthesize allNodes;
-@synthesize ignoreNodes;
 @synthesize auth;
 
 
@@ -51,8 +49,6 @@
         auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
                                                            consumerKey:myConsumerKey
                                                             privateKey:myConsumerSecret];
-        allNodes = [[NSMutableDictionary alloc] init];
-        ignoreNodes = [[NSMutableDictionary alloc] init];
         
         tagInterpreter = [OPETagInterpreter sharedInstance];
     }
@@ -131,15 +127,15 @@
         while (xmlNode!=nil) {
             
             OPEManagedOsmNode * newNode = [OPEManagedOsmNode fetchOrCreateNodeWithOsmID:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlNode] longLongValue]];
-            
-            newNode.lattitude = [NSNumber numberWithFloat:[[TBXML valueOfAttributeNamed:@"lat" forElement:xmlNode] floatValue]];
-            newNode.longitude = [NSNumber numberWithFloat:[[TBXML valueOfAttributeNamed:@"lon" forElement:xmlNode] floatValue]];
-            
-            
-            [newNode setMetaData:xmlNode];
-            [newNode findType];
-            
-
+            NSInteger newVersion = [[TBXML valueOfAttributeNamed:@"version" forElement:xmlNode] integerValue];
+            if (newVersion > newNode.versionValue) {
+                newNode.lattitude = [NSNumber numberWithFloat:[[TBXML valueOfAttributeNamed:@"lat" forElement:xmlNode] floatValue]];
+                newNode.longitude = [NSNumber numberWithFloat:[[TBXML valueOfAttributeNamed:@"lon" forElement:xmlNode] floatValue]];
+                
+                
+                [newNode setMetaData:xmlNode];
+                [newNode findType];
+            }
             xmlNode = [TBXML nextSiblingNamed:@"node" searchFromElement:xmlNode];
         }
     }
@@ -152,24 +148,25 @@
         while (xmlWay!=nil) {
             
             OPEManagedOsmWay * newWay = [OPEManagedOsmWay fetchOrCreatWayWithOsmID:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlWay] longLongValue]];
-            
-            [newWay setMetaData:xmlWay];
-            
-            TBXMLElement* nodeXml = [TBXML childElementNamed:@"nd" parentElement:xmlWay];
-            NSMutableOrderedSet * nodeSet = [NSMutableOrderedSet orderedSet];
-            
-            while (nodeXml!=nil) {
-                int64_t nodeId = [[TBXML valueOfAttributeNamed:@"ref" forElement:nodeXml] longLongValue];
-                OPEManagedOsmNode * node = [OPEManagedOsmNode fetchOrCreateNodeWithOsmID:nodeId];
-                [nodeSet addObject:node];
+            NSInteger newVersion = [[TBXML valueOfAttributeNamed:@"version" forElement:xmlWay] integerValue];
+            if (newVersion > newWay.versionValue) {
+                [newWay setMetaData:xmlWay];
                 
-                nodeXml = [TBXML nextSiblingNamed:@"nd" searchFromElement:nodeXml];
+                TBXMLElement* nodeXml = [TBXML childElementNamed:@"nd" parentElement:xmlWay];
+                NSMutableOrderedSet * nodeSet = [NSMutableOrderedSet orderedSet];
+                
+                while (nodeXml!=nil) {
+                    int64_t nodeId = [[TBXML valueOfAttributeNamed:@"ref" forElement:nodeXml] longLongValue];
+                    OPEManagedOsmNode * node = [OPEManagedOsmNode fetchOrCreateNodeWithOsmID:nodeId];
+                    [nodeSet addObject:node];
+                    
+                    nodeXml = [TBXML nextSiblingNamed:@"nd" searchFromElement:nodeXml];
+                }
+                [newWay setNodes:nodeSet];
+                
+                
+                [newWay findType];
             }
-            [newWay setNodes:nodeSet];
-            
-            
-            [newWay findType];
-            
             xmlWay = [TBXML nextSiblingNamed:@"way" searchFromElement:xmlWay];
         }
     }

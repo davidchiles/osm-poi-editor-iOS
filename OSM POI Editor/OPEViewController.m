@@ -495,12 +495,29 @@
 
 -(void)removeAnnotationWithOsmElementID:(NSManagedObjectID *)objectID
 {
-    NSInteger index = [self indexOfOsmElementID:objectID];
-    if (index != NSNotFound) {
-        RMAnnotation* annotation = [mapView.annotations objectAtIndex:index];
+    RMAnnotation * annotation = [self annotationForOsmElementID:objectID];
+    if (annotation) {
         [mapView removeAnnotation:annotation];
     }
-    
+
+}
+
+-(void)updateAnnotationWithOsmElementID:(NSManagedObjectID *)objectID
+{
+    RMAnnotation * annotation = [self annotationForOsmElementID:objectID];
+    if (annotation) {
+        
+    }
+}
+
+-(RMAnnotation *)annotationForOsmElementID:(NSManagedObjectID *)objectID
+{
+    RMAnnotation* annotation = nil;
+    NSInteger index = [self indexOfOsmElementID:objectID];
+    if (index != NSNotFound) {
+        annotation = [mapView.annotations objectAtIndex:index];
+    }
+    return annotation;
 }
 
 -(NSInteger)indexOfOsmElementID:(NSManagedObjectID *)objectID
@@ -537,10 +554,10 @@
             break;
         case NSFetchedResultsChangeUpdate:
         {
-            OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:indexPath];
-            [self removeAnnotationWithOsmElementID:managedOsmElement.objectID];
-            managedOsmElement = [controller objectAtIndexPath:newIndexPath];
-            [mapView addAnnotation:[self annotationWithOsmElement:managedOsmElement]];
+            //OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:indexPath];
+            //[self removeAnnotationWithOsmElementID:managedOsmElement.objectID];
+            //managedOsmElement = [controller objectAtIndexPath:newIndexPath];
+            //[mapView addAnnotation:[self annotationWithOsmElement:managedOsmElement]];
         }
             break;
         case NSFetchedResultsChangeDelete:
