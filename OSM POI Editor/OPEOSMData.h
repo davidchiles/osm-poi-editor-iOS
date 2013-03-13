@@ -28,6 +28,12 @@
 @class OPEManagedOsmNode;
 @class OPEManagedOsmElement;
 
+@protocol OPEOSMDataControllerDelegate <NSObject>
+
+-(void) createdElement:(NSManagedObjectID *)objectID newVersion:(NSInteger)newVersion;
+
+@end
+
 @interface OPEOSMData : NSObject 
 {
     GTMOAuthAuthentication *auth;
