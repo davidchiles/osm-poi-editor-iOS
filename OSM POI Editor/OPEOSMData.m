@@ -32,10 +32,14 @@
 #import "OPEManagedOsmNode.h"
 #import "OPEManagedOsmTag.h"
 #import "OPEManagedOsmWay.h"
+#import "OPEManagedOsmRelation.h"
+#import "AFNetworking.h"
 
 @implementation OPEOSMData
 
 @synthesize auth;
+@synthesize delegate;
+@synthesize currentElement = _currentElement;
 
 
 -(id) init
@@ -56,52 +60,6 @@
     return self;
 }
 
-- (void)requestFinished:(ASIHTTPRequest *)request
-{
-    dispatch_queue_t q = dispatch_queue_create("Parse.Queue", NULL);
-    dispatch_async(q,  ^{
-    NSLog(@"Request Type: %@",[request.userInfo objectForKey:@"type"]);
-    // Use when fetching text data
-    //NSString *responseString = [request responseString];
-    
-    // Use when fetching binary data
-    if ([[request.userInfo objectForKey:@"type"] isEqualToString: @"download"] )
-    {
-        NSData *responseData = [request responseData];
-        TBXML* tbxml = [TBXML tbxmlWithXMLData:responseData];
-        
-        TBXMLElement * root = tbxml.rootXMLElement;
-        if(root)
-        {
-            [self findNodes:root];
-            [self findWays:root];
-        }
-        
-        NSInteger count = [OPEManagedOsmNode MR_countOfEntities];
-        count =  [OPEManagedOsmWay MR_countOfEntities];
-    
-        
-        NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-        [context MR_saveToPersistentStoreAndWait];
-        
-    }
-    });
-    //dispatch_release(q);
-
-}
-
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    NSError *error = [request error];
-    if (error) {
-        NSLog(@"Error Description: %@",error.description);
-        [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"DownloadError"
-         object:self
-         userInfo:nil];
-    }
-}
-
 -(BOOL) canAuth;
 {
     BOOL didAuth = NO;
@@ -120,57 +78,6 @@
     
 }
 
--(void)findNodes:(TBXMLElement *)root {
-    if(root)
-    {
-        TBXMLElement* xmlNode = [TBXML childElementNamed:@"node" parentElement:root];
-        while (xmlNode!=nil) {
-            
-            OPEManagedOsmNode * newNode = [OPEManagedOsmNode fetchOrCreateNodeWithOsmID:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlNode] longLongValue]];
-            NSInteger newVersion = [[TBXML valueOfAttributeNamed:@"version" forElement:xmlNode] integerValue];
-            if (newVersion > newNode.versionValue) {
-                newNode.lattitude = [NSNumber numberWithFloat:[[TBXML valueOfAttributeNamed:@"lat" forElement:xmlNode] floatValue]];
-                newNode.longitude = [NSNumber numberWithFloat:[[TBXML valueOfAttributeNamed:@"lon" forElement:xmlNode] floatValue]];
-                
-                
-                [newNode setMetaData:xmlNode];
-                [newNode findType];
-            }
-            xmlNode = [TBXML nextSiblingNamed:@"node" searchFromElement:xmlNode];
-        }
-    }
-}
-
--(void)findWays:(TBXMLElement *)root{
-    if(root)
-    {
-        TBXMLElement* xmlWay = [TBXML childElementNamed:@"way" parentElement:root];
-        while (xmlWay!=nil) {
-            
-            OPEManagedOsmWay * newWay = [OPEManagedOsmWay fetchOrCreatWayWithOsmID:[[TBXML valueOfAttributeNamed:@"id" forElement:xmlWay] longLongValue]];
-            NSInteger newVersion = [[TBXML valueOfAttributeNamed:@"version" forElement:xmlWay] integerValue];
-            if (newVersion > newWay.versionValue) {
-                [newWay setMetaData:xmlWay];
-                
-                TBXMLElement* nodeXml = [TBXML childElementNamed:@"nd" parentElement:xmlWay];
-                NSMutableOrderedSet * nodeSet = [NSMutableOrderedSet orderedSet];
-                
-                while (nodeXml!=nil) {
-                    int64_t nodeId = [[TBXML valueOfAttributeNamed:@"ref" forElement:nodeXml] longLongValue];
-                    OPEManagedOsmNode * node = [OPEManagedOsmNode fetchOrCreateNodeWithOsmID:nodeId];
-                    [nodeSet addObject:node];
-                    
-                    nodeXml = [TBXML nextSiblingNamed:@"nd" searchFromElement:nodeXml];
-                }
-                [newWay setNodes:nodeSet];
-                
-                
-                [newWay findType];
-            }
-            xmlWay = [TBXML nextSiblingNamed:@"way" searchFromElement:xmlWay];
-        }
-    }
-}
  
 -(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
 {
@@ -180,12 +87,103 @@
     double boxtop = northEast.latitude;
     
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",kOPEAPIURL,boxleft,boxbottom,boxright,boxtop]];
+    NSURLRequest * request =[NSURLRequest requestWithURL:url];
+    
+        [AFXMLRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"application/osm3s+xml"]];
+        AFXMLRequestOperation * xmlRequestOperation = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
+            dispatch_queue_t q = dispatch_queue_create("Parse.Queue", NULL);
+            dispatch_async(q,  ^{
+                XMLParser.delegate = self;
+                [XMLParser parse];
+                });
+            
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+            [delegate downloadFailed:error];
+        }];
+        [xmlRequestOperation start];
+    
+    
     NSLog(@"Download URL %@",url);
-    ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"download",@"type", nil];
-    [request setDelegate:self];
-    [request startAsynchronous];
+    //ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
+    //request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"download",@"type", nil];
+    //[request setDelegate:self];
+    //[request startAsynchronous];
 }
+
+#pragma nsxmlparserdelegate
+
+-(void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+{
+    if ([elementName isEqualToString:@"node"] || [elementName isEqualToString:@"way"] ||[elementName isEqualToString:@"relation"]) {
+        [self.currentElement findType];
+        self.currentElement = nil;
+    }
+    
+    
+}
+
+-(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
+{
+     NSInteger newVersion = [[attributeDict objectForKey:@"version"] integerValue];
+    
+    if ([elementName isEqualToString:@"node"]) {
+        OPEManagedOsmNode * newNode = [OPEManagedOsmNode fetchOrCreateNodeWithOsmID:[[attributeDict objectForKey:@"id"] longLongValue]];
+        if (newVersion > newNode.versionValue) {
+            [newNode setMetaData:attributeDict];
+            newNode.lattitudeValue = [[attributeDict objectForKey:@"lat"] doubleValue];
+            newNode.longitudeValue = [[attributeDict objectForKey:@"lon"] doubleValue];
+            self.currentElement = newNode;
+        }
+        
+    }
+    else if([elementName isEqualToString:@"way"])
+    {
+        OPEManagedOsmWay * newWay = [OPEManagedOsmWay fetchOrCreatWayWithOsmID:[[attributeDict objectForKey:@"id"] longLongValue]];
+        if (newVersion > newWay.versionValue) {
+            [newWay setMetaData:attributeDict];
+            self.currentElement = newWay;
+        }
+        
+    }
+    else if([elementName isEqualToString:@"relation"])
+    {
+        
+    }
+    else if ([elementName isEqualToString:@"tag"])
+    {
+        [self.currentElement addKey:[attributeDict objectForKey:@"k"] value:[attributeDict objectForKey:@"v"]];
+    }
+    else if ([elementName isEqualToString:@"nd"])
+    {
+        int64_t nodeId = [[attributeDict objectForKey:@"ref"] longLongValue];
+        OPEManagedOsmNode * node = [OPEManagedOsmNode fetchOrCreateNodeWithOsmID:nodeId];
+        [currentWay.nodesSet addObject:node];
+    }
+    else if([elementName isEqualToString:@"member"])
+    {
+        
+    }
+}
+
+-(void)parserDidEndDocument:(NSXMLParser *)parser
+{
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+    [context MR_saveToPersistentStoreWithCompletion:nil];
+}
+
+-(void)setCurrentElement:(OPEManagedOsmElement *)currentElement{
+    _currentElement = currentElement;
+    currentRelation = nil;
+    currentWay = nil;
+    if ([currentElement isKindOfClass:[OPEManagedOsmWay class]]) {
+        currentWay = (OPEManagedOsmWay *)currentElement;
+    }
+    else if ([currentElement isKindOfClass:[OPEManagedOsmRelation class]])
+    {
+        currentRelation = (OPEManagedOsmRelation *)currentElement;
+    }
+}
+
 
 - (int64_t) createNode: (OPEManagedOsmNode *) node
 {

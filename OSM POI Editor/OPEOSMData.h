@@ -27,21 +27,32 @@
 
 @class OPEManagedOsmNode;
 @class OPEManagedOsmElement;
+@class OPEManagedOsmRelation;
+@class OPEManagedOsmWay;
 
 @protocol OPEOSMDataControllerDelegate <NSObject>
 
--(void) createdElement:(NSManagedObjectID *)objectID newVersion:(NSInteger)newVersion;
+-(void) uploadedElement:(NSManagedObjectID *)objectID newVersion:(NSInteger)newVersion;
+-(void) deletedElement:(NSManagedObjectID *)objectID;
+-(void) downloadFailed:(NSError *)error;
 
 @end
 
-@interface OPEOSMData : NSObject 
+@interface OPEOSMData : NSObject <NSXMLParserDelegate>
 {
     GTMOAuthAuthentication *auth;
     OPETagInterpreter * tagInterpreter;
+    OPEManagedOsmWay * currentWay;
+    OPEManagedOsmRelation * currentRelation;
     
 }
 
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
+@property (nonatomic, weak) id <OPEOSMDataControllerDelegate> delegate;
+@property (nonatomic, strong) OPEManagedOsmElement * currentElement;
+@property (nonatomic, strong) OPEManagedOsmNode * currentNode;
+@property (nonatomic, strong) OPEManagedOsmWay * currentWay;
+@property (nonatomic, strong) OPEManagedOsmRelation * currentRelation;
 
 - (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 - (int64_t) openChangesetWithMessage: (NSString *) message;

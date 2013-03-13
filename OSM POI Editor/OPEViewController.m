@@ -554,10 +554,10 @@
             break;
         case NSFetchedResultsChangeUpdate:
         {
-            //OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:indexPath];
-            //[self removeAnnotationWithOsmElementID:managedOsmElement.objectID];
-            //managedOsmElement = [controller objectAtIndexPath:newIndexPath];
-            //[mapView addAnnotation:[self annotationWithOsmElement:managedOsmElement]];
+            OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:indexPath];
+            [self removeAnnotationWithOsmElementID:managedOsmElement.objectID];
+            managedOsmElement = [controller objectAtIndexPath:newIndexPath];
+            [mapView addAnnotation:[self annotationWithOsmElement:managedOsmElement]];
         }
             break;
         case NSFetchedResultsChangeDelete:

@@ -45,35 +45,23 @@
         return @"";
     }
 }
-
--(void)setMetaData:(TBXMLElement *)xmlElement
+-(void)addKey:(NSString *)key value:(NSString *)value
 {
-    self.version = [NSNumber numberWithInteger:[[TBXML valueOfAttributeNamed:@"version" forElement:xmlElement] integerValue]];
-    self.userName = [TBXML valueOfAttributeNamed:@"user" forElement:xmlElement];
-    self.userIDValue = [[TBXML valueOfAttributeNamed:@"uid" forElement:xmlElement] longLongValue];
-    self.changesetIDValue = [[TBXML valueOfAttributeNamed:@"changeset" forElement:xmlElement] longLongValue];
-    NSString * timeString = [TBXML valueOfAttributeNamed:@"timestamp" forElement:xmlElement];
+    OPEManagedOsmTag * newTag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
+    [self.tagsSet addObject:newTag];
+}
+
+-(void)setMetaData:(NSDictionary *)dictionary;
+{
+    self.versionValue = [[dictionary objectForKey:@"version"] longLongValue];
+    self.userName = [dictionary objectForKey:@"user"];
+    self.userIDValue = [[dictionary objectForKey:@"uid"]longLongValue];
+    self.changesetIDValue = [[dictionary objectForKey:@"changeset"] longLongValue];
+    NSString * timeString = [dictionary objectForKey:@"timestamp"];
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"YYYY-MM-dd'T'HH:mm:ssZ"];
     self.timeStamp = [dateFormatter dateFromString:timeString];
-    
-    TBXMLElement* tag = [TBXML childElementNamed:@"tag" parentElement:xmlElement];
-    
-    NSMutableSet * newTags = [NSMutableSet set];
-    
-    while (tag!=nil) //Takes in tags and adds them to newNode
-    {
-        NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tag];
-        NSString* value = [OPEUtility removeHTML:[TBXML valueOfAttributeNamed:@"v" forElement:tag]];
-        OPEManagedOsmTag * newTag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
-        [newTags addObject:newTag];
-        
-        tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
-    }
-    
-    [self setTags:newTags];
 
-    
 }
 
 -(NSString *)tagsXML

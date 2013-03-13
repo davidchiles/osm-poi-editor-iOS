@@ -11,8 +11,9 @@
 -(void)removeTagWithOsmKey:(NSString *)osmKey;
 -(void)newType:(OPEManagedReferencePoi *)type;
 -(NSString *)tagsDescription;
+-(void)addKey:(NSString *)key value:(NSString *)value;
 
--(void)setMetaData:(TBXMLElement *)xmlElement;
+-(void)setMetaData:(NSDictionary *)dictionary;
 
 -(NSString *)tagsXML;
 
