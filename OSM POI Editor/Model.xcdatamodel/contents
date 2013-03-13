@@ -41,6 +41,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="osmKey" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sectionSortOrder" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" defaultValueString="list" syncable="YES"/>
         <relationship name="referencePois" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedReferencePoi" inverseName="optional" inverseEntity="OPEManagedReferencePoi" syncable="YES"/>
         <relationship name="referenceSection" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="OPEManagedReferenceOptionalCategory" inverseName="referenceOptionals" inverseEntity="OPEManagedReferenceOptionalCategory" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedReferenceOsmTag" inverseName="referenceOptionals" inverseEntity="OPEManagedReferenceOsmTag" syncable="YES"/>
@@ -78,8 +79,8 @@
         <element name="OpeManagedOsmRelationMember" positionX="79" positionY="422" width="191" height="88"/>
         <element name="OPEManagedOsmTag" positionX="637" positionY="113" width="128" height="118"/>
         <element name="OPEManagedOsmWay" positionX="466" positionY="449" width="128" height="73"/>
-        <element name="OPEManagedReferenceOptional" positionX="90" positionY="89" width="173" height="150"/>
-        <element name="OPEManagedReferenceOptionalCategory" positionX="72" positionY="-45" width="128" height="90"/>
+        <element name="OPEManagedReferenceOptional" positionX="90" positionY="89" width="173" height="163"/>
+        <element name="OPEManagedReferenceOptionalCategory" positionX="72" positionY="-45" width="216" height="90"/>
         <element name="OPEManagedReferenceOsmTag" positionX="376" positionY="-108" width="128" height="88"/>
         <element name="OPEManagedReferencePoi" positionX="387" positionY="-0" width="135" height="193"/>
         <element name="OPEManagedReferencePoiCategory" positionX="601" positionY="-81" width="200" height="73"/>

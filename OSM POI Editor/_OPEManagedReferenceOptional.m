@@ -8,6 +8,7 @@ const struct OPEManagedReferenceOptionalAttributes OPEManagedReferenceOptionalAt
 	.name = @"name",
 	.osmKey = @"osmKey",
 	.sectionSortOrder = @"sectionSortOrder",
+	.type = @"type",
 };
 
 const struct OPEManagedReferenceOptionalRelationships OPEManagedReferenceOptionalRelationships = {
@@ -99,6 +100,13 @@ const struct OPEManagedReferenceOptionalFetchedProperties OPEManagedReferenceOpt
 - (void)setPrimitiveSectionSortOrderValue:(int16_t)value_ {
 	[self setPrimitiveSectionSortOrder:[NSNumber numberWithShort:value_]];
 }
+
+
+
+
+
+@dynamic type;
+
 
 
 

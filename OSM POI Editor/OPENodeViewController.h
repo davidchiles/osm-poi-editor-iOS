@@ -58,7 +58,6 @@
 @property (nonatomic) BOOL newElement;
 @property (nonatomic, strong) NSArray * optionalSectionsArray;
 
-- (id)initWithAnnotation:(RMAnnotation *)annotation delegate:(id<OPENodeViewDelegate>)delegate;
 - (id)initWithOsmElementObjectID:(NSManagedObjectID *)objectID delegate:(id<OPENodeViewDelegate>)delegate;
 
 - (void) saveButtonPressed;

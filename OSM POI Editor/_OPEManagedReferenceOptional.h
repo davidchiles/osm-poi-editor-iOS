@@ -9,6 +9,7 @@ extern const struct OPEManagedReferenceOptionalAttributes {
 	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *osmKey;
 	__unsafe_unretained NSString *sectionSortOrder;
+	__unsafe_unretained NSString *type;
 } OPEManagedReferenceOptionalAttributes;
 
 extern const struct OPEManagedReferenceOptionalRelationships {
@@ -23,6 +24,7 @@ extern const struct OPEManagedReferenceOptionalFetchedProperties {
 @class OPEManagedReferencePoi;
 @class OPEManagedReferenceOptionalCategory;
 @class OPEManagedReferenceOsmTag;
+
 
 
 
@@ -81,6 +83,16 @@ extern const struct OPEManagedReferenceOptionalFetchedProperties {
 - (void)setSectionSortOrderValue:(int16_t)value_;
 
 //- (BOOL)validateSectionSortOrder:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* type;
+
+
+
+//- (BOOL)validateType:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -150,6 +162,12 @@ extern const struct OPEManagedReferenceOptionalFetchedProperties {
 
 - (int16_t)primitiveSectionSortOrderValue;
 - (void)setPrimitiveSectionSortOrderValue:(int16_t)value_;
+
+
+
+
+- (NSString*)primitiveType;
+- (void)setPrimitiveType:(NSString*)value;
 
 
 

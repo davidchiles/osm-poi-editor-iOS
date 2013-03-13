@@ -60,6 +60,7 @@
     [super viewDidLoad];
     //self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [self.view setBackgroundColor:[UIColor colorWithRed:215.0/255.0 green:217.0/255.0 blue:223.0/255.0 alpha:1.0]];
+    //self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     //[self.view addSubview:[[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStyleGrouped]];
     
     osmKeysStoreRecent = [NSSet setWithObjects:@"addr:country",@"addr:city",@"addr:postcode",@"addr:state",@"addr:province",@"addr:street", nil];
@@ -284,7 +285,11 @@
         newOsmValue = @"";
     }
     
-    [[self delegate] newTag:[[NSDictionary alloc] initWithObjectsAndKeys:osmKey,@"osmKey",newOsmValue,@"osmValue", nil]];
+    
+    OPEManagedOsmTag * tag = [OPEManagedOsmTag fetchOrCreateWithKey:osmKey value:newOsmValue];
+    NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
+    [context MR_saveToPersistentStoreAndWait];
+    [self.delegate newTag:tag.objectID];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

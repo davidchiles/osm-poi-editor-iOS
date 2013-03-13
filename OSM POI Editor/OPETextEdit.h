@@ -42,7 +42,7 @@
 @property (nonatomic, strong) NSString * type;
 @property (nonatomic, strong) UITextField * textField;
 
-@property (retain) id delegate;
+@property (nonatomic, weak) id<editTagDelegate> delegate;
 
 - (void) saveButtonPressed;
 

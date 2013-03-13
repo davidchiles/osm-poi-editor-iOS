@@ -260,15 +260,8 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
         }
-        NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"key == %@",@"name"];
-        NSSet * filteredSet = [self.managedOsmElement.tags filteredSetUsingPredicate:tagFilter];
-        NSString * displayValueForOptional = @"";
-        if ([filteredSet count]) {
-            OPEManagedOsmTag * elementTag = [filteredSet anyObject];
-            displayValueForOptional = elementTag.value;
-        }
         
-        cell.textLabel.text = displayValueForOptional;
+        cell.textLabel.text = [self.managedOsmElement valueForOsmKey:@"name"];
         cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }
@@ -296,15 +289,8 @@
     {
         OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
         
-        NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"key == %@",managedOptionalTag.osmKey];
-        NSSet * filteredSet = [self.managedOsmElement.tags filteredSetUsingPredicate:tagFilter];
-        NSString * valueForOptional = @"";
-        NSString * displayValueForOptional = @"";
-        if ([filteredSet count]) {
-            OPEManagedOsmTag * elementTag = [filteredSet anyObject];
-            valueForOptional = elementTag.value;
-            displayValueForOptional = [managedOptionalTag displayNameForKey:managedOptionalTag.osmKey withValue:valueForOptional];
-        }
+        NSString * valueForOptional = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
+        NSString * displayValueForOptional = [managedOptionalTag displayNameForKey:managedOptionalTag.osmKey withValue:valueForOptional];
         
         //more than 3 tags just show value not switch or Address
         if ([managedOptionalTag.tags count]>3 || ![managedOptionalTag.tags count]) {
@@ -360,19 +346,6 @@
         
         [self newTag:managedReferenceOsmTag.tag.objectID];
         
-        /*
-        if ([sender selectedSegmentIndex] == 0) {
-            //Yes
-            [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",@"yes",@"osmValue", nil]];
-        }
-        else if ([sender selectedSegmentIndex] == 1){
-            //No
-            [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",@"no",@"osmValue", nil]];
-        }
-        else if([sender selectedSegmentIndex] ==2){
-            [self newTag:[NSDictionary dictionaryWithObjectsAndKeys:[cellDictionary objectForKey:@"osmKey"],@"osmKey",[[cellDictionary objectForKey:@"values"] objectForKey:[sender titleForSegmentAtIndex:[sender selectedSegmentIndex]]],@"osmValue", nil]];
-        }
-        */
     }
     
 }
@@ -381,6 +354,13 @@
     //Name Selected
     if(indexPath.section == 0)
     {
+        OPETextEdit * textEdit = [[OPETextEdit alloc] init];
+        textEdit.osmKey = @"name";
+        textEdit.osmValue = [self.managedOsmElement valueForOsmKey:@"name"];
+        textEdit.type = kTypeText;
+        textEdit.delegate = self;
+        
+        [self.navigationController pushViewController:textEdit animated:YES];
         
     }
     else if(indexPath.section ==1)
@@ -411,7 +391,7 @@
     else if(indexPath.section>1 && indexPath.section<[self.optionalSectionsArray count]+2)
     {
         OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
-        if ([managedOptionalTag.tags count]>3)
+        if ([managedOptionalTag.type isEqualToString:kTypeList] && [managedOptionalTag.tags count] > 3)
         {
             OPETagValueList * viewer = [[OPETagValueList alloc] initWithNibName:@"OPETagValueList" bundle:nil];
             viewer.title = managedOptionalTag.displayName;
@@ -419,25 +399,12 @@
             [viewer setDelegate:self];
             [self.navigationController pushViewController:viewer animated:YES];
         }
-    }
-    
-    NSDictionary * cellDictionary = [NSDictionary dictionaryWithDictionary:[[[tableSections objectAtIndex:indexPath.section] objectForKey:@"rows"] objectAtIndex:indexPath.row]];
-    if ([[tableView cellForRowAtIndexPath:indexPath] isKindOfClass:[OPEBinaryCell class]])
-    {
-        //binary or 3 way type
-    }
-    else if([[cellDictionary objectForKey:@"values"] isKindOfClass:[NSDictionary class]])
-    {
-        //list view cell
-        
-    }
-    else {
-        if ([[cellDictionary objectForKey:@"values"] isEqualToString:kTypeText] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeLabel] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeNumber] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypeUrl] || [[cellDictionary objectForKey:@"values"] isEqualToString:kTypePhone] || [[cellDictionary objectForKey:@"values"] isEqualToString:KTypeName] ){ //Text editing
+        else if(![managedOptionalTag.type isEqualToString:kTypeList]) { //Text editing
             OPETextEdit * viewer = [[OPETextEdit alloc] init];
-            viewer.title = [cellDictionary objectForKey:@"name"];
-            viewer.osmValue = [self.managedOsmElement valueForOsmKey:[cellDictionary objectForKey:@"osmKey"]];
-            viewer.osmKey = [cellDictionary objectForKey:@"osmKey"];
-            viewer.type = [cellDictionary objectForKey:@"values"];
+            viewer.title = managedOptionalTag.displayName;
+            viewer.osmValue = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
+            viewer.osmKey = managedOptionalTag.osmKey;
+            viewer.type = managedOptionalTag.type;
             [viewer setDelegate:self];
             [self.navigationController pushViewController:viewer animated:YES];
         }
