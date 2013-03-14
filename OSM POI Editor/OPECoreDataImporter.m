@@ -32,7 +32,9 @@
             NSDictionary * tags = [typeDictionary objectForKey:@"tags"];
             NSArray * optionalTags = [typeDictionary objectForKey:@"optional"];
             
-            [self addPOIWithName:type category:category imageString:imageString legacy:NO optional:optionalTags tags:tags];
+            BOOL legacy = ([type rangeOfString:@" (legacy)"].location != NSNotFound);
+            
+            [self addPOIWithName:type category:category imageString:imageString legacy:legacy optional:optionalTags tags:tags];
             
         }
     }
@@ -87,6 +89,11 @@
         newPoi.isLegacy = [NSNumber numberWithBool:isLegacy];
         newPoi.imageString = imageString;
         [newPoi setCanAddValue:YES];
+        
+        if (isLegacy) {
+            NSString * newName = [name componentsSeparatedByString:@" (legacy)"][0];
+            newPoi.newTagMethod = [OPEManagedReferencePoi fetchOrCreateWithName:newName category:poiCategory didCreate:&didCreate];
+        }
         
         newPoi.category = [OPEManagedReferencePoiCategory fetchOrCreateWithName:category];
         

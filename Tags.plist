@@ -2941,12 +2941,26 @@
 			<string>bus.png</string>
 			<key>tags</key>
 			<dict>
-				<key>highway</key>
-				<string>bus_stop</string>
 				<key>public_transport</key>
 				<string>platform</string>
 				<key>bus</key>
 				<string>yes</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>shelter</string>
+				<string>ref</string>
+				<string>route_ref</string>
+			</array>
+		</dict>
+		<key>Bus Stop (legacy)</key>
+		<dict>
+			<key>image</key>
+			<string>bus.png</string>
+			<key>tags</key>
+			<dict>
+				<key>highway</key>
+				<string>bus_stop</string>
 			</dict>
 			<key>optional</key>
 			<array>
