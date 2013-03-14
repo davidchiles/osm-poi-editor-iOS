@@ -737,19 +737,21 @@
 }
 -(void)didCloseChangeset:(int64_t)changesetNumber
 {
-    self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ceckmark.png"]];
-    self.HUD.labelText = @"";
+    self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark.png"]];
+    HUD.mode = MBProgressHUDModeCustomView;
+    self.HUD.labelText = @"Complete";
     [self.HUD hide:YES afterDelay:3.0];
     [self checkSaveButton];
-    [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];
+    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];
     //[self.navigationController dismissModalViewControllerAnimated: YES];
     
 }
 -(void)uploadFailed:(NSError *)error
 {
     self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"x.png"]];
+    HUD.mode = MBProgressHUDModeCustomView;
     self.HUD.labelText =@"Error";
-    [self.HUD hide:YES afterDelay:3.0];
+    [self.HUD hide:YES afterDelay:2.0];
     [self checkSaveButton];
     
 }
