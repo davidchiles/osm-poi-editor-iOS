@@ -54,7 +54,8 @@
                                                            consumerKey:myConsumerKey
                                                             privateKey:myConsumerSecret];
         
-        tagInterpreter = [OPETagInterpreter sharedInstance];
+        //tagInterpreter = [OPETagInterpreter sharedInstance];
+        q = dispatch_queue_create("Parse.Queue", NULL);
     }
     
     return self;
@@ -89,25 +90,21 @@
     NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",kOPEAPIURL,boxleft,boxbottom,boxright,boxtop]];
     NSURLRequest * request =[NSURLRequest requestWithURL:url];
     
-        [AFXMLRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"application/osm3s+xml"]];
-        AFXMLRequestOperation * xmlRequestOperation = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
-            dispatch_queue_t q = dispatch_queue_create("Parse.Queue", NULL);
+    [AFXMLRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"application/osm3s+xml"]];
+    AFXMLRequestOperation * xmlRequestOperation = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
             dispatch_async(q,  ^{
-                XMLParser.delegate = self;
-                [XMLParser parse];
+            XMLParser.delegate = self;
+            [XMLParser parse];
                 });
             
-        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
-            [delegate downloadFailed:error];
-        }];
-        [xmlRequestOperation start];
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
+        [delegate downloadFailed:error];
+    }];
+    [xmlRequestOperation start];
     
     
     NSLog(@"Download URL %@",url);
-    //ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
-    //request.userInfo = [[NSDictionary alloc] initWithObjectsAndKeys:@"download",@"type", nil];
-    //[request setDelegate:self];
-    //[request startAsynchronous];
 }
 
 #pragma nsxmlparserdelegate
@@ -118,8 +115,6 @@
         [self.currentElement findType];
         self.currentElement = nil;
     }
-    
-    
 }
 
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
@@ -258,11 +253,20 @@
     [urlRequest setHTTPBody: changeset];
     [urlRequest setHTTPMethod: @"PUT"];
     [auth authorizeRequest:urlRequest];
-    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
-    NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
+    //NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
+    //NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
     
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id object){
+        NSLog(@"changeset %@",object);
+        
+    }failure:^(AFHTTPRequestOperation *operation, NSError * error)
+    {
+        
+    }];
+    [requestOperation start];
     
-    return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] longLongValue];
+    //return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] longLongValue];
 }
 
 - (int64_t) updateXmlNode: (OPEManagedOsmElement *) element withChangeset: (int64_t) changesetNumber

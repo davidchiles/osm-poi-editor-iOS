@@ -63,13 +63,6 @@
                          andSecret:CRITTERCISM_SECRET];
 #endif
     
-    [Parse setApplicationId:PARSE_APPLICATION_ID clientKey:PARSE_CLIENT_KEY];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,
-                                             (unsigned long)NULL), ^(void) {
-        [[[OPEFileUpdater alloc] init] downloadFiles];
-        [[OPETagInterpreter sharedInstance] readPlist];
-    });
-    
     
     
     

@@ -77,8 +77,21 @@
 -(BOOL)findType
 {
     if ([self.tags count]) {
-        NSMutableSet * possibleMatches = [NSMutableSet set];
-        NSMutableSet * possibleLegacyMatches = [NSMutableSet set];
+        
+        
+        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(SUBQUERY(tags, $tag, $tag IN %@).@count == tags.@count)",self.tags];
+        NSArray * matches = [OPEManagedReferencePoi MR_findAllSortedBy:OPEManagedReferencePoiAttributes.isLegacy ascending:NO withPredicate:predicate];
+        if ([matches count]) {
+            
+            self.type =[matches lastObject];
+            if ([self.type.name isEqualToString:@"Bus Stop"]) {
+                NSLog(@"mantches: %@",[self name]);
+            }
+            
+            return YES;
+        }
+        
+        /*
         for(OPEManagedOsmTag * tag in self.tags)
         {
             for(OPEManagedReferencePoi * poi in tag.referencePois)
@@ -106,8 +119,11 @@
             self.type = [possibleLegacyMatches anyObject];
             return YES;
         }
+         */
     }
+    
     return NO;
+    
 }
 
 -(void)removeTagWithOsmKey:(NSString *)osmKey

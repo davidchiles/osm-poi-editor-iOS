@@ -44,6 +44,7 @@
     OPETagInterpreter * tagInterpreter;
     OPEManagedOsmWay * currentWay;
     OPEManagedOsmRelation * currentRelation;
+    dispatch_queue_t q;
     
 }
 

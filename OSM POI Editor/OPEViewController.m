@@ -298,16 +298,16 @@
 
 -(void)downloadNewArea:(RMMapView *)map
 {
-    dispatch_queue_t q = dispatch_queue_create("queue", NULL);
+    //dispatch_queue_t q = dispatch_queue_create("queue", NULL);
     
     
     RMSphericalTrapezium geoBox = [map latitudeLongitudeBoundingBox];
     if (map.zoom > MINZOOM) {
         [self removeZoomWarning];
-        dispatch_async(q, ^{
-            [osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
-        });
-        dispatch_release(q);
+        //dispatch_async(q, ^{
+        [osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
+        //});
+        //dispatch_release(q);
     }
     else {
         [self showZoomWarning];
