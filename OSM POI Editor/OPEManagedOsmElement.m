@@ -157,6 +157,11 @@
     return [NSString stringWithFormat:@"%@ %@",[super description],[self tagsDescription]];
 }
 
+-(NSString *)osmType
+{
+    return OPEOsmElementNone;
+}
+
 +(NSInteger) minID
 {
     NSFetchRequest * request = [OPEManagedOsmElement MR_requestAllSortedBy:OPEManagedOsmElementAttributes.osmID ascending:YES];

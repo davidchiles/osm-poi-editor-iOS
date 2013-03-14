@@ -8,6 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+@class OPEManagedOsmElement;
+
 @interface OPEChangeset : NSObject
 
+
+@property (nonatomic, strong) NSMutableArray * nodes;
+@property (nonatomic, strong) NSMutableArray * ways;
+@property (nonatomic, strong) NSMutableArray * relations;
+@property (nonatomic) int64_t changesetID;
+@property (nonatomic, strong) NSString * message;
+
+-(void)addElement:(OPEManagedOsmElement *)element;
+-(BOOL)hasNodes;
+-(BOOL)hasWays;
+-(BOOL)hasRelations;
 @end

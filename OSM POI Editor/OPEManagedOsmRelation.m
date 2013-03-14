@@ -28,4 +28,9 @@
     return CLLocationCoordinate2DMake(0, 0);
 }
 
+-(NSString *)osmType
+{
+    return OPEOsmElementRelation;
+}
+
 @end

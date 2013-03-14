@@ -1,8 +1,10 @@
 #import "_OPEManagedOsmElement.h"
 #import "CoreLocation/CoreLocation.h"
 #import "TBXML.h"
+#import "OPEConstants.h"
 
 @interface OPEManagedOsmElement : _OPEManagedOsmElement {}
+
 
 -(CLLocationCoordinate2D) center;
 -(BOOL) findType;
@@ -17,7 +19,10 @@
 
 -(NSString *)tagsXML;
 
-- (NSData *) updateXMLforChangset: (int64_t) changesetNumber;
+-(NSData *) uploadXMLforChangset: (int64_t)changesetNumber;
+-(NSData *) deleteXMLforChangset: (int64_t) changesetNumber;
+
+-(NSString *)osmType;
 
 + (NSInteger)minID;
 

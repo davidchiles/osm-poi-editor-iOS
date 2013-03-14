@@ -383,7 +383,7 @@
     if (mapView.zoom > MINZOOM) {
         
         OPEManagedOsmNode * node = [OPEManagedOsmNode newNode];
-        node.lattitudeValue = center.latitude;
+        node.latitudeValue = center.latitude;
         node.longitudeValue = center.longitude;
         
         [OPEMRUtility saveAll];

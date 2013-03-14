@@ -47,3 +47,11 @@
 
 #define kExpandedAddressArray [NSArray arrayWithObjects:@"addr:housenumber",@"addr:street",@"addr:city",@"addr:postcode",@"addr:state",@"addr:country",@"addr:province",@"website",@"phone", nil];
 
+#define kActionTypeModify @"modify"
+#define kActionTypeDelete @"delete"
+
+#define OPEOsmElementNode @"node"
+#define OPEOsmElementWay @"way"
+#define OPEOsmElementRelation @"relation"
+#define OPEOsmElementNone @"none"
+

@@ -31,6 +31,7 @@
 #import "OPEType.h"
 #import "RMAnnotation.h"
 #import "OPEManagedOsmElement.h"
+#import "OPEOSMData.h"
 
 @protocol OPENodeViewDelegate
 @optional
@@ -38,13 +39,14 @@
 @end
 
 
-@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, editTagDelegate, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate>
+@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, editTagDelegate, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate, OPEOSMDataControllerDelegate>
 {
     OPETagInterpreter * tagInterpreter;
     NSDictionary * osmKeyValue;
     float optionalTagWidth;
     NSManagedObjectContext * editContext;
     NSSet * originalTags;
+    OPEOSMData * osmData;
 }
 
 @property (nonatomic, strong) UITableView * nodeInfoTableView;

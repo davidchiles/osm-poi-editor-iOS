@@ -55,6 +55,7 @@
 @synthesize newElement;
 @synthesize optionalSectionsArray;
 
+
 -(id)init
 {
     self = [super init];
@@ -70,6 +71,8 @@
     {
         self.delegate = newDelegate;
         editContext = [NSManagedObjectContext MR_context];
+        osmData = [[OPEOSMData alloc] init];
+        osmData.delegate = self;
         if (objectID) {
             
             NSError * error = nil;
@@ -450,9 +453,10 @@
 
 - (void) saveButtonPressed
 {
+    self.managedOsmElement.action = kActionTypeModify;
     [editContext MR_saveToPersistentStoreAndWait];
-    OPEOSMData* data = [[OPEOSMData alloc] init];
-    if (![data canAuth])
+    
+    if (![osmData canAuth])
     {
         [self showOauthError];
     }
@@ -471,19 +475,13 @@
             if(element.osmIDValue<0 && [element isKindOfClass:[OPEManagedOsmNode class]])
             {
                 NSLog(@"Create Node");
-                int64_t newID = [data createNode:(OPEManagedOsmNode *)element];
-                element.osmIDValue = newID;
-                element.versionValue = 1;
+                [osmData uploadElement: element];
             }
             else
             {
                 NSLog(@"Update Node");
-                int64_t newVersion = [data updateNode:element];
-                NSLog(@"Version after update: %lld",newVersion);
-                element.versionValue = newVersion;
+                [osmData uploadElement:element];
             }
-            
-            [context MR_saveToPersistentStoreAndWait];
             
         });
         
@@ -498,8 +496,7 @@
 
 - (void) deleteButtonPressed
 {
-    OPEOSMData* data = [[OPEOSMData alloc] init];
-    if (![data canAuth])
+    if (![osmData canAuth])
     {
         [self showOauthError];
     }
@@ -533,6 +530,10 @@
     else if (alertView.tag == 1) {
         if(buttonIndex != alertView.cancelButtonIndex)
         {
+            [editContext rollback];
+            self.managedOsmElement.action = kActionTypeDelete;
+            [editContext MR_saveToPersistentStoreAndWait];
+            
             NSLog(@"Button YES was selected.");
             
             [self.navigationController.view addSubview:HUD];
@@ -544,16 +545,10 @@
                 dispatch_async(q, ^{
                     
                     NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
-                    OPEManagedOsmNode * node = (OPEManagedOsmNode *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
+                    OPEManagedOsmElement * osmElement = (OPEManagedOsmElement *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
                     
-                    OPEOSMData* data = [[OPEOSMData alloc] init];
-                    int64_t version = [data deleteNode:node];
-                    if (version) {
-                        node.versionValue = version;
-                    }
-                    node.isVisibleValue = NO;
                     
-                    [context MR_saveToPersistentStoreAndWait];
+                    [osmData deleteElement:osmElement];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.delegate removeAnnotation:annotation];
@@ -619,12 +614,7 @@
 {
     NSLog(@"got notification");
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.HUD hide:YES];
-        [editContext MR_saveToPersistentStoreAndWait];
-        [self checkSaveButton];
-        [self.navigationController dismissModalViewControllerAnimated: YES];
-    });
+    
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -736,6 +726,37 @@
                                                                                      finishedSelector:@selector(viewController:finishedWithAuth:error:)];
     
     [[self navigationController] pushViewController:viewController animated:YES];
+}
+
+#pragma OPEOsmDataDelegate
+
+-(void)didOpenChangeset:(int64_t)changesetNumber withMessage:(NSString *)message
+{
+    self.HUD.labelText = @"Uploading...";
+    
+}
+-(void)didCloseChangeset:(int64_t)changesetNumber
+{
+    self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ceckmark.png"]];
+    self.HUD.labelText = @"";
+    [self.HUD hide:YES afterDelay:3.0];
+    [self checkSaveButton];
+    [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];
+    //[self.navigationController dismissModalViewControllerAnimated: YES];
+    
+}
+-(void)uploadFailed:(NSError *)error
+{
+    self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"x.png"]];
+    self.HUD.labelText =@"Error";
+    [self.HUD hide:YES afterDelay:3.0];
+    [self checkSaveButton];
+    
+}
+
+-(void)dismissViewController
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

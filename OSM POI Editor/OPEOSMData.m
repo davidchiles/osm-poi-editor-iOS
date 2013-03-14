@@ -33,7 +33,8 @@
 #import "OPEManagedOsmTag.h"
 #import "OPEManagedOsmWay.h"
 #import "OPEManagedOsmRelation.h"
-#import "AFNetworking.h"
+#import "OPEChangeset.h"
+#import "OPEMRUtility.h"
 
 @implementation OPEOSMData
 
@@ -56,6 +57,12 @@
         
         //tagInterpreter = [OPETagInterpreter sharedInstance];
         q = dispatch_queue_create("Parse.Queue", NULL);
+        
+        //NSString * baseUrl = @"http://api06.dev.openstreetmap.org/";
+        NSString * baseUrl = @"http://api.openstreetmap.org/api/0.6/";
+        
+        httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        //[httpClient setAuthorizationHeaderWithToken:auth.token];
     }
     
     return self;
@@ -125,7 +132,7 @@
         OPEManagedOsmNode * newNode = [OPEManagedOsmNode fetchOrCreateNodeWithOsmID:[[attributeDict objectForKey:@"id"] longLongValue]];
         if (newVersion > newNode.versionValue) {
             [newNode setMetaData:attributeDict];
-            newNode.lattitudeValue = [[attributeDict objectForKey:@"lat"] doubleValue];
+            newNode.latitudeValue = [[attributeDict objectForKey:@"lat"] doubleValue];
             newNode.longitudeValue = [[attributeDict objectForKey:@"lon"] doubleValue];
             self.currentElement = newNode;
         }
@@ -179,184 +186,215 @@
     }
 }
 
-
-- (int64_t) createNode: (OPEManagedOsmNode *) node
+-(void)uploadElement:(OPEManagedOsmElement *)element
 {
-    int64_t changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Created new POI: %@",node.name]];
-    int64_t newIdent = [self createXmlNode:node withChangeset:changeset];
-    [self closeChangeset:changeset];
-    return newIdent;
+    OPEChangeset * changeset = [[OPEChangeset alloc] init];
+    [changeset addElement:element];
+    changeset.message = [NSString stringWithFormat:@"Created new POI: %@",element.name];
+    
+    [self openChangeset:changeset];
     
 }
-- (int64_t) updateNode: (OPEManagedOsmElement *) element
+-(void)deleteElement:(OPEManagedOsmElement *)element
 {
-    int64_t changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Updated existing POI: %@",element.name]];
-    int version = [self updateXmlNode:element withChangeset:changeset];
-    [self closeChangeset:changeset];
-    //[ignoreNodes setObject:node forKey:[node uniqueIdentifier]];
-    return version;
+    OPEChangeset * changeset = [[OPEChangeset alloc] init];
+    [changeset addElement:element];
+    changeset.message = [NSString stringWithFormat:@"Deleted POI: %@",element.name];
     
-}
-- (int64_t) deleteNode: (OPEManagedOsmNode *) node
-{
-    int64_t changeset = [self openChangesetWithMessage:[NSString stringWithFormat:@"Deleted POI: %@",node.name]];
-    int version = [self deleteXmlNode:node withChangeset:changeset];
-    [self closeChangeset:changeset];
-    
-    return version;
+    [self openChangeset:changeset];
     
 }
 
-- (int64_t) openChangesetWithMessage: (NSString *) message
+- (void) openChangeset:(OPEChangeset *)changeset
 {    
-    BOOL didAuth = NO;
-    BOOL canAuth = NO;
-    if (auth) {
-        didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor"
-                                                                  authentication:auth];
-        // if the auth object contains an access token, didAuth is now true
-        canAuth = [auth canAuthorize];
-    }
     
-    // retain the authentication object, which holds the auth tokens
-    //
-    // we can determine later if the auth object contains an access token
-    // by calling its -canAuthorize method
-    //[self setAuthentication:auth];
-    NSLog(@"didAuth %d",didAuth);
-    NSLog(@"canAuth %d",canAuth);
+    NSMutableString * changesetString = [[NSMutableString alloc] init];
     
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/changeset/create"]];
-    NSLog(@"URL: %@",[url absoluteURL]);
-    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-    //[urlRequest setURL:url];
-    [urlRequest setHTTPMethod:@"PUT"];
-   
-    //NSLog(@"URL before: %@",[urlRequest.URL absoluteURL]);
+    [changesetString appendString:@"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
+    [changesetString appendString:@"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"];
+    [changesetString appendString:@"<changeset>"];
+    [changesetString appendString:@"<tag k=\"created_by\" v=\"OSMPOIEditor\"/>"];
+    [changesetString appendFormat:@"<tag k=\"comment\" v=\"%@\"/>",changeset.message];
+    [changesetString appendString:@"</changeset>"];
+    [changesetString appendString:@"</osm>"];
     
-    //NSLog(@"URL header: %@",urlRequest.allHTTPHeaderFields);
-    //NSLog(@"URL after: %@",[urlRequest.URL absoluteURL]);
+    NSData * changesetData = [changesetString dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSMutableData *changeset = [NSMutableData data];
+    NSLog(@"Changeset Data: %@",[[NSString alloc] initWithData:changesetData encoding:NSUTF8StringEncoding]);
     
-    [changeset appendData: [[NSString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [changeset appendData: [[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [changeset appendData: [[NSString stringWithFormat: @"<changeset>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [changeset appendData: [[NSString stringWithFormat: @"<tag k=\"created_by\" v=\"OSMPOIEditor\"/>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [changeset appendData: [[NSString stringWithFormat: @"<tag k=\"comment\" v=\"%@\"/>",message] dataUsingEncoding: NSUTF8StringEncoding]];
-    [changeset appendData: [[NSString stringWithFormat: @"</changeset>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    [changeset appendData: [[NSString stringWithFormat: @"</osm>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    //[changeset appendData: [[NSString stringWithFormat: @"</xml>"] dataUsingEncoding: NSUTF8StringEncoding]];
-    
-    NSLog(@"Changeset Data: %@",[[NSString alloc] initWithData:changeset encoding:NSUTF8StringEncoding]);
-    
-    [urlRequest setHTTPBody: changeset];
-    [urlRequest setHTTPMethod: @"PUT"];
+     NSMutableURLRequest * urlRequest = [httpClient requestWithMethod:@"PUT" path:@"changeset/create" parameters:nil];
+    [urlRequest setHTTPBody:changesetData];
     [auth authorizeRequest:urlRequest];
-    //NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
-    //NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id object){
         NSLog(@"changeset %@",object);
+        changeset.changesetID = [[[NSString alloc] initWithData:object encoding:NSUTF8StringEncoding] longLongValue];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [delegate didOpenChangeset:changeset.changesetID withMessage:changeset.message];
+        });
+        
+        
+        [self uploadElements:changeset];
         
     }failure:^(AFHTTPRequestOperation *operation, NSError * error)
     {
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [delegate uploadFailed:error];
+        });
+        NSLog(@"Failed: %@",urlRequest.URL);
     }];
     [requestOperation start];
-    
-    //return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] longLongValue];
 }
 
-- (int64_t) updateXmlNode: (OPEManagedOsmElement *) element withChangeset: (int64_t) changesetNumber
+-(void)uploadElements:(OPEChangeset *)changeset
 {
-    
-    NSData * nodeXML = [element updateXMLforChangset:changesetNumber];
-    
-    
-    NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
-    NSURL * url;
-    
-    if([element isKindOfClass:[OPENode class]] )
-    {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%lld",element.osmIDValue]];
+    if (!changeset.changesetID) {
+        return;
     }
-    else
+    NSMutableArray * requestOperations = [NSMutableArray array];
+    NSArray * elements =  @[changeset.nodes,changeset.ways,changeset.relations];
+
+    for( NSArray * elmentArray in elements)
     {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/way/%lld",element.osmIDValue]];
+        for(OPEManagedOsmElement * element in elmentArray)
+        {
+            if([element.action isEqualToString:kActionTypeDelete])
+            {
+                [requestOperations addObject:[self deleteRequestOperationWithElement:element changeset:changeset.changesetID]];
+            }
+            else if([element.action isEqualToString:kActionTypeModify])
+            {
+                [requestOperations addObject:[self uploadRequestOperationWithElement:element changeset:changeset.changesetID]];
+            }
+        }
+    }
+
+    [httpClient enqueueBatchOfHTTPRequestOperations:requestOperations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+        NSLog(@"uploaded: %d/%d",numberOfFinishedOperations,totalNumberOfOperations);
+        
+    } completionBlock:^(NSArray *operations) {
+        [self closeChangeset:changeset.changesetID];
+    }];
+    
+    
+    
+    
+}
+
+-(AFHTTPRequestOperation *)uploadRequestOperationWithElement: (OPEManagedOsmElement *) element changeset: (int64_t) changesetNumber
+{
+    NSData * xmlData = [element uploadXMLforChangset:changesetNumber];
+    
+    NSMutableString * path = [NSMutableString stringWithFormat:@"%@/",[element osmType]];
+    int64_t elementOsmID = element.osmIDValue;
+    NSManagedObjectID * objectID = element.objectID;
+    
+    if (elementOsmID < 0) {
+        [path appendString:@"create"];
+    }
+    else{
+        [path appendFormat:@"%lld",element.osmIDValue];
     }
     
-    NSLog(@"URL: %@",[url absoluteURL]);
-    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-    [urlRequest setHTTPBody: nodeXML];
-    [urlRequest setHTTPMethod: @"PUT"];
+    NSMutableURLRequest * urlRequest = [httpClient requestWithMethod:@"PUT" path:path parameters:nil];
+    [urlRequest setHTTPBody:xmlData];
     [auth authorizeRequest:urlRequest];
-    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
-
-    NSLog(@"Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
-    return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
+    
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id object){
+        NSLog(@"changeset %@",object);
+        int64_t response = [[[NSString alloc] initWithData:object encoding:NSUTF8StringEncoding] longLongValue];
+        
+        OPEManagedOsmElement * element = (OPEManagedOsmElement*)[OPEMRUtility managedObjectWithID:objectID];
+        
+        if (elementOsmID < 0) {
+            element.osmIDValue = response;
+            element.versionValue = 1;
+        }
+        else{
+            element.versionValue = response;
+        }
+        
+        
+        NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
+        [context MR_saveToPersistentStoreAndWait];
+        
+        //[delegate uploadedElement:element.objectID newVersion:newVersion];
+        
+        
+    }failure:^(AFHTTPRequestOperation *operation, NSError * error)
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             [delegate uploadFailed:error];
+         });
+         NSLog(@"Failed: %@",urlRequest.URL);
+     }];
+    return requestOperation;
     
 }
 
-- (int64_t) createXmlNode: (OPEManagedOsmNode *) node withChangeset: (int64_t) changesetNumber
+-(AFHTTPRequestOperation *)deleteRequestOperationWithElement: (OPEManagedOsmElement *) element changeset: (int64_t) changesetNumber
 {
+    NSData * xmlData = [element deleteXMLforChangset:changesetNumber];
+    NSString * path = [NSString stringWithFormat:@"%@/%lld",[element osmType],element.osmIDValue];
+    NSManagedObjectID * objectID = element.objectID;
     
-    NSData *nodeXML = [node createXMLforChangset:changesetNumber];
-    
-    NSLog(@"Node Data: %@",[[NSString alloc] initWithData:nodeXML encoding:NSUTF8StringEncoding]);
-    
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/create"]];
-    NSLog(@"URL: %@",[url absoluteURL]);
-    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-    [urlRequest setHTTPBody: nodeXML];
-    [urlRequest setHTTPMethod: @"PUT"];
+    NSMutableURLRequest * urlRequest = [httpClient requestWithMethod:@"DELETE" path:path parameters:nil];
+    [urlRequest setHTTPBody:xmlData];
     [auth authorizeRequest:urlRequest];
-    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
-    //NSData * returnData = nil;
-    NSLog(@"Create Node Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
-    return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
-}
     
-- (int64_t) deleteXmlNode: (OPEManagedOsmNode *) node withChangeset: (int64_t) changesetNumber
-{
-    
-    NSData *nodeXML = [node deleteXMLforChangset:changesetNumber];
-    
-    
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/node/%lld",node.osmIDValue]];
-    NSLog(@"URL: %@",[url absoluteURL]);
-    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-    [urlRequest setHTTPBody: nodeXML];
-    [urlRequest setHTTPMethod: @"DELETE"];
-    [auth authorizeRequest:urlRequest];
-    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: nil];
-    //NSData * returnData = nil;
-    NSLog(@"Delete Node Return Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
-    return [[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding] intValue];
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id object){
+        NSLog(@"changeset %@",object);
+        NSInteger newVersion = [[[NSString alloc] initWithData:object encoding:NSUTF8StringEncoding] integerValue];
+        OPEManagedOsmElement * element = (OPEManagedOsmElement*)[OPEMRUtility managedObjectWithID:objectID];
+        
+        element.osmIDValue = newVersion;
+        element.isVisibleValue = NO;
+        NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
+        [context MR_saveToPersistentStoreAndWait];
+        
+        //[delegate uploadedElement:element.objectID newVersion:newVersion];
+        
+        
+    }failure:^(AFHTTPRequestOperation *operation, NSError * error)
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             [delegate uploadFailed:error];
+         });
+         NSLog(@"Failed: %@",urlRequest.URL);
+     }];
+    return requestOperation;
+
     
 }
 
 - (void) closeChangeset: (int64_t) changesetNumber
 {
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"http://api.openstreetmap.org/api/0.6/changeset/%lld/close",changesetNumber]];
-    NSLog(@"URL: %@",[url absoluteURL]);
-    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:url];
-    [urlRequest setHTTPMethod: @"PUT"];
+    NSString * path = [NSString stringWithFormat:@"changeset/%lld/close",changesetNumber];
+    
+    NSMutableURLRequest * urlRequest = [httpClient requestWithMethod:@"PUT" path:path parameters:nil];
     [auth authorizeRequest:urlRequest];
-    NSError * error;
-    NSData *returnData = [NSURLConnection sendSynchronousRequest: urlRequest returningResponse: nil error: &error];
-    [self uploadComplete];
-    //NSData * returnData = nil;
-    NSLog(@"Close Changeset Data: %@",[[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding]);
-}
-
-- (void) uploadComplete
-{
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"uploadComplete"
-     object:self
-     userInfo:nil];
+    
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id object){
+        NSLog(@"changeset Closed");
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [delegate didCloseChangeset:changesetNumber];
+        });
+        
+        
+    }failure:^(AFHTTPRequestOperation *operation, NSError * error)
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             [delegate uploadFailed:error];
+         });
+         NSLog(@"Failed: %@",urlRequest.URL);
+     }];
+    [requestOperation start];
+    
 }
 
 

@@ -24,16 +24,21 @@
 #import <CoreLocation/CoreLocation.h>
 #import "OPETagInterpreter.h"
 #import "GTMOAuthViewControllerTouch.h"
+#import "AFNetworking.h"
 
 @class OPEManagedOsmNode;
 @class OPEManagedOsmElement;
 @class OPEManagedOsmRelation;
 @class OPEManagedOsmWay;
+@class OPEChangeset;
 
 @protocol OPEOSMDataControllerDelegate <NSObject>
 
--(void) uploadedElement:(NSManagedObjectID *)objectID newVersion:(NSInteger)newVersion;
--(void) deletedElement:(NSManagedObjectID *)objectID;
+-(void)didOpenChangeset:(int64_t)changesetNumber withMessage:(NSString *)message;
+-(void)didCloseChangeset:(int64_t)changesetNumber;
+-(void)uploadFailed:(NSError *)error;
+
+@optional
 -(void) downloadFailed:(NSError *)error;
 
 @end
@@ -45,28 +50,21 @@
     OPEManagedOsmWay * currentWay;
     OPEManagedOsmRelation * currentRelation;
     dispatch_queue_t q;
+    AFHTTPClient * httpClient;
     
 }
 
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
 @property (nonatomic, weak) id <OPEOSMDataControllerDelegate> delegate;
 @property (nonatomic, strong) OPEManagedOsmElement * currentElement;
-@property (nonatomic, strong) OPEManagedOsmNode * currentNode;
-@property (nonatomic, strong) OPEManagedOsmWay * currentWay;
-@property (nonatomic, strong) OPEManagedOsmRelation * currentRelation;
 
 - (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
-- (int64_t) openChangesetWithMessage: (NSString *) message;
-- (int64_t) createXmlNode: (OPEManagedOsmNode *) node withChangeset: (int64_t) changesetNumber;
-- (int64_t) updateXmlNode: (OPEManagedOsmElement *) node withChangeset: (int64_t) changesetNumber;
-- (int64_t) deleteXmlNode: (OPEManagedOsmNode *) node withChangeset: (int64_t) changesetNumber;
+- (void) openChangeset:(OPEChangeset *)changeset;
 - (void) closeChangeset: (int64_t) changesetNumber;
 - (BOOL) canAuth;
 
-- (int64_t) createNode: (OPEManagedOsmNode *) node;
-- (int64_t) updateNode: (OPEManagedOsmElement *) element;
-- (int64_t) deleteNode: (OPEManagedOsmNode *) node;
-- (void) uploadComplete;
+- (void) uploadElement: (OPEManagedOsmElement *) element;
+- (void) deleteElement: (OPEManagedOsmElement *) element;
 
 
 

@@ -278,9 +278,9 @@
 		634205C01645EA62009C6BA4 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 634205BF1645EA62009C6BA4 /* plus@2x.png */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
 		63570A901640F3C00009D8A3 /* libMapBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63570A8C1640F3B10009D8A3 /* libMapBox.a */; };
-		636D7819152E58F8005E31A3 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D7818152E58F8005E31A3 /* MBProgressHUD.m */; };
 		6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6370D354151A8BAE0081206A /* libsqlite3.dylib */; };
 		637A89FE14E1C340003F656F /* SPOI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 637A89FD14E1C340003F656F /* SPOI.bundle */; };
+		637C7CCB16F164BE002CD340 /* OPEChangeset.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C7CCA16F164BE002CD340 /* OPEChangeset.m */; };
 		6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */; };
 		6383949414EC7DAC00C74A57 /* GTMOAuthViewControllerTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383948C14EC7DAC00C74A57 /* GTMOAuthViewControllerTouch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6383949514EC7DAC00C74A57 /* GTMOAuthAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383948E14EC7DAC00C74A57 /* GTMOAuthAuthentication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -326,6 +326,11 @@
 		63A2DB4615226CF6000C095D /* gear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63A2DB4415226CF6000C095D /* gear@2x.png */; };
 		63AD8F7A15E8570B006F92B8 /* OPECategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7915E8570B006F92B8 /* OPECategory.m */; };
 		63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7C15E8577E006F92B8 /* OPEType.m */; };
+		63B1B15016F285DB00323E9F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B1B14F16F285DB00323E9F /* MBProgressHUD.m */; };
+		63B1B15716F2877800323E9F /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B1B15516F2877700323E9F /* checkmark.png */; };
+		63B1B15816F2877800323E9F /* checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B1B15616F2877700323E9F /* checkmark@2x.png */; };
+		63B1B15B16F2883A00323E9F /* x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B1B15916F2883A00323E9F /* x.png */; };
+		63B1B15C16F2883A00323E9F /* x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B1B15A16F2883A00323E9F /* x@2x.png */; };
 		63B1B7DB16698FAB006CFD68 /* OPEOpenStreetMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B1B7DA16698FAA006CFD68 /* OPEOpenStreetMapSource.m */; };
 		63B748A5162781820052148E /* memorial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B748A3162781820052148E /* memorial@2x.png */; };
 		63B748A6162781820052148E /* townhall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63B748A4162781820052148E /* townhall@2x.png */; };
@@ -750,10 +755,10 @@
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
 		63570A801640F3B10009D8A3 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = "<group>"; };
-		636D7817152E58F8005E31A3 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		636D7818152E58F8005E31A3 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		6370D354151A8BAE0081206A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		637A89FD14E1C340003F656F /* SPOI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SPOI.bundle; sourceTree = "<group>"; };
+		637C7CC916F164BE002CD340 /* OPEChangeset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEChangeset.h; sourceTree = "<group>"; };
+		637C7CCA16F164BE002CD340 /* OPEChangeset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEChangeset.m; sourceTree = "<group>"; };
 		6383947E14EC4DDD00C74A57 /* OPEInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEInfoViewController.h; sourceTree = "<group>"; };
 		6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEInfoViewController.m; sourceTree = "<group>"; };
 		6383948B14EC7DAC00C74A57 /* GTMOAuthViewControllerTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuthViewControllerTouch.h; sourceTree = "<group>"; };
@@ -836,6 +841,12 @@
 		63AD8F7B15E8577D006F92B8 /* OPEType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEType.h; sourceTree = "<group>"; };
 		63AD8F7C15E8577E006F92B8 /* OPEType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEType.m; sourceTree = "<group>"; };
 		63AFC7BC15ACE3DB00A50C29 /* OPEPoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPEPoint.h; sourceTree = "<group>"; };
+		63B1B14E16F285DB00323E9F /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = lib/MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
+		63B1B14F16F285DB00323E9F /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = lib/MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
+		63B1B15516F2877700323E9F /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
+		63B1B15616F2877700323E9F /* checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkmark@2x.png"; sourceTree = "<group>"; };
+		63B1B15916F2883A00323E9F /* x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x.png; sourceTree = "<group>"; };
+		63B1B15A16F2883A00323E9F /* x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x@2x.png"; sourceTree = "<group>"; };
 		63B1B7D916698FAA006CFD68 /* OPEOpenStreetMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOpenStreetMapSource.h; sourceTree = "<group>"; };
 		63B1B7DA16698FAA006CFD68 /* OPEOpenStreetMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpenStreetMapSource.m; sourceTree = "<group>"; };
 		63B748A3162781820052148E /* memorial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "memorial@2x.png"; sourceTree = "<group>"; };
@@ -1333,7 +1344,6 @@
 			children = (
 				63570A801640F3B10009D8A3 /* MapView.xcodeproj */,
 				63570721163F613B0009D8A3 /* Resources */,
-				636D781A152E58FD005E31A3 /* MBProgressHUD */,
 				6330AB7414DB519A00448852 /* OSM POI Editor */,
 				63E8210F16F12A2A0040B892 /* Submodules */,
 				637A89FB14E1B426003F656F /* Resources */,
@@ -1406,6 +1416,8 @@
 				633CD876164B28DA00678D58 /* OPEFileUpdater.m */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,
 				631539E014DC98D0000236F0 /* OPEOSMData.m */,
+				637C7CC916F164BE002CD340 /* OPEChangeset.h */,
+				637C7CCA16F164BE002CD340 /* OPEChangeset.m */,
 				63FFDC6414E480DF00701DEC /* OPETagInterpreter.h */,
 				63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */,
 				6310F4B4153736D000C65FD8 /* OPEMessage.h */,
@@ -1559,15 +1571,20 @@
 		636D781A152E58FD005E31A3 /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
-				636D7817152E58F8005E31A3 /* MBProgressHUD.h */,
-				636D7818152E58F8005E31A3 /* MBProgressHUD.m */,
+				63B1B14E16F285DB00323E9F /* MBProgressHUD.h */,
+				63B1B14F16F285DB00323E9F /* MBProgressHUD.m */,
 			);
 			name = MBProgressHUD;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		637A89FB14E1B426003F656F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				63B1B15916F2883A00323E9F /* x.png */,
+				63B1B15A16F2883A00323E9F /* x@2x.png */,
+				63B1B15516F2877700323E9F /* checkmark.png */,
+				63B1B15616F2877700323E9F /* checkmark@2x.png */,
 				63DE6E531611365D00C26B77 /* default-568h@2x.png */,
 				63DE6E4B1611328200C26B77 /* default.png */,
 				63DE6E4C1611328200C26B77 /* default@2x.png */,
@@ -1862,6 +1879,7 @@
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				636D781A152E58FD005E31A3 /* MBProgressHUD */,
 				63E8211216F12A850040B892 /* AFNetworking */,
 				6383948A14EC7D8C00C74A57 /* OAuth */,
 			);
@@ -2262,6 +2280,10 @@
 				63C3D0611666EF59001585E1 /* apartment.png in Resources */,
 				63C3D0631666EF61001585E1 /* apartment@2x.png in Resources */,
 				6301910016B327EB007AB232 /* OptionalCategorySort.plist in Resources */,
+				63B1B15716F2877800323E9F /* checkmark.png in Resources */,
+				63B1B15816F2877800323E9F /* checkmark@2x.png in Resources */,
+				63B1B15B16F2883A00323E9F /* x.png in Resources */,
+				63B1B15C16F2883A00323E9F /* x@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2328,7 +2350,6 @@
 				6383949514EC7DAC00C74A57 /* GTMOAuthAuthentication.m in Sources */,
 				6383949614EC7DAC00C74A57 /* GTMOAuthSignIn.m in Sources */,
 				6383949714EC7DAC00C74A57 /* GTMHTTPFetcher.m in Sources */,
-				636D7819152E58F8005E31A3 /* MBProgressHUD.m in Sources */,
 				63E525D21534D90500D2DA35 /* OPECreditViewController.m in Sources */,
 				6310F4B6153736D000C65FD8 /* OPEMessage.m in Sources */,
 				63292E6B1593ED670010A11B /* OPEBinaryCell.m in Sources */,
@@ -2405,6 +2426,8 @@
 				63E8212C16F12A850040B892 /* AFURLConnectionOperation.m in Sources */,
 				63E8212D16F12A850040B892 /* AFXMLRequestOperation.m in Sources */,
 				63E8212E16F12A850040B892 /* UIImageView+AFNetworking.m in Sources */,
+				637C7CCB16F164BE002CD340 /* OPEChangeset.m in Sources */,
+				63B1B15016F285DB00323E9F /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

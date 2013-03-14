@@ -5,6 +5,7 @@
 
 
 extern const struct OPEManagedOsmElementAttributes {
+	__unsafe_unretained NSString *action;
 	__unsafe_unretained NSString *changesetID;
 	__unsafe_unretained NSString *isVisible;
 	__unsafe_unretained NSString *osmID;
@@ -35,6 +36,7 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 
 
 
+
 @interface OPEManagedOsmElementID : NSManagedObjectID {}
 @end
 
@@ -43,6 +45,16 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (OPEManagedOsmElementID*)objectID;
+
+
+
+
+
+@property (nonatomic, strong) NSString* action;
+
+
+
+//- (BOOL)validateAction:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -177,6 +189,12 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 @end
 
 @interface _OPEManagedOsmElement (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSString*)primitiveAction;
+- (void)setPrimitiveAction:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveChangesetID;

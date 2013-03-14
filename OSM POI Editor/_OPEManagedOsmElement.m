@@ -4,6 +4,7 @@
 #import "_OPEManagedOsmElement.h"
 
 const struct OPEManagedOsmElementAttributes OPEManagedOsmElementAttributes = {
+	.action = @"action",
 	.changesetID = @"changesetID",
 	.isVisible = @"isVisible",
 	.osmID = @"osmID",
@@ -76,6 +77,13 @@ const struct OPEManagedOsmElementFetchedProperties OPEManagedOsmElementFetchedPr
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic action;
+
+
 
 
 

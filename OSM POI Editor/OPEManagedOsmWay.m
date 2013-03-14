@@ -18,18 +18,16 @@
     {
         double centerLat=0.0;
         double centerLon=0.0;
-        for(OPEManagedOsmNode * node in self.nodes)
-        {
-            CLLocationCoordinate2D nodeCenter = [node center];
-            centerLat += nodeCenter.latitude;
-            centerLon += nodeCenter.longitude;
-        }
+        
+        centerLat = [[self.nodes valueForKeyPath:@"@sum.latitude"] doubleValue];
+        centerLon = [[self.nodes valueForKeyPath:@"@sum.longitude"] doubleValue];
+        
         return CLLocationCoordinate2DMake(centerLat/[self.nodes count], centerLon/[self.nodes count]);
     }
     return CLLocationCoordinate2DMake(0, 0);
 }
 
--(NSData *) updateXMLforChangset:(int64_t)changesetNumber
+-(NSData *) uploadXMLforChangset:(int64_t)changesetNumber
 {
     NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
     [xml appendString:[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"]];
@@ -46,6 +44,11 @@
     
     return [xml dataUsingEncoding:NSUTF8StringEncoding];
     
+}
+
+-(NSString *)osmType
+{
+    return OPEOsmElementWay;
 }
 
 +(OPEManagedOsmWay *)fetchOrCreatWayWithOsmID:(int64_t)wayID

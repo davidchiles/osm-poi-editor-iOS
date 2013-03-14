@@ -5,7 +5,7 @@
 #import "OPEManagedOsmElement.h"
 
 extern const struct OPEManagedOsmNodeAttributes {
-	__unsafe_unretained NSString *lattitude;
+	__unsafe_unretained NSString *latitude;
 	__unsafe_unretained NSString *longitude;
 } OPEManagedOsmNodeAttributes;
 
@@ -34,15 +34,15 @@ extern const struct OPEManagedOsmNodeFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* lattitude;
+@property (nonatomic, strong) NSNumber* latitude;
 
 
 
-@property double lattitudeValue;
-- (double)lattitudeValue;
-- (void)setLattitudeValue:(double)value_;
+@property double latitudeValue;
+- (double)latitudeValue;
+- (void)setLatitudeValue:(double)value_;
 
-//- (BOOL)validateLattitude:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateLatitude:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -84,11 +84,11 @@ extern const struct OPEManagedOsmNodeFetchedProperties {
 @interface _OPEManagedOsmNode (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSNumber*)primitiveLattitude;
-- (void)setPrimitiveLattitude:(NSNumber*)value;
+- (NSNumber*)primitiveLatitude;
+- (void)setPrimitiveLatitude:(NSNumber*)value;
 
-- (double)primitiveLattitudeValue;
-- (void)setPrimitiveLattitudeValue:(double)value_;
+- (double)primitiveLatitudeValue;
+- (void)setPrimitiveLatitudeValue:(double)value_;
 
 
 

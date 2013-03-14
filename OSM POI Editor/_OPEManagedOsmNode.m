@@ -4,7 +4,7 @@
 #import "_OPEManagedOsmNode.h"
 
 const struct OPEManagedOsmNodeAttributes OPEManagedOsmNodeAttributes = {
-	.lattitude = @"lattitude",
+	.latitude = @"latitude",
 	.longitude = @"longitude",
 };
 
@@ -41,8 +41,8 @@ const struct OPEManagedOsmNodeFetchedProperties OPEManagedOsmNodeFetchedProperti
 + (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"lattitudeValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"lattitude"];
+	if ([key isEqualToString:@"latitudeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"latitude"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
@@ -58,26 +58,26 @@ const struct OPEManagedOsmNodeFetchedProperties OPEManagedOsmNodeFetchedProperti
 
 
 
-@dynamic lattitude;
+@dynamic latitude;
 
 
 
-- (double)lattitudeValue {
-	NSNumber *result = [self lattitude];
+- (double)latitudeValue {
+	NSNumber *result = [self latitude];
 	return [result doubleValue];
 }
 
-- (void)setLattitudeValue:(double)value_ {
-	[self setLattitude:[NSNumber numberWithDouble:value_]];
+- (void)setLatitudeValue:(double)value_ {
+	[self setLatitude:[NSNumber numberWithDouble:value_]];
 }
 
-- (double)primitiveLattitudeValue {
-	NSNumber *result = [self primitiveLattitude];
+- (double)primitiveLatitudeValue {
+	NSNumber *result = [self primitiveLatitude];
 	return [result doubleValue];
 }
 
-- (void)setPrimitiveLattitudeValue:(double)value_ {
-	[self setPrimitiveLattitude:[NSNumber numberWithDouble:value_]];
+- (void)setPrimitiveLatitudeValue:(double)value_ {
+	[self setPrimitiveLatitude:[NSNumber numberWithDouble:value_]];
 }
 
 
