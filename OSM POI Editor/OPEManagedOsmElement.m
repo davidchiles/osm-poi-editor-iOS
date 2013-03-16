@@ -47,6 +47,7 @@
 }
 -(void)addKey:(NSString *)key value:(NSString *)value
 {
+    [self removeTagWithOsmKey:key];
     OPEManagedOsmTag * newTag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
     [self.tagsSet addObject:newTag];
 }

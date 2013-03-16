@@ -98,7 +98,7 @@
             {
                 NSLog(@"Match: %d",[currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location);
                 NSNumber * location = [NSNumber numberWithInteger: [currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location];
-                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",[currentPoi objectID],@"objectID",location,@"location", nil];
+                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",[currentPoi objectID],@"objectID",location,@"location",currentPoi.category.name,@"catName", nil];
                 [searchResults addObject:match];
                 
             }
@@ -133,11 +133,12 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     if (tableView == [[self searchDisplayController] searchResultsTableView]) {
         cell.textLabel.text = [[self.searchResults objectAtIndex:indexPath.row] objectForKey:@"typeName"];
+        cell.detailTextLabel.text = [[self.searchResults objectAtIndex:indexPath.row] objectForKey:@"catName"];
         return cell;
     }
     
@@ -191,13 +192,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
      if (tableView == [[self searchDisplayController] searchResultsTableView]) {
          [[self delegate] setNewType: [[searchResults objectAtIndex:indexPath.row] objectForKey:@"objectID"]];
@@ -210,12 +204,7 @@
          viewer.categoryManagedObjectID = [[categoriesArray objectAtIndex:indexPath.row] objectID];
          [viewer setDelegate: [[[self navigationController] viewControllers] objectAtIndex:0]];
          [self.navigationController pushViewController:viewer animated:YES];
-     }
-    
-    
-    
-    
-    
+     }  
 }
 
 #pragma mark - search delegate
