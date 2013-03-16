@@ -559,6 +559,22 @@
 			<string>no</string>
 		</dict>
 	</dict>
+	<key>bench</key>
+	<dict>
+		<key>name</key>
+		<string>Bench</string>
+		<key>osmKey</key>
+		<string>bench</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Yes</key>
+			<string>yes</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
 	<key>map_size</key>
 	<dict>
 		<key>name</key>

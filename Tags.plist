@@ -305,6 +305,8 @@
 				<string>cuisine</string>
 				<string>drive_through</string>
 				<string>drive_in</string>
+				<string>internet_access</string>
+				<string>internet_access_fee</string>
 			</array>
 		</dict>
 		<key>Food Court</key>
@@ -1519,6 +1521,36 @@
 				<string>drive_through</string>
 			</array>
 		</dict>
+		<key>Animal Shelter</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>animal_shelter</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>operator</string>
+			</array>
+		</dict>
+		<key>Animal Boarding</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>animal_boarding</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>operator</string>
+			</array>
+		</dict>
 		<key>Hairdresser</key>
 		<dict>
 			<key>image</key>
@@ -2251,6 +2283,36 @@
 				<string>address</string>
 			</array>
 		</dict>
+		<key>Music Store</key>
+		<dict>
+			<key>image</key>
+			<string>trumpet.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>music</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Curtain Store</key>
+		<dict>
+			<key>image</key>
+			<string>trumpet.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>curtain</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
 		<key>Newsstand </key>
 		<dict>
 			<key>image</key>
@@ -2424,6 +2486,21 @@
 			<dict>
 				<key>shop</key>
 				<string>supermarket</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Greengrocer</key>
+		<dict>
+			<key>image</key>
+			<string>shop.png</string>
+			<key>tags</key>
+			<dict>
+				<key>shop</key>
+				<string>greengrocer</string>
 			</dict>
 			<key>optional</key>
 			<array>
@@ -2922,12 +2999,25 @@
 			<string>bus_stop.png</string>
 			<key>tags</key>
 			<dict>
-				<key>amenity</key>
-				<string>bus_station</string>
 				<key>bus</key>
 				<string>yes</string>
 				<key>public_transport</key>
 				<string>station</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Bus Station (legacy)</key>
+		<dict>
+			<key>image</key>
+			<string>bus_stop.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>bus_station</string>
 			</dict>
 			<key>optional</key>
 			<array>
@@ -2951,6 +3041,8 @@
 				<string>shelter</string>
 				<string>ref</string>
 				<string>route_ref</string>
+				<string>covered</string>
+				<string>bench</string>
 			</array>
 		</dict>
 		<key>Bus Stop (legacy)</key>
@@ -2966,7 +3058,9 @@
 			<array>
 				<string>shelter</string>
 				<string>ref</string>
+				<string>bench</string>
 				<string>route_ref</string>
+				<string>covered</string>
 			</array>
 		</dict>
 		<key>Car Rental</key>
