@@ -495,38 +495,32 @@
 
 -(void)removeAnnotationWithOsmElementID:(NSManagedObjectID *)objectID
 {
-    RMAnnotation * annotation = [self annotationForOsmElementID:objectID];
-    if (annotation) {
+    NSSet * annotationSet = [self annotationsForOsmElementID:objectID];
+    for (RMAnnotation * annotation in annotationSet)
+    {
         [mapView removeAnnotation:annotation];
     }
-
 }
 
--(void)updateAnnotationWithOsmElementID:(NSManagedObjectID *)objectID
+-(NSSet *)annotationsForOsmElementID:(NSManagedObjectID *)objectID
 {
-    RMAnnotation * annotation = [self annotationForOsmElementID:objectID];
-    if (annotation) {
-        
-    }
+    NSIndexSet * indexSet = [self indexesOfOsmElementID:objectID];
+    NSMutableSet * annotationSet = [NSMutableSet set];
+    
+    [indexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [annotationSet addObject:[mapView.annotations objectAtIndex:idx]];
+    }];
+    
+    return annotationSet;
 }
 
--(RMAnnotation *)annotationForOsmElementID:(NSManagedObjectID *)objectID
+-(NSIndexSet *)indexesOfOsmElementID:(NSManagedObjectID *)objectID
 {
-    RMAnnotation* annotation = nil;
-    NSInteger index = [self indexOfOsmElementID:objectID];
-    if (index != NSNotFound) {
-        annotation = [mapView.annotations objectAtIndex:index];
-    }
-    return annotation;
-}
-
--(NSInteger)indexOfOsmElementID:(NSManagedObjectID *)objectID
-{
-    return [mapView.annotations indexOfObjectPassingTest:^BOOL (id obj, NSUInteger idx, BOOL *stop) {
+    NSIndexSet * set = [mapView.annotations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         RMAnnotation * annotation = (RMAnnotation *)obj;
         return [annotation.userInfo isEqual:objectID];
     }];
-    
+    return set;
 }
 
 -(NSFetchedResultsController *)osmElementFetchedResultsController
@@ -567,7 +561,6 @@
             break;
     }
 }
-             
              
 
 @end

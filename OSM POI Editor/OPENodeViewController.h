@@ -36,6 +36,7 @@
 @protocol OPENodeViewDelegate
 @optional
 -(void)removeAnnotation:(RMAnnotation *)annotation;
+-(void)removeAnnotationWithOsmElementID:(NSManagedObjectID *)objectID;
 @end
 
 

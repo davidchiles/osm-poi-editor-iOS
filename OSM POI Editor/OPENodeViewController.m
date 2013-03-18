@@ -549,10 +549,6 @@
                     
                     
                     [osmData deleteElement:osmElement];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.delegate removeAnnotation:annotation];
-                    });
                 });
                 //dispatch_release(q);
             }
@@ -740,6 +736,7 @@
     self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark.png"]];
     HUD.mode = MBProgressHUDModeCustomView;
     self.HUD.labelText = @"Complete";
+    [self.delegate removeAnnotationWithOsmElementID:self.managedOsmElement.objectID];
     [self.HUD hide:YES afterDelay:3.0];
     [self checkSaveButton];
     [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];
