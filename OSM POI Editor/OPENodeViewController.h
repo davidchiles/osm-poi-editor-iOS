@@ -35,7 +35,6 @@
 
 @protocol OPENodeViewDelegate
 @optional
--(void)removeAnnotation:(RMAnnotation *)annotation;
 -(void)removeAnnotationWithOsmElementID:(NSManagedObjectID *)objectID;
 @end
 
@@ -56,7 +55,6 @@
 @property (nonatomic, strong) id <OPENodeViewDelegate> delegate;
 @property (nonatomic, strong) MBProgressHUD * HUD;
 @property (nonatomic, strong) NSMutableArray * tableSections;
-@property (nonatomic, strong) RMAnnotation * annotation;
 @property (nonatomic, strong) OPEManagedOsmElement * managedOsmElement;
 @property (nonatomic) BOOL newElement;
 @property (nonatomic, strong) NSArray * optionalSectionsArray;

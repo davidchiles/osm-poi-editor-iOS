@@ -41,6 +41,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     // DATABASE TESTS
     [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"db.sqlite"];
     NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];

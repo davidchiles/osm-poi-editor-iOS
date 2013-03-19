@@ -55,3 +55,5 @@
 #define OPEOsmElementRelation @"relation"
 #define OPEOsmElementNone @"none"
 
+#define highwayTypes @[@"residential",@"unclassified",@"track",@"tertiary",@"secondary",@"primary",@"trunk",@"footway",@"path",@"cycleway",@"steps",@"bridleway"]
+

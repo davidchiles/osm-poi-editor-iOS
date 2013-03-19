@@ -14,6 +14,10 @@
 
 -(CLLocationCoordinate2D)center
 {
+    if (self.isNoNameStreetValue) {
+        return ((CLLocation *)[self.points objectAtIndex:0]).coordinate;
+    }
+    
     if(self.nodes)
     {
         double centerLat=0.0;
@@ -49,6 +53,49 @@
 -(NSString *)osmType
 {
     return OPEOsmElementWay;
+}
+
+-(NSArray *)points
+{
+    NSMutableArray * mutablePointsArray = [NSMutableArray array];
+    for (OPEManagedOsmNode * node in self.nodes)
+    {
+        CLLocationCoordinate2D center = [node center];
+        CLLocation * location = [[CLLocation alloc]initWithLatitude:center.latitude longitude:center.longitude];
+        [mutablePointsArray addObject:location];
+        
+    }
+    return mutablePointsArray;
+}
+-(NSString *)name
+{
+    if (self.isNoNameStreetValue) {
+        return @"Highway Missing Name";
+    }
+    return [super name];
+}
+
+-(BOOL)noNameStreet
+{
+    if ([[self name] length]) {
+        return NO;
+    }
+    
+    
+    
+    NSString * highwayValue = [self valueForOsmKey:@"highway"];
+    
+    if ([highwayValue length])
+    {
+        NSSet * highwaySet = [NSSet setWithArray:highwayTypes];
+        
+        if ([highwaySet containsObject:highwayValue]) {
+            return YES;
+        }
+        
+    }
+    return NO;
+    
 }
 
 +(OPEManagedOsmWay *)fetchOrCreatWayWithOsmID:(int64_t)wayID

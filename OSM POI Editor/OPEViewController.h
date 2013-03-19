@@ -29,10 +29,12 @@
 #import "OPEInfoViewController.h"
 #import "OPENodeViewController.h"
 #import "OPEMessage.h"
+#import "RMPolygonAnnotation.h"
 
 @interface OPEViewController : UIViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,NSFetchedResultsControllerDelegate> {
     RMMapView* mapView;
     UIImageView * plusImageView;
+    RMAnnotation * wayAnnotation;
     
 }
 
@@ -58,6 +60,7 @@
 @property (nonatomic) BOOL firstDownload;
 
 @property (nonatomic,strong) NSFetchedResultsController * osmElementFetchedResultsController;
+@property (nonatomic,strong) NSFetchedResultsController * noNameStreetsFetchedResultsController;
 
 -(IBAction)infoButtonPressed:(id)sender;
 -(IBAction)addPointButtonPressed:(id)sender;

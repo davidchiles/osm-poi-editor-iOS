@@ -30,7 +30,6 @@
 #import "OPEConstants.h"
 #import "OPEAPIConstants.h"
 #import "OPESpecialCell2.h"
-#import "OPEWay.h"
 #import "OPEMRUtility.h"
 #import "OPEManagedReferenceOptional.h"
 #import "OPEManagedReferencePoi.h"
@@ -50,7 +49,6 @@
 @synthesize delegate;
 @synthesize HUD;
 @synthesize tableSections;
-@synthesize annotation;
 @synthesize managedOsmElement;
 @synthesize newElement;
 @synthesize optionalSectionsArray;
@@ -472,16 +470,7 @@
             NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
             OPEManagedOsmElement * element = (OPEManagedOsmElement *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
             
-            if(element.osmIDValue<0 && [element isKindOfClass:[OPEManagedOsmNode class]])
-            {
-                NSLog(@"Create Node");
-                [osmData uploadElement: element];
-            }
-            else
-            {
-                NSLog(@"Update Node");
-                [osmData uploadElement:element];
-            }
+            [osmData uploadElement:element];
             
         });
         

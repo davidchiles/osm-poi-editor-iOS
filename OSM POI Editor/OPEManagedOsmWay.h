@@ -7,4 +7,7 @@
 
 +(OPEManagedOsmWay *)fetchOrCreatWayWithOsmID:(int64_t)wayID;
 
+-(NSArray *)points;
+-(BOOL)noNameStreet;
+
 @end

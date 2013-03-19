@@ -120,6 +120,12 @@
 {
     if ([elementName isEqualToString:@"node"] || [elementName isEqualToString:@"way"] ||[elementName isEqualToString:@"relation"]) {
         [self.currentElement findType];
+        
+        if ([self.currentElement isKindOfClass:[OPEManagedOsmWay class]]) {
+            OPEManagedOsmWay* osmWay =(OPEManagedOsmWay *)self.currentElement;
+            osmWay.isNoNameStreetValue = [osmWay noNameStreet];
+        }
+        
         self.currentElement = nil;
     }
 }
@@ -132,6 +138,7 @@
         OPEManagedOsmNode * newNode = [OPEManagedOsmNode fetchOrCreateNodeWithOsmID:[[attributeDict objectForKey:@"id"] longLongValue]];
         if (newVersion > newNode.versionValue) {
             [newNode setMetaData:attributeDict];
+            newNode.isVisibleValue = YES;
             newNode.latitudeValue = [[attributeDict objectForKey:@"lat"] doubleValue];
             newNode.longitudeValue = [[attributeDict objectForKey:@"lon"] doubleValue];
             self.currentElement = newNode;

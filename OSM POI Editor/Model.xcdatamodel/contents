@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="12C60" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="OPEManagedOsmElement" representedClassName="OPEManagedOsmElement" syncable="YES">
         <attribute name="action" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="changesetID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="isVisible" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isVisible" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="osmID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -35,6 +35,7 @@
     </entity>
     <entity name="OPEManagedOsmWay" representedClassName="OPEManagedOsmWay" parentEntity="OPEManagedOsmElement" syncable="YES">
         <attribute name="isArea" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isNoNameStreet" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="nodes" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="OPEManagedOsmNode" inverseName="ways" inverseEntity="OPEManagedOsmNode" syncable="YES"/>
     </entity>
     <entity name="OPEManagedReferenceOptional" representedClassName="OPEManagedReferenceOptional" syncable="YES">
@@ -79,7 +80,7 @@
         <element name="OPEManagedOsmRelation" positionX="90" positionY="315" width="180" height="58"/>
         <element name="OpeManagedOsmRelationMember" positionX="79" positionY="422" width="191" height="88"/>
         <element name="OPEManagedOsmTag" positionX="637" positionY="113" width="128" height="118"/>
-        <element name="OPEManagedOsmWay" positionX="450" positionY="485" width="128" height="73"/>
+        <element name="OPEManagedOsmWay" positionX="450" positionY="485" width="128" height="88"/>
         <element name="OPEManagedReferenceOptional" positionX="90" positionY="89" width="173" height="163"/>
         <element name="OPEManagedReferenceOptionalCategory" positionX="72" positionY="-45" width="216" height="90"/>
         <element name="OPEManagedReferenceOsmTag" positionX="376" positionY="-108" width="128" height="88"/>

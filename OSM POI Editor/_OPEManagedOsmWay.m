@@ -5,6 +5,7 @@
 
 const struct OPEManagedOsmWayAttributes OPEManagedOsmWayAttributes = {
 	.isArea = @"isArea",
+	.isNoNameStreet = @"isNoNameStreet",
 };
 
 const struct OPEManagedOsmWayRelationships OPEManagedOsmWayRelationships = {
@@ -45,6 +46,11 @@ const struct OPEManagedOsmWayFetchedProperties OPEManagedOsmWayFetchedProperties
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 		return keyPaths;
 	}
+	if ([key isEqualToString:@"isNoNameStreetValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isNoNameStreet"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
 
 	return keyPaths;
 }
@@ -72,6 +78,32 @@ const struct OPEManagedOsmWayFetchedProperties OPEManagedOsmWayFetchedProperties
 
 - (void)setPrimitiveIsAreaValue:(BOOL)value_ {
 	[self setPrimitiveIsArea:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic isNoNameStreet;
+
+
+
+- (BOOL)isNoNameStreetValue {
+	NSNumber *result = [self isNoNameStreet];
+	return [result boolValue];
+}
+
+- (void)setIsNoNameStreetValue:(BOOL)value_ {
+	[self setIsNoNameStreet:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsNoNameStreetValue {
+	NSNumber *result = [self primitiveIsNoNameStreet];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsNoNameStreetValue:(BOOL)value_ {
+	[self setPrimitiveIsNoNameStreet:[NSNumber numberWithBool:value_]];
 }
 
 

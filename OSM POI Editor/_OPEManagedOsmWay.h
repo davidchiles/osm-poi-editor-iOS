@@ -6,6 +6,7 @@
 
 extern const struct OPEManagedOsmWayAttributes {
 	__unsafe_unretained NSString *isArea;
+	__unsafe_unretained NSString *isNoNameStreet;
 } OPEManagedOsmWayAttributes;
 
 extern const struct OPEManagedOsmWayRelationships {
@@ -16,6 +17,7 @@ extern const struct OPEManagedOsmWayFetchedProperties {
 } OPEManagedOsmWayFetchedProperties;
 
 @class OPEManagedOsmNode;
+
 
 
 
@@ -41,6 +43,20 @@ extern const struct OPEManagedOsmWayFetchedProperties {
 - (void)setIsAreaValue:(BOOL)value_;
 
 //- (BOOL)validateIsArea:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSNumber* isNoNameStreet;
+
+
+
+@property BOOL isNoNameStreetValue;
+- (BOOL)isNoNameStreetValue;
+- (void)setIsNoNameStreetValue:(BOOL)value_;
+
+//- (BOOL)validateIsNoNameStreet:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -73,6 +89,15 @@ extern const struct OPEManagedOsmWayFetchedProperties {
 
 - (BOOL)primitiveIsAreaValue;
 - (void)setPrimitiveIsAreaValue:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveIsNoNameStreet;
+- (void)setPrimitiveIsNoNameStreet:(NSNumber*)value;
+
+- (BOOL)primitiveIsNoNameStreetValue;
+- (void)setPrimitiveIsNoNameStreetValue:(BOOL)value_;
 
 
 
