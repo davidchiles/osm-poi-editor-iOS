@@ -218,6 +218,7 @@
 {
     OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:managedObjectID];
     UIImage * icon;
+    NSString *imagestring = managedOsmElement.type.imageString;
     if (managedOsmElement.type) {
         if ([imagesDic objectForKey:managedOsmElement.type.imageString]) {
             icon = [imagesDic objectForKey:managedOsmElement.type.imageString];
@@ -526,7 +527,7 @@
     [super viewWillAppear:animated];
     //[self.navigationController setNavigationBarHidden:YES animated:YES];
     //[self.navigationController setToolbarHidden:NO animated:YES];
-    
+    [self updateAllAnnotations];
     [self setupButtons];
     userPressedLocatoinButton = NO;
     
@@ -560,7 +561,23 @@
     }
 }
 
+-(void)updateAllAnnotations
+{
+    [mapView removeAllAnnotations];
+    for (OPEManagedOsmElement * element in [self.osmElementFetchedResultsController fetchedObjects])
+    {
+        [self updateOsmElementWithID:element.objectID];
+    }
+}
+
 #pragma FetchedResultsController
+
+-(void)updateOsmElementWithID:(NSManagedObjectID *)objectID
+{
+    [self removeAnnotationWithOsmElementID:objectID];
+    [mapView addAnnotation:[self annotationWithOsmElement:(OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:objectID]]];
+    
+}
 
 -(void)removeAnnotationWithOsmElementID:(NSManagedObjectID *)objectID
 {
@@ -620,7 +637,7 @@
         case NSFetchedResultsChangeInsert:
         {
             OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:newIndexPath];
-            [mapView addAnnotation:[self annotationWithOsmElement:managedOsmElement]];
+            [self updateOsmElementWithID:managedOsmElement.objectID];
         }
             break;
         case NSFetchedResultsChangeMove:
@@ -628,9 +645,7 @@
         case NSFetchedResultsChangeUpdate:
         {
             OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:indexPath];
-            [self removeAnnotationWithOsmElementID:managedOsmElement.objectID];
-            managedOsmElement = [controller objectAtIndexPath:indexPath];
-            [mapView addAnnotation:[self annotationWithOsmElement:managedOsmElement]];
+            [self updateOsmElementWithID:managedOsmElement.objectID];
         }
             break;
         case NSFetchedResultsChangeDelete:

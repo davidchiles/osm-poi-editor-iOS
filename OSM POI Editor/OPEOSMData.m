@@ -143,6 +143,9 @@
             newNode.longitudeValue = [[attributeDict objectForKey:@"lon"] doubleValue];
             self.currentElement = newNode;
         }
+        else{
+            self.currentElement = nil;
+        }
         
     }
     else if([elementName isEqualToString:@"way"])
@@ -160,7 +163,10 @@
     }
     else if ([elementName isEqualToString:@"tag"])
     {
-        [self.currentElement addKey:[attributeDict objectForKey:@"k"] value:[attributeDict objectForKey:@"v"]];
+        if (self.currentElement) {
+            [self.currentElement addKey:[attributeDict objectForKey:@"k"] value:[attributeDict objectForKey:@"v"]];
+        }
+        
     }
     else if ([elementName isEqualToString:@"nd"])
     {

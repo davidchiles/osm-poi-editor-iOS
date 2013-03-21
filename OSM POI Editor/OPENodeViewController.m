@@ -68,7 +68,7 @@
     if(self)
     {
         self.delegate = newDelegate;
-        editContext = [NSManagedObjectContext MR_context];
+        editContext = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_contextForCurrentThread]];
         osmData = [[OPEOSMData alloc] init];
         osmData.delegate = self;
         if (objectID) {
@@ -452,6 +452,7 @@
 - (void) saveButtonPressed
 {
     self.managedOsmElement.action = kActionTypeModify;
+    
     [editContext MR_saveToPersistentStoreAndWait];
     
     if (![osmData canAuth])
@@ -473,7 +474,7 @@
             [osmData uploadElement:element];
             
         });
-        
+        //[self didCloseChangeset:1];
         //dispatch_release(q);
 
         
