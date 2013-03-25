@@ -44,59 +44,6 @@ static OPETagInterpreter *sharedManager = nil;
     }
     return self;
 }
-
-- (NSString *) category: (OPEPoint *)node
-{
-    return [[self type:node] categoryName];
-}
-
--(OPEType *)type:(OPEPoint *)node
-{
-    if([[node.tags objectForKey:@"highway"] isEqualToString:@"bus_stop"] )
-    {
-        NSLog(@"bus stop");
-    }
-    if([node hasNoTags])
-    {
-        return nil;
-    }
-    NSMutableDictionary * finalCatAndType = [[NSMutableDictionary alloc] init];
-    
-    NSArray * allOsmKeyValue =[osmKeyValueAndType allKeys];
-    int maxMatches = 0;
-    
-    for(NSDictionary * osmKeyValues in allOsmKeyValue)
-    {
-        int matches = 0;
-        //NSLog(@"Number of Values: %d",numValues);
-        for( NSString * osmKey in osmKeyValues)
-        {
-            if([[node.tags objectForKey:osmKey] isEqualToString:[osmKeyValues objectForKey:osmKey]])
-            {
-                matches++;
-            }
-        }
-        if(matches > maxMatches)
-        {
-            maxMatches = matches;
-            [finalCatAndType setObject:[[NSNumber alloc] initWithInt:matches] forKey:osmKeyValues];
-        }
-    }
-    
-    if ([finalCatAndType count]>0)
-    {
-        //NSLog(@"finalCatAndType; %@",finalCatAndType);
-        NSArray * sortedKeys = [finalCatAndType keysSortedByValueUsingSelector:@selector(compare:)];
-        //NSLog(@"sorted Array: %@",sortedKeys);
-        return (OPEType *)[osmKeyValueAndType objectForKey: [sortedKeys objectAtIndex:([sortedKeys count]-1)]];
-    }
-    //NSLog(@"NO CATEGORY OR TYPE: %@",node.tags);
-    return nil;
-    
-    
-    
-}
-
 - (void) readPlist
 {
     NSLog(@"start reading plist");
@@ -157,38 +104,6 @@ static OPETagInterpreter *sharedManager = nil;
     //NSLog(@"osmkeyandValue count: %@",[osmKeyandValue objectForKey:@"amenity"]);
     //NSLog(@"CategoryTypeandOsmKV count: %@",CategoryTypeandOsmKV );
 
-}
-
-- (NSString *) getName:(OPEPoint *)node
-{
-    NSString * name = [node.tags objectForKey:@"name"];
-    if(name)
-    {
-        return name;
-    }
-    else
-    {
-        return [[self type:node] displayName];
-    }
-    return @"Unknown";
-}
-
-- (NSString *) getImageForNode: (OPEPoint *) node
-{
-    return [[self type:node] imageString];
-}
-
-- (void)removeTagsForType:(OPEType *)type withNode:(OPEPoint *)node
-{
-    [node.tags removeObjectsForKeys:type.tags.allKeys];
-    //[node.tags removeObjectsForKeys:type.optionalTags];
-}
-
-- (BOOL)isSupported:(OPEPoint *)node
-{
-    if([self type:node])
-        return YES;
-    return NO;
 }
 
 +(NSArray *) getOptionalTagsKeys:(NSArray *)array

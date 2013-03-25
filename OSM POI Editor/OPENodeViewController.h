@@ -21,13 +21,11 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
-#import "OPENode.h"
 #import "OPETagInterpreter.h"
 #import "OPETextEdit.h"
 #import "OPETypeViewController.h"
 #import "MBProgressHUD.h"
 #import "OPETagValueList.h"
-#import "OPEPoint.h"
 #import "OPEType.h"
 #import "RMAnnotation.h"
 #import "OPEManagedOsmElement.h"

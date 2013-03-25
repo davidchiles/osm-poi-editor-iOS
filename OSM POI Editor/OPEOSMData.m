@@ -22,12 +22,10 @@
 
 #import "OPEOSMData.h"
 #import "TBXML.h"
-#import "OPENode.h"
 #import "ASIHTTPRequest.h"
 #import "ASIFormDataRequest.h"
 #import "GTMOAuthViewControllerTouch.h"
 #import "OPEAPIConstants.h"
-#import "OPEWay.h"
 #import "OPEConstants.h"
 #import "OPEManagedOsmNode.h"
 #import "OPEManagedOsmTag.h"

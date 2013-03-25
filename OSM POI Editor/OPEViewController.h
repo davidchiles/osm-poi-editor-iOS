@@ -24,7 +24,6 @@
 #import "RMMapView.h"
 #import "RMMapViewDelegate.h" 
 #import <CoreLocation/CoreLocation.h>
-#import "OPENode.h"
 #import "OPEOSMData.h"
 #import "OPEInfoViewController.h"
 #import "OPENodeViewController.h"

@@ -21,7 +21,6 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#import "OPEpoint.h"
 #import "OPECategory.h"
 #import "OPEType.h"
 
@@ -38,13 +37,7 @@
 - (id) init;
 //- (BOOL) nodeHasRecognizedTags:(OPENode *)n;
 //- (NSDictionary *) getPrimaryKeyValue: (OPENode *)n;
-- (NSString *) category: (OPEPoint *)n; //getCategory
-- (OPEType *) type: (OPEPoint *)n; //getType
 - (void) readPlist;
-- (NSString *) getName: (OPEPoint *) node;
-- (NSString *) getImageForNode: (OPEPoint *) node;
-- (void)removeTagsForType:(OPEType *)type withNode:(OPEPoint *)node;
-- (BOOL)isSupported:(OPEPoint *)node;
 - (NSDictionary *) allCategories;
 - (NSDictionary *) allTypes;
 
