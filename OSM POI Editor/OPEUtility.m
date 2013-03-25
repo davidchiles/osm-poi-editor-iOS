@@ -70,7 +70,35 @@
 
 +(BOOL)uesMetric
 {
-    return [[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem];
+    return [[[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem] boolValue];
+}
+
++(NSString *)formatDistanceMeters:(double)meters
+{
+    if ([OPEUtility uesMetric]) {
+        if (meters < 1.0) {
+            return @"<1 m";
+        }
+        else if (meters > 500.0)
+        {
+            return [NSString stringWithFormat: @"%.1f %@",meters/1000.0,@"km"];
+        }
+        return [NSString stringWithFormat: @"%.1f %@",meters,@"m"];
+    }
+    else{
+        double ft = meters*3.28084;
+        
+        if (ft > 100) {
+            return [NSString stringWithFormat: @"%.1f %@",ft/3.0,@"yd"];
+        }
+        else if (ft > 3000)
+        {
+            return [NSString stringWithFormat: @"%.1f %@",ft/5280,@"mi"];
+        }
+        return [NSString stringWithFormat: @"%.1f %@",ft,@"ft"];
+        
+    }
+    
 }
 
 @end

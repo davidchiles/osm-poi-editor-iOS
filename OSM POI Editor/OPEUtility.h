@@ -18,5 +18,7 @@
 
 +(NSString *)removeHTML:(NSString *)string;
 +(NSString *)addHTML:(NSString *)string;
++(NSString *)formatDistanceMeters:(double)meters;
++(BOOL)uesMetric;
 
 @end

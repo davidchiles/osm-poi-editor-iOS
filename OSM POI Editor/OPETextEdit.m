@@ -287,11 +287,16 @@
     }
     
     
-    OPEManagedOsmTag * tag = [OPEManagedOsmTag fetchOrCreateWithKey:osmKey value:newOsmValue];
+    [self saveNewOsmKey:osmKey andValue:newOsmValue];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)saveNewOsmKey:(NSString *)osmKeay andValue:(NSString *)value
+{
+    OPEManagedOsmTag * tag = [OPEManagedOsmTag fetchOrCreateWithKey:osmKey value:value];
     NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
     [context MR_saveToPersistentStoreAndWait];
     [self.delegate newTag:tag.objectID];
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void) saveToRecentlyUsed:(NSString *) newValue

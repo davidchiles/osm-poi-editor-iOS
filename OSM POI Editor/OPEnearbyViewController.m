@@ -9,12 +9,16 @@
 #import "OPEnearbyViewController.h"
 #import "OPEManagedOsmElement.h"
 #import "OPEMRUtility.h"
+#import "OPEUtility.h"
 
 @interface OPEnearbyViewController ()
 
 @end
 
 @implementation OPEnearbyViewController
+
+@synthesize osmKey;
+@synthesize delegate;
 
 - (id)initWithManagedObjectID:(NSManagedObjectID *)objectID
 {
@@ -44,14 +48,16 @@
 {
     [super viewDidLoad];
 	
+    
+}
+-(void)viewWillAppear:(BOOL)animated
+{
     UITableView * tableview = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     tableview.dataSource = self;
     tableview.delegate = self;
     
     
     [self.view addSubview:tableview];
-    
-    
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -69,22 +75,46 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     }
     cell.textLabel.text = [[distances objectAtIndex:indexPath.row] objectForKey:@"name"];
-    NSString * distanceString = [NSString stringWithFormat:@"%f",[[[distances objectAtIndex:indexPath.row] objectForKey:@"distance"]doubleValue]];
-    cell.detailTextLabel.text = distanceString;
+    cell.detailTextLabel.text = [OPEUtility formatDistanceMeters:[[[distances objectAtIndex:indexPath.row] objectForKey:@"distance"]doubleValue]];
     
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    NSString * value = [[distances objectAtIndex:indexPath.row] objectForKey:@"name"];
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self saveNewOsmKey:osmKey andValue:value];
+    [self backMultiple:2];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)saveNewOsmKey:(NSString *)osmKeay andValue:(NSString *)value
+{
+    OPEManagedOsmTag * tag = [OPEManagedOsmTag fetchOrCreateWithKey:osmKey value:value];
+    NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
+    [context MR_saveToPersistentStoreAndWait];
+    [self.delegate newTag:tag.objectID];
+}
+
+-(void)backMultiple:(int)data {
+    int back = data; //Default to go back 2
+    int count = [self.navigationController.viewControllers count];
+    
+    
+    //If we want to go back more than those that actually exist, just go to the root
+    if(back+1 > count) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    //Otherwise go back X ViewControllers
+    else {
+        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:count-(back+1)] animated:YES];
+    }
 }
 
 @end

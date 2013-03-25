@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OPETextEdit.h"
 
 @interface OPEnearbyViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 {
@@ -15,5 +16,8 @@
 }
 
 - (id)initWithManagedObjectID:(NSManagedObjectID *)objectID;
+
+@property (nonatomic,strong) NSString * osmKey;
+@property (nonatomic, weak) id<editTagDelegate> delegate;
 
 @end
