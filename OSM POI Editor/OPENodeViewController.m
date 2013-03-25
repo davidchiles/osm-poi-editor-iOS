@@ -86,6 +86,8 @@
         
         [[self navigationItem] setLeftBarButtonItem: newBackButton];
         
+        NSDictionary * dict = [managedOsmElement nearbyHighwayNames];
+        
     }
     return self;
 }

@@ -68,4 +68,9 @@
     return [string stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"];
 }
 
++(BOOL)uesMetric
+{
+    return [[NSLocale currentLocale] objectForKey:NSLocaleUsesMetricSystem];
+}
+
 @end

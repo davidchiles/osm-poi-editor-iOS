@@ -1,8 +1,12 @@
 #import "OPEManagedOsmElement.h"
 #import "OPEManagedReferencePoi.h"
 #import "OPEUtility.h"
+#import "OPEManagedOsmWay.h"
+#import "OPEManagedOsmNode.h"
+#import "OPEGeo.h"
 
 #import "OPEManagedOsmTag.h"
+
 
 
 @interface OPEManagedOsmElement ()
@@ -176,6 +180,57 @@
         }
     }
     return 0;
+}
+
+-(double)minDistanceTo:(OPEManagedOsmWay *)way
+{
+    double distance = DBL_MAX;
+    for (NSInteger index = 0; index<[way.nodes count]-1; index++) {
+        OPEManagedOsmNode * node1 = [way.nodes objectAtIndex:index];
+        OPEManagedOsmNode * node2 = [way.nodes objectAtIndex:index+1];
+        OPELineSegment line = [OPEGeo lineSegmentFromPoint:[node1 center] toPoint:[node2 center]];
+        
+        double tempDistance  =  [OPEGeo distanceFromlineSegment:line toPoint:[self center]];
+        distance = MIN(distance, tempDistance);
+        
+        
+    }
+    return distance;
+    
+}
+
+-(NSDictionary *)nearbyHighwayNames
+{
+    NSPredicate * tagPredicate = [NSPredicate predicateWithFormat:@"%K == %@",OPEManagedOsmTagAttributes.key,@"highway"];
+    NSArray * tags = [OPEManagedOsmTag MR_findAllWithPredicate:tagPredicate];
+    
+    NSPredicate * prediacte = [NSPredicate predicateWithFormat:@"(SUBQUERY(tags, $tag, $tag IN %@).@count >0)",tags];
+    
+    
+    NSArray * ways = [OPEManagedOsmWay MR_findAllWithPredicate:prediacte];
+    
+    NSMutableDictionary * highwayDictionary = [NSMutableDictionary dictionary];
+    
+    for (OPEManagedOsmWay * way in ways)
+    {
+        NSString * wayName = [way valueForOsmKey:@"name"];
+        if ([wayName length]) {
+            double wayDistance = [self minDistanceTo:way];
+            
+            if (![highwayDictionary objectForKey:wayName]) {
+                [highwayDictionary setObject:[NSNumber numberWithDouble:wayDistance] forKey:wayName];
+            }
+            else
+            {
+                double tempDistance = [[highwayDictionary objectForKey:wayName] doubleValue];
+                double distance = MIN(tempDistance, wayDistance);
+                [highwayDictionary setObject:[NSNumber numberWithDouble:distance] forKey:wayName];
+            }
+        }
+    }
+    
+    return highwayDictionary;
+    
     
 }
 

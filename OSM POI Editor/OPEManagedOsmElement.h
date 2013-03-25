@@ -23,6 +23,7 @@
 -(NSData *) deleteXMLforChangset: (int64_t) changesetNumber;
 
 -(NSString *)osmType;
+-(NSDictionary *)nearbyHighwayNames;
 
 + (NSInteger)minID;
 
