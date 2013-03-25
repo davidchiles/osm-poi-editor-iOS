@@ -35,6 +35,7 @@
 @synthesize osmKeysStoreRecent;
 @synthesize type;
 @synthesize textField;
+@synthesize managedObjectID;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

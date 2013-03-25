@@ -355,6 +355,8 @@
 		63CB49E314E9E3BF008C4551 /* OPETypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49E114E9E3BF008C4551 /* OPETypeViewController.xib */; };
 		63CE5DC115BE085E00C84B90 /* OPEOptionalTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */; };
 		63D0A5C41700EEEB007A595E /* OPEGeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5C31700E9AD007A595E /* OPEGeo.m */; };
+		63D0A5C81700F1BB007A595E /* OPEStreetNameEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5C71700F1BB007A595E /* OPEStreetNameEditViewController.m */; };
+		63D0A5CE1700F694007A595E /* OPEnearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5CD1700F694007A595E /* OPEnearbyViewController.m */; };
 		63DE6E4D1611328200C26B77 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 63DE6E4B1611328200C26B77 /* default.png */; };
 		63DE6E4E1611328200C26B77 /* default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63DE6E4C1611328200C26B77 /* default@2x.png */; };
 		63DE6E521611332200C26B77 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63DE6E511611332200C26B77 /* Default-568h@2x.png */; };
@@ -874,6 +876,10 @@
 		63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOptionalTag.m; sourceTree = "<group>"; };
 		63D0A5C21700E9AD007A595E /* OPEGeo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEGeo.h; sourceTree = "<group>"; };
 		63D0A5C31700E9AD007A595E /* OPEGeo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEGeo.m; sourceTree = "<group>"; };
+		63D0A5C61700F1BB007A595E /* OPEStreetNameEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEStreetNameEditViewController.h; sourceTree = "<group>"; };
+		63D0A5C71700F1BB007A595E /* OPEStreetNameEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEStreetNameEditViewController.m; sourceTree = "<group>"; };
+		63D0A5CC1700F694007A595E /* OPEnearbyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEnearbyViewController.h; sourceTree = "<group>"; };
+		63D0A5CD1700F694007A595E /* OPEnearbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEnearbyViewController.m; sourceTree = "<group>"; };
 		63DE6E4B1611328200C26B77 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		63DE6E4C1611328200C26B77 /* default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default@2x.png"; sourceTree = "<group>"; };
 		63DE6E511611332200C26B77 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -1423,8 +1429,7 @@
 				6330AB8114DB519A00448852 /* OPEViewController.m */,
 				6345E57D14E3122900F55486 /* OPENodeViewController.h */,
 				6345E57E14E3122900F55486 /* OPENodeViewController.m */,
-				63CB49D014E9C5A0008C4551 /* OPETextEdit.h */,
-				63CB49D114E9C5A0008C4551 /* OPETextEdit.m */,
+				63D0A5C51700F03C007A595E /* TextEdit */,
 				63CB49DA14E9DE7B008C4551 /* OPECategoryViewController.h */,
 				63CB49DB14E9DE7B008C4551 /* OPECategoryViewController.m */,
 				63CB49DC14E9DE7B008C4551 /* OPECategoryViewController.xib */,
@@ -1722,6 +1727,19 @@
 				63D0A5C31700E9AD007A595E /* OPEGeo.m */,
 			);
 			name = Geo;
+			sourceTree = "<group>";
+		};
+		63D0A5C51700F03C007A595E /* TextEdit */ = {
+			isa = PBXGroup;
+			children = (
+				63CB49D014E9C5A0008C4551 /* OPETextEdit.h */,
+				63CB49D114E9C5A0008C4551 /* OPETextEdit.m */,
+				63D0A5C61700F1BB007A595E /* OPEStreetNameEditViewController.h */,
+				63D0A5C71700F1BB007A595E /* OPEStreetNameEditViewController.m */,
+				63D0A5CC1700F694007A595E /* OPEnearbyViewController.h */,
+				63D0A5CD1700F694007A595E /* OPEnearbyViewController.m */,
+			);
+			name = TextEdit;
 			sourceTree = "<group>";
 		};
 		63E2796D14E1F31B009D02BD /* Classes */ = {
@@ -2424,6 +2442,8 @@
 				637C7CCB16F164BE002CD340 /* OPEChangeset.m in Sources */,
 				63B1B15016F285DB00323E9F /* MBProgressHUD.m in Sources */,
 				63D0A5C41700EEEB007A595E /* OPEGeo.m in Sources */,
+				63D0A5C81700F1BB007A595E /* OPEStreetNameEditViewController.m in Sources */,
+				63D0A5CE1700F694007A595E /* OPEnearbyViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

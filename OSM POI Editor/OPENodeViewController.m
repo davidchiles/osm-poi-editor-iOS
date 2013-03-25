@@ -39,6 +39,7 @@
 #import "OPEManagedReferencePoiCategory.h"
 #import "OPEManagedReferenceOsmTag.h"
 #import "OPEManagedOsmNode.h"
+#import "OPEStreetNameEditViewController.h"
 
 
 
@@ -85,8 +86,6 @@
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         
         [[self navigationItem] setLeftBarButtonItem: newBackButton];
-        
-        NSDictionary * dict = [managedOsmElement nearbyHighwayNames];
         
     }
     return self;
@@ -403,8 +402,18 @@
             [self.navigationController pushViewController:viewer animated:YES];
         }
         else if(![managedOptionalTag.type isEqualToString:kTypeList]) { //Text editing
-            OPETextEdit * viewer = [[OPETextEdit alloc] init];
+            
+            OPETextEdit * viewer = nil;
+            if ([managedOptionalTag.osmKey isEqualToString:@"addr:street"]) {
+                viewer = [[OPEStreetNameEditViewController alloc] init];
+            }
+            else{
+                viewer = [[OPETextEdit alloc] init];
+            }
+            
+            
             viewer.title = managedOptionalTag.displayName;
+            viewer.managedObjectID = managedOsmElement.objectID;
             viewer.osmValue = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
             viewer.osmKey = managedOptionalTag.osmKey;
             viewer.type = managedOptionalTag.type;
