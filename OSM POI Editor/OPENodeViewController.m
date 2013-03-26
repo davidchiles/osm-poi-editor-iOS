@@ -40,6 +40,7 @@
 #import "OPEManagedReferenceOsmTag.h"
 #import "OPEManagedOsmNode.h"
 #import "OPEStreetNameEditViewController.h"
+#import "OPETagEditViewController.h"
 
 
 
@@ -403,6 +404,11 @@
         }
         else if(![managedOptionalTag.type isEqualToString:kTypeList]) { //Text editing
             
+            OPETagEditViewController * viewController = nil;
+            viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey delegate:self];
+            viewController.managedObjectID = managedOsmElement.objectID;
+            [self.navigationController pushViewController:viewController animated:YES];
+            /*
             OPETextEdit * viewer = nil;
             if ([managedOptionalTag.osmKey isEqualToString:@"addr:street"]) {
                 viewer = [[OPEStreetNameEditViewController alloc] init];
@@ -418,7 +424,9 @@
             viewer.osmKey = managedOptionalTag.osmKey;
             viewer.type = managedOptionalTag.type;
             [viewer setDelegate:self];
+             
             [self.navigationController pushViewController:viewer animated:YES];
+             */
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

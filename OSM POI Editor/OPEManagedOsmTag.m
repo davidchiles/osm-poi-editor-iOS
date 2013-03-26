@@ -34,4 +34,21 @@
     return osmTag;
 }
 
++(NSArray *)uniqueValuesForOsmKeys:(NSArray *)keys
+{
+    NSMutableArray * predicates = [NSMutableArray array];
+    for (NSString * key in keys)
+    {
+        NSPredicate * tagPredicate = [NSPredicate predicateWithFormat:@"%K == %@",OPEManagedOsmTagAttributes.key,key];
+        [predicates addObject:tagPredicate];
+    }
+ 
+    NSPredicate * allPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:predicates];
+    
+    NSArray * tags = [OPEManagedOsmTag MR_findAllWithPredicate:allPredicates];
+    
+    NSArray *values = [tags valueForKeyPath:@"@distinctUnionOfObjects.value"];
+    
+    return values;
+}
 @end

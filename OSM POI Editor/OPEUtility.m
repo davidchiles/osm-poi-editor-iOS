@@ -75,6 +75,10 @@
 
 +(NSString *)formatDistanceMeters:(double)meters
 {
+    if (meters < 0) {
+        return @"";
+    }
+    
     if ([OPEUtility uesMetric]) {
         if (meters < 1.0) {
             return @"<1 m";

@@ -24,8 +24,10 @@
 
 -(NSString *)osmType;
 -(NSDictionary *)nearbyHighwayNames;
+-(NSDictionary *)nearbyValuesForOsmKey:(NSString *)osmKey;
 
 + (NSInteger)minID;
++(NSArray *)allElementsWithTag:(OPEManagedOsmTag *)tag;
 
 
 //+(OPEManagedOsmElement *)fetchOrCreateElementWithOsmID:(int64_t)elementID;

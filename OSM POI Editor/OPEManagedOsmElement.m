@@ -182,6 +182,102 @@
     return 0;
 }
 
+-(NSDictionary *)nearbyValuesForOsmKey:(NSString *)osmKey
+{
+    NSDictionary * values = nil;
+    if ([osmKey isEqualToString:@"addr:street"]) {
+        values = [self nearbyHighwayNames];
+    }
+    else if ([osmKey isEqualToString:@"addr:city"]) {
+        values = [self nearbyCities];
+    }
+    else if ([osmKey isEqualToString:@"addr:state"])
+    {
+        values = [self nearbyStates];
+    }
+    else if ([osmKey isEqualToString:@"addr:province"])
+    {
+        values = [self nearbyProvinces];
+    }
+    else if ([osmKey isEqualToString:@"addr:postcode"])
+    {
+        values = [self nearbyPostcodes];
+    }
+    
+    
+    return values;
+}
++(NSArray *)allElementsWithTag:(OPEManagedOsmTag *)tag
+{
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"%@ IN self.tags",tag];
+    
+    return [OPEManagedOsmElement MR_findAllWithPredicate:predicate];
+}
+
+-(NSDictionary *)nearbyCities
+{
+    NSArray *values = [OPEManagedOsmTag uniqueValuesForOsmKeys:@[@"addr:city"]];
+    
+    OPEManagedOsmTag * cityTag = [OPEManagedOsmTag fetchOrCreateWithKey:@"place" value:@"city"];
+    
+    NSArray * cities = [OPEManagedOsmElement allElementsWithTag:cityTag];
+    NSArray *cityNames = [cities valueForKey:@"name"];
+    
+    NSMutableSet * allCityNamesSet = [NSMutableSet setWithArray:values];
+    [allCityNamesSet addObjectsFromArray:cityNames];
+    
+    NSNumber * num = [NSNumber numberWithInt:-1];
+    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
+    for (NSString * name in allCityNamesSet)
+    {
+        [dictionary setObject:num forKey:name];
+    }
+    
+    return dictionary;
+}
+-(NSDictionary *)nearbyStates
+{
+    NSArray *values = [OPEManagedOsmTag uniqueValuesForOsmKeys:@[@"addr:state"]];
+    NSArray *uppercaseStrings = [values valueForKey:@"uppercaseString"];
+    
+    NSNumber * num = [NSNumber numberWithInt:-1];
+    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
+    for (NSString * name in uppercaseStrings)
+    {
+        [dictionary setObject:num forKey:name];
+    }
+    
+    return dictionary;
+    
+    
+}
+-(NSDictionary *)nearbyProvinces
+{
+    NSArray *values = [OPEManagedOsmTag uniqueValuesForOsmKeys:@[@"addr:province"]];
+    
+    NSNumber * num = [NSNumber numberWithInt:-1];
+    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
+    for (NSString * name in values)
+    {
+        [dictionary setObject:num forKey:name];
+    }
+    
+    return dictionary;
+}
+-(NSDictionary *)nearbyPostcodes
+{
+    NSArray *values = [OPEManagedOsmTag uniqueValuesForOsmKeys:@[@"addr:postcode",@"tiger:zip_left",@"tiger:zip_right"]];
+    
+    NSNumber * num = [NSNumber numberWithInt:-1];
+    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
+    for (NSString * name in values)
+    {
+        [dictionary setObject:num forKey:name];
+    }
+    
+    return dictionary;
+}
+
 -(double)minDistanceTo:(OPEManagedOsmWay *)way
 {
     double distance = DBL_MAX;
