@@ -9,5 +9,8 @@
 #import "OPERecentlyUsedViewController.h"
 
 @interface OPEPhoneEditViewController : OPERecentlyUsedViewController
+{
+    NSMutableArray * phoneTextFieldArray;
+}
 
 @end

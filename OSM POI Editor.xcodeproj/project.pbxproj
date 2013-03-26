@@ -265,6 +265,7 @@
 		6333D3A916811F2A00BF129E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6333D3A816811F2A00BF129E /* CoreData.framework */; };
 		6333D3AC16811F6800BF129E /* OPECoreDataImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6333D3AB16811F6800BF129E /* OPECoreDataImporter.m */; };
 		63397D8F170250AA00D411E7 /* OPERecent+NearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */; };
+		63397D9717026B0F00D411E7 /* OPEPhoneEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */; };
 		633CD868164B242C00678D58 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD867164B242C00678D58 /* Parse.framework */; };
 		633CD86A164B249100678D58 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD869164B249100678D58 /* AudioToolbox.framework */; };
 		633CD86C164B249D00678D58 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86B164B249D00678D58 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -356,8 +357,6 @@
 		63CB49E314E9E3BF008C4551 /* OPETypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49E114E9E3BF008C4551 /* OPETypeViewController.xib */; };
 		63CE5DC115BE085E00C84B90 /* OPEOptionalTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */; };
 		63D0A5C41700EEEB007A595E /* OPEGeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5C31700E9AD007A595E /* OPEGeo.m */; };
-		63D0A5C81700F1BB007A595E /* OPEStreetNameEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5C71700F1BB007A595E /* OPEStreetNameEditViewController.m */; };
-		63D0A5CE1700F694007A595E /* OPEnearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5CD1700F694007A595E /* OPEnearbyViewController.m */; };
 		63D0A5D2170112BF007A595E /* OPETagEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D1170112BF007A595E /* OPETagEditViewController.m */; };
 		63D0A5D517011659007A595E /* OPETextEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D417011659007A595E /* OPETextEditViewController.m */; };
 		63D0A5D8170119B5007A595E /* OPERecentlyUsedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D7170119B4007A595E /* OPERecentlyUsedViewController.m */; };
@@ -716,6 +715,8 @@
 		6333D3AB16811F6800BF129E /* OPECoreDataImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECoreDataImporter.m; sourceTree = "<group>"; };
 		63397D8D170250AA00D411E7 /* OPERecent+NearbyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OPERecent+NearbyViewController.h"; sourceTree = "<group>"; };
 		63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OPERecent+NearbyViewController.m"; sourceTree = "<group>"; };
+		63397D9517026B0F00D411E7 /* OPEPhoneEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEPhoneEditViewController.h; sourceTree = "<group>"; };
+		63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEPhoneEditViewController.m; sourceTree = "<group>"; };
 		633CD867164B242C00678D58 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = lib/Parse.framework; sourceTree = "<group>"; };
 		633CD869164B249100678D58 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		633CD86B164B249D00678D58 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -883,10 +884,6 @@
 		63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOptionalTag.m; sourceTree = "<group>"; };
 		63D0A5C21700E9AD007A595E /* OPEGeo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEGeo.h; sourceTree = "<group>"; };
 		63D0A5C31700E9AD007A595E /* OPEGeo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEGeo.m; sourceTree = "<group>"; };
-		63D0A5C61700F1BB007A595E /* OPEStreetNameEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEStreetNameEditViewController.h; sourceTree = "<group>"; };
-		63D0A5C71700F1BB007A595E /* OPEStreetNameEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEStreetNameEditViewController.m; sourceTree = "<group>"; };
-		63D0A5CC1700F694007A595E /* OPEnearbyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEnearbyViewController.h; sourceTree = "<group>"; };
-		63D0A5CD1700F694007A595E /* OPEnearbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEnearbyViewController.m; sourceTree = "<group>"; };
 		63D0A5D0170112BF007A595E /* OPETagEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETagEditViewController.h; sourceTree = "<group>"; };
 		63D0A5D1170112BF007A595E /* OPETagEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETagEditViewController.m; sourceTree = "<group>"; };
 		63D0A5D317011659007A595E /* OPETextEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETextEditViewController.h; sourceTree = "<group>"; };
@@ -1746,10 +1743,6 @@
 			children = (
 				63CB49D014E9C5A0008C4551 /* OPETextEdit.h */,
 				63CB49D114E9C5A0008C4551 /* OPETextEdit.m */,
-				63D0A5C61700F1BB007A595E /* OPEStreetNameEditViewController.h */,
-				63D0A5C71700F1BB007A595E /* OPEStreetNameEditViewController.m */,
-				63D0A5CC1700F694007A595E /* OPEnearbyViewController.h */,
-				63D0A5CD1700F694007A595E /* OPEnearbyViewController.m */,
 			);
 			name = TextEdit;
 			sourceTree = "<group>";
@@ -1763,6 +1756,8 @@
 				63D0A5D417011659007A595E /* OPETextEditViewController.m */,
 				63D0A5D6170119B4007A595E /* OPERecentlyUsedViewController.h */,
 				63D0A5D7170119B4007A595E /* OPERecentlyUsedViewController.m */,
+				63397D9517026B0F00D411E7 /* OPEPhoneEditViewController.h */,
+				63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */,
 				63397D8D170250AA00D411E7 /* OPERecent+NearbyViewController.h */,
 				63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */,
 				63D0A5D917011F17007A595E /* OPEOsmValueTextField.h */,
@@ -2475,13 +2470,12 @@
 				637C7CCB16F164BE002CD340 /* OPEChangeset.m in Sources */,
 				63B1B15016F285DB00323E9F /* MBProgressHUD.m in Sources */,
 				63D0A5C41700EEEB007A595E /* OPEGeo.m in Sources */,
-				63D0A5C81700F1BB007A595E /* OPEStreetNameEditViewController.m in Sources */,
-				63D0A5CE1700F694007A595E /* OPEnearbyViewController.m in Sources */,
 				63D0A5D2170112BF007A595E /* OPETagEditViewController.m in Sources */,
 				63D0A5D517011659007A595E /* OPETextEditViewController.m in Sources */,
 				63D0A5D8170119B5007A595E /* OPERecentlyUsedViewController.m in Sources */,
 				63D0A5DB17011F18007A595E /* OPEOsmValueTextField.m in Sources */,
 				63397D8F170250AA00D411E7 /* OPERecent+NearbyViewController.m in Sources */,
+				63397D9717026B0F00D411E7 /* OPEPhoneEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

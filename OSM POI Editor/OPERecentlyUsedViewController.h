@@ -14,5 +14,7 @@
     NSArray * recentValues;
 }
 
+@property (nonatomic) BOOL showRecent;
+
 
 @end

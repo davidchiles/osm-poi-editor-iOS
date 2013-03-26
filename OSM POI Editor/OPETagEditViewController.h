@@ -25,5 +25,6 @@
 -(id)initWithOsmKey:(NSString *)osmKey currentValue:(NSString *)currentValue delegate:(id<OPETagEditViewControllerDelegate>)delegate;
 
 +(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey delegate:(id<OPETagEditViewControllerDelegate>)delegate;
++(NSString *)sectionFootnoteForOsmKey:(NSString *)osmKey;
 
 @end

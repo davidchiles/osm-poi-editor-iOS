@@ -14,11 +14,21 @@
 
 @implementation OPERecentlyUsedViewController
 
+@synthesize showRecent;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (showRecent) {
+        recentValues = [self recentlyUsedValues];
+    }
+    else
+    {
+        recentValues = nil;
+    }
 	
-    recentValues = [self recentlyUsedValues];
+    
     
     self.textField = [[OPEOsmValueTextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35) withOsmKey:self.osmKey andValue:self.currentOsmValue];
     
@@ -43,6 +53,13 @@
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section == 1 && recentValues) {
         return @"Recently Used";
+    }
+    return @"";
+}
+-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return [OPETagEditViewController sectionFootnoteForOsmKey:self.osmKey];
     }
     return @"";
 }

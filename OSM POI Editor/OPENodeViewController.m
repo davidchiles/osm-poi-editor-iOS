@@ -39,7 +39,6 @@
 #import "OPEManagedReferencePoiCategory.h"
 #import "OPEManagedReferenceOsmTag.h"
 #import "OPEManagedOsmNode.h"
-#import "OPEStreetNameEditViewController.h"
 #import "OPETagEditViewController.h"
 
 
@@ -406,6 +405,7 @@
             
             OPETagEditViewController * viewController = nil;
             viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey delegate:self];
+            viewController.title = managedOptionalTag.name;
             viewController.managedObjectID = managedOsmElement.objectID;
             [self.navigationController pushViewController:viewController animated:YES];
             /*

@@ -37,7 +37,7 @@
             self.keyboardType = UIKeyboardTypeNamePhonePad;
             self.autocorrectionType = UITextAutocorrectionTypeNo;
         }
-        else if([osmKey isEqualToString:@"url"])
+        else if([osmKey isEqualToString:@"website"])
         {
             self.keyboardType = UIKeyboardTypeURL;
             self.autocapitalizationType = UITextAutocapitalizationTypeNone;

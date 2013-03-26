@@ -30,6 +30,7 @@
 #import "RMAnnotation.h"
 #import "OPEManagedOsmElement.h"
 #import "OPEOSMData.h"
+#import "OPETagEditViewController.h"
 
 @protocol OPENodeViewDelegate
 @optional
@@ -37,7 +38,7 @@
 @end
 
 
-@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, editTagDelegate, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate, OPEOSMDataControllerDelegate>
+@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, OPETagEditViewControllerDelegate, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate, OPEOSMDataControllerDelegate>
 {
     OPETagInterpreter * tagInterpreter;
     NSDictionary * osmKeyValue;
