@@ -353,9 +353,14 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[tableView cellForRowAtIndexPath: indexPath] isKindOfClass:[OPEBinaryCell class]]) {
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        return;
+    }
+    
     if (indexPath.section == 0) {
         OPETagEditViewController * viewController = nil;
-        viewController = [OPETagEditViewController viewControllerWithOsmKey:@"name" delegate:self];
+        viewController = [OPETagEditViewController viewControllerWithOsmKey:@"name" andType:nil delegate:self];
         viewController.title = @"Name";
         viewController.currentOsmValue = [self.managedOsmElement valueForOsmKey:@"name"];
         [self.navigationController pushViewController:viewController animated:YES];
@@ -387,22 +392,15 @@
     }
     else{
         OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
-        if ([managedOptionalTag.type isEqualToString:kTypeList] && [managedOptionalTag.tags count] > 3)
-        {
-            OPETagValueList * viewer = [[OPETagValueList alloc] initWithNibName:@"OPETagValueList" bundle:nil];
-            viewer.title = managedOptionalTag.displayName;
-            viewer.referenceOptionalID = managedOptionalTag.objectID;
-            [viewer setDelegate:self];
-            [self.navigationController pushViewController:viewer animated:YES];
-        }
-        else{
-            OPETagEditViewController * viewController = nil;
-            viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey delegate:self];
-            viewController.title = managedOptionalTag.displayName;
-            viewController.managedObjectID = managedOsmElement.objectID;
-            viewController.currentOsmValue = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
-            [self.navigationController pushViewController:viewController animated:YES];
-        }
+        
+        OPETagEditViewController * viewController = nil;
+        viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey andType:managedOptionalTag.type delegate:self];
+        viewController.title = managedOptionalTag.displayName;
+        viewController.managedObjectID = managedOsmElement.objectID;
+        viewController.manageedOptionalObjectID = managedOptionalTag.objectID;
+        viewController.currentOsmValue = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
+        [self.navigationController pushViewController:viewController animated:YES];
+        
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

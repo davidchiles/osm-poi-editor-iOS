@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OPEMRUtility.h"
+#import "OPEManagedReferenceOptional.h"
+#import "OPEConstants.h"
 
 @protocol OPETagEditViewControllerDelegate <NSObject>
 @required
@@ -20,11 +23,12 @@
 @property (nonatomic, strong) NSString * osmKey;
 @property (nonatomic, strong) NSString * currentOsmValue;
 @property (nonatomic, strong) NSManagedObjectID * managedObjectID;
+@property (nonatomic, strong) NSManagedObjectID * manageedOptionalObjectID;
 
 -(id)initWithOsmKey:(NSString *)osmKey delegate:(id<OPETagEditViewControllerDelegate>)delegate;
 -(id)initWithOsmKey:(NSString *)osmKey currentValue:(NSString *)currentValue delegate:(id<OPETagEditViewControllerDelegate>)delegate;
 
-+(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey delegate:(id<OPETagEditViewControllerDelegate>)delegate;
++(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey andType:(NSString *)type delegate:(id<OPETagEditViewControllerDelegate>)delegate;
 +(NSString *)sectionFootnoteForOsmKey:(NSString *)osmKey;
 
 @end

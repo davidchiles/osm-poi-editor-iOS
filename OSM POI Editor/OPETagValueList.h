@@ -21,19 +21,13 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
-#import "OPETextEdit.h"
+#import "OPETagEditViewController.h"
 
-@interface OPETagValueList : UITableViewController 
-
-@property (nonatomic, strong) NSArray * valuesArray;
-@property (nonatomic, strong) NSArray * valuesCheckmarkArray;
-@property (nonatomic, strong) NSMutableArray * selectedArray;
-@property (nonatomic, strong) NSArray * osmValues;
-@property (nonatomic, strong) NSString * osmKey;
-@property (nonatomic, strong) NSString * osmValue;
-@property (nonatomic, strong) id <editTagDelegate> delegate;
-
-@property (nonatomic, strong) NSManagedObjectID * referenceOptionalID;
+@interface OPETagValueList : OPETagEditViewController <UITableViewDataSource,UITableViewDelegate>
+{
+    NSArray * osmValues;
+    NSArray * valuesArray;
+}
 
 
 @end

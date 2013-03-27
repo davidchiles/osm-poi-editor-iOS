@@ -11,6 +11,8 @@
 #import "OPERecentlyUsedViewController.h"
 #import "OPEPhoneEditViewController.h"
 #import "OPETextViewEditViewController.h"
+#import "OPEConstants.h"
+#import "OPETagValueList.h"
 
 @interface OPETagEditViewController ()
 
@@ -18,7 +20,7 @@
 
 @implementation OPETagEditViewController
 
-@synthesize delegate = _delegate,osmKey = _osmKey,currentOsmValue = _currentOsmValue;
+@synthesize delegate = _delegate,osmKey = _osmKey,currentOsmValue = _currentOsmValue, manageedOptionalObjectID,managedObjectID;
 
 -(id)initWithOsmKey:(NSString *)newOsmKey delegate:(id<OPETagEditViewControllerDelegate>)newDelegate
 {
@@ -40,17 +42,23 @@
     
 }
 
-+(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey delegate:(id<OPETagEditViewControllerDelegate>)delegate
++(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey andType:(NSString *)type delegate:(id<OPETagEditViewControllerDelegate>)delegate
 {
     OPETagEditViewController * viewController = nil;
-    if ([@[@"addr:street",@"addr:postcode",@"addr:city",@"addr:state",@"addr:province"]containsObject:osmKey]) {
+    if ([type isEqualToString:kTypeList]) {
+        viewController = [[OPETagValueList alloc] initWithOsmKey:osmKey delegate:delegate];
+    }
+    else if ([@[@"addr:street",@"addr:postcode",@"addr:city",@"addr:state",@"addr:province"]containsObject:osmKey]) {
         OPERecentlyUsedViewController * rView = [[OPERecent_NearbyViewController alloc] initWithOsmKey:osmKey delegate:delegate];
         rView.showRecent = YES;
         viewController = rView;
     }
-    else if ([@[@"addr:housenumber",@"addr:country",@"website"]containsObject:osmKey]) {
+    else if ([@[@"addr:housenumber",@"addr:country",@"website"]containsObject:osmKey] || [type isEqualToString:kTypeNumber]) {
         OPERecentlyUsedViewController * rView = [[OPERecentlyUsedViewController alloc] initWithOsmKey:osmKey delegate:delegate];
         rView.showRecent = [osmKey isEqualToString:@"addr:country"];
+        if ([type isEqualToString:kTypeNumber]) {
+            rView.textField.keyboardType = UIKeyboardTypeNumberPad;
+        }
         viewController = rView;
     }
     else if ([@[@"phone"] containsObject:osmKey])

@@ -24,6 +24,7 @@
 #import "OPEMRUtility.h"
 #import "OPEManagedReferenceOptional.h"
 #import "OPEManagedReferenceOsmTag.h"
+#import "OPEManagedOsmTag.h"
 
 @interface OPETagValueList ()
 
@@ -32,28 +33,15 @@
 
 @implementation OPETagValueList
 
-
-@synthesize osmKey,osmValue,osmValues,valuesArray;
-@synthesize delegate;
-@synthesize valuesCheckmarkArray,selectedArray;
-@synthesize referenceOptionalID;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    OPEManagedReferenceOptional * referenceOptional = (OPEManagedReferenceOptional *)[OPEMRUtility managedObjectWithID:referenceOptionalID];
+    OPEManagedReferenceOptional * referenceOptional = (OPEManagedReferenceOptional *)[OPEMRUtility managedObjectWithID:self.manageedOptionalObjectID];
     
     valuesArray = [referenceOptional allSortedTags];
+    
+    
     
 
     // Uncomment the following line to preserve selection between presentations.
@@ -61,6 +49,15 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    UITableView * tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    
+    [self.view addSubview:tableView];
 }
 
 - (void)viewDidUnload
@@ -100,59 +97,14 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
--(void) donePressed:(id)sender
-{
-    for (NSString * omsKey in selectedArray)
-    {
-        [self.delegate newTag:[NSDictionary dictionaryWithObjectsAndKeys:@"yes",@"osmValue",osmKey,@"osmKey", nil]];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   
-    [delegate newTag:[((OPEManagedReferenceOsmTag *)[valuesArray objectAtIndex:indexPath.row]).tag objectID]];
+    OPEManagedReferenceOsmTag * refTag = (OPEManagedReferenceOsmTag *)[valuesArray objectAtIndex: indexPath.row];
+    
+    [self.delegate setNewTag:refTag.tag.objectID];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
     
 }

@@ -8,6 +8,7 @@
 
 #import "OPERecentlyUsedViewController.h"
 
+
 @interface OPERecentlyUsedViewController ()
 
 @end
@@ -28,10 +29,15 @@
         recentValues = nil;
     }
 	
+    OPEManagedReferenceOptional * referenceOptional = (OPEManagedReferenceOptional *)[OPEMRUtility managedObjectWithID:self.manageedOptionalObjectID];
+    
     
     
     self.textField = [[OPEOsmValueTextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35) withOsmKey:self.osmKey andValue:self.currentOsmValue];
     [self.textField becomeFirstResponder];
+    if ([referenceOptional.type isEqualToString:kTypeNumber]) {
+        self.textField.keyboardType = UIKeyboardTypeNumberPad;
+    }
     
     if ([recentValues count]) {
         [self.textField resignFirstResponder];
