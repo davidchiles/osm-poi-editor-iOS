@@ -313,16 +313,20 @@
         if ([wayName length]) {
             double wayDistance = [self minDistanceTo:way];
             
-            if (![highwayDictionary objectForKey:wayName]) {
-                [highwayDictionary setObject:[NSNumber numberWithDouble:wayDistance] forKey:wayName];
+            if (wayDistance < 20000) {
+                if (![highwayDictionary objectForKey:wayName]) {
+                    [highwayDictionary setObject:[NSNumber numberWithDouble:wayDistance] forKey:wayName];
+                }
+                else
+                {
+                    double tempDistance = [[highwayDictionary objectForKey:wayName] doubleValue];
+                    double distance = MIN(tempDistance, wayDistance);
+                    [highwayDictionary setObject:[NSNumber numberWithDouble:distance] forKey:wayName];
+                }
+
             }
-            else
-            {
-                double tempDistance = [[highwayDictionary objectForKey:wayName] doubleValue];
-                double distance = MIN(tempDistance, wayDistance);
-                [highwayDictionary setObject:[NSNumber numberWithDouble:distance] forKey:wayName];
-            }
-        }
+            
+                    }
     }
     
     return highwayDictionary;
