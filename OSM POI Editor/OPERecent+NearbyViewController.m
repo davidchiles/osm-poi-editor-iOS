@@ -44,7 +44,9 @@
         NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
         
         distances = [array sortedArrayUsingDescriptors:@[descriptor,nameDescriptor]];
+        [self.textField resignFirstResponder];
     }
+    
     
 }
 

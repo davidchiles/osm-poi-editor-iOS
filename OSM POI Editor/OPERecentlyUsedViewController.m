@@ -31,6 +31,11 @@
     
     
     self.textField = [[OPEOsmValueTextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35) withOsmKey:self.osmKey andValue:self.currentOsmValue];
+    [self.textField becomeFirstResponder];
+    
+    if ([recentValues count]) {
+        [self.textField resignFirstResponder];
+    }
     
     
 }
@@ -69,7 +74,7 @@
     if (section == 0) {
         return 1;
     }
-    else if(section == 2 && recentValues)
+    else if(section == 1 && [recentValues count])
     {
         return [recentValues count];
     }
@@ -104,6 +109,22 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section > 0) {
+        
+        NSString * newValue = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
+        
+        [self saveToRecentlyUsed:newValue];
+        [self saveNewValue:newValue];
+        
+        [self.navigationController popViewControllerAnimated:YES];
+        
+        
+    }
+}
+
 
 -(NSArray *)recentlyUsedValues
 {
@@ -120,7 +141,7 @@
 -(void) saveToRecentlyUsed:(NSString *) newValue
 {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if (![newValue isEqualToString:@""])
+    if ([newValue length])
     {
         if ([prefs objectForKey:self.osmKey]) {
             NSMutableArray * recent = [NSMutableArray arrayWithArray:[prefs objectForKey:self.osmKey]];
@@ -140,6 +161,16 @@
         [prefs synchronize];
     }
     
+}
+
+-(NSString *)newOsmValue
+{
+    NSString * newValue = [super newOsmValue];
+    
+    [self saveToRecentlyUsed:newValue];
+    
+    
+    return newValue;
 }
 
 

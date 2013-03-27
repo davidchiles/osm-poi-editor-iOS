@@ -353,17 +353,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //Name Selected
-    if(indexPath.section == 0)
-    {
-        OPETextEdit * textEdit = [[OPETextEdit alloc] init];
-        textEdit.osmKey = @"name";
-        textEdit.osmValue = [self.managedOsmElement valueForOsmKey:@"name"];
-        textEdit.type = kTypeText;
-        textEdit.delegate = self;
-        
-        [self.navigationController pushViewController:textEdit animated:YES];
-        
+    if (indexPath.section == 0) {
+        OPETagEditViewController * viewController = nil;
+        viewController = [OPETagEditViewController viewControllerWithOsmKey:@"name" delegate:self];
+        viewController.title = @"Name";
+        viewController.currentOsmValue = [self.managedOsmElement valueForOsmKey:@"name"];
+        [self.navigationController pushViewController:viewController animated:YES];
     }
     else if(indexPath.section ==1)
     {
@@ -390,8 +385,7 @@
             [self.navigationController pushViewController:viewer animated:YES];
         }
     }
-    else if(indexPath.section>1 && indexPath.section<[self.optionalSectionsArray count]+2)
-    {
+    else{
         OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
         if ([managedOptionalTag.type isEqualToString:kTypeList] && [managedOptionalTag.tags count] > 3)
         {
@@ -401,32 +395,13 @@
             [viewer setDelegate:self];
             [self.navigationController pushViewController:viewer animated:YES];
         }
-        else if(![managedOptionalTag.type isEqualToString:kTypeList]) { //Text editing
-            
+        else{
             OPETagEditViewController * viewController = nil;
             viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey delegate:self];
-            viewController.title = managedOptionalTag.name;
+            viewController.title = managedOptionalTag.displayName;
             viewController.managedObjectID = managedOsmElement.objectID;
+            viewController.currentOsmValue = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
             [self.navigationController pushViewController:viewController animated:YES];
-            /*
-            OPETextEdit * viewer = nil;
-            if ([managedOptionalTag.osmKey isEqualToString:@"addr:street"]) {
-                viewer = [[OPEStreetNameEditViewController alloc] init];
-            }
-            else{
-                viewer = [[OPETextEdit alloc] init];
-            }
-            
-            
-            viewer.title = managedOptionalTag.displayName;
-            viewer.managedObjectID = managedOsmElement.objectID;
-            viewer.osmValue = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
-            viewer.osmKey = managedOptionalTag.osmKey;
-            viewer.type = managedOptionalTag.type;
-            [viewer setDelegate:self];
-             
-            [self.navigationController pushViewController:viewer animated:YES];
-             */
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -570,6 +545,15 @@
     
    
     
+}
+-(void)setNewTag:(NSManagedObjectID *)managedOsmTagID
+{
+    OPEManagedOsmTag * managedOsmTag = (OPEManagedOsmTag *)[editContext existingObjectWithID:managedOsmTagID error:nil];
+    
+    [self.managedOsmElement removeTagWithOsmKey:managedOsmTag.key];
+    [self.managedOsmElement addTagsObject:managedOsmTag];
+    [self checkSaveButton];
+    [nodeInfoTableView reloadData];
 }
 
 - (void) newTag:(NSManagedObjectID *)managedOsmTagID

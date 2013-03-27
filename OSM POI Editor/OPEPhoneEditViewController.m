@@ -87,6 +87,17 @@
     }
 }
 
+-(NSString *)newOsmValue
+{
+    int cc = [[[phoneTextFieldArray objectAtIndex:0] text] intValue];
+    int ac = [[[phoneTextFieldArray objectAtIndex:1] text] intValue];
+    int ln = [[[phoneTextFieldArray objectAtIndex:2] text] intValue];
+    NSString * finalString = [NSString stringWithFormat:@"+%d %d %d",cc,ac,ln];
+    finalString = [[finalString stringByReplacingOccurrencesOfString:@"+0" withString:@""] stringByReplacingOccurrencesOfString:@" 0" withString:@""];
+    finalString = [finalString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return finalString;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

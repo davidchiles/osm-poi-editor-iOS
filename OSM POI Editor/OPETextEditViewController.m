@@ -30,7 +30,10 @@
 
 -(void)doneButtonPressed:(id)sender
 {
-    [self saveNewValue:[self newOsmValue]];
+    NSString * newValue = [self newOsmValue];
+    if ([newValue length]) {
+        [self saveNewValue:newValue];
+    }
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -46,6 +49,11 @@
     [context MR_saveToPersistentStoreAndWait];
     [self.delegate setNewTag:tag.objectID];
     
+}
+
+-(NSString *)newOsmValue
+{
+    return [self.textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
 @end

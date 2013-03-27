@@ -10,6 +10,7 @@
 #import "OPERecent+NearbyViewController.h"
 #import "OPERecentlyUsedViewController.h"
 #import "OPEPhoneEditViewController.h"
+#import "OPETextViewEditViewController.h"
 
 @interface OPETagEditViewController ()
 
@@ -43,7 +44,9 @@
 {
     OPETagEditViewController * viewController = nil;
     if ([@[@"addr:street",@"addr:postcode",@"addr:city",@"addr:state",@"addr:province"]containsObject:osmKey]) {
-        viewController = [[OPERecent_NearbyViewController alloc] initWithOsmKey:osmKey delegate:delegate];
+        OPERecentlyUsedViewController * rView = [[OPERecent_NearbyViewController alloc] initWithOsmKey:osmKey delegate:delegate];
+        rView.showRecent = YES;
+        viewController = rView;
     }
     else if ([@[@"addr:housenumber",@"addr:country",@"website"]containsObject:osmKey]) {
         OPERecentlyUsedViewController * rView = [[OPERecentlyUsedViewController alloc] initWithOsmKey:osmKey delegate:delegate];
@@ -55,6 +58,10 @@
         OPERecentlyUsedViewController * rView = [[OPEPhoneEditViewController alloc] initWithOsmKey:osmKey delegate:delegate];
         rView.showRecent = NO;
         viewController = rView;
+    }
+    else if ([@[@"name",@"source",@"note"] containsObject:osmKey])
+    {
+        viewController = [[OPETextViewEditViewController alloc] initWithOsmKey:osmKey delegate:delegate];
     }
     
     return viewController;

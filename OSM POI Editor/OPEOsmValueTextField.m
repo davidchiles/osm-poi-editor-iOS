@@ -18,6 +18,7 @@
         self.font = [UIFont systemFontOfSize:24.0];
         self.returnKeyType = UIReturnKeyDone;
         self.delegate = self;
+        
         if ([osmKey isEqualToString:@"name"] || [osmKey isEqualToString:@"addr:city"]  || [osmKey isEqualToString:@"addr:province"]|| [osmKey isEqualToString:@"addr:street"]) {
             self.autocapitalizationType = UITextAutocapitalizationTypeWords;
         }
@@ -25,9 +26,7 @@
             self.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
         }
         
-        if ([value length]) {
-            self.text = value;
-        }
+        
         
         if ([osmKey isEqualToString:@"phone"]) {
             self.keyboardType = UIKeyboardTypeNumberPad;
@@ -45,6 +44,10 @@
             if (![value length]) {
                 self.text = @"www.";
             }
+        }
+        
+        if ([value length]) {
+            self.text = value;
         }
         
         

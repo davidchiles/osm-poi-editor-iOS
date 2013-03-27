@@ -15,5 +15,6 @@
 
 -(NSString *)newOsmValue;
 -(void)saveNewValue:(NSString *)value;
+-(void)doneButtonPressed:(id)sender;
 
 @end
