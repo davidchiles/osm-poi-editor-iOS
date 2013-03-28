@@ -41,7 +41,6 @@
 
 @implementation OPEViewController
 
-@synthesize osmData;
 @synthesize locationManager;
 @synthesize interpreter;
 @synthesize infoButton,location, addOPEPoint;
@@ -176,9 +175,6 @@
     [self setTileSource:newTileSource at:num];
     
     currentSquare = [mapView latitudeLongitudeBoundingBox];
-    
-    osmData = [[OPEOSMData alloc] init];
-    osmData.delegate = self;
     
     message = [[OPEMessage alloc] init];
     message.alpha = 0.0;
@@ -410,21 +406,23 @@
 }
 -(void)saveValue:(NSString *)value
 {
-    [self.view endEditing:YES];
-    [self.navigationController.view addSubview:HUD];
-    [HUD setLabelText:@"Saving..."];
-    [HUD show:YES];
-    
-    OPEManagedOsmTag * tag = [OPEManagedOsmTag fetchOrCreateWithKey:@"name" value:value];
-    OPEManagedOsmElement * managedElement = (OPEManagedOsmElement*)[OPEMRUtility managedObjectWithID:self.selectedNoNameHighway.userInfo];
-    [managedElement addTagsObject:tag];
-    managedElement.action = kActionTypeModify;
-    NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
-    [context MR_saveToPersistentStoreAndWait];
-    
-    [osmData uploadElement:managedElement];
-    
-    
+    if (![self.osmData canAuth]) {
+        [self showAuthError];
+    }
+    else
+    {
+        [self.view endEditing:YES];
+        [self startSave];
+        
+        OPEManagedOsmTag * tag = [OPEManagedOsmTag fetchOrCreateWithKey:@"name" value:value];
+        OPEManagedOsmElement * managedElement = (OPEManagedOsmElement*)[OPEMRUtility managedObjectWithID:self.selectedNoNameHighway.userInfo];
+        [managedElement addTagsObject:tag];
+        managedElement.action = kActionTypeModify;
+        NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
+        [context MR_saveToPersistentStoreAndWait];
+        
+        [self.osmData uploadElement:managedElement];
+    }
 }
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
@@ -472,7 +470,7 @@
     if (map.zoom > MINZOOM) {
         [self removeZoomWarning];
         //dispatch_async(q, ^{
-        [osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
+        [self.osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
         //});
         //dispatch_release(q);
     }
@@ -615,6 +613,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.toolbarHidden = NO;
     //[self.navigationController setNavigationBarHidden:YES animated:YES];
     //[self.navigationController setToolbarHidden:NO animated:YES];
     [self updateAllAnnotations];
@@ -748,28 +748,10 @@
 
 #pragma OPEOsmDataDelegate
 
--(void)didOpenChangeset:(int64_t)changesetNumber withMessage:(NSString *)message
-{
-    self.HUD.labelText = @"Uploading...";
-    
-}
 -(void)didCloseChangeset:(int64_t)changesetNumber
 {
-    self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark.png"]];
-    HUD.mode = MBProgressHUDModeCustomView;
-    self.HUD.labelText = @"Complete";
-    [self.HUD hide:YES afterDelay:3.0];
-    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];
-    //[self.navigationController dismissModalViewControllerAnimated: YES];
+    [super didCloseChangeset:changesetNumber];
     [self removeNonameView];
-    
-}
--(void)uploadFailed:(NSError *)error
-{
-    self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"x.png"]];
-    HUD.mode = MBProgressHUDModeCustomView;
-    self.HUD.labelText =@"Error";
-    [self.HUD hide:YES afterDelay:2.0];
     
 }
 

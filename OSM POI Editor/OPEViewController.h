@@ -31,8 +31,9 @@
 #import "RMPolygonAnnotation.h"
 #import "OPENameEditView.h"
 #import "MBProgressHUD.h"
+#import "OPEBaseViewController.h"
 
-@interface OPEViewController : UIViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,NSFetchedResultsControllerDelegate,OPENameEditViewDelegate, OPEOSMDataControllerDelegate> {
+@interface OPEViewController : OPEBaseViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,NSFetchedResultsControllerDelegate,OPENameEditViewDelegate, OPEOSMDataControllerDelegate> {
     RMMapView* mapView;
     UIImageView * plusImageView;
     RMAnnotation * wayAnnotation;
@@ -40,7 +41,6 @@
     
 }
 
-@property (nonatomic,strong) OPEOSMData * osmData;
 @property (nonatomic,strong) CLLocationManager* locationManager;
 @property (nonatomic,strong) OPETagInterpreter * interpreter;
 

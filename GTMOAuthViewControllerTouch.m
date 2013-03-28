@@ -629,6 +629,8 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+    self.navigationController.toolbarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
   if (!isViewShown_) {
     isViewShown_ = YES;
     if ([self isNavigationBarTranslucent]) {

@@ -231,6 +231,7 @@
 		6310F6661537A46D00C65FD8 /* zoo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F59A1537A46D00C65FD8 /* zoo@2x.png */; };
 		6314515615BE092B00501CF3 /* Optional.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6314515515BE092B00501CF3 /* Optional.plist */; };
 		6314D13C17039A5B00AE91E3 /* OPENameEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6314D13B17039A5B00AE91E3 /* OPENameEditView.m */; };
+		6314D13F1703C27B00AE91E3 /* OPEBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6314D13E1703C27A00AE91E3 /* OPEBaseViewController.m */; };
 		631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E014DC98D0000236F0 /* OPEOSMData.m */; };
 		631BAAB616B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 631BAAB516B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m */; };
 		63214B2D153CB382001C9A58 /* stardavid.png in Resources */ = {isa = PBXBuildFile; fileRef = 63214B2C153CB382001C9A58 /* stardavid.png */; };
@@ -362,6 +363,7 @@
 		63D0A5D517011659007A595E /* OPETextEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D417011659007A595E /* OPETextEditViewController.m */; };
 		63D0A5D8170119B5007A595E /* OPERecentlyUsedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D7170119B4007A595E /* OPERecentlyUsedViewController.m */; };
 		63D0A5DB17011F18007A595E /* OPEOsmValueTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5DA17011F17007A595E /* OPEOsmValueTextField.m */; };
+		63D4DAF01703D8DC00C989CD /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4DAEF1703D8DC00C989CD /* AFOAuth1Client.m */; };
 		63DE6E4D1611328200C26B77 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 63DE6E4B1611328200C26B77 /* default.png */; };
 		63DE6E4E1611328200C26B77 /* default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63DE6E4C1611328200C26B77 /* default@2x.png */; };
 		63DE6E521611332200C26B77 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63DE6E511611332200C26B77 /* Default-568h@2x.png */; };
@@ -667,6 +669,8 @@
 		6314515515BE092B00501CF3 /* Optional.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Optional.plist; sourceTree = "<group>"; };
 		6314D13A17039A5B00AE91E3 /* OPENameEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENameEditView.h; sourceTree = "<group>"; };
 		6314D13B17039A5B00AE91E3 /* OPENameEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENameEditView.m; sourceTree = "<group>"; };
+		6314D13D1703C27A00AE91E3 /* OPEBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBaseViewController.h; sourceTree = "<group>"; };
+		6314D13E1703C27A00AE91E3 /* OPEBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBaseViewController.m; sourceTree = "<group>"; };
 		631539DF14DC98D0000236F0 /* OPEOSMData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMData.h; sourceTree = "<group>"; };
 		631539E014DC98D0000236F0 /* OPEOSMData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMData.m; sourceTree = "<group>"; };
 		631BAAB416B366AB00CF4DAA /* OPEManagedReferencePoiCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedReferencePoiCategory.h; sourceTree = "<group>"; };
@@ -896,6 +900,8 @@
 		63D0A5D7170119B4007A595E /* OPERecentlyUsedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPERecentlyUsedViewController.m; sourceTree = "<group>"; };
 		63D0A5D917011F17007A595E /* OPEOsmValueTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOsmValueTextField.h; sourceTree = "<group>"; };
 		63D0A5DA17011F17007A595E /* OPEOsmValueTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOsmValueTextField.m; sourceTree = "<group>"; };
+		63D4DAEE1703D8DC00C989CD /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
+		63D4DAEF1703D8DC00C989CD /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
 		63DE6E4B1611328200C26B77 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		63DE6E4C1611328200C26B77 /* default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default@2x.png"; sourceTree = "<group>"; };
 		63DE6E511611332200C26B77 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -1438,6 +1444,8 @@
 				6310F4B5153736D000C65FD8 /* OPEMessage.m */,
 				6330AB7D14DB519A00448852 /* OPEAppDelegate.h */,
 				6330AB7E14DB519A00448852 /* OPEAppDelegate.m */,
+				6314D13D1703C27A00AE91E3 /* OPEBaseViewController.h */,
+				6314D13E1703C27A00AE91E3 /* OPEBaseViewController.m */,
 				6330AB8014DB519A00448852 /* OPEViewController.h */,
 				6330AB8114DB519A00448852 /* OPEViewController.m */,
 				6345E57D14E3122900F55486 /* OPENodeViewController.h */,
@@ -1777,6 +1785,15 @@
 			name = TagEdit;
 			sourceTree = "<group>";
 		};
+		63D4DAED1703D8DC00C989CD /* AFOAuth1Client */ = {
+			isa = PBXGroup;
+			children = (
+				63D4DAEE1703D8DC00C989CD /* AFOAuth1Client.h */,
+				63D4DAEF1703D8DC00C989CD /* AFOAuth1Client.m */,
+			);
+			path = AFOAuth1Client;
+			sourceTree = "<group>";
+		};
 		63E2796D14E1F31B009D02BD /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1930,6 +1947,7 @@
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				63D4DAED1703D8DC00C989CD /* AFOAuth1Client */,
 				636D781A152E58FD005E31A3 /* MBProgressHUD */,
 				63E8211216F12A850040B892 /* AFNetworking */,
 				6383948A14EC7D8C00C74A57 /* OAuth */,
@@ -2484,6 +2502,8 @@
 				63397D9717026B0F00D411E7 /* OPEPhoneEditViewController.m in Sources */,
 				63397D9A1702732A00D411E7 /* OPETextViewEditViewController.m in Sources */,
 				6314D13C17039A5B00AE91E3 /* OPENameEditView.m in Sources */,
+				6314D13F1703C27B00AE91E3 /* OPEBaseViewController.m in Sources */,
+				63D4DAF01703D8DC00C989CD /* AFOAuth1Client.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

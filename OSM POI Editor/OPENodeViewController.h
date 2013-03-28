@@ -31,6 +31,7 @@
 #import "OPEManagedOsmElement.h"
 #import "OPEOSMData.h"
 #import "OPETagEditViewController.h"
+#import "OPEBaseViewController.h"
 
 @protocol OPENodeViewDelegate
 @optional
@@ -38,21 +39,19 @@
 @end
 
 
-@interface OPENodeViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate, OPETagEditViewControllerDelegate, PassCategoryAndType, MBProgressHUDDelegate, UIAlertViewDelegate, OPEOSMDataControllerDelegate>
+@interface OPENodeViewController : OPEBaseViewController <UITableViewDelegate, UITableViewDataSource, OPETagEditViewControllerDelegate, PassCategoryAndType>
 {
     OPETagInterpreter * tagInterpreter;
     NSDictionary * osmKeyValue;
     float optionalTagWidth;
     NSManagedObjectContext * editContext;
     NSSet * originalTags;
-    OPEOSMData * osmData;
 }
 
 @property (nonatomic, strong) UITableView * nodeInfoTableView;
 @property (nonatomic, strong) UIButton * deleteButton;
 @property (nonatomic, strong) UIBarButtonItem * saveButton;
 @property (nonatomic, strong) id <OPENodeViewDelegate> delegate;
-@property (nonatomic, strong) MBProgressHUD * HUD;
 @property (nonatomic, strong) NSMutableArray * tableSections;
 @property (nonatomic, strong) OPEManagedOsmElement * managedOsmElement;
 @property (nonatomic) BOOL newElement;
@@ -63,7 +62,6 @@
 - (void) saveButtonPressed;
 - (void) deleteButtonPressed;
 - (void) checkSaveButton;
-- (void) uploadComplete:(NSNotification *)notification;
 
 
 

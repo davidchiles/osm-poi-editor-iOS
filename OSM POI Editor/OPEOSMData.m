@@ -46,12 +46,8 @@
     self = [super init];
     if(self)
     {
-        NSString *myConsumerKey = osmConsumerKey; //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
-        NSString *myConsumerSecret = osmConsumerSecret; //@"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
-        
-        auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
-                                                           consumerKey:myConsumerKey
-                                                            privateKey:myConsumerSecret];
+        auth = [OPEOSMData osmAuth];
+        [self canAuth];
         
         //tagInterpreter = [OPETagInterpreter sharedInstance];
         q = dispatch_queue_create("Parse.Queue", NULL);
@@ -64,24 +60,6 @@
     }
     
     return self;
-}
-
--(BOOL) canAuth;
-{
-    BOOL didAuth = NO;
-    BOOL canAuth = NO;
-    if (auth) {
-        didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor"
-                                                             authentication:auth];
-        // if the auth object contains an access token, didAuth is now true
-        canAuth = [auth canAuthorize];
-    }
-    else {
-        return NO;
-    }
-    return didAuth && canAuth;
-
-    
 }
 
  
@@ -110,6 +88,23 @@
     
     
     NSLog(@"Download URL %@",url);
+}
+
+-(BOOL) canAuth;
+{
+        BOOL didAuth = NO;
+        BOOL canAuth = NO;
+        if (auth) {
+                didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor" authentication:auth];
+                // if the auth object contains an access token, didAuth is now true
+                canAuth = [auth canAuthorize];
+            }
+        else {
+                return NO;
+            }
+        return didAuth && canAuth;
+    
+    
 }
 
 #pragma nsxmlparserdelegate
@@ -244,6 +239,7 @@
     [urlRequest setHTTPBody:changesetData];
     [auth authorizeRequest:urlRequest];
     
+    
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id object){
         NSLog(@"changeset %@",object);
@@ -300,7 +296,6 @@
     
     
 }
-
 -(AFHTTPRequestOperation *)uploadRequestOperationWithElement: (OPEManagedOsmElement *) element changeset: (int64_t) changesetNumber
 {
     NSData * xmlData = [element uploadXMLforChangset:changesetNumber];
@@ -413,6 +408,22 @@
      }];
     [requestOperation start];
     
+}
+
++(GTMOAuthAuthentication *)osmAuth {
+    NSString *myConsumerKey = osmConsumerKey; //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
+    NSString *myConsumerSecret = osmConsumerSecret; //@"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
+    
+    GTMOAuthAuthentication *auth;
+    auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
+                                                       consumerKey:myConsumerKey
+                                                        privateKey:myConsumerSecret];
+    
+    // setting the service name lets us inspect the auth object later to know
+    // what service it is for
+    auth.serviceProvider = @"OSMPOIEditor";
+    
+    return auth;
 }
 
 

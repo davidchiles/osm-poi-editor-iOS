@@ -61,11 +61,12 @@
 - (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 - (void) openChangeset:(OPEChangeset *)changeset;
 - (void) closeChangeset: (int64_t) changesetNumber;
-- (BOOL) canAuth;
 
 - (void) uploadElement: (OPEManagedOsmElement *) element;
 - (void) deleteElement: (OPEManagedOsmElement *) element;
 
+-(BOOL) canAuth;
 
++(GTMOAuthAuthentication *)osmAuth;
 
 @end
