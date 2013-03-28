@@ -230,6 +230,7 @@
 		6310F6651537A46D00C65FD8 /* wrench@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F5991537A46D00C65FD8 /* wrench@2x.png */; };
 		6310F6661537A46D00C65FD8 /* zoo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F59A1537A46D00C65FD8 /* zoo@2x.png */; };
 		6314515615BE092B00501CF3 /* Optional.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6314515515BE092B00501CF3 /* Optional.plist */; };
+		6314D13C17039A5B00AE91E3 /* OPENameEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6314D13B17039A5B00AE91E3 /* OPENameEditView.m */; };
 		631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E014DC98D0000236F0 /* OPEOSMData.m */; };
 		631BAAB616B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 631BAAB516B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m */; };
 		63214B2D153CB382001C9A58 /* stardavid.png in Resources */ = {isa = PBXBuildFile; fileRef = 63214B2C153CB382001C9A58 /* stardavid.png */; };
@@ -240,7 +241,6 @@
 		63292E6C1593ED670010A11B /* OPEPhoneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E651593ED670010A11B /* OPEPhoneCell.m */; };
 		63292E6D1593ED670010A11B /* OPESpecialCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E671593ED670010A11B /* OPESpecialCell2.m */; };
 		63292E6E1593ED670010A11B /* OPETagValueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E691593ED670010A11B /* OPETagValueList.m */; };
-		63292E6F1593ED670010A11B /* OPETagValueList.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63292E6A1593ED670010A11B /* OPETagValueList.xib */; };
 		6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB6E14DB519A00448852 /* UIKit.framework */; };
 		6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7014DB519A00448852 /* Foundation.framework */; };
 		6330AB7314DB519A00448852 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7214DB519A00448852 /* CoreGraphics.framework */; };
@@ -665,6 +665,8 @@
 		6310F5991537A46D00C65FD8 /* wrench@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wrench@2x.png"; sourceTree = "<group>"; };
 		6310F59A1537A46D00C65FD8 /* zoo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoo@2x.png"; sourceTree = "<group>"; };
 		6314515515BE092B00501CF3 /* Optional.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Optional.plist; sourceTree = "<group>"; };
+		6314D13A17039A5B00AE91E3 /* OPENameEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENameEditView.h; sourceTree = "<group>"; };
+		6314D13B17039A5B00AE91E3 /* OPENameEditView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENameEditView.m; sourceTree = "<group>"; };
 		631539DF14DC98D0000236F0 /* OPEOSMData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMData.h; sourceTree = "<group>"; };
 		631539E014DC98D0000236F0 /* OPEOSMData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMData.m; sourceTree = "<group>"; };
 		631BAAB416B366AB00CF4DAA /* OPEManagedReferencePoiCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedReferencePoiCategory.h; sourceTree = "<group>"; };
@@ -682,7 +684,6 @@
 		63292E671593ED670010A11B /* OPESpecialCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPESpecialCell2.m; sourceTree = "<group>"; };
 		63292E681593ED670010A11B /* OPETagValueList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETagValueList.h; sourceTree = "<group>"; };
 		63292E691593ED670010A11B /* OPETagValueList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETagValueList.m; sourceTree = "<group>"; };
-		63292E6A1593ED670010A11B /* OPETagValueList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPETagValueList.xib; sourceTree = "<group>"; };
 		6330AB6A14DB519A00448852 /* OSM POI Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSM POI Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6330AB6E14DB519A00448852 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6330AB7014DB519A00448852 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1769,7 +1770,8 @@
 				63D0A5DA17011F17007A595E /* OPEOsmValueTextField.m */,
 				63292E681593ED670010A11B /* OPETagValueList.h */,
 				63292E691593ED670010A11B /* OPETagValueList.m */,
-				63292E6A1593ED670010A11B /* OPETagValueList.xib */,
+				6314D13A17039A5B00AE91E3 /* OPENameEditView.h */,
+				6314D13B17039A5B00AE91E3 /* OPENameEditView.m */,
 				63D0A5C51700F03C007A595E /* TextEdit */,
 			);
 			name = TagEdit;
@@ -2291,7 +2293,6 @@
 				639682A0153CBD82008F4C0E /* icon-29@2x.png in Resources */,
 				639682A1153CBD82008F4C0E /* icon-512.png in Resources */,
 				639682A2153CBD82008F4C0E /* icon-512@2x.png in Resources */,
-				63292E6F1593ED670010A11B /* OPETagValueList.xib in Resources */,
 				6314515615BE092B00501CF3 /* Optional.plist in Resources */,
 				63DE6E4D1611328200C26B77 /* default.png in Resources */,
 				63DE6E4E1611328200C26B77 /* default@2x.png in Resources */,
@@ -2482,6 +2483,7 @@
 				63397D8F170250AA00D411E7 /* OPERecent+NearbyViewController.m in Sources */,
 				63397D9717026B0F00D411E7 /* OPEPhoneEditViewController.m in Sources */,
 				63397D9A1702732A00D411E7 /* OPETextViewEditViewController.m in Sources */,
+				6314D13C17039A5B00AE91E3 /* OPENameEditView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

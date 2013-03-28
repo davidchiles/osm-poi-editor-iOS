@@ -201,7 +201,14 @@
 {
     OPEChangeset * changeset = [[OPEChangeset alloc] init];
     [changeset addElement:element];
-    changeset.message = [NSString stringWithFormat:@"Created new POI: %@",element.name];
+    
+    if (element.osmIDValue < 0) {
+        changeset.message = [NSString stringWithFormat:@"Created new POI: %@",element.name];
+    }
+    else{
+        changeset.message = [NSString stringWithFormat:@"Updated POI: %@",element.name];
+    }
+    
     
     [self openChangeset:changeset];
     

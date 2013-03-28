@@ -29,11 +29,14 @@
 #import "OPENodeViewController.h"
 #import "OPEMessage.h"
 #import "RMPolygonAnnotation.h"
+#import "OPENameEditView.h"
+#import "MBProgressHUD.h"
 
-@interface OPEViewController : UIViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,NSFetchedResultsControllerDelegate> {
+@interface OPEViewController : UIViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,NSFetchedResultsControllerDelegate,OPENameEditViewDelegate, OPEOSMDataControllerDelegate> {
     RMMapView* mapView;
     UIImageView * plusImageView;
     RMAnnotation * wayAnnotation;
+    
     
 }
 
@@ -57,6 +60,8 @@
 @property (nonatomic) RMSphericalTrapezium currentSquare;
 @property (nonatomic) BOOL userPressedLocatoinButton;
 @property (nonatomic) BOOL firstDownload;
+@property (nonatomic, strong) RMAnnotation * selectedNoNameHighway;
+@property (nonatomic, strong) MBProgressHUD * HUD;
 
 @property (nonatomic,strong) NSFetchedResultsController * osmElementFetchedResultsController;
 @property (nonatomic,strong) NSFetchedResultsController * noNameStreetsFetchedResultsController;

@@ -8,6 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OPENameEditView : UIView
+@protocol OPENameEditViewDelegate <NSObject>
+
+-(void)saveValue:(NSString *)value;
+
+@end
+
+@interface OPENameEditView : UIView <UITextFieldDelegate>
+
+
+@property (nonatomic, strong) UITextField * textField;
+@property (nonatomic, strong) UIButton * saveButton;
+@property (nonatomic, strong) UILabel * typeLabel;
+@property (nonatomic, weak) id<OPENameEditViewDelegate> delegate;
+
+
+-(id)initWithFrame:(CGRect)frame andType:(NSString *)typeString;
 
 @end

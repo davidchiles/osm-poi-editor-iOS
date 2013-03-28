@@ -98,6 +98,21 @@
     
 }
 
+-(NSString *)highwayType
+{
+    NSString * type = nil;
+    
+    NSString * highwayValue = [self valueForOsmKey:@"highway"];
+    if ([highwayValue length]) {
+        type = [[highwayValue stringByReplacingOccurrencesOfString:@"_" withString:@" "] capitalizedString];
+    }
+    
+    
+    
+    
+    return type;
+}
+
 +(OPEManagedOsmWay *)fetchOrCreatWayWithOsmID:(int64_t)wayID
 {
     NSPredicate *osmNodeFilter = [NSPredicate predicateWithFormat:@"osmID == %d",wayID];

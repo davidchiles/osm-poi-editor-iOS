@@ -10,4 +10,6 @@
 -(NSArray *)points;
 -(BOOL)noNameStreet;
 
+-(NSString *)highwayType;
+
 @end

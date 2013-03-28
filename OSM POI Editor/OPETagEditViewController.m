@@ -53,7 +53,7 @@
         rView.showRecent = YES;
         viewController = rView;
     }
-    else if ([@[@"addr:housenumber",@"addr:country",@"website"]containsObject:osmKey] || [type isEqualToString:kTypeNumber]) {
+    else if ([@[@"addr:housenumber",@"addr:country",@"website"]containsObject:osmKey] || [@[kTypeNumber,kTypeLabel]containsObject:type]) {
         OPERecentlyUsedViewController * rView = [[OPERecentlyUsedViewController alloc] initWithOsmKey:osmKey delegate:delegate];
         rView.showRecent = [osmKey isEqualToString:@"addr:country"];
         if ([type isEqualToString:kTypeNumber]) {

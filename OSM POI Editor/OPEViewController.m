@@ -36,6 +36,7 @@
 #import "OPEManagedOsmNode.h"
 #import "OPEManagedOsmWay.h"
 
+#define noNameTag 100
 
 
 @implementation OPEViewController
@@ -51,6 +52,8 @@
 @synthesize imagesDic;
 @synthesize currentSquare;
 @synthesize firstDownload;
+@synthesize selectedNoNameHighway = _selectedNoNameHighway;
+@synthesize HUD;
 
 @synthesize userPressedLocatoinButton;
 
@@ -109,6 +112,8 @@
     mapView.showLogoBug = NO;
     mapView.hideAttribution = YES;
     mapView.userTrackingMode = RMUserTrackingModeFollow;
+    
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     
     
     /*
@@ -173,6 +178,7 @@
     currentSquare = [mapView latitudeLongitudeBoundingBox];
     
     osmData = [[OPEOSMData alloc] init];
+    osmData.delegate = self;
     
     message = [[OPEMessage alloc] init];
     message.alpha = 0.0;
@@ -216,8 +222,7 @@
 -(RMMarker *)markerWithManagedObjectID:(NSManagedObjectID *)managedObjectID
 {
     OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:managedObjectID];
-    UIImage * icon;
-    NSString *imagestring = managedOsmElement.type.imageString;
+    UIImage * icon = nil;
     if (managedOsmElement.type) {
         if ([imagesDic objectForKey:managedOsmElement.type.imageString]) {
             icon = [imagesDic objectForKey:managedOsmElement.type.imageString];
@@ -252,7 +257,7 @@
      
     line.lineColor = [UIColor redColor];
     line.lineWidth +=10;
-    line.canShowCallout = YES;
+    line.canShowCallout = NO;
     
     return line;
 }
@@ -285,6 +290,20 @@
     return annotation;
 }
 
+-(void)setSelectedNoNameHighway:(RMAnnotation *)newSelectedNoNameHighway
+{
+    if (_selectedNoNameHighway) {
+        ((RMShape *)_selectedNoNameHighway.layer).lineColor = [UIColor redColor];
+    }
+    
+    _selectedNoNameHighway = newSelectedNoNameHighway;
+    
+    if (_selectedNoNameHighway) {
+        ((RMShape *)_selectedNoNameHighway.layer).lineColor = [UIColor greenColor];
+    }
+    
+}
+
 -(void)tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
     if (wayAnnotation) {
@@ -292,11 +311,15 @@
         wayAnnotation = nil;
     }
     
+    [self removeNonameView];
+    
     id osmElement = [OPEMRUtility managedObjectWithID:annotation.userInfo];
     
     if ([osmElement isKindOfClass:[OPEManagedOsmWay class]]) {
         OPEManagedOsmWay * osmWay = (OPEManagedOsmWay *)osmElement;
         if (osmWay.isNoNameStreetValue) {
+            self.selectedNoNameHighway = annotation;
+            [self showNoNameViewWithType:[NSString stringWithFormat:@"%@ - missing name",[osmWay highwayType]]];
             return;
         }
         NSArray * points = [osmWay points];
@@ -334,6 +357,74 @@
 - (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
     [self presentNodeInfoViewControllerWithElement:annotation.userInfo];
+}
+
+-(void)showNoNameViewWithType:(NSString *)type;
+{
+    CGFloat height = 50.0;
+    OPENameEditView * nameView = [[OPENameEditView alloc] initWithFrame:CGRectMake(0, -height, self.view.frame.size.width, height) andType:type];
+    nameView.tag = noNameTag;
+    nameView.delegate = self;
+    
+    [self.view addSubview:nameView];
+    
+    [UIView beginAnimations:nil context:NULL];
+    {
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+        [UIView setAnimationDuration:.3];
+        CGRect frame = nameView.frame;
+        CGRect mapFrame = mapView.frame;
+        mapFrame.origin.y = frame.size.height;
+        frame.origin.y = 0;
+        nameView.frame = frame;
+        mapView.frame = mapFrame;
+        
+    }
+    [UIView commitAnimations];
+    [nameView.textField becomeFirstResponder];
+    
+}
+
+-(void)removeNonameView
+{
+    UIView * nameView = [self.view viewWithTag:noNameTag];
+    
+    if (nameView) {
+        self.selectedNoNameHighway = nil;
+        [UIView beginAnimations:nil context:NULL];
+        {
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+            [UIView setAnimationDuration:.3];
+            CGRect frame = nameView.frame;
+            CGRect mapFrame = mapView.frame;
+            mapFrame.origin.y = 0;
+            frame.origin.y = -frame.size.height;
+            nameView.frame = frame;
+            mapView.frame = mapFrame;
+            
+        }
+        [UIView commitAnimations];
+        [nameView removeFromSuperview];
+        nameView = nil;
+    }
+}
+-(void)saveValue:(NSString *)value
+{
+    [self.view endEditing:YES];
+    [self.navigationController.view addSubview:HUD];
+    [HUD setLabelText:@"Saving..."];
+    [HUD show:YES];
+    
+    OPEManagedOsmTag * tag = [OPEManagedOsmTag fetchOrCreateWithKey:@"name" value:value];
+    OPEManagedOsmElement * managedElement = (OPEManagedOsmElement*)[OPEMRUtility managedObjectWithID:self.selectedNoNameHighway.userInfo];
+    [managedElement addTagsObject:tag];
+    managedElement.action = kActionTypeModify;
+    NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
+    [context MR_saveToPersistentStoreAndWait];
+    
+    [osmData uploadElement:managedElement];
+    
+    
 }
 
 - (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
@@ -654,6 +745,32 @@
             break;
     }
 }
-             
+
+#pragma OPEOsmDataDelegate
+
+-(void)didOpenChangeset:(int64_t)changesetNumber withMessage:(NSString *)message
+{
+    self.HUD.labelText = @"Uploading...";
+    
+}
+-(void)didCloseChangeset:(int64_t)changesetNumber
+{
+    self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark.png"]];
+    HUD.mode = MBProgressHUDModeCustomView;
+    self.HUD.labelText = @"Complete";
+    [self.HUD hide:YES afterDelay:3.0];
+    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];
+    //[self.navigationController dismissModalViewControllerAnimated: YES];
+    [self removeNonameView];
+    
+}
+-(void)uploadFailed:(NSError *)error
+{
+    self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"x.png"]];
+    HUD.mode = MBProgressHUDModeCustomView;
+    self.HUD.labelText =@"Error";
+    [self.HUD hide:YES afterDelay:2.0];
+    
+}
 
 @end
