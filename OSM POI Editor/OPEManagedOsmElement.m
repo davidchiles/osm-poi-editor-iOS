@@ -89,42 +89,8 @@
         if ([matches count]) {
             
             self.type =[matches lastObject];
-            if ([self.type.name isEqualToString:@"Bus Stop"]) {
-                NSLog(@"mantches: %@",[self name]);
-            }
-            
             return YES;
         }
-        
-        /*
-        for(OPEManagedOsmTag * tag in self.tags)
-        {
-            for(OPEManagedReferencePoi * poi in tag.referencePois)
-            {
-                if([poi.tags isSubsetOfSet:self.tags])
-                {
-                    if (poi.isLegacyValue)
-                        [possibleLegacyMatches addObject:poi];
-                    else
-                        [possibleMatches addObject:poi];
-                }
-                
-            }
-        }
-        
-        if ([possibleMatches count]) {
-            self.type = [possibleMatches anyObject];
-            
-            NSString * name = [self name];
-            NSLog(@"Name: %@",name);
-            return YES;
-        }
-        else if([possibleLegacyMatches count])
-        {
-            self.type = [possibleLegacyMatches anyObject];
-            return YES;
-        }
-         */
     }
     
     return NO;

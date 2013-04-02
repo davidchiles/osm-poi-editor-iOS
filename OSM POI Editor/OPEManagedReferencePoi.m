@@ -2,7 +2,6 @@
 #import "OPEManagedReferenceOptionalCategory.h"
 #import "OPEManagedReferencePoiCategory.h"
 
-
 @interface OPEManagedReferencePoi ()
 
 // Private interface goes here.

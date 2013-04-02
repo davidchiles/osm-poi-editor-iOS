@@ -112,12 +112,20 @@
 -(void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
     if ([elementName isEqualToString:@"node"] || [elementName isEqualToString:@"way"] ||[elementName isEqualToString:@"relation"]) {
-        [self.currentElement findType];
         
-        if ([self.currentElement isKindOfClass:[OPEManagedOsmWay class]]) {
-            OPEManagedOsmWay* osmWay =(OPEManagedOsmWay *)self.currentElement;
-            osmWay.isNoNameStreetValue = [osmWay noNameStreet];
-        }
+        
+        [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *localContext) {
+            OPEManagedOsmElement * localElement = [self.currentElement MR_inContext:localContext];
+            
+            [localElement findType];
+            
+            if ([localElement isKindOfClass:[OPEManagedOsmWay class]]) {
+                OPEManagedOsmWay* osmWay =(OPEManagedOsmWay *)localElement;
+                osmWay.isNoNameStreetValue = [osmWay noNameStreet];
+            }
+            
+            
+        }];
         
         self.currentElement = nil;
     }

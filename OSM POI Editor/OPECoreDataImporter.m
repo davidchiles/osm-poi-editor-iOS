@@ -16,7 +16,16 @@
 
 
 @implementation OPECoreDataImporter
-@synthesize managedObjectContext;
+
+-(void)import
+{
+    if ([self shouldDoImport]) {
+        [self importOptionalTags];
+        [self importTagsPlist];
+        [self setImportVersionNumber];
+    }
+    
+}
 
 -(void)importTagsPlist
 {
@@ -38,6 +47,8 @@
             
         }
     }
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+    [context MR_saveToPersistentStoreAndWait];
     NSLog(@"Number of POIs: %u",[[OPEManagedOsmTag MR_findAll] count]);
 }
 
@@ -58,17 +69,14 @@
 
 -(void)importOptionalTags
 {
+    [self lastImportVersion];
     [self importOptionalSection];
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"plist"];
     NSDictionary* optionalDictionary = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
     for(NSString * key in optionalDictionary)
     {
-        OPEOptionalTag * optionalTag = [[OPEOptionalTag alloc] initWithName:key dictionary:[optionalDictionary objectForKey:key]];
-        
-        
-        
-        [self addOptionalWithName:key displayName:optionalTag.displayName section:optionalTag.section sectionSortOrder:optionalTag.sectionSortOrder osmkey:optionalTag.osmKey values:optionalTag.possibleValues type:optionalTag.displayType];
+        [self importOptionalDictionary:[optionalDictionary objectForKey:key] name:key];
     }
     [self addOptionalWithName:@"note" displayName:@"Note" section:@"Note" sectionSortOrder:[NSNumber numberWithInt:1] osmkey:@"note" values:nil type:kTypeText];
     [self addOptionalWithName:@"source" displayName:@"Source" section:@"Note" sectionSortOrder:[NSNumber numberWithInt:2] osmkey:@"source" values:nil type:kTypeText];
@@ -84,63 +92,46 @@
     OPEManagedReferencePoiCategory * poiCategory = [OPEManagedReferencePoiCategory fetchOrCreateWithName:category];
     OPEManagedReferencePoi * newPoi = [OPEManagedReferencePoi fetchOrCreateWithName:name category:poiCategory didCreate:&didCreate];
     
-    if (didCreate) {
-        newPoi.name = name;
-        newPoi.isLegacy = [NSNumber numberWithBool:isLegacy];
-        newPoi.imageString = imageString;
-        [newPoi setCanAddValue:YES];
-        
-        if (isLegacy) {
-            NSString * newName = [name componentsSeparatedByString:@" (legacy)"][0];
-            newPoi.newTagMethod = [OPEManagedReferencePoi fetchOrCreateWithName:newName category:poiCategory didCreate:&didCreate];
-        }
-        
-        newPoi.category = [OPEManagedReferencePoiCategory fetchOrCreateWithName:category];
-        
-        NSMutableSet * optionalSet = [NSMutableSet set];
-        for(NSString * optionalString in optionalTags)
-        {
-            if([optionalString isEqualToString:@"address"])
-            {
-                NSArray * exppandedAddress = kExpandedAddressArray;
-                for(NSString * addressString in exppandedAddress)
-                {
-                    didCreate = NO;
-                    OPEManagedReferenceOptional * optional = [OPEManagedReferenceOptional fetchOrCreateWithName:addressString didCreate:&didCreate];
-                    if (!didCreate) {
-                        [optionalSet addObject:optional];
-                    }
-                }
-            }
-            else
-            {
-                didCreate = NO;
-                OPEManagedReferenceOptional * optional = [OPEManagedReferenceOptional fetchOrCreateWithName:optionalString didCreate:&didCreate];
-                if (!didCreate) {
-                    [optionalSet addObject:optional];
-                }
-            }
-        }
-        OPEManagedReferenceOptional * optionalNote = [OPEManagedReferenceOptional fetchOrCreateWithName:@"note" didCreate:&didCreate];
-        if (!didCreate) {
-            [optionalSet addObject:optionalNote];
-        }
-        OPEManagedReferenceOptional * optionalSource = [OPEManagedReferenceOptional fetchOrCreateWithName:@"source" didCreate:&didCreate];
-        if (!didCreate) {
-            [optionalSet addObject:optionalSource];
-        }
-        [newPoi setOptional:optionalSet];
-        
-        NSMutableSet * osmTagSet = [NSMutableSet set];
-        for (NSString * key in tagDictionary)
-        {
-            [osmTagSet addObject:[OPEManagedOsmTag fetchOrCreateWithKey:key value:[tagDictionary objectForKey:key]]];
-        }
-        [newPoi setTags:osmTagSet];
+    
+    newPoi.name = name;
+    newPoi.isLegacy = [NSNumber numberWithBool:isLegacy];
+    newPoi.imageString = imageString;
+    [newPoi setCanAddValue:YES];
+    
+    if (isLegacy) {
+        NSString * newName = [name componentsSeparatedByString:@" (legacy)"][0];
+        newPoi.newTagMethod = [OPEManagedReferencePoi fetchOrCreateWithName:newName category:poiCategory didCreate:&didCreate];
     }
     
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    [context MR_saveToPersistentStoreAndWait];
+    newPoi.category = [OPEManagedReferencePoiCategory fetchOrCreateWithName:category];
+    
+    for(NSString * optionalString in optionalTags)
+    {
+        OPEManagedReferenceOptional * optional;
+        if([optionalString isEqualToString:@"address"])
+        {
+            NSArray * exppandedAddress = kExpandedAddressArray;
+            for(NSString * addressString in exppandedAddress)
+            {
+                didCreate = NO;
+                optional = [OPEManagedReferenceOptional fetchOrCreateWithName:addressString didCreate:&didCreate];
+            }
+        }
+        else
+        {
+            optional = [OPEManagedReferenceOptional fetchOrCreateWithName:optionalString didCreate:&didCreate];
+        }
+        [newPoi addOptionalObject:optional];
+    }
+    OPEManagedReferenceOptional * optionalNote = [OPEManagedReferenceOptional fetchOrCreateWithName:@"note" didCreate:&didCreate];
+    [newPoi addOptionalObject:optionalNote];
+    OPEManagedReferenceOptional * optionalSource = [OPEManagedReferenceOptional fetchOrCreateWithName:@"source" didCreate:&didCreate];
+    [newPoi addOptionalObject:optionalSource];
+    
+    for (NSString * key in tagDictionary)
+    {
+        [newPoi addTagsObject:[OPEManagedOsmTag fetchOrCreateWithKey:key value:[tagDictionary objectForKey:key]]];
+    }
     
    /* NSError *error;
     if (![self.managedObjectContext save:&error]) {
@@ -148,6 +139,37 @@
     }
     */
 
+}
+
+-(OPEManagedReferenceOptional *)importOptionalDictionary:(NSDictionary *)dictionary name:(NSString *)name
+{
+    BOOL didCreate = NO;
+    OPEManagedReferenceOptional * newOptional = [OPEManagedReferenceOptional fetchOrCreateWithName:name didCreate:&didCreate];
+    
+    [newOptional MR_importValuesForKeysWithObject:dictionary];
+    
+    OPEManagedReferenceOptionalCategory * cat = [OPEManagedReferenceOptionalCategory fetchWithName:[dictionary objectForKey:@"section"]];
+    newOptional.referenceSection = cat;
+    NSDictionary * possibleValues = nil;
+    
+    if([[dictionary objectForKey:@"values"] isKindOfClass:[NSString class]])
+    {
+        newOptional.type = [dictionary objectForKey:@"values"];
+    }
+    else
+    {
+        possibleValues = [dictionary objectForKey:@"values"];
+    }
+    
+    for(NSString * value in possibleValues)
+    {
+        
+        OPEManagedReferenceOsmTag * tag = [OPEManagedReferenceOsmTag fetchOrCreateWithName:value key:newOptional.osmKey value:[possibleValues objectForKey:value]];
+        [newOptional addTagsObject:tag];
+    }
+    
+    return newOptional;
+    
 }
 
 -(OPEManagedReferenceOptional *)addOptionalWithName:(NSString *)name displayName:(NSString *)displayName section:(NSString *)section sectionSortOrder:(NSNumber *)sectionSortOrder osmkey:(NSString *)osmKey values:(NSDictionary *)tagValues type:(NSString *)type;
@@ -179,6 +201,39 @@
     }
     
     return newOptional;
+}
+
+-(double)lastImportVersion
+{
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    return [userDefaults doubleForKey:kLastImportVersionNumber];    
+    
+}
+-(double)appVersionNumber
+{
+    NSString * currentVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    return [currentVersion doubleValue];
+    
+}
+
+-(BOOL)shouldDoImport
+{
+    double numberOfOptionals = [[OPEManagedReferenceOptional MR_numberOfEntities] doubleValue];
+    double numberOfPOI = [[OPEManagedReferencePoi MR_numberOfEntities] doubleValue];
+    if ([self lastImportVersion]<[self appVersionNumber]) {
+        return YES;
+    }
+    else if (numberOfOptionals == 0 && numberOfPOI == 0)
+    {
+        return YES;
+    }
+    return NO;
+}
+
+-(void)setImportVersionNumber
+{
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setDouble:[self appVersionNumber] forKey:kLastImportVersionNumber];
 }
 
 @end

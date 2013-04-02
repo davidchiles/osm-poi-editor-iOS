@@ -4,7 +4,7 @@
 <dict>
 	<key>tower:type</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Tower Type</string>
 		<key>osmKey</key>
 		<string>tower:type</string>
@@ -24,7 +24,7 @@
 	</dict>
 	<key>microbrewery</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Microbrewery</string>
 		<key>osmKey</key>
 		<string>microbrewery</string>
@@ -40,7 +40,7 @@
 	</dict>
 	<key>capacity</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Capacity</string>
 		<key>osmKey</key>
 		<string>capacity</string>
@@ -51,7 +51,7 @@
 	</dict>
 	<key>voltage</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Voltage</string>
 		<key>osmKey</key>
 		<string>voltage</string>
@@ -62,7 +62,7 @@
 	</dict>
 	<key>maxtents</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Max Tents</string>
 		<key>osmKey</key>
 		<string>maxtents</string>
@@ -73,7 +73,7 @@
 	</dict>
 	<key>cuisine</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Cuisine</string>
 		<key>osmKey</key>
 		<string>cuisine</string>
@@ -143,7 +143,7 @@
 	</dict>
 	<key>generator-source</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Source</string>
 		<key>osmKey</key>
 		<string>generator:source</string>
@@ -189,7 +189,7 @@
 	</dict>
 	<key>generator-method</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Method</string>
 		<key>osmKey</key>
 		<string>generator:method</string>
@@ -225,7 +225,7 @@
 	</dict>
 	<key>bicycle_parking</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Type</string>
 		<key>osmKey</key>
 		<string>bicycle_parking</string>
@@ -249,7 +249,7 @@
 	</dict>
 	<key>bicycle</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Bicycle</string>
 		<key>osmKey</key>
 		<string>bicycle</string>
@@ -265,7 +265,7 @@
 	</dict>
 	<key>atm</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>ATM</string>
 		<key>osmKey</key>
 		<string>atm</string>
@@ -281,7 +281,7 @@
 	</dict>
 	<key>bicycle_second_hand</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Used Bikes Sold</string>
 		<key>osmKey</key>
 		<string>service:bicycle:second_hand</string>
@@ -297,7 +297,7 @@
 	</dict>
 	<key>bicycle_cleaning</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Bicycles Cleaned</string>
 		<key>osmKey</key>
 		<string>service:bicycle:cleaning</string>
@@ -313,7 +313,7 @@
 	</dict>
 	<key>bicycle_diy</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Bicycle DIY</string>
 		<key>osmKey</key>
 		<string>service:bicycle:diy</string>
@@ -329,7 +329,7 @@
 	</dict>
 	<key>bicycle_pump</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Bicycle Pump</string>
 		<key>osmKey</key>
 		<string>service:bicycle:pump</string>
@@ -345,7 +345,7 @@
 	</dict>
 	<key>bicycle_rental</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Bicycles Rented</string>
 		<key>osmKey</key>
 		<string>service:bicycle:rental</string>
@@ -361,7 +361,7 @@
 	</dict>
 	<key>bicycle_retail</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Bicycles Sold</string>
 		<key>osmKey</key>
 		<string>service:bicycle:retail</string>
@@ -377,7 +377,7 @@
 	</dict>
 	<key>bicycle_repair</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Bicycles Repaired</string>
 		<key>osmKey</key>
 		<string>service:bicycle:repair</string>
@@ -393,7 +393,7 @@
 	</dict>
 	<key>tents</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Tents</string>
 		<key>osmKey</key>
 		<string>tents</string>
@@ -409,7 +409,7 @@
 	</dict>
 	<key>internet_access</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Internet</string>
 		<key>osmKey</key>
 		<string>internet_access</string>
@@ -431,7 +431,7 @@
 	</dict>
 	<key>internet_access_fee</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Internet Fee</string>
 		<key>osmKey</key>
 		<string>internet_access:fee</string>
@@ -447,7 +447,7 @@
 	</dict>
 	<key>takeaway</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Takeaway</string>
 		<key>osmKey</key>
 		<string>takeaway</string>
@@ -465,7 +465,7 @@
 	</dict>
 	<key>swimming_pool_access</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Access</string>
 		<key>osmKey</key>
 		<string>access</string>
@@ -487,7 +487,7 @@
 	</dict>
 	<key>shelter_type</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Type</string>
 		<key>osmKey</key>
 		<string>shelter_type</string>
@@ -511,7 +511,7 @@
 	</dict>
 	<key>wifi</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Wifi</string>
 		<key>osmKey</key>
 		<string>wifi</string>
@@ -529,7 +529,7 @@
 	</dict>
 	<key>outdoor_seating</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Outdoor Seating</string>
 		<key>osmKey</key>
 		<string>outdoor_seating</string>
@@ -545,7 +545,7 @@
 	</dict>
 	<key>covered</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Covered</string>
 		<key>osmKey</key>
 		<string>covered</string>
@@ -561,7 +561,7 @@
 	</dict>
 	<key>bench</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Bench</string>
 		<key>osmKey</key>
 		<string>bench</string>
@@ -577,7 +577,7 @@
 	</dict>
 	<key>map_size</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Size</string>
 		<key>osmKey</key>
 		<string>map_size</string>
@@ -599,7 +599,7 @@
 	</dict>
 	<key>map_type</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Type</string>
 		<key>osmKey</key>
 		<string>map_type</string>
@@ -619,7 +619,7 @@
 	</dict>
 	<key>ski_guidepost</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Skiing</string>
 		<key>osmKey</key>
 		<string>ski</string>
@@ -635,7 +635,7 @@
 	</dict>
 	<key>hiking_guidepost</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Hiking</string>
 		<key>osmKey</key>
 		<string>hiking</string>
@@ -651,7 +651,7 @@
 	</dict>
 	<key>bicycle_guidepost</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Biking</string>
 		<key>osmKey</key>
 		<string>bicycle</string>
@@ -667,7 +667,7 @@
 	</dict>
 	<key>board_type</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Type</string>
 		<key>osmKey</key>
 		<string>board_type</string>
@@ -697,7 +697,7 @@
 	</dict>
 	<key>information</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Type</string>
 		<key>osmKey</key>
 		<string>information</string>
@@ -723,7 +723,7 @@
 	</dict>
 	<key>elevator</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Elevator</string>
 		<key>osmKey</key>
 		<string>highway</string>
@@ -737,7 +737,7 @@
 	</dict>
 	<key>drive_in</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Drive In</string>
 		<key>osmKey</key>
 		<string>drive_in</string>
@@ -753,7 +753,7 @@
 	</dict>
 	<key>drive_through</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Drive-through</string>
 		<key>osmKey</key>
 		<string>drive_through</string>
@@ -769,7 +769,7 @@
 	</dict>
 	<key>smoking</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Smoking</string>
 		<key>osmKey</key>
 		<string>smoking</string>
@@ -787,7 +787,7 @@
 	</dict>
 	<key>wheelchair</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Wheelchair</string>
 		<key>osmKey</key>
 		<string>wheelchair</string>
@@ -805,7 +805,7 @@
 	</dict>
 	<key>fire_hydrant:type</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Type</string>
 		<key>osmKey</key>
 		<string>fire_hydrant:type</string>
@@ -825,7 +825,7 @@
 	</dict>
 	<key>fire_hydrant:position</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Position</string>
 		<key>osmKey</key>
 		<string>fire_hydrant:position</string>
@@ -845,7 +845,7 @@
 	</dict>
 	<key>shelter</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Shelter</string>
 		<key>osmKey</key>
 		<string>shelter</string>
@@ -861,7 +861,7 @@
 	</dict>
 	<key>ref</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Ref</string>
 		<key>osmKey</key>
 		<string>ref</string>
@@ -872,7 +872,7 @@
 	</dict>
 	<key>route_ref</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Route Ref</string>
 		<key>osmKey</key>
 		<string>route_ref</string>
@@ -883,7 +883,7 @@
 	</dict>
 	<key>operator</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Operator</string>
 		<key>osmKey</key>
 		<string>operator</string>
@@ -894,7 +894,7 @@
 	</dict>
 	<key>fee</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Fee</string>
 		<key>osmKey</key>
 		<string>fee</string>
@@ -910,7 +910,7 @@
 	</dict>
 	<key>dispensing</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Dispensing</string>
 		<key>osmKey</key>
 		<string>dispensing</string>
@@ -926,7 +926,7 @@
 	</dict>
 	<key>denomination:christian</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Denomination</string>
 		<key>osmKey</key>
 		<string>denomination</string>
@@ -978,7 +978,7 @@
 	</dict>
 	<key>denomination:jewish</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Denomination</string>
 		<key>osmKey</key>
 		<string>denomination</string>
@@ -1026,7 +1026,7 @@
 	</dict>
 	<key>denomination:muslim</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Denomination</string>
 		<key>osmKey</key>
 		<string>denomination</string>
@@ -1054,7 +1054,7 @@
 	</dict>
 	<key>addr:housenumber</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Number</string>
 		<key>osmKey</key>
 		<string>addr:housenumber</string>
@@ -1062,12 +1062,12 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
-		<key>section_order</key>
+		<key>sectionSortOrder</key>
 		<integer>1</integer>
 	</dict>
 	<key>addr:street</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Street</string>
 		<key>osmKey</key>
 		<string>addr:street</string>
@@ -1075,12 +1075,12 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
-		<key>section_order</key>
+		<key>sectionSortOrder</key>
 		<integer>2</integer>
 	</dict>
 	<key>addr:postcode</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Post Code</string>
 		<key>osmKey</key>
 		<string>addr:postcode</string>
@@ -1088,12 +1088,12 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
-		<key>section_order</key>
+		<key>sectionSortOrder</key>
 		<integer>6</integer>
 	</dict>
 	<key>addr:city</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>City</string>
 		<key>osmKey</key>
 		<string>addr:city</string>
@@ -1101,12 +1101,12 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
-		<key>section_order</key>
+		<key>sectionSortOrder</key>
 		<integer>3</integer>
 	</dict>
 	<key>addr:state</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>State</string>
 		<key>osmKey</key>
 		<string>addr:state</string>
@@ -1114,12 +1114,12 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
-		<key>section_order</key>
+		<key>sectionSortOrder</key>
 		<integer>4</integer>
 	</dict>
 	<key>addr:province</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Province</string>
 		<key>osmKey</key>
 		<string>addr:province</string>
@@ -1127,12 +1127,12 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
-		<key>section_order</key>
+		<key>sectionSortOrder</key>
 		<integer>5</integer>
 	</dict>
 	<key>addr:country</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Country</string>
 		<key>osmKey</key>
 		<string>addr:country</string>
@@ -1140,12 +1140,12 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>label</string>
-		<key>section_order</key>
+		<key>sectionSortOrder</key>
 		<integer>7</integer>
 	</dict>
 	<key>website</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Website</string>
 		<key>osmKey</key>
 		<string>website</string>
@@ -1153,12 +1153,12 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>url</string>
-		<key>section_order</key>
+		<key>sectionSortOrder</key>
 		<integer>8</integer>
 	</dict>
 	<key>phone</key>
 	<dict>
-		<key>name</key>
+		<key>displayName</key>
 		<string>Phone #</string>
 		<key>osmKey</key>
 		<string>phone</string>
@@ -1166,7 +1166,7 @@
 		<string>Address</string>
 		<key>values</key>
 		<string>phone</string>
-		<key>section_order</key>
+		<key>sectionSortOrder</key>
 		<integer>9</integer>
 	</dict>
 </dict>

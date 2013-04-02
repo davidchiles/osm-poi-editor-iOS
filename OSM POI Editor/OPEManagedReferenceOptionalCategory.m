@@ -39,7 +39,7 @@
     
     if([results count])
     {
-        referenceOptionalCategory = [results objectAtIndex:0];
+        referenceOptionalCategory = [results lastObject];
     }
     return referenceOptionalCategory;
 

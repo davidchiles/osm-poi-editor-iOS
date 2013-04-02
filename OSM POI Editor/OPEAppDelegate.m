@@ -50,8 +50,7 @@
     
     OPECoreDataImporter * importer = [[OPECoreDataImporter alloc] init];
 
-    [importer importOptionalTags];
-    [importer importTagsPlist];
+    [importer import];
     
     [OPEMRUtility deleteDownloaded];
 
