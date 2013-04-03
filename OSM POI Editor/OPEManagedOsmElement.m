@@ -56,19 +56,6 @@
     [self.tagsSet addObject:newTag];
 }
 
--(void)setMetaData:(NSDictionary *)dictionary;
-{
-    self.versionValue = [[dictionary objectForKey:@"version"] longLongValue];
-    self.userName = [dictionary objectForKey:@"user"];
-    self.userIDValue = [[dictionary objectForKey:@"uid"]longLongValue];
-    self.changesetIDValue = [[dictionary objectForKey:@"changeset"] longLongValue];
-    NSString * timeString = [dictionary objectForKey:@"timestamp"];
-    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYY-MM-dd'T'HH:mm:ssZ"];
-    self.timeStamp = [dateFormatter dateFromString:timeString];
-
-}
-
 -(NSString *)tagsXML
 {
     NSMutableString * xml = [NSMutableString stringWithString:@""];
@@ -296,6 +283,21 @@
     }
     
     return highwayDictionary;
+}
+
++(OPEManagedOsmElement *)fetchOrCreatWayWithOsmID:(int64_t)ID
+{
+    Class class = self;
+    
+    OPEManagedOsmElement * element = [class MR_findFirstByAttribute:OPEManagedOsmElementAttributes.osmID withValue:[NSNumber numberWithLongLong:ID]];
+    
+    if (!element) {
+        element = [class MR_createEntity];
+        element.osmIDValue = ID;
+    }
+    
+    return element;
+    
 }
 
 @end

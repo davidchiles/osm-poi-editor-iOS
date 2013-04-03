@@ -2,21 +2,54 @@
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="OPEManagedOsmElement" representedClassName="OPEManagedOsmElement" syncable="YES">
         <attribute name="action" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="changesetID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="changesetID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES">
+            <userInfo>
+                <entry key="mappedKeyName" value="changeset"/>
+            </userInfo>
+        </attribute>
         <attribute name="isVisible" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="osmID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="timeStamp" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="userID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="version" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES">
+            <userInfo>
+                <entry key="dateFormat" value="YYYY-MM-dd'T'HH:mm:ssZ"/>
+            </userInfo>
+        </attribute>
+        <attribute name="user" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES">
+            <userInfo>
+                <entry key="mappedKeyName" value="uid"/>
+            </userInfo>
+        </attribute>
+        <attribute name="version" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES">
+            <userInfo>
+                <entry key="version" value="longlong"/>
+            </userInfo>
+        </attribute>
         <relationship name="parentRelations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OpeManagedOsmRelationMember" inverseName="member" inverseEntity="OpeManagedOsmRelationMember" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedOsmTag" inverseName="osmElements" inverseEntity="OPEManagedOsmTag" syncable="YES"/>
         <relationship name="type" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="OPEManagedReferencePoi" inverseName="osmElements" inverseEntity="OPEManagedReferencePoi" syncable="YES"/>
+        <userInfo>
+            <entry key="changeset" value="changesetID"/>
+            <entry key="changesetID" value="changeset"/>
+            <entry key="uid" value="userID"/>
+            <entry key="userID" value="uid"/>
+        </userInfo>
     </entity>
     <entity name="OPEManagedOsmNode" representedClassName="OPEManagedOsmNode" parentEntity="OPEManagedOsmElement" syncable="YES">
-        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES">
+            <userInfo>
+                <entry key="mappedKeyName" value="lat"/>
+            </userInfo>
+        </attribute>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES">
+            <userInfo>
+                <entry key="mappedKeyName" value="lon"/>
+            </userInfo>
+        </attribute>
         <relationship name="ways" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedOsmWay" inverseName="nodes" inverseEntity="OPEManagedOsmWay" syncable="YES"/>
+        <userInfo>
+            <entry key="mappedKeyName" value="node"/>
+        </userInfo>
     </entity>
     <entity name="OPEManagedOsmRelation" representedClassName="OPEManagedOsmRelation" parentEntity="OPEManagedOsmElement" syncable="YES">
         <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="OpeManagedOsmRelationMember" inverseName="osmRelation" inverseEntity="OpeManagedOsmRelationMember" syncable="YES"/>
@@ -27,16 +60,30 @@
         <relationship name="osmRelation" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="OPEManagedOsmRelation" inverseName="members" inverseEntity="OPEManagedOsmRelation" syncable="YES"/>
     </entity>
     <entity name="OPEManagedOsmTag" representedClassName="OPEManagedOsmTag" syncable="YES">
-        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES">
+            <userInfo>
+                <entry key="mappedKeyName" value="k"/>
+            </userInfo>
+        </attribute>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES">
+            <userInfo>
+                <entry key="mappedKeyName" value="v"/>
+            </userInfo>
+        </attribute>
         <relationship name="osmElements" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedOsmElement" inverseName="tags" inverseEntity="OPEManagedOsmElement" syncable="YES"/>
         <relationship name="referenceOsmTag" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedReferenceOsmTag" inverseName="tag" inverseEntity="OPEManagedReferenceOsmTag" syncable="YES"/>
         <relationship name="referencePois" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OPEManagedReferencePoi" inverseName="tags" inverseEntity="OPEManagedReferencePoi" syncable="YES"/>
+        <userInfo>
+            <entry key="mappedKeyName" value="tag"/>
+        </userInfo>
     </entity>
     <entity name="OPEManagedOsmWay" representedClassName="OPEManagedOsmWay" parentEntity="OPEManagedOsmElement" syncable="YES">
         <attribute name="isArea" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isNoNameStreet" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="nodes" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="OPEManagedOsmNode" inverseName="ways" inverseEntity="OPEManagedOsmNode" syncable="YES"/>
+        <userInfo>
+            <entry key="mappedKeyName" value="way"/>
+        </userInfo>
     </entity>
     <entity name="OPEManagedReferenceOptional" representedClassName="OPEManagedReferenceOptional" syncable="YES">
         <attribute name="displayName" optional="YES" attributeType="String" syncable="YES"/>

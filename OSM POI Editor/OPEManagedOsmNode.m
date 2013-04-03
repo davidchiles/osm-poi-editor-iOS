@@ -52,25 +52,6 @@
     return xml;
 }
 
-+(OPEManagedOsmNode *)fetchOrCreateNodeWithOsmID:(int64_t)nodeId
-{
-    NSPredicate *osmNodeFilter = [NSPredicate predicateWithFormat:@"%K == %lld",OPEManagedOsmElementAttributes.osmID,nodeId];
-    
-    NSArray * results = [OPEManagedOsmNode MR_findAllWithPredicate:osmNodeFilter];
-    
-    OPEManagedOsmNode * osmNode = nil;
-    
-    if([results count])
-    {
-        osmNode = [results lastObject];
-    }
-    else{
-        osmNode = [OPEManagedOsmNode MR_createEntity];
-        osmNode.osmIDValue = nodeId;
-    }
-    
-    return osmNode;
-}
 -(NSString *)osmType
 {
     return OPEOsmElementNode;

@@ -15,8 +15,6 @@
 -(NSString *)tagsDescription;
 -(void)addKey:(NSString *)key value:(NSString *)value;
 
--(void)setMetaData:(NSDictionary *)dictionary;
-
 -(NSString *)tagsXML;
 
 -(NSData *) uploadXMLforChangset: (int64_t)changesetNumber;
@@ -28,6 +26,8 @@
 
 + (NSInteger)minID;
 +(NSArray *)allElementsWithTag:(OPEManagedOsmTag *)tag;
+
++(OPEManagedOsmElement *)fetchOrCreatWayWithOsmID:(int64_t)ID;
 
 
 //+(OPEManagedOsmElement *)fetchOrCreateElementWithOsmID:(int64_t)elementID;

@@ -9,9 +9,9 @@ extern const struct OPEManagedOsmElementAttributes {
 	__unsafe_unretained NSString *changesetID;
 	__unsafe_unretained NSString *isVisible;
 	__unsafe_unretained NSString *osmID;
-	__unsafe_unretained NSString *timeStamp;
+	__unsafe_unretained NSString *timestamp;
+	__unsafe_unretained NSString *user;
 	__unsafe_unretained NSString *userID;
-	__unsafe_unretained NSString *userName;
 	__unsafe_unretained NSString *version;
 } OPEManagedOsmElementAttributes;
 
@@ -102,11 +102,21 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSDate* timeStamp;
+@property (nonatomic, strong) NSDate* timestamp;
 
 
 
-//- (BOOL)validateTimeStamp:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateTimestamp:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSString* user;
+
+
+
+//- (BOOL)validateUser:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -121,16 +131,6 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 - (void)setUserIDValue:(int64_t)value_;
 
 //- (BOOL)validateUserID:(id*)value_ error:(NSError**)error_;
-
-
-
-
-
-@property (nonatomic, strong) NSString* userName;
-
-
-
-//- (BOOL)validateUserName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -224,8 +224,14 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 
 
 
-- (NSDate*)primitiveTimeStamp;
-- (void)setPrimitiveTimeStamp:(NSDate*)value;
+- (NSDate*)primitiveTimestamp;
+- (void)setPrimitiveTimestamp:(NSDate*)value;
+
+
+
+
+- (NSString*)primitiveUser;
+- (void)setPrimitiveUser:(NSString*)value;
 
 
 
@@ -235,12 +241,6 @@ extern const struct OPEManagedOsmElementFetchedProperties {
 
 - (int64_t)primitiveUserIDValue;
 - (void)setPrimitiveUserIDValue:(int64_t)value_;
-
-
-
-
-- (NSString*)primitiveUserName;
-- (void)setPrimitiveUserName:(NSString*)value;
 
 
 

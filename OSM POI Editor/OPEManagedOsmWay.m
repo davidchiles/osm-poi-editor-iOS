@@ -113,24 +113,4 @@
     return type;
 }
 
-+(OPEManagedOsmWay *)fetchOrCreatWayWithOsmID:(int64_t)wayID
-{
-    NSPredicate *osmNodeFilter = [NSPredicate predicateWithFormat:@"osmID == %d",wayID];
-    
-    NSArray * results = [OPEManagedOsmWay MR_findAllWithPredicate:osmNodeFilter];
-    
-    OPEManagedOsmWay * osmWay = nil;
-    
-    if([results count])
-    {
-        osmWay = [results lastObject];
-    }
-    else{
-        osmWay = [OPEManagedOsmWay MR_createEntity];
-        osmWay.osmIDValue = wayID;
-    }
-    
-    return osmWay;
-}
-
 @end

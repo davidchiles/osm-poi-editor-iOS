@@ -8,9 +8,9 @@ const struct OPEManagedOsmElementAttributes OPEManagedOsmElementAttributes = {
 	.changesetID = @"changesetID",
 	.isVisible = @"isVisible",
 	.osmID = @"osmID",
-	.timeStamp = @"timeStamp",
+	.timestamp = @"timestamp",
+	.user = @"user",
 	.userID = @"userID",
-	.userName = @"userName",
 	.version = @"version",
 };
 
@@ -166,7 +166,14 @@ const struct OPEManagedOsmElementFetchedProperties OPEManagedOsmElementFetchedPr
 
 
 
-@dynamic timeStamp;
+@dynamic timestamp;
+
+
+
+
+
+
+@dynamic user;
 
 
 
@@ -194,13 +201,6 @@ const struct OPEManagedOsmElementFetchedProperties OPEManagedOsmElementFetchedPr
 - (void)setPrimitiveUserIDValue:(int64_t)value_ {
 	[self setPrimitiveUserID:[NSNumber numberWithLongLong:value_]];
 }
-
-
-
-
-
-@dynamic userName;
-
 
 
 
