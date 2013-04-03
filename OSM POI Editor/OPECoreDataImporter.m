@@ -94,7 +94,7 @@
     
     
     newPoi.name = name;
-    newPoi.isLegacy = [NSNumber numberWithBool:isLegacy];
+    newPoi.isLegacyValue = isLegacy;
     newPoi.imageString = imageString;
     [newPoi setCanAddValue:YES];
     

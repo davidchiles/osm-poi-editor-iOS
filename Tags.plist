@@ -631,6 +631,36 @@
 			<string>first_aid.png</string>
 			<key>tags</key>
 			<dict>
+				<key>healthcare</key>
+				<string>clinic</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Physical Therapy</key>
+		<dict>
+			<key>image</key>
+			<string>first_aid.png</string>
+			<key>tags</key>
+			<dict>
+				<key>healthcare</key>
+				<string>physiotherapist</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Clinic (legacy)</key>
+		<dict>
+			<key>image</key>
+			<string>first_aid.png</string>
+			<key>tags</key>
+			<dict>
 				<key>amenity</key>
 				<string>clinic</string>
 			</dict>
@@ -640,7 +670,7 @@
 				<string>address</string>
 			</array>
 		</dict>
-		<key>Dentist</key>
+		<key>Dentist (legacy)</key>
 		<dict>
 			<key>image</key>
 			<string>dentist.png</string>
@@ -655,7 +685,37 @@
 				<string>address</string>
 			</array>
 		</dict>
+		<key>Dentist</key>
+		<dict>
+			<key>image</key>
+			<string>dentist.png</string>
+			<key>tags</key>
+			<dict>
+				<key>healthcare</key>
+				<string>dentist</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
 		<key>Doctor</key>
+		<dict>
+			<key>image</key>
+			<string>doctor.png</string>
+			<key>tags</key>
+			<dict>
+				<key>healthcare</key>
+				<string>doctor</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Doctor (legacy)</key>
 		<dict>
 			<key>image</key>
 			<string>doctor.png</string>
@@ -670,7 +730,7 @@
 				<string>address</string>
 			</array>
 		</dict>
-		<key>Hospital</key>
+		<key>Hospital (legacy)</key>
 		<dict>
 			<key>image</key>
 			<string>hospital.png</string>
@@ -685,14 +745,14 @@
 				<string>address</string>
 			</array>
 		</dict>
-		<key>Nursing Home</key>
+		<key>Hospital</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>hospital.png</string>
 			<key>tags</key>
 			<dict>
-				<key>amenity</key>
-				<string>nursing_home</string>
+				<key>healthcare</key>
+				<string>hospital</string>
 			</dict>
 			<key>optional</key>
 			<array>
@@ -717,21 +777,6 @@
 				<string>drive_through</string>
 			</array>
 		</dict>
-		<key>Social Facility</key>
-		<dict>
-			<key>image</key>
-			<string>none.png</string>
-			<key>tags</key>
-			<dict>
-				<key>amenity</key>
-				<string>social_facility</string>
-			</dict>
-			<key>optional</key>
-			<array>
-				<string>wheelchair</string>
-				<string>address</string>
-			</array>
-		</dict>
 		<key>Veterinary</key>
 		<dict>
 			<key>image</key>
@@ -745,6 +790,140 @@
 			<array>
 				<string>wheelchair</string>
 				<string>address</string>
+			</array>
+		</dict>
+	</dict>
+	<key>Social Facilities</key>
+	<dict>
+		<key>Nursing Home</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>nursing_home</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
+		<key>Retirement Home</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>social_facility</string>
+				<key>social_facility</key>
+				<string>group_home</string>
+				<key>social_facility:for</key>
+				<string>senior</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>operator</string>
+			</array>
+		</dict>
+		<key>Senior Assisted Living</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>social_facility</string>
+				<key>social_facility</key>
+				<string>assisted_living</string>
+				<key>social_facility:for</key>
+				<string>senior</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>operator</string>
+			</array>
+		</dict>
+		<key>Homeless Shelter</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>social_facility</string>
+				<key>social_facility</key>
+				<string>shelter</string>
+				<key>social_facility:for</key>
+				<string>homeless</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>operator</string>
+			</array>
+		</dict>
+		<key>Food Bank</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>social_facility</string>
+				<key>social_facility</key>
+				<string>food_bank</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>operator</string>
+			</array>
+		</dict>
+		<key>Orphanage</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>social_facility</string>
+				<key>social_facility</key>
+				<string>group_home</string>
+				<key>social_facility:for</key>
+				<string>orphanage</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>operator</string>
+			</array>
+		</dict>
+		<key>Outreach</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>social_facility</string>
+				<key>social_facility</key>
+				<string>outreach</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>operator</string>
 			</array>
 		</dict>
 	</dict>
@@ -848,6 +1027,7 @@
 				<string>clock_date</string>
 				<string>clock_thermometer</string>
 				<string>clock_barometer</string>
+				<string>clock_hygrometer</string>
 				<string>clock_faces</string>
 			</array>
 		</dict>

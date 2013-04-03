@@ -74,17 +74,20 @@
     NSURLRequest * request =[NSURLRequest requestWithURL:url];
     
     [AFXMLRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"application/osm3s+xml"]];
+    
     AFHTTPRequestOperation * httpRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [httpRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        dispatch_async(q,  ^{
         TBXML * xmlResponse = [[TBXML alloc] initWithXMLData:responseObject];
         [self parseTBXML:xmlResponse];
+        });
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [delegate downloadFailed:error];
     }];
     [httpRequestOperation start];
     
-    
+    /*
     AFXMLRequestOperation * xmlRequestOperation = [AFXMLRequestOperation XMLParserRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
             dispatch_async(q,  ^{
             XMLParser.delegate = self;
@@ -93,9 +96,10 @@
             
         
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParser) {
-        [delegate downloadFailed:error];
+        //[delegate downloadFailed:error];
     }];
     //[xmlRequestOperation start];
+     */
     
     
     NSLog(@"Download URL %@",url);

@@ -287,7 +287,7 @@
 
 -(void)updateLegacyTags
 {
-    if (self.type.isLegacy) {
+    if (self.type.isLegacyValue) {
         OPEManagedReferencePoi * newType = self.type.newTagMethod;
         for (OPEManagedOsmTag * tag in newType.tags)
         {
