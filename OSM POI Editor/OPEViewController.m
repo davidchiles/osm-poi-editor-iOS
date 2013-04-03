@@ -252,7 +252,7 @@
     }];
      
     line.lineColor = [UIColor redColor];
-    line.lineWidth +=10;
+    line.lineWidth +=30;
     line.canShowCallout = NO;
     
     return line;

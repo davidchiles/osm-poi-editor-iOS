@@ -11,3 +11,6 @@
 [submodule "lib/MBProgressHUD"]
 	path = lib/MBProgressHUD
 	url = git@github.com:jdg/MBProgressHUD.git
+[submodule "lib/uservoice"]
+	path = lib/uservoice
+	url = git://github.com/uservoice/uservoice-iphone-sdk.git

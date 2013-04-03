@@ -25,6 +25,8 @@
 #import "OPEOpenStreetMapSource.h"
 #import "OPEBingTileSource.h"
 #import "OPEAPIConstants.h"
+#import "UVConfig.h"
+#import "UserVoice.h"
 
 
 @implementation OPEInfoViewController
@@ -119,8 +121,8 @@
 
 
 - (GTMOAuthAuthentication *)osmAuth {
-    NSString *myConsumerKey = osmConsumerKey; //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
-    NSString *myConsumerSecret = osmConsumerSecret; //@"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
+    NSString *myConsumerKey = osmConsumerKey;     // pre-registered with service
+    NSString *myConsumerSecret = osmConsumerSecret;  // pre-assigned by service
     
     GTMOAuthAuthentication *auth;
     auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
@@ -183,6 +185,10 @@
 {
     if (section == 0) {
         return 3;
+    }
+    else if (section == 2)
+    {
+        return 2;
     }
     else {
         return 1;
@@ -257,7 +263,14 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:aboutIdentifier];
         }
-        cell.textLabel.text = @"About POI+";
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"Feedback";
+        }
+        else
+        {
+            cell.textLabel.text = @"About POI+";
+        }
+        
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
 
@@ -295,7 +308,19 @@
         
     }
     else if (indexPath.section == 2) {
-        [self infoButtonPressed:nil];
+        if (indexPath.row == 0) {
+            //USer voice Feedback
+            UVConfig *config = [UVConfig configWithSite:USERVOICE_SITE
+                                                 andKey:USERVOICE_KEY
+                                              andSecret:USERVOICE_SECRET];
+            [UserVoice presentUserVoiceInterfaceForParentViewController:self andConfig:config];
+        }
+        else
+        {
+            [self infoButtonPressed:nil];
+        }
+        
+        
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -342,8 +367,6 @@
 -(void)infoButtonPressed:(id)sender
 {
     OPECreditViewController * view = [[OPECreditViewController alloc] init];
-    //view.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    //[self presentModalViewController:view animated:YES];
     view.title = @"About";
     [self.navigationController pushViewController:view animated:YES];
 }

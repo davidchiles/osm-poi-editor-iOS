@@ -19,6 +19,21 @@
 				<string>address</string>
 			</array>
 		</dict>
+		<key>Driving School</key>
+		<dict>
+			<key>image</key>
+			<string>school.png</string>
+			<key>tags</key>
+			<dict>
+				<key>amenity</key>
+				<string>driving_school</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+			</array>
+		</dict>
 		<key>Kindergarden</key>
 		<dict>
 			<key>image</key>
@@ -1694,7 +1709,7 @@
 	</dict>
 	<key>Services</key>
 	<dict>
-		<key>Rest Area (no fuel)</key>
+		<key>Highway Rest Area (no fuel)</key>
 		<dict>
 			<key>image</key>
 			<string>none.png</string>
@@ -1709,7 +1724,7 @@
 				<string>operator</string>
 			</array>
 		</dict>
-		<key>Rest Area (fuel)</key>
+		<key>Highway Rest Area (fuel)</key>
 		<dict>
 			<key>image</key>
 			<string>none.png</string>
