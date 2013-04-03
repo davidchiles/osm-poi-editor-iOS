@@ -841,6 +841,15 @@
 				<key>amenity</key>
 				<string>clock</string>
 			</dict>
+			<key>optional</key>
+			<array>
+				<string>clock_support</string>
+				<string>clock_display</string>
+				<string>clock_date</string>
+				<string>clock_thermometer</string>
+				<string>clock_barometer</string>
+				<string>clock_faces</string>
+			</array>
 		</dict>
 		<key>Storage Tank</key>
 		<dict>

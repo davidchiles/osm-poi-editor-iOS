@@ -220,6 +220,7 @@
 
 -(BOOL)shouldDoImport
 {
+    return YES;
     double numberOfOptionals = [[OPEManagedReferenceOptional MR_numberOfEntities] doubleValue];
     double numberOfPOI = [[OPEManagedReferencePoi MR_numberOfEntities] doubleValue];
     if ([self lastImportVersion]<[self appVersionNumber]) {

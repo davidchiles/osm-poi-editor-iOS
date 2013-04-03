@@ -142,6 +142,7 @@
 
 -(void)didOpenChangeset:(int64_t)changesetNumber withMessage:(NSString *)message
 {
+    self.HUD.mode = MBProgressHUDModeIndeterminate;
     self.HUD.labelText = @"Uploading...";
     
 }

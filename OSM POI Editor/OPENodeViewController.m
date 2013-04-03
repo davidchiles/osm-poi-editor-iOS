@@ -168,7 +168,7 @@
     
     [self reloadTags];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadComplete:) name:@"uploadComplete" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadComplete:) name:@"uploadComplete" object:nil];
     
     
     
@@ -491,6 +491,7 @@
             
             NSLog(@"Button YES was selected.");
             
+            
             [self.navigationController.view addSubview:self.HUD];
             [self.HUD setLabelText:@"Deleting..."];
             [self.HUD show:YES];
@@ -594,7 +595,7 @@
 {
     [super didCloseChangeset:changesetNumber];
     [self checkSaveButton];
-    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];
     //[self.navigationController dismissModalViewControllerAnimated: YES];
     
 }
