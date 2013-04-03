@@ -285,6 +285,21 @@
     return highwayDictionary;
 }
 
+-(void)updateLegacyTags
+{
+    if (self.type.isLegacy) {
+        OPEManagedReferencePoi * newType = self.type.newTagMethod;
+        for (OPEManagedOsmTag * tag in newType.tags)
+        {
+            [self addKey:tag.key value:tag.value];
+        }
+        self.type = newType;
+        
+    }
+    
+    
+}
+
 +(OPEManagedOsmElement *)fetchOrCreatWayWithOsmID:(int64_t)ID
 {
     Class class = self;

@@ -79,6 +79,7 @@
         }
         
         originalTags = [self.managedOsmElement.tags copy];
+        [self.managedOsmElement updateLegacyTags];
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         

@@ -1524,7 +1524,7 @@
 		<key>Animal Shelter</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>dog.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>
@@ -1539,7 +1539,7 @@
 		<key>Animal Boarding</key>
 		<dict>
 			<key>image</key>
-			<string>none.png</string>
+			<string>dog.png</string>
 			<key>tags</key>
 			<dict>
 				<key>amenity</key>

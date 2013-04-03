@@ -115,13 +115,15 @@
             {
                 didCreate = NO;
                 optional = [OPEManagedReferenceOptional fetchOrCreateWithName:addressString didCreate:&didCreate];
+                [newPoi addOptionalObject:optional];
             }
         }
         else
         {
             optional = [OPEManagedReferenceOptional fetchOrCreateWithName:optionalString didCreate:&didCreate];
+            [newPoi addOptionalObject:optional];
         }
-        [newPoi addOptionalObject:optional];
+        
     }
     OPEManagedReferenceOptional * optionalNote = [OPEManagedReferenceOptional fetchOrCreateWithName:@"note" didCreate:&didCreate];
     [newPoi addOptionalObject:optionalNote];
