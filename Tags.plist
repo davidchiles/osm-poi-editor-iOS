@@ -1694,6 +1694,36 @@
 	</dict>
 	<key>Services</key>
 	<dict>
+		<key>Rest Area (no fuel)</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>highway</key>
+				<string>rest_area</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>operator</string>
+			</array>
+		</dict>
+		<key>Rest Area (fuel)</key>
+		<dict>
+			<key>image</key>
+			<string>none.png</string>
+			<key>tags</key>
+			<dict>
+				<key>highway</key>
+				<string>services</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>operator</string>
+			</array>
+		</dict>
 		<key>ATM</key>
 		<dict>
 			<key>image</key>
