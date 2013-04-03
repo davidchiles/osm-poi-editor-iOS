@@ -252,7 +252,9 @@
     }];
      
     line.lineColor = [UIColor redColor];
-    line.lineWidth +=30;
+    line.lineWidth +=15;
+    line.lineCap = kCALineCapRound;
+    line.lineJoin = kCALineJoinRound;
     line.canShowCallout = NO;
     
     return line;
@@ -314,6 +316,7 @@
     if ([osmElement isKindOfClass:[OPEManagedOsmWay class]]) {
         OPEManagedOsmWay * osmWay = (OPEManagedOsmWay *)osmElement;
         if (osmWay.isNoNameStreetValue) {
+            
             self.selectedNoNameHighway = annotation;
             [self showNoNameViewWithType:[NSString stringWithFormat:@"%@ - missing name",[osmWay highwayType]]];
             return;
