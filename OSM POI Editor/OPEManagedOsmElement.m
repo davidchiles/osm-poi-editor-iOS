@@ -73,6 +73,7 @@
         
         NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(SUBQUERY(tags, $tag, $tag IN %@).@count == tags.@count)",self.tags];
         NSArray * matches = [OPEManagedReferencePoi MR_findAllSortedBy:OPEManagedReferencePoiAttributes.isLegacy ascending:NO withPredicate:predicate];
+        
         if ([matches count]) {
             
             self.type =[matches lastObject];
@@ -298,6 +299,13 @@
     }
     
     
+}
+-(BOOL)memberOfOtherElement
+{
+    if ([self.parentRelations count]) {
+        return YES;
+    }
+    return NO;
 }
 
 +(OPEManagedOsmElement *)fetchOrCreatWayWithOsmID:(int64_t)ID

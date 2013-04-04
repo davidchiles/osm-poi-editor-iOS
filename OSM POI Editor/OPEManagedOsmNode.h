@@ -5,4 +5,5 @@
 
 +(OPEManagedOsmNode *)newNode;
 
+
 @end

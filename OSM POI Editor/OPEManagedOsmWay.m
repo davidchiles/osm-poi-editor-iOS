@@ -26,7 +26,50 @@
         centerLat = [[self.nodes valueForKeyPath:@"@sum.latitude"] doubleValue];
         centerLon = [[self.nodes valueForKeyPath:@"@sum.longitude"] doubleValue];
         
-        return CLLocationCoordinate2DMake(centerLat/[self.nodes count], centerLon/[self.nodes count]);
+        //return CLLocationCoordinate2DMake(centerLat/[self.nodes count], centerLon/[self.nodes count]);
+        
+        float twiceArea = 0.0f;
+        double x = 0;
+        double y = 0;
+        //lat = y
+        //long = x
+        
+        for (NSInteger index = 0; index < [self.nodes count]-1; index++)
+        {
+            OPEManagedOsmNode * node1 = [self.nodes objectAtIndex:index];
+            OPEManagedOsmNode * node2 = [self.nodes objectAtIndex:index+1];
+            
+            twiceArea+=node1.longitudeValue*node2.latitudeValue;
+            twiceArea-=node1.latitudeValue*node2.longitudeValue;
+            double f = node1.longitudeValue*node2.latitudeValue-node2.longitudeValue*node1.latitudeValue;
+            x+=(node1.longitudeValue*node2.longitudeValue)*f;
+            y+=(node1.latitudeValue*node2.latitudeValue)*f;
+            
+            
+        }
+        double f = twiceArea*3;
+        
+        return CLLocationCoordinate2DMake(x/f, y/f);
+        
+        /*
+        function get_polygon_centroid(pts){
+            var twicearea=0,
+            x=0, y=0,
+            nPts = pts.length,
+            p1, p2, f;
+            for (var i=0, j=nPts-1 ;i<nPts;j=i++) {
+                p1=pts[i]; p2=pts[j];
+                twicearea+=p1.x*p2.y;
+                twicearea-=p1.y*p2.x;
+                f=p1.x*p2.y-p2.x*p1.y;
+                x+=(p1.x+p2.x)*f;
+                y+=(p1.y+p2.y)*f;
+            }
+            f=twicearea*3;
+            return {x: x/f,y:y/f};
+        }
+         */
+        
     }
     return CLLocationCoordinate2DMake(0, 0);
 }

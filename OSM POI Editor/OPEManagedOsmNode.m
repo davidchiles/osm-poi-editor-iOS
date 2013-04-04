@@ -52,6 +52,14 @@
     return xml;
 }
 
+-(BOOL)memberOfOtherElement
+{
+    if ([self.ways count]) {
+        return YES;
+    }
+    return [super memberOfOtherElement];
+}
+
 -(NSString *)osmType
 {
     return OPEOsmElementNode;

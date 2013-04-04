@@ -128,7 +128,9 @@
     nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     
-    if (self.managedOsmElement.osmIDValue > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
+    if (self.managedOsmElement.osmIDValue > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![managedOsmElement memberOfOtherElement]) {
+        
+        
         deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
         [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]

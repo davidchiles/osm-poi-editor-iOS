@@ -29,6 +29,7 @@
 +(NSArray *)allElementsWithTag:(OPEManagedOsmTag *)tag;
 
 +(OPEManagedOsmElement *)fetchOrCreatWayWithOsmID:(int64_t)ID;
+-(BOOL)memberOfOtherElement;
 
 
 //+(OPEManagedOsmElement *)fetchOrCreateElementWithOsmID:(int64_t)elementID;
