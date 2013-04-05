@@ -81,7 +81,7 @@
         });
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [delegate downloadFailed:error];
+        //[delegate downloadFailed:error];
     }];
     [httpRequestOperation start];
     
