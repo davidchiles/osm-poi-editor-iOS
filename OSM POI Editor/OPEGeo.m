@@ -157,6 +157,58 @@
     }
 }
 
++(CLLocationCoordinate2D)centroidOfPolygon:(NSArray *)points
+{
+    double sumY = 0;
+    double sumX = 0;
+    double partialSum = 0;
+    double sum = 0;
+    //lat = y
+    //long = x
+    
+    for (NSInteger index = 0; index < [points count]-1; index++)
+    {
+        CLLocationCoordinate2D point1 = ((CLLocation *)points[index]).coordinate;
+        CLLocationCoordinate2D point2 = ((CLLocation *)points[index+1]).coordinate;
+        
+        partialSum = point1.latitude*point2.longitude-point2.latitude*point1.longitude;
+        sum+=partialSum;
+        sumX += (point1.latitude+point2.latitude) * partialSum;
+        sumY += (point1.longitude+point2.longitude) * partialSum;
+        
+        
+    }
+    double area = 0.5*sum;
+    
+    
+    return CLLocationCoordinate2DMake(sumY/6/area, sumX/6/area);
+    
+    /*
+     var sumY = 0;
+     var sumX = 0;
+     var partialSum = 0;
+     var sum = 0;
+     
+     //close polygon
+     points.push(points[0]);
+     
+     var n = points.length;
+     
+     for(var i=0;i<n-1;i++)
+     {
+     partialSum = points[i].Longitude*points[i+1].Latitude - points[i+1].Longitude*points[i].Latitude;
+     sum += partialSum;
+     sumX += (points[i].Longitude+points[i+1].Longitude) * partialSum;
+     sumY += (points[i].Latitude+points[i+1].Latitude) * partialSum;
+     }
+     
+     var area = 0.5*sum;
+     
+     return new VELatLong(sumY/6/area,sumX/6/area);
+     }
+     */
+}
+
 /*
 float minimum_distance(vec2 v, vec2 w, vec2 p) {
     // Return minimum distance between line segment vw and point p

@@ -431,12 +431,21 @@
 
 -(void)parseTBXML:(TBXML *)xml
 {
+    NSDate * start = [NSDate date];
+    double totalNodeTime = 0;
+    double totalWayTime = 0;
+    double totalFindTime = 0;
+    int numFinds =0;
+    int numNodes = 0;
+    int numWays = 0;
     TBXMLElement * root = xml.rootXMLElement;
     if(root)
     {
         //NSLog(@"root: %@",[TBXML elementName:root]);
         //NSLog(@"version: %@",[TBXML valueOfAttributeNamed:@"version" forElement:root]);
         TBXMLElement * osmElementXML = [TBXML childElementNamed:@"node" parentElement:root];
+        
+        BOOL switchType = NO;
         
         while (osmElementXML) {
             
@@ -453,6 +462,8 @@
             NSString * elementName = [NSString stringWithFormat:@"%s" ,osmElementXML->name];
             
             if ([elementName isEqualToString:@"node"]) {
+                numNodes +=1;
+                NSDate * nodeStart = [NSDate date];
                 OPEManagedOsmNode * newNode = (OPEManagedOsmNode *)[OPEManagedOsmNode fetchOrCreatWayWithOsmID:[[attributeDict objectForKey:@"id"] longLongValue]];
                 if (newVersion > newNode.versionValue) {
                     [newNode MR_importValuesForKeysWithObject:attributeDict];
@@ -463,10 +474,13 @@
                 else{
                     self.currentElement = nil;
                 }
-                
+                totalNodeTime -= [nodeStart timeIntervalSinceNow];
             }
             else if([elementName isEqualToString:@"way"])
             {
+                numWays +=1;
+                NSDate * wayStart = [NSDate date];
+                switchType = YES;
                 OPEManagedOsmWay * newWay = (OPEManagedOsmWay *)[OPEManagedOsmWay fetchOrCreatWayWithOsmID:[[attributeDict objectForKey:@"id"] longLongValue]];
                 if (newVersion > newWay.versionValue) {
                     [newWay MR_importValuesForKeysWithObject:attributeDict];
@@ -474,7 +488,7 @@
                     [self findTags:osmElementXML];
                     [self findNodes:osmElementXML];
                 }
-                
+                totalWayTime -= [wayStart timeIntervalSinceNow];
             }
             else if([elementName isEqualToString:@"relation"])
             {
@@ -482,6 +496,7 @@
             }
             
             if (self.currentElement) {
+                /*
                 [MagicalRecord saveUsingCurrentThreadContextWithBlockAndWait:^(NSManagedObjectContext *localContext) {
                     OPEManagedOsmElement * localElement = [self.currentElement MR_inContext:localContext];
                     
@@ -494,6 +509,23 @@
                     
                     
                 }];
+                 */
+                numFinds +=1;
+                NSDate * findStart = [NSDate date];
+                
+                if (!self.currentElement.type) {
+                    [self.currentElement findType];
+                }
+                
+                if ([self.currentElement isKindOfClass:[OPEManagedOsmWay class]]) {
+                    OPEManagedOsmWay* osmWay =(OPEManagedOsmWay *)self.currentElement;
+                    osmWay.isNoNameStreetValue = [osmWay noNameStreet];
+                }
+                
+                if (switchType) {
+                    [self saveCurrentThreadContext];
+                }
+                totalFindTime -= [findStart timeIntervalSinceNow];
             }
             
             
@@ -504,6 +536,18 @@
         }
         
     }
+    [self saveCurrentThreadContext];
+    NSTimeInterval time = [start timeIntervalSinceNow];
+    NSLog(@"Total Time: %f",-1*time);
+    NSLog(@"Node Time: %f",totalNodeTime/numNodes);
+    NSLog(@"Way Time: %f",totalWayTime/numWays);
+    NSLog(@"Find Time: %f",totalFindTime/numFinds);
+}
+
+-(void)saveCurrentThreadContext
+{
+    NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
+    [context MR_saveToPersistentStoreAndWait];
 }
 
 -(void)findNodes:(TBXMLElement *)xmlElement
