@@ -31,6 +31,7 @@
 #import "OPEManagedOsmRelation.h"
 #import "OPEChangeset.h"
 #import "OPEMRUtility.h"
+#import "OPEUtility.h"
 
 @implementation OPEOSMData
 
@@ -246,7 +247,7 @@
     [changesetString appendString:@"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"];
     [changesetString appendString:@"<changeset>"];
     [changesetString appendString:@"<tag k=\"created_by\" v=\"OSMPOIEditor\"/>"];
-    [changesetString appendFormat:@"<tag k=\"comment\" v=\"%@\"/>",changeset.message];
+    [changesetString appendFormat:@"<tag k=\"comment\" v=\"%@\"/>",[OPEUtility addHTML:changeset.message]];
     [changesetString appendString:@"</changeset>"];
     [changesetString appendString:@"</osm>"];
     
@@ -580,7 +581,7 @@
     while (tag) //Takes in tags and adds them to newNode
     {
         NSString* key = [TBXML valueOfAttributeNamed:@"k" forElement:tag];
-        NSString* value = [TBXML valueOfAttributeNamed:@"v" forElement:tag];
+        NSString* value = [OPEUtility removeHTML: [TBXML valueOfAttributeNamed:@"v" forElement:tag]];
         
         if (self.currentElement) {
             [self.currentElement addKey:key value:value];
