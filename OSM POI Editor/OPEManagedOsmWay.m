@@ -27,7 +27,7 @@
         centerLat = [[self.nodes valueForKeyPath:@"@sum.latitude"] doubleValue];
         centerLon = [[self.nodes valueForKeyPath:@"@sum.longitude"] doubleValue];
         
-        return CLLocationCoordinate2DMake(centerLat/[self.nodes count], centerLon/[self.nodes count]);
+        //return CLLocationCoordinate2DMake(centerLat/[self.nodes count], centerLon/[self.nodes count]);
         
         NSMutableArray * array = [NSMutableArray array];
         for (OPEManagedOsmNode * node in self.nodes)

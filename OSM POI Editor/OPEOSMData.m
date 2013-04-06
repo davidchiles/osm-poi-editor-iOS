@@ -492,7 +492,13 @@
             }
             else if([elementName isEqualToString:@"relation"])
             {
-                
+                OPEManagedOsmRelation * newRelation = (OPEManagedOsmRelation *)[OPEManagedOsmRelation fetchOrCreatWayWithOsmID:[[attributeDict objectForKey:@"id"] longLongValue]];
+                if (newVersion > newRelation.versionValue) {
+                    [newRelation MR_importValuesForKeysWithObject:attributeDict];
+                    self.currentElement = newRelation;
+                    [self findTags:osmElementXML];
+                    //[self findElements:osmElementXML];
+                }
             }
             
             if (self.currentElement) {

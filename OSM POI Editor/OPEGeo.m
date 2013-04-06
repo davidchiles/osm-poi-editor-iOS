@@ -61,7 +61,7 @@
     };
     
    
-    projUV result = pj_fwd(uv,  pj_init_plus([@"+proj=latlong +ellps=WGS84" UTF8String]));
+    projUV result = pj_fwd(uv,  pj_init_plus([@"+proj=merc +ellps=WGS84 +units=m" UTF8String]));
     
     OPEProjectedPoint result_point = {
         result.u,
@@ -77,7 +77,7 @@
         point.y,
     };
     
-    projUV result = pj_inv(uv, pj_init_plus([@"+proj=latlong +ellps=WGS84 +units=m" UTF8String]));
+    projUV result = pj_inv(uv, pj_init_plus([@"+proj=merc +ellps=WGS84 +units=m" UTF8String]));
     
     CLLocationCoordinate2D result_coordinate = {
         result.v * RAD_TO_DEG,
@@ -159,29 +159,57 @@
 
 +(CLLocationCoordinate2D)centroidOfPolygon:(NSArray *)points
 {
-    double sumY = 0;
-    double sumX = 0;
-    double partialSum = 0;
-    double sum = 0;
-    //lat = y
-    //long = x
+    long double sumY = 0.0;
+    long double sumX = 0.0;
+    long double partialSum;
+    long double sum = 0.0;
     
-    for (NSInteger index = 0; index < [points count]-1; index++)
+    if ([points count] == 4) {
+        NSLog(@"small area");
+    }
+    
+    for (NSInteger index = 0; index < [points count]; index++)
     {
-        CLLocationCoordinate2D point1 = ((CLLocation *)points[index]).coordinate;
-        CLLocationCoordinate2D point2 = ((CLLocation *)points[index+1]).coordinate;
+        NSInteger secondIndex = index+1;
+        if (secondIndex == [points count]) {
+            secondIndex = 0;
+        }
         
-        partialSum = point1.latitude*point2.longitude-point2.latitude*point1.longitude;
-        sum+=partialSum;
-        sumX += (point1.latitude+point2.latitude) * partialSum;
-        sumY += (point1.longitude+point2.longitude) * partialSum;
+        OPEProjectedPoint point1 = [OPEGeo coordinateToProjectedPoint:((CLLocation *)points[index]).coordinate];
+        OPEProjectedPoint point2 = [OPEGeo coordinateToProjectedPoint:((CLLocation *)points[secondIndex]).coordinate];
+        
+        partialSum = (point1.x*point2.y-point2.x*point1.y);
+        sum+= partialSum;
+        sumX += ((point1.x+point2.x) * partialSum);
+        sumY += ((point1.y+point2.y) * partialSum);
         
         
     }
-    double area = 0.5*sum;
     
     
-    return CLLocationCoordinate2DMake(sumY/6/area, sumX/6/area);
+    
+    long double area = 0.5*sum;
+    
+    //Some sort of percission error for areas less than ~600 meters use guess instead
+    if (fabs(area)< 600.0) {
+        double sumCenterLat = 0.0;
+        double sumCenterLon = 0.0;
+        for(CLLocation * location in points)
+        {
+            sumCenterLat += location.coordinate.latitude;
+            sumCenterLon += location.coordinate.longitude;
+        }
+        return CLLocationCoordinate2DMake(sumCenterLat/[points count], sumCenterLon/[points count]);
+    }
+    
+    OPEProjectedPoint center;
+    center.x = (sumX/(6.0*area));
+    center.y = (sumY/(6.0*area));
+    
+    CLLocationCoordinate2D centerCoordinate = [OPEGeo toCoordinate:center];
+    
+    
+    return centerCoordinate;
     
     /*
      var sumY = 0;
