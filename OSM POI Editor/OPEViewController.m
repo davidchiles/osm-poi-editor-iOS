@@ -770,7 +770,7 @@
         
         
         
-        self.parsingMessageView = [[OPEMessageView alloc] initWithFrame:frame];
+        self.parsingMessageView = [[OPEMessageView alloc] initWithIndicator:YES frame:frame];
         self.parsingMessageView.textLabel.text = @"Parsing...";
         [self.view addSubview:self.parsingMessageView];
     }

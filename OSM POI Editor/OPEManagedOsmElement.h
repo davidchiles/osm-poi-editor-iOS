@@ -28,7 +28,7 @@
 + (NSInteger)minID;
 +(NSArray *)allElementsWithTag:(OPEManagedOsmTag *)tag;
 
-+(OPEManagedOsmElement *)fetchOrCreatWayWithOsmID:(int64_t)ID;
++(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID;
 -(BOOL)memberOfOtherElement;
 
 

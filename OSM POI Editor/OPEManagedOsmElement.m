@@ -4,6 +4,7 @@
 #import "OPEManagedOsmWay.h"
 #import "OPEManagedOsmNode.h"
 #import "OPEGeo.h"
+#import "OPEManagedOsmNodeReference.h"
 
 #import "OPEManagedOsmTag.h"
 
@@ -72,11 +73,17 @@
         
         
         NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(SUBQUERY(tags, $tag, $tag IN %@).@count == tags.@count)",self.tags];
-        NSArray * matches = [OPEManagedReferencePoi MR_findAllSortedBy:OPEManagedReferencePoiAttributes.isLegacy ascending:NO withPredicate:predicate];
+       // NSArray * matches = [OPEManagedReferencePoi MR_findAllSortedBy:OPEManagedReferencePoiAttributes.isLegacy ascending:NO withPredicate:predicate];
+        NSFetchRequest * request = [OPEManagedReferencePoi MR_requestAllSortedBy:OPEManagedReferencePoiAttributes.isLegacy ascending:NO withPredicate:predicate];
+        [request setFetchLimit:1];
+        [request setFetchBatchSize:2];
         
-        if ([matches count]) {
+        OPEManagedReferencePoi * newType = [OPEManagedReferencePoi MR_executeFetchRequestAndReturnFirstObject:request];
+        
+        
+        if (newType) {
             
-            self.type =[matches lastObject];
+            self.type =newType;
             return YES;
         }
     }
@@ -235,9 +242,9 @@
 -(double)minDistanceTo:(OPEManagedOsmWay *)way
 {
     double distance = DBL_MAX;
-    for (NSInteger index = 0; index<[way.nodes count]-1; index++) {
-        OPEManagedOsmNode * node1 = [way.nodes objectAtIndex:index];
-        OPEManagedOsmNode * node2 = [way.nodes objectAtIndex:index+1];
+    for (NSInteger index = 0; index<[way.orderedNodes count]-1; index++) {
+        OPEManagedOsmNode * node1 = ((OPEManagedOsmNodeReference *)[way.orderedNodes objectAtIndex:index]).node;
+        OPEManagedOsmNode * node2 = ((OPEManagedOsmNodeReference *)[way.orderedNodes objectAtIndex:index+1]).node;
         OPELineSegment line = [OPEGeo lineSegmentFromPoint:[node1 center] toPoint:[node2 center]];
         
         double tempDistance  =  [OPEGeo distanceFromlineSegment:line toPoint:[self center]];
@@ -308,7 +315,7 @@
     return NO;
 }
 
-+(OPEManagedOsmElement *)fetchOrCreatWayWithOsmID:(int64_t)ID
++(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID
 {
     Class class = self;
     

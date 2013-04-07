@@ -10,6 +10,7 @@ const struct OPEManagedOsmNodeAttributes OPEManagedOsmNodeAttributes = {
 
 const struct OPEManagedOsmNodeRelationships OPEManagedOsmNodeRelationships = {
 	.ways = @"ways",
+	.waysReference = @"waysReference",
 };
 
 const struct OPEManagedOsmNodeFetchedProperties OPEManagedOsmNodeFetchedProperties = {
@@ -119,6 +120,19 @@ const struct OPEManagedOsmNodeFetchedProperties OPEManagedOsmNodeFetchedProperti
 	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"ways"];
   
 	[self didAccessValueForKey:@"ways"];
+	return result;
+}
+	
+
+@dynamic waysReference;
+
+	
+- (NSMutableSet*)waysReferenceSet {
+	[self willAccessValueForKey:@"waysReference"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"waysReference"];
+  
+	[self didAccessValueForKey:@"waysReference"];
 	return result;
 }
 	

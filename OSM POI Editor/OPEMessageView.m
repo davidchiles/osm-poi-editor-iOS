@@ -56,6 +56,30 @@
     return self;
 }
 
+-(id)initWithIndicator:(BOOL)indicator frame:(CGRect)frame
+{
+    if (self = [self initWithFrame:frame]) {
+        if (indicator) {
+            UIActivityIndicatorView * activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+            
+            CGRect frame = CGRectMake(0, 0, activityIndicatorView.frame.size.width, activityIndicatorView.frame.size.height);
+            
+            frame.origin.y = (self.frame.size.height - frame.size.height)/2;
+            frame.origin.x = frame.origin.y;
+            
+            activityIndicatorView.frame = frame;
+            
+            [activityIndicatorView startAnimating];
+            
+            
+            [self addSubview:activityIndicatorView];
+            
+            
+        }
+    }
+    return self;
+}
+
 -(id)initWithMessage:(NSString *)message
 {
     if(self = [self init])

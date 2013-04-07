@@ -7,6 +7,8 @@
 -(NSArray *)points;
 -(BOOL)noNameStreet;
 
+-(void)addNodeInOrder:(OPEManagedOsmNode *)node;
+
 -(NSString *)highwayType;
 
 @end

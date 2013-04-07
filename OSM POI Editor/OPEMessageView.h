@@ -28,5 +28,6 @@
 
 
 -(id)initWithMessage:(NSString *)message;
+-(id)initWithIndicator:(BOOL)indicator frame:(CGRect)frame;
 
 @end

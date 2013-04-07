@@ -11,12 +11,14 @@ extern const struct OPEManagedOsmWayAttributes {
 
 extern const struct OPEManagedOsmWayRelationships {
 	__unsafe_unretained NSString *nodes;
+	__unsafe_unretained NSString *orderedNodes;
 } OPEManagedOsmWayRelationships;
 
 extern const struct OPEManagedOsmWayFetchedProperties {
 } OPEManagedOsmWayFetchedProperties;
 
 @class OPEManagedOsmNode;
+@class OPEManagedOsmNodeReference;
 
 
 
@@ -62,9 +64,16 @@ extern const struct OPEManagedOsmWayFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSOrderedSet *nodes;
+@property (nonatomic, strong) NSSet *nodes;
 
-- (NSMutableOrderedSet*)nodesSet;
+- (NSMutableSet*)nodesSet;
+
+
+
+
+@property (nonatomic, strong) NSOrderedSet *orderedNodes;
+
+- (NSMutableOrderedSet*)orderedNodesSet;
 
 
 
@@ -74,10 +83,15 @@ extern const struct OPEManagedOsmWayFetchedProperties {
 
 @interface _OPEManagedOsmWay (CoreDataGeneratedAccessors)
 
-- (void)addNodes:(NSOrderedSet*)value_;
-- (void)removeNodes:(NSOrderedSet*)value_;
+- (void)addNodes:(NSSet*)value_;
+- (void)removeNodes:(NSSet*)value_;
 - (void)addNodesObject:(OPEManagedOsmNode*)value_;
 - (void)removeNodesObject:(OPEManagedOsmNode*)value_;
+
+- (void)addOrderedNodes:(NSOrderedSet*)value_;
+- (void)removeOrderedNodes:(NSOrderedSet*)value_;
+- (void)addOrderedNodesObject:(OPEManagedOsmNodeReference*)value_;
+- (void)removeOrderedNodesObject:(OPEManagedOsmNodeReference*)value_;
 
 @end
 
@@ -103,8 +117,13 @@ extern const struct OPEManagedOsmWayFetchedProperties {
 
 
 
-- (NSMutableOrderedSet*)primitiveNodes;
-- (void)setPrimitiveNodes:(NSMutableOrderedSet*)value;
+- (NSMutableSet*)primitiveNodes;
+- (void)setPrimitiveNodes:(NSMutableSet*)value;
+
+
+
+- (NSMutableOrderedSet*)primitiveOrderedNodes;
+- (void)setPrimitiveOrderedNodes:(NSMutableOrderedSet*)value;
 
 
 @end

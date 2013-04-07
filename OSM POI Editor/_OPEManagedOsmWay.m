@@ -10,6 +10,7 @@ const struct OPEManagedOsmWayAttributes OPEManagedOsmWayAttributes = {
 
 const struct OPEManagedOsmWayRelationships OPEManagedOsmWayRelationships = {
 	.nodes = @"nodes",
+	.orderedNodes = @"orderedNodes",
 };
 
 const struct OPEManagedOsmWayFetchedProperties OPEManagedOsmWayFetchedProperties = {
@@ -113,12 +114,25 @@ const struct OPEManagedOsmWayFetchedProperties OPEManagedOsmWayFetchedProperties
 @dynamic nodes;
 
 	
-- (NSMutableOrderedSet*)nodesSet {
+- (NSMutableSet*)nodesSet {
 	[self willAccessValueForKey:@"nodes"];
   
-	NSMutableOrderedSet *result = (NSMutableOrderedSet*)[self mutableOrderedSetValueForKey:@"nodes"];
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"nodes"];
   
 	[self didAccessValueForKey:@"nodes"];
+	return result;
+}
+	
+
+@dynamic orderedNodes;
+
+	
+- (NSMutableOrderedSet*)orderedNodesSet {
+	[self willAccessValueForKey:@"orderedNodes"];
+  
+	NSMutableOrderedSet *result = (NSMutableOrderedSet*)[self mutableOrderedSetValueForKey:@"orderedNodes"];
+  
+	[self didAccessValueForKey:@"orderedNodes"];
 	return result;
 }
 	

@@ -2,6 +2,7 @@
 #import "OPEManagedOsmNode.h"
 #import "OPEManagedOsmTag.h"
 #import "OPEGeo.h"
+#import "OPEManagedOsmNodeReference.h"
 
 
 @interface OPEManagedOsmWay ()
@@ -19,19 +20,20 @@
         return ((CLLocation *)[self.points objectAtIndex:0]).coordinate;
     }
     
-    if(self.nodes)
+    if([self.orderedNodes count])
     {
-        double centerLat=0.0;
-        double centerLon=0.0;
+        //double centerLat=0.0;
+        //double centerLon=0.0;
         
-        centerLat = [[self.nodes valueForKeyPath:@"@sum.latitude"] doubleValue];
-        centerLon = [[self.nodes valueForKeyPath:@"@sum.longitude"] doubleValue];
+        //centerLat = [[self.nodes valueForKeyPath:@"@sum.latitude"] doubleValue];
+        //centerLon = [[self.nodes valueForKeyPath:@"@sum.longitude"] doubleValue];
         
         //return CLLocationCoordinate2DMake(centerLat/[self.nodes count], centerLon/[self.nodes count]);
         
         NSMutableArray * array = [NSMutableArray array];
-        for (OPEManagedOsmNode * node in self.nodes)
+        for (OPEManagedOsmNodeReference * nodeRef in self.orderedNodes)
         {
+            OPEManagedOsmNode * node = nodeRef.node;
             [array addObject:[[CLLocation alloc] initWithLatitude:node.latitudeValue longitude:node.longitudeValue]];
         }
         
@@ -48,8 +50,9 @@
     [xml appendString:[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"]];
     [xml appendFormat:@"<way id=\"%lld\" version=\"%lld\" changeset=\"%lld\">",self.osmIDValue,self.versionValue, changesetNumber];
     
-    for(OPEManagedOsmNode * node in self.nodes)
+    for(OPEManagedOsmNodeReference * nodeRef in self.orderedNodes)
     {
+        OPEManagedOsmNode * node = nodeRef.node;
         [xml appendFormat:@"<nd ref=\"%lld\"/>",node.osmIDValue];
     }
     
@@ -69,11 +72,15 @@
 -(NSArray *)points
 {
     NSMutableArray * mutablePointsArray = [NSMutableArray array];
-    for (OPEManagedOsmNode * node in self.nodes)
+    for (OPEManagedOsmNodeReference * nodeRef in self.orderedNodes)
     {
-        CLLocationCoordinate2D center = [node center];
-        CLLocation * location = [[CLLocation alloc]initWithLatitude:center.latitude longitude:center.longitude];
-        [mutablePointsArray addObject:location];
+        if(nodeRef.node)
+        {
+            CLLocationCoordinate2D center = [nodeRef.node center];
+            CLLocation * location = [[CLLocation alloc]initWithLatitude:center.latitude longitude:center.longitude];
+            [mutablePointsArray addObject:location];
+        }
+        
         
     }
     return mutablePointsArray;
@@ -122,6 +129,14 @@
     
     
     return type;
+}
+
+-(void)addNodeInOrder:(OPEManagedOsmNode *)node
+{
+    [self addNodesObject:node];
+    OPEManagedOsmNodeReference * nodeRef = [OPEManagedOsmNodeReference MR_createEntity];
+    nodeRef.node = node;
+    nodeRef.way = self;
 }
 
 @end

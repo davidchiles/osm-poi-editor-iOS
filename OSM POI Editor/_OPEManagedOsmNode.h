@@ -11,12 +11,14 @@ extern const struct OPEManagedOsmNodeAttributes {
 
 extern const struct OPEManagedOsmNodeRelationships {
 	__unsafe_unretained NSString *ways;
+	__unsafe_unretained NSString *waysReference;
 } OPEManagedOsmNodeRelationships;
 
 extern const struct OPEManagedOsmNodeFetchedProperties {
 } OPEManagedOsmNodeFetchedProperties;
 
 @class OPEManagedOsmWay;
+@class OPEManagedOsmNodeReference;
 
 
 
@@ -69,6 +71,13 @@ extern const struct OPEManagedOsmNodeFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSSet *waysReference;
+
+- (NSMutableSet*)waysReferenceSet;
+
+
+
+
 
 @end
 
@@ -78,6 +87,11 @@ extern const struct OPEManagedOsmNodeFetchedProperties {
 - (void)removeWays:(NSSet*)value_;
 - (void)addWaysObject:(OPEManagedOsmWay*)value_;
 - (void)removeWaysObject:(OPEManagedOsmWay*)value_;
+
+- (void)addWaysReference:(NSSet*)value_;
+- (void)removeWaysReference:(NSSet*)value_;
+- (void)addWaysReferenceObject:(OPEManagedOsmNodeReference*)value_;
+- (void)removeWaysReferenceObject:(OPEManagedOsmNodeReference*)value_;
 
 @end
 
@@ -105,6 +119,11 @@ extern const struct OPEManagedOsmNodeFetchedProperties {
 
 - (NSMutableSet*)primitiveWays;
 - (void)setPrimitiveWays:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveWaysReference;
+- (void)setPrimitiveWaysReference:(NSMutableSet*)value;
 
 
 @end
