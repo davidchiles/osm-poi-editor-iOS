@@ -22,7 +22,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "OPETagInterpreter.h"
 #import "GTMOAuthViewControllerTouch.h"
 #import "AFNetworking.h"
 
@@ -46,7 +45,6 @@
 @interface OPEOSMData : NSObject <NSXMLParserDelegate>
 {
     GTMOAuthAuthentication *auth;
-    OPETagInterpreter * tagInterpreter;
     OPEManagedOsmWay * currentWay;
     OPEManagedOsmRelation * currentRelation;
     dispatch_queue_t q;

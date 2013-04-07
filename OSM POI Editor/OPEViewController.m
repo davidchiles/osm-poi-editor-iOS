@@ -281,6 +281,7 @@
 
 -(RMAnnotation *)annotationWithOsmElement:(OPEManagedOsmElement *)managedOsmElement
 {
+    //NSLog(@"center: %@",[managedOsmElement center]);
     RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[managedOsmElement center] andTitle:[managedOsmElement name]];
     annotation.userInfo = [managedOsmElement objectID];
     
@@ -675,7 +676,10 @@
 -(void)removeAnnotationWithOsmElementID:(NSManagedObjectID *)objectID
 {
     NSSet * annotationSet = [self annotationsForOsmElementID:objectID];
-    [mapView removeAnnotations:[annotationSet allObjects]];
+    if ([annotationSet count])
+    {
+        [mapView removeAnnotations:[annotationSet allObjects]];
+    }
 }
 
 -(NSSet *)annotationsForOsmElementID:(NSManagedObjectID *)objectID

@@ -48,7 +48,6 @@
         auth = [OPEOSMData osmAuth];
         [self canAuth];
         
-        //tagInterpreter = [OPETagInterpreter sharedInstance];
         q = dispatch_queue_create("Parse.Queue", NULL);
         
         //NSString * baseUrl = @"http://api06.dev.openstreetmap.org/";
@@ -73,6 +72,7 @@
     NSURLRequest * request =[NSURLRequest requestWithURL:url];
     
     [AFXMLRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"application/osm3s+xml"]];
+    //dispatch_queue_t t = dispatch_queue_create(NULL, NULL);
     
     AFHTTPRequestOperation * httpRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [httpRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -80,6 +80,7 @@
         TBXML * xmlResponse = [[TBXML alloc] initWithXMLData:responseObject];
         [self parseTBXML:xmlResponse];
         });
+        //dispatch_release(t);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //[delegate downloadFailed:error];
@@ -493,6 +494,7 @@
             }
             else if([elementName isEqualToString:@"relation"])
             {
+                /*
                 OPEManagedOsmRelation * newRelation = (OPEManagedOsmRelation *)[OPEManagedOsmRelation fetchOrCreatWayWithOsmID:[[attributeDict objectForKey:@"id"] longLongValue]];
                 if (newVersion > newRelation.versionValue) {
                     [newRelation MR_importValuesForKeysWithObject:attributeDict];
@@ -500,6 +502,7 @@
                     [self findTags:osmElementXML];
                     //[self findElements:osmElementXML];
                 }
+                 */
             }
             
             if (self.currentElement) {
@@ -529,21 +532,24 @@
                     osmWay.isNoNameStreetValue = [osmWay noNameStreet];
                 }
                 
-                if (switchType) {
-                    [self saveCurrentThreadContext];
-                }
                 totalFindTime -= [findStart timeIntervalSinceNow];
             }
             
             
             
-            
+            //[self saveCurrentThreadContext];
             self.currentElement = nil;
             osmElementXML = osmElementXML->nextSibling;
         }
+        NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
+        [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+            NSLog(@"saved");
+        }];
+        
         
     }
-    [self saveCurrentThreadContext];
+    
+    
     NSTimeInterval time = [start timeIntervalSinceNow];
     NSLog(@"Total Time: %f",-1*time);
     NSLog(@"Node Time: %f",totalNodeTime/numNodes);
