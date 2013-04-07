@@ -53,6 +53,7 @@
 @synthesize firstDownload;
 @synthesize selectedNoNameHighway = _selectedNoNameHighway;
 @synthesize HUD;
+@synthesize parsingMessageView;
 
 @synthesize userPressedLocatoinButton;
 
@@ -130,7 +131,6 @@
    
     //36079
     
-    
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     locationManager.distanceFilter = kCLDistanceFilterNone;
@@ -176,7 +176,7 @@
     
     currentSquare = [mapView latitudeLongitudeBoundingBox];
     
-    message = [[OPEMessage alloc] init];
+    message = [[OPEMessageView alloc] initWithMessage:@"Zoom in to load data"];
     message.alpha = 0.0;
     
     imagesDic = [[NSMutableDictionary alloc] init];
@@ -759,6 +759,32 @@
 {
     [super didCloseChangeset:changesetNumber];
     [self removeNonameView];
+    
+}
+-(void)willStartParsing
+{
+    if (self.numberOfOngoingParses < 1) {
+        CGRect frame = CGRectMake(0, 0, 180, 40);
+        frame.origin.y = self.view.frame.size.height -frame.size.height-10;
+        frame.origin.x = (self.view.frame.size.width -frame.size.width)/2;
+        
+        
+        
+        self.parsingMessageView = [[OPEMessageView alloc] initWithFrame:frame];
+        self.parsingMessageView.textLabel.text = @"Parsing...";
+        [self.view addSubview:self.parsingMessageView];
+    }
+    self.numberOfOngoingParses += 1;
+
+}
+-(void)didEndParsing
+{
+    self.numberOfOngoingParses -=1;
+    if (self.numberOfOngoingParses < 1) {
+        [self.parsingMessageView removeFromSuperview];
+        self.parsingMessageView = nil;
+    }
+    
     
 }
 

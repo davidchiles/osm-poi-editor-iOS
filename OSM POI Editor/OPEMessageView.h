@@ -22,6 +22,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OPEMessage : UIView
+@interface OPEMessageView: UIView
+
+@property (nonatomic,strong) UILabel * textLabel;
+
+
+-(id)initWithMessage:(NSString *)message;
 
 @end

@@ -13,8 +13,10 @@
 @interface OPEBaseViewController : UIViewController <MBProgressHUDDelegate,OPEOSMDataControllerDelegate, UIAlertViewDelegate>
 
 
+
 @property (nonatomic,strong)OPEOSMData * osmData;
 @property (nonatomic,strong)MBProgressHUD * HUD;
+@property (nonatomic) NSInteger numberOfOngoingParses;
 
 -(void)startSave;
 -(void)showAuthError;

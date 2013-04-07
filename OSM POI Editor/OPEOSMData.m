@@ -74,15 +74,33 @@
     [AFXMLRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"application/osm3s+xml"]];
     //dispatch_queue_t t = dispatch_queue_create(NULL, NULL);
     
+    if ([delegate respondsToSelector:@selector(willStartDownloading)]) {
+        [delegate willStartDownloading];
+    }
+    
     AFHTTPRequestOperation * httpRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [httpRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([delegate respondsToSelector:@selector(didEndDownloading)]) {
+            [delegate didEndDownloading];
+        }
+        if ([delegate respondsToSelector:@selector(willStartParsing)]) {
+            [delegate willStartParsing];
+        }
         dispatch_async(q,  ^{
-        TBXML * xmlResponse = [[TBXML alloc] initWithXMLData:responseObject];
-        [self parseTBXML:xmlResponse];
+            TBXML * xmlResponse = [[TBXML alloc] initWithXMLData:responseObject];
+            [self parseTBXML:xmlResponse];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([delegate respondsToSelector:@selector(didEndParsing)]) {
+                    [delegate didEndParsing];
+                }
+            });
+
         });
         //dispatch_release(t);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
         //[delegate downloadFailed:error];
     }];
     [httpRequestOperation start];

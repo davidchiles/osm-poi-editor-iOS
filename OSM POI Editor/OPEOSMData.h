@@ -37,6 +37,12 @@
 -(void)didCloseChangeset:(int64_t)changesetNumber;
 -(void)uploadFailed:(NSError *)error;
 
+-(void)willStartDownloading;
+-(void)didEndDownloading;
+
+-(void)willStartParsing;
+-(void)didEndParsing;
+
 @optional
 -(void) downloadFailed:(NSError *)error;
 

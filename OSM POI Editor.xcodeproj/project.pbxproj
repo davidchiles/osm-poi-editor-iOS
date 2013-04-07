@@ -24,7 +24,7 @@
 		630190FB16B32583007AB232 /* _OPEManagedReferenceOptionalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 630190FA16B32583007AB232 /* _OPEManagedReferenceOptionalCategory.m */; };
 		630190FE16B3258F007AB232 /* OPEManagedReferenceOptionalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 630190FD16B3258F007AB232 /* OPEManagedReferenceOptionalCategory.m */; };
 		6301910016B327EB007AB232 /* OptionalCategorySort.plist in Resources */ = {isa = PBXBuildFile; fileRef = 630190FF16B327EB007AB232 /* OptionalCategorySort.plist */; };
-		6310F4B6153736D000C65FD8 /* OPEMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310F4B5153736D000C65FD8 /* OPEMessage.m */; };
+		6310F4B6153736D000C65FD8 /* OPEMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310F4B5153736D000C65FD8 /* OPEMessageView.m */; };
 		6310F59B1537A46D00C65FD8 /* airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4CE1537A46D00C65FD8 /* airplane.png */; };
 		6310F59C1537A46D00C65FD8 /* alcohol.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4CF1537A46D00C65FD8 /* alcohol.png */; };
 		6310F59D1537A46D00C65FD8 /* art.png in Resources */ = {isa = PBXBuildFile; fileRef = 6310F4D01537A46D00C65FD8 /* art.png */; };
@@ -445,8 +445,8 @@
 		630190FC16B3258F007AB232 /* OPEManagedReferenceOptionalCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedReferenceOptionalCategory.h; sourceTree = "<group>"; };
 		630190FD16B3258F007AB232 /* OPEManagedReferenceOptionalCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedReferenceOptionalCategory.m; sourceTree = "<group>"; };
 		630190FF16B327EB007AB232 /* OptionalCategorySort.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OptionalCategorySort.plist; sourceTree = "<group>"; };
-		6310F4B4153736D000C65FD8 /* OPEMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMessage.h; sourceTree = "<group>"; };
-		6310F4B5153736D000C65FD8 /* OPEMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMessage.m; sourceTree = "<group>"; };
+		6310F4B4153736D000C65FD8 /* OPEMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMessageView.h; sourceTree = "<group>"; };
+		6310F4B5153736D000C65FD8 /* OPEMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMessageView.m; sourceTree = "<group>"; };
 		6310F4CE1537A46D00C65FD8 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplane.png; sourceTree = "<group>"; };
 		6310F4CF1537A46D00C65FD8 /* alcohol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alcohol.png; sourceTree = "<group>"; };
 		6310F4D01537A46D00C65FD8 /* art.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = art.png; sourceTree = "<group>"; };
@@ -1345,8 +1345,8 @@
 				637C7CCA16F164BE002CD340 /* OPEChangeset.m */,
 				63FFDC6414E480DF00701DEC /* OPETagInterpreter.h */,
 				63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */,
-				6310F4B4153736D000C65FD8 /* OPEMessage.h */,
-				6310F4B5153736D000C65FD8 /* OPEMessage.m */,
+				6310F4B4153736D000C65FD8 /* OPEMessageView.h */,
+				6310F4B5153736D000C65FD8 /* OPEMessageView.m */,
 				6330AB7D14DB519A00448852 /* OPEAppDelegate.h */,
 				6330AB7E14DB519A00448852 /* OPEAppDelegate.m */,
 				6314D13D1703C27A00AE91E3 /* OPEBaseViewController.h */,
@@ -2199,7 +2199,7 @@
 				6383949614EC7DAC00C74A57 /* GTMOAuthSignIn.m in Sources */,
 				6383949714EC7DAC00C74A57 /* GTMHTTPFetcher.m in Sources */,
 				63E525D21534D90500D2DA35 /* OPECreditViewController.m in Sources */,
-				6310F4B6153736D000C65FD8 /* OPEMessage.m in Sources */,
+				6310F4B6153736D000C65FD8 /* OPEMessageView.m in Sources */,
 				63292E6B1593ED670010A11B /* OPEBinaryCell.m in Sources */,
 				63292E6C1593ED670010A11B /* OPEPhoneCell.m in Sources */,
 				63292E6D1593ED670010A11B /* OPESpecialCell2.m in Sources */,

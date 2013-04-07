@@ -15,11 +15,12 @@
 @end
 
 @implementation OPEBaseViewController
-@synthesize HUD,osmData;
+@synthesize HUD,osmData,numberOfOngoingParses;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.numberOfOngoingParses = 0;
 	self.osmData = [[OPEOSMData alloc] init];
     self.osmData.delegate = self;
 }

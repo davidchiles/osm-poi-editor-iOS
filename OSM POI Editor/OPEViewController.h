@@ -27,7 +27,7 @@
 #import "OPEOSMData.h"
 #import "OPEInfoViewController.h"
 #import "OPENodeViewController.h"
-#import "OPEMessage.h"
+#import "OPEMessageView.h"
 #import "RMPolygonAnnotation.h"
 #import "OPENameEditView.h"
 #import "MBProgressHUD.h"
@@ -55,7 +55,8 @@
 @property (nonatomic,strong) RMMarker * nodeInfo;
 @property (nonatomic,strong) RMMarker * currentLocationMarker;
 @property (nonatomic) int currentTile;
-@property (nonatomic, strong) OPEMessage * message;
+@property (nonatomic, strong) OPEMessageView * message;
+@property (nonatomic, strong) OPEMessageView * parsingMessageView;
 @property (nonatomic, strong) NSMutableDictionary * imagesDic;
 @property (nonatomic) RMSphericalTrapezium currentSquare;
 @property (nonatomic) BOOL userPressedLocatoinButton;
