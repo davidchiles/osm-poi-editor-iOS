@@ -283,6 +283,14 @@
 {
     //NSLog(@"center: %@",[managedOsmElement center]);
     RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[managedOsmElement center] andTitle:[managedOsmElement name]];
+    NSMutableString * subtitleString = [NSMutableString stringWithFormat:@"%@",managedOsmElement.type.category.name];
+    
+    if ([[managedOsmElement valueForOsmKey:@"name"] length]) {
+        [subtitleString appendFormat:@" - %@",managedOsmElement.type.name];
+    }
+    annotation.subtitle = subtitleString;
+    
+    
     annotation.userInfo = [managedOsmElement objectID];
     
     
