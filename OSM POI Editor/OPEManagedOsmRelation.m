@@ -102,4 +102,28 @@
     return PointsArray;
 }
 
+-(NSData *) uploadXMLforChangset:(int64_t)changesetNumber
+{
+    NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
+    [xml appendString:[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"]];
+    [xml appendFormat:@"<relation id=\"%lld\" version=\"%lld\" changeset=\"%lld\">",self.osmIDValue,self.versionValue, changesetNumber];
+    
+    for(OpeManagedOsmRelationMember * relationMember in self.members)
+    {
+        OPEManagedOsmElement * element = relationMember.member;
+        NSString * memberRoleString = @"";
+        if ([relationMember.role length]) {
+            memberRoleString = relationMember.role;
+        }
+        [xml appendFormat:@"<member type=\"%@\" ref=\"%lld\" role=\"%@\"/>",[element osmType],element.osmIDValue,memberRoleString];
+    }
+    
+    [xml appendString:[self tagsXML]];
+    
+    [xml appendFormat: @"</relation> @</osm>"];
+    
+    return [xml dataUsingEncoding:NSUTF8StringEncoding];
+    
+}
+
 @end
