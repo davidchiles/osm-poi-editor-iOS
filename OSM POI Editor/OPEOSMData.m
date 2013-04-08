@@ -508,6 +508,31 @@
 }
 -(NSInteger)findAllRelations:(TBXMLElement *)rootXML
 {
+    NSInteger numberOfRelations = 0;
+    TBXMLElement * relationXML = [TBXML childElementNamed:@"relation" parentElement:rootXML];
+    
+    while (relationXML) {
+        numberOfRelations +=1;
+        int64_t newVersion = [[TBXML valueOfAttributeNamed:@"version" forElement:relationXML] longLongValue];
+        int64_t osmID = [[TBXML valueOfAttributeNamed:@"id" forElement:relationXML] longLongValue];
+        OPEManagedOsmRelation * newRelation = (OPEManagedOsmRelation *)[OPEManagedOsmRelation fetchOrCreateWithOsmID:osmID];
+        
+        if (newVersion > newRelation.versionValue) {
+            [newRelation MR_importValuesForKeysWithObject:[self attributesWithTBXML:relationXML]];
+            self.currentElement = newRelation;
+            [self findTags:relationXML];
+            [self findMemebers:relationXML withRelation:newRelation];
+        }
+        
+        if (!newRelation.type) {
+            [newRelation findType];
+        }
+        
+        
+        relationXML = [TBXML nextSiblingNamed:@"relation" searchFromElement:relationXML];
+        
+    }
+    return numberOfRelations;
     
 }
 
@@ -516,6 +541,7 @@
     NSDate * start = [NSDate date];
     double totalNodeTime = 0;
     double totalWayTime = 0;
+    double totalRelationTime = 0;
     //double totalFindNodesForWaysTime = 0;
     //double totalFindTime = 0;
     //int numFinds =0;
@@ -541,7 +567,13 @@
             NSLog(@"Saved Ways");
         }];
         
+        NSDate * relationStart = [NSDate date];
+        numWays = [self findAllRelations:root];
+        totalRelationTime -= [relationStart timeIntervalSinceNow];
         
+        [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
+            NSLog(@"Saved Relations");
+        }];
         /*
         //NSLog(@"root: %@",[TBXML elementName:root]);
         //NSLog(@"version: %@",[TBXML valueOfAttributeNamed:@"version" forElement:root]);
@@ -692,8 +724,22 @@
         nd = [TBXML nextSiblingNamed:@"nd" searchFromElement:nd];
     }
     
+}
+-(void)findMemebers:(TBXMLElement *)xmlElement withRelation:(OPEManagedOsmRelation *)relation
+{
+    TBXMLElement * memberXML = [TBXML childElementNamed:@"member" parentElement:xmlElement];
     
-    
+    while (memberXML) {
+        NSString * typeString = [TBXML valueOfAttributeNamed:@"type" forElement:memberXML];
+        int64_t elementOsmID = [[TBXML valueOfAttributeNamed:@"ref" forElement:memberXML] longLongValue];
+        NSString * roleString = [TBXML valueOfAttributeNamed:@"role" forElement:memberXML];
+        
+        OPEManagedOsmElement * element = [OPEManagedOsmElement fetchOrCreateWithOsmID:elementOsmID type:typeString];
+        
+        [relation addInOrderElement:element withRole:roleString];
+        
+        memberXML= [TBXML nextSiblingNamed:@"member" searchFromElement:memberXML];
+    }
     
 }
 

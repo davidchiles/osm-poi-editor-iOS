@@ -5,6 +5,7 @@
 #import "OPEManagedOsmNode.h"
 #import "OPEGeo.h"
 #import "OPEManagedOsmNodeReference.h"
+#import "OPEManagedOsmRelation.h"
 
 #import "OPEManagedOsmTag.h"
 
@@ -328,6 +329,21 @@
     
     return element;
     
+}
+
++(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID type:(NSString *)typeString
+{
+    OPEManagedOsmElement * element = nil;
+    if ([typeString isEqualToString:OPEOsmElementNode]) {
+        element = [OPEManagedOsmNode fetchOrCreateWithOsmID:ID];
+    }
+    else if ([typeString isEqualToString:OPEOsmElementWay]) {
+        element = [OPEManagedOsmWay fetchOrCreateWithOsmID:ID];
+    }
+    else if ([typeString isEqualToString:OPEOsmElementRelation]) {
+        element = [OPEManagedOsmRelation fetchOrCreateWithOsmID:ID];
+    }
+    return element;
 }
 
 @end

@@ -35,6 +35,9 @@
 #import "OPEMRUtility.h"
 #import "OPEManagedOsmNode.h"
 #import "OPEManagedOsmWay.h"
+#import "OPEManagedOsmRelation.h"
+#import "OpeManagedOsmRelationMember.h"
+#import "OPEGeo.h"
 
 #define noNameTag 100
 
@@ -279,7 +282,7 @@
     return marker;
 }
 
--(RMAnnotation *)annotationWithOsmElement:(OPEManagedOsmElement *)managedOsmElement
+-(NSArray *)annotationWithOsmElement:(OPEManagedOsmElement *)managedOsmElement
 {
     //NSLog(@"center: %@",[managedOsmElement center]);
     RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[managedOsmElement center] andTitle:[managedOsmElement name]];
@@ -293,8 +296,30 @@
     
     annotation.userInfo = [managedOsmElement objectID];
     
+    if ([managedOsmElement isKindOfClass:[OPEManagedOsmRelation class]]) {
+        OPEManagedOsmRelation * managedRelation = (OPEManagedOsmRelation *)managedOsmElement;
+        
+        NSArray * outerPolygonArray = [managedRelation outerPolygons];
+        
+        NSMutableArray * annotationsArray = [NSMutableArray array];
+        for (NSArray * pointsArray in outerPolygonArray)
+        {
+            
+            CLLocationCoordinate2D center = [OPEGeo centroidOfPolygon:pointsArray];
+            RMAnnotation * newAnnoation = [RMAnnotation annotationWithMapView:mapView coordinate:center andTitle:annotation.title];
+            newAnnoation.subtitle = annotation.subtitle;
+            newAnnoation.userInfo = annotation.userInfo;
+            //set center for each outer;
+            [annotationsArray addObject:newAnnoation];
+        }
+        if ([annotationsArray count]) {
+            return annotationsArray;
+        }
+        
+    }
     
-    return annotation;
+    
+    return @[annotation];
 }
 
 -(void)setSelectedNoNameHighway:(RMAnnotation *)newSelectedNoNameHighway
@@ -311,12 +336,99 @@
     
 }
 
+-(RMAnnotation *)shapeForRelation:(OPEManagedOsmRelation *)relation
+{
+    NSArray * outerPoints = [relation outerPolygons];
+    NSArray * innerPoints = [relation innerPolygons];
+    
+    if (![outerPoints count]) {
+        return nil;
+    }
+    RMAnnotation * newAnnotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:((CLLocation *)[[outerPoints objectAtIndex:0] objectAtIndex:0]).coordinate andTitle:nil];
+    
+    RMShape *shape = [[RMShape alloc] initWithView:mapView];
+    
+    [shape performBatchOperations:^(RMShape *aShape)
+     {
+         
+         
+         for (NSArray * points in outerPoints)
+         {
+             [aShape moveToCoordinate:((CLLocation *)[points objectAtIndex:0]).coordinate];
+             for (CLLocation *point in points)
+             {
+                 [aShape addLineToCoordinate:point.coordinate];
+             }
+             //[aShape closePath];
+             
+         }
+         
+         
+         
+         
+         if ([innerPoints count])
+         {
+             [aShape moveToCoordinate:((CLLocation *)[[innerPoints objectAtIndex:0] objectAtIndex:0]).coordinate];
+             for (NSArray * points in innerPoints)
+             {
+                 [aShape moveToCoordinate:((CLLocation *)[points objectAtIndex:0]).coordinate];
+                 for (CLLocation *point in points)
+                 {
+                     [aShape addLineToCoordinate:point.coordinate];
+                 }
+                 //[aShape closePath];
+                 
+             }
+                 
+             
+             
+         }
+         aShape.lineColor = [UIColor blackColor];
+         aShape.lineWidth +=1;
+         aShape.fillColor = [UIColor colorWithWhite:.5 alpha:.6];
+         aShape.fillRule  = kCAFillRuleEvenOdd;
+     }];
+    
+    newAnnotation.layer = shape;
+    return newAnnotation;
+    
+}
+
+-(RMAnnotation *)shapeForWay:(OPEManagedOsmWay *)way
+{
+    
+    NSArray * points = [way points];
+    
+    RMAnnotation * newAnnotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:((CLLocation *)[points objectAtIndex:0]).coordinate andTitle:nil];
+    
+    
+    
+    RMShape * shape = [[RMShape alloc]initWithView:mapView];
+    [shape performBatchOperations:^(RMShape *aShape) {
+        [aShape moveToCoordinate:((CLLocation *)[points objectAtIndex:0]).coordinate];
+        
+        for (CLLocation *point in points)
+            [aShape addLineToCoordinate:point.coordinate];
+        
+        [aShape closePath];
+        
+        
+    }];
+    shape.lineColor = [UIColor blackColor];
+    shape.lineWidth +=1;
+    shape.fillColor = [UIColor colorWithWhite:.5 alpha:.6];
+    newAnnotation.layer = shape;
+    return newAnnotation;
+    
+}
+
 -(void)tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
     if (wayAnnotation) {
         [map removeAnnotation:wayAnnotation];
         wayAnnotation = nil;
     }
+    
     
     [self removeNonameView];
     
@@ -330,28 +442,16 @@
             [self showNoNameViewWithType:[NSString stringWithFormat:@"%@ - missing name",[osmWay highwayType]]];
             return;
         }
-        NSArray * points = [osmWay points];
-        wayAnnotation = [[RMAnnotation alloc] initWithMapView:map coordinate:((CLLocation *)[points objectAtIndex:0]).coordinate andTitle:nil];
         
         
-        
-        RMShape * shape = [[RMShape alloc]initWithView:map];
-        [shape performBatchOperations:^(RMShape *aShape) {
-            [aShape moveToCoordinate:((CLLocation *)[points objectAtIndex:0]).coordinate];
-            
-            for (CLLocation *point in points)
-                [aShape addLineToCoordinate:point.coordinate];
-            
-            [aShape closePath];
-            
-            
-        }];
-        shape.lineColor = [UIColor blackColor];
-        shape.lineWidth +=1;
-        shape.fillColor = [UIColor colorWithWhite:.5 alpha:.6];
-
-        
-        [wayAnnotation setLayer:shape];
+        wayAnnotation = [self shapeForWay:osmWay];
+        wayAnnotation.userInfo = annotation.userInfo;
+        [mapView addAnnotation:wayAnnotation];
+    }
+    else if ([osmElement isKindOfClass:[OPEManagedOsmRelation  class]])
+    {
+        OPEManagedOsmRelation * osmRelation = (OPEManagedOsmRelation *)osmElement;
+        wayAnnotation = [self shapeForRelation:osmRelation];
         wayAnnotation.userInfo = annotation.userInfo;
         [mapView addAnnotation:wayAnnotation];
     }
@@ -677,7 +777,13 @@
 -(void)updateOsmElementWithID:(NSManagedObjectID *)objectID
 {
     [self removeAnnotationWithOsmElementID:objectID];
-    [mapView addAnnotation:[self annotationWithOsmElement:(OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:objectID]]];
+    OPEManagedOsmElement * element = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:objectID];
+    if (![element.action isEqualToString:kActionTypeDelete]) {
+        NSArray * annotationsArray = [self annotationWithOsmElement:element];
+        for(RMAnnotation * annotation in annotationsArray)
+        [mapView addAnnotation:annotation];
+    }
+    
     
 }
 
@@ -716,7 +822,7 @@
     if(_osmElementFetchedResultsController)
         return _osmElementFetchedResultsController;
     
-    NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type != nil AND isVisible == YES"];
+    NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type != nil AND isVisible == YES AND action!=%@",kActionTypeDelete];
     
     _osmElementFetchedResultsController = [OPEManagedOsmElement MR_fetchAllGroupedBy:nil withPredicate:osmElementFilter sortedBy:OPEManagedOsmElementAttributes.osmID ascending:NO delegate:self];
     
