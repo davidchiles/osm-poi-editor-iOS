@@ -13,6 +13,10 @@
 #import "OPEManagedOsmTag.h"
 #import "OPEManagedReferenceOptionalCategory.h"
 #import "OPEManagedReferencePoiCategory.h"
+#import "OPEUtility.h"
+
+#define tagsPlistFilePath [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"plist"]
+#define optionalPlistFilePath [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"plist"];
 
 
 @implementation OPECoreDataImporter
@@ -29,7 +33,7 @@
 
 -(void)importTagsPlist
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"plist"];
+    NSString *filePath = tagsPlistFilePath;
     NSDictionary* plistDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     for(NSString * category in plistDict)
     {
@@ -69,9 +73,8 @@
 
 -(void)importOptionalTags
 {
-    [self lastImportVersion];
     [self importOptionalSection];
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"plist"];
+    NSString *filePath = optionalPlistFilePath;
     NSDictionary* optionalDictionary = [[NSDictionary alloc] initWithContentsOfFile:filePath];
     
     for(NSString * key in optionalDictionary)
@@ -205,10 +208,10 @@
     return newOptional;
 }
 
--(double)lastImportVersion
+-(NSString *)lastImportHash
 {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    return [userDefaults doubleForKey:kLastImportVersionNumber];    
+    return [userDefaults stringForKey:kLastImportHashKey];
     
 }
 -(double)appVersionNumber
@@ -217,12 +220,20 @@
     return [currentVersion doubleValue];
     
 }
+-(NSString *)currentFileHash;
+{
+    NSMutableString * hash = [[OPEUtility hashOfFilePath:tagsPlistFilePath] mutableCopy];
+    [hash appendString:[OPEUtility hashOfFilePath:tagsPlistFilePath]];
+    
+    return hash;
+    
+}
 
 -(BOOL)shouldDoImport
 {
     double numberOfOptionals = [[OPEManagedReferenceOptional MR_numberOfEntities] doubleValue];
     double numberOfPOI = [[OPEManagedReferencePoi MR_numberOfEntities] doubleValue];
-    if ([self lastImportVersion]<[self appVersionNumber]) {
+    if (![[self lastImportHash] isEqualToString:[self currentFileHash]]) {
         return YES;
     }
     else if (numberOfOptionals == 0 && numberOfPOI == 0)
@@ -235,7 +246,8 @@
 -(void)setImportVersionNumber
 {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setDouble:[self appVersionNumber] forKey:kLastImportVersionNumber];
+    [userDefaults setObject:[self currentFileHash] forKey:kLastImportHashKey];
+    [userDefaults synchronize];
 }
 
 @end

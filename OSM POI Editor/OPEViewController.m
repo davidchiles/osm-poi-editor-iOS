@@ -770,6 +770,10 @@
     {
         [self updateOsmElementWithID:element.objectID];
     }
+    for (OPEManagedOsmElement * element in [self.noNameStreetsFetchedResultsController fetchedObjects])
+    {
+        [self updateOsmElementWithID:element.objectID];
+    }
 }
 
 #pragma FetchedResultsController

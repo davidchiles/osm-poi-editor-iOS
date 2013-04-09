@@ -3402,6 +3402,7 @@
 				<string>fee</string>
 				<string>capacity</string>
 				<string>covered</string>
+				<string>parking_access</string>
 			</array>
 		</dict>
 		<key>Motorcycle Parking</key>

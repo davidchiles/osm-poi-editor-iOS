@@ -21,4 +21,6 @@
 +(NSString *)formatDistanceMeters:(double)meters;
 +(BOOL)uesMetric;
 
++(NSString *)hashOfFilePath:(NSString *)filePath;
+
 @end

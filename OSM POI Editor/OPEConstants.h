@@ -44,7 +44,7 @@
 
 #define kLastDownloadedKey @"lastFileDownload"
 
-#define kLastImportVersionNumber @"lastImportVersionKey"
+#define kLastImportHashKey @"kLastImportHashKey"
 
 
 #define kExpandedAddressArray [NSArray arrayWithObjects:@"addr:housenumber",@"addr:street",@"addr:city",@"addr:postcode",@"addr:state",@"addr:country",@"addr:province",@"website",@"phone", nil];

@@ -2,6 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>parking_access</key>
+	<dict>
+		<key>displayName</key>
+		<string>Access</string>
+		<key>osmKey</key>
+		<string>access</string>
+		<key>section</key>
+		<string>Other</string>
+		<key>values</key>
+		<dict>
+			<key>Private</key>
+			<string>private</string>
+			<key>Permissive</key>
+			<string>permissive</string>
+			<key>Customers</key>
+			<string>customers</string>
+			<key>No</key>
+			<string>no</string>
+		</dict>
+	</dict>
 	<key>tower:type</key>
 	<dict>
 		<key>displayName</key>
