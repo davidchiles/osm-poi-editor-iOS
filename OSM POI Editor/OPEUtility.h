@@ -22,5 +22,6 @@
 +(BOOL)uesMetric;
 
 +(NSString *)hashOfFilePath:(NSString *)filePath;
++(NSString *)hasOfData:(NSData *)data;
 
 @end

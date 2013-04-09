@@ -105,10 +105,8 @@
     }
     
 }
-
-+(NSString *)hashOfFilePath:(NSString *)filePath
++(NSString *)hasOfData:(NSData *)data
 {
-    NSData * data = [[NSData alloc] initWithContentsOfFile:filePath];
     unsigned char md5Buffer[CC_MD5_DIGEST_LENGTH];
     CC_MD5(data.bytes, data.length, md5Buffer);
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
@@ -116,6 +114,12 @@
         [output appendFormat:@"%02x",md5Buffer[i]];
     
     return output;
+}
+
++(NSString *)hashOfFilePath:(NSString *)filePath
+{
+    NSData * data = [[NSData alloc] initWithContentsOfFile:filePath];
+    [self hasOfData:data];
 }
 
 @end

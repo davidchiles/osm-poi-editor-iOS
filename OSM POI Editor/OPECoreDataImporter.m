@@ -16,7 +16,7 @@
 #import "OPEUtility.h"
 
 #define tagsPlistFilePath [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"plist"]
-#define optionalPlistFilePath [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"plist"];
+#define optionalPlistFilePath [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"plist"]
 
 
 @implementation OPECoreDataImporter
@@ -24,6 +24,11 @@
 -(void)import
 {
     if ([self shouldDoImport]) {
+        [OPEManagedReferenceOptional MR_deleteAllMatchingPredicate:nil];
+        [OPEManagedReferencePoi MR_deleteAllMatchingPredicate:nil];
+        [OPEManagedReferenceOptionalCategory MR_deleteAllMatchingPredicate:nil];
+        [OPEManagedReferencePoiCategory MR_deleteAllMatchingPredicate:nil];
+        
         [self importOptionalTags];
         [self importTagsPlist];
         [self setImportVersionNumber];
@@ -211,7 +216,8 @@
 -(NSString *)lastImportHash
 {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    return [userDefaults stringForKey:kLastImportHashKey];
+    NSString * hash = [userDefaults stringForKey:kLastImportHashKey];
+    return hash;
     
 }
 -(double)appVersionNumber
@@ -222,8 +228,9 @@
 }
 -(NSString *)currentFileHash;
 {
-    NSMutableString * hash = [[OPEUtility hashOfFilePath:tagsPlistFilePath] mutableCopy];
-    [hash appendString:[OPEUtility hashOfFilePath:tagsPlistFilePath]];
+    NSMutableData * data = [NSMutableData dataWithContentsOfFile:optionalPlistFilePath];
+    [data appendData:[NSData dataWithContentsOfFile:tagsPlistFilePath]];
+    NSString * hash = [OPEUtility hasOfData:data];
     
     return hash;
     

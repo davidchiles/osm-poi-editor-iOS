@@ -130,15 +130,15 @@
     <elements>
         <element name="OPEManagedOsmElement" positionX="414" positionY="251" width="128" height="208"/>
         <element name="OPEManagedOsmNode" positionX="655" positionY="369" width="128" height="103"/>
+        <element name="OPEManagedOsmNodeReference" positionX="666" positionY="513" width="128" height="73"/>
         <element name="OPEManagedOsmRelation" positionX="90" positionY="315" width="180" height="58"/>
         <element name="OpeManagedOsmRelationMember" positionX="79" positionY="422" width="191" height="88"/>
         <element name="OPEManagedOsmTag" positionX="637" positionY="113" width="128" height="118"/>
         <element name="OPEManagedOsmWay" positionX="450" positionY="485" width="128" height="103"/>
         <element name="OPEManagedReferenceOptional" positionX="90" positionY="89" width="173" height="163"/>
         <element name="OPEManagedReferenceOptionalCategory" positionX="72" positionY="-45" width="216" height="90"/>
-        <element name="OPEManagedReferenceOsmTag" positionX="376" positionY="-108" width="128" height="88"/>
-        <element name="OPEManagedReferencePoi" positionX="387" positionY="-0" width="135" height="193"/>
+        <element name="OPEManagedReferenceOsmTag" positionX="376" positionY="-108" width="191" height="88"/>
+        <element name="OPEManagedReferencePoi" positionX="387" positionY="9" width="135" height="193"/>
         <element name="OPEManagedReferencePoiCategory" positionX="601" positionY="-81" width="200" height="73"/>
-        <element name="OPEManagedOsmNodeReference" positionX="666" positionY="513" width="128" height="73"/>
     </elements>
 </model>

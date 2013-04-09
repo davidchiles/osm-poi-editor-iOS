@@ -20,6 +20,8 @@
 			<string>customers</string>
 			<key>No</key>
 			<string>no</string>
+			<key>Yes</key>
+			<string>yes</string>
 		</dict>
 	</dict>
 	<key>tower:type</key>
