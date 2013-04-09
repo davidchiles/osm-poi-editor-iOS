@@ -255,7 +255,7 @@
     }];
      
     line.lineColor = [UIColor redColor];
-    line.lineWidth +=15;
+    line.lineWidth +=10;
     line.lineCap = kCALineCapRound;
     line.lineJoin = kCALineJoinRound;
     line.canShowCallout = NO;
