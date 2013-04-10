@@ -725,8 +725,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = YES;
-    self.navigationController.toolbarHidden = NO;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController setToolbarHidden:NO animated:YES];
     //[self.navigationController setNavigationBarHidden:YES animated:YES];
     //[self.navigationController setToolbarHidden:NO animated:YES];
     [self updateAllAnnotations];

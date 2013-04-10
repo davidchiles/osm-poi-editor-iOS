@@ -52,6 +52,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    
     webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     
     [self.view addSubview:webView];

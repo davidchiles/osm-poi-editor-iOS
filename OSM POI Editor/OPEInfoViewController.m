@@ -401,8 +401,8 @@
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self.navigationController setToolbarHidden:NO animated:YES];
+    //[self.navigationController setNavigationBarHidden:YES animated:YES];
+    //[self.navigationController setToolbarHidden:NO animated:YES];
 }
 
 - (void)viewDidUnload
