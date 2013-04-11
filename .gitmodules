@@ -1,7 +1,7 @@
 
 [submodule "lib/mapbox"]
 	path = lib/mapbox
-	url = git://github.com/mapbox/mapbox-ios-sdk.git
+	url = git@github.com:davidchiles/mapbox-ios-sdk.git
 [submodule "lib/MagicalRecord"]
 	path = lib/MagicalRecord
 	url = git://github.com/magicalpanda/MagicalRecord.git
