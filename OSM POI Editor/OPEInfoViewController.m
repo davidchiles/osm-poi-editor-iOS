@@ -339,10 +339,12 @@
     else if (indexPath.section == 3) {
         if (indexPath.row == 0) {
             //USer voice Feedback
+#ifdef USERVOICE_ENABLED
             UVConfig *config = [UVConfig configWithSite:USERVOICE_SITE
                                                  andKey:USERVOICE_KEY
                                               andSecret:USERVOICE_SECRET];
             [UserVoice presentUserVoiceInterfaceForParentViewController:self andConfig:config];
+#endif
         }
         else
         {
