@@ -28,7 +28,7 @@
 
 @protocol OPEInfoViewControllerDelegate
 @optional
--(void)setTileSource:(id)tileSource at:(int)number;
+-(void)setTileSource:(id)tileSource;
 
 @end
 
@@ -42,7 +42,5 @@
 
 
 -(void)infoButtonPressed:(id)sender;
-
-+ (id)getTileSourceFromNumber:(int) num;
 
 @end

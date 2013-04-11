@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RMTileSource.h"
 
 
 @interface OPEUtility : NSObject
@@ -26,5 +27,7 @@
 
 +(id)currentValueForSettingKey:(NSString *)settingKey;
 +(void)setSettingsValue:(id)settingValue forKey:(NSString *)key;
+
++(id <RMTileSource>)currentTileSource;
 
 @end

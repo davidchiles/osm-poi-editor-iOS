@@ -21,9 +21,6 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPEInfoViewController.h"
-#import "OPEOpenMapQuestAerialTileSource.h"
-#import "OPEOpenStreetMapSource.h"
-#import "OPEBingTileSource.h"
 #import "OPEAPIConstants.h"
 #import "UVConfig.h"
 #import "UserVoice.h"
@@ -320,10 +317,11 @@
         currentNumber = indexPath.row;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        id <RMTileSource> newTileSource = [OPEInfoViewController getTileSourceFromNumber:indexPath.row];
         
         [OPEUtility setSettingsValue:[NSNumber numberWithInt:indexPath.row] forKey:kTileSourceNumber];
-        [delegate setTileSource:newTileSource at:indexPath.row ];
+        id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
+        
+        [delegate setTileSource:newTileSource];
         [self.navigationController popViewControllerAnimated:YES];
     }
     else if (indexPath.section == 2)
@@ -355,17 +353,6 @@
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma - TileSource
-
--(void)changeTileSourceTo:(NSString *) newSoureceName
-{
-    id <RMTileSource> newTileSource = nil;
-    newTileSource = [[OPEBingTileSource alloc] init];
-    
-    //[delegate setTileSource:newTileSource a];
-    
 }
 
 #pragma mark - View lifecycle
@@ -407,22 +394,6 @@
     UISwitch * currentSwitch = (UISwitch *)sender;
     [OPEUtility setSettingsValue:[NSNumber numberWithBool:currentSwitch.on] forKey:kShowNoNameStreetsKey]; 
     
-}
-
-+ (id)getTileSourceFromNumber:(int) num
-{
-    if (num == 1) {
-        return [[OPEOpenMapQuestAerialTileSource alloc] init];
-    }
-    else if (num == 2) {
-        return [[OPEOpenStreetMapSource alloc] init];
-    }
-    else{
-        return [[OPEBingTileSource alloc] initWithMapsKey:bingMapsKey];
-    }
-    
-    
-    return nil;
 }
 
 -(void)viewWillAppear:(BOOL)animated

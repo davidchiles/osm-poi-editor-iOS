@@ -53,7 +53,6 @@
 @property (nonatomic,strong) RMMarker * addedNode;
 @property (nonatomic,strong) RMMarker * nodeInfo;
 @property (nonatomic,strong) RMMarker * currentLocationMarker;
-@property (nonatomic) int currentTile;
 @property (nonatomic, strong) OPEMessageView * message;
 @property (nonatomic, strong) OPEMessageView * parsingMessageView;
 @property (nonatomic, strong) NSMutableDictionary * imagesDic;

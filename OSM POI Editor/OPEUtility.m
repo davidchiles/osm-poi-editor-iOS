@@ -10,6 +10,12 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <CommonCrypto/CommonDigest.h>
+#import "OPEConstants.h"
+#import "OPEAPIConstants.h"
+
+#import "OPEOpenMapQuestAerialTileSource.h"
+#import "OPEOpenStreetMapSource.h"
+#import "OPEBingTileSource.h"
 
 @implementation OPEUtility
 
@@ -134,6 +140,33 @@
     [defaults setObject:settingValue forKey:key];
     [defaults synchronize];
     
+}
+
++(id <RMTileSource>)currentTileSource
+{
+    int num = 0;
+   
+    if ([self currentValueForSettingKey:kTileSourceNumber]) {
+        num = [[self currentValueForSettingKey:kTileSourceNumber] intValue] ;
+        
+    }
+    
+    if (num == 1) {
+        return [[OPEOpenMapQuestAerialTileSource alloc] init];
+    }
+    else if (num == 2) {
+        return [[OPEOpenStreetMapSource alloc] init];
+    }
+    else if([bingMapsKey length]){
+        return [[OPEBingTileSource alloc] initWithMapsKey:bingMapsKey];
+    }
+    else
+    {
+        return [[OPEOpenMapQuestAerialTileSource alloc] init];
+    }
+    
+    
+    return nil;
 }
 
 @end

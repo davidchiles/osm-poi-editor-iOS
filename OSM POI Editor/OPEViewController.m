@@ -49,7 +49,6 @@
 @synthesize infoButton,location, addOPEPoint;
 @synthesize openMarker,theNewMarker, label, calloutLabel;
 @synthesize addedNode,nodeInfo,currentLocationMarker;
-@synthesize currentTile;
 @synthesize message;
 @synthesize imagesDic;
 @synthesize currentSquare;
@@ -156,22 +155,11 @@
     //[mapView setCenterCoordinate:initLocation animated:YES];
     
     [mapView setZoom: 18];
-    id <RMTileSource> newTileSource = nil;
-    int num = 0;
-    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
-    NSLog(@"stored TileSource: %@",[settings objectForKey:@"tileSourceNumber"]);
-    if ([settings objectForKey:@"tileSourceNumber"]) {
-        currentTile = [[settings objectForKey:@"tileSourceNumber"] intValue] ;
-        newTileSource = [OPEInfoViewController getTileSourceFromNumber:currentTile];
-        
-    }
-    else {
-        newTileSource = [[OPEBingTileSource alloc] initWithMapsKey:bingMapsKey];
-        currentTile = 0;
-    }
+    id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
     
     
-    [self setTileSource:newTileSource at:num];
+    
+    [self setTileSource:newTileSource];
     
     currentSquare = [mapView latitudeLongitudeBoundingBox];
     
@@ -626,10 +614,9 @@
 
 #pragma - InfoViewDelegate
 
--(void)setTileSource:(id)tileSource at:(int)number
+-(void)setTileSource:(id)tileSource
 {
     if (tileSource) {
-        currentTile = number;
         [mapView removeAllCachedImages];
         [mapView setTileSource:tileSource];
     }
