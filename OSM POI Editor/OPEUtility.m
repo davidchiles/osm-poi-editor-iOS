@@ -119,7 +119,21 @@
 +(NSString *)hashOfFilePath:(NSString *)filePath
 {
     NSData * data = [[NSData alloc] initWithContentsOfFile:filePath];
-    [self hasOfData:data];
+    return [self hasOfData:data];
+}
+
++(id)currentValueForSettingKey:(NSString *)settingKey
+{
+    return [[NSUserDefaults standardUserDefaults] objectForKey:settingKey];
+    
+}
+
++(void)setSettingsValue:(id)settingValue forKey:(NSString *)key
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:settingValue forKey:key];
+    [defaults synchronize];
+    
 }
 
 @end

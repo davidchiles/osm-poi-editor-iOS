@@ -31,7 +31,7 @@
 
 -(NSString *)osmType
 {
-    return OPEOsmElementRelation;
+    return kOPEOsmElementRelation;
 }
 
 -(void)addInOrderElement:(OPEManagedOsmElement *)element withRole:(NSString *)role

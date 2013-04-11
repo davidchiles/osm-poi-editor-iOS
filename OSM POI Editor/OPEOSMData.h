@@ -40,8 +40,8 @@
 -(void)willStartDownloading;
 -(void)didEndDownloading;
 
--(void)willStartParsing;
--(void)didEndParsing;
+-(void)willStartParsing:(NSString *)typeString;
+-(void)didEndParsing:(NSString *)typeString;
 
 @optional
 -(void) downloadFailed:(NSError *)error;

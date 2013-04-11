@@ -21,7 +21,6 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPECategoryViewController.h"
-#import "OPETagInterpreter.h"
 #import "OPEManagedReferenceOptionalCategory.h"
 #import "OPEManagedReferencePoi.h"
 

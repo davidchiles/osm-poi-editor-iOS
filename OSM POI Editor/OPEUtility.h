@@ -24,4 +24,7 @@
 +(NSString *)hashOfFilePath:(NSString *)filePath;
 +(NSString *)hasOfData:(NSData *)data;
 
++(id)currentValueForSettingKey:(NSString *)settingKey;
++(void)setSettingsValue:(id)settingValue forKey:(NSString *)key;
+
 @end

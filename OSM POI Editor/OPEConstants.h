@@ -52,10 +52,16 @@
 #define kActionTypeModify @"modify"
 #define kActionTypeDelete @"delete"
 
-#define OPEOsmElementNode @"node"
-#define OPEOsmElementWay @"way"
-#define OPEOsmElementRelation @"relation"
-#define OPEOsmElementNone @"none"
+#define kOPEOsmElementNode @"node"
+#define kOPEOsmElementWay @"way"
+#define kOPEOsmElementRelation @"relation"
+#define kOPEOsmElementNone @"none"
 
 #define highwayTypes @[@"residential",@"unclassified",@"track",@"tertiary",@"secondary",@"primary",@"trunk",@"footway",@"path",@"cycleway",@"steps",@"bridleway"]
+
+//settings key
+#define kShowNoNameStreetsKey @"kShowNoNameStreetsKey"
+#define kTileSourceNumber @"tileSourceNumber"
+
+
 

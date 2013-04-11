@@ -20,5 +20,8 @@
 
 -(void)startSave;
 -(void)showAuthError;
+-(void)signIntoOSM;
+
+-(void)findishedAuthWithError:(NSError *)error;
 
 @end

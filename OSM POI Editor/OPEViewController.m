@@ -29,6 +29,7 @@
 #import "RMShape.h"
 #import "OPEBingTileSource.h"
 #import "OPEAPIConstants.h"
+#import "OPEUtility.h"
 
 #import "OPEManagedOsmElement.h"
 #import "OPEManagedReferencePoi.h"
@@ -45,7 +46,6 @@
 @implementation OPEViewController
 
 @synthesize locationManager;
-@synthesize interpreter;
 @synthesize infoButton,location, addOPEPoint;
 @synthesize openMarker,theNewMarker, label, calloutLabel;
 @synthesize addedNode,nodeInfo,currentLocationMarker;
@@ -126,11 +126,7 @@
      name:@"DownloadComplete"
      object:nil ];
      */
-    [self osmElementFetchedResultsController];
-    [self noNameStreetsFetchedResultsController];
     
-    interpreter = [[OPETagInterpreter alloc] init];
-    [interpreter readPlist];
    
     //36079
     
@@ -678,6 +674,14 @@
     [mapView setCenterCoordinate: mapView.userLocation.coordinate animated:YES];
 }
 
+-(BOOL)showNoNameStreets
+{
+    NSNumber * number = [OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey];
+    BOOL boolValue = [number boolValue];
+    return boolValue;
+    //[[OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey]boolValue];
+}
+
 - (IBAction)infoButtonPressed:(id)sender
 {
     NSMutableString *attribution = [NSMutableString string];
@@ -770,9 +774,17 @@
     {
         [self updateOsmElementWithID:element.objectID];
     }
-    for (OPEManagedOsmElement * element in [self.noNameStreetsFetchedResultsController fetchedObjects])
+    
+    if ([self showNoNameStreets]) {
+        for (OPEManagedOsmElement * element in [self.noNameStreetsFetchedResultsController fetchedObjects])
+        {
+            [self updateOsmElementWithID:element.objectID];
+        }
+    }
+    else
     {
-        [self updateOsmElementWithID:element.objectID];
+        _noNameStreetsFetchedResultsController.delegate = nil;
+        _noNameStreetsFetchedResultsController = nil;
     }
 }
 
@@ -879,23 +891,39 @@
     [self removeNonameView];
     
 }
--(void)willStartParsing
+-(void)willStartParsing:(NSString *)typeString
 {
+    NSString * elementTypeString = nil;
+    if ([typeString isEqualToString:kOPEOsmElementNode]) {
+        elementTypeString = @"Nodes";
+    }
+    else if ([typeString isEqualToString:kOPEOsmElementWay]) {
+        elementTypeString = @"Ways";
+    }
+    else if ([typeString isEqualToString:kOPEOsmElementRelation]) {
+        elementTypeString = @"Relations";
+    }
+    
+    
     if (self.numberOfOngoingParses < 1) {
-        CGRect frame = CGRectMake(0, 0, 180, 40);
+        CGRect frame = CGRectMake(0, 0, 200, 40);
         frame.origin.y = self.view.frame.size.height -frame.size.height-10;
         frame.origin.x = (self.view.frame.size.width -frame.size.width)/2;
         
         
         
         self.parsingMessageView = [[OPEMessageView alloc] initWithIndicator:YES frame:frame];
-        self.parsingMessageView.textLabel.text = @"Parsing...";
+        //self.parsingMessageView.textLabel.text = [NSString stringWithFormat:@"Finding %@ ...",elementTypeString];
         [self.view addSubview:self.parsingMessageView];
     }
+    self.parsingMessageView.textLabel.text = [NSString stringWithFormat:@"Finding %@ ...",elementTypeString];
+    
+    
+    
     self.numberOfOngoingParses += 1;
 
 }
--(void)didEndParsing
+-(void)didEndParsing:(NSString *)typeString
 {
     self.numberOfOngoingParses -=1;
     if (self.numberOfOngoingParses < 1) {

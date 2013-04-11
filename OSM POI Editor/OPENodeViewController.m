@@ -21,7 +21,6 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPENodeViewController.h"
-#import "OPETagInterpreter.h"
 #import "OPETextEdit.h"
 #import "OPECategoryViewController.h"
 #import "OPEOSMData.h"

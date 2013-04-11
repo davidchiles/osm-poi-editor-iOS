@@ -42,7 +42,6 @@
 }
 
 @property (nonatomic,strong) CLLocationManager* locationManager;
-@property (nonatomic,strong) OPETagInterpreter * interpreter;
 
 @property (nonatomic,strong) UIBarButtonItem * infoButton;
 @property (nonatomic,strong) UIBarButtonItem * location;

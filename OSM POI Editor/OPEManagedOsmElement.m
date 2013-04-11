@@ -126,7 +126,7 @@
 
 -(NSString *)osmType
 {
-    return OPEOsmElementNone;
+    return kOPEOsmElementNone;
 }
 
 +(NSInteger) minID
@@ -334,13 +334,13 @@
 +(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID type:(NSString *)typeString
 {
     OPEManagedOsmElement * element = nil;
-    if ([typeString isEqualToString:OPEOsmElementNode]) {
+    if ([typeString isEqualToString:kOPEOsmElementNode]) {
         element = [OPEManagedOsmNode fetchOrCreateWithOsmID:ID];
     }
-    else if ([typeString isEqualToString:OPEOsmElementWay]) {
+    else if ([typeString isEqualToString:kOPEOsmElementWay]) {
         element = [OPEManagedOsmWay fetchOrCreateWithOsmID:ID];
     }
-    else if ([typeString isEqualToString:OPEOsmElementRelation]) {
+    else if ([typeString isEqualToString:kOPEOsmElementRelation]) {
         element = [OPEManagedOsmRelation fetchOrCreateWithOsmID:ID];
     }
     return element;

@@ -27,6 +27,8 @@
 #import "OPEAPIConstants.h"
 #import "UVConfig.h"
 #import "UserVoice.h"
+#import "OPEUtility.h"
+#import "OPEConstants.h"
 
 
 @implementation OPEInfoViewController
@@ -35,6 +37,7 @@
 @synthesize currentNumber;
 @synthesize settingsTableView;
 @synthesize attributionString;
+@synthesize showNoNameStreetsSwitch;
 
 - (void)viewDidLoad
 {
@@ -45,15 +48,18 @@
     [settingsTableView setDelegate:self];
     settingsTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
-    NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
-    if ([settings objectForKey:@"tileSourceNumber"]) {
-        currentNumber = [[settings objectForKey:@"tileSourceNumber"] intValue];
+    if ([OPEUtility currentValueForSettingKey:kTileSourceNumber]) {
+        currentNumber = [[OPEUtility currentValueForSettingKey:kTileSourceNumber] intValue];
     }
     else {
         currentNumber = 0;
     }
     
     [self.view addSubview:settingsTableView];
+    
+    showNoNameStreetsSwitch = [[UISwitch alloc] init];
+    [showNoNameStreetsSwitch addTarget:self action:@selector(toggleSwitch:) forControlEvents:UIControlEventValueChanged];
+    showNoNameStreetsSwitch.on = [[OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey] boolValue];
     
 }
 
@@ -65,6 +71,7 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+/*
 - (IBAction)doneButtonPressed:(id)sender
 {
     GTMOAuthAuthentication *auth = [self osmAuth];
@@ -78,8 +85,9 @@
     NSLog(@"didAuth %d",didAuth);
     NSLog(@"canAuth %d",canAuth);
 }
+*/
 
-- (void)viewController:(GTMOAuthViewControllerTouch *)viewController
+- (void)viewControllerOLD:(GTMOAuthViewControllerTouch *)viewController
       finishedWithAuth:(GTMOAuthAuthentication *)auth
                  error:(NSError *)error {
     [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -120,7 +128,7 @@
 }
 
 
-- (GTMOAuthAuthentication *)osmAuth {
+- (GTMOAuthAuthentication *)osmAuthOLD {
     NSString *myConsumerKey = osmConsumerKey;     // pre-registered with service
     NSString *myConsumerSecret = osmConsumerSecret;  // pre-assigned by service
     
@@ -136,7 +144,8 @@
     return auth;
 }
 
-- (void)signInToOSM {
+/*
+- (void)signInToOSMOLD {
     
     NSURL *requestURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/request_token"];
     NSURL *accessURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/access_token"];
@@ -170,23 +179,28 @@
     [[self navigationController] pushViewController:viewController
                                            animated:YES];
 }
-
+*/
 - (void) signOutOfOSM
 {
     [GTMOAuthViewControllerTouch removeParamsFromKeychainForName:@"OSMPOIEditor"];
-    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
+-(void)findishedAuthWithError:(NSError *)error
+{
+    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
 #pragma - TableView
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
         return 3;
     }
-    else if (section == 2)
+    else if (section == 3)
     {
         return 2;
     }
@@ -220,9 +234,10 @@
     static NSString * tileIdentifier = @"Cell";
     static NSString * buttonIdentifier = @"Cell1";
     static NSString * aboutIdentifier = @"Cell2";
+    static NSString * switchIdentifier = @"Cell3";
     if (indexPath.section == 0) {
         
-        //cell = [tableView dequeueReusableCellWithIdentifier:tileIdentifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:tileIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tileIdentifier];
         }
@@ -244,12 +259,26 @@
     }
     else if (indexPath.section == 1)
     {
-        //cell = [tableView dequeueReusableCellWithIdentifier:buttonIdentifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:switchIdentifier];
+
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:switchIdentifier];
+        }
+        cell.textLabel.text = @"Show No Name Streets";
+        cell.accessoryView = showNoNameStreetsSwitch;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        
+        
+    }
+    else if (indexPath.section == 2)
+    {
+        cell = [tableView dequeueReusableCellWithIdentifier:buttonIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:buttonIdentifier];
         }
         
-        if(![self loggedIn])
+        if(![self.osmData canAuth])
         {
             cell.textLabel.text = @"Login to OpenStreetMap";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -258,8 +287,10 @@
             cell.textLabel.text = @"Logout of OpenStreetMap";
         
     }
-    else if (indexPath.section == 2)
+    else if (indexPath.section == 3)
     {
+        cell = [tableView dequeueReusableCellWithIdentifier:aboutIdentifier];
+
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:aboutIdentifier];
         }
@@ -291,23 +322,21 @@
         
         id <RMTileSource> newTileSource = [OPEInfoViewController getTileSourceFromNumber:indexPath.row];
         
-        NSUserDefaults *settings = [NSUserDefaults standardUserDefaults];
-        [settings setObject:[NSNumber numberWithInt:indexPath.row] forKey:@"tileSourceNumber"];
-        [settings synchronize];
+        [OPEUtility setSettingsValue:[NSNumber numberWithInt:indexPath.row] forKey:kTileSourceNumber];
         [delegate setTileSource:newTileSource at:indexPath.row ];
         [self.navigationController popViewControllerAnimated:YES];
     }
-    else if (indexPath.section == 1)
+    else if (indexPath.section == 2)
     {
-        if(![self loggedIn])
+        if(![self.osmData canAuth])
         {
-            [self signInToOSM];
+            [self signIntoOSM];
         }
         else
             [self signOutOfOSM];
         
     }
-    else if (indexPath.section == 2) {
+    else if (indexPath.section == 3) {
         if (indexPath.row == 0) {
             //USer voice Feedback
             UVConfig *config = [UVConfig configWithSite:USERVOICE_SITE
@@ -338,7 +367,7 @@
 }
 
 #pragma mark - View lifecycle
-
+/*
 -(BOOL)loggedIn
 {
     GTMOAuthAuthentication *auth = [self osmAuth];
@@ -363,12 +392,19 @@
     }
     
 }
+*/
 
 -(void)infoButtonPressed:(id)sender
 {
     OPECreditViewController * view = [[OPECreditViewController alloc] init];
     view.title = @"About";
     [self.navigationController pushViewController:view animated:YES];
+}
+-(void)toggleSwitch:(id)sender
+{
+    UISwitch * currentSwitch = (UISwitch *)sender;
+    [OPEUtility setSettingsValue:[NSNumber numberWithBool:currentSwitch.on] forKey:kShowNoNameStreetsKey]; 
+    
 }
 
 + (id)getTileSourceFromNumber:(int) num
@@ -389,15 +425,16 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController setToolbarHidden:YES animated:YES];
-    [super viewWillAppear:animated];
+    [self.settingsTableView reloadData];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+    //[settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {

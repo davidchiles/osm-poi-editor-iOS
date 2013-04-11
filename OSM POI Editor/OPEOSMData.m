@@ -83,18 +83,11 @@
         if ([delegate respondsToSelector:@selector(didEndDownloading)]) {
             [delegate didEndDownloading];
         }
-        if ([delegate respondsToSelector:@selector(willStartParsing)]) {
-            [delegate willStartParsing];
-        }
+        
         dispatch_async(q,  ^{
             TBXML * xmlResponse = [[TBXML alloc] initWithXMLData:responseObject];
             [self parseTBXML:xmlResponse];
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([delegate respondsToSelector:@selector(didEndParsing)]) {
-                    [delegate didEndParsing];
-                }
-            });
 
         });
         //dispatch_release(t);
@@ -294,7 +287,7 @@
     }failure:^(AFHTTPRequestOperation *operation, NSError * error)
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [delegate uploadFailed:error];
+            //[delegate uploadFailed:error];
         });
         NSLog(@"Failed: %@",urlRequest.URL);
     }];
@@ -414,7 +407,7 @@
     }failure:^(AFHTTPRequestOperation *operation, NSError * error)
      {
          dispatch_async(dispatch_get_main_queue(), ^{
-             [delegate uploadFailed:error];
+             //[delegate uploadFailed:error];
          });
          NSLog(@"Failed: %@",urlRequest.URL);
      }];
@@ -550,6 +543,11 @@
     TBXMLElement * root = xml.rootXMLElement;
     if(root)
     {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([delegate respondsToSelector:@selector(willStartParsing:)]) {
+                [delegate willStartParsing:kOPEOsmElementNode];
+            }
+        });
         NSDate * nodeStart = [NSDate date];
         numNodes = [self findAllNodes:root];
         totalNodeTime -= [nodeStart timeIntervalSinceNow];
@@ -558,6 +556,15 @@
         [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
             NSLog(@"Saved Nodes");
         }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([delegate respondsToSelector:@selector(didEndParsing:)]) {
+                [delegate didEndParsing:kOPEOsmElementNode];
+            }
+            if ([delegate respondsToSelector:@selector(willStartParsing:)]) {
+                [delegate willStartParsing:kOPEOsmElementWay];
+            }
+            
+        });
         
         NSDate * wayStart = [NSDate date];
         numWays = [self findAllWays:root];
@@ -566,6 +573,14 @@
         [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
             NSLog(@"Saved Ways");
         }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([delegate respondsToSelector:@selector(didEndParsing:)]) {
+                [delegate didEndParsing:kOPEOsmElementWay];
+            }
+            if ([delegate respondsToSelector:@selector(willStartParsing:)]) {
+                [delegate willStartParsing:kOPEOsmElementRelation];
+            }
+        });
         
         NSDate * relationStart = [NSDate date];
         numWays = [self findAllRelations:root];
@@ -574,6 +589,11 @@
         [context MR_saveToPersistentStoreWithCompletion:^(BOOL success, NSError *error) {
             NSLog(@"Saved Relations");
         }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([delegate respondsToSelector:@selector(didEndParsing:)]) {
+                [delegate didEndParsing:kOPEOsmElementRelation];
+            }
+        });
         /*
         //NSLog(@"root: %@",[TBXML elementName:root]);
         //NSLog(@"version: %@",[TBXML valueOfAttributeNamed:@"version" forElement:root]);

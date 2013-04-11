@@ -66,7 +66,7 @@
 
 -(NSString *)osmType
 {
-    return OPEOsmElementWay;
+    return kOPEOsmElementWay;
 }
 
 -(NSArray *)points

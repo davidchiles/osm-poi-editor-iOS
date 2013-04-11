@@ -125,10 +125,16 @@
         // signed-in user
         //[self doAnAuthenticatedAPIFetch];
         NSLog(@"Suceeed");
+        
         //[self dismissModalViewControllerAnimated:YES];
     }
-    
+    [self findishedAuthWithError:error];
     //[self updateUI];
+}
+
+-(void)findishedAuthWithError:(NSError *)error
+{
+    NSLog(@"AUTH ERROR: %@",error);
 }
 
 

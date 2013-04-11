@@ -21,7 +21,6 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
-#import "OPETagInterpreter.h"
 #import "OPETextEdit.h"
 #import "OPETypeViewController.h"
 #import "MBProgressHUD.h"
@@ -41,7 +40,6 @@
 
 @interface OPENodeViewController : OPEBaseViewController <UITableViewDelegate, UITableViewDataSource, OPETagEditViewControllerDelegate, PassCategoryAndType>
 {
-    OPETagInterpreter * tagInterpreter;
     NSDictionary * osmKeyValue;
     float optionalTagWidth;
     NSManagedObjectContext * editContext;

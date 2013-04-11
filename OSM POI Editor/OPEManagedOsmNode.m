@@ -62,7 +62,7 @@
 
 -(NSString *)osmType
 {
-    return OPEOsmElementNode;
+    return kOPEOsmElementNode;
 }
 
 +(OPEManagedOsmNode *)newNode

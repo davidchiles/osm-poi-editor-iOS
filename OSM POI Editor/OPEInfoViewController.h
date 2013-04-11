@@ -24,6 +24,7 @@
 #import "GTMOAuthViewControllerTouch.h"
 #import "RMMapView.h"
 #import "OPECreditViewController.h"
+#import "OPEBaseViewController.h"
 
 @protocol OPEInfoViewControllerDelegate
 @optional
@@ -31,21 +32,16 @@
 
 @end
 
-@interface OPEInfoViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface OPEInfoViewController : OPEBaseViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView * settingsTableView;
 @property (nonatomic, strong) id<OPEInfoViewControllerDelegate> delegate;
 @property (nonatomic) int currentNumber;
 @property (nonatomic, strong) NSString * attributionString;
+@property (nonatomic, strong) UISwitch * showNoNameStreetsSwitch;
 
-- (IBAction)doneButtonPressed:(id)sender;
 
 -(void)infoButtonPressed:(id)sender;
-
-- (BOOL)loggedIn;
-- (void) signInToOSM;
-- (GTMOAuthAuthentication *)osmAuth;
-- (void) signOutOfOSM;
 
 + (id)getTileSourceFromNumber:(int) num;
 
