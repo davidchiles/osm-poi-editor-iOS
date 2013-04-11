@@ -414,7 +414,6 @@
 		63F9CCA514F32B2E00308DE1 /* iphone_delete_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 63F9CCA414F32B2E00308DE1 /* iphone_delete_button.png */; };
 		63FCA4421643127D00A28470 /* OPEBingTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FCA4411643127D00A28470 /* OPEBingTileSource.m */; };
 		63FCA4511643363800A28470 /* OPEUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FCA4501643363700A28470 /* OPEUtility.m */; };
-		63FFDC6614E480DF00701DEC /* OPETagInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -975,8 +974,6 @@
 		63FCA4411643127D00A28470 /* OPEBingTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBingTileSource.m; sourceTree = "<group>"; };
 		63FCA44F1643363700A28470 /* OPEUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEUtility.h; sourceTree = "<group>"; };
 		63FCA4501643363700A28470 /* OPEUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEUtility.m; sourceTree = "<group>"; };
-		63FFDC6414E480DF00701DEC /* OPETagInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPETagInterpreter.h; path = ../OPETagInterpreter.h; sourceTree = "<group>"; };
-		63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPETagInterpreter.m; path = ../OPETagInterpreter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1349,8 +1346,6 @@
 				631539E014DC98D0000236F0 /* OPEOSMData.m */,
 				637C7CC916F164BE002CD340 /* OPEChangeset.h */,
 				637C7CCA16F164BE002CD340 /* OPEChangeset.m */,
-				63FFDC6414E480DF00701DEC /* OPETagInterpreter.h */,
-				63FFDC6514E480DF00701DEC /* OPETagInterpreter.m */,
 				6310F4B4153736D000C65FD8 /* OPEMessageView.h */,
 				6310F4B5153736D000C65FD8 /* OPEMessageView.m */,
 				6330AB7D14DB519A00448852 /* OPEAppDelegate.h */,
@@ -2199,7 +2194,6 @@
 				63E4BF3214E0728200E0BD46 /* TBXML.m in Sources */,
 				63E279E814E1F32B009D02BD /* Reachability.m in Sources */,
 				6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */,
-				63FFDC6614E480DF00701DEC /* OPETagInterpreter.m in Sources */,
 				63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */,
 				63CB49DD14E9DE7B008C4551 /* OPECategoryViewController.m in Sources */,
 				63CB49E214E9E3BF008C4551 /* OPETypeViewController.m in Sources */,
