@@ -94,7 +94,11 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        //[delegate downloadFailed:error];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([delegate respondsToSelector:@selector(downloadFailed:)]) {
+                [delegate downloadFailed:error];
+            }
+        });
     }];
     [httpRequestOperation start];
     
@@ -287,7 +291,9 @@
     }failure:^(AFHTTPRequestOperation *operation, NSError * error)
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            //[delegate uploadFailed:error];
+            if ([delegate respondsToSelector:@selector(downloadFailed:)]) {
+                [delegate downloadFailed:error];
+            }
         });
         NSLog(@"Failed: %@",urlRequest.URL);
     }];
@@ -372,7 +378,9 @@
     }failure:^(AFHTTPRequestOperation *operation, NSError * error)
      {
          dispatch_async(dispatch_get_main_queue(), ^{
-             [delegate uploadFailed:error];
+             if ([delegate respondsToSelector:@selector(uploadFailed:)]) {
+                 [delegate uploadFailed:error];
+             }
          });
          NSLog(@"Failed: %@",urlRequest.URL);
      }];
@@ -407,7 +415,9 @@
     }failure:^(AFHTTPRequestOperation *operation, NSError * error)
      {
          dispatch_async(dispatch_get_main_queue(), ^{
-             //[delegate uploadFailed:error];
+             if ([delegate respondsToSelector:@selector(downloadFailed:)]) {
+                 [delegate downloadFailed:error];
+             }
          });
          NSLog(@"Failed: %@",urlRequest.URL);
      }];
@@ -434,7 +444,9 @@
     }failure:^(AFHTTPRequestOperation *operation, NSError * error)
      {
          dispatch_async(dispatch_get_main_queue(), ^{
-             [delegate uploadFailed:error];
+             if ([delegate respondsToSelector:@selector(downloadFailed:)]) {
+                 [delegate downloadFailed:error];
+             }
          });
          NSLog(@"Failed: %@",urlRequest.URL);
      }];

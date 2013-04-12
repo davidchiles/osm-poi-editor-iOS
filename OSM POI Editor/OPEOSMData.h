@@ -33,6 +33,7 @@
 
 @protocol OPEOSMDataControllerDelegate <NSObject>
 
+@optional
 -(void)didOpenChangeset:(int64_t)changesetNumber withMessage:(NSString *)message;
 -(void)didCloseChangeset:(int64_t)changesetNumber;
 -(void)uploadFailed:(NSError *)error;
@@ -43,7 +44,6 @@
 -(void)willStartParsing:(NSString *)typeString;
 -(void)didEndParsing:(NSString *)typeString;
 
-@optional
 -(void) downloadFailed:(NSError *)error;
 
 @end

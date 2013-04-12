@@ -165,6 +165,7 @@
     
     message = [[OPEMessageView alloc] initWithMessage:@"Zoom in to load data"];
     message.alpha = 0.0;
+    message.userInteractionEnabled = NO;
     
     imagesDic = [[NSMutableDictionary alloc] init];
 }
@@ -528,32 +529,40 @@
 
 -(void) showZoomWarning
 {
-    [self.view addSubview:message];
-    message.userInteractionEnabled = NO;
-    [UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:1.0];
-	//[UIView setAnimationDelegate:self];
-    //[UIView setAnimationDidStopSelector:@selector(finishedFadIn)];
-	
-	[message setAlpha:0.8];
-	
-	[UIView commitAnimations];
+    self.message.textLabel.text = @"Zoom in to load data";
     
-}
--(void)animationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context
-{
-    [message removeFromSuperview];
+    if (![message.superview isEqual:self.view]) {
+        self.message.alpha = 0.0;
+        [self.view addSubview:message];
+    }
+    
+    [UIView animateWithDuration:1.0 animations:^{
+        self.message.alpha = .8;
+    }];
     
 }
 -(void) removeZoomWarning
 {
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDelegate:self];
-	[UIView setAnimationDuration:1.0];
-	
-	[message setAlpha:0.0];
-	
-	[UIView commitAnimations];
+    if (![self.message.layer.animationKeys count]) {
+        [UIView animateWithDuration:0.8 delay:0.0 options:UIViewAnimationCurveEaseOut animations:^{
+            self.message.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.message removeFromSuperview];
+            }
+        }];
+    }
+    
+    
+    /*
+    [UIView animateWithDuration:1.0 animations:^{
+        self.message.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self.message removeFromSuperview];
+        }
+    }];
+     */
     
 }
 
@@ -917,7 +926,28 @@
         [self.parsingMessageView removeFromSuperview];
         self.parsingMessageView = nil;
     }
+}
+
+-(void)downloadFailed:(NSError *)error
+{
+    message.textLabel.text = @"Download Error";
+    if (![message.superview isEqual:self.view]) {
+        message.alpha = 0.0;
+        [self.view addSubview:self.message];
+    }
     
+    [UIView animateWithDuration:1.0 animations:^{
+        message.alpha =.8;
+        
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:1.0 delay:1.0 options:UIViewAnimationCurveEaseOut animations:^{
+            self.message.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            if (finished) {
+                [self.message removeFromSuperview];
+            }
+        }];
+    }];
     
 }
 
