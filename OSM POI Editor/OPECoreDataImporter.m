@@ -232,15 +232,48 @@
     [data appendData:[NSData dataWithContentsOfFile:tagsPlistFilePath]];
     NSString * hash = [OPEUtility hasOfData:data];
     
+    
+    
     return hash;
     
+}
+
+-(NSDate *)lastImportDate
+{
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDate * date = (NSDate *)[userDefaults stringForKey:kLastImportFileDate];
+    return date;
+}
+
+-(NSDate *)currentMostRecentFileDate
+{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSDictionary* tagsAttrs = [fm attributesOfItemAtPath:tagsPlistFilePath error:nil];
+    NSDictionary* optionalAttrs = [fm attributesOfItemAtPath:optionalPlistFilePath error:nil];
+    
+    if (tagsAttrs != nil || optionalAttrs != nil) {
+        NSDate *tagsDate = (NSDate*)[tagsAttrs objectForKey: NSFileCreationDate];
+        NSDate *optionalDate = (NSDate *)[optionalAttrs objectForKey:NSFileCreationDate];
+        NSLog(@"Date Created: %@", [tagsAttrs description]);
+        if ([tagsDate compare:optionalDate] == NSOrderedDescending) {
+            return tagsDate;
+        }
+        else
+        {
+            return optionalDate;
+        }
+    }
+    else {
+        NSLog(@"Not found");
+    }
+    return nil;
 }
 
 -(BOOL)shouldDoImport
 {
     double numberOfOptionals = [[OPEManagedReferenceOptional MR_numberOfEntities] doubleValue];
     double numberOfPOI = [[OPEManagedReferencePoi MR_numberOfEntities] doubleValue];
-    if (![[self lastImportHash] isEqualToString:[self currentFileHash]]) {
+    if ([[self lastImportDate] compare:[self currentMostRecentFileDate]] != NSOrderedSame) {
         return YES;
     }
     else if (numberOfOptionals == 0 && numberOfPOI == 0)
@@ -253,7 +286,7 @@
 -(void)setImportVersionNumber
 {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:[self currentFileHash] forKey:kLastImportHashKey];
+    [userDefaults setObject:[self currentMostRecentFileDate] forKey:kLastImportFileDate];
     [userDefaults synchronize];
 }
 

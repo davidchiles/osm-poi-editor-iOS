@@ -640,73 +640,13 @@
 				<string>baby_hatch</string>
 			</dict>
 		</dict>
-		<key>Clinic</key>
-		<dict>
-			<key>image</key>
-			<string>first_aid.png</string>
-			<key>tags</key>
-			<dict>
-				<key>healthcare</key>
-				<string>clinic</string>
-			</dict>
-			<key>optional</key>
-			<array>
-				<string>wheelchair</string>
-				<string>address</string>
-			</array>
-		</dict>
-		<key>Physical Therapy</key>
-		<dict>
-			<key>image</key>
-			<string>first_aid.png</string>
-			<key>tags</key>
-			<dict>
-				<key>healthcare</key>
-				<string>physiotherapist</string>
-			</dict>
-			<key>optional</key>
-			<array>
-				<string>wheelchair</string>
-				<string>address</string>
-			</array>
-		</dict>
-		<key>Clinic (legacy)</key>
-		<dict>
-			<key>image</key>
-			<string>first_aid.png</string>
-			<key>tags</key>
-			<dict>
-				<key>amenity</key>
-				<string>clinic</string>
-			</dict>
-			<key>optional</key>
-			<array>
-				<string>wheelchair</string>
-				<string>address</string>
-			</array>
-		</dict>
-		<key>Dentist (legacy)</key>
-		<dict>
-			<key>image</key>
-			<string>dentist.png</string>
-			<key>tags</key>
-			<dict>
-				<key>amenity</key>
-				<string>dentist</string>
-			</dict>
-			<key>optional</key>
-			<array>
-				<string>wheelchair</string>
-				<string>address</string>
-			</array>
-		</dict>
 		<key>Dentist</key>
 		<dict>
 			<key>image</key>
 			<string>dentist.png</string>
 			<key>tags</key>
 			<dict>
-				<key>healthcare</key>
+				<key>amenity</key>
 				<string>dentist</string>
 			</dict>
 			<key>optional</key>
@@ -721,38 +661,8 @@
 			<string>doctor.png</string>
 			<key>tags</key>
 			<dict>
-				<key>healthcare</key>
-				<string>doctor</string>
-			</dict>
-			<key>optional</key>
-			<array>
-				<string>wheelchair</string>
-				<string>address</string>
-			</array>
-		</dict>
-		<key>Doctor (legacy)</key>
-		<dict>
-			<key>image</key>
-			<string>doctor.png</string>
-			<key>tags</key>
-			<dict>
 				<key>amenity</key>
 				<string>doctors</string>
-			</dict>
-			<key>optional</key>
-			<array>
-				<string>wheelchair</string>
-				<string>address</string>
-			</array>
-		</dict>
-		<key>Hospital (legacy)</key>
-		<dict>
-			<key>image</key>
-			<string>hospital.png</string>
-			<key>tags</key>
-			<dict>
-				<key>amenity</key>
-				<string>hospital</string>
 			</dict>
 			<key>optional</key>
 			<array>
@@ -766,7 +676,7 @@
 			<string>hospital.png</string>
 			<key>tags</key>
 			<dict>
-				<key>healthcare</key>
+				<key>amenity</key>
 				<string>hospital</string>
 			</dict>
 			<key>optional</key>
@@ -775,7 +685,7 @@
 				<string>address</string>
 			</array>
 		</dict>
-		<key>Pharmacy</key>
+		<key>Pharmacy </key>
 		<dict>
 			<key>image</key>
 			<string>first_aid.png</string>
