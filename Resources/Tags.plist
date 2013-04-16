@@ -3421,7 +3421,45 @@
 				<string>covered</string>
 			</array>
 		</dict>
+		<key>Subway Station</key>
+		<dict>
+			<key>image</key>
+			<string>train.png</string>
+			<key>tags</key>
+			<dict>
+				<key>public_transport</key>
+				<string>station</string>
+				<key>subway</key>
+				<string>yes</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>internet_access</string>
+				<string>internet_access_fee</string>
+			</array>
+		</dict>
 		<key>Train Station</key>
+		<dict>
+			<key>image</key>
+			<string>train.png</string>
+			<key>tags</key>
+			<dict>
+				<key>public_transport</key>
+				<string>station</string>
+				<key>train</key>
+				<string>yes</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>address</string>
+				<string>internet_access</string>
+				<string>internet_access_fee</string>
+			</array>
+		</dict>
+		<key>Train Station (legacy)</key>
 		<dict>
 			<key>image</key>
 			<string>train.png</string>
@@ -3442,6 +3480,21 @@
 				<string>internet_access_fee</string>
 			</array>
 		</dict>
+		<key>Train Platform (legacy)</key>
+		<dict>
+			<key>image</key>
+			<string>train.png</string>
+			<key>tags</key>
+			<dict>
+				<key>railway</key>
+				<string>platform</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>covered</string>
+			</array>
+		</dict>
 		<key>Train Platform</key>
 		<dict>
 			<key>image</key>
@@ -3451,6 +3504,23 @@
 				<key>public_transport</key>
 				<string>platform</string>
 				<key>train</key>
+				<string>yes</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>covered</string>
+			</array>
+		</dict>
+		<key>Subway Platform</key>
+		<dict>
+			<key>image</key>
+			<string>train.png</string>
+			<key>tags</key>
+			<dict>
+				<key>public_transport</key>
+				<string>platform</string>
+				<key>subway</key>
 				<string>yes</string>
 			</dict>
 			<key>optional</key>
