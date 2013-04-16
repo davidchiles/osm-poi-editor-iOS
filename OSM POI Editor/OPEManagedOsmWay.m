@@ -2,6 +2,7 @@
 #import "OPEManagedOsmNode.h"
 #import "OPEManagedOsmTag.h"
 #import "OPEGeo.h"
+#import "OPEGeoCentroid.h"
 #import "OPEManagedOsmNodeReference.h"
 
 
@@ -38,7 +39,8 @@
         }
         
         
-        CLLocationCoordinate2D center = [OPEGeo centroidOfPolygon:array];
+        //CLLocationCoordinate2D center = [OPEGeo centroidOfPolygon:array];
+        CLLocationCoordinate2D center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:array];
         return center;
     }
     return CLLocationCoordinate2DMake(0, 0);

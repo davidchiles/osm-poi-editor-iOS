@@ -39,6 +39,7 @@
 #import "OPEManagedOsmRelation.h"
 #import "OpeManagedOsmRelationMember.h"
 #import "OPEGeo.h"
+#import "OPEGeoCentroid.h"
 
 #define noNameTag 100
 
@@ -290,7 +291,7 @@
         for (NSArray * pointsArray in outerPolygonArray)
         {
             
-            CLLocationCoordinate2D center = [OPEGeo centroidOfPolygon:pointsArray];
+            CLLocationCoordinate2D center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:pointsArray];
             RMAnnotation * newAnnoation = [RMAnnotation annotationWithMapView:mapView coordinate:center andTitle:annotation.title];
             newAnnoation.subtitle = annotation.subtitle;
             newAnnoation.userInfo = annotation.userInfo;

@@ -29,5 +29,7 @@ typedef struct {
 +(OPELineSegment)lineSegmentFromPoint:(CLLocationCoordinate2D)point1 toPoint:(CLLocationCoordinate2D)point2;
 +(double)distanceFromlineSegment:(OPELineSegment)lineSegment toPoint:(CLLocationCoordinate2D)point;
 +(CLLocationCoordinate2D)centroidOfPolygon:(NSArray *)points;
++(OPEProjectedPoint)coordinateToProjectedPoint:(CLLocationCoordinate2D)aLatLong;
++(CLLocationCoordinate2D)toCoordinate:(OPEProjectedPoint)point;
 
 @end
