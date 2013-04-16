@@ -254,7 +254,7 @@
     if (tagsAttrs != nil || optionalAttrs != nil) {
         NSDate *tagsDate = (NSDate*)[tagsAttrs objectForKey: NSFileCreationDate];
         NSDate *optionalDate = (NSDate *)[optionalAttrs objectForKey:NSFileCreationDate];
-        NSLog(@"Date Created: %@", [tagsAttrs description]);
+        //NSLog(@"Date Created: %@", [tagsAttrs description]);
         if ([tagsDate compare:optionalDate] == NSOrderedDescending) {
             return tagsDate;
         }
