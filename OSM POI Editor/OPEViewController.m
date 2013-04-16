@@ -551,19 +551,7 @@
                 [self.message removeFromSuperview];
             }
         }];
-    }
-    
-    
-    /*
-    [UIView animateWithDuration:1.0 animations:^{
-        self.message.alpha = 0.0;
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self.message removeFromSuperview];
-        }
-    }];
-     */
-    
+    }    
 }
 
 -(void)downloadNewArea:(RMMapView *)map

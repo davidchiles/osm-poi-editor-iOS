@@ -5,11 +5,14 @@ POI+ is a simple and straightforward iPhone app that can add or edit exisiting n
 
 You can find the app on the [App Store](https://itunes.apple.com/us/app/poi+-open-street-map-poi-editor/id518401562?ls=1&mt=8)
 
-##Building
+##Project Setup
+`git clone git@github.com:davidchiles/osm-poi-editor-iOS.git
+cd osm-poi-editor-iOS/
+git submodule update --init --recursive`
 
 change `OPEAPIConstants_example.h` to `OPEAPIConstants.h`
 
-To use bing as a tile source or make changes to the map fill in the necessary fields in `OPEAPIConstants.h`
+To use bing as a tile source or make edits to OpenStreetMap fill in the necessary fields in `OPEAPIConstants.h`
 
 
 
