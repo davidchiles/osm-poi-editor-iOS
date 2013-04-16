@@ -417,6 +417,22 @@
 		63F03D3616B09FD8004AF385 /* OPEManagedReferenceOsmTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2D16B09FD8004AF385 /* OPEManagedReferenceOsmTag.m */; };
 		63F03D3816B0A2D1004AF385 /* OPEManagedReferencePoi.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D3716B0A2D0004AF385 /* OPEManagedReferencePoi.m */; };
 		63F03D3B16B0A927004AF385 /* OPEMRUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D3A16B0A926004AF385 /* OPEMRUtility.m */; };
+		63FBA581171DFBD90098A2F3 /* libSPATIALITE_2.3.1_arm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBA57F171DFBD90098A2F3 /* libSPATIALITE_2.3.1_arm.a */; };
+		63FBA582171DFBD90098A2F3 /* libSPATIALITE_2.3.1_x86.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBA580171DFBD90098A2F3 /* libSPATIALITE_2.3.1_x86.a */; };
+		63FBA59E171DFBED0098A2F3 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA589171DFBED0098A2F3 /* Node.m */; };
+		63FBA59F171DFBED0098A2F3 /* optimizeDb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 63FBA58A171DFBED0098A2F3 /* optimizeDb.sql */; };
+		63FBA5A0171DFBED0098A2F3 /* OSMDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA58C171DFBED0098A2F3 /* OSMDAO.m */; };
+		63FBA5A1171DFBED0098A2F3 /* OSMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA58E171DFBED0098A2F3 /* OSMParser.m */; };
+		63FBA5A2171DFBED0098A2F3 /* OSMParserHandlerAdministrative.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA590171DFBED0098A2F3 /* OSMParserHandlerAdministrative.m */; };
+		63FBA5A3171DFBED0098A2F3 /* OSMParserHandlerAllRoads.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA592171DFBED0098A2F3 /* OSMParserHandlerAllRoads.m */; };
+		63FBA5A4171DFBED0098A2F3 /* OSMParserHandlerDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA594171DFBED0098A2F3 /* OSMParserHandlerDefault.m */; };
+		63FBA5A5171DFBED0098A2F3 /* OSMParserHandlerMotorway.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA596171DFBED0098A2F3 /* OSMParserHandlerMotorway.m */; };
+		63FBA5A7171DFBED0098A2F3 /* Relation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA599171DFBED0098A2F3 /* Relation.m */; };
+		63FBA5A8171DFBED0098A2F3 /* roadNetworkInit.sql in Resources */ = {isa = PBXBuildFile; fileRef = 63FBA59A171DFBED0098A2F3 /* roadNetworkInit.sql */; };
+		63FBA5A9171DFBED0098A2F3 /* Way.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA59C171DFBED0098A2F3 /* Way.m */; };
+		63FBA5AC171E00F20098A2F3 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA5AB171E00F20098A2F3 /* Element.m */; };
+		63FBA5AE171E08E70098A2F3 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBA5AD171E08E70098A2F3 /* libiconv.dylib */; };
+		63FBA5B0171E08F50098A2F3 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBA5AF171E08F40098A2F3 /* libstdc++.dylib */; };
 		63FCA4421643127D00A28470 /* OPEBingTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FCA4411643127D00A28470 /* OPEBingTileSource.m */; };
 		63FCA4511643363800A28470 /* OPEUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FCA4501643363700A28470 /* OPEUtility.m */; };
 /* End PBXBuildFile section */
@@ -980,6 +996,42 @@
 		63F03D3716B0A2D0004AF385 /* OPEManagedReferencePoi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedReferencePoi.m; sourceTree = "<group>"; };
 		63F03D3916B0A925004AF385 /* OPEMRUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMRUtility.h; sourceTree = "<group>"; };
 		63F03D3A16B0A926004AF385 /* OPEMRUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMRUtility.m; sourceTree = "<group>"; };
+		63FBA573171DFBD90098A2F3 /* geos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geos.h; sourceTree = "<group>"; };
+		63FBA574171DFBD90098A2F3 /* geos_c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geos_c.h; sourceTree = "<group>"; };
+		63FBA575171DFBD90098A2F3 /* proj_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = proj_api.h; sourceTree = "<group>"; };
+		63FBA577171DFBD90098A2F3 /* gaiaaux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gaiaaux.h; sourceTree = "<group>"; };
+		63FBA578171DFBD90098A2F3 /* gaiaexif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gaiaexif.h; sourceTree = "<group>"; };
+		63FBA579171DFBD90098A2F3 /* gaiageo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gaiageo.h; sourceTree = "<group>"; };
+		63FBA57A171DFBD90098A2F3 /* spatialite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spatialite.h; sourceTree = "<group>"; };
+		63FBA57B171DFBD90098A2F3 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
+		63FBA57C171DFBD90098A2F3 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
+		63FBA57D171DFBD90098A2F3 /* spatialite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spatialite.h; sourceTree = "<group>"; };
+		63FBA57F171DFBD90098A2F3 /* libSPATIALITE_2.3.1_arm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSPATIALITE_2.3.1_arm.a; sourceTree = "<group>"; };
+		63FBA580171DFBD90098A2F3 /* libSPATIALITE_2.3.1_x86.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSPATIALITE_2.3.1_x86.a; sourceTree = "<group>"; };
+		63FBA588171DFBED0098A2F3 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		63FBA589171DFBED0098A2F3 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
+		63FBA58A171DFBED0098A2F3 /* optimizeDb.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = optimizeDb.sql; sourceTree = "<group>"; };
+		63FBA58B171DFBED0098A2F3 /* OSMDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMDAO.h; sourceTree = "<group>"; };
+		63FBA58C171DFBED0098A2F3 /* OSMDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMDAO.m; sourceTree = "<group>"; };
+		63FBA58D171DFBED0098A2F3 /* OSMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMParser.h; sourceTree = "<group>"; };
+		63FBA58E171DFBED0098A2F3 /* OSMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMParser.m; sourceTree = "<group>"; };
+		63FBA58F171DFBED0098A2F3 /* OSMParserHandlerAdministrative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMParserHandlerAdministrative.h; sourceTree = "<group>"; };
+		63FBA590171DFBED0098A2F3 /* OSMParserHandlerAdministrative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMParserHandlerAdministrative.m; sourceTree = "<group>"; };
+		63FBA591171DFBED0098A2F3 /* OSMParserHandlerAllRoads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMParserHandlerAllRoads.h; sourceTree = "<group>"; };
+		63FBA592171DFBED0098A2F3 /* OSMParserHandlerAllRoads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMParserHandlerAllRoads.m; sourceTree = "<group>"; };
+		63FBA593171DFBED0098A2F3 /* OSMParserHandlerDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMParserHandlerDefault.h; sourceTree = "<group>"; };
+		63FBA594171DFBED0098A2F3 /* OSMParserHandlerDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMParserHandlerDefault.m; sourceTree = "<group>"; };
+		63FBA595171DFBED0098A2F3 /* OSMParserHandlerMotorway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMParserHandlerMotorway.h; sourceTree = "<group>"; };
+		63FBA596171DFBED0098A2F3 /* OSMParserHandlerMotorway.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMParserHandlerMotorway.m; sourceTree = "<group>"; };
+		63FBA598171DFBED0098A2F3 /* Relation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Relation.h; sourceTree = "<group>"; };
+		63FBA599171DFBED0098A2F3 /* Relation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Relation.m; sourceTree = "<group>"; };
+		63FBA59A171DFBED0098A2F3 /* roadNetworkInit.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = roadNetworkInit.sql; sourceTree = "<group>"; };
+		63FBA59B171DFBED0098A2F3 /* Way.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Way.h; sourceTree = "<group>"; };
+		63FBA59C171DFBED0098A2F3 /* Way.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Way.m; sourceTree = "<group>"; };
+		63FBA5AA171E00F20098A2F3 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
+		63FBA5AB171E00F20098A2F3 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Element.m; sourceTree = "<group>"; };
+		63FBA5AD171E08E70098A2F3 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		63FBA5AF171E08F40098A2F3 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		63FCA4401643127D00A28470 /* OPEBingTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBingTileSource.h; sourceTree = "<group>"; };
 		63FCA4411643127D00A28470 /* OPEBingTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBingTileSource.m; sourceTree = "<group>"; };
 		63FCA44F1643363700A28470 /* OPEUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEUtility.h; sourceTree = "<group>"; };
@@ -991,6 +1043,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63FBA5B0171E08F50098A2F3 /* libstdc++.dylib in Frameworks */,
+				63FBA5AE171E08E70098A2F3 /* libiconv.dylib in Frameworks */,
+				6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */,
 				63E39018170CEEE0006F35D0 /* libUserVoice.a in Frameworks */,
 				6333D3A916811F2A00BF129E /* CoreData.framework in Frameworks */,
 				63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */,
@@ -1004,7 +1059,6 @@
 				633CD86A164B249100678D58 /* AudioToolbox.framework in Frameworks */,
 				63570A901640F3C00009D8A3 /* libMapBox.a in Frameworks */,
 				63E279EA14E1F87D009D02BD /* libxml2.dylib in Frameworks */,
-				6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */,
 				63E4BF1A14E068EC00E0BD46 /* libz.dylib in Frameworks */,
 				6383949A14EC85C100C74A57 /* Security.framework in Frameworks */,
 				63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */,
@@ -1014,6 +1068,8 @@
 				6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */,
 				634205A716449197009C6BA4 /* libCrittercismCrashOnly_v3_3_4.a in Frameworks */,
 				633CD868164B242C00678D58 /* Parse.framework in Frameworks */,
+				63FBA581171DFBD90098A2F3 /* libSPATIALITE_2.3.1_arm.a in Frameworks */,
+				63FBA582171DFBD90098A2F3 /* libSPATIALITE_2.3.1_x86.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1368,6 +1424,8 @@
 		6330AB5F14DB519A00448852 = {
 			isa = PBXGroup;
 			children = (
+				63FBA5AF171E08F40098A2F3 /* libstdc++.dylib */,
+				63FBA5AD171E08E70098A2F3 /* libiconv.dylib */,
 				63570A801640F3B10009D8A3 /* MapView.xcodeproj */,
 				6330AB7414DB519A00448852 /* OSM POI Editor */,
 				6326680617164578002CD7E4 /* Resources */,
@@ -1752,6 +1810,8 @@
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				63FBA586171DFBED0098A2F3 /* osm-parser */,
+				63FBA571171DFBD90098A2F3 /* spatialite */,
 				63266A2A171646F0002CD7E4 /* TBXML */,
 				63266A1B1716469B002CD7E4 /* gtm-oauth */,
 				63E38FE3170CE6BD006F35D0 /* UserVoice */,
@@ -1819,6 +1879,80 @@
 			);
 			name = MachineGenerated;
 			sourceTree = "<group>";
+		};
+		63FBA571171DFBD90098A2F3 /* spatialite */ = {
+			isa = PBXGroup;
+			children = (
+				63FBA572171DFBD90098A2F3 /* headers */,
+				63FBA57E171DFBD90098A2F3 /* libs */,
+			);
+			name = spatialite;
+			path = lib/spatialite;
+			sourceTree = SOURCE_ROOT;
+		};
+		63FBA572171DFBD90098A2F3 /* headers */ = {
+			isa = PBXGroup;
+			children = (
+				63FBA573171DFBD90098A2F3 /* geos.h */,
+				63FBA574171DFBD90098A2F3 /* geos_c.h */,
+				63FBA575171DFBD90098A2F3 /* proj_api.h */,
+				63FBA576171DFBD90098A2F3 /* spatialite */,
+				63FBA57D171DFBD90098A2F3 /* spatialite.h */,
+			);
+			path = headers;
+			sourceTree = "<group>";
+		};
+		63FBA576171DFBD90098A2F3 /* spatialite */ = {
+			isa = PBXGroup;
+			children = (
+				63FBA577171DFBD90098A2F3 /* gaiaaux.h */,
+				63FBA578171DFBD90098A2F3 /* gaiaexif.h */,
+				63FBA579171DFBD90098A2F3 /* gaiageo.h */,
+				63FBA57A171DFBD90098A2F3 /* spatialite.h */,
+				63FBA57B171DFBD90098A2F3 /* sqlite3.h */,
+				63FBA57C171DFBD90098A2F3 /* sqlite3ext.h */,
+			);
+			path = spatialite;
+			sourceTree = "<group>";
+		};
+		63FBA57E171DFBD90098A2F3 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				63FBA57F171DFBD90098A2F3 /* libSPATIALITE_2.3.1_arm.a */,
+				63FBA580171DFBD90098A2F3 /* libSPATIALITE_2.3.1_x86.a */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		63FBA586171DFBED0098A2F3 /* osm-parser */ = {
+			isa = PBXGroup;
+			children = (
+				63FBA58A171DFBED0098A2F3 /* optimizeDb.sql */,
+				63FBA58B171DFBED0098A2F3 /* OSMDAO.h */,
+				63FBA58C171DFBED0098A2F3 /* OSMDAO.m */,
+				63FBA58D171DFBED0098A2F3 /* OSMParser.h */,
+				63FBA58E171DFBED0098A2F3 /* OSMParser.m */,
+				63FBA58F171DFBED0098A2F3 /* OSMParserHandlerAdministrative.h */,
+				63FBA590171DFBED0098A2F3 /* OSMParserHandlerAdministrative.m */,
+				63FBA591171DFBED0098A2F3 /* OSMParserHandlerAllRoads.h */,
+				63FBA592171DFBED0098A2F3 /* OSMParserHandlerAllRoads.m */,
+				63FBA593171DFBED0098A2F3 /* OSMParserHandlerDefault.h */,
+				63FBA594171DFBED0098A2F3 /* OSMParserHandlerDefault.m */,
+				63FBA595171DFBED0098A2F3 /* OSMParserHandlerMotorway.h */,
+				63FBA596171DFBED0098A2F3 /* OSMParserHandlerMotorway.m */,
+				63FBA5AA171E00F20098A2F3 /* Element.h */,
+				63FBA5AB171E00F20098A2F3 /* Element.m */,
+				63FBA588171DFBED0098A2F3 /* Node.h */,
+				63FBA589171DFBED0098A2F3 /* Node.m */,
+				63FBA59B171DFBED0098A2F3 /* Way.h */,
+				63FBA59C171DFBED0098A2F3 /* Way.m */,
+				63FBA598171DFBED0098A2F3 /* Relation.h */,
+				63FBA599171DFBED0098A2F3 /* Relation.m */,
+				63FBA59A171DFBED0098A2F3 /* roadNetworkInit.sql */,
+			);
+			name = "osm-parser";
+			path = "lib/osm-parser";
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -2181,6 +2315,8 @@
 				63266A1A17164579002CD7E4 /* Tags.plist in Resources */,
 				63266A291716469B002CD7E4 /* GTMOAuthViewTouch.xib in Resources */,
 				63266A3717164732002CD7E4 /* OPECategoryViewController.xib in Resources */,
+				63FBA59F171DFBED0098A2F3 /* optimizeDb.sql in Resources */,
+				63FBA5A8171DFBED0098A2F3 /* roadNetworkInit.sql in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2311,6 +2447,16 @@
 				63266A30171646F0002CD7E4 /* TBXML.m in Sources */,
 				63266A3617164732002CD7E4 /* OPECategoryViewController.m in Sources */,
 				636549E8171CDE8000F16772 /* OPEGeoCentroid.m in Sources */,
+				63FBA59E171DFBED0098A2F3 /* Node.m in Sources */,
+				63FBA5A0171DFBED0098A2F3 /* OSMDAO.m in Sources */,
+				63FBA5A1171DFBED0098A2F3 /* OSMParser.m in Sources */,
+				63FBA5A2171DFBED0098A2F3 /* OSMParserHandlerAdministrative.m in Sources */,
+				63FBA5A3171DFBED0098A2F3 /* OSMParserHandlerAllRoads.m in Sources */,
+				63FBA5A4171DFBED0098A2F3 /* OSMParserHandlerDefault.m in Sources */,
+				63FBA5A5171DFBED0098A2F3 /* OSMParserHandlerMotorway.m in Sources */,
+				63FBA5A7171DFBED0098A2F3 /* Relation.m in Sources */,
+				63FBA5A9171DFBED0098A2F3 /* Way.m in Sources */,
+				63FBA5AC171E00F20098A2F3 /* Element.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2408,6 +2554,7 @@
 					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/OSM_POI_Editor-eqgolvplfdafjffvryvwtjldlhbj/Build/Products/Debug-iphoneos\"",
 					"\"$(SRCROOT)/lib/CrittercismSDK\"",
 					"\"$(SRCROOT)/OSM POI Editor\"",
+					"\"$(SRCROOT)/lib/spatialite/libs\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -2448,6 +2595,7 @@
 					"\"$(SRCROOT)/../../../Library/Developer/Xcode/DerivedData/OSM_POI_Editor-eqgolvplfdafjffvryvwtjldlhbj/Build/Products/Debug-iphoneos\"",
 					"\"$(SRCROOT)/lib/CrittercismSDK\"",
 					"\"$(SRCROOT)/OSM POI Editor\"",
+					"\"$(SRCROOT)/lib/spatialite/libs\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
