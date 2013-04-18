@@ -42,6 +42,12 @@ the terms of any one of the MPL, the GPL or the LGPL.
  
 */
 
+int virtualshape_extension_init (sqlite3 * db);
+int virtualtext_extension_init (sqlite3 * db);
+int virtualnetwork_extension_init (sqlite3 * db);
+int virtualfdo_extension_init (sqlite3 * db);
+int mbrcache_extension_init (sqlite3 * db);
+
 #ifdef DLL_EXPORT
 #define SPATIALITE_DECLARE __declspec(dllexport)
 #else

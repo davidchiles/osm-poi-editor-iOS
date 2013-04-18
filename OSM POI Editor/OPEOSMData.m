@@ -33,6 +33,9 @@
 #import "OPEMRUtility.h"
 #import "OPEUtility.h"
 
+#import "OSMParser.h"
+#import "OSMParserHandlerDefault.h"
+
 @implementation OPEOSMData
 
 @synthesize auth;
@@ -85,9 +88,16 @@
         }
         
         dispatch_async(q,  ^{
-            TBXML * xmlResponse = [[TBXML alloc] initWithXMLData:responseObject];
-            [self parseTBXML:xmlResponse];
+            //TBXML * xmlResponse = [[TBXML alloc] initWithXMLData:responseObject];
+            //[self parseTBXML:xmlResponse];
             
+            NSString* mySpatialiteOutputFile = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"spatialdb.sqlite"];
+            OSMParser* parser = [[OSMParser alloc] initWithOSMData:responseObject];
+            OSMParserHandlerDefault* handler = [[OSMParserHandlerDefault alloc] initWithOutputFilePath:mySpatialiteOutputFile overrideIfExists:NO];
+            parser.delegate=handler;
+            [parser parse];
+            
+            NSLog(@"done Parsing");
 
         });
         //dispatch_release(t);
@@ -729,7 +739,6 @@
         
         [attributeDict setObject:[NSString stringWithFormat:@"%s" ,attribute->value] forKey:[NSString stringWithFormat:@"%s" ,attribute->name]];
     }
-    
     return attributeDict;
 }
 
