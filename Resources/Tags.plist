@@ -685,7 +685,7 @@
 				<string>address</string>
 			</array>
 		</dict>
-		<key>Pharmacy </key>
+		<key>Pharmacy</key>
 		<dict>
 			<key>image</key>
 			<string>first_aid.png</string>
@@ -2923,6 +2923,7 @@
 				<string>internet_access_fee</string>
 				<string>address</string>
 				<string>smoking</string>
+				<string>operator</string>
 			</array>
 		</dict>
 		<key>Hotel</key>
@@ -2941,6 +2942,26 @@
 				<string>internet_access_fee</string>
 				<string>address</string>
 				<string>smoking</string>
+				<string>operator</string>
+			</array>
+		</dict>
+		<key>Motel</key>
+		<dict>
+			<key>image</key>
+			<string>bed.png</string>
+			<key>tags</key>
+			<dict>
+				<key>tourism</key>
+				<string>motel</string>
+			</dict>
+			<key>optional</key>
+			<array>
+				<string>wheelchair</string>
+				<string>internet_access</string>
+				<string>internet_access_fee</string>
+				<string>address</string>
+				<string>smoking</string>
+				<string>operator</string>
 			</array>
 		</dict>
 		<key>Memorial</key>
@@ -2983,24 +3004,6 @@
 			<key>optional</key>
 			<array>
 				<string>wheelchair</string>
-			</array>
-		</dict>
-		<key>Motel</key>
-		<dict>
-			<key>image</key>
-			<string>bed.png</string>
-			<key>tags</key>
-			<dict>
-				<key>tourism</key>
-				<string>motel</string>
-			</dict>
-			<key>optional</key>
-			<array>
-				<string>wheelchair</string>
-				<string>address</string>
-				<string>internet_access</string>
-				<string>internet_access_fee</string>
-				<string>smoking</string>
 			</array>
 		</dict>
 		<key>Mountain Hut</key>
