@@ -39,6 +39,7 @@
 #import "OPEManagedReferenceOsmTag.h"
 #import "OPEManagedOsmNode.h"
 #import "OPETagEditViewController.h"
+#import "OPEStrings.h"
 
 
 
@@ -57,7 +58,7 @@
 {
     self = [super init];
     if(self){
-        self.title = @"Info";
+        self.title = INFO_TITLE_STRING;
     }
     return self;
 }
@@ -80,7 +81,7 @@
         originalTags = [self.managedOsmElement.tags copy];
         [self.managedOsmElement updateLegacyTags];
         
-        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
+        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: CANCEL_STRING style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         
         [[self navigationItem] setLeftBarButtonItem: newBackButton];
         
@@ -117,7 +118,7 @@
     
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
-    self.saveButton = [[UIBarButtonItem alloc] initWithTitle: @"Save" style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
+    self.saveButton = [[UIBarButtonItem alloc] initWithTitle: SAVE_STRING style: UIBarButtonItemStyleBordered target: self action: @selector(saveButtonPressed)];
     
     [[self navigationItem] setRightBarButtonItem:saveButton];
     
@@ -131,7 +132,7 @@
         
         
         deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [deleteButton setTitle:@"Delete" forState:UIControlStateNormal];
+        [deleteButton setTitle:DELETING_STRING forState:UIControlStateNormal];
         [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
                                                stretchableImageWithLeftCapWidth:8.0f
                                                topCapHeight:0.0f]
@@ -230,11 +231,11 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	if(section == 0)
     {
-        return @"Name";
+        return NAME_STRING;
     }
     else if(section == 1)
     {
-        return @"Category";
+        return CATEGORY_STRING;
     }
     else
     {
@@ -276,11 +277,11 @@
         //cell.textLabel.text = [catAndTypeName objectAtIndex:indexPath.row];
         cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"Category";
+            cell.textLabel.text = CATEGORY_STRING;
             cell.detailTextLabel.text = self.managedOsmElement.type.category.name;
         }
         else{
-            cell.textLabel.text = @"Type";
+            cell.textLabel.text = TYPE_STRING;
             cell.detailTextLabel.text = self.managedOsmElement.type.name;
         }
         return cell;
@@ -360,7 +361,7 @@
     if (indexPath.section == 0) {
         OPETagEditViewController * viewController = nil;
         viewController = [OPETagEditViewController viewControllerWithOsmKey:@"name" andType:nil delegate:self];
-        viewController.title = @"Name";
+        viewController.title = NAME_STRING;
         viewController.currentOsmValue = [self.managedOsmElement valueForOsmKey:@"name"];
         [self.navigationController pushViewController:viewController animated:YES];
     }
@@ -371,7 +372,7 @@
             if (self.managedOsmElement.type)
             {
                 OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:[NSBundle mainBundle]];
-                viewer.title = @"Type";
+                viewer.title = TYPE_STRING;
                 
                 //viewer.category = editableType.category;
                 viewer.categoryManagedObjectID = [self.managedOsmElement.type.category objectID];
@@ -383,7 +384,7 @@
         else
         {
             OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
-            viewer.title = @"Category";
+            viewer.title = CATEGORY_STRING;
             [viewer setDelegate:self];
             
             [self.navigationController pushViewController:viewer animated:YES];
@@ -412,7 +413,7 @@
 }
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return @"Remove";
+    return REMOVE_STRING;
 }
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -467,11 +468,11 @@
     }
     else {
         NSLog(@"Delete Button Pressed");
-        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Delete Point of Interest"
-                                                          message:@"Are you Sure you want to delete this node?"
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:DELETE_ALERT_TITLE_STRING
+                                                          message:DELETE_ALERT_STRING
                                                          delegate:self
-                                                cancelButtonTitle:@"Cancel"
-                                                otherButtonTitles:@"Delete",nil];
+                                                cancelButtonTitle:CANCEL_STRING
+                                                otherButtonTitles:DELETE_STRING,nil];
         message.tag = 1;
         
         [message show];
@@ -494,7 +495,7 @@
             
             
             [self.navigationController.view addSubview:self.HUD];
-            [self.HUD setLabelText:@"Deleting..."];
+            [self.HUD setLabelText:[NSString stringWithFormat:@"%@ ...",DELETING_STRING]];
             [self.HUD show:YES];
             
             if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {

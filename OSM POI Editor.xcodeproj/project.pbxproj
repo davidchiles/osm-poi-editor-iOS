@@ -460,6 +460,7 @@
 		631539E014DC98D0000236F0 /* OPEOSMData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMData.m; sourceTree = "<group>"; };
 		631BAAB416B366AB00CF4DAA /* OPEManagedReferencePoiCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedReferencePoiCategory.h; sourceTree = "<group>"; };
 		631BAAB516B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedReferencePoiCategory.m; sourceTree = "<group>"; };
+		631FE88D1720C26000AEA107 /* OPEStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEStrings.h; sourceTree = "<group>"; };
 		6326680917164578002CD7E4 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplane.png; sourceTree = "<group>"; };
 		6326680A17164578002CD7E4 /* alcohol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alcohol.png; sourceTree = "<group>"; };
 		6326680B17164578002CD7E4 /* apartment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apartment.png; sourceTree = "<group>"; };
@@ -1469,6 +1470,7 @@
 			isa = PBXGroup;
 			children = (
 				63E525D81534E66500D2DA35 /* about.html */,
+				631FE88D1720C26000AEA107 /* OPEStrings.h */,
 				639953FD16113A200070CBAF /* about.css */,
 				6330AB7614DB519A00448852 /* OSM POI Editor-Info.plist */,
 				6330AB7714DB519A00448852 /* InfoPlist.strings */,

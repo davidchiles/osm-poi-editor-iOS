@@ -26,6 +26,7 @@
 #import "UserVoice.h"
 #import "OPEUtility.h"
 #import "OPEConstants.h"
+#import "OPEStrings.h"
 
 
 @implementation OPEInfoViewController
@@ -209,7 +210,7 @@
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        return @"Tile Source";
+        return TILE_SOURCE_STRING;
     }
     else {
         return @"";
@@ -240,13 +241,13 @@
         }
         
         if (indexPath.row == 0){
-            cell.textLabel.text = @"Bing Aerial";
+            cell.textLabel.text = BING_AERIAL_STRING;
         }
         else if (indexPath.row == 1){
-            cell.textLabel.text = @"OpenMapquest Aerial";
+            cell.textLabel.text = MAPQUEST_AERIAL_STRING;
         }
         else if (indexPath.row == 2) {
-            cell.textLabel.text = @"OSM Default";
+            cell.textLabel.text = OSM_DEFAULT_STRING;
         }
         
         if (indexPath.row == currentNumber) {
@@ -261,7 +262,7 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:switchIdentifier];
         }
-        cell.textLabel.text = @"Show No Name Streets";
+        cell.textLabel.text = NO_NAME_HIGHWAY_STRING;
         cell.accessoryView = showNoNameStreetsSwitch;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
@@ -277,11 +278,11 @@
         
         if(![self.osmData canAuth])
         {
-            cell.textLabel.text = @"Login to OpenStreetMap";
+            cell.textLabel.text = LOGIN_STRING;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         else
-            cell.textLabel.text = @"Logout of OpenStreetMap";
+            cell.textLabel.text = LOGOUT_STRING;
         
     }
     else if (indexPath.section == 3)
@@ -292,11 +293,11 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:aboutIdentifier];
         }
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"Feedback";
+            cell.textLabel.text = FEEDBACK_STRING;
         }
         else
         {
-            cell.textLabel.text = @"About POI+";
+            cell.textLabel.text = ABOUT_STRING;
         }
         
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

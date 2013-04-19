@@ -30,6 +30,7 @@
 #import "OPEBingTileSource.h"
 #import "OPEAPIConstants.h"
 #import "OPEUtility.h"
+#import "OPEStrings.h"
 
 #import "OPEManagedOsmElement.h"
 #import "OPEManagedReferencePoi.h"
@@ -164,7 +165,7 @@
     
     currentSquare = [mapView latitudeLongitudeBoundingBox];
     
-    message = [[OPEMessageView alloc] initWithMessage:@"Zoom in to load data"];
+    message = [[OPEMessageView alloc] initWithMessage:ZOOM_ERROR_STRING];
     message.alpha = 0.0;
     message.userInteractionEnabled = NO;
     
@@ -530,7 +531,7 @@
 
 -(void) showZoomWarning
 {
-    self.message.textLabel.text = @"Zoom in to load data";
+    self.message.textLabel.text = ZOOM_ERROR_STRING;
     
     if (![message.superview isEqual:self.view]) {
         self.message.alpha = 0.0;
@@ -644,10 +645,10 @@
     }
     else {
         UIAlertView * zoomAlert = [[UIAlertView alloc]
-                                   initWithTitle: @"Zoom Level"
-                                   message: @"You need to zoom in to add a new POI"
+                                   initWithTitle: ZOOM_ALERT_TITLE_STRING
+                                   message: ZOOM_ALERT_STRING
                                    delegate: nil
-                                   cancelButtonTitle:@"OK"
+                                   cancelButtonTitle:OK_STRING
                                    otherButtonTitles:nil];
         [zoomAlert show];
     }
@@ -688,7 +689,7 @@
     viewer.attributionString = attribution;
     //[viewer setCurrentNumber:currentTile];
     viewer.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    viewer.title = @"Settings";
+    viewer.title = SETTINGS_TITLE_STRING;
     [[self navigationController] pushViewController:viewer animated:YES];
 }
 
@@ -901,7 +902,7 @@
         //self.parsingMessageView.textLabel.text = [NSString stringWithFormat:@"Finding %@ ...",elementTypeString];
         [self.view addSubview:self.parsingMessageView];
     }
-    self.parsingMessageView.textLabel.text = [NSString stringWithFormat:@"Finding %@ ...",elementTypeString];
+    self.parsingMessageView.textLabel.text = [NSString stringWithFormat:@"%@ %@ ...",FINDING_STRING,elementTypeString];
     
     
     
@@ -919,7 +920,7 @@
 
 -(void)downloadFailed:(NSError *)error
 {
-    message.textLabel.text = @"Download Error";
+    message.textLabel.text = DOWNLOAD_ERROR_STRING;
     if (![message.superview isEqual:self.view]) {
         message.alpha = 0.0;
         [self.view addSubview:self.message];

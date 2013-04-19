@@ -7,6 +7,7 @@
 //
 
 #import "OPEBaseViewController.h"
+#import "OPEStrings.h"
 
 #define authErrorTag 101
 
@@ -141,7 +142,7 @@
 -(void)startSave
 {
     [self.navigationController.view addSubview:HUD];
-    [HUD setLabelText:@"Saving..."];
+    [HUD setLabelText:[NSString stringWithFormat:@"%@...",SAVING_STRING]];
     [HUD show:YES];
 }
 
@@ -150,7 +151,7 @@
 -(void)didOpenChangeset:(int64_t)changesetNumber withMessage:(NSString *)message
 {
     self.HUD.mode = MBProgressHUDModeIndeterminate;
-    self.HUD.labelText = @"Uploading...";
+    self.HUD.labelText = [NSString stringWithFormat:@"%@...",UPLOADING_STRING];
     
 }
 -(void)didCloseChangeset:(int64_t)changesetNumber
@@ -164,7 +165,7 @@
 {
     self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"x.png"]];
     HUD.mode = MBProgressHUDModeCustomView;
-    self.HUD.labelText =@"Error";
+    self.HUD.labelText =ERROR_STRING;
     [self.HUD hide:YES afterDelay:2.0];
 }
 
