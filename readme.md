@@ -3,7 +3,7 @@
 
 POI+ is a simple and straightforward iPhone app that can add or edit exisiting nodes, ways and relations in [OpenStreetMap](http://openstreetmap.org)
 
-You can find the app on the [App Store](https://itunes.apple.com/us/app/poi+-open-street-map-poi-editor/id518401562?ls=1&mt=8)
+<a href="https://itunes.apple.com/us/app/poi+-open-street-map-poi-editor/id518401562?mt=8&uo=4" target="itunes_store"style="display:inline-block;overflow:hidden;background:url(http://linkmaker.itunes.apple.com/htmlResources/assets/images/web/linkmaker/badge_appstore-lrg.png) no-repeat;width:135px;height:40px;@media only screen{background-image:url(http://linkmaker.itunes.apple.com/htmlResources/assets/images/web/linkmaker/badge_appstore-lrg.svg);}"></a>
 
 ## Project Setup
 	git clone git@github.com:davidchiles/osm-poi-editor-iOS.git
