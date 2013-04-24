@@ -6,9 +6,9 @@ POI+ is a simple and straightforward iPhone app that can add or edit exisiting n
 You can find the app on the [App Store](https://itunes.apple.com/us/app/poi+-open-street-map-poi-editor/id518401562?ls=1&mt=8)
 
 ## Project Setup
-`git clone git@github.com:davidchiles/osm-poi-editor-iOS.git
-cd osm-poi-editor-iOS/
-git submodule update --init --recursive`
+	git clone git@github.com:davidchiles/osm-poi-editor-iOS.git
+	cd osm-poi-editor-iOS/
+	git submodule update --init --recursive
 
 change `OPEAPIConstants_example.h` to `OPEAPIConstants.h`
 
