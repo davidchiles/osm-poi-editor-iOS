@@ -1324,7 +1324,7 @@
 				<string>wheelchair</string>
 			</array>
 		</dict>
-		<key>Scenic Viewpoint</key>
+		<key>Viewpoint</key>
 		<dict>
 			<key>image</key>
 			<string>viewpoint.png</string>
@@ -1892,7 +1892,7 @@
 				<string>address</string>
 			</array>
 		</dict>
-		<key>Dry Cleaning</key>
+		<key>Dry Cleaners</key>
 		<dict>
 			<key>image</key>
 			<string>shirt.png</string>
@@ -2232,7 +2232,7 @@
 				<string>address</string>
 			</array>
 		</dict>
-		<key>Electronics</key>
+		<key>Electronics Store</key>
 		<dict>
 			<key>image</key>
 			<string>computer.png</string>

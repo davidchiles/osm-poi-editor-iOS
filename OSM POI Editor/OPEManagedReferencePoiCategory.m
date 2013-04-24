@@ -8,6 +8,7 @@
 
 #import "OPEManagedReferencePoiCategory.h"
 #import "OPEManagedReferencePoi.h"
+#import "OPETranslate.h"
 
 @interface OPEManagedReferencePoiCategory ()
 
@@ -61,6 +62,14 @@
         referencePoiCategory = [results objectAtIndex:0];
     }
     return referencePoiCategory;
+}
+
+-(NSString *)name
+{
+    [self willAccessValueForKey:@"name"];
+    NSString *myName = [self primitiveName];
+    [self didAccessValueForKey:@"name"];
+    return [OPETranslate translateString:myName];
 }
 
 @end

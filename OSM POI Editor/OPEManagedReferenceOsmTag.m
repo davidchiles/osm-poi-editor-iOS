@@ -1,5 +1,6 @@
 #import "OPEManagedReferenceOsmTag.h"
 #import "OPEManagedOsmTag.h"
+#import "OPETranslate.h"
 
 @interface OPEManagedReferenceOsmTag ()
 
@@ -33,6 +34,14 @@
     
     
     
+}
+
+-(NSString *)name
+{
+    [self willAccessValueForKey:@"name"];
+    NSString *myName = [self primitiveName];
+    [self didAccessValueForKey:@"name"];
+    return [OPETranslate translateString:myName];
 }
 
 @end

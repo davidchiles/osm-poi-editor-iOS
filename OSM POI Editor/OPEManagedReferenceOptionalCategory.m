@@ -1,4 +1,5 @@
 #import "OPEManagedReferenceOptionalCategory.h"
+#import "OPETranslate.h"
 
 
 @interface OPEManagedReferenceOptionalCategory ()
@@ -43,6 +44,14 @@
     }
     return referenceOptionalCategory;
 
+}
+
+-(NSString *)displayName
+{
+    [self willAccessValueForKey:@"displayName"];
+    NSString *myName = [self primitiveDisplayName];
+    [self didAccessValueForKey:@"displayName"];
+    return [OPETranslate translateString:myName];
 }
 
 @end

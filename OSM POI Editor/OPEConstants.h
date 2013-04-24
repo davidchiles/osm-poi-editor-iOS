@@ -64,5 +64,8 @@
 #define kShowNoNameStreetsKey @"kShowNoNameStreetsKey"
 #define kTileSourceNumber @"tileSourceNumber"
 
+#define kOTRAppleLanguagesKey @"AppleLanguages"
+#define kOTRUserSetLanguageKey @"userSetLanguageKey"
+
 
 

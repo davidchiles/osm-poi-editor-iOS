@@ -1,5 +1,6 @@
 #import "OPEManagedReferenceOptional.h"
 #import "OPEManagedReferenceOsmTag.h"
+#import "OPETranslate.h"
 
 
 @interface OPEManagedReferenceOptional ()
@@ -75,6 +76,14 @@
         referenceOptional = [results objectAtIndex:0];
     }
     return referenceOptional;
+}
+
+-(NSString *)displayName
+{
+    [self willAccessValueForKey:@"displayName"];
+    NSString *myName = [self primitiveDisplayName];
+    [self didAccessValueForKey:@"displayName"];
+    return [OPETranslate translateString:myName];
 }
 
 @end

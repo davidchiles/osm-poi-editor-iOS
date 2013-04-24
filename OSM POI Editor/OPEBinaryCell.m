@@ -22,6 +22,8 @@
 
 #import "OPEBinaryCell.h"
 #import "OPEConstants.h"
+#import "OPEManagedReferenceOsmTag.h"
+#import "OPEManagedOsmTag.h"
 
 @implementation OPEBinaryCell
 
@@ -59,7 +61,7 @@
     if(self)
     {
         NSArray * controlArray = [NSArray arrayWithArray:[self orderArray:array]];
-        binaryControl = [[UISegmentedControl alloc] initWithItems:controlArray];
+        binaryControl = [[UISegmentedControl alloc] initWithItems:[controlArray valueForKey:@"name"]];
         binaryControl.segmentedControlStyle = UISegmentedControlStylePlain;
         switch ([controlArray count]) {
             case 1:
@@ -87,23 +89,36 @@
 }
 -(NSArray *)orderArray:(NSArray *) array
 {
-    NSMutableArray * tempArray = [array mutableCopy];
-    NSMutableArray * resultArray = [[NSMutableArray alloc] init ];
     
-    NSString *search = @"Yes";
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[c] %@", search];
-    [resultArray addObjectsFromArray: [array filteredArrayUsingPredicate:predicate]];
-    
-    search = @"No";
-    predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[c] %@", search];
-    [resultArray addObjectsFromArray: [array filteredArrayUsingPredicate:predicate]];
-    
-    for (NSString * item in resultArray) {
-        [tempArray removeObject:item];
-    }
-    
-    [resultArray addObjectsFromArray:tempArray];
-    return [resultArray copy];
+    return [array sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        OPEManagedReferenceOsmTag * tag1 = (OPEManagedReferenceOsmTag *)obj1;
+        OPEManagedReferenceOsmTag * tag2 = (OPEManagedReferenceOsmTag *)obj2;
+        
+        if([tag1.tag.value isEqualToString:@"yes"])
+        {
+            return NSOrderedAscending;
+        }
+        else if ([tag2.tag.value isEqualToString:@"yes"])
+        {
+            return NSOrderedDescending;
+        }
+        else if([tag1.tag.value isEqualToString:@"no"])
+        {
+            return NSOrderedAscending;
+        }
+        else if ([tag2.tag.value isEqualToString:@"no"])
+        {
+            return NSOrderedDescending;
+        }
+        
+        if ([tag1.name length] > [tag2.name length]) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        if ([tag1.name length] < [tag2.name length]) {
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
+    }];
 }
 -(void)selectSegmentWithTitle:(NSString *)title
 {
