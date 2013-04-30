@@ -35,7 +35,7 @@
     
     self.textField = [[OPEOsmValueTextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35) withOsmKey:self.osmKey andValue:self.currentOsmValue];
     [self.textField becomeFirstResponder];
-    if ([referenceOptional.type isEqualToString:kTypeNumber]) {
+    if (referenceOptional.type == OPEOptionalTypeNumber) {
         self.textField.keyboardType = UIKeyboardTypeNumberPad;
     }
     

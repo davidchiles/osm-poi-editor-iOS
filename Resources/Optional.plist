@@ -1308,5 +1308,31 @@
 		<key>sectionSortOrder</key>
 		<integer>9</integer>
 	</dict>
+	<key>note</key>
+	<dict>
+		<key>displayName</key>
+		<string>Note</string>
+		<key>osmKey</key>
+		<string>note</string>
+		<key>section</key>
+		<string>Note</string>
+		<key>values</key>
+		<string>text</string>
+		<key>sectionSortOrder</key>
+		<integer>1</integer>
+	</dict>
+	<key>source</key>
+	<dict>
+		<key>displayName</key>
+		<string>Source</string>
+		<key>osmKey</key>
+		<string>source</string>
+		<key>section</key>
+		<string>Note</string>
+		<key>values</key>
+		<string>text</string>
+		<key>sectionSortOrder</key>
+		<integer>2</integer>
+	</dict>
 </dict>
 </plist>

@@ -70,6 +70,8 @@
 
 -(BOOL)findType
 {
+    //FIXME
+    /*
     if ([self.tags count]) {
         
         
@@ -88,6 +90,7 @@
             return YES;
         }
     }
+     */
     
     return NO;
     
@@ -95,9 +98,11 @@
 
 -(void)removeTagWithOsmKey:(NSString *)osmKey
 {
+    /*
     NSPredicate * keyFilter = [NSPredicate predicateWithFormat:@"%K == %@",OPEManagedOsmTagAttributes.key,osmKey];
     NSSet * removeSet = [self.tags filteredSetUsingPredicate:keyFilter];
     [self.tagsSet minusSet:removeSet];
+     */
 }
 
 -(void)newType:(OPEManagedReferencePoi *)newType
@@ -259,6 +264,7 @@
 
 -(NSDictionary *)nearbyHighwayNames
 {
+    /*
     NSPredicate * tagPredicate = [NSPredicate predicateWithFormat:@"%K == %@",OPEManagedOsmTagAttributes.key,@"highway"];
     NSArray * tags = [OPEManagedOsmTag MR_findAllWithPredicate:tagPredicate];
     
@@ -292,12 +298,13 @@
     }
     
     return highwayDictionary;
+     */
 }
 
 -(void)updateLegacyTags
 {
-    if (self.type.isLegacyValue && self.type.newTagMethod) {
-        OPEManagedReferencePoi * newType = self.type.newTagMethod;
+    if (self.type.isLegacy && self.type.currentTagMethod) {
+        OPEManagedReferencePoi * newType = self.type.currentTagMethod;
         for (OPEManagedOsmTag * tag in newType.tags)
         {
             [self addKey:tag.key value:tag.value];

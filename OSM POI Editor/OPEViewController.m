@@ -111,7 +111,9 @@
     [self.navigationController setToolbarHidden:NO animated:NO];
     //Check OAuth
     
-    mapView = [[RMMapView alloc] initWithFrame:self.view.bounds];
+    id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
+    
+    mapView = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:newTileSource];
     mapView.showLogoBug = NO;
     mapView.hideAttribution = YES;
     mapView.userTrackingMode = RMUserTrackingModeFollow;
@@ -156,11 +158,6 @@
     //[mapView setCenterCoordinate:initLocation animated:YES];
     
     [mapView setZoom: 18];
-    id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
-    
-    
-    
-    [self setTileSource:newTileSource];
     
     currentSquare = [mapView latitudeLongitudeBoundingBox];
     
@@ -272,7 +269,7 @@
 {
     //NSLog(@"center: %@",[managedOsmElement center]);
     RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[managedOsmElement center] andTitle:[managedOsmElement name]];
-    NSMutableString * subtitleString = [NSMutableString stringWithFormat:@"%@",managedOsmElement.type.category.name];
+    NSMutableString * subtitleString = [NSMutableString stringWithFormat:@"%@",managedOsmElement.type.categoryName];
     
     if ([[managedOsmElement valueForOsmKey:@"name"] length]) {
         [subtitleString appendFormat:@" - %@",managedOsmElement.type.name];
@@ -825,9 +822,9 @@
     
     NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type != nil AND isVisible == YES AND action!=%@",kActionTypeDelete];
     
-    _osmElementFetchedResultsController = [OPEManagedOsmElement MR_fetchAllGroupedBy:nil withPredicate:osmElementFilter sortedBy:OPEManagedOsmElementAttributes.osmID ascending:NO delegate:self];
+    //_osmElementFetchedResultsController = [OPEManagedOsmElement MR_fetchAllGroupedBy:nil withPredicate:osmElementFilter sortedBy:OPEManagedOsmElementAttributes.osmID ascending:NO delegate:self];
     
-    return _osmElementFetchedResultsController;
+    return nil;
 }
 
 -(NSFetchedResultsController *)noNameStreetsFetchedResultsController

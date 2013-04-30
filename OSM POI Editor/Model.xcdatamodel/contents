@@ -139,6 +139,6 @@
         <element name="OPEManagedReferenceOptionalCategory" positionX="72" positionY="-45" width="216" height="90"/>
         <element name="OPEManagedReferenceOsmTag" positionX="376" positionY="-108" width="191" height="88"/>
         <element name="OPEManagedReferencePoi" positionX="387" positionY="9" width="135" height="193"/>
-        <element name="OPEManagedReferencePoiCategory" positionX="601" positionY="-81" width="200" height="73"/>
+        <element name="OPEManagedReferencePoiCategory" positionX="619" positionY="-64" width="200" height="73"/>
     </elements>
 </model>

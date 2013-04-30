@@ -1,0 +1,2324 @@
+{
+  "Fun and Leisure" : {
+    "Water Park" : {
+      "optional" : [
+        "operator",
+        "address"
+      ],
+      "image" : "swimmer",
+      "tags" : {
+        "leisure" : "water_park"
+      }
+    },
+    "Bowling Alley (10 pin)" : {
+      "optional" : [
+        "address"
+      ],
+      "image" : "pin",
+      "tags" : {
+        "sport" : "10pin"
+      }
+    },
+    "Amusement Park" : {
+      "optional" : [
+        "operator",
+        "address"
+      ],
+      "image" : "carousel",
+      "tags" : {
+        "tourism" : "theme_park"
+      }
+    },
+    "Swimming Pool" : {
+      "optional" : [
+        "swimming_pool_access"
+      ],
+      "image" : "swimmer",
+      "tags" : {
+        "leisure" : "swimming_pool"
+      }
+    }
+  },
+  "Education" : {
+    "School" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "school",
+      "tags" : {
+        "amenity" : "school"
+      }
+    },
+    "University" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "college",
+      "tags" : {
+        "amenity" : "university"
+      }
+    },
+    "Kindergarden" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "school",
+      "tags" : {
+        "amenity" : "kindergarten"
+      }
+    },
+    "Library" : {
+      "optional" : [
+        "internet_access",
+        "wheelchair",
+        "address",
+        "internet_access_fee"
+      ],
+      "image" : "book",
+      "tags" : {
+        "amenity" : "library"
+      }
+    },
+    "Driving School" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "school",
+      "tags" : {
+        "amenity" : "driving_school"
+      }
+    },
+    "College" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "college",
+      "tags" : {
+        "amenity" : "college"
+      }
+    }
+  },
+  "Man Made" : {
+    "Water Tower" : {
+      "image" : "tank",
+      "tags" : {
+        "man_made" : "water_tower"
+      }
+    },
+    "Publicly Visible Clock" : {
+      "optional" : [
+        "clock_support",
+        "clock_display",
+        "clock_date",
+        "clock_thermometer",
+        "clock_barometer",
+        "clock_hygrometer",
+        "clock_faces"
+      ],
+      "image" : "clock",
+      "tags" : {
+        "amenity" : "clock"
+      }
+    },
+    "Emergency Siren" : {
+      "image" : "none",
+      "tags" : {
+        "emergency" : "siren"
+      }
+    },
+    "Power Generator" : {
+      "optional" : [
+        "operator",
+        "address",
+        "generator-source",
+        "generator-method"
+      ],
+      "image" : "lightning",
+      "tags" : {
+        "power" : "generator"
+      }
+    },
+    "Power Station" : {
+      "optional" : [
+        "voltage",
+        "operator"
+      ],
+      "image" : "lightning",
+      "tags" : {
+        "power" : "generator"
+      }
+    },
+    "Lighthouse" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "lighthouse",
+      "tags" : {
+        "man_made" : "lighthouse"
+      }
+    },
+    "Storage Tank" : {
+      "image" : "tank",
+      "tags" : {
+        "man_made" : "storage_tank"
+      }
+    },
+    "Tower" : {
+      "optional" : [
+        "tower:type"
+      ],
+      "image" : "tower",
+      "tags" : {
+        "man_made" : "tower"
+      }
+    },
+    "Flagpole" : {
+      "image" : "flag",
+      "tags" : {
+        "man_made" : "flagpole"
+      }
+    },
+    "Windmill" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "windmill",
+      "tags" : {
+        "man_made" : "windmill"
+      }
+    },
+    "Power Substation" : {
+      "optional" : [
+        "voltage",
+        "operator"
+      ],
+      "image" : "lightning",
+      "tags" : {
+        "power" : "generator"
+      }
+    }
+  },
+  "Government" : {
+    "Courthouse" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "gavel",
+      "tags" : {
+        "amenity" : "courthouse"
+      }
+    },
+    "Post Office" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "letter",
+      "tags" : {
+        "amenity" : "post_office"
+      }
+    },
+    "Post Box" : {
+      "optional" : [
+        "operator",
+        "drive_through",
+        "ref"
+      ],
+      "image" : "letter",
+      "tags" : {
+        "amenity" : "post_box"
+      }
+    },
+    "Police Station" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "police",
+      "tags" : {
+        "amenity" : "police"
+      }
+    },
+    "Fire Station" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "fire_station",
+      "tags" : {
+        "amenity" : "fire_station"
+      }
+    },
+    "Embassy" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "embassy",
+      "tags" : {
+        "amenity" : "embassy"
+      }
+    },
+    "Office Building" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "building",
+      "tags" : {
+        "office" : "government"
+      }
+    },
+    "Prison" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "police",
+      "tags" : {
+        "amenity" : "prison"
+      }
+    },
+    "Townhall or Cityhall" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "townhall",
+      "tags" : {
+        "amenity" : "townhall"
+      }
+    }
+  },
+  "Entertainment and Art" : {
+    "Social Center" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "amenity" : "social_centre"
+      }
+    },
+    "Nightclub" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "amenity" : "nightclub"
+      }
+    },
+    "Stripclub" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "amenity" : "stripclub"
+      }
+    },
+    "Theater or Opera House" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "theater",
+      "tags" : {
+        "amenity" : "theatre"
+      }
+    },
+    "Public Artwork" : {
+      "image" : "art",
+      "tags" : {
+        "tourism" : "artwork"
+      }
+    },
+    "Arts Center" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "art",
+      "tags" : {
+        "amenity" : "arts_centre"
+      }
+    },
+    "Community Center" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "amenity" : "community_centre"
+      }
+    },
+    "Fountain" : {
+      "image" : "fountain",
+      "tags" : {
+        "amenity" : "fountain"
+      }
+    },
+    "Movie Theater" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "movie",
+      "tags" : {
+        "amenity" : "cinema"
+      }
+    },
+    "Recording Studio" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "amenity" : "studio"
+      }
+    }
+  },
+  "Other" : {
+    "Public Telephone" : {
+      "optional" : [
+        "phone",
+        "covered"
+      ],
+      "image" : "phone",
+      "tags" : {
+        "amenity" : "telephone"
+      }
+    },
+    "Emergency Phone" : {
+      "image" : "phone",
+      "tags" : {
+        "emergency" : "phone"
+      }
+    },
+    "Recycling Can" : {
+      "image" : "recycle",
+      "tags" : {
+        "amenity" : "recycling"
+      }
+    },
+    "Trash Can" : {
+      "image" : "trash",
+      "tags" : {
+        "amenity" : "waste_basket"
+      }
+    },
+    "Vending Machine" : {
+      "image" : "none",
+      "tags" : {
+        "amenity" : "vending_machine"
+      }
+    },
+    "Fire Hydrant" : {
+      "optional" : [
+        "fire_hydrant:type",
+        "fire_hydrant:position"
+      ],
+      "image" : "fire_hydrant",
+      "tags" : {
+        "emergency" : "fire_hydrant"
+      }
+    },
+    "Public Toilets" : {
+      "optional" : [
+        "wheelchair",
+        "fee"
+      ],
+      "image" : "toilet",
+      "tags" : {
+        "amenity" : "toilets"
+      }
+    },
+    "Fitness Center\/Gym" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "gym",
+      "tags" : {
+        "leisure" : "sports_centre"
+      }
+    }
+  },
+  "Social Facilities" : {
+    "Orphanage" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "operator"
+      ],
+      "image" : "none",
+      "tags" : {
+        "social_facility" : "group_home",
+        "amenity" : "social_facility",
+        "social_facility:for" : "orphanage"
+      }
+    },
+    "Outreach" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "operator"
+      ],
+      "image" : "none",
+      "tags" : {
+        "social_facility" : "outreach",
+        "amenity" : "social_facility"
+      }
+    },
+    "Nursing Home" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "amenity" : "nursing_home"
+      }
+    },
+    "Retirement Home" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "operator"
+      ],
+      "image" : "none",
+      "tags" : {
+        "social_facility" : "group_home",
+        "amenity" : "social_facility",
+        "social_facility:for" : "senior"
+      }
+    },
+    "Homeless Shelter" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "operator"
+      ],
+      "image" : "none",
+      "tags" : {
+        "social_facility" : "shelter",
+        "amenity" : "social_facility",
+        "social_facility:for" : "homeless"
+      }
+    },
+    "Food Bank" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "operator"
+      ],
+      "image" : "none",
+      "tags" : {
+        "social_facility" : "food_bank",
+        "amenity" : "social_facility"
+      }
+    },
+    "Senior Assisted Living" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "operator"
+      ],
+      "image" : "none",
+      "tags" : {
+        "social_facility" : "assisted_living",
+        "amenity" : "social_facility",
+        "social_facility:for" : "senior"
+      }
+    }
+  },
+  "Outdoors and Natural" : {
+    "Picnic Site" : {
+      "optional" : [
+        "wheelchair"
+      ],
+      "image" : "picnic",
+      "tags" : {
+        "tourism" : "picnic_site"
+      }
+    },
+    "Peak" : {
+      "image" : "peak",
+      "tags" : {
+        "natural" : "peak"
+      }
+    },
+    "Lake" : {
+      "image" : "water",
+      "tags" : {
+        "natural" : "water"
+      }
+    },
+    "Scenic Viewpoint" : {
+      "optional" : [
+        "wheelchair"
+      ],
+      "image" : "viewpoint",
+      "tags" : {
+        "tourism" : "viewpoint"
+      }
+    },
+    "Spring" : {
+      "image" : "water",
+      "tags" : {
+        "natural" : "spring"
+      }
+    },
+    "Playground" : {
+      "image" : "playground",
+      "tags" : {
+        "leisure" : "playground"
+      }
+    },
+    "Volcano" : {
+      "image" : "volvano",
+      "tags" : {
+        "natural" : "volcano"
+      }
+    },
+    "Waterfall" : {
+      "image" : "waterfall",
+      "tags" : {
+        "waterway" : "waterfall"
+      }
+    },
+    "Shelter" : {
+      "optional" : [
+        "shelter_type"
+      ],
+      "image" : "none",
+      "tags" : {
+        "amenity" : "shelter"
+      }
+    },
+    "Beach" : {
+      "image" : "beach",
+      "tags" : {
+        "natural" : "beach"
+      }
+    },
+    "Bench" : {
+      "image" : "bench",
+      "tags" : {
+        "amenity" : "bench"
+      }
+    }
+  },
+  "Shopping" : {
+    "Luggage\/Bag Shop" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "bag"
+      }
+    },
+    "Video Rental" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "movie",
+      "tags" : {
+        "shop" : "video"
+      }
+    },
+    "Copy and Fax Shop" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "paperclip",
+      "tags" : {
+        "shop" : "copyshop"
+      }
+    },
+    "Boutique" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "boutique"
+      }
+    },
+    "Car Repair" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "wrench",
+      "tags" : {
+        "shop" : "car_repair"
+      }
+    },
+    "Toy Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "teddybear",
+      "tags" : {
+        "shop" : "toys"
+      }
+    },
+    "Clothing Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "shirt",
+      "tags" : {
+        "shop" : "clothes"
+      }
+    },
+    "Motorcycle Dealership" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "motorcycle",
+      "tags" : {
+        "shop" : "motorcycle"
+      }
+    },
+    "Car Parts Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "wrench",
+      "tags" : {
+        "shop" : "car_parts"
+      }
+    },
+    "Supermarket" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "shop",
+      "tags" : {
+        "shop" : "supermarket"
+      }
+    },
+    "Art Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "art",
+      "tags" : {
+        "shop" : "art"
+      }
+    },
+    "Book Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "book",
+      "tags" : {
+        "shop" : "books"
+      }
+    },
+    "Electronics" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "computer",
+      "tags" : {
+        "shop" : "electronics"
+      }
+    },
+    "Matress Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "hotel",
+      "tags" : {
+        "shop" : "bed"
+      }
+    },
+    "Candy Shop" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "candy",
+      "tags" : {
+        "shop" : "confectionery"
+      }
+    },
+    "Carpet Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "carpet"
+      }
+    },
+    "XXX\/Adult Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "erotic"
+      }
+    },
+    "Pet Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "dog",
+      "tags" : {
+        "shop" : "pet"
+      }
+    },
+    "Shoe Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "shoe",
+      "tags" : {
+        "shop" : "shoes"
+      }
+    },
+    "Frame Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "frame",
+      "tags" : {
+        "shop" : "frame"
+      }
+    },
+    "Tattoo Parlor" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "tattoo"
+      }
+    },
+    "Convenience Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "shop",
+      "tags" : {
+        "shop" : "convenience"
+      }
+    },
+    "Antiques" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "chair",
+      "tags" : {
+        "shop" : "antiques"
+      }
+    },
+    "Cosmetics" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "chemist"
+      }
+    },
+    "Florist" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "flower",
+      "tags" : {
+        "shop" : "florist"
+      }
+    },
+    "Newsstand " : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "news",
+      "tags" : {
+        "shop" : "newsagent"
+      }
+    },
+    "Baby Goods" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "baby_hatch",
+      "tags" : {
+        "shop" : "baby_goods"
+      }
+    },
+    "Diving Equipment" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "scuba",
+      "tags" : {
+        "shop" : "dive"
+      }
+    },
+    "Second Hand Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "second_hand"
+      }
+    },
+    "Computer Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "computer",
+      "tags" : {
+        "shop" : "computer"
+      }
+    },
+    "General Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "shop",
+      "tags" : {
+        "shop" : "general"
+      }
+    },
+    "Jewelry Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "ring",
+      "tags" : {
+        "shop" : "jewelry"
+      }
+    },
+    "Hardware Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "wrench",
+      "tags" : {
+        "shop" : "hardware"
+      }
+    },
+    "Optician" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "glasses",
+      "tags" : {
+        "shop" : "optician"
+      }
+    },
+    "Car Dealership" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "car",
+      "tags" : {
+        "shop" : "car"
+      }
+    },
+    "Curtain Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "trumpet",
+      "tags" : {
+        "shop" : "curtain"
+      }
+    },
+    "Paint Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "paint_brush",
+      "tags" : {
+        "shop" : "paint"
+      }
+    },
+    "Sporting Goods Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "basketball",
+      "tags" : {
+        "shop" : "sports"
+      }
+    },
+    "Office Supplies" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "paperclip",
+      "tags" : {
+        "shop" : "stationery"
+      }
+    },
+    "Bicycle Shop" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "bicycle_second_hand",
+        "bicycle_cleaning",
+        "bicycle_diy",
+        "bicycle_pump",
+        "bicycle_rental",
+        "bicycle_retail",
+        "bicycle_repair"
+      ],
+      "image" : "bicycle",
+      "tags" : {
+        "shop" : "bicycle"
+      }
+    },
+    "Gift Shop" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "gift",
+      "tags" : {
+        "shop" : "gift"
+      }
+    },
+    "Tobacco Shop" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "pipe",
+      "tags" : {
+        "shop" : "tobacco"
+      }
+    },
+    "Shopping Mall" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "shop",
+      "tags" : {
+        "shop" : "mall"
+      }
+    },
+    "Sewing Shop" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "sewing"
+      }
+    },
+    "Musical Instrument Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "trumpet",
+      "tags" : {
+        "shop" : "musical_instruments"
+      }
+    },
+    "Garden Center" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "flower",
+      "tags" : {
+        "shop" : "garden_centre"
+      }
+    },
+    "Music Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "trumpet",
+      "tags" : {
+        "shop" : "music"
+      }
+    },
+    "Pawn Shop" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "pawnbroker"
+      }
+    },
+    "Farm Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "farm",
+      "tags" : {
+        "shop" : "farm"
+      }
+    },
+    "Outdoor Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "tree",
+      "tags" : {
+        "shop" : "outdoor"
+      }
+    },
+    "Greengrocer" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "shop",
+      "tags" : {
+        "shop" : "greengrocer"
+      }
+    },
+    "Furniture Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "chair",
+      "tags" : {
+        "shop" : "furniture"
+      }
+    },
+    "Department Store" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "shop",
+      "tags" : {
+        "shop" : "department_store"
+      }
+    }
+  },
+  "Tourism" : {
+    "Museum" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "museum",
+      "tags" : {
+        "tourism" : "museum"
+      }
+    },
+    "Nautical Craft Wreck" : {
+      "image" : "none",
+      "tags" : {
+        "historic" : "wreck"
+      }
+    },
+    "Mountain Hut" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "cabin",
+      "tags" : {
+        "tourism" : "apine_hut"
+      }
+    },
+    "Tourism Information Office" : {
+      "optional" : [
+        "address"
+      ],
+      "image" : "info",
+      "tags" : {
+        "information" : "office",
+        "tourism" : "information"
+      }
+    },
+    "Memorial" : {
+      "optional" : [
+        "wheelchair"
+      ],
+      "image" : "memorial",
+      "tags" : {
+        "historic" : "memorial"
+      }
+    },
+    "Castle" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "historic" : "castle"
+      }
+    },
+    "Shower" : {
+      "optional" : [
+        "wheelchair",
+        "fee",
+        "maxtents"
+      ],
+      "image" : "shower",
+      "tags" : {
+        "amenity" : "shower"
+      }
+    },
+    "Historic Boundry Stone" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "historic" : "boundry_stone"
+      }
+    },
+    "RV Park" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "trailer",
+      "tags" : {
+        "tourism" : "caravan_site"
+      }
+    },
+    "Zoo" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "zoo",
+      "tags" : {
+        "tourism" : "zoo"
+      }
+    },
+    "Information Board" : {
+      "optional" : [
+        "board_type"
+      ],
+      "image" : "info",
+      "tags" : {
+        "information" : "board",
+        "tourism" : "information"
+      }
+    },
+    "Historic Battlefield" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "historic" : "battlefield"
+      }
+    },
+    "Guidepost" : {
+      "optional" : [
+        "ski_guidepost",
+        "hiking_guidepost",
+        "bicycle_guidepost"
+      ],
+      "image" : "guidepost",
+      "tags" : {
+        "information" : "guidepost",
+        "tourism" : "information"
+      }
+    },
+    "Map" : {
+      "optional" : [
+        "map_type",
+        "map_size"
+      ],
+      "image" : "map",
+      "tags" : {
+        "information" : "map",
+        "tourism" : "information"
+      }
+    },
+    "Chalet" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "bed",
+      "tags" : {
+        "tourism" : "chalet"
+      }
+    },
+    "Theme Park" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "tourism" : "theme_park"
+      }
+    },
+    "Bed and Breakfast" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "internet_access",
+        "internet_access_fee"
+      ],
+      "image" : "bed",
+      "tags" : {
+        "tourism" : "guest_house"
+      }
+    },
+    "Camp Site" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "tents",
+        "maxtents"
+      ],
+      "image" : "tent",
+      "tags" : {
+        "tourism" : "camp_site"
+      }
+    },
+    "Ruins" : {
+      "optional" : [
+        "wheelchair"
+      ],
+      "image" : "none",
+      "tags" : {
+        "historic" : "ruins"
+      }
+    },
+    "Hotel" : {
+      "optional" : [
+        "wheelchair",
+        "internet_access",
+        "internet_access_fee",
+        "address",
+        "smoking"
+      ],
+      "image" : "bed",
+      "tags" : {
+        "tourism" : "hotel"
+      }
+    },
+    "Military Fort" : {
+      "optional" : [
+        "wheelchair"
+      ],
+      "image" : "none",
+      "tags" : {
+        "historic" : "fort"
+      }
+    },
+    "Hostel" : {
+      "optional" : [
+        "wheelchair",
+        "internet_access",
+        "internet_access_fee",
+        "address",
+        "smoking"
+      ],
+      "image" : "bed",
+      "tags" : {
+        "tourism" : "hostel"
+      }
+    },
+    "Motel" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "internet_access",
+        "internet_access_fee",
+        "smoking"
+      ],
+      "image" : "bed",
+      "tags" : {
+        "tourism" : "motel"
+      }
+    },
+    "Monument" : {
+      "optional" : [
+        "wheelchair"
+      ],
+      "image" : "none",
+      "tags" : {
+        "historic" : "monument"
+      }
+    }
+  },
+  "Services" : {
+    "NGO" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "building",
+      "tags" : {
+        "office" : "ngo"
+      }
+    },
+    "Spa or Nail Salon" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "beauty"
+      }
+    },
+    "Accountant" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "building",
+      "tags" : {
+        "office" : "accountant"
+      }
+    },
+    "Hairdresser" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "hairdresser"
+      }
+    },
+    "Animal Shelter" : {
+      "optional" : [
+        "wheelchair",
+        "operator"
+      ],
+      "image" : "dog",
+      "tags" : {
+        "amenity" : "animal_shelter"
+      }
+    },
+    "Insurance" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "building",
+      "tags" : {
+        "office" : "insurance"
+      }
+    },
+    "Highway Rest Area (fuel)" : {
+      "optional" : [
+        "wheelchair",
+        "operator"
+      ],
+      "image" : "none",
+      "tags" : {
+        "highway" : "services"
+      }
+    },
+    "Lawyer" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "building",
+      "tags" : {
+        "office" : "lawyer"
+      }
+    },
+    "Animal Boarding" : {
+      "optional" : [
+        "wheelchair",
+        "operator"
+      ],
+      "image" : "dog",
+      "tags" : {
+        "amenity" : "animal_boarding"
+      }
+    },
+    "Architect" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "building",
+      "tags" : {
+        "office" : "architect"
+      }
+    },
+    "Currency Exchange" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "currency",
+      "tags" : {
+        "amenity" : "bureau_de_change"
+      }
+    },
+    "Realtor" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "building",
+      "tags" : {
+        "office" : "estate_agent"
+      }
+    },
+    "Loans" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "money",
+      "tags" : {
+        "shop" : "money_lender"
+      }
+    },
+    "ATM" : {
+      "optional" : [
+        "wheelchair",
+        "operator",
+        "drive_through"
+      ],
+      "image" : "atm",
+      "tags" : {
+        "amenity" : "atm"
+      }
+    },
+    "Laundromat" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "shirt",
+      "tags" : {
+        "shop" : "laundry"
+      }
+    },
+    "Dry Cleaning" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "shirt",
+      "tags" : {
+        "shop" : "dry_cleaning"
+      }
+    },
+    "Highway Rest Area (no fuel)" : {
+      "optional" : [
+        "wheelchair",
+        "operator"
+      ],
+      "image" : "none",
+      "tags" : {
+        "highway" : "rest_area"
+      }
+    },
+    "Bank" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "drive_through",
+        "atm"
+      ],
+      "image" : "bank",
+      "tags" : {
+        "amenity" : "bank"
+      }
+    },
+    "IT Specialist" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "building",
+      "tags" : {
+        "office" : "it"
+      }
+    },
+    "Travel Agency" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "building",
+      "tags" : {
+        "office" : "travel_agent"
+      }
+    }
+  },
+  "Building (residence)" : {
+    "Cabin" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "house",
+      "tags" : {
+        "building" : "cabin"
+      }
+    },
+    "Dormitory" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "apartment",
+      "tags" : {
+        "building" : "dormitory"
+      }
+    },
+    "Apartments" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "apartment",
+      "tags" : {
+        "building" : "apartments"
+      }
+    },
+    "House" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "house",
+      "tags" : {
+        "building" : "house"
+      }
+    },
+    "Hut" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "house",
+      "tags" : {
+        "building" : "hut"
+      }
+    }
+  },
+  "Place of Worship" : {
+    "Muslim" : {
+      "optional" : [
+        "denomination:muslim",
+        "wheelchair",
+        "address"
+      ],
+      "image" : "crescent",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "muslim"
+      }
+    },
+    "Shinto" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "prayer",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "shinto"
+      }
+    },
+    "Unitarian" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "prayer",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "unitarian"
+      }
+    },
+    "Spiritualist" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "prayer",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "spiritualist"
+      }
+    },
+    "Buddhist" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "prayer",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "buddhist"
+      }
+    },
+    "Pagan" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "prayer",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "pagan"
+      }
+    },
+    "Scientologist" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "prayer",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "scientologist"
+      }
+    },
+    "Jewish" : {
+      "optional" : [
+        "denomination:jewish",
+        "wheelchair",
+        "address"
+      ],
+      "image" : "stardavid",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "jewish"
+      }
+    },
+    "Hindu" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "hindu",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "hindu"
+      }
+    },
+    "Taoist" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "prayer",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "taoist"
+      }
+    },
+    "Christian" : {
+      "optional" : [
+        "denomination:christian",
+        "wheelchair",
+        "address"
+      ],
+      "image" : "prayer",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "christian"
+      }
+    },
+    "Sikh" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "prayer",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "sikh"
+      }
+    },
+    "Voodoo" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "prayer",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "voodoo"
+      }
+    },
+    "Multifaith" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "prayer",
+      "tags" : {
+        "amenity" : "place_of_worship",
+        "religion" : "multifaith"
+      }
+    }
+  },
+  "Food and Drink" : {
+    "Craft Brewery" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "beer",
+      "tags" : {
+        "craft" : "bewery"
+      }
+    },
+    "Cafe" : {
+      "optional" : [
+        "cuisine",
+        "smoking",
+        "address",
+        "wheelchair",
+        "internet_access",
+        "internet_access_fee",
+        "takeaway",
+        "outdoor_seating"
+      ],
+      "image" : "cafe",
+      "tags" : {
+        "amenity" : "cafe"
+      }
+    },
+    "Drinking Water" : {
+      "image" : "drinking_water",
+      "tags" : {
+        "amenity" : "drinking_water"
+      }
+    },
+    "Butcher" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "butcher",
+      "tags" : {
+        "shop" : "butcher"
+      }
+    },
+    "Deli" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "deli"
+      }
+    },
+    "Pub" : {
+      "optional" : [
+        "cuisine",
+        "wheelchair",
+        "microbrewery",
+        "address",
+        "takeaway"
+      ],
+      "image" : "beer",
+      "tags" : {
+        "amenity" : "pub"
+      }
+    },
+    "Ice Cream Shop" : {
+      "optional" : [
+        "wheelchair",
+        "outdoor_seating",
+        "address"
+      ],
+      "image" : "ice_cream",
+      "tags" : {
+        "amenity" : "ice_cream"
+      }
+    },
+    "Bakery" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "bread",
+      "tags" : {
+        "shop" : "bakery"
+      }
+    },
+    "Beer Garden" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "outdoor_seating"
+      ],
+      "image" : "beer",
+      "tags" : {
+        "amenity" : "biergarten"
+      }
+    },
+    "Food Court" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "outdoor_seating"
+      ],
+      "image" : "none",
+      "tags" : {
+        "amenity" : "food_court"
+      }
+    },
+    "Bar" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "bar",
+      "tags" : {
+        "amenity" : "bar"
+      }
+    },
+    "Restaurant" : {
+      "optional" : [
+        "outdoor_seating",
+        "cuisine",
+        "microbrewery",
+        "smoking",
+        "drive_in",
+        "address",
+        "wheelchair",
+        "internet_access",
+        "internet_access_fee",
+        "takeaway"
+      ],
+      "image" : "restaurant",
+      "tags" : {
+        "amenity" : "restaurant"
+      }
+    },
+    "Fast Food" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "cuisine",
+        "drive_through",
+        "drive_in",
+        "internet_access",
+        "internet_access_fee"
+      ],
+      "image" : "fast_food",
+      "tags" : {
+        "amenity" : "fast_food"
+      }
+    },
+    "Beverage Shop" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "alcohol",
+      "tags" : {
+        "shop" : "beverages"
+      }
+    },
+    "Alcohol Shop" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "drive_through"
+      ],
+      "image" : "alcohol",
+      "tags" : {
+        "shop" : "alcohol"
+      }
+    }
+  },
+  "Transportation" : {
+    "Bus Station (legacy)" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "bus_stop",
+      "tags" : {
+        "amenity" : "bus_station"
+      }
+    },
+    "Ferry Terminal" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "ref"
+      ],
+      "image" : "ferry",
+      "tags" : {
+        "public_transport" : "platform",
+        "ferry" : "yes",
+        "amenity" : "ferry_terminal"
+      }
+    },
+    "Gas Station" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "fuel",
+      "tags" : {
+        "amenity" : "fuel"
+      }
+    },
+    "Bicycle Rental" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "bicycle",
+      "tags" : {
+        "amenity" : "bicycle_rental"
+      }
+    },
+    "Taxi Stand" : {
+      "optional" : [
+        "capacity"
+      ],
+      "image" : "taxi",
+      "tags" : {
+        "amenity" : "taxi"
+      }
+    },
+    "Parking" : {
+      "optional" : [
+        "fee",
+        "capacity",
+        "covered",
+        "parking_access"
+      ],
+      "image" : "parking",
+      "tags" : {
+        "amenity" : "parking"
+      }
+    },
+    "Subway Entrance" : {
+      "optional" : [
+        "wheelchair",
+        "bicycle",
+        "elevator"
+      ],
+      "image" : "subway_entrance",
+      "tags" : {
+        "railway" : "subway_entrance"
+      }
+    },
+    "Subway Station" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "internet_access",
+        "internet_access_fee"
+      ],
+      "image" : "train",
+      "tags" : {
+        "subway" : "yes",
+        "public_transport" : "station"
+      }
+    },
+    "Car Sharing" : {
+      "optional" : [
+        "operator",
+        "wheelchair",
+        "address"
+      ],
+      "image" : "car_rental",
+      "tags" : {
+        "amenity" : "car_sharing"
+      }
+    },
+    "Train Station" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "internet_access",
+        "internet_access_fee"
+      ],
+      "image" : "train",
+      "tags" : {
+        "public_transport" : "station",
+        "train" : "yes"
+      }
+    },
+    "Train Platform (legacy)" : {
+      "optional" : [
+        "wheelchair",
+        "covered"
+      ],
+      "image" : "train",
+      "tags" : {
+        "railway" : "platform"
+      }
+    },
+    "Bus Stop" : {
+      "optional" : [
+        "shelter",
+        "ref",
+        "route_ref",
+        "covered",
+        "bench"
+      ],
+      "image" : "bus",
+      "tags" : {
+        "public_transport" : "platform",
+        "bus" : "yes"
+      }
+    },
+    "Bus Station" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "bus_stop",
+      "tags" : {
+        "bus" : "yes",
+        "public_transport" : "station"
+      }
+    },
+    "Train Station (legacy)" : {
+      "optional" : [
+        "wheelchair",
+        "address",
+        "internet_access",
+        "internet_access_fee"
+      ],
+      "image" : "train",
+      "tags" : {
+        "public_transport" : "station",
+        "train" : "yes",
+        "railway" : "station"
+      }
+    },
+    "Electric Vehicle Charging" : {
+      "image" : "EV",
+      "tags" : {
+        "amenity" : "ev_charging"
+      }
+    },
+    "Tram Stop" : {
+      "optional" : [
+        "wheelchair"
+      ],
+      "image" : "tram",
+      "tags" : {
+        "public_transport" : "platform",
+        "tram" : "yes",
+        "railway" : "tram_stop"
+      }
+    },
+    "Car Rental" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "car_rental",
+      "tags" : {
+        "amenity" : "car_rental"
+      }
+    },
+    "Motorcycle Parking" : {
+      "optional" : [
+        "fee",
+        "capacity",
+        "covered"
+      ],
+      "image" : "parking",
+      "tags" : {
+        "amenity" : "motorcycle_parking"
+      }
+    },
+    "Bicycle Parking" : {
+      "optional" : [
+        "fee",
+        "bicycle_parking",
+        "capacity",
+        "covered"
+      ],
+      "image" : "bicycle",
+      "tags" : {
+        "amenity" : "bicycle_parking"
+      }
+    },
+    "Subway Platform" : {
+      "optional" : [
+        "wheelchair",
+        "covered"
+      ],
+      "image" : "train",
+      "tags" : {
+        "subway" : "yes",
+        "public_transport" : "platform"
+      }
+    },
+    "Car Wash" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "car_wash",
+      "tags" : {
+        "amenity" : "car_wash"
+      }
+    },
+    "Bus Stop (legacy)" : {
+      "optional" : [
+        "shelter",
+        "ref",
+        "bench",
+        "route_ref",
+        "covered"
+      ],
+      "image" : "bus",
+      "tags" : {
+        "highway" : "bus_stop"
+      }
+    },
+    "Train Platform" : {
+      "optional" : [
+        "wheelchair",
+        "covered"
+      ],
+      "image" : "train",
+      "tags" : {
+        "public_transport" : "platform",
+        "train" : "yes"
+      }
+    }
+  },
+  "Healthcare" : {
+    "Doctor" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "doctor",
+      "tags" : {
+        "amenity" : "doctors"
+      }
+    },
+    "Pharmacy" : {
+      "optional" : [
+        "dispensing",
+        "address",
+        "wheelchair",
+        "drive_through"
+      ],
+      "image" : "first_aid",
+      "tags" : {
+        "amenity" : "pharmacy"
+      }
+    },
+    "Veterinary" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "dog",
+      "tags" : {
+        "amenity" : "veterinary"
+      }
+    },
+    "Baby Hatch" : {
+      "image" : "baby_hatch",
+      "tags" : {
+        "amenity" : "baby_hatch"
+      }
+    },
+    "Hospital" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "hospital",
+      "tags" : {
+        "amenity" : "hospital"
+      }
+    },
+    "Dentist" : {
+      "optional" : [
+        "wheelchair",
+        "address"
+      ],
+      "image" : "dentist",
+      "tags" : {
+        "amenity" : "dentist"
+      }
+    }
+  }
+}

@@ -36,13 +36,6 @@
     
     NSPredicate *osmTagFilter = [NSPredicate predicateWithFormat:@"referencePois.@count == 0 AND referenceOsmTag.@count == 0"];
     
-    [OPEManagedOsmTag MR_deleteAllMatchingPredicate:osmTagFilter];
-    
-    [OPEManagedOsmElement MR_deleteAllMatchingPredicate:nil];
-    [OPEManagedOsmNode MR_deleteAllMatchingPredicate:nil];
-    [OPEManagedOsmWay MR_deleteAllMatchingPredicate:nil];
-    [OPEManagedOsmRelation MR_deleteAllMatchingPredicate:nil];
-    [OpeManagedOsmRelationMember MR_deleteAllMatchingPredicate:nil];
     
     
     

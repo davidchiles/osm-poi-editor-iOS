@@ -240,7 +240,7 @@
     {
         NSInteger index = section-2;
         OPEManagedReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
-        return tempOptional.referenceSection.displayName;
+        return tempOptional.sectionName;
     }
 }
 
@@ -277,7 +277,7 @@
         cell.accessoryType= UITableViewCellAccessoryDisclosureIndicator;
         if (indexPath.row == 0) {
             cell.textLabel.text = @"Category";
-            cell.detailTextLabel.text = self.managedOsmElement.type.category.name;
+            cell.detailTextLabel.text = self.managedOsmElement.type.categoryName;
         }
         else{
             cell.textLabel.text = @"Type";
@@ -294,7 +294,7 @@
         NSString * displayValueForOptional = [managedOptionalTag displayNameForKey:managedOptionalTag.osmKey withValue:valueForOptional];
         
         //more than 3 tags just show value not switch or Address
-        if ([managedOptionalTag.tags count]>3 || ![managedOptionalTag.tags count]) {
+        if ([managedOptionalTag.optionalTags count]>3 || ![managedOptionalTag.optionalTags count]) {
             OPESpecialCell2 * specialCell;
             specialCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
             if (specialCell == nil) {
@@ -305,7 +305,7 @@
             return specialCell;
         }
         //Show switch
-        else if([managedOptionalTag.tags count] > 0)
+        else if([managedOptionalTag.optionalTags count] > 0)
         {
             OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
             if (aCell == nil) {
@@ -345,7 +345,8 @@
         NSString * title = [sender titleForSegmentAtIndex:[sender selectedSegmentIndex]];
         OPEManagedReferenceOsmTag * managedReferenceOsmTag = [referenceOptional managedReferenceOsmTagWithName:title];
         
-        [self newTag:managedReferenceOsmTag.tag.objectID];
+        //FIXME
+        //[self newTag:managedReferenceOsmTag.tag.objectID];
         
     }
     
@@ -374,7 +375,7 @@
                 viewer.title = @"Type";
                 
                 //viewer.category = editableType.category;
-                viewer.categoryManagedObjectID = [self.managedOsmElement.type.category objectID];
+                //FIXME viewer.categoryManagedObjectID = [self.managedOsmElement.type.category objectID];
                 [viewer setDelegate:self];
                 
                 [self.navigationController pushViewController:viewer animated:YES];
@@ -393,10 +394,12 @@
         OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
         
         OPETagEditViewController * viewController = nil;
-        viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey andType:managedOptionalTag.type delegate:self];
+        //FIXME
+        //viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey andType:managedOptionalTag.type delegate:self];
         viewController.title = managedOptionalTag.displayName;
         viewController.managedObjectID = managedOsmElement.objectID;
-        viewController.manageedOptionalObjectID = managedOptionalTag.objectID;
+        //FIXME
+        //viewController.manageedOptionalObjectID = managedOptionalTag.objectID;
         viewController.currentOsmValue = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
         [self.navigationController pushViewController:viewController animated:YES];
         

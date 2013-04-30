@@ -97,8 +97,8 @@
             {
                 NSLog(@"Match: %d",[currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location);
                 NSNumber * location = [NSNumber numberWithInteger: [currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location];
-                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",[currentPoi objectID],@"objectID",location,@"location",currentPoi.category.name,@"catName", nil];
-                [searchResults addObject:match];
+                // FIXME NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",[currentPoi objectID],@"objectID",location,@"location",currentPoi.category.name,@"catName", nil];
+                //[searchResults addObject:match];
                 
             }
         }

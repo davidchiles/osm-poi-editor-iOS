@@ -47,7 +47,8 @@
     OPEManagedOsmTag * tag = [OPEManagedOsmTag fetchOrCreateWithKey:self.osmKey value:value];
     NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
     [context MR_saveToPersistentStoreAndWait];
-    [self.delegate setNewTag:tag.objectID];
+    //FIXME
+    //[self.delegate setNewTag:tag.objectID];
     
 }
 

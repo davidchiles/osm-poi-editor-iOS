@@ -103,7 +103,8 @@
 {
     OPEManagedReferenceOsmTag * refTag = (OPEManagedReferenceOsmTag *)[valuesArray objectAtIndex: indexPath.row];
     
-    [self.delegate setNewTag:refTag.tag.objectID];
+    //FIXME
+    //[self.delegate setNewTag:refTag.tag.objectID];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
     

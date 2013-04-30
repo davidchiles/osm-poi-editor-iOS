@@ -1,6 +1,9 @@
-#import "_OPEManagedOsmTag.h"
+#import "OPEManagedObject.h"
 
-@interface OPEManagedOsmTag : _OPEManagedOsmTag {}
+@interface OPEManagedOsmTag : OPEManagedObject {}
+
+@property (nonatomic,strong) NSString * key;
+@property (nonatomic,strong) NSString * value;
 
 +(OPEManagedOsmTag *)fetchOrCreateWithKey:(NSString *)key value:(NSString *)value;
 +(NSArray *)uniqueValuesForOsmKeys:(NSArray *)keys;

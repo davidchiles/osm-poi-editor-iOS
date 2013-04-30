@@ -91,9 +91,8 @@
             //TBXML * xmlResponse = [[TBXML alloc] initWithXMLData:responseObject];
             //[self parseTBXML:xmlResponse];
             
-            NSString* mySpatialiteOutputFile = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"spatialdb.sqlite"];
             OSMParser* parser = [[OSMParser alloc] initWithOSMData:responseObject];
-            OSMParserHandlerDefault* handler = [[OSMParserHandlerDefault alloc] initWithOutputFilePath:mySpatialiteOutputFile overrideIfExists:NO];
+            OSMParserHandlerDefault* handler = [[OSMParserHandlerDefault alloc] initWithOutputFilePath:kDatabasePath overrideIfExists:NO];
             parser.delegate=handler;
             [parser parse];
             

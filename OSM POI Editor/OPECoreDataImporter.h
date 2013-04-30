@@ -10,8 +10,12 @@
 #import "OPEManagedReferenceOsmTag.h"
 #import "OPEManagedReferenceOptional.h"
 #import "OPEManagedReferencePoi.h"
+#import "FMDatabaseQueue.h"
 
 @interface OPECoreDataImporter : NSObject
+{
+    FMDatabaseQueue *queue;
+}
 
 
 -(void)import;

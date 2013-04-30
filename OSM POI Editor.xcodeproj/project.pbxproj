@@ -291,7 +291,6 @@
 		63266A1717164579002CD7E4 /* x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326690F17164579002CD7E4 /* x@2x.png */; };
 		63266A1817164579002CD7E4 /* Optional.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6326691017164579002CD7E4 /* Optional.plist */; };
 		63266A1917164579002CD7E4 /* OptionalCategorySort.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6326691117164579002CD7E4 /* OptionalCategorySort.plist */; };
-		63266A1A17164579002CD7E4 /* Tags.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6326691217164579002CD7E4 /* Tags.plist */; };
 		63266A251716469B002CD7E4 /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 63266A1D1716469B002CD7E4 /* GTMHTTPFetcher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63266A261716469B002CD7E4 /* GTMOAuthAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 63266A1F1716469B002CD7E4 /* GTMOAuthAuthentication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63266A271716469B002CD7E4 /* GTMOAuthSignIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 63266A211716469B002CD7E4 /* GTMOAuthSignIn.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -367,6 +366,7 @@
 		639953FE16113A200070CBAF /* about.css in Resources */ = {isa = PBXBuildFile; fileRef = 639953FD16113A200070CBAF /* about.css */; };
 		63A201F3171217B70060EFF6 /* _OPEManagedOsmNodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A201F2171217B70060EFF6 /* _OPEManagedOsmNodeReference.m */; };
 		63A201F6171217C00060EFF6 /* OPEManagedOsmNodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A201F5171217C00060EFF6 /* OPEManagedOsmNodeReference.m */; };
+		63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A964981729FA6100D14CA1 /* OPEManagedObject.m */; };
 		63AD8F7A15E8570B006F92B8 /* OPECategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7915E8570B006F92B8 /* OPECategory.m */; };
 		63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7C15E8577E006F92B8 /* OPEType.m */; };
 		63B1B15016F285DB00323E9F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B1B14F16F285DB00323E9F /* MBProgressHUD.m */; };
@@ -433,6 +433,7 @@
 		63FBA5B0171E08F50098A2F3 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBA5AF171E08F40098A2F3 /* libstdc++.dylib */; };
 		63FCA4421643127D00A28470 /* OPEBingTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FCA4411643127D00A28470 /* OPEBingTileSource.m */; };
 		63FCA4511643363800A28470 /* OPEUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FCA4501643363700A28470 /* OPEUtility.m */; };
+		63FD2DAD172F329A0094B969 /* Tags.json in Resources */ = {isa = PBXBuildFile; fileRef = 63FD2DAC172F329A0094B969 /* Tags.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -737,7 +738,6 @@
 		6326690F17164579002CD7E4 /* x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x@2x.png"; sourceTree = "<group>"; };
 		6326691017164579002CD7E4 /* Optional.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Optional.plist; sourceTree = "<group>"; };
 		6326691117164579002CD7E4 /* OptionalCategorySort.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OptionalCategorySort.plist; sourceTree = "<group>"; };
-		6326691217164579002CD7E4 /* Tags.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Tags.plist; sourceTree = "<group>"; };
 		63266A1C1716469B002CD7E4 /* GTMHTTPFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetcher.h; sourceTree = "<group>"; };
 		63266A1D1716469B002CD7E4 /* GTMHTTPFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMHTTPFetcher.m; sourceTree = "<group>"; };
 		63266A1E1716469B002CD7E4 /* GTMOAuthAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuthAuthentication.h; sourceTree = "<group>"; };
@@ -901,6 +901,8 @@
 		63A201F2171217B70060EFF6 /* _OPEManagedOsmNodeReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedOsmNodeReference.m; sourceTree = "<group>"; };
 		63A201F4171217C00060EFF6 /* OPEManagedOsmNodeReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmNodeReference.h; sourceTree = "<group>"; };
 		63A201F5171217C00060EFF6 /* OPEManagedOsmNodeReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedOsmNodeReference.m; sourceTree = "<group>"; };
+		63A964971729FA6100D14CA1 /* OPEManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedObject.h; sourceTree = "<group>"; };
+		63A964981729FA6100D14CA1 /* OPEManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedObject.m; sourceTree = "<group>"; };
 		63AD8F7815E8570B006F92B8 /* OPECategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECategory.h; sourceTree = "<group>"; };
 		63AD8F7915E8570B006F92B8 /* OPECategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECategory.m; sourceTree = "<group>"; };
 		63AD8F7B15E8577D006F92B8 /* OPEType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEType.h; sourceTree = "<group>"; };
@@ -1022,6 +1024,7 @@
 		63FCA4411643127D00A28470 /* OPEBingTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBingTileSource.m; sourceTree = "<group>"; };
 		63FCA44F1643363700A28470 /* OPEUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEUtility.h; sourceTree = "<group>"; };
 		63FCA4501643363700A28470 /* OPEUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEUtility.m; sourceTree = "<group>"; };
+		63FD2DAC172F329A0094B969 /* Tags.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tags.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1079,7 +1082,7 @@
 				6326680717164578002CD7E4 /* Images */,
 				6326691017164579002CD7E4 /* Optional.plist */,
 				6326691117164579002CD7E4 /* OptionalCategorySort.plist */,
-				6326691217164579002CD7E4 /* Tags.plist */,
+				63FD2DAC172F329A0094B969 /* Tags.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1538,6 +1541,8 @@
 			children = (
 				63F03D0216B09EA6004AF385 /* MachineGenerated */,
 				6391C67216AE2B370084D579 /* Model.xcdatamodel */,
+				63A964971729FA6100D14CA1 /* OPEManagedObject.h */,
+				63A964981729FA6100D14CA1 /* OPEManagedObject.m */,
 				63A201F4171217C00060EFF6 /* OPEManagedOsmNodeReference.h */,
 				63A201F5171217C00060EFF6 /* OPEManagedOsmNodeReference.m */,
 				63F03D1E16B09FD8004AF385 /* OPEManagedOsmElement.h */,
@@ -2251,11 +2256,11 @@
 				63266A1717164579002CD7E4 /* x@2x.png in Resources */,
 				63266A1817164579002CD7E4 /* Optional.plist in Resources */,
 				63266A1917164579002CD7E4 /* OptionalCategorySort.plist in Resources */,
-				63266A1A17164579002CD7E4 /* Tags.plist in Resources */,
 				63266A291716469B002CD7E4 /* GTMOAuthViewTouch.xib in Resources */,
 				63266A3717164732002CD7E4 /* OPECategoryViewController.xib in Resources */,
 				63FBA59F171DFBED0098A2F3 /* optimizeDb.sql in Resources */,
 				63FBA5A8171DFBED0098A2F3 /* roadNetworkInit.sql in Resources */,
+				63FD2DAD172F329A0094B969 /* Tags.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2396,6 +2401,7 @@
 				63FBA5A7171DFBED0098A2F3 /* Relation.m in Sources */,
 				63FBA5A9171DFBED0098A2F3 /* Way.m in Sources */,
 				63FBA5AC171E00F20098A2F3 /* Element.m in Sources */,
+				63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
