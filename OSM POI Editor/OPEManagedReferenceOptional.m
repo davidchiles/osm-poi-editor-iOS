@@ -57,14 +57,6 @@
     return OPEOptionalTypeNone;
 }
 
--(NSString *)sectionName
-{
-    if (!_sectionName) {
-        _sectionName = self.section.displayName;
-    }
-    return _sectionName;
-}
-
 -(NSString *)displayNameForKey:(NSString *)osmKey withValue:(NSString *)osmValue
 {
     NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"self.key == %@ AND self.value == %@",osmKey,osmValue];

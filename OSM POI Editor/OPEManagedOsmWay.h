@@ -1,13 +1,14 @@
-#import "_OPEManagedOsmWay.h"
 #import "CoreLocation/CoreLocation.h"
+#import "Way.h"
+#import "OPEManagedOsmElement.h"
 
-@interface OPEManagedOsmWay : _OPEManagedOsmWay {}
+@interface OPEManagedOsmWay : OPEManagedOsmElement{}
 // Custom logic goes here.
 
--(NSArray *)points;
--(BOOL)noNameStreet;
+@property (nonatomic,strong) Way * element;
+@property (nonatomic) BOOL isNoNameStreet;
 
--(void)addNodeInOrder:(OPEManagedOsmNode *)node;
+-(NSArray *)points;
 
 -(NSString *)highwayType;
 

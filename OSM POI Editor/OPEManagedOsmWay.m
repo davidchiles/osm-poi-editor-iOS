@@ -3,7 +3,6 @@
 #import "OPEManagedOsmTag.h"
 #import "OPEGeo.h"
 #import "OPEGeoCentroid.h"
-#import "OPEManagedOsmNodeReference.h"
 
 
 @interface OPEManagedOsmWay ()
@@ -17,11 +16,11 @@
 
 -(CLLocationCoordinate2D)center
 {
-    if (self.isNoNameStreetValue) {
+    if (self.isNoNameStreet) {
         return ((CLLocation *)[self.points objectAtIndex:0]).coordinate;
     }
     
-    if([self.orderedNodes count])
+    if([self.element.nodes count])
     {
         //double centerLat=0.0;
         //double centerLon=0.0;
@@ -32,10 +31,9 @@
         //return CLLocationCoordinate2DMake(centerLat/[self.nodes count], centerLon/[self.nodes count]);
         
         NSMutableArray * array = [NSMutableArray array];
-        for (OPEManagedOsmNodeReference * nodeRef in self.orderedNodes)
+        for (Node * node in self.element.nodes)
         {
-            OPEManagedOsmNode * node = nodeRef.node;
-            [array addObject:[[CLLocation alloc] initWithLatitude:node.latitudeValue longitude:node.longitudeValue]];
+            [array addObject:[[CLLocation alloc] initWithLatitude:node.latitude longitude:node.longitude]];
         }
         
         
@@ -50,12 +48,11 @@
 {
     NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
     [xml appendString:[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"]];
-    [xml appendFormat:@"<way id=\"%lld\" version=\"%lld\" changeset=\"%lld\">",self.osmIDValue,self.versionValue, changesetNumber];
+    [xml appendFormat:@"<way id=\"%lld\" version=\"%lld\" changeset=\"%lld\">",self.element.elementID,self.element.version, changesetNumber];
     
-    for(OPEManagedOsmNodeReference * nodeRef in self.orderedNodes)
+    for(Node * node in self.element.nodes)
     {
-        OPEManagedOsmNode * node = nodeRef.node;
-        [xml appendFormat:@"<nd ref=\"%lld\"/>",node.osmIDValue];
+        [xml appendFormat:@"<nd ref=\"%lld\"/>",node.elementID];
     }
     
     [xml appendString:[self tagsXML]];
@@ -74,22 +71,17 @@
 -(NSArray *)points
 {
     NSMutableArray * mutablePointsArray = [NSMutableArray array];
-    for (OPEManagedOsmNodeReference * nodeRef in self.orderedNodes)
+    for (Node * node in self.element.nodes)
     {
-        if(nodeRef.node)
-        {
-            CLLocationCoordinate2D center = [nodeRef.node center];
-            CLLocation * location = [[CLLocation alloc]initWithLatitude:center.latitude longitude:center.longitude];
-            [mutablePointsArray addObject:location];
-        }
-        
-        
+        CLLocationCoordinate2D center = node.coordinate;
+        CLLocation * location = [[CLLocation alloc]initWithLatitude:center.latitude longitude:center.longitude];
+        [mutablePointsArray addObject:location];
     }
     return mutablePointsArray;
 }
 -(NSString *)name
 {
-    if (self.isNoNameStreetValue) {
+    if (self.isNoNameStreet) {
         return @"Highway Missing Name";
     }
     return [super name];
@@ -127,18 +119,7 @@
         type = [[highwayValue stringByReplacingOccurrencesOfString:@"_" withString:@" "] capitalizedString];
     }
     
-    
-    
-    
     return type;
-}
-
--(void)addNodeInOrder:(OPEManagedOsmNode *)node
-{
-    [self addNodesObject:node];
-    OPEManagedOsmNodeReference * nodeRef = [OPEManagedOsmNodeReference MR_createEntity];
-    nodeRef.node = node;
-    nodeRef.way = self;
 }
 
 @end

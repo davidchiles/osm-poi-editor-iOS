@@ -1,6 +1,6 @@
-#import "_OPEManagedReferencePoiCategory.h"
 
-@interface OPEManagedReferencePoiCategory : _OPEManagedReferencePoiCategory {}
+
+@interface OPEManagedReferencePoiCategory : NSObject {}
 
 +(OPEManagedReferencePoiCategory *)fetchOrCreateWithName:(NSString * )name;
 +(NSArray *)allSortedCategories;

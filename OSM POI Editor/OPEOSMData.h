@@ -24,6 +24,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import "GTMOAuthViewControllerTouch.h"
 #import "AFNetworking.h"
+#import "FMDatabaseQueue.h"
+#import "OSMDAO.h"
 
 @class OPEManagedOsmNode;
 @class OPEManagedOsmElement;
@@ -48,7 +50,7 @@
 
 @end
 
-@interface OPEOSMData : NSObject <NSXMLParserDelegate>
+@interface OPEOSMData : NSObject <OSMDAODelegate>
 {
     GTMOAuthAuthentication *auth;
     OPEManagedOsmWay * currentWay;
@@ -60,7 +62,7 @@
 
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
 @property (nonatomic, weak) id <OPEOSMDataControllerDelegate> delegate;
-@property (nonatomic, strong) OPEManagedOsmElement * currentElement;
+@property (nonatomic,strong) FMDatabaseQueue * databaseQueue;
 
 - (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 - (void) openChangeset:(OPEChangeset *)changeset;

@@ -21,7 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		630190FB16B32583007AB232 /* _OPEManagedReferenceOptionalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 630190FA16B32583007AB232 /* _OPEManagedReferenceOptionalCategory.m */; };
 		630190FE16B3258F007AB232 /* OPEManagedReferenceOptionalCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 630190FD16B3258F007AB232 /* OPEManagedReferenceOptionalCategory.m */; };
 		6310F4B6153736D000C65FD8 /* OPEMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310F4B5153736D000C65FD8 /* OPEMessageView.m */; };
 		6314D13C17039A5B00AE91E3 /* OPENameEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6314D13B17039A5B00AE91E3 /* OPENameEditView.m */; };
@@ -364,14 +363,11 @@
 		6391C66516AE1BA80084D579 /* MagicalRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 6391C64916AE1BA80084D579 /* MagicalRecord.m */; };
 		6391C67316AE2B370084D579 /* Model.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 6391C67216AE2B370084D579 /* Model.xcdatamodel */; };
 		639953FE16113A200070CBAF /* about.css in Resources */ = {isa = PBXBuildFile; fileRef = 639953FD16113A200070CBAF /* about.css */; };
-		63A201F3171217B70060EFF6 /* _OPEManagedOsmNodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A201F2171217B70060EFF6 /* _OPEManagedOsmNodeReference.m */; };
-		63A201F6171217C00060EFF6 /* OPEManagedOsmNodeReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A201F5171217C00060EFF6 /* OPEManagedOsmNodeReference.m */; };
 		63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A964981729FA6100D14CA1 /* OPEManagedObject.m */; };
 		63AD8F7A15E8570B006F92B8 /* OPECategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7915E8570B006F92B8 /* OPECategory.m */; };
 		63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7C15E8577E006F92B8 /* OPEType.m */; };
 		63B1B15016F285DB00323E9F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B1B14F16F285DB00323E9F /* MBProgressHUD.m */; };
 		63B1B7DB16698FAB006CFD68 /* OPEOpenStreetMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B1B7DA16698FAA006CFD68 /* OPEOpenStreetMapSource.m */; };
-		63BDDDFD16B367840083A30C /* _OPEManagedReferencePoiCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BDDDFC16B367840083A30C /* _OPEManagedReferencePoiCategory.m */; };
 		63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49D114E9C5A0008C4551 /* OPETextEdit.m */; };
 		63CB49E214E9E3BF008C4551 /* OPETypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */; };
 		63CB49E314E9E3BF008C4551 /* OPETypeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63CB49E114E9E3BF008C4551 /* OPETypeViewController.xib */; };
@@ -398,15 +394,6 @@
 		63E8212C16F12A850040B892 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E8212116F12A850040B892 /* AFURLConnectionOperation.m */; };
 		63E8212D16F12A850040B892 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E8212316F12A850040B892 /* AFXMLRequestOperation.m */; };
 		63E8212E16F12A850040B892 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E8212516F12A850040B892 /* UIImageView+AFNetworking.m */; };
-		63F03D1516B09EBE004AF385 /* _OPEManagedOsmElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D0416B09EBE004AF385 /* _OPEManagedOsmElement.m */; };
-		63F03D1616B09EBE004AF385 /* _OPEManagedOsmNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D0616B09EBE004AF385 /* _OPEManagedOsmNode.m */; };
-		63F03D1716B09EBE004AF385 /* _OPEManagedOsmRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D0816B09EBE004AF385 /* _OPEManagedOsmRelation.m */; };
-		63F03D1816B09EBE004AF385 /* _OpeManagedOsmRelationMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D0A16B09EBE004AF385 /* _OpeManagedOsmRelationMember.m */; };
-		63F03D1916B09EBE004AF385 /* _OPEManagedOsmTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D0C16B09EBE004AF385 /* _OPEManagedOsmTag.m */; };
-		63F03D1A16B09EBE004AF385 /* _OPEManagedOsmWay.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D0E16B09EBE004AF385 /* _OPEManagedOsmWay.m */; };
-		63F03D1B16B09EBE004AF385 /* _OPEManagedReferenceOptional.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D1016B09EBE004AF385 /* _OPEManagedReferenceOptional.m */; };
-		63F03D1C16B09EBE004AF385 /* _OPEManagedReferenceOsmTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D1216B09EBE004AF385 /* _OPEManagedReferenceOsmTag.m */; };
-		63F03D1D16B09EBE004AF385 /* _OPEManagedReferencePoi.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D1416B09EBE004AF385 /* _OPEManagedReferencePoi.m */; };
 		63F03D2F16B09FD8004AF385 /* OPEManagedOsmElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */; };
 		63F03D3016B09FD8004AF385 /* OPEManagedOsmNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2116B09FD8004AF385 /* OPEManagedOsmNode.m */; };
 		63F03D3116B09FD8004AF385 /* OPEManagedOsmRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2316B09FD8004AF385 /* OPEManagedOsmRelation.m */; };
@@ -461,8 +448,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		630190F916B32583007AB232 /* _OPEManagedReferenceOptionalCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedReferenceOptionalCategory.h; sourceTree = "<group>"; };
-		630190FA16B32583007AB232 /* _OPEManagedReferenceOptionalCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedReferenceOptionalCategory.m; sourceTree = "<group>"; };
 		630190FC16B3258F007AB232 /* OPEManagedReferenceOptionalCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedReferenceOptionalCategory.h; sourceTree = "<group>"; };
 		630190FD16B3258F007AB232 /* OPEManagedReferenceOptionalCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedReferenceOptionalCategory.m; sourceTree = "<group>"; };
 		6310F4B4153736D000C65FD8 /* OPEMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMessageView.h; sourceTree = "<group>"; };
@@ -897,10 +882,6 @@
 		6391C67216AE2B370084D579 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		63968298153CB8B4008F4C0E /* OPEAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAPIConstants.h; sourceTree = "<group>"; };
 		639953FD16113A200070CBAF /* about.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = about.css; sourceTree = "<group>"; };
-		63A201F1171217B70060EFF6 /* _OPEManagedOsmNodeReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedOsmNodeReference.h; sourceTree = "<group>"; };
-		63A201F2171217B70060EFF6 /* _OPEManagedOsmNodeReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedOsmNodeReference.m; sourceTree = "<group>"; };
-		63A201F4171217C00060EFF6 /* OPEManagedOsmNodeReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmNodeReference.h; sourceTree = "<group>"; };
-		63A201F5171217C00060EFF6 /* OPEManagedOsmNodeReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedOsmNodeReference.m; sourceTree = "<group>"; };
 		63A964971729FA6100D14CA1 /* OPEManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedObject.h; sourceTree = "<group>"; };
 		63A964981729FA6100D14CA1 /* OPEManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedObject.m; sourceTree = "<group>"; };
 		63AD8F7815E8570B006F92B8 /* OPECategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECategory.h; sourceTree = "<group>"; };
@@ -911,8 +892,6 @@
 		63B1B14F16F285DB00323E9F /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = lib/MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		63B1B7D916698FAA006CFD68 /* OPEOpenStreetMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOpenStreetMapSource.h; sourceTree = "<group>"; };
 		63B1B7DA16698FAA006CFD68 /* OPEOpenStreetMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpenStreetMapSource.m; sourceTree = "<group>"; };
-		63BDDDFB16B367840083A30C /* _OPEManagedReferencePoiCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedReferencePoiCategory.h; sourceTree = "<group>"; };
-		63BDDDFC16B367840083A30C /* _OPEManagedReferencePoiCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedReferencePoiCategory.m; sourceTree = "<group>"; };
 		63CB49D014E9C5A0008C4551 /* OPETextEdit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETextEdit.h; sourceTree = "<group>"; };
 		63CB49D114E9C5A0008C4551 /* OPETextEdit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETextEdit.m; sourceTree = "<group>"; };
 		63CB49DF14E9E3BE008C4551 /* OPETypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETypeViewController.h; sourceTree = "<group>"; };
@@ -958,24 +937,6 @@
 		63E8212316F12A850040B892 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		63E8212416F12A850040B892 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		63E8212516F12A850040B892 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		63F03D0316B09EBE004AF385 /* _OPEManagedOsmElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedOsmElement.h; sourceTree = "<group>"; };
-		63F03D0416B09EBE004AF385 /* _OPEManagedOsmElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedOsmElement.m; sourceTree = "<group>"; };
-		63F03D0516B09EBE004AF385 /* _OPEManagedOsmNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedOsmNode.h; sourceTree = "<group>"; };
-		63F03D0616B09EBE004AF385 /* _OPEManagedOsmNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedOsmNode.m; sourceTree = "<group>"; };
-		63F03D0716B09EBE004AF385 /* _OPEManagedOsmRelation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedOsmRelation.h; sourceTree = "<group>"; };
-		63F03D0816B09EBE004AF385 /* _OPEManagedOsmRelation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedOsmRelation.m; sourceTree = "<group>"; };
-		63F03D0916B09EBE004AF385 /* _OpeManagedOsmRelationMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OpeManagedOsmRelationMember.h; sourceTree = "<group>"; };
-		63F03D0A16B09EBE004AF385 /* _OpeManagedOsmRelationMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OpeManagedOsmRelationMember.m; sourceTree = "<group>"; };
-		63F03D0B16B09EBE004AF385 /* _OPEManagedOsmTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedOsmTag.h; sourceTree = "<group>"; };
-		63F03D0C16B09EBE004AF385 /* _OPEManagedOsmTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedOsmTag.m; sourceTree = "<group>"; };
-		63F03D0D16B09EBE004AF385 /* _OPEManagedOsmWay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedOsmWay.h; sourceTree = "<group>"; };
-		63F03D0E16B09EBE004AF385 /* _OPEManagedOsmWay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedOsmWay.m; sourceTree = "<group>"; };
-		63F03D0F16B09EBE004AF385 /* _OPEManagedReferenceOptional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedReferenceOptional.h; sourceTree = "<group>"; };
-		63F03D1016B09EBE004AF385 /* _OPEManagedReferenceOptional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedReferenceOptional.m; sourceTree = "<group>"; };
-		63F03D1116B09EBE004AF385 /* _OPEManagedReferenceOsmTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedReferenceOsmTag.h; sourceTree = "<group>"; };
-		63F03D1216B09EBE004AF385 /* _OPEManagedReferenceOsmTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedReferenceOsmTag.m; sourceTree = "<group>"; };
-		63F03D1316B09EBE004AF385 /* _OPEManagedReferencePoi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _OPEManagedReferencePoi.h; sourceTree = "<group>"; };
-		63F03D1416B09EBE004AF385 /* _OPEManagedReferencePoi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _OPEManagedReferencePoi.m; sourceTree = "<group>"; };
 		63F03D1E16B09FD8004AF385 /* OPEManagedOsmElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmElement.h; sourceTree = "<group>"; };
 		63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedOsmElement.m; sourceTree = "<group>"; };
 		63F03D2016B09FD8004AF385 /* OPEManagedOsmNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmNode.h; sourceTree = "<group>"; };
@@ -1539,12 +1500,9 @@
 		6333D39B1680F55900BF129E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				63F03D0216B09EA6004AF385 /* MachineGenerated */,
 				6391C67216AE2B370084D579 /* Model.xcdatamodel */,
 				63A964971729FA6100D14CA1 /* OPEManagedObject.h */,
 				63A964981729FA6100D14CA1 /* OPEManagedObject.m */,
-				63A201F4171217C00060EFF6 /* OPEManagedOsmNodeReference.h */,
-				63A201F5171217C00060EFF6 /* OPEManagedOsmNodeReference.m */,
 				63F03D1E16B09FD8004AF385 /* OPEManagedOsmElement.h */,
 				63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */,
 				63F03D2016B09FD8004AF385 /* OPEManagedOsmNode.h */,
@@ -1836,37 +1794,6 @@
 			name = AFNetworking;
 			path = lib/AFNetworking/AFNetworking;
 			sourceTree = SOURCE_ROOT;
-		};
-		63F03D0216B09EA6004AF385 /* MachineGenerated */ = {
-			isa = PBXGroup;
-			children = (
-				63A201F1171217B70060EFF6 /* _OPEManagedOsmNodeReference.h */,
-				63A201F2171217B70060EFF6 /* _OPEManagedOsmNodeReference.m */,
-				63BDDDFB16B367840083A30C /* _OPEManagedReferencePoiCategory.h */,
-				63BDDDFC16B367840083A30C /* _OPEManagedReferencePoiCategory.m */,
-				630190F916B32583007AB232 /* _OPEManagedReferenceOptionalCategory.h */,
-				630190FA16B32583007AB232 /* _OPEManagedReferenceOptionalCategory.m */,
-				63F03D0316B09EBE004AF385 /* _OPEManagedOsmElement.h */,
-				63F03D0416B09EBE004AF385 /* _OPEManagedOsmElement.m */,
-				63F03D0516B09EBE004AF385 /* _OPEManagedOsmNode.h */,
-				63F03D0616B09EBE004AF385 /* _OPEManagedOsmNode.m */,
-				63F03D0716B09EBE004AF385 /* _OPEManagedOsmRelation.h */,
-				63F03D0816B09EBE004AF385 /* _OPEManagedOsmRelation.m */,
-				63F03D0916B09EBE004AF385 /* _OpeManagedOsmRelationMember.h */,
-				63F03D0A16B09EBE004AF385 /* _OpeManagedOsmRelationMember.m */,
-				63F03D0B16B09EBE004AF385 /* _OPEManagedOsmTag.h */,
-				63F03D0C16B09EBE004AF385 /* _OPEManagedOsmTag.m */,
-				63F03D0D16B09EBE004AF385 /* _OPEManagedOsmWay.h */,
-				63F03D0E16B09EBE004AF385 /* _OPEManagedOsmWay.m */,
-				63F03D0F16B09EBE004AF385 /* _OPEManagedReferenceOptional.h */,
-				63F03D1016B09EBE004AF385 /* _OPEManagedReferenceOptional.m */,
-				63F03D1116B09EBE004AF385 /* _OPEManagedReferenceOsmTag.h */,
-				63F03D1216B09EBE004AF385 /* _OPEManagedReferenceOsmTag.m */,
-				63F03D1316B09EBE004AF385 /* _OPEManagedReferencePoi.h */,
-				63F03D1416B09EBE004AF385 /* _OPEManagedReferencePoi.m */,
-			);
-			name = MachineGenerated;
-			sourceTree = "<group>";
 		};
 		63FBA586171DFBED0098A2F3 /* osm-parser */ = {
 			isa = PBXGroup;
@@ -2337,15 +2264,6 @@
 				6391C66416AE1BA80084D579 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				6391C66516AE1BA80084D579 /* MagicalRecord.m in Sources */,
 				6391C67316AE2B370084D579 /* Model.xcdatamodel in Sources */,
-				63F03D1516B09EBE004AF385 /* _OPEManagedOsmElement.m in Sources */,
-				63F03D1616B09EBE004AF385 /* _OPEManagedOsmNode.m in Sources */,
-				63F03D1716B09EBE004AF385 /* _OPEManagedOsmRelation.m in Sources */,
-				63F03D1816B09EBE004AF385 /* _OpeManagedOsmRelationMember.m in Sources */,
-				63F03D1916B09EBE004AF385 /* _OPEManagedOsmTag.m in Sources */,
-				63F03D1A16B09EBE004AF385 /* _OPEManagedOsmWay.m in Sources */,
-				63F03D1B16B09EBE004AF385 /* _OPEManagedReferenceOptional.m in Sources */,
-				63F03D1C16B09EBE004AF385 /* _OPEManagedReferenceOsmTag.m in Sources */,
-				63F03D1D16B09EBE004AF385 /* _OPEManagedReferencePoi.m in Sources */,
 				63F03D2F16B09FD8004AF385 /* OPEManagedOsmElement.m in Sources */,
 				63F03D3016B09FD8004AF385 /* OPEManagedOsmNode.m in Sources */,
 				63F03D3116B09FD8004AF385 /* OPEManagedOsmRelation.m in Sources */,
@@ -2356,10 +2274,8 @@
 				63F03D3616B09FD8004AF385 /* OPEManagedReferenceOsmTag.m in Sources */,
 				63F03D3816B0A2D1004AF385 /* OPEManagedReferencePoi.m in Sources */,
 				63F03D3B16B0A927004AF385 /* OPEMRUtility.m in Sources */,
-				630190FB16B32583007AB232 /* _OPEManagedReferenceOptionalCategory.m in Sources */,
 				630190FE16B3258F007AB232 /* OPEManagedReferenceOptionalCategory.m in Sources */,
 				631BAAB616B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m in Sources */,
-				63BDDDFD16B367840083A30C /* _OPEManagedReferencePoiCategory.m in Sources */,
 				63E8212616F12A850040B892 /* AFHTTPClient.m in Sources */,
 				63E8212716F12A850040B892 /* AFHTTPRequestOperation.m in Sources */,
 				63E8212816F12A850040B892 /* AFImageRequestOperation.m in Sources */,
@@ -2381,8 +2297,6 @@
 				63397D9A1702732A00D411E7 /* OPETextViewEditViewController.m in Sources */,
 				6314D13C17039A5B00AE91E3 /* OPENameEditView.m in Sources */,
 				6314D13F1703C27B00AE91E3 /* OPEBaseViewController.m in Sources */,
-				63A201F3171217B70060EFF6 /* _OPEManagedOsmNodeReference.m in Sources */,
-				63A201F6171217C00060EFF6 /* OPEManagedOsmNodeReference.m in Sources */,
 				63266A251716469B002CD7E4 /* GTMHTTPFetcher.m in Sources */,
 				63266A261716469B002CD7E4 /* GTMOAuthAuthentication.m in Sources */,
 				63266A271716469B002CD7E4 /* GTMOAuthSignIn.m in Sources */,

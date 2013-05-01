@@ -4,7 +4,6 @@
 #import "OPEManagedOsmWay.h"
 #import "OPEManagedOsmNode.h"
 #import "OPEGeo.h"
-#import "OPEManagedOsmNodeReference.h"
 #import "OPEManagedOsmRelation.h"
 
 #import "OPEManagedOsmTag.h"
@@ -19,6 +18,15 @@
 
 
 @implementation OPEManagedOsmElement
+@synthesize type,isVisible,element,action;
+
+-(id)init
+{
+    if (self = [super init]) {
+        self.isVisible = YES;
+    }
+    return self;
+}
 
 -(CLLocationCoordinate2D)center
 {
@@ -27,12 +35,6 @@
 
 -(NSString *)valueForOsmKey:(NSString *)osmKey
 {
-    NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"key == %@",osmKey];
-    NSSet * filteredSet = [self.tags filteredSetUsingPredicate:tagFilter];
-    if ([filteredSet count]) {
-        OPEManagedOsmTag * tag = [filteredSet anyObject];
-        return tag.value;
-    }
     return @"";
 }
 
@@ -53,19 +55,19 @@
 }
 -(void)addKey:(NSString *)key value:(NSString *)value
 {
-    [self removeTagWithOsmKey:key];
-    OPEManagedOsmTag * newTag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
-    [self.tagsSet addObject:newTag];
+
 }
 
 -(NSString *)tagsXML
 {
+    /*
     NSMutableString * xml = [NSMutableString stringWithString:@""];
     for (OPEManagedOsmTag *tag in self.tags)
     {
         [xml appendFormat:@"<tag k=\"%@\" v=\"%@\"/>",tag.key,[OPEUtility addHTML:tag.value]];
     }
     return xml;
+     */
 }
 
 -(BOOL)findType
@@ -105,23 +107,9 @@
      */
 }
 
--(void)newType:(OPEManagedReferencePoi *)newType
-{
-    if (self.type) {
-        [self.tagsSet minusSet:self.type.tags];
-    }
-    [self.tagsSet unionSet:newType.tags];
-    self.type = newType;
-}
-
 -(NSString *)tagsDescription
 {
-    NSMutableString * string = [NSMutableString stringWithString:@""];
-    for (OPEManagedOsmTag * tag in self.tags)
-    {
-        [string appendFormat:@"\n%@ = %@",tag.key,tag.value];
-    }
-    return string;
+    return @"";
 }
 
 -(NSString *)description
@@ -132,21 +120,6 @@
 -(NSString *)osmType
 {
     return kOPEOsmElementNone;
-}
-
-+(NSInteger) minID
-{
-    NSFetchRequest * request = [OPEManagedOsmElement MR_requestAllSortedBy:OPEManagedOsmElementAttributes.osmID ascending:YES];
-    request.fetchLimit = 1;
-    
-    NSArray * results = [OPEManagedOsmElement MR_executeFetchRequest:request];
-    if ([results count]) {
-        OPEManagedOsmElement * element = [results lastObject];
-        if (element.osmIDValue < 0) {
-            return  element.osmIDValue;
-        }
-    }
-    return 0;
 }
 
 -(NSDictionary *)nearbyValuesForOsmKey:(NSString *)osmKey
@@ -178,7 +151,8 @@
 {
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"%@ IN self.tags",tag];
     
-    return [OPEManagedOsmElement MR_findAllWithPredicate:predicate];
+    //FIXME
+    //return [OPEManagedOsmElement MR_findAllWithPredicate:predicate];
 }
 
 -(NSDictionary *)nearbyCities
@@ -248,10 +222,11 @@
 -(double)minDistanceTo:(OPEManagedOsmWay *)way
 {
     double distance = DBL_MAX;
-    for (NSInteger index = 0; index<[way.orderedNodes count]-1; index++) {
-        OPEManagedOsmNode * node1 = ((OPEManagedOsmNodeReference *)[way.orderedNodes objectAtIndex:index]).node;
-        OPEManagedOsmNode * node2 = ((OPEManagedOsmNodeReference *)[way.orderedNodes objectAtIndex:index+1]).node;
-        OPELineSegment line = [OPEGeo lineSegmentFromPoint:[node1 center] toPoint:[node2 center]];
+    for (NSInteger index = 0; index<[way.element.nodes count]-1; index++) {
+        Node * node1 = ((Node *)[way.element.nodes objectAtIndex:index]);
+        Node * node2 = ((Node *)[way.element.nodes objectAtIndex:index+1]);
+        
+        OPELineSegment line = [OPEGeo lineSegmentFromPoint:node1.coordinate toPoint:node2.coordinate];
         
         double tempDistance  =  [OPEGeo distanceFromlineSegment:line toPoint:[self center]];
         distance = MIN(distance, tempDistance);
@@ -317,25 +292,8 @@
 }
 -(BOOL)memberOfOtherElement
 {
-    if ([self.parentRelations count]) {
-        return YES;
-    }
+    //FIXME
     return NO;
-}
-
-+(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID
-{
-    Class class = self;
-    
-    OPEManagedOsmElement * element = [class MR_findFirstByAttribute:OPEManagedOsmElementAttributes.osmID withValue:[NSNumber numberWithLongLong:ID]];
-    
-    if (!element) {
-        element = [class MR_createEntity];
-        element.osmIDValue = ID;
-    }
-    
-    return element;
-    
 }
 
 +(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID type:(NSString *)typeString
@@ -351,6 +309,25 @@
         element = [OPEManagedOsmRelation fetchOrCreateWithOsmID:ID];
     }
     return element;
+}
+
++(OPEManagedOsmElement *)elementWithBasicOsmElement:(Element *)element
+{
+    if ([element isKindOfClass:[Node class]]) {
+        OPEManagedOsmNode * node = [[OPEManagedOsmNode alloc] init];
+        node.element = (Node *)element;
+        return node;
+    }
+    else if ([element isKindOfClass:[Way class]]) {
+        OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] init];
+        way.element = (Way *)element;
+        return way;
+    }
+    else if ([element isKindOfClass:[Relation class]]) {
+        OPEManagedOsmRelation * relation = [[OPEManagedOsmRelation alloc] init];
+        relation.element = (Relation *)element;
+        return relation;
+    }
 }
 
 @end

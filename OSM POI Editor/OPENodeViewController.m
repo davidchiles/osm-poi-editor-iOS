@@ -77,7 +77,7 @@
             }
         }
         
-        originalTags = [self.managedOsmElement.tags copy];
+        originalTags = [self.managedOsmElement.element.tags copy];
         [self.managedOsmElement updateLegacyTags];
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
@@ -98,8 +98,9 @@
 
 -(void)cancelButtonPressed:(id)sender
 {
-    if (self.managedOsmElement.osmIDValue < 0) {
-        [self.managedOsmElement MR_deleteInContext:editContext];
+    if (self.managedOsmElement.element.elementID < 0) {
+        //FIXME
+        //[self.managedOsmElement MR_deleteInContext:editContext];
     }
     else
     {
@@ -127,7 +128,7 @@
     nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     
-    if (self.managedOsmElement.osmIDValue > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![managedOsmElement memberOfOtherElement]) {
+    if (self.managedOsmElement.element.elementID > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![managedOsmElement memberOfOtherElement]) {
         
         
         deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -397,7 +398,7 @@
         //FIXME
         //viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey andType:managedOptionalTag.type delegate:self];
         viewController.title = managedOptionalTag.displayName;
-        viewController.managedObjectID = managedOsmElement.objectID;
+        //viewController.managedObjectID = managedOsmElement.objectID;
         //FIXME
         //viewController.manageedOptionalObjectID = managedOptionalTag.objectID;
         viewController.currentOsmValue = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
@@ -447,9 +448,9 @@
             NSLog(@"saveBottoPressed");
             
             NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
-            OPEManagedOsmElement * element = (OPEManagedOsmElement *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
-            
-            [self.osmData uploadElement:element];
+            //FIXME
+            //OPEManagedOsmElement * element = (OPEManagedOsmElement *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
+            //[self.osmData uploadElement:element];
             
         });
         //[self didCloseChangeset:1];
@@ -505,10 +506,11 @@
                 dispatch_async(q, ^{
                     
                     NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
-                    OPEManagedOsmElement * osmElement = (OPEManagedOsmElement *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
+                    //FIXME
+                    //OPEManagedOsmElement * osmElement = (OPEManagedOsmElement *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
                     
                     
-                    [self.osmData deleteElement:osmElement];
+                    //[self.osmData deleteElement:osmElement];
                 });
                 //dispatch_release(q);
             }
@@ -527,7 +529,7 @@
     OPEManagedOsmTag * managedOsmTag = (OPEManagedOsmTag *)[editContext existingObjectWithID:managedOsmTagID error:nil];
     
     [self.managedOsmElement removeTagWithOsmKey:managedOsmTag.key];
-    [self.managedOsmElement addTagsObject:managedOsmTag];
+    //FIXME [self.managedOsmElement addTagsObject:managedOsmTag];
     [self checkSaveButton];
     [nodeInfoTableView reloadData];
 }
@@ -537,7 +539,7 @@
     OPEManagedOsmTag * managedOsmTag = (OPEManagedOsmTag *)[editContext existingObjectWithID:managedOsmTagID error:nil];
     
     [self.managedOsmElement removeTagWithOsmKey:managedOsmTag.key];
-    [self.managedOsmElement addTagsObject:managedOsmTag];
+    //FIXME [self.managedOsmElement addTagsObject:managedOsmTag];
     [self checkSaveButton];
     [nodeInfoTableView reloadData];
 }
@@ -559,7 +561,7 @@
 
 -(BOOL)tagsHaveChanged
 {
-    return ![originalTags isEqualToSet:self.managedOsmElement.tags];
+    //FIXME return ![originalTags isEqualToSet:self.managedOsmElement.tags];
 }
 
 

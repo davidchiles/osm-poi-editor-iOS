@@ -252,7 +252,7 @@
     
     OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:managedObjectID];
     if ([managedOsmElement isKindOfClass:[OPEManagedOsmWay class]]) {
-        if (((OPEManagedOsmWay *)managedOsmElement).isNoNameStreetValue) {
+        if (((OPEManagedOsmWay *)managedOsmElement).isNoNameStreet) {
             return [self shapeForNoNameStreet:(OPEManagedOsmWay *)managedOsmElement];
         }
     }
@@ -277,7 +277,7 @@
     annotation.subtitle = subtitleString;
     
     
-    annotation.userInfo = [managedOsmElement objectID];
+    //FIXME annotation.userInfo = [managedOsmElement objectID];
     
     if ([managedOsmElement isKindOfClass:[OPEManagedOsmRelation class]]) {
         OPEManagedOsmRelation * managedRelation = (OPEManagedOsmRelation *)managedOsmElement;
@@ -419,7 +419,7 @@
     
     if ([osmElement isKindOfClass:[OPEManagedOsmWay class]]) {
         OPEManagedOsmWay * osmWay = (OPEManagedOsmWay *)osmElement;
-        if (osmWay.isNoNameStreetValue) {
+        if (osmWay.isNoNameStreet) {
             
             self.selectedNoNameHighway = annotation;
             [self showNoNameViewWithType:[NSString stringWithFormat:@"%@ - missing name",[osmWay highwayType]]];
@@ -511,7 +511,7 @@
         
         OPEManagedOsmTag * tag = [OPEManagedOsmTag fetchOrCreateWithKey:@"name" value:value];
         OPEManagedOsmElement * managedElement = (OPEManagedOsmElement*)[OPEMRUtility managedObjectWithID:self.selectedNoNameHighway.userInfo];
-        [managedElement addTagsObject:tag];
+        //FIXME [managedElement addTagsObject:tag];
         managedElement.action = kActionTypeModify;
         NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
         [context MR_saveToPersistentStoreAndWait];
@@ -632,12 +632,12 @@
     if (mapView.zoom > MINZOOM) {
         
         OPEManagedOsmNode * node = [OPEManagedOsmNode newNode];
-        node.latitudeValue = center.latitude;
-        node.longitudeValue = center.longitude;
+        node.element.latitude = center.latitude;
+        node.element.longitude = center.longitude;
         
         [OPEMRUtility saveAll];
         
-        [self presentNodeInfoViewControllerWithElement:node.objectID];
+        //FIXME [self presentNodeInfoViewControllerWithElement:node.objectID];
     }
     else {
         UIAlertView * zoomAlert = [[UIAlertView alloc]
@@ -754,13 +754,13 @@
     [mapView removeAllAnnotations];
     for (OPEManagedOsmElement * element in [self.osmElementFetchedResultsController fetchedObjects])
     {
-        [self updateOsmElementWithID:element.objectID];
+        //FIXME [self updateOsmElementWithID:element.objectID];
     }
     
     if ([self showNoNameStreets]) {
         for (OPEManagedOsmElement * element in [self.noNameStreetsFetchedResultsController fetchedObjects])
         {
-            [self updateOsmElementWithID:element.objectID];
+            //FIXME [self updateOsmElementWithID:element.objectID];
         }
     }
     else
@@ -829,6 +829,7 @@
 
 -(NSFetchedResultsController *)noNameStreetsFetchedResultsController
 {
+    /*
     if(_noNameStreetsFetchedResultsController)
         return _noNameStreetsFetchedResultsController;
     
@@ -837,11 +838,13 @@
     _noNameStreetsFetchedResultsController = [OPEManagedOsmWay MR_fetchAllGroupedBy:nil withPredicate:noNameFilter sortedBy:OPEManagedOsmElementAttributes.osmID ascending:NO delegate:self];
     
     return _noNameStreetsFetchedResultsController;
+     */
     
 }
 
 -(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
+    /*
     switch (type) {
         case NSFetchedResultsChangeInsert:
         {
@@ -863,6 +866,7 @@
         default:
             break;
     }
+     */
 }
 
 #pragma OPEOsmDataDelegate

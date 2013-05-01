@@ -1,9 +1,11 @@
-#import "_OPEManagedOsmRelation.h"
 #import "CoreLocation/CoreLocation.h"
+#import "Relation.h"
+#import "OPEManagedOsmElement.h"
 
-@interface OPEManagedOsmRelation : _OPEManagedOsmRelation {}
+@interface OPEManagedOsmRelation : OPEManagedOsmElement {}
 
--(void)addInOrderElement:(OPEManagedOsmElement *)element withRole:(NSString *)role;
+
+@property (nonatomic,strong) Relation * element;
 
 -(NSArray *)outerPolygons;
 -(NSArray *)innerPolygons;

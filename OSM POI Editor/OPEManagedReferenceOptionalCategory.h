@@ -1,9 +1,6 @@
-#import "_OPEManagedReferenceOptionalCategory.h"
 
-@interface OPEManagedReferenceOptionalCategory : _OPEManagedReferenceOptionalCategory {}
+
+@interface OPEManagedReferenceOptionalCategory : NSObject {}
 // Custom logic goes here.
-
-+(OPEManagedReferenceOptionalCategory *) fetchOrCreateWithName:(NSString *)name sortOrder:(NSInteger) sortOrder;
-+(OPEManagedReferenceOptionalCategory *) fetchWithName:(NSString *)name;
 
 @end

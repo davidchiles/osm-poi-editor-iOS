@@ -16,6 +16,7 @@
 #import "OPEUtility.h"
 #import "FMDatabase.h"
 #import "FMDatabaseQueue.h"
+#import "OSMDAO.h"
 
 #define tagsFilePath [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"json"]
 #define optionalPlistFilePath [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"plist"]
@@ -209,13 +210,15 @@
 {
     [queue inDatabase:^(FMDatabase *db) {
         BOOL result = NO;
-        result = [db executeUpdate:@"DROP TABLE poi"];
-        result = [db executeUpdate:@"DROP TABLE optional"];
-        result = [db executeUpdate:@"DROP TABLE optional_section"];
-        result = [db executeUpdate:@"DROP TABLE pois_tags"];
-        result = [db executeUpdate:@"DROP TABLE optionals_tags"];
-        result = [db executeUpdate:@"DROP TABLE pois_optionals"];
-        //result = [db executeUpdate:@"CREATE TABLE poi(canAdd INTEGER DEFAULT 1,imageString TEXT,isLegacy INTEGER DEFAULT 0)"];
+        OSMDAO * osmData = [[OSMDAO alloc] initWithFilePath:kDatabasePath overrideIfExists:YES];
+        osmData = nil;
+        [db beginTransaction];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS poi"];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS optional"];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS optional_section"];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS pois_tags"];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS optionals_tags"];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS pois_optionals"];
         
         result = [db executeUpdateWithFormat:@"create table poi(canAdd INTEGER DEFAULT 1,imageString TEXT,isLegacy INTEGER DEFAULT 0,displayName TEXT NOT NULL,category TEXT NOT NULL,UNIQUE(displayName,category))"];
         result = [db executeUpdateWithFormat:@"create table optional(name TEXT PRIMARY KEY NOT NULL, displayName TEXT NOT NULL, osmKey TEXT,sectionSortOrder INTEGER,type TEXT,section_id INTEGER)"];
@@ -225,10 +228,14 @@
         result = [db executeUpdate:@"create table pois_optionals(poi_id INTEGER NOT NULL,optional_id INTEGER NOT NULL,UNIQUE(poi_id,optional_id))"];
         
         result = [db executeUpdate:@"ALTER TABLE nodes ADD COLUMN poi_id INTEGER;"];
-        
         result = [db executeUpdate:@"ALTER TABLE ways ADD COLUMN poi_id INTEGER;"];
-        
         result = [db executeUpdate:@"ALTER TABLE relations ADD COLUMN poi_id INTEGER;"];
+        
+        result = [db executeUpdate:@"ALTER TABLE nodes ADD COLUMN isVisible INTEGER DEFAULT 1;"];
+        result = [db executeUpdate:@"ALTER TABLE ways ADD COLUMN isVisible INTEGER DEFAULT 1;"];
+        result = [db executeUpdate:@"ALTER TABLE relations ADD COLUMN isVisible INTEGER DEFAULT 1;"];
+        
+        [db commit];
         
     }];
     

@@ -1,7 +1,9 @@
-#import "_OPEManagedOsmNode.h"
 #import "CoreLocation/CoreLocation.h"
+#import "OPEManagedOsmElement.h"
+#import "Node.h"
 
-@interface OPEManagedOsmNode : _OPEManagedOsmNode {}
+@interface OPEManagedOsmNode : OPEManagedOsmElement {}
+@property (nonatomic,strong) Node * element;
 
 +(OPEManagedOsmNode *)newNode;
 

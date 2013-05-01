@@ -1,5 +1,4 @@
-#import "_OpeManagedOsmRelationMember.h"
 
-@interface OpeManagedOsmRelationMember : _OpeManagedOsmRelationMember {}
+@interface OpeManagedOsmRelationMember : NSObject {}
 // Custom logic goes here.
 @end
