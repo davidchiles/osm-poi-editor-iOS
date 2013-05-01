@@ -18,7 +18,7 @@
 
 
 @implementation OPEManagedOsmElement
-@synthesize type,isVisible,element,action;
+@synthesize typeID,type,isVisible,element,action;
 
 -(id)init
 {
@@ -35,76 +35,22 @@
 
 -(NSString *)valueForOsmKey:(NSString *)osmKey
 {
-    return @"";
+    return self.element.tags[osmKey];
 }
 
--(NSString *)name
+-(int64_t)elementID
 {
-    NSString * possibleName = [self valueForOsmKey:@"name"];
-    if ([possibleName length]) {
-        return possibleName;
-    }
-    else if (self.type)
-    {
-        return self.type.name;
-    }
-    else
-    {
-        return @"";
-    }
-}
--(void)addKey:(NSString *)key value:(NSString *)value
-{
-
+    return self.element.elementID;
 }
 
 -(NSString *)tagsXML
 {
-    /*
     NSMutableString * xml = [NSMutableString stringWithString:@""];
-    for (OPEManagedOsmTag *tag in self.tags)
+    for (NSString *osmKey in self.element.tags)
     {
-        [xml appendFormat:@"<tag k=\"%@\" v=\"%@\"/>",tag.key,[OPEUtility addHTML:tag.value]];
+        [xml appendFormat:@"<tag k=\"%@\" v=\"%@\"/>",osmKey,[OPEUtility addHTML:self.element.tags[osmKey]]];
     }
     return xml;
-     */
-}
-
--(BOOL)findType
-{
-    //FIXME
-    /*
-    if ([self.tags count]) {
-        
-        
-        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(SUBQUERY(tags, $tag, $tag IN %@).@count == tags.@count)",self.tags];
-       // NSArray * matches = [OPEManagedReferencePoi MR_findAllSortedBy:OPEManagedReferencePoiAttributes.isLegacy ascending:NO withPredicate:predicate];
-        NSFetchRequest * request = [OPEManagedReferencePoi MR_requestAllSortedBy:OPEManagedReferencePoiAttributes.isLegacy ascending:NO withPredicate:predicate];
-        [request setFetchLimit:1];
-        [request setFetchBatchSize:2];
-        
-        OPEManagedReferencePoi * newType = [OPEManagedReferencePoi MR_executeFetchRequestAndReturnFirstObject:request];
-        
-        
-        if (newType) {
-            
-            self.type =newType;
-            return YES;
-        }
-    }
-     */
-    
-    return NO;
-    
-}
-
--(void)removeTagWithOsmKey:(NSString *)osmKey
-{
-    /*
-    NSPredicate * keyFilter = [NSPredicate predicateWithFormat:@"%K == %@",OPEManagedOsmTagAttributes.key,osmKey];
-    NSSet * removeSet = [self.tags filteredSetUsingPredicate:keyFilter];
-    [self.tagsSet minusSet:removeSet];
-     */
 }
 
 -(NSString *)tagsDescription

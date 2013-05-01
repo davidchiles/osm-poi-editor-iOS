@@ -26,6 +26,7 @@
 #import "AFNetworking.h"
 #import "FMDatabaseQueue.h"
 #import "OSMDAO.h"
+#import "OPEManagedReferencePoi.h"
 
 @class OPEManagedOsmNode;
 @class OPEManagedOsmElement;
@@ -57,6 +58,7 @@
     OPEManagedOsmRelation * currentRelation;
     dispatch_queue_t q;
     AFHTTPClient * httpClient;
+    NSMutableDictionary * typeDictionary;
     
 }
 
@@ -70,6 +72,14 @@
 
 - (void) uploadElement: (OPEManagedOsmElement *) element;
 - (void) deleteElement: (OPEManagedOsmElement *) element;
+
+- (NSString *)nameWithElement: (OPEManagedOsmElement *) element;
+
+-(void)removeOsmKey:(NSString *)osmKey forElement:(OPEManagedOsmElement *)element;
+-(void)setOsmKey:(NSString *)osmKey andValue:(NSString *)osmValue forElement:(OPEManagedOsmElement *)element;
+-(void)setNewType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element;
+
+-(NSArray *)allElementsWithType:(BOOL)withType;
 
 -(BOOL) canAuth;
 

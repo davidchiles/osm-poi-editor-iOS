@@ -689,9 +689,9 @@
     [[self navigationController] pushViewController:viewer animated:YES];
 }
 
--(void)presentNodeInfoViewControllerWithElement:(NSManagedObjectID *)elementID
+-(void)presentNodeInfoViewControllerWithElement:(OPEManagedOsmElement *)element
 {
-    OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithOsmElementObjectID:elementID delegate:self];
+    OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithOsmElement:element delegate:self];
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:nodeViewController];
     
     [self.navigationController presentModalViewController:navController animated:YES];

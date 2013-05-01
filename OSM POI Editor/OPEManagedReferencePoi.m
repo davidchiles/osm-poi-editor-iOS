@@ -53,6 +53,19 @@
     return self;
     
 }
+-(id)initWithSqliteResultDictionary:(NSDictionary *)dictionary
+{
+    if (self = [super init]) {
+        self.name = dictionary[@"displayName"];
+        self.imageString = dictionary[@"imageString"];
+        self.canAdd = [dictionary[@"canAdd"] boolValue];
+        self.isLegacy = [dictionary[@"isLegacy"]boolValue];
+        self.categoryName = dictionary[@"category"];
+    }
+    return self;
+    
+}
+
 -(NSString *)sqliteInsertString
 {
     return [NSString stringWithFormat:@"insert or replace into poi(canAdd,imageString,isLegacy,displayName,category) values(%d,\'%@\',%d,\'%@\',\'%@\')",YES,self.imageString,self.isLegacy,self.name,self.categoryName];

@@ -362,14 +362,9 @@
     NSString * baseTableName = [OSMDAO tableName:element.element];
     NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
     NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
-    
-    if ([baseTableName isEqualToString:@"ways"]) {
-        NSLog(@"adding way");
-    }
 
     if (tagsTable && columnID && [element.element.tags count]) {
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
-            db.logsErrors = YES;
             if ([[element.element.tags objectForKey:@"bus"] isEqualToString:@"yes"]) {
                 NSLog(@"bus stop");
             }
@@ -381,7 +376,6 @@
                 int poi_id  = [result intForColumn:@"poi_id"];
                 sql = [NSString stringWithFormat:@"UPDATE %@ SET poi_id=%d WHERE id=%lld",baseTableName,poi_id,element.element.elementID];
                 BOOL res = [db executeUpdateWithFormat:sql];
-                NSLog(@"test %d",res);
             }
             [result close];
             
@@ -402,7 +396,7 @@
 -(void)setNewType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element
 {
     [self removeType:element.type forElement:element];
-    element.type = type;
+    element.typeID = type.rowID;
     for (NSString * osmKey in type.tags)
     {
         [self setOsmKey:osmKey andValue:type.tags[osmKey] forElement:element];
@@ -420,8 +414,7 @@
 }
 -(void)removeType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element
 {
-    [self removeType:element.type forElement:element];
-    element.type = type;
+    element.typeID = 0;
     for (NSString * osmKey in type.tags)
     {
         [self removeOsmKey:osmKey forElement:element];
@@ -449,7 +442,7 @@
         [db executeUpdate:[OSMDAO sqliteInsertOrReplaceNodeString:node.element]];
         [db executeUpdateWithFormat:@"DELETE FROM nodes_tags WHERE node_id = %lld",node.element.elementID];
         [db executeUpdate:[OSMDAO sqliteInsertNodeTagsString:node.element]];
-        [db executeUpdateWithFormat:@"UPDATE nodes SET poi_id = %d,isVisible = %d WHERE id = %lld",node.type.rowID,node.isVisible,node.element.elementID];
+        [db executeUpdateWithFormat:@"UPDATE nodes SET poi_id = %d,isVisible = %d WHERE id = %lld",node.typeID,node.isVisible,node.element.elementID];
         
     }];
     
@@ -461,7 +454,7 @@
         [db executeUpdate:[OSMDAO sqliteInsertOrReplaceWayTagsString:way.element]];
         [db executeUpdateWithFormat:@"DELETE FROM ways_tags WHERE way_id = %lld",way.element.elementID];
         [db executeUpdate:[OSMDAO sqliteInsertOrReplaceWayTagsString:way.element]];
-        [db executeUpdateWithFormat:@"UPDATE ways SET poi_id = %d,isVisible = %d WHERE id = %lld",way.type.rowID,way.isVisible,way.element.elementID];
+        [db executeUpdateWithFormat:@"UPDATE ways SET poi_id = %d,isVisible = %d WHERE id = %lld",way.typeID,way.isVisible,way.element.elementID];
         
     }];
     
@@ -473,9 +466,67 @@
         [db executeUpdate:[OSMDAO sqliteInsertOrReplaceRelationString:relation.element]];
         [db executeUpdateWithFormat:@"DELETE FROM relations_tags WHERE relation_id = %lld",relation.element.elementID];
         [db executeUpdate:[OSMDAO sqliteInsertOrReplaceRelationTagsString:relation.element]];
-        [db executeUpdateWithFormat:@"UPDATE relations SET poi_id,isVisible = %d = %d WHERE id = %lld",relation.type.rowID,relation.isVisible,relation.element.elementID];
+        [db executeUpdateWithFormat:@"UPDATE relations SET poi_id,isVisible = %d = %d WHERE id = %lld",relation.typeID,relation.isVisible,relation.element.elementID];
         
     }];
+}
+
+-(OPEManagedReferencePoi *)typeWithElement:(OPEManagedOsmElement *)element withTags:(BOOL)withTags
+{
+    __block OPEManagedReferencePoi * type = nil;
+    if (element.typeID) {
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            FMResultSet * result = [db executeQueryWithFormat:@"SELECT * FROM poi WHERE rowid = %d",element.typeID];
+            
+            if ([result next]) {
+                type = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[result resultDictionary]];
+            }
+            [result close];
+            if (withTags) {
+                result = [db executeQueryWithFormat:@"SELECT * FROM pois_tags WHERE poi_id = %d",element.typeID];
+                NSMutableDictionary * tempTags = [NSMutableDictionary dictionary];
+                while ([result next]) {
+                    [tempTags setObject:[result stringForColumn:@"value"] forKey:[result stringForColumn:@"key"]];
+                }
+                type.tags = tempTags;
+            }
+        }];
+    }
+    element.type = type;
+    return type;
+}
+
+- (NSString *)nameWithElement: (OPEManagedOsmElement *) element
+{
+    NSString * possibleName = [element valueForOsmKey:@"name"];
+    if (!element.type) {
+        [self typeWithElement:element withTags:NO];
+    }
+    
+    if ([possibleName length]) {
+        return possibleName;
+    }
+    else if (element.type)
+    {
+        return element.type.name;
+    }
+    else
+    {
+        return @"";
+    }
+}
+
+-(NSArray *)allElementsWithType:(BOOL)withType
+{
+    
+}
+
+-(NSArray *)allElementsOfKind:(NSString *)kind withType:(BOOL)withType
+{
+    NSMutableString * sql = [NSMutableString stringWithFormat:@"SELECT * FROM %@s",kind];
+    
+    
+    
 }
 
 //OSMDAODelegate Mehtod

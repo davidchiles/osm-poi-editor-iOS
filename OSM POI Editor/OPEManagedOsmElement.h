@@ -7,17 +7,16 @@
 
 @interface OPEManagedOsmElement : NSObject {}
 
-@property (nonatomic,strong) OPEManagedReferencePoi * type;
+@property (nonatomic) int typeID;
+@property (nonatomic,strong) OPEManagedReferencePoi *type;
 @property (nonatomic,strong) Element * element;
 @property (nonatomic) BOOL isVisible;
 @property (nonatomic,strong) NSString * action;
+@property (nonatomic) int64_t elementID;
 
 -(CLLocationCoordinate2D) center;
--(BOOL) findType;
 -(NSString *)name;
 -(NSString *)valueForOsmKey:(NSString *)osmKey;
--(void)removeTagWithOsmKey:(NSString *)osmKey;
--(void)newType:(OPEManagedReferencePoi *)type;
 -(NSString *)tagsDescription;
 -(void)addKey:(NSString *)key value:(NSString *)value;
 

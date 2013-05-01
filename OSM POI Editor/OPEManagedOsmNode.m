@@ -14,7 +14,7 @@
 
 -(CLLocationCoordinate2D) center
 {
-    return CLLocationCoordinate2DMake(self.element.latitude, self.element.longitude);
+    return [self.element coordinate];
 }
 
 -(NSData *) uploadXMLforChangset:(int64_t)changesetNumber

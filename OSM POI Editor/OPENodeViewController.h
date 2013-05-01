@@ -43,7 +43,8 @@
     NSDictionary * osmKeyValue;
     float optionalTagWidth;
     NSManagedObjectContext * editContext;
-    NSSet * originalTags;
+    NSDictionary * originalTags;
+    OPEOSMData * osmData;
 }
 
 @property (nonatomic, strong) UITableView * nodeInfoTableView;
@@ -55,7 +56,7 @@
 @property (nonatomic) BOOL newElement;
 @property (nonatomic, strong) NSArray * optionalSectionsArray;
 
-- (id)initWithOsmElementObjectID:(NSManagedObjectID *)objectID delegate:(id<OPENodeViewDelegate>)delegate;
+- (id)initWithOsmElement:(OPEManagedOsmElement *)element delegate:(id<OPENodeViewDelegate>)delegate;
 
 - (void) saveButtonPressed;
 - (void) deleteButtonPressed;

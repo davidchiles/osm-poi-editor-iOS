@@ -61,21 +61,15 @@
     }
     return self;
 }
-- (id)initWithOsmElementObjectID:(NSManagedObjectID *)objectID delegate:(id<OPENodeViewDelegate>)newDelegate
+- (id)initWithOsmElement:(OPEManagedOsmElement *)element delegate:(id<OPENodeViewDelegate>)newDelegate;
 {
     self = [self init];
     if(self)
     {
+        osmData = [[OPEOSMData alloc] init];
         self.delegate = newDelegate;
-        editContext = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_contextForCurrentThread]];
-        if (objectID) {
-            
-            NSError * error = nil;
-            self.managedOsmElement = (OPEManagedOsmElement *)[editContext existingObjectWithID:objectID error:&error];
-            if (error) {
-                NSLog(@"Getting Element Error: %@",error);
-            }
-        }
+        
+        self.managedOsmElement = [element copy];
         
         originalTags = [self.managedOsmElement.element.tags copy];
         [self.managedOsmElement updateLegacyTags];
@@ -423,7 +417,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         OPEManagedReferenceOptional * optional = [self optionalAtIndexPath:indexPath];
         NSString * osmKey = optional.osmKey;
-        [self.managedOsmElement removeTagWithOsmKey:osmKey];
+        [osmData removeOsmKey:osmKey forElement:self.managedOsmElement];
         [nodeInfoTableView reloadData];
         [self checkSaveButton];
     }
@@ -528,8 +522,7 @@
 {
     OPEManagedOsmTag * managedOsmTag = (OPEManagedOsmTag *)[editContext existingObjectWithID:managedOsmTagID error:nil];
     
-    [self.managedOsmElement removeTagWithOsmKey:managedOsmTag.key];
-    //FIXME [self.managedOsmElement addTagsObject:managedOsmTag];
+    [osmData setOsmKey:managedOsmTag.key andValue:managedOsmTag.value forElement:self.managedOsmElement];
     [self checkSaveButton];
     [nodeInfoTableView reloadData];
 }
@@ -538,30 +531,19 @@
 {
     OPEManagedOsmTag * managedOsmTag = (OPEManagedOsmTag *)[editContext existingObjectWithID:managedOsmTagID error:nil];
     
-    [self.managedOsmElement removeTagWithOsmKey:managedOsmTag.key];
-    //FIXME [self.managedOsmElement addTagsObject:managedOsmTag];
+    [osmData setOsmKey:managedOsmTag.key andValue:managedOsmTag.value forElement:self.managedOsmElement];
     [self checkSaveButton];
     [nodeInfoTableView reloadData];
 }
 
 -(void)newType:(OPEManagedReferencePoi *)newType;
 {
-    [self.managedOsmElement newType:newType];
-}
-
--(void)setNewType:(NSManagedObjectID *)managedReferencePoiID
-{
-    //[self newType:(OPEManagedReferencePoi *)[OPEMRUtility managedObjectWithID:managedReferencePoiID]];
-    [self newType:(OPEManagedReferencePoi *)[editContext existingObjectWithID:managedReferencePoiID error:nil]];
-    
-    [self reloadTags];
-    [nodeInfoTableView reloadData];
-    [self checkSaveButton];
+    [osmData setNewType:newType forElement:self.managedOsmElement];
 }
 
 -(BOOL)tagsHaveChanged
 {
-    //FIXME return ![originalTags isEqualToSet:self.managedOsmElement.tags];
+    return ![originalTags isEqualToDictionary:self.managedOsmElement.element.tags];
 }
 
 
