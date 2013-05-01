@@ -22,36 +22,6 @@
     return self;
 }
 
--(CLLocationCoordinate2D)center
-{
-    if (self.isNoNameStreet) {
-        return ((CLLocation *)[self.points objectAtIndex:0]).coordinate;
-    }
-    
-    if([self.element.nodes count])
-    {
-        //double centerLat=0.0;
-        //double centerLon=0.0;
-        
-        //centerLat = [[self.nodes valueForKeyPath:@"@sum.latitude"] doubleValue];
-        //centerLon = [[self.nodes valueForKeyPath:@"@sum.longitude"] doubleValue];
-        
-        //return CLLocationCoordinate2DMake(centerLat/[self.nodes count], centerLon/[self.nodes count]);
-        
-        NSMutableArray * array = [NSMutableArray array];
-        for (Node * node in self.element.nodes)
-        {
-            [array addObject:[[CLLocation alloc] initWithLatitude:node.latitude longitude:node.longitude]];
-        }
-        
-        
-        //CLLocationCoordinate2D center = [OPEGeo centroidOfPolygon:array];
-        CLLocationCoordinate2D center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:array];
-        return center;
-    }
-    return CLLocationCoordinate2DMake(0, 0);
-}
-
 -(NSData *) uploadXMLforChangset:(int64_t)changesetNumber
 {
     NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];

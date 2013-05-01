@@ -7,8 +7,4 @@
 
 @property (nonatomic,strong) Relation * element;
 
--(NSArray *)outerPolygons;
--(NSArray *)innerPolygons;
--(NSIndexSet *)outerPolygonsIndexes;
-
 @end

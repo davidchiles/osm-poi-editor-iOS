@@ -1,4 +1,15 @@
+#import "OPEManagedOsmElement.h"
 
 @interface OpeManagedOsmRelationMember : NSObject {}
-// Custom logic goes here.
+
+@property (nonatomic,strong) NSString * role;
+@property (nonatomic,strong) NSString * type;
+@property (nonatomic) int64_t ref;
+
+@property (nonatomic,strong) OPEManagedOsmElement * element;
+
+-(id)initWithDictionary:(NSDictionary *)dictionary;
+
+
+
 @end

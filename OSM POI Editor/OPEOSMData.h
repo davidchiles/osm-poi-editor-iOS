@@ -81,6 +81,10 @@
 
 -(void)getTypeFor:(OPEManagedOsmElement *)element;
 -(NSString *)nameForElement:(OPEManagedOsmElement *)element;
+-(CLLocationCoordinate2D)centerForElement:(OPEManagedOsmElement *)element;
+-(NSArray *)pointsForWay:(OPEManagedOsmWay *)way;
+-(NSArray *)outerPolygonsForRelation:(OPEManagedOsmRelation *)relation;
+-(NSArray *)innerPolygonsForRelation:(OPEManagedOsmRelation *)relation;
 
 -(NSArray *)allElementsWithType:(BOOL)withType;
 

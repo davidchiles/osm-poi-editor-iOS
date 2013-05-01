@@ -226,7 +226,7 @@
 -(RMShape *) shapeForNoNameStreet:(OPEManagedOsmWay *)osmWay
 {
     RMShape * line = [[RMShape alloc]initWithView:mapView];
-    NSArray * points = osmWay.points;
+    NSArray * points = [self.osmData pointsForWay:osmWay];
     
     [line performBatchOperations:^(RMShape *aShape) {
             [aShape moveToCoordinate:((CLLocation *)[points objectAtIndex:0]).coordinate];
@@ -267,7 +267,7 @@
 {
     //NSLog(@"center: %@",[managedOsmElement center]);
     [self.osmData getTypeFor:managedOsmElement];
-    RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[managedOsmElement center] andTitle:[self.osmData nameForElement:managedOsmElement]];
+    RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[self.osmData centerForElement:managedOsmElement] andTitle:[self.osmData nameForElement:managedOsmElement]];
     
     NSMutableString * subtitleString = [NSMutableString stringWithFormat:@"%@",managedOsmElement.type.categoryName];
     
@@ -282,7 +282,7 @@
     if ([managedOsmElement isKindOfClass:[OPEManagedOsmRelation class]]) {
         OPEManagedOsmRelation * managedRelation = (OPEManagedOsmRelation *)managedOsmElement;
         
-        NSArray * outerPolygonArray = [managedRelation outerPolygons];
+        NSArray * outerPolygonArray = [self.osmData outerPolygonsForRelation:managedRelation];
         
         NSMutableArray * annotationsArray = [NSMutableArray array];
         for (NSArray * pointsArray in outerPolygonArray)
@@ -321,8 +321,8 @@
 
 -(RMAnnotation *)shapeForRelation:(OPEManagedOsmRelation *)relation
 {
-    NSArray * outerPoints = [relation outerPolygons];
-    NSArray * innerPoints = [relation innerPolygons];
+    NSArray * outerPoints = [self.osmData outerPolygonsForRelation:relation];
+    NSArray * innerPoints = [self.osmData innerPolygonsForRelation:relation];
     
     if (![outerPoints count]) {
         return nil;
@@ -380,7 +380,7 @@
 -(RMAnnotation *)shapeForWay:(OPEManagedOsmWay *)way
 {
     
-    NSArray * points = [way points];
+    NSArray * points = [self.osmData pointsForWay:way];
     
     RMAnnotation * newAnnotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:((CLLocation *)[points objectAtIndex:0]).coordinate andTitle:nil];
     

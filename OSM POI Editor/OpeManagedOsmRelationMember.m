@@ -9,7 +9,18 @@
 
 
 @implementation OpeManagedOsmRelationMember
+@synthesize role,type,ref,element;
 
-// Custom logic goes here.
+-(id)initWithDictionary:(NSDictionary *)dictionary
+{
+    if(self = [super init])
+    {
+        self.role = dictionary[@"role"];
+        self.ref = [dictionary[@"ref"] longLongValue];
+        self.type = dictionary[@"type"];
+        
+    }
+    return self;
+}
 
 @end

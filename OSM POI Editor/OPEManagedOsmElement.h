@@ -16,7 +16,6 @@
 
 
 -(id)initWithDictionary:(NSDictionary *)dictionary;
--(CLLocationCoordinate2D) center;
 -(NSString *)valueForOsmKey:(NSString *)osmKey;
 -(NSString *)tagsDescription;
 -(void)addKey:(NSString *)key value:(NSString *)value;

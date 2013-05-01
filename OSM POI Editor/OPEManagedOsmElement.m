@@ -32,8 +32,12 @@
     if (self = [self init]) {
         //self.element = [[Element alloc] initWithDictionary:dictionary];
         self.isVisible = dictionary[@"isVisible"];
-        self.typeID = [dictionary[@"poi_id"] intValue];
+        
         self.action = dictionary[@"action"];
+        if ([dictionary[@"poi_id"] isKindOfClass:[NSNumber class]]) {
+            self.typeID = [dictionary[@"poi_id"] intValue];
+        }
+        
     }
     return self;
     

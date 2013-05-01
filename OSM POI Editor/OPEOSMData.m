@@ -32,6 +32,8 @@
 #import "OPEChangeset.h"
 #import "OPEMRUtility.h"
 #import "OPEUtility.h"
+#import "OPEGeoCentroid.h"
+#import "OpeManagedOsmRelationMember.h"
 
 #import "OSMParser.h"
 #import "OSMParserHandlerDefault.h"
@@ -457,8 +459,6 @@
     
     
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        db.logsErrors = YES;
-        db.traceExecution = YES;
         NSString * baseTableName = [OSMDAO tableName:element.element];
         NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
         NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
@@ -474,7 +474,113 @@
     }
     return name;
 }
+-(NSArray *)pointsForWay:(OPEManagedOsmWay *)way
+{
+    __block NSMutableArray * resultsArray = [NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQueryWithFormat:@"SELECT latitude,longitude FROM ways_nodes,nodes WHERE ways_nodes.way_id = %lld AND ways_nodes.node_id = nodes.id ORDER BY local_order ASC",way.elementID];
+        while ([set next]) {
+            [resultsArray addObject:[[CLLocation alloc] initWithLatitude:[set doubleForColumn:@"latitude"] longitude:[set doubleForColumn:@"longitude"]]];
+        }
+    }];
+    return resultsArray;
+}
 
+-(NSArray *)relationMembersFor:(OPEManagedOsmRelation *)relation
+{
+    __block NSMutableArray * membersArray = [NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQuery:@"select * from relations_members where relation_id = ?",[NSNumber numberWithLongLong:relation.elementID]];
+        while ([set next]) {
+            OpeManagedOsmRelationMember * member = [[OpeManagedOsmRelationMember alloc] initWithDictionary:[set resultDictionary]];
+            [membersArray addObject:member];
+        }
+    }];
+    
+    for (OpeManagedOsmRelationMember * member in membersArray)
+    {
+        member.element = [self elementOfKind:member.type osmID:member.ref];
+    }
+    
+    return membersArray;
+    
+}
+
+-(CLLocationCoordinate2D)centerForElement:(OPEManagedOsmElement *)element
+{
+    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(0, 0);
+    if ([element isKindOfClass:[OPEManagedOsmNode class]]) {
+        center = [((OPEManagedOsmNode *)element).element coordinate];
+    }
+    else if ([element isKindOfClass:[OPEManagedOsmWay class]])
+    {
+        NSArray * array = [self pointsForWay:(OPEManagedOsmWay* )element];
+        center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:array];
+        
+    }
+    else if ([element isKindOfClass:[OPEManagedOsmRelation class]])
+    {
+        NSArray * membersArray = [self relationMembersFor:(OPEManagedOsmRelation *)element];
+        
+        double centerLat=0.0;
+        double centerLon=0.0;
+        int num = 0;
+        for(OpeManagedOsmRelationMember * member in membersArray)
+        {
+            
+            if (member.element) {
+                num +=1;
+                CLLocationCoordinate2D tempCenter = [self centerForElement:member.element];
+                centerLat += tempCenter.latitude;
+                centerLon += tempCenter.longitude;
+            }
+        }
+        return CLLocationCoordinate2DMake(centerLat/num, centerLon/num);
+
+        
+        
+    }
+    return center;
+}
+-(NSArray *)outerPolygonsForRelation:(OPEManagedOsmRelation *)relation
+{
+    __block NSMutableArray * waysArray = [NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQuery:@"select * from relations_members,ways where relation_id = ? AND type = 'way' AND role = 'outer' AND ref=id",[NSNumber numberWithLongLong:relation.elementID]];
+        while ([set next]) {
+            OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] initWithDictionary:[set resultDictionary]];
+            [waysArray addObject:way];
+        }
+    }];
+    
+    NSMutableArray * resultsArray = [NSMutableArray array];
+    
+    for(OPEManagedOsmWay * way in waysArray)
+    {
+        [resultsArray addObject:[self pointsForWay:way]];
+    }
+    return resultsArray;
+    
+}
+-(NSArray *)innerPolygonsForRelation:(OPEManagedOsmRelation *)relation
+{
+    __block NSMutableArray * waysArray = [NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQuery:@"select * from relations_members,ways where relation_id = ? AND type = 'way' AND role = 'inner' AND ref=id",[NSNumber numberWithLongLong:relation.elementID]];
+        while ([set next]) {
+            OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] initWithDictionary:[set resultDictionary]];
+            [waysArray addObject:way];
+        }
+    }];
+    
+    NSMutableArray * resultsArray = [NSMutableArray array];
+    
+    for(OPEManagedOsmWay * way in waysArray)
+    {
+        [resultsArray addObject:[self pointsForWay:way]];
+    }
+    return resultsArray;
+}
 
 -(void)updateElement:(OPEManagedOsmElement *)element
 {
@@ -581,6 +687,19 @@
     return resultArray;
 }
 
+-(OPEManagedOsmElement *)elementOfKind:(NSString *)kind osmID:(int64_t)osmID
+{
+    __block OPEManagedOsmElement * managedElement = nil;
+    NSMutableString * sql = [NSMutableString stringWithFormat:@"SELECT * FROM %@s WHERE id=%lld",kind,osmID];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQuery:sql];
+        while ([set next]) {
+            managedElement = [OPEManagedOsmElement elementWithType:kind withDictionary:[set resultDictionary]];
+        }
+    }];
+    return managedElement;
+}
+
 -(NSArray *)allElementsOfKind:(NSString *)kind withType:(BOOL)withType
 {
     __block NSMutableArray * resultArray = [NSMutableArray array];
@@ -598,7 +717,6 @@
     }];
     
     return  resultArray;
-    
 }
 
 //OSMDAODelegate Mehtod
