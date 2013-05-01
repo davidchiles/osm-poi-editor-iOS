@@ -14,6 +14,14 @@
 
 @implementation OPEManagedOsmWay
 
+-(id)initWithDictionary:(NSDictionary *)dictionary
+{
+    if (self = [super initWithDictionary:dictionary]) {
+        self.element = [[Way alloc] initWithDictionary:dictionary];
+    }
+    return self;
+}
+
 -(CLLocationCoordinate2D)center
 {
     if (self.isNoNameStreet) {
@@ -81,10 +89,10 @@
 }
 -(NSString *)name
 {
+    //FIXME
     if (self.isNoNameStreet) {
         return @"Highway Missing Name";
     }
-    return [super name];
 }
 
 -(BOOL)noNameStreet

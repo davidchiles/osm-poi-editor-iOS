@@ -12,6 +12,14 @@
 @implementation OPEManagedOsmNode
 @synthesize element;
 
+-(id)initWithDictionary:(NSDictionary *)dictionary
+{
+    if (self = [super initWithDictionary:dictionary]) {
+        self.element = [[Node alloc] initWithDictionary:dictionary];
+    }
+    return self;
+}
+
 -(CLLocationCoordinate2D) center
 {
     return [self.element coordinate];

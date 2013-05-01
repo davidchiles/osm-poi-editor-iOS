@@ -201,9 +201,8 @@
     return newImage;
 }
 
--(RMMarker *)markerWithManagedObjectID:(NSManagedObjectID *)managedObjectID
+-(RMMarker *)markerWithManagedObjectID:(OPEManagedOsmElement *)managedOsmElement
 {
-    OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:managedObjectID];
     UIImage * icon = nil;
     if (managedOsmElement.type) {
         if ([imagesDic objectForKey:managedOsmElement.type.imageString]) {
@@ -219,7 +218,7 @@
         }
     }
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
-    newMarker.userInfo = managedObjectID;
+    newMarker.userInfo = managedOsmElement;
     newMarker.zPosition = 0.2;
     return newMarker;
 }
@@ -248,9 +247,8 @@
 
 -(RMMapLayer *) mapView:(RMMapView *)mView layerForAnnotation:(RMAnnotation *)annotation
 {
-    NSManagedObjectID * managedObjectID = annotation.userInfo;
     
-    OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:managedObjectID];
+    OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)annotation.userInfo;;
     if ([managedOsmElement isKindOfClass:[OPEManagedOsmWay class]]) {
         if (((OPEManagedOsmWay *)managedOsmElement).isNoNameStreet) {
             return [self shapeForNoNameStreet:(OPEManagedOsmWay *)managedOsmElement];
@@ -258,7 +256,7 @@
     }
     
     
-    RMMarker * marker = [self markerWithManagedObjectID:managedObjectID];
+    RMMarker * marker = [self markerWithManagedObjectID:managedOsmElement];
     marker.canShowCallout = YES;
     marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     
@@ -268,7 +266,9 @@
 -(NSArray *)annotationWithOsmElement:(OPEManagedOsmElement *)managedOsmElement
 {
     //NSLog(@"center: %@",[managedOsmElement center]);
-    RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[managedOsmElement center] andTitle:[managedOsmElement name]];
+    [self.osmData getTypeFor:managedOsmElement];
+    RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[managedOsmElement center] andTitle:[self.osmData nameForElement:managedOsmElement]];
+    
     NSMutableString * subtitleString = [NSMutableString stringWithFormat:@"%@",managedOsmElement.type.categoryName];
     
     if ([[managedOsmElement valueForOsmKey:@"name"] length]) {
@@ -277,7 +277,7 @@
     annotation.subtitle = subtitleString;
     
     
-    //FIXME annotation.userInfo = [managedOsmElement objectID];
+    annotation.userInfo = managedOsmElement;
     
     if ([managedOsmElement isKindOfClass:[OPEManagedOsmRelation class]]) {
         OPEManagedOsmRelation * managedRelation = (OPEManagedOsmRelation *)managedOsmElement;
@@ -415,7 +415,7 @@
     
     [self removeNonameView];
     
-    id osmElement = [OPEMRUtility managedObjectWithID:annotation.userInfo];
+    id osmElement = annotation.userInfo;
     
     if ([osmElement isKindOfClass:[OPEManagedOsmWay class]]) {
         OPEManagedOsmWay * osmWay = (OPEManagedOsmWay *)osmElement;
@@ -915,6 +915,20 @@
     if (self.numberOfOngoingParses < 1) {
         [self.parsingMessageView removeFromSuperview];
         self.parsingMessageView = nil;
+    }
+}
+
+-(void)didEndParsing
+{
+    NSArray * elementsArray = [self.osmData allElementsWithType:YES];
+    for(OPEManagedOsmElement * element in elementsArray)
+    {
+        NSArray * annotationsArray = [self annotationWithOsmElement:element];
+        for (RMAnnotation * annotation in annotationsArray)
+        {
+            [mapView addAnnotation:annotation];
+        }
+        
     }
 }
 

@@ -27,6 +27,17 @@
     }
     return self;
 }
+-(id)initWithDictionary:(NSDictionary *)dictionary
+{
+    if (self = [self init]) {
+        //self.element = [[Element alloc] initWithDictionary:dictionary];
+        self.isVisible = dictionary[@"isVisible"];
+        self.typeID = [dictionary[@"poi_id"] intValue];
+        self.action = dictionary[@"action"];
+    }
+    return self;
+    
+}
 
 -(CLLocationCoordinate2D)center
 {
@@ -274,6 +285,22 @@
         relation.element = (Relation *)element;
         return relation;
     }
+    return nil;
+}
+
++(OPEManagedOsmElement *)elementWithType:(NSString *)elementTypeString withDictionary:(NSDictionary *)dictionary;
+{
+    OPEManagedOsmElement * element = nil;
+    if ([elementTypeString isEqualToString:kOPEOsmElementNode]) {
+        element = [[OPEManagedOsmNode alloc] initWithDictionary:dictionary];
+    }
+    else if ([elementTypeString isEqualToString:kOPEOsmElementWay]) {
+        element = [[OPEManagedOsmWay alloc] initWithDictionary:dictionary];
+    }
+    else if ([elementTypeString isEqualToString:kOPEOsmElementRelation]) {
+        element = [[OPEManagedOsmRelation alloc] initWithDictionary:dictionary];
+    }
+    return element;
 }
 
 @end

@@ -46,6 +46,7 @@
 
 -(void)willStartParsing:(NSString *)typeString;
 -(void)didEndParsing:(NSString *)typeString;
+-(void)didEndParsing;
 
 -(void) downloadFailed:(NSError *)error;
 
@@ -59,7 +60,6 @@
     dispatch_queue_t q;
     AFHTTPClient * httpClient;
     NSMutableDictionary * typeDictionary;
-    
 }
 
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
@@ -78,6 +78,9 @@
 -(void)removeOsmKey:(NSString *)osmKey forElement:(OPEManagedOsmElement *)element;
 -(void)setOsmKey:(NSString *)osmKey andValue:(NSString *)osmValue forElement:(OPEManagedOsmElement *)element;
 -(void)setNewType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element;
+
+-(void)getTypeFor:(OPEManagedOsmElement *)element;
+-(NSString *)nameForElement:(OPEManagedOsmElement *)element;
 
 -(NSArray *)allElementsWithType:(BOOL)withType;
 

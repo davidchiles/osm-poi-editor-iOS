@@ -57,6 +57,7 @@
         NSString * baseUrl = @"http://api.openstreetmap.org/api/0.6/";
         
         httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        typeDictionary = [NSMutableDictionary dictionary];
         //[httpClient setAuthorizationHeaderWithToken:auth.token];
     }
     
@@ -102,8 +103,13 @@
             handler.outputDao.delegate = self;
             [parser parse];
             
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([delegate respondsToSelector:@selector(didEndParsing)]) {
+                    [delegate didEndParsing];
+                }
+            });
+            
             NSLog(@"done Parsing");
-
         });
         //dispatch_release(t);
         
@@ -143,10 +149,10 @@
     [changeset addElement:element];
     
     if (element.element.elementID < 0) {
-        changeset.message = [NSString stringWithFormat:@"Created new POI: %@",element.name];
+        changeset.message = [NSString stringWithFormat:@"Created new POI: %@",[self nameForElement: element]];
     }
     else{
-        changeset.message = [NSString stringWithFormat:@"Updated POI: %@",element.name];
+        changeset.message = [NSString stringWithFormat:@"Updated POI: %@",[self nameForElement: element]];
     }
     
     
@@ -157,7 +163,7 @@
 {
     OPEChangeset * changeset = [[OPEChangeset alloc] init];
     [changeset addElement:element];
-    changeset.message = [NSString stringWithFormat:@"Deleted POI: %@",element.name];
+    changeset.message = [NSString stringWithFormat:@"Deleted POI: %@",[self nameForElement: element]];
     
     [self openChangeset:changeset];
     
@@ -362,7 +368,7 @@
     NSString * baseTableName = [OSMDAO tableName:element.element];
     NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
     NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
-
+    __block BOOL didFind = NO;
     if (tagsTable && columnID && [element.element.tags count]) {
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
             if ([[element.element.tags objectForKey:@"bus"] isEqualToString:@"yes"]) {
@@ -375,13 +381,15 @@
             if ([result next]) {
                 int poi_id  = [result intForColumn:@"poi_id"];
                 sql = [NSString stringWithFormat:@"UPDATE %@ SET poi_id=%d WHERE id=%lld",baseTableName,poi_id,element.element.elementID];
-                BOOL res = [db executeUpdateWithFormat:sql];
+                [db executeUpdateWithFormat:sql];
+                didFind = YES;
             }
             [result close];
             
 
         }];
     }
+    return didFind;
 }
 -(void)setNewTypeRow:(NSInteger)rowId forElement:(OPEManagedOsmElement *)element
 {
@@ -419,8 +427,55 @@
     {
         [self removeOsmKey:osmKey forElement:element];
     }
-    
 }
+-(void)getTypeFor:(OPEManagedOsmElement *)element
+{
+    if (element.typeID) {
+        __block OPEManagedReferencePoi * poi = [typeDictionary objectForKey:[NSNumber numberWithInt:element.typeID]];
+        if (!poi) {
+            [self.databaseQueue inDatabase:^(FMDatabase *db) {
+                FMResultSet * result = [db executeQuery:@"SELECT * FROM poi WHERE rowid = ?",[NSNumber numberWithInt:element.typeID]];
+                if ([result next]) {
+                    poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[result resultDictionary]];
+                    
+                }
+                [result close];
+            }];
+        }
+        [typeDictionary setObject:poi forKey:[NSNumber numberWithInt:element.typeID]];
+        element.type = poi;
+
+        
+    }
+}
+-(NSString *)nameForElement:(OPEManagedOsmElement *)element
+{
+    __block NSString * name = [element valueForOsmKey:@"name"];
+    if ([name length]) {
+        return name;
+    }
+    
+    
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        db.logsErrors = YES;
+        db.traceExecution = YES;
+        NSString * baseTableName = [OSMDAO tableName:element.element];
+        NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
+        NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
+        NSString * sqlString = [NSString stringWithFormat:@"SELECT value FROM %@ WHERE key = 'name' AND %@ = %lld",tagsTable,columnID,element.elementID];
+        FMResultSet * set = [db executeQuery:sqlString];
+        while ([set next]) {
+            name = [set stringForColumn:@"value"];
+            [element.element.tags setObject:name forKey:@"name"];
+        }
+    }];
+    if (![name length]) {
+        name = element.type.name;
+    }
+    return name;
+}
+
+
 -(void)updateElement:(OPEManagedOsmElement *)element
 {
     if ([element isKindOfClass:[OPEManagedOsmNode class]]) {
@@ -518,14 +573,31 @@
 
 -(NSArray *)allElementsWithType:(BOOL)withType
 {
+    NSMutableArray * resultArray = [NSMutableArray array];
+    [resultArray addObjectsFromArray:[self allElementsOfKind:kOPEOsmElementNode withType:YES]];
+    [resultArray addObjectsFromArray:[self allElementsOfKind:kOPEOsmElementWay withType:YES]];
+    [resultArray addObjectsFromArray:[self allElementsOfKind:kOPEOsmElementRelation withType:YES]];
     
+    return resultArray;
 }
 
 -(NSArray *)allElementsOfKind:(NSString *)kind withType:(BOOL)withType
 {
+    __block NSMutableArray * resultArray = [NSMutableArray array];
     NSMutableString * sql = [NSMutableString stringWithFormat:@"SELECT * FROM %@s",kind];
+    if (withType) {
+        [sql appendFormat:@" WHERE poi_id > 0"];
+    }
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQuery:sql];
+        
+        while ([set next]) {
+            OPEManagedOsmElement * managedElement = [OPEManagedOsmElement elementWithType:kind withDictionary:[set resultDictionary]];
+            [resultArray addObject:managedElement];
+        }
+    }];
     
-    
+    return  resultArray;
     
 }
 
@@ -557,6 +629,5 @@
     
     return auth;
 }
-
 
 @end

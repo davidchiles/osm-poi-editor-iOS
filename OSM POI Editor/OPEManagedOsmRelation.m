@@ -14,6 +14,14 @@
 
 @synthesize element;
 
+-(id)initWithDictionary:(NSDictionary *)dictionary
+{
+    if (self = [super initWithDictionary:dictionary]) {
+        self.element = [[Relation alloc] initWithDictionary:dictionary];
+    }
+    return self;
+}
+
 -(CLLocationCoordinate2D) center
 {
     if([self.element.members count])

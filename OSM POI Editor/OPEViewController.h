@@ -38,7 +38,6 @@
     UIImageView * plusImageView;
     RMAnnotation * wayAnnotation;
     
-    
 }
 
 @property (nonatomic,strong) CLLocationManager* locationManager;

@@ -14,8 +14,9 @@
 @property (nonatomic,strong) NSString * action;
 @property (nonatomic) int64_t elementID;
 
+
+-(id)initWithDictionary:(NSDictionary *)dictionary;
 -(CLLocationCoordinate2D) center;
--(NSString *)name;
 -(NSString *)valueForOsmKey:(NSString *)osmKey;
 -(NSString *)tagsDescription;
 -(void)addKey:(NSString *)key value:(NSString *)value;
@@ -39,6 +40,7 @@
 +(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID type:(NSString *)typeString;
 
 +(OPEManagedOsmElement *)elementWithBasicOsmElement:(Element *)element;
++(OPEManagedOsmElement *)elementWithType:(NSString *)elementTypeString withDictionary:(NSDictionary *)dictionary;
 
 //+(OPEManagedOsmElement *)fetchOrCreateElementWithOsmID:(int64_t)elementID;
 
