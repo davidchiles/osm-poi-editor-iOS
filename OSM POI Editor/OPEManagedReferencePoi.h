@@ -10,7 +10,7 @@
 @property (nonatomic) NSString * imageString;
 @property (nonatomic,strong) OPEManagedReferencePoi * currentTagMethod;
 @property (nonatomic,strong) OPEManagedReferencePoi * oldTagMethod;
-@property (nonatomic,strong) NSSet * optionalsSet;
+@property (nonatomic,strong) NSMutableSet * optionalsSet;
 @property (nonatomic,strong) NSDictionary * tags;
 
 

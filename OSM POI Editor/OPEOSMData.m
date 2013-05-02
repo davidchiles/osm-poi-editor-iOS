@@ -34,6 +34,8 @@
 #import "OPEUtility.h"
 #import "OPEGeoCentroid.h"
 #import "OpeManagedOsmRelationMember.h"
+#import "OPEManagedReferenceOptional.h"
+#import "OPEManagedReferenceOptional.h"
 
 #import "OSMParser.h"
 #import "OSMParserHandlerDefault.h"
@@ -436,9 +438,10 @@
         __block OPEManagedReferencePoi * poi = [typeDictionary objectForKey:[NSNumber numberWithInt:element.typeID]];
         if (!poi) {
             [self.databaseQueue inDatabase:^(FMDatabase *db) {
-                FMResultSet * result = [db executeQuery:@"SELECT * FROM poi WHERE rowid = ?",[NSNumber numberWithInt:element.typeID]];
+                FMResultSet * result = [db executeQuery:@"SELECT *,rowid AS id FROM poi WHERE rowid = ?",[NSNumber numberWithInt:element.typeID]];
                 if ([result next]) {
                     poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[result resultDictionary]];
+                    poi.rowID = [result intForColumn:@"id"];
                     
                 }
                 [result close];
@@ -717,6 +720,89 @@
     }];
     
     return  resultArray;
+}
+
+-(void)getTagsForElement:(OPEManagedOsmElement *)element
+{
+    
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        NSString * baseTableName = [OSMDAO tableName:element.element];
+        NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
+        NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
+        NSString * sqlString = [NSString stringWithFormat:@"select * from %@ where %@ = %lld",tagsTable,columnID,element.elementID];
+        
+        FMResultSet * set = [db executeQuery:sqlString];
+        
+        while ([set next]) {
+            [self setOsmKey:[set stringForColumn:@"key"] andValue:[set stringForColumn:@"value"] forElement:element];
+        }
+    }];
+    
+}
+
+-(NSDictionary *)optionalSectionSortOrder
+{
+    __block NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQuery:@"SELECT * FROM optional_section"];
+        while ([set next]) {
+            [dictionary setObject:[set objectForColumnName:@"sortOrder"] forKey:[set objectForColumnName:@"name"]];
+        }
+        
+        
+    }];
+    
+    
+    return dictionary;
+    
+}
+
+-(void)getOptionalsFor:(OPEManagedReferencePoi *)poi
+{
+    if (poi.rowID) {
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            db.logsErrors = YES;
+            db.traceExecution = YES;
+            FMResultSet * set = [db executeQueryWithFormat:@"select displayName,osmKey,type,sectionSortOrder,optional_section.name AS section,optional.rowid AS id from pois_optionals,optional,optional_section where optional_id = optional.rowid AND poi_id = %d AND section_id = optional_section.rowid",poi.rowID];
+            while([set next])
+            {
+                OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] init];
+                optional.displayName = [set stringForColumn:@"displayName"];
+                optional.osmKey = [set stringForColumn:@"osmKey"];
+                optional.type = [set intForColumn:@"type"];
+                optional.sectionSortOrder = [set intForColumn:@"sectionSortOrder"];
+                optional.sectionName = [set stringForColumn:@"section"];
+                optional.rowID = [set intForColumn:@"id"];
+                
+                [poi.optionalsSet addObject:optional];
+            }
+            
+        }];
+        
+        for (OPEManagedReferenceOptional * optional in poi.optionalsSet)
+        {
+            if (optional.type == OPEOptionalTypeList) {
+                [self getTagsFor:optional];
+            }
+            
+        }
+    }
+}
+
+-(void)getTagsFor:(OPEManagedReferenceOptional *)optional
+{
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQueryWithFormat:@"select * from optionals_tags where optional_id = %d",optional.rowID];
+        while ([set next]) {
+            OPEManagedReferenceOsmTag * tag = [[OPEManagedReferenceOsmTag alloc] init];
+            tag.name = [set stringForColumn:@"name"];
+            tag.key = [set stringForColumn:@"key"];
+            tag.value = [set stringForColumn:@"value"];
+            [optional.optionalTags addObject:tag];
+        }
+        
+    }];
+    
 }
 
 //OSMDAODelegate Mehtod

@@ -69,10 +69,16 @@
         osmData = [[OPEOSMData alloc] init];
         self.delegate = newDelegate;
         
-        self.managedOsmElement = [element copy];
+        self.managedOsmElement = element;
+        
+        //LOAD ALL DATA FROM DATABASE
+        [osmData getTagsForElement:self.managedOsmElement];
+        [osmData getTypeFor:self.managedOsmElement];
+        [osmData getOptionalsFor:self.managedOsmElement.type];
+        
         
         originalTags = [self.managedOsmElement.element.tags copy];
-        [self.managedOsmElement updateLegacyTags];
+        //FIXME [self.managedOsmElement updateLegacyTags];
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         
@@ -171,7 +177,7 @@
 }
 -(void) reloadTags
 {
-    self.optionalSectionsArray = [self.managedOsmElement.type optionalDisplayNames];
+    self.optionalSectionsArray = [self sortedOptionalDisplayNames];
     
     optionalTagWidth = [self getWidth];
     
@@ -558,6 +564,32 @@
         self.saveButton.enabled= NO;
     }
 
+}
+
+-(NSArray *)sortedOptionalDisplayNames
+{
+    NSMutableArray * displayNameArray = [NSMutableArray array];
+    NSArray * tempArray = [[self.managedOsmElement.type.optionalsSet valueForKeyPath:@"@distinctUnionOfObjects.sectionName"] allObjects];
+    
+    __block NSDictionary * sortDictioanry = [osmData optionalSectionSortOrder];
+    NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
+        return [[sortDictioanry objectForKey:obj1] compare:[sortDictioanry objectForKey:obj2]];
+    }];
+    NSArray * uniqueSections = [tempArray sortedArrayUsingDescriptors:@[sortDescriptor]];
+    
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionSortOrder"  ascending:YES];
+    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"displayName" ascending:YES];
+    
+    
+    for(NSString * sectionName in uniqueSections)
+    {
+        //NSString * sectionName = managedOptionalCategory.displayName;
+        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"sectionName == %@", sectionName];
+        NSArray * names = [[[self.managedOsmElement.type.optionalsSet filteredSetUsingPredicate:predicate] allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nameDescriptor, nil]];
+        [displayNameArray addObject:names];
+    }
+    
+    return displayNameArray;
 }
 
 - (void) viewDidAppear:(BOOL)animated

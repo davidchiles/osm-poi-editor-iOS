@@ -85,6 +85,11 @@
 -(NSArray *)pointsForWay:(OPEManagedOsmWay *)way;
 -(NSArray *)outerPolygonsForRelation:(OPEManagedOsmRelation *)relation;
 -(NSArray *)innerPolygonsForRelation:(OPEManagedOsmRelation *)relation;
+-(void)getTagsForElement:(OPEManagedOsmElement *)element;
+
+-(void)getOptionalsFor:(OPEManagedReferencePoi *)poi;
+-(NSDictionary *)optionalSectionSortOrder;
+
 
 -(NSArray *)allElementsWithType:(BOOL)withType;
 

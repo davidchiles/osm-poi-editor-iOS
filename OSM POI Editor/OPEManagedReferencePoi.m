@@ -16,9 +16,20 @@
 
 @synthesize name,isLegacy,canAdd,imageString,currentTagMethod,oldTagMethod,optionalsSet,tags;
 
--(id)initWithName:(NSString *)newName withCategory:(NSString *)newCategoryName andDictionary:(NSDictionary *)dictionary
+-(id)init
 {
     if (self = [super init]) {
+        self.isLegacy = NO;
+        self.optionalsSet = [NSMutableSet set];
+    }
+    return self;
+    
+    
+}
+
+-(id)initWithName:(NSString *)newName withCategory:(NSString *)newCategoryName andDictionary:(NSDictionary *)dictionary
+{
+    if (self = [self init]) {
         self.name = newName;
         self.categoryName = newCategoryName;
         self.imageString = [dictionary objectForKey:@"image"];
@@ -55,7 +66,7 @@
 }
 -(id)initWithSqliteResultDictionary:(NSDictionary *)dictionary
 {
-    if (self = [super init]) {
+    if (self = [self init]) {
         self.name = dictionary[@"displayName"];
         self.imageString = dictionary[@"imageString"];
         self.canAdd = [dictionary[@"canAdd"] boolValue];
@@ -83,7 +94,8 @@
             else{
                 [sqlString appendFormat:@" union select %lld,(select optional.rowid from optional where optional.name = \'%@\')",self.rowID,optional.name];
             }
-            
+            [sqlString appendFormat:@" union select %lld,(select optional.rowid from optional where optional.name = \'note\')",self.rowID];
+            [sqlString appendFormat:@" union select %lld,(select optional.rowid from optional where optional.name = \'source\')",self.rowID];
             
             
             first = NO;
@@ -119,37 +131,8 @@
 -(NSInteger)numberOfOptionalSections
 {
     NSLog(@"Optionals: %d",[self.optionalsSet count]);
-    NSArray * uniqueSections =[self.optionalsSet valueForKeyPath:@"@distinctUnionOfObjects.referenceSection"];
+    NSArray * uniqueSections =[self.optionalsSet valueForKeyPath:@"@distinctUnionOfObjects.sectionName"];
     return [uniqueSections count];
-}
-
--(NSArray *)optionalDisplayNames
-{
-    NSMutableArray * displayNameArray = [NSMutableArray array];
-    NSArray * tempArray = [[self.optionalsSet valueForKeyPath:@"@distinctUnionOfObjects.referenceSection"] allObjects];
-    
-    NSSortDescriptor *sortDescriptor;
-    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sortOrder"
-                                                  ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    NSArray *uniqueSections;
-    uniqueSections = [tempArray sortedArrayUsingDescriptors:sortDescriptors];
-    
-    
-    //NSArray * uniqueSections =[[[[[self.optional valueForKeyPath:@"@distinctUnionOfObjects.referenceSection"] allObjects] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] reverseObjectEnumerator] allObjects];;
-    
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionSortOrder"  ascending:YES];
-    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"displayName" ascending:YES];
-    
-    
-    for(OPEManagedReferenceOptionalCategory * managedOptionalCategory in uniqueSections)
-    {
-        //NSString * sectionName = managedOptionalCategory.displayName;
-        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"referenceSection == %@", managedOptionalCategory];
-        NSArray * names = [[[self.optionalsSet filteredSetUsingPredicate:predicate] allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nameDescriptor, nil]];
-        [displayNameArray addObject:names];
-    }
-    return displayNameArray;
 }
 
 +(NSArray *) allTypes

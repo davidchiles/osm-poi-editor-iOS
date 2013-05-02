@@ -13,7 +13,7 @@
 @property (nonatomic) NSInteger sectionSortOrder;
 @property (nonatomic,strong) OPEManagedReferenceOptionalCategory * section;
 @property (nonatomic,strong) NSString * sectionName;
-@property (nonatomic,strong) NSSet * optionalTags;
+@property (nonatomic,strong) NSMutableSet * optionalTags;
 
 
 -(id)initWithDictionary:(NSDictionary *)dictionary withName:(NSString * )newNamed;

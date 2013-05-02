@@ -17,9 +17,16 @@
 @synthesize optionalTags = _optionalTags;
 @synthesize sectionName = _sectionName;
 
+-(id)init{
+    if (self = [super init]) {
+        self.optionalTags = [NSMutableSet set];
+    }
+    return self;
+}
+
 -(id)initWithDictionary:(NSDictionary *)dictionary withName:(NSString * )newName
 {
-    if (self = [super init]) {
+    if (self = [self init]) {
         self.name = newName;
         [self setDictionary:dictionary];
     }
