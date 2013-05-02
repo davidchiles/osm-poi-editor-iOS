@@ -21,6 +21,7 @@
     if (self = [super init]) {
         self.isLegacy = NO;
         self.optionalsSet = [NSMutableSet set];
+        self.tags = [NSMutableDictionary dictionary];
     }
     return self;
     

@@ -13,7 +13,7 @@
 
 @protocol OPETagEditViewControllerDelegate <NSObject>
 @required
-- (void) setNewTag:(NSManagedObjectID *)managedOsmTagID;
+- (void) newOsmKey:(NSString *)key value:(NSString *)value;
 @end
 
 @interface OPETagEditViewController : UIViewController

@@ -11,7 +11,7 @@
 @property (nonatomic,strong) OPEManagedReferencePoi * currentTagMethod;
 @property (nonatomic,strong) OPEManagedReferencePoi * oldTagMethod;
 @property (nonatomic,strong) NSMutableSet * optionalsSet;
-@property (nonatomic,strong) NSDictionary * tags;
+@property (nonatomic,strong) NSMutableDictionary * tags;
 
 
 -(NSString *)sqliteTagsInsertString;

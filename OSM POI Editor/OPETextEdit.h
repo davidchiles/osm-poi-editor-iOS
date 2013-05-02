@@ -25,7 +25,7 @@
 
 @protocol editTagDelegate <NSObject>
 @required
-- (void) newTag:(NSManagedObjectID *)managedOsmTagID;
+- (void) newOsmKey:(NSString *)key value:(NSString *)value;
 @end
 
 @interface OPETextEdit : UIViewController <UITextViewDelegate,UITextFieldDelegate, UITableViewDelegate,UITableViewDataSource>

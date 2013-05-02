@@ -395,6 +395,35 @@
     }
     return didFind;
 }
+-(void)updateLegacyTags:(OPEManagedOsmElement *)element
+{
+    if (element.type.isLegacy) {
+        NSString * baseName = [element.type.name stringByReplacingOccurrencesOfString:@" (legacy)" withString:@""];
+        OPEManagedReferencePoi * newPoi = [self getTypeWithName:baseName];
+        [element.element.tags addEntriesFromDictionary:newPoi.tags];
+    }
+}
+-(OPEManagedReferencePoi *)getTypeWithName:(NSString *)name;
+{
+    __block OPEManagedReferencePoi * poi = nil;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQuery:@"SELECT * FROM poi WHERE displayName = ?",name];
+        
+        while (set) {
+            poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+        }
+        
+        set = [db executeQueryWithFormat:@"SELECT * FROM pois_tags WHERE poi_id = %d",poi.rowID];
+        
+        while (set) {
+            [poi.tags setObject:[set stringForColumn:@"value"] forKey:[set stringForColumn:@"key"]];
+        }
+        
+    }];
+    return poi;
+    
+}
+
 -(void)setNewTypeRow:(NSInteger)rowId forElement:(OPEManagedOsmElement *)element
 {
     if (rowId) {

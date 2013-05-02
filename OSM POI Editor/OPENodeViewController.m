@@ -76,9 +76,8 @@
         [osmData getTypeFor:self.managedOsmElement];
         [osmData getOptionalsFor:self.managedOsmElement.type];
         
-        
         originalTags = [self.managedOsmElement.element.tags copy];
-        //FIXME [self.managedOsmElement updateLegacyTags];
+        [self.osmData updateLegacyTags:managedOsmElement];
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         
@@ -346,8 +345,7 @@
         NSString * title = [sender titleForSegmentAtIndex:[sender selectedSegmentIndex]];
         OPEManagedReferenceOsmTag * managedReferenceOsmTag = [referenceOptional managedReferenceOsmTagWithName:title];
         
-        //FIXME
-        //[self newTag:managedReferenceOsmTag.tag.objectID];
+        [self newOsmKey:managedReferenceOsmTag.key value:managedReferenceOsmTag.value];
         
     }
     
@@ -505,12 +503,12 @@
                 dispatch_queue_t q = dispatch_queue_create("queue", NULL);
                 dispatch_async(q, ^{
                     
-                    NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
+                    //NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
                     //FIXME
                     //OPEManagedOsmElement * osmElement = (OPEManagedOsmElement *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
                     
                     
-                    //[self.osmData deleteElement:osmElement];
+                    [self.osmData deleteElement:self.managedOsmElement];
                 });
                 //dispatch_release(q);
             }
@@ -524,20 +522,10 @@
    
     
 }
--(void)setNewTag:(NSManagedObjectID *)managedOsmTagID
-{
-    OPEManagedOsmTag * managedOsmTag = (OPEManagedOsmTag *)[editContext existingObjectWithID:managedOsmTagID error:nil];
-    
-    [osmData setOsmKey:managedOsmTag.key andValue:managedOsmTag.value forElement:self.managedOsmElement];
-    [self checkSaveButton];
-    [nodeInfoTableView reloadData];
-}
 
-- (void) newTag:(NSManagedObjectID *)managedOsmTagID
+- (void) newOsmKey:(NSString *)key value:(NSString *)value
 {
-    OPEManagedOsmTag * managedOsmTag = (OPEManagedOsmTag *)[editContext existingObjectWithID:managedOsmTagID error:nil];
-    
-    [osmData setOsmKey:managedOsmTag.key andValue:managedOsmTag.value forElement:self.managedOsmElement];
+    [osmData setOsmKey:key andValue:value forElement:self.managedOsmElement];
     [self checkSaveButton];
     [nodeInfoTableView reloadData];
 }
