@@ -366,28 +366,21 @@
     }
     else if(indexPath.section ==1)
     {
-        if(indexPath.row == 1)
-        {
-            if (self.managedOsmElement.type)
-            {
-                OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:[NSBundle mainBundle]];
-                viewer.title = @"Type";
-                
-                //viewer.category = editableType.category;
-                //FIXME viewer.categoryManagedObjectID = [self.managedOsmElement.type.category objectID];
-                [viewer setDelegate:self];
-                
-                [self.navigationController pushViewController:viewer animated:YES];
-            }
-        }
-        else
+        if(indexPath.row == 0 || !self.managedOsmElement.type)
         {
             OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
             viewer.title = @"Category";
             [viewer setDelegate:self];
             
             [self.navigationController pushViewController:viewer animated:YES];
+            
         }
+        else{
+            OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithCategory:self.managedOsmElement.type.categoryName];
+            [viewer setDelegate:self];
+            [self.navigationController pushViewController:viewer animated:YES];
+        }
+        
     }
     else{
         OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
@@ -532,7 +525,11 @@
 
 -(void)newType:(OPEManagedReferencePoi *)newType;
 {
+    //FIXME
     [osmData setNewType:newType forElement:self.managedOsmElement];
+    [osmData getOptionalsFor:self.managedOsmElement.type];
+    [self reloadTags];
+    [nodeInfoTableView reloadData];
 }
 
 -(BOOL)tagsHaveChanged

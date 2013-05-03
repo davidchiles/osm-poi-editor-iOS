@@ -73,6 +73,10 @@
         self.canAdd = [dictionary[@"canAdd"] boolValue];
         self.isLegacy = [dictionary[@"isLegacy"]boolValue];
         self.categoryName = dictionary[@"category"];
+        id itemId = dictionary[@"id"];
+        if ([itemId isKindOfClass:[NSNumber class]]) {
+            self.rowID = [itemId intValue];
+        }
     }
     return self;
     
@@ -131,7 +135,6 @@
 
 -(NSInteger)numberOfOptionalSections
 {
-    NSLog(@"Optionals: %d",[self.optionalsSet count]);
     NSArray * uniqueSections =[self.optionalsSet valueForKeyPath:@"@distinctUnionOfObjects.sectionName"];
     return [uniqueSections count];
 }

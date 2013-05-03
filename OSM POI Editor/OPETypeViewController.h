@@ -21,23 +21,20 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
-#import "OPECategory.h"
 #import "OPEType.h"
-#import "OPEManagedReferencePoiCategory.h"
+#import "OPEManagedReferencePoi.h"
+
 
 @protocol PassCategoryAndType <NSObject>
 @required
-- (void) setNewType:(NSManagedObjectID *)managedReferencePoiID;
+-(void)newType:(OPEManagedReferencePoi *)type;
 @end
 
-@interface OPETypeViewController : UITableViewController
-{
-    OPEManagedReferencePoiCategory * managedReferencePoiCategory;
-    NSArray * allTypes;
-}
+@interface OPETypeViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic, strong) NSManagedObjectID * categoryManagedObjectID;
 @property (nonatomic, strong) NSArray * typeArray;
 @property (nonatomic, strong) id delegate;
+
+- (id)initWithCategory:(NSString *)category;
 
 @end

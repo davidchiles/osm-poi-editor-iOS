@@ -23,17 +23,21 @@
 #import "OPETypeViewController.h"
 #import "OPEMRUtility.h"
 #import "OPEManagedReferencePoi.h"
+#import "OPEOSMData.h"
 
 @implementation OPETypeViewController
 
 @synthesize delegate;
 @synthesize typeArray;
-@synthesize categoryManagedObjectID;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithCategory:(NSString *)category
 {
-    self = [super initWithStyle:style];
+    self = [super init];
     if (self) {
+        self.title = category;
+        OPEOSMData * osmData = [[OPEOSMData alloc] init];
+        self.typeArray = [osmData allSortedTypesWithCategory:category];
+        
         
     }
     return self;
@@ -53,13 +57,13 @@
 {
     [super viewDidLoad];
     
-    managedReferencePoiCategory = (OPEManagedReferencePoiCategory *)[OPEMRUtility managedObjectWithID:categoryManagedObjectID];
-    allTypes = [managedReferencePoiCategory allSortedPois];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UITableView * tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    
+    
+    [self.view addSubview:tableView];
+    
 }
 
 - (void)viewDidUnload
@@ -105,7 +109,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [allTypes count];
+    return [self.typeArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,7 +120,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    OPEManagedReferencePoi * cellPoi = [allTypes objectAtIndex:indexPath.row];
+    OPEManagedReferencePoi * cellPoi = [self.typeArray objectAtIndex:indexPath.row];
     cell.textLabel.text = cellPoi.name;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -127,8 +131,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    [[self delegate] setNewType:[[allTypes objectAtIndex:indexPath.row] objectID]];
+    [self.delegate newType:[self.typeArray objectAtIndex:indexPath.row]];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

@@ -24,6 +24,9 @@
 #import "OPETypeViewController.h"
 
 @interface OPECategoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate>
+{
+    NSArray * searchArray;
+}
 
 @property (nonatomic,strong) IBOutlet UITableView * mainTableView;
 @property (nonatomic,strong) UISearchDisplayController * searchDisplayController;

@@ -23,6 +23,7 @@
 #import "OPECategoryViewController.h"
 #import "OPEManagedReferenceOptionalCategory.h"
 #import "OPEManagedReferencePoi.h"
+#import "OPEOSMData.h"
 
 @implementation OPECategoryViewController
 
@@ -43,10 +44,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    categoriesArray = [OPEManagedReferencePoiCategory allSortedCategories];
     
-    typesArray = [OPEManagedReferencePoi allTypes];
+    OPEOSMData * osmData = [[OPEOSMData alloc] init];
+    
+
+    categoriesArray = [osmData allSortedCategories];
+    
+    typesArray = [osmData allTypesIncludeLegacy:NO];
     //NSLog(@"Types: %@",types);
     
 }
@@ -93,12 +97,12 @@
         {
             //NSLog(@"CurrentString: %@",currentString);
             NSString * currentString = currentPoi.name;
-            if ([currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location != NSNotFound)
+            NSRange range = [currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch];
+            if (range.location != NSNotFound)
             {
-                NSLog(@"Match: %d",[currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location);
-                NSNumber * location = [NSNumber numberWithInteger: [currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch].location];
-                // FIXME NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",[currentPoi objectID],@"objectID",location,@"location",currentPoi.category.name,@"catName", nil];
-                //[searchResults addObject:match];
+                NSNumber * location = [NSNumber numberWithInteger: range.location];
+                NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",currentPoi,@"poi",location,@"location",currentPoi.categoryName,@"catName", nil];
+                [searchResults addObject:match];
                 
             }
         }
@@ -142,50 +146,11 @@
     }
     
     
-    cell.textLabel.text = [[categoriesArray objectAtIndex:indexPath.row] name];
+    cell.textLabel.text = [categoriesArray objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -193,14 +158,11 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
      if (tableView == [[self searchDisplayController] searchResultsTableView]) {
-         [[self delegate] setNewType: [[searchResults objectAtIndex:indexPath.row] objectForKey:@"objectID"]];
+         [[self delegate] newType: [[searchResults objectAtIndex:indexPath.row] objectForKey:@"poi"]];
          [self.navigationController popViewControllerAnimated:YES];
      }
      else {
-         OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithNibName:@"OPETypeViewController" bundle:nil];
-         viewer.title = @"Type";
-         //viewer.category = [categoriesArray objectAtIndex:indexPath.row];
-         viewer.categoryManagedObjectID = [[categoriesArray objectAtIndex:indexPath.row] objectID];
+         OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithCategory:[tableView cellForRowAtIndexPath:indexPath].textLabel.text];
          [viewer setDelegate: [[[self navigationController] viewControllers] objectAtIndex:0]];
          [self.navigationController pushViewController:viewer animated:YES];
      }  

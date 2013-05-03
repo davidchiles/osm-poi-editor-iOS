@@ -54,17 +54,14 @@
 
 @interface OPEOSMData : NSObject <OSMDAODelegate>
 {
-    GTMOAuthAuthentication *auth;
-    OPEManagedOsmWay * currentWay;
-    OPEManagedOsmRelation * currentRelation;
     dispatch_queue_t q;
-    AFHTTPClient * httpClient;
     NSMutableDictionary * typeDictionary;
 }
 
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
 @property (nonatomic, weak) id <OPEOSMDataControllerDelegate> delegate;
 @property (nonatomic,strong) FMDatabaseQueue * databaseQueue;
+@property (nonatomic,strong) AFHTTPClient * httpClient;
 
 - (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 - (void) openChangeset:(OPEChangeset *)changeset;
@@ -90,6 +87,10 @@
 
 -(void)getOptionalsFor:(OPEManagedReferencePoi *)poi;
 -(NSDictionary *)optionalSectionSortOrder;
+
+-(NSArray *)allSortedCategories;
+-(NSArray *)allSortedTypesWithCategory:(NSString *)category;
+-(NSArray *)allTypesIncludeLegacy:(BOOL)includeLegacy;
 
 
 

@@ -42,9 +42,10 @@
 
 @implementation OPEOSMData
 
-@synthesize auth;
+@synthesize auth=_auth;
 @synthesize delegate;
 @synthesize databaseQueue = _databaseQueue;
+@synthesize httpClient = _httpClient;
 
 
 -(id) init
@@ -52,20 +53,37 @@
     self = [super init];
     if(self)
     {
-        auth = [OPEOSMData osmAuth];
-        [self canAuth];
+        
         
         q = dispatch_queue_create("Parse.Queue", NULL);
         
         //NSString * baseUrl = @"http://api06.dev.openstreetmap.org/";
-        NSString * baseUrl = @"http://api.openstreetmap.org/api/0.6/";
         
-        httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
         typeDictionary = [NSMutableDictionary dictionary];
         //[httpClient setAuthorizationHeaderWithToken:auth.token];
     }
     
     return self;
+}
+
+-(AFHTTPClient *)httpClient
+{
+    if (!_httpClient) {
+        NSString * baseUrl = @"http://api.openstreetmap.org/api/0.6/";
+        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+    }
+    return _httpClient;
+}
+
+-(GTMOAuthAuthentication *)auth
+{
+    if(_auth)
+    {
+        _auth = [OPEOSMData osmAuth];
+        [self canAuth];
+    }
+    return _auth;
+    
 }
 
 -(FMDatabaseQueue *)databaseQueue
@@ -134,10 +152,10 @@
 {
         BOOL didAuth = NO;
         BOOL canAuth = NO;
-        if (auth) {
-                didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor" authentication:auth];
+        if (_auth) {
+                didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor" authentication:_auth];
                 // if the auth object contains an access token, didAuth is now true
-                canAuth = [auth canAuthorize];
+                canAuth = [_auth canAuthorize];
             }
         else {
                 return NO;
@@ -190,9 +208,9 @@
     
     NSLog(@"Changeset Data: %@",[[NSString alloc] initWithData:changesetData encoding:NSUTF8StringEncoding]);
     
-     NSMutableURLRequest * urlRequest = [httpClient requestWithMethod:@"PUT" path:@"changeset/create" parameters:nil];
+     NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"PUT" path:@"changeset/create" parameters:nil];
     [urlRequest setHTTPBody:changesetData];
-    [auth authorizeRequest:urlRequest];
+    [self.auth authorizeRequest:urlRequest];
     
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
@@ -242,7 +260,7 @@
         }
     }
 
-    [httpClient enqueueBatchOfHTTPRequestOperations:requestOperations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+    [self.httpClient enqueueBatchOfHTTPRequestOperations:requestOperations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
         NSLog(@"uploaded: %d/%d",numberOfFinishedOperations,totalNumberOfOperations);
         
     } completionBlock:^(NSArray *operations) {
@@ -267,9 +285,9 @@
         [path appendFormat:@"%lld",element.element.elementID];
     }
     
-    NSMutableURLRequest * urlRequest = [httpClient requestWithMethod:@"PUT" path:path parameters:nil];
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"PUT" path:path parameters:nil];
     [urlRequest setHTTPBody:xmlData];
-    [auth authorizeRequest:urlRequest];
+    [self.auth authorizeRequest:urlRequest];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id object){
@@ -308,9 +326,9 @@
     NSData * xmlData = [element deleteXMLforChangset:changesetNumber];
     NSString * path = [NSString stringWithFormat:@"%@/%lld",[element osmType],element.element.elementID];
     
-    NSMutableURLRequest * urlRequest = [httpClient requestWithMethod:@"DELETE" path:path parameters:nil];
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"DELETE" path:path parameters:nil];
     [urlRequest setHTTPBody:xmlData];
-    [auth authorizeRequest:urlRequest];
+    [self.auth authorizeRequest:urlRequest];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id object){
@@ -343,8 +361,8 @@
 {
     NSString * path = [NSString stringWithFormat:@"changeset/%lld/close",changesetNumber];
     
-    NSMutableURLRequest * urlRequest = [httpClient requestWithMethod:@"PUT" path:path parameters:nil];
-    [auth authorizeRequest:urlRequest];
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"PUT" path:path parameters:nil];
+    [self.auth authorizeRequest:urlRequest];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id object){
@@ -438,10 +456,12 @@
 {
     [self removeType:element.type forElement:element];
     element.typeID = type.rowID;
+    element.type = type;
     for (NSString * osmKey in type.tags)
     {
         [self setOsmKey:osmKey andValue:type.tags[osmKey] forElement:element];
     }
+    
     
 }
 -(void)removeOsmKey:(NSString *)osmKey forElement:(OPEManagedOsmElement *)element
@@ -470,8 +490,6 @@
                 FMResultSet * result = [db executeQuery:@"SELECT *,rowid AS id FROM poi WHERE rowid = ?",[NSNumber numberWithInt:element.typeID]];
                 if ([result next]) {
                     poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[result resultDictionary]];
-                    poi.rowID = [result intForColumn:@"id"];
-                    
                 }
                 [result close];
             }];
@@ -831,6 +849,70 @@
         }
         
     }];
+    
+}
+-(NSArray *)allSortedCategories
+{
+    __block NSMutableArray * array = [NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        NSString * sqlString = @"SELECT category FROM poi GROUP BY category ORDER BY category ASC";
+        FMResultSet * set = [db executeQuery:sqlString];
+        
+        while ([set next]) {
+            [array addObject:[set stringForColumn:@"category"]];
+        }
+        
+    }];
+    return array;
+}
+-(NSArray *)allSortedTypesWithCategory:(NSString *)category
+{
+    __block NSMutableArray * array = [NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi,pois_tags WHERE  poi.rowid = pois_tags.poi_id AND category = ? ORDER BY displayName",category];
+        OPEManagedReferencePoi * poi = nil;
+        poi.name = @"";
+        while ([set next]) {
+            if (![poi.name isEqualToString:[set stringForColumn:@"displayName"]]) {
+                poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+                
+                [array addObject: poi];
+            }
+            [poi.tags setObject:[set stringForColumn:@"value"] forKey:[set stringForColumn:@"key"]];
+        }
+        
+    }];
+    
+    
+    return array;
+    
+}
+-(NSArray *)allTypesIncludeLegacy:(BOOL)includeLegacy
+{
+    __block NSMutableArray * array = [NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        NSString * sqlString = @"SELECT *,poi.rowid AS id FROM poi,pois_tags WHERE  poi.rowid = pois_tags.poi_id";
+        if (!includeLegacy) {
+            sqlString = [sqlString stringByAppendingFormat:@" AND isLegacy = 0"];
+        }
+        
+        FMResultSet * set = [db executeQuery:sqlString];
+        OPEManagedReferencePoi * poi = nil;
+        poi.name = @"";
+        while ([set next]) {
+            if (![poi.name isEqualToString:[set stringForColumn:@"displayName"]]) {
+                poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+                
+                [array addObject: poi];
+            }
+            [poi.tags setObject:[set stringForColumn:@"value"] forKey:[set stringForColumn:@"key"]];
+        }
+        
+    }];
+    
+    
+    return array;
+    
     
 }
 
