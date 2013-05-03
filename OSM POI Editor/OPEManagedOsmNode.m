@@ -77,4 +77,11 @@
     return kOPEOsmElementNode;
 }
 
++(OPEManagedOsmNode *)newNode
+{
+    OPEManagedOsmNode * node = [[OPEManagedOsmNode alloc] init];
+    node.element = [[Node alloc] init];
+    return node;
+}
+
 @end

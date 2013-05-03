@@ -57,6 +57,10 @@
 {
     return self.element.elementID;
 }
+-(void)setElementID:(int64_t)elementID
+{
+    self.element.elementID = elementID;
+}
 
 -(NSString *)tagsXML
 {
@@ -250,11 +254,6 @@
     }
     
     
-}
--(BOOL)memberOfOtherElement
-{
-    //FIXME
-    return NO;
 }
 
 +(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID type:(NSString *)typeString

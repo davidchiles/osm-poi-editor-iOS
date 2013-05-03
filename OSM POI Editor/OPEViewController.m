@@ -632,12 +632,11 @@
     if (mapView.zoom > MINZOOM) {
         
         OPEManagedOsmNode * node = [OPEManagedOsmNode newNode];
+        node.element.elementID = [self.osmData newElementId];
         node.element.latitude = center.latitude;
         node.element.longitude = center.longitude;
         
-        [OPEMRUtility saveAll];
-        
-        //FIXME [self presentNodeInfoViewControllerWithElement:node.objectID];
+        [self presentNodeInfoViewControllerWithElement:node];
     }
     else {
         UIAlertView * zoomAlert = [[UIAlertView alloc]

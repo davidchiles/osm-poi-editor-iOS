@@ -92,6 +92,9 @@
 -(NSArray *)allSortedTypesWithCategory:(NSString *)category;
 -(NSArray *)allTypesIncludeLegacy:(BOOL)includeLegacy;
 
+-(int64_t)newElementId;
+-(BOOL)hasParentElement:(OPEManagedOsmElement *)element;
+
 
 
 

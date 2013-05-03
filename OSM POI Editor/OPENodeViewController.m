@@ -127,7 +127,7 @@
     nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     
-    if (self.managedOsmElement.element.elementID > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![managedOsmElement memberOfOtherElement]) {
+    if (self.managedOsmElement.element.elementID > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![self.osmData hasParentElement:self.managedOsmElement]) {
         
         
         deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -525,7 +525,6 @@
 
 -(void)newType:(OPEManagedReferencePoi *)newType;
 {
-    //FIXME
     [osmData setNewType:newType forElement:self.managedOsmElement];
     [osmData getOptionalsFor:self.managedOsmElement.type];
     [self reloadTags];

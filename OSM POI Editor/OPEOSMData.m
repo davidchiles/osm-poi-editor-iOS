@@ -916,6 +916,44 @@
     
 }
 
+-(int64_t)newElementId
+{
+    __block int64_t newID = -1;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQuery:@"SELECT MIN(id) as min from nodes"];
+        
+        while ([set next]) {
+            if ([set longLongIntForColumn:@"min"] < 0) {
+                newID = [set longLongIntForColumn:@"min"]-1;
+            }
+        }
+    }];
+    
+    return newID;
+}
+-(BOOL)hasParentElement:(OPEManagedOsmElement *)element
+{
+    __block BOOL hasParent = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        BOOL hasWayParent = NO;
+        BOOL hasRelationParent = NO;
+        if ([element isKindOfClass:[OPEManagedOsmNode class]]) {
+            FMResultSet * set = [db executeQuery:@"SELECT EXISTS(SELECT * FROM ways_nodes WHERE node_id= ? LIMIT 1)",element.elementID];
+            while ([set next]) {
+                hasWayParent = [set boolForColumnIndex:0];
+            }
+        }
+        
+        FMResultSet * set = [db executeQuery:@"SELECT EXISTS(SELECT * FROM relations_members WHERE ref= ? AND type =? LIMIT 1)",element.elementID,[element osmType]];
+        while ([set next]) {
+            hasRelationParent = [set boolForColumnIndex:0];
+        }
+        
+        hasParent = hasWayParent && hasRelationParent;
+    }];
+    return hasParent;
+}
+
 //OSMDAODelegate Mehtod
 -(void)didFinishSavingElements:(NSArray *)elements
 {
