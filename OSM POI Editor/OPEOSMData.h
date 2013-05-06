@@ -50,12 +50,17 @@
 
 -(void) downloadFailed:(NSError *)error;
 
+-(void) didFindNewElements:(NSArray *)newElementsArray updatedElements:(NSArray *)updatedElementsArray;
+
 @end
 
 @interface OPEOSMData : NSObject <OSMDAODelegate>
 {
     dispatch_queue_t q;
     NSMutableDictionary * typeDictionary;
+    NSMutableDictionary * downloadedNodes;
+    NSMutableDictionary * downloadedWays;
+    NSMutableDictionary * downloadedRelations;
 }
 
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;

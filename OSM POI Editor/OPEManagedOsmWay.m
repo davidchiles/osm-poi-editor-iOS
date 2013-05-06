@@ -45,6 +45,10 @@
 {
     return kOPEOsmElementWay;
 }
+-(NSString *)idKeyPrefix
+{
+    return @"w";
+}
 
 -(NSArray *)points
 {

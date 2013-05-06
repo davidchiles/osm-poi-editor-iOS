@@ -750,7 +750,7 @@
 
 -(void)updateAllAnnotations
 {
-    [mapView removeAllAnnotations];
+    //[mapView removeAllAnnotations];
     for (OPEManagedOsmElement * element in [self.osmElementFetchedResultsController fetchedObjects])
     {
         //FIXME [self updateOsmElementWithID:element.objectID];
@@ -771,10 +771,8 @@
 
 #pragma FetchedResultsController
 
--(void)updateOsmElementWithID:(NSManagedObjectID *)objectID
-{
-    [self removeAnnotationWithOsmElementID:objectID];
-    OPEManagedOsmElement * element = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:objectID];
+-(void)updateAnnotationForOsmElement:(OPEManagedOsmElement *)element{
+    [self removeAnnotationWithOsmElementIDKey:element.idKey];
     if (![element.action isEqualToString:kActionTypeDelete]) {
         NSArray * annotationsArray = [self annotationWithOsmElement:element];
         for(RMAnnotation * annotation in annotationsArray)
@@ -784,18 +782,18 @@
     
 }
 
--(void)removeAnnotationWithOsmElementID:(NSManagedObjectID *)objectID
+-(void)removeAnnotationWithOsmElementIDKey:(NSString *)idKey
 {
-    NSSet * annotationSet = [self annotationsForOsmElementID:objectID];
+    NSSet * annotationSet = [self annotationsForOsmElementIDKey:idKey];
     if ([annotationSet count])
     {
         [mapView removeAnnotations:[annotationSet allObjects]];
     }
 }
 
--(NSSet *)annotationsForOsmElementID:(NSManagedObjectID *)objectID
+-(NSSet *)annotationsForOsmElementIDKey:(NSString *)idKey;
 {
-    NSIndexSet * indexSet = [self indexesOfOsmElementID:objectID];
+    NSIndexSet * indexSet = [self indexesOfOsmElementIDKey:idKey];
     NSMutableSet * annotationSet = [NSMutableSet set];
     
     [indexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
@@ -805,11 +803,12 @@
     return annotationSet;
 }
 
--(NSIndexSet *)indexesOfOsmElementID:(NSManagedObjectID *)objectID
+-(NSIndexSet *)indexesOfOsmElementIDKey:(NSString *)idKey;
 {
     NSIndexSet * set = [mapView.annotations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         RMAnnotation * annotation = (RMAnnotation *)obj;
-        return [annotation.userInfo isEqual:objectID];
+        OPEManagedOsmElement * element = annotation.userInfo;
+        return [element.idKey isEqualToString:idKey];
     }];
     return set;
 }
@@ -870,6 +869,27 @@
 
 #pragma OPEOsmDataDelegate
 
+-(void)didFindNewElements:(NSArray *)newElementsArray updatedElements:(NSArray *)updatedElementsArray
+{
+    for(OPEManagedOsmElement * element in newElementsArray)
+    {
+        NSArray * annotationsArray = [self annotationWithOsmElement:element];
+        for (RMAnnotation * annotation in annotationsArray)
+        {
+            [mapView addAnnotation:annotation];
+        }
+        
+    }
+    
+    for(OPEManagedOsmElement * element in updatedElementsArray)
+    {
+        [self updateAnnotationForOsmElement:element];
+    }
+    
+    
+    
+}
+
 -(void)didCloseChangeset:(int64_t)changesetNumber
 {
     [super didCloseChangeset:changesetNumber];
@@ -919,6 +939,7 @@
 
 -(void)didEndParsing
 {
+    /*
     NSArray * elementsArray = [self.osmData allElementsWithType:YES];
     for(OPEManagedOsmElement * element in elementsArray)
     {
@@ -929,6 +950,7 @@
         }
         
     }
+    */
 }
 
 -(void)downloadFailed:(NSError *)error

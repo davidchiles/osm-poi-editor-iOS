@@ -13,6 +13,8 @@
 @property (nonatomic) BOOL isVisible;
 @property (nonatomic,strong) NSString * action;
 @property (nonatomic) int64_t elementID;
+@property (nonatomic,readonly) NSString * idKey;
+@property (nonatomic,readonly) NSString * idKeyPrefix;
 
 
 -(id)initWithDictionary:(NSDictionary *)dictionary;

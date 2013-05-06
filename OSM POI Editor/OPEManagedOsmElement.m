@@ -19,6 +19,7 @@
 
 @implementation OPEManagedOsmElement
 @synthesize typeID,type,isVisible,element,action;
+@synthesize idKeyPrefix,idKey;
 
 -(id)init
 {
@@ -85,6 +86,11 @@
 -(NSString *)osmType
 {
     return kOPEOsmElementNone;
+}
+
+-(NSString *)idKey
+{
+    return [NSString stringWithFormat:@"%@%lld",self.idKeyPrefix,self.elementID];
 }
 
 -(NSDictionary *)nearbyValuesForOsmKey:(NSString *)osmKey

@@ -61,15 +61,9 @@
     return xml;
 }
 
--(BOOL)memberOfOtherElement
+-(NSString *)idKeyPrefix
 {
-    //FIXME
-    /*
-    if ([self.ways count]) {
-        return YES;
-    }
-    return [super memberOfOtherElement];
-     */
+    return @"n";
 }
 
 -(NSString *)osmType

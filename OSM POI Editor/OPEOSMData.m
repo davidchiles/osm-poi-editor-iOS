@@ -59,7 +59,11 @@
         
         //NSString * baseUrl = @"http://api06.dev.openstreetmap.org/";
         
-        typeDictionary = [NSMutableDictionary dictionary];
+        typeDictionary      = [NSMutableDictionary dictionary];
+        downloadedNodes     = [NSMutableDictionary dictionary];
+        downloadedWays      = [NSMutableDictionary dictionary];
+        downloadedRelations = [NSMutableDictionary dictionary];
+        
         //[httpClient setAuthorizationHeaderWithToken:auth.token];
     }
     
@@ -402,6 +406,7 @@
             
             if ([result next]) {
                 int poi_id  = [result intForColumn:@"poi_id"];
+                element.typeID = poi_id;
                 sql = [NSString stringWithFormat:@"UPDATE %@ SET poi_id=%d WHERE id=%lld",baseTableName,poi_id,element.element.elementID];
                 [db executeUpdateWithFormat:sql];
                 didFind = YES;
@@ -729,12 +734,45 @@
 
 -(NSArray *)allElementsWithType:(BOOL)withType
 {
+    //do in different thread with call back FIXME
     NSMutableArray * resultArray = [NSMutableArray array];
+    
     [resultArray addObjectsFromArray:[self allElementsOfKind:kOPEOsmElementNode withType:YES]];
     [resultArray addObjectsFromArray:[self allElementsOfKind:kOPEOsmElementWay withType:YES]];
     [resultArray addObjectsFromArray:[self allElementsOfKind:kOPEOsmElementRelation withType:YES]];
     
+    [self removeDownloaded:resultArray];
+    
     return resultArray;
+}
+-(void)removeDownloaded:(NSMutableArray *)elementsArray
+{
+    for(OPEManagedOsmElement * element in elementsArray)
+    {
+        NSMutableDictionary * downloadedDictionary  = nil;
+        if ([element.osmType isEqualToString:kOPEOsmElementNode]) {
+            downloadedDictionary = downloadedNodes;
+        }
+        else if ([element.osmType isEqualToString:kOPEOsmElementWay]) {
+            downloadedDictionary = downloadedWays;
+        }
+        else if ([element.osmType isEqualToString:kOPEOsmElementRelation]) {
+            downloadedDictionary = downloadedRelations;
+        }
+        NSNumber * version = [downloadedDictionary objectForKey:[NSNumber numberWithLongLong:element.elementID]];
+        if (![version intValue] && [version intValue] > element.element.version)
+        {
+            //FIXME beter to use id prefix n(ode) w(ay) r(elation)
+            [downloadedDictionary setObject:version forKey:[NSNumber numberWithLongLong:element.element.version]];
+            
+        }
+        else
+        {
+            [elementsArray removeObject:element];
+            
+        }
+    }
+    
 }
 
 -(OPEManagedOsmElement *)elementOfKind:(NSString *)kind osmID:(int64_t)osmID
@@ -935,16 +973,18 @@
 {
     __block BOOL hasParent = YES;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        db.logsErrors = YES;
+        db.traceExecution = YES;
         BOOL hasWayParent = NO;
         BOOL hasRelationParent = NO;
         if ([element isKindOfClass:[OPEManagedOsmNode class]]) {
-            FMResultSet * set = [db executeQuery:@"SELECT EXISTS(SELECT * FROM ways_nodes WHERE node_id= ? LIMIT 1)",element.elementID];
+            FMResultSet * set = [db executeQuery:@"SELECT EXISTS(SELECT * FROM ways_nodes WHERE node_id= ? LIMIT 1)",[NSNumber numberWithLongLong: element.elementID]];
             while ([set next]) {
                 hasWayParent = [set boolForColumnIndex:0];
             }
         }
         
-        FMResultSet * set = [db executeQuery:@"SELECT EXISTS(SELECT * FROM relations_members WHERE ref= ? AND type =? LIMIT 1)",element.elementID,[element osmType]];
+        FMResultSet * set = [db executeQuery:@"SELECT EXISTS(SELECT * FROM relations_members WHERE ref= ? AND type =? LIMIT 1)",[NSNumber numberWithLongLong: element.elementID],[element osmType]];
         while ([set next]) {
             hasRelationParent = [set boolForColumnIndex:0];
         }
@@ -955,6 +995,45 @@
 }
 
 //OSMDAODelegate Mehtod
+-(void)didFinishSavingNewElements:(NSArray *)newElements updatedElements:(NSArray *)updatedElements
+{
+    NSMutableArray * newMatchedElements = [NSMutableArray array];
+    NSMutableArray * updatedMatchedElements = [NSMutableArray array];
+    
+    //match new elements
+    for(Element * element in newElements)
+    {
+        if ([element.tags count]) {
+            OPEManagedOsmElement * managedElement = [OPEManagedOsmElement elementWithBasicOsmElement:element];
+            if([self findType:managedElement])
+            {
+                [newMatchedElements addObject: managedElement];
+            }
+        }
+    }
+    //match updated elements in case any tags have changed enough to change type
+    for(Element * element in updatedElements)
+    {
+        if ([element.tags count]) {
+            OPEManagedOsmElement * managedElement = [OPEManagedOsmElement elementWithBasicOsmElement:element];
+            if([self findType:managedElement])
+            {
+                [updatedMatchedElements addObject: managedElement];
+            }
+        }
+    }
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.delegate respondsToSelector:@selector(didFindNewElements:updatedElements:)]) {
+            [self.delegate didFindNewElements:newMatchedElements updatedElements:updatedMatchedElements];
+        }
+    });
+    
+    
+    
+}
+
 -(void)didFinishSavingElements:(NSArray *)elements
 {
     for(Element * element in elements)

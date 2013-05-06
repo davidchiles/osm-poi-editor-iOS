@@ -27,6 +27,11 @@
     return kOPEOsmElementRelation;
 }
 
+-(NSString *)idKeyPrefix
+{
+    return @"r";
+}
+
 -(NSData *) uploadXMLforChangset:(int64_t)changesetNumber
 {
     NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
