@@ -61,36 +61,6 @@
     }
     return mutablePointsArray;
 }
--(NSString *)name
-{
-    //FIXME
-    if (self.isNoNameStreet) {
-        return @"Highway Missing Name";
-    }
-}
-
--(BOOL)noNameStreet
-{
-    if ([[self name] length]) {
-        return NO;
-    }
-    
-    
-    
-    NSString * highwayValue = [self valueForOsmKey:@"highway"];
-    
-    if ([highwayValue length])
-    {
-        NSSet * highwaySet = [NSSet setWithArray:highwayTypes];
-        
-        if ([highwaySet containsObject:highwayValue]) {
-            return YES;
-        }
-        
-    }
-    return NO;
-    
-}
 
 -(NSString *)highwayType
 {

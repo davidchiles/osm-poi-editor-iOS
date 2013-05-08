@@ -1,7 +1,6 @@
 #import "OPEManagedReferencePoi.h"
 #import "OPEManagedReferenceOptionalCategory.h"
 #import "OPEManagedReferenceOptional.h"
-#import "OPEManagedReferencePoiCategory.h"
 #import "FMDatabase.h"
 #import "OPEConstants.h"
 

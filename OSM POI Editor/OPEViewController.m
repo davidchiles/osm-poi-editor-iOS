@@ -41,6 +41,7 @@
 #import "OPEGeo.h"
 #import "OPEGeoCentroid.h"
 
+
 #define noNameTag 100
 
 
@@ -77,6 +78,8 @@
     UIBarButtonItem * locationBarButton;
     UIBarButtonItem * addBarButton;
     UIBarButtonItem * settingsBarButton;
+    
+    
     
     locationBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"location.png"]style:UIBarButtonItemStylePlain target:self action:@selector(locationButtonPressed:)];
     
@@ -166,6 +169,9 @@
     message.userInteractionEnabled = NO;
     
     imagesDic = [[NSMutableDictionary alloc] init];
+    
+    downloadedNoNameHighways = [NSMutableDictionary dictionary];
+    searchManager = [[OPEOSMSearchManager alloc] init];
 }
 
 - (UIImage*)imageWithBorderFromImage:(UIImage*)source  //Draw box around centered image
@@ -509,12 +515,9 @@
         [self.view endEditing:YES];
         [self startSave];
         
-        OPEManagedOsmTag * tag = [OPEManagedOsmTag fetchOrCreateWithKey:@"name" value:value];
-        OPEManagedOsmElement * managedElement = (OPEManagedOsmElement*)[OPEMRUtility managedObjectWithID:self.selectedNoNameHighway.userInfo];
-        //FIXME [managedElement addTagsObject:tag];
+        OPEManagedOsmElement * managedElement = (OPEManagedOsmElement*)self.selectedNoNameHighway.userInfo;
+        [managedElement.element.tags setObject:value forKey:@"name"];
         managedElement.action = kActionTypeModify;
-        NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
-        [context MR_saveToPersistentStoreAndWait];
         
         [self.osmData uploadElement:managedElement];
     }
@@ -714,7 +717,7 @@
     [self.navigationController setToolbarHidden:NO animated:YES];
     //[self.navigationController setNavigationBarHidden:YES animated:YES];
     //[self.navigationController setToolbarHidden:NO animated:YES];
-    [self updateAllAnnotations];
+    //[self updateAllAnnotations];
     [self setupButtons];
     userPressedLocatoinButton = NO;
     
@@ -745,27 +748,6 @@
         return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
     } else {
         return YES;
-    }
-}
-
--(void)updateAllAnnotations
-{
-    //[mapView removeAllAnnotations];
-    for (OPEManagedOsmElement * element in [self.osmElementFetchedResultsController fetchedObjects])
-    {
-        //FIXME [self updateOsmElementWithID:element.objectID];
-    }
-    
-    if ([self showNoNameStreets]) {
-        for (OPEManagedOsmElement * element in [self.noNameStreetsFetchedResultsController fetchedObjects])
-        {
-            //FIXME [self updateOsmElementWithID:element.objectID];
-        }
-    }
-    else
-    {
-        _noNameStreetsFetchedResultsController.delegate = nil;
-        _noNameStreetsFetchedResultsController = nil;
     }
 }
 

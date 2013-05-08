@@ -26,7 +26,6 @@
 		6314D13C17039A5B00AE91E3 /* OPENameEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6314D13B17039A5B00AE91E3 /* OPENameEditView.m */; };
 		6314D13F1703C27B00AE91E3 /* OPEBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6314D13E1703C27A00AE91E3 /* OPEBaseViewController.m */; };
 		631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E014DC98D0000236F0 /* OPEOSMData.m */; };
-		631BAAB616B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 631BAAB516B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m */; };
 		6326691317164579002CD7E4 /* airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326680917164578002CD7E4 /* airplane.png */; };
 		6326691417164579002CD7E4 /* alcohol.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326680A17164578002CD7E4 /* alcohol.png */; };
 		6326691517164579002CD7E4 /* apartment.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326680B17164578002CD7E4 /* apartment.png */; };
@@ -334,6 +333,7 @@
 		6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */; };
 		6383949A14EC85C100C74A57 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6383949914EC85C100C74A57 /* Security.framework */; };
 		638445EA1665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */; };
+		6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */; };
 		638E994F1665C9FF00C29F9A /* MapBox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 638E99201665C2CC00C29F9A /* MapBox.bundle */; };
 		6391C64C16AE1BA80084D579 /* MagicalImportFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6391C61416AE1BA80084D579 /* MagicalImportFunctions.m */; };
 		6391C64D16AE1BA80084D579 /* NSAttributeDescription+MagicalDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 6391C61616AE1BA80084D579 /* NSAttributeDescription+MagicalDataImport.m */; };
@@ -457,8 +457,6 @@
 		6314D13E1703C27A00AE91E3 /* OPEBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBaseViewController.m; sourceTree = "<group>"; };
 		631539DF14DC98D0000236F0 /* OPEOSMData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMData.h; sourceTree = "<group>"; };
 		631539E014DC98D0000236F0 /* OPEOSMData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMData.m; sourceTree = "<group>"; };
-		631BAAB416B366AB00CF4DAA /* OPEManagedReferencePoiCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedReferencePoiCategory.h; sourceTree = "<group>"; };
-		631BAAB516B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedReferencePoiCategory.m; sourceTree = "<group>"; };
 		6326680917164578002CD7E4 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplane.png; sourceTree = "<group>"; };
 		6326680A17164578002CD7E4 /* alcohol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alcohol.png; sourceTree = "<group>"; };
 		6326680B17164578002CD7E4 /* apartment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apartment.png; sourceTree = "<group>"; };
@@ -824,6 +822,8 @@
 		6383949914EC85C100C74A57 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		638445E81665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOpenMapQuestAerialTileSource.h; sourceTree = "<group>"; };
 		638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpenMapQuestAerialTileSource.m; sourceTree = "<group>"; };
+		6384D80A1738766500B58AF4 /* OPEOSMSearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMSearchManager.h; sourceTree = "<group>"; };
+		6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMSearchManager.m; sourceTree = "<group>"; };
 		6391C61316AE1BA80084D579 /* MagicalImportFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicalImportFunctions.h; sourceTree = "<group>"; };
 		6391C61416AE1BA80084D579 /* MagicalImportFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicalImportFunctions.m; sourceTree = "<group>"; };
 		6391C61516AE1BA80084D579 /* NSAttributeDescription+MagicalDataImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributeDescription+MagicalDataImport.h"; sourceTree = "<group>"; };
@@ -1440,6 +1440,8 @@
 				633CD876164B28DA00678D58 /* OPEFileUpdater.m */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,
 				631539E014DC98D0000236F0 /* OPEOSMData.m */,
+				6384D80A1738766500B58AF4 /* OPEOSMSearchManager.h */,
+				6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */,
 				637C7CC916F164BE002CD340 /* OPEChangeset.h */,
 				637C7CCA16F164BE002CD340 /* OPEChangeset.m */,
 				6310F4B4153736D000C65FD8 /* OPEMessageView.h */,
@@ -1520,8 +1522,6 @@
 				63F03D2D16B09FD8004AF385 /* OPEManagedReferenceOsmTag.m */,
 				63F03D2E16B09FD8004AF385 /* OPEManagedReferencePoi.h */,
 				63F03D3716B0A2D0004AF385 /* OPEManagedReferencePoi.m */,
-				631BAAB416B366AB00CF4DAA /* OPEManagedReferencePoiCategory.h */,
-				631BAAB516B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m */,
 				6333D3AA16811F6700BF129E /* OPECoreDataImporter.h */,
 				6333D3AB16811F6800BF129E /* OPECoreDataImporter.m */,
 				63F03D3916B0A925004AF385 /* OPEMRUtility.h */,
@@ -2271,7 +2271,6 @@
 				63F03D3816B0A2D1004AF385 /* OPEManagedReferencePoi.m in Sources */,
 				63F03D3B16B0A927004AF385 /* OPEMRUtility.m in Sources */,
 				630190FE16B3258F007AB232 /* OPEManagedReferenceOptionalCategory.m in Sources */,
-				631BAAB616B366AB00CF4DAA /* OPEManagedReferencePoiCategory.m in Sources */,
 				63E8212616F12A850040B892 /* AFHTTPClient.m in Sources */,
 				63E8212716F12A850040B892 /* AFHTTPRequestOperation.m in Sources */,
 				63E8212816F12A850040B892 /* AFImageRequestOperation.m in Sources */,
@@ -2312,6 +2311,7 @@
 				63FBA5A9171DFBED0098A2F3 /* Way.m in Sources */,
 				63FBA5AC171E00F20098A2F3 /* Element.m in Sources */,
 				63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */,
+				6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

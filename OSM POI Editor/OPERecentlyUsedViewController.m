@@ -29,13 +29,10 @@
         recentValues = nil;
     }
 	
-    OPEManagedReferenceOptional * referenceOptional = (OPEManagedReferenceOptional *)[OPEMRUtility managedObjectWithID:self.manageedOptionalObjectID];
-    
-    
     
     self.textField = [[OPEOsmValueTextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35) withOsmKey:self.osmKey andValue:self.currentOsmValue];
     [self.textField becomeFirstResponder];
-    if (referenceOptional.type == OPEOptionalTypeNumber) {
+    if (self.managedOptional.type == OPEOptionalTypeNumber) {
         self.textField.keyboardType = UIKeyboardTypeNumberPad;
     }
     

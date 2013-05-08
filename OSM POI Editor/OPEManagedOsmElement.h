@@ -28,16 +28,6 @@
 -(NSData *) deleteXMLforChangset: (int64_t) changesetNumber;
 
 -(NSString *)osmType;
--(NSDictionary *)nearbyHighwayNames;
--(NSDictionary *)nearbyValuesForOsmKey:(NSString *)osmKey;
--(void)updateLegacyTags;
-
-+ (NSInteger)minID;
-+(NSArray *)allElementsWithTag:(OPEManagedOsmTag *)tag;
-
-+(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID;
-
-+(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID type:(NSString *)typeString;
 
 +(OPEManagedOsmElement *)elementWithBasicOsmElement:(Element *)element;
 +(OPEManagedOsmElement *)elementWithType:(NSString *)elementTypeString withDictionary:(NSDictionary *)dictionary;

@@ -35,7 +35,6 @@
 #import "OPEManagedReferenceOptional.h"
 #import "OPEManagedOsmTag.h"
 #import "OPEManagedReferenceOptionalCategory.h"
-#import "OPEManagedReferencePoiCategory.h"
 #import "OPEManagedReferenceOsmTag.h"
 #import "OPEManagedOsmNode.h"
 #import "OPETagEditViewController.h"
@@ -77,6 +76,7 @@
         [osmData getOptionalsFor:self.managedOsmElement.type];
         
         originalTags = [self.managedOsmElement.element.tags copy];
+        originalTypeID = self.managedOsmElement.typeID;
         [self.osmData updateLegacyTags:managedOsmElement];
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
@@ -98,15 +98,15 @@
 -(void)cancelButtonPressed:(id)sender
 {
     if (self.managedOsmElement.element.elementID < 0) {
-        //FIXME
-        //[self.managedOsmElement MR_deleteInContext:editContext];
+        self.managedOsmElement = nil;
     }
     else
     {
-        [editContext rollback];
+        self.managedOsmElement.element.tags = [originalTags mutableCopy];
+        self.managedOsmElement.typeID = originalTypeID;
+        [osmData getTypeFor:managedOsmElement];
     }
     [self.navigationController dismissModalViewControllerAnimated:YES];
-    [editContext MR_saveToPersistentStoreAndWait];
 }
 
 #pragma mark - View lifecycle
@@ -386,12 +386,10 @@
         OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
         
         OPETagEditViewController * viewController = nil;
-        //FIXME
-        //viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey andType:managedOptionalTag.type delegate:self];
+        viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey andType:managedOptionalTag.type delegate:self];
         viewController.title = managedOptionalTag.displayName;
-        //viewController.managedObjectID = managedOsmElement.objectID;
-        //FIXME
-        //viewController.manageedOptionalObjectID = managedOptionalTag.objectID;
+        viewController.managedOptional = managedOptionalTag;
+        viewController.element = self.managedOsmElement;
         viewController.currentOsmValue = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
         [self.navigationController pushViewController:viewController animated:YES];
         
@@ -425,8 +423,6 @@
 {
     self.managedOsmElement.action = kActionTypeModify;
     
-    [editContext MR_saveToPersistentStoreAndWait];
-    
     if (![self.osmData canAuth])
     {
         [self showAuthError];
@@ -436,12 +432,9 @@
         [self startSave];
         dispatch_queue_t q = dispatch_queue_create("queue", NULL);
         dispatch_async(q, ^{
-            NSLog(@"saveBottoPressed");
+            NSLog(@"saveBottonPressed");
             
-            NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
-            //FIXME
-            //OPEManagedOsmElement * element = (OPEManagedOsmElement *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
-            //[self.osmData uploadElement:element];
+            [self.osmData uploadElement:self.managedOsmElement];
             
         });
         //[self didCloseChangeset:1];
@@ -481,9 +474,7 @@
     if (alertView.tag == 1) {
         if(buttonIndex != alertView.cancelButtonIndex)
         {
-            [editContext rollback];
             self.managedOsmElement.action = kActionTypeDelete;
-            [editContext MR_saveToPersistentStoreAndWait];
             
             NSLog(@"Button YES was selected.");
             
@@ -495,10 +486,6 @@
             if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
                 dispatch_queue_t q = dispatch_queue_create("queue", NULL);
                 dispatch_async(q, ^{
-                    
-                    //NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
-                    //FIXME
-                    //OPEManagedOsmElement * osmElement = (OPEManagedOsmElement *)[context existingObjectWithID:self.managedOsmElement.objectID error:nil];
                     
                     
                     [self.osmData deleteElement:self.managedOsmElement];
@@ -597,6 +584,7 @@
 
 -(void)didCloseChangeset:(int64_t)changesetNumber
 {
+    [delegate updateAnnotationForOsmElement:self.managedOsmElement];
     [super didCloseChangeset:changesetNumber];
     [self checkSaveButton];
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];

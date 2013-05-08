@@ -33,8 +33,8 @@
 #import "OPEBaseViewController.h"
 
 @protocol OPENodeViewDelegate
-@optional
--(void)removeAnnotationWithOsmElementID:(NSManagedObjectID *)objectID;
+@required
+-(void)updateAnnotationForOsmElement:(OPEManagedOsmElement *)element;
 @end
 
 
@@ -44,6 +44,7 @@
     float optionalTagWidth;
     NSManagedObjectContext * editContext;
     NSDictionary * originalTags;
+    int originalTypeID;
     OPEOSMData * osmData;
 }
 

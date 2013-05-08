@@ -58,9 +58,6 @@
 {
     dispatch_queue_t q;
     NSMutableDictionary * typeDictionary;
-    NSMutableDictionary * downloadedNodes;
-    NSMutableDictionary * downloadedWays;
-    NSMutableDictionary * downloadedRelations;
 }
 
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;

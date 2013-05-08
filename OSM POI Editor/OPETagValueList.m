@@ -37,9 +37,7 @@
 {
     [super viewDidLoad];
     
-    OPEManagedReferenceOptional * referenceOptional = (OPEManagedReferenceOptional *)[OPEMRUtility managedObjectWithID:self.manageedOptionalObjectID];
-    
-    valuesArray = [referenceOptional allSortedTags];
+    valuesArray = [self.managedOptional allSortedTags];
     
     
     

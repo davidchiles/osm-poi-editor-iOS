@@ -32,11 +32,14 @@
 #import "OPENameEditView.h"
 #import "MBProgressHUD.h"
 #import "OPEBaseViewController.h"
+#import "OPEOSMSearchManager.h"
 
 @interface OPEViewController : OPEBaseViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,NSFetchedResultsControllerDelegate,OPENameEditViewDelegate, OPEOSMDataControllerDelegate> {
     RMMapView* mapView;
     UIImageView * plusImageView;
     RMAnnotation * wayAnnotation;
+    NSMutableDictionary * downloadedNoNameHighways;
+    OPEOSMSearchManager * searchManager;
     
 }
 

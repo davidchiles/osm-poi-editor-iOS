@@ -60,9 +60,7 @@
         //NSString * baseUrl = @"http://api06.dev.openstreetmap.org/";
         
         typeDictionary      = [NSMutableDictionary dictionary];
-        downloadedNodes     = [NSMutableDictionary dictionary];
-        downloadedWays      = [NSMutableDictionary dictionary];
-        downloadedRelations = [NSMutableDictionary dictionary];
+        [self auth];
         
         //[httpClient setAuthorizationHeaderWithToken:auth.token];
     }
@@ -81,7 +79,7 @@
 
 -(GTMOAuthAuthentication *)auth
 {
-    if(_auth)
+    if(!_auth)
     {
         _auth = [OPEOSMData osmAuth];
         [self canAuth];
@@ -120,6 +118,7 @@
         if ([delegate respondsToSelector:@selector(didEndDownloading)]) {
             [delegate didEndDownloading];
         }
+        
         
         dispatch_async(q,  ^{
             
@@ -171,6 +170,7 @@
 
 -(void)uploadElement:(OPEManagedOsmElement *)element
 {
+    [self updateElement:element];
     OPEChangeset * changeset = [[OPEChangeset alloc] init];
     [changeset addElement:element];
     
@@ -187,6 +187,7 @@
 }
 -(void)deleteElement:(OPEManagedOsmElement *)element
 {
+    [self updateElement:element];
     OPEChangeset * changeset = [[OPEChangeset alloc] init];
     [changeset addElement:element];
     changeset.message = [NSString stringWithFormat:@"Deleted POI: %@",[self nameForElement: element]];
@@ -564,16 +565,16 @@
 -(CLLocationCoordinate2D)centerForElement:(OPEManagedOsmElement *)element
 {
     CLLocationCoordinate2D center = CLLocationCoordinate2DMake(0, 0);
-    if ([element isKindOfClass:[OPEManagedOsmNode class]]) {
+    if ([element.element isKindOfClass:[Node class]]) {
         center = [((OPEManagedOsmNode *)element).element coordinate];
     }
-    else if ([element isKindOfClass:[OPEManagedOsmWay class]])
+    else if ([element.element isKindOfClass:[Way class]])
     {
         NSArray * array = [self pointsForWay:(OPEManagedOsmWay* )element];
         center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:array];
         
     }
-    else if ([element isKindOfClass:[OPEManagedOsmRelation class]])
+    else if ([element.element isKindOfClass:[Relation class]])
     {
         NSArray * membersArray = [self relationMembersFor:(OPEManagedOsmRelation *)element];
         
@@ -654,11 +655,17 @@
 -(void)updateNode:(OPEManagedOsmNode *)node
 {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
         
         [db executeUpdate:[OSMDAO sqliteInsertOrReplaceNodeString:node.element]];
         [db executeUpdateWithFormat:@"DELETE FROM nodes_tags WHERE node_id = %lld",node.element.elementID];
-        [db executeUpdate:[OSMDAO sqliteInsertNodeTagsString:node.element]];
-        [db executeUpdateWithFormat:@"UPDATE nodes SET poi_id = %d,isVisible = %d WHERE id = %lld",node.typeID,node.isVisible,node.element.elementID];
+        NSArray * sqlArray = [OSMDAO sqliteInsertNodeTagsString:node.element];
+        for (NSString * sqlString in sqlArray)
+        {
+            [db executeUpdate:sqlString];
+        }
+        [db executeUpdateWithFormat:@"UPDATE nodes SET poi_id = %d,isVisible = %d,action= %@ WHERE id = %lld",node.typeID,node.isVisible,node.action,node.element.elementID];
+        [db commit];
         
     }];
     
@@ -670,7 +677,7 @@
         [db executeUpdate:[OSMDAO sqliteInsertOrReplaceWayTagsString:way.element]];
         [db executeUpdateWithFormat:@"DELETE FROM ways_tags WHERE way_id = %lld",way.element.elementID];
         [db executeUpdate:[OSMDAO sqliteInsertOrReplaceWayTagsString:way.element]];
-        [db executeUpdateWithFormat:@"UPDATE ways SET poi_id = %d,isVisible = %d WHERE id = %lld",way.typeID,way.isVisible,way.element.elementID];
+        [db executeUpdateWithFormat:@"UPDATE ways SET poi_id = %d,isVisible = %d,action = %@ WHERE id = %lld",way.typeID,way.isVisible,way.action,way.element.elementID];
         
     }];
     
@@ -682,7 +689,7 @@
         [db executeUpdate:[OSMDAO sqliteInsertOrReplaceRelationString:relation.element]];
         [db executeUpdateWithFormat:@"DELETE FROM relations_tags WHERE relation_id = %lld",relation.element.elementID];
         [db executeUpdate:[OSMDAO sqliteInsertOrReplaceRelationTagsString:relation.element]];
-        [db executeUpdateWithFormat:@"UPDATE relations SET poi_id,isVisible = %d = %d WHERE id = %lld",relation.typeID,relation.isVisible,relation.element.elementID];
+        [db executeUpdateWithFormat:@"UPDATE relations SET poi_id,isVisible = %d = %d,action = %@ WHERE id = %lld",relation.typeID,relation.isVisible,relation.action,relation.element.elementID];
         
     }];
 }
@@ -734,45 +741,13 @@
 
 -(NSArray *)allElementsWithType:(BOOL)withType
 {
-    //do in different thread with call back FIXME
     NSMutableArray * resultArray = [NSMutableArray array];
     
     [resultArray addObjectsFromArray:[self allElementsOfKind:kOPEOsmElementNode withType:YES]];
     [resultArray addObjectsFromArray:[self allElementsOfKind:kOPEOsmElementWay withType:YES]];
     [resultArray addObjectsFromArray:[self allElementsOfKind:kOPEOsmElementRelation withType:YES]];
     
-    [self removeDownloaded:resultArray];
-    
     return resultArray;
-}
--(void)removeDownloaded:(NSMutableArray *)elementsArray
-{
-    for(OPEManagedOsmElement * element in elementsArray)
-    {
-        NSMutableDictionary * downloadedDictionary  = nil;
-        if ([element.osmType isEqualToString:kOPEOsmElementNode]) {
-            downloadedDictionary = downloadedNodes;
-        }
-        else if ([element.osmType isEqualToString:kOPEOsmElementWay]) {
-            downloadedDictionary = downloadedWays;
-        }
-        else if ([element.osmType isEqualToString:kOPEOsmElementRelation]) {
-            downloadedDictionary = downloadedRelations;
-        }
-        NSNumber * version = [downloadedDictionary objectForKey:[NSNumber numberWithLongLong:element.elementID]];
-        if (![version intValue] && [version intValue] > element.element.version)
-        {
-            //FIXME beter to use id prefix n(ode) w(ay) r(elation)
-            [downloadedDictionary setObject:version forKey:[NSNumber numberWithLongLong:element.element.version]];
-            
-        }
-        else
-        {
-            [elementsArray removeObject:element];
-            
-        }
-    }
-    
 }
 
 -(OPEManagedOsmElement *)elementOfKind:(NSString *)kind osmID:(int64_t)osmID
@@ -1045,6 +1020,8 @@
     }
     
 }
+
+
 
 +(GTMOAuthAuthentication *)osmAuth {
     NSString *myConsumerKey = osmConsumerKey; //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service

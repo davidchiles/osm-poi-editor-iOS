@@ -12,7 +12,6 @@
 #import "OPEConstants.h"
 #import "OPEManagedOsmTag.h"
 #import "OPEManagedReferenceOptionalCategory.h"
-#import "OPEManagedReferencePoiCategory.h"
 #import "OPEUtility.h"
 #import "FMDatabase.h"
 #import "FMDatabaseQueue.h"
