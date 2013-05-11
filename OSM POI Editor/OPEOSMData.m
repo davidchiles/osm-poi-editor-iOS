@@ -678,56 +678,18 @@
 
 -(void)updateElement:(OPEManagedOsmElement *)element
 {
-    if ([element isKindOfClass:[OPEManagedOsmNode class]]) {
-        [self updateNode:(OPEManagedOsmNode *)element];
-    }
-    else if ([element isKindOfClass:[OPEManagedOsmWay class]]) {
-        [self updateWay:(OPEManagedOsmWay *)element];
-    }
-    else if ([element isKindOfClass:[OPEManagedOsmRelation class]]) {
-        [self updateRelation:(OPEManagedOsmRelation *)element];
-    }
-    
-}
-
--(void)updateNode:(OPEManagedOsmNode *)node
-{
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         [db beginTransaction];
         
-        [db executeUpdate:[OSMDAO sqliteInsertOrReplaceNodeString:node.element]];
-        [db executeUpdateWithFormat:@"DELETE FROM nodes_tags WHERE node_id = %lld",node.element.elementID];
-        NSArray * sqlArray = [OSMDAO sqliteInsertNodeTagsString:node.element];
+        [db executeUpdate:[OSMDAO sqliteInsertOrReplaceString:element.element]];
+        [db executeUpdateWithFormat:@"DELETE FROM %@ WHERE node_id = %lld",element.element.tagsTableName,element.elementID];
+        NSArray * sqlArray = [OSMDAO sqliteInsertTagsString:element.element];
         for (NSString * sqlString in sqlArray)
         {
             [db executeUpdate:sqlString];
         }
-        [db executeUpdateWithFormat:@"UPDATE nodes SET poi_id = %d,isVisible = %d,action= %@ WHERE id = %lld",node.typeID,node.isVisible,node.action,node.element.elementID];
+        [db executeUpdateWithFormat:@"UPDATE %@ SET poi_id = %d,isVisible = %d,action= %@ WHERE id = %lld",element.element.tableName,element.typeID,element.isVisible,element.action,element.elementID];
         [db commit];
-        
-    }];
-    
-}
--(void)updateWay:(OPEManagedOsmWay *)way
-{
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        
-        [db executeUpdate:[OSMDAO sqliteInsertOrReplaceWayTagsString:way.element]];
-        [db executeUpdateWithFormat:@"DELETE FROM ways_tags WHERE way_id = %lld",way.element.elementID];
-        [db executeUpdate:[OSMDAO sqliteInsertOrReplaceWayTagsString:way.element]];
-        [db executeUpdateWithFormat:@"UPDATE ways SET poi_id = %d,isVisible = %d,action = %@ WHERE id = %lld",way.typeID,way.isVisible,way.action,way.element.elementID];
-        
-    }];
-    
-}
--(void)updateRelation:(OPEManagedOsmRelation *)relation
-{
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        
-        [db executeUpdate:[OSMDAO sqliteInsertOrReplaceRelationString:relation.element]];
-        [db executeUpdateWithFormat:@"DELETE FROM relations_tags WHERE relation_id = %lld",relation.element.elementID];
-        [db executeUpdate:[OSMDAO sqliteInsertOrReplaceRelationTagsString:relation.element]];
-        [db executeUpdateWithFormat:@"UPDATE relations SET poi_id,isVisible = %d = %d,action = %@ WHERE id = %lld",relation.typeID,relation.isVisible,relation.action,relation.element.elementID];
         
     }];
 }
