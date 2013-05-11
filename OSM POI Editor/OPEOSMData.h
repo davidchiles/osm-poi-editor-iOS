@@ -96,6 +96,7 @@
 
 -(int64_t)newElementId;
 -(BOOL)hasParentElement:(OPEManagedOsmElement *)element;
+-(NSString *)highwayTypeForOsmWay:(OPEManagedOsmWay *)way;
 
 
 

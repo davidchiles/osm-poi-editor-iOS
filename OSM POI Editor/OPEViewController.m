@@ -428,7 +428,7 @@
         if (osmWay.isNoNameStreet) {
             
             self.selectedNoNameHighway = annotation;
-            [self showNoNameViewWithType:[NSString stringWithFormat:@"%@ - missing name",[osmWay highwayType]]];
+            [self showNoNameViewWithType:[NSString stringWithFormat:@"%@ - missing name",[self.osmData highwayTypeForOsmWay:osmWay]]];
             return;
         }
         
@@ -721,6 +721,12 @@
     [self setupButtons];
     userPressedLocatoinButton = NO;
     
+    [self removeAllNoNameStreets];
+    if ([[OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey] boolValue]) {
+        [self addAllNoNameStreets];
+    }
+    
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -773,6 +779,18 @@
     }
 }
 
+-(NSSet *)noNameHighwayAnnotaitons
+{
+    NSIndexSet * indexSet = [self indexesOfNoNameHighways];
+    NSMutableSet * annotationSet = [NSMutableSet set];
+    
+    [indexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [annotationSet addObject:[mapView.annotations objectAtIndex:idx]];
+    }];
+    
+    return annotationSet;
+}
+
 -(NSSet *)annotationsForOsmElementIDKey:(NSString *)idKey;
 {
     NSIndexSet * indexSet = [self indexesOfOsmElementIDKey:idKey];
@@ -794,59 +812,42 @@
     }];
     return set;
 }
-
--(NSFetchedResultsController *)osmElementFetchedResultsController
+-(NSIndexSet *)indexesOfNoNameHighways
 {
-    if(_osmElementFetchedResultsController)
-        return _osmElementFetchedResultsController;
-    
-    NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type != nil AND isVisible == YES AND action!=%@",kActionTypeDelete];
-    
-    //_osmElementFetchedResultsController = [OPEManagedOsmElement MR_fetchAllGroupedBy:nil withPredicate:osmElementFilter sortedBy:OPEManagedOsmElementAttributes.osmID ascending:NO delegate:self];
-    
-    return nil;
+    NSIndexSet * set = [mapView.annotations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        RMAnnotation * annotation = (RMAnnotation *)obj;
+        if ([annotation.userInfo isKindOfClass:[OPEManagedOsmWay class]]) {
+            OPEManagedOsmWay * element = annotation.userInfo;
+            if (element.isNoNameStreet) {
+                return YES;
+            }
+
+        }
+        return NO;
+    }];
+    return set;
 }
 
--(NSFetchedResultsController *)noNameStreetsFetchedResultsController
+-(void)removeAllNoNameStreets
 {
-    /*
-    if(_noNameStreetsFetchedResultsController)
-        return _noNameStreetsFetchedResultsController;
-    
-    NSPredicate * noNameFilter = [NSPredicate predicateWithFormat:@"%K == YES",OPEManagedOsmWayAttributes.isNoNameStreet];
-    
-    _noNameStreetsFetchedResultsController = [OPEManagedOsmWay MR_fetchAllGroupedBy:nil withPredicate:noNameFilter sortedBy:OPEManagedOsmElementAttributes.osmID ascending:NO delegate:self];
-    
-    return _noNameStreetsFetchedResultsController;
-     */
-    
-}
-
--(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
-{
-    /*
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
-        {
-            OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:newIndexPath];
-            [self updateOsmElementWithID:managedOsmElement.objectID];
-        }
-            break;
-        case NSFetchedResultsChangeMove:
-            break;
-        case NSFetchedResultsChangeUpdate:
-        {
-            OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:indexPath];
-            [self updateOsmElementWithID:managedOsmElement.objectID];
-        }
-            break;
-        case NSFetchedResultsChangeDelete:
-            break;
-            
-        default:
-            break;
+    NSSet * annotationSet = [self noNameHighwayAnnotaitons];
+    if ([annotationSet count])
+    {
+        [mapView removeAnnotations:[annotationSet allObjects]];
     }
-     */
+    
+}
+-(void)addAllNoNameStreets
+{
+    NSArray * allNoNameHighways =[searchManager noNameHighways];
+    for (OPEManagedOsmWay * way in allNoNameHighways)
+    {
+        NSArray * annotationsArray = [self annotationWithOsmElement:way];
+        for (RMAnnotation * annotation in annotationsArray)
+        {
+             [mapView addAnnotation:annotation];
+        }
+    }
 }
 
 #pragma OPEOsmDataDelegate
@@ -867,9 +868,6 @@
     {
         [self updateAnnotationForOsmElement:element];
     }
-    
-    
-    
 }
 
 -(void)didCloseChangeset:(int64_t)changesetNumber

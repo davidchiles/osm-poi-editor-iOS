@@ -207,6 +207,7 @@
         
         while ([resultSet next]) {
             OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] initWithDictionary:[resultSet resultDictionary]];
+            way.isNoNameStreet = YES;
             [resultArray addObject:way];
         }
     }];

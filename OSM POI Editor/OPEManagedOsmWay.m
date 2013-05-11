@@ -62,16 +62,4 @@
     return mutablePointsArray;
 }
 
--(NSString *)highwayType
-{
-    NSString * type = nil;
-    
-    NSString * highwayValue = [self valueForOsmKey:@"highway"];
-    if ([highwayValue length]) {
-        type = [[highwayValue stringByReplacingOccurrencesOfString:@"_" withString:@" "] capitalizedString];
-    }
-    
-    return type;
-}
-
 @end

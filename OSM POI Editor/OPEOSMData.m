@@ -390,6 +390,33 @@
     
 }
 
+-(BOOL)isNoNameStreet:(OPEManagedOsmWay *)way
+{
+    __block BOOL result = NO;
+    if ([way.element.tags count]) {
+        if ([way.element.tags objectForKey:@"highway"] && ![way.element.tags objectForKey:@"name"]) {
+            result = YES;
+        }
+        else
+        {
+            result = NO;
+        }
+    }
+    else{
+        
+        [self.databaseQueue inDatabase:^(FMDatabase *db) {
+            FMResultSet * resultSet = [db executeQuery:@"select * from (select * from (SELECT *,COUNT(*) AS count FROM (select * from ways_tags where key='highway' union select * from ways_tags where key='name') group by way_id) WHERE count< 2 AND key = 'highway' AND way_id=?) AS A join ways on A.way_id = id",[NSNumber numberWithLongLong:way.elementID]];
+            
+            while([resultSet next]) {
+                result = YES;
+            }
+        }];
+    }
+    way.isNoNameStreet = result;
+    return result;
+    
+}
+
 -(BOOL)findType:(OPEManagedOsmElement *)element
 {
     NSString * baseTableName = [OSMDAO tableName:element.element];
@@ -398,9 +425,6 @@
     __block BOOL didFind = NO;
     if (tagsTable && columnID && [element.element.tags count]) {
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
-            if ([[element.element.tags objectForKey:@"bus"] isEqualToString:@"yes"]) {
-                NSLog(@"bus stop");
-            }
             
             NSString * sql =  [NSString stringWithFormat:@"SELECT poi_id FROM (SELECT D.poi_id,%@ FROM (SELECT poi_id,%@,isLegacy,COUNT(*) AS count FROM (SELECT poi_id,%@ FROM pois_tags NATURAL JOIN %@) AS A JOIN poi AS B ON A.poi_id = B.rowid AND A.%@ = %lld GROUP BY poi_id ORDER BY isLegacy ASC) AS C, (SELECT poi_id,COUNT(*)AS count FROM pois_tags GROUP BY poi_id) AS D WHERE C.poi_id = D.poi_id AND C.count = D.count) LIMIT 1",columnID,columnID,columnID,tagsTable,columnID,element.element.elementID];
             FMResultSet * result = [db executeQuery:sql];
@@ -513,6 +537,13 @@
         return name;
     }
     
+    if ([element isKindOfClass:[OPEManagedOsmWay class]]) {
+        if(((OPEManagedOsmWay *)element).isNoNameStreet)
+        {
+            return @"No Name Street";
+        }
+    }
+    
     
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         NSString * baseTableName = [OSMDAO tableName:element.element];
@@ -571,7 +602,14 @@
     else if ([element.element isKindOfClass:[Way class]])
     {
         NSArray * array = [self pointsForWay:(OPEManagedOsmWay* )element];
-        center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:array];
+        if (((OPEManagedOsmWay *)element).isNoNameStreet) {
+            center = ((CLLocation *)array[0]).coordinate;
+        }
+        else{
+            center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:array];
+        }
+        
+        
         
     }
     else if ([element.element isKindOfClass:[Relation class]])
@@ -737,6 +775,22 @@
     {
         return @"";
     }
+}
+
+-(NSString *)highwayTypeForOsmWay:(OPEManagedOsmWay *)way
+{
+    NSString * type = @"";
+    if (![way.element.tags count]) {
+        [self getTagsForElement:way];
+    }
+    NSString * highwayValue = way.element.tags[@"highway"];
+    
+    
+    if ([highwayValue length]) {
+        type = [[highwayValue stringByReplacingOccurrencesOfString:@"_" withString:@" "] capitalizedString];
+    }
+    
+    return type;
 }
 
 -(NSArray *)allElementsWithType:(BOOL)withType
@@ -975,6 +1029,8 @@
     NSMutableArray * newMatchedElements = [NSMutableArray array];
     NSMutableArray * updatedMatchedElements = [NSMutableArray array];
     
+    BOOL showNoNameStreets = [[OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey] boolValue];
+    
     //match new elements
     for(Element * element in newElements)
     {
@@ -983,6 +1039,12 @@
             if([self findType:managedElement])
             {
                 [newMatchedElements addObject: managedElement];
+            }
+            else if (showNoNameStreets && [managedElement isKindOfClass:[OPEManagedOsmWay class]]) {
+                if([self isNoNameStreet:(OPEManagedOsmWay *)managedElement])
+                {
+                    [newMatchedElements addObject:managedElement];
+                }
             }
         }
     }
@@ -995,6 +1057,12 @@
             {
                 [updatedMatchedElements addObject: managedElement];
             }
+            else if (showNoNameStreets && [managedElement isKindOfClass:[OPEManagedOsmWay class]]) {
+                if([self isNoNameStreet:(OPEManagedOsmWay *)managedElement])
+                {
+                    [updatedMatchedElements addObject:managedElement];
+                }
+            }
         }
     }
     
@@ -1006,18 +1074,6 @@
     });
     
     
-    
-}
-
--(void)didFinishSavingElements:(NSArray *)elements
-{
-    for(Element * element in elements)
-    {
-        if ([element.tags count]) {
-            OPEManagedOsmElement * managedElement = [OPEManagedOsmElement elementWithBasicOsmElement:element];
-            [self findType:managedElement];
-        }
-    }
     
 }
 
