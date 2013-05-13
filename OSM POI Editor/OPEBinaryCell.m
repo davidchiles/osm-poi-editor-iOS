@@ -58,26 +58,7 @@
     self = [self initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withTextWidth:(float)textWidth];
     if(self)
     {
-        NSArray * controlArray = [NSArray arrayWithArray:[self orderArray:array]];
-        binaryControl = [[UISegmentedControl alloc] initWithItems:controlArray];
-        binaryControl.segmentedControlStyle = UISegmentedControlStylePlain;
-        switch ([controlArray count]) {
-            case 1:
-                binaryControl.frame = CGRectMake(0, 0, 190, 40);
-                break;
-            case 2:
-                 binaryControl.frame = CGRectMake(0, 0, 190, 40);
-                break;
-            case 3:
-                binaryControl.frame = CGRectMake(0, 0, 190, 40);
-                [binaryControl setWidth:44 forSegmentAtIndex:0];
-                [binaryControl setWidth:44 forSegmentAtIndex:1];
-                [binaryControl setWidth:100 forSegmentAtIndex:2];
-                break;
-            default:
-                break;
-        }
-        self.accessoryView = binaryControl;
+        [self setupBinaryControl:(NSArray *)array];
         
         
     }
@@ -134,6 +115,31 @@
 -(void) setLeftText:(NSString *)txt
 {
     leftLabel.text=txt;
+}
+
+-(void)setupBinaryControl:(NSArray *)array
+{
+    NSArray * controlArray = [NSArray arrayWithArray:[self orderArray:array]];
+    binaryControl = [[UISegmentedControl alloc] initWithItems:controlArray];
+    binaryControl.segmentedControlStyle = UISegmentedControlStylePlain;
+    switch ([controlArray count]) {
+        case 1:
+            binaryControl.frame = CGRectMake(0, 0, 190, 40);
+            break;
+        case 2:
+            binaryControl.frame = CGRectMake(0, 0, 190, 40);
+            break;
+        case 3:
+            binaryControl.frame = CGRectMake(0, 0, 190, 40);
+            [binaryControl setWidth:44 forSegmentAtIndex:0];
+            [binaryControl setWidth:44 forSegmentAtIndex:1];
+            [binaryControl setWidth:100 forSegmentAtIndex:2];
+            break;
+        default:
+            break;
+    }
+    self.accessoryView = binaryControl;
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

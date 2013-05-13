@@ -409,19 +409,43 @@
         "emergency" : "phone"
       }
     },
-    "Recycling Can" : {
+    "Recycling Container" : {
       "image" : "recycle",
       "tags" : {
         "amenity" : "recycling",
         "recycling_type" : "container"
-      }
+      },
+      "optional" : [
+        "recycling_type_paper",
+        "recycling_type_glass",
+        "recycling_type_cardboard",
+        "recycling_type_green_waste",
+        "recycling_type_batteries",
+        "recycling_type_plastic",
+        "recycling_type_scrap_metal",
+        "recycling_type_cans",
+        "recycling_type_glass_bottles",
+        "recycling_type_clothes"
+      ]
     },
     "Recycling Center" : {
       "image" : "recycle",
       "tags" : {
         "amenity" : "recycling",
         "recycling_type" : "centre"
-      }
+      },
+      "optional" : [
+        "recycling_type_paper",
+        "recycling_type_glass",
+        "recycling_type_cardboard",
+        "recycling_type_green_waste",
+        "recycling_type_batteries",
+        "recycling_type_plastic",
+        "recycling_type_scrap_metal",
+        "recycling_type_cans",
+        "recycling_type_glass_bottles",
+        "recycling_type_clothes"
+      ]
     },"Generic Recycling" : {
       "image" : "recycle",
       "editOnly" : 1,
@@ -429,7 +453,17 @@
         "amenity" : "recycling",
       },
       "optional" : [
-        "recycling_type"
+        "recycling_type",
+        "recycling_type_paper",
+        "recycling_type_glass",
+        "recycling_type_cardboard",
+        "recycling_type_green_waste",
+        "recycling_type_batteries",
+        "recycling_type_plastic",
+        "recycling_type_scrap_metal",
+        "recycling_type_cans",
+        "recycling_type_glass_bottles",
+        "recycling_type_clothes"
       ]
     },
     "Trash Can" : {
@@ -571,6 +605,16 @@
       "image" : "picnic",
       "tags" : {
         "tourism" : "picnic_site"
+      }
+    },
+    "Barbecue\/BBQ" : {
+      "optional" : [
+        "covered",
+        "bbq_fuel"
+      ],
+      "image" : "none",
+      "tags" : {
+        "amenity" : "bbq"
       }
     },
     "Peak" : {

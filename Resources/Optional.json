@@ -757,5 +757,106 @@
       "Center" : "centre"
       },
     "section" : "Other"
-  }
+  },
+  "bbq_fuel" : {
+    "displayName" : "Fuel",
+    "osmKey" : "fuel",
+    "values" : {
+      "Wood" : "wood",
+      "Electric" : "electric",
+      "Charcoal" : "charcoal",
+      "Gas" : "gas"
+    },
+    "section" : "Other"
+  },
+  "recycling_type_glass" : {
+    "displayName" : "Glass",
+    "osmKey" : "recycling:glass",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Recycling Accepts"
+  },
+  "recycling_type_paper" : {
+    "displayName" : "Paper",
+    "osmKey" : "recycling:paper",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Recycling Accepts"
+  },
+  "recycling_type_clothes" : {
+    "displayName" : "Clothes",
+    "osmKey" : "recycling:clothes",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Recycling Accepts"
+  },
+  "recycling_type_cans" : {
+    "displayName" : "Cans",
+    "osmKey" : "recycling:cans",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Recycling Accepts"
+  },
+  "recycling_type_glass_bottles" : {
+    "displayName" : "Glass Bottles",
+    "osmKey" : "recycling:glass_bottles",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Recycling Accepts"
+  },
+  "recycling_type_scrap_metal" : {
+    "displayName" : "Scrap Metal",
+    "osmKey" : "recycling:scrap_metal",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Recycling Accepts"
+  },
+  "recycling_type_plastic" : {
+    "displayName" : "Plastic",
+    "osmKey" : "recycling:plastic",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Recycling Accepts"
+  },
+  "recycling_type_batteries" : {
+    "displayName" : "Batteries",
+    "osmKey" : "recycling:batteries",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Recycling Accepts"
+  },
+  "recycling_type_green_waste" : {
+    "displayName" : "Green Waste",
+    "osmKey" : "recycling:green_waste",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Recycling Accepts"
+  },
+  "recycling_type_cardboard" : {
+    "displayName" : "Cardboard",
+    "osmKey" : "recycling:cardboard",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Recycling Accepts"
+  },
 }

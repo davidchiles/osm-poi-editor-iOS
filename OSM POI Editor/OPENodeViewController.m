@@ -313,6 +313,7 @@
                 
             }
             [aCell setLeftText: managedOptionalTag.displayName];
+            [aCell setupBinaryControl:[managedOptionalTag allDisplayNames]];
             //aCell.controlArray = [[cellDictionary objectForKey:@"values"] allKeys];
             
             [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
