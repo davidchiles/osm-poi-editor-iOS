@@ -287,8 +287,6 @@
 		63266A1517164579002CD7E4 /* SPOI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6326690D17164579002CD7E4 /* SPOI.bundle */; };
 		63266A1617164579002CD7E4 /* x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326690E17164579002CD7E4 /* x.png */; };
 		63266A1717164579002CD7E4 /* x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326690F17164579002CD7E4 /* x@2x.png */; };
-		63266A1817164579002CD7E4 /* Optional.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6326691017164579002CD7E4 /* Optional.plist */; };
-		63266A1917164579002CD7E4 /* OptionalCategorySort.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6326691117164579002CD7E4 /* OptionalCategorySort.plist */; };
 		63266A251716469B002CD7E4 /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 63266A1D1716469B002CD7E4 /* GTMHTTPFetcher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63266A261716469B002CD7E4 /* GTMOAuthAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 63266A1F1716469B002CD7E4 /* GTMOAuthAuthentication.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		63266A271716469B002CD7E4 /* GTMOAuthSignIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 63266A211716469B002CD7E4 /* GTMOAuthSignIn.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -329,6 +327,8 @@
 		63570A901640F3C00009D8A3 /* libMapBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63570A8C1640F3B10009D8A3 /* libMapBox.a */; };
 		636549E8171CDE8000F16772 /* OPEGeoCentroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 636549E7171CDE8000F16772 /* OPEGeoCentroid.m */; };
 		6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6370D354151A8BAE0081206A /* libsqlite3.dylib */; };
+		6372F80117419F3100DE5909 /* Optional.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80017419F3100DE5909 /* Optional.json */; };
+		6372F80817419F6A00DE5909 /* OptionalCategorySort.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80717419F6A00DE5909 /* OptionalCategorySort.json */; };
 		637C7CCB16F164BE002CD340 /* OPEChangeset.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C7CCA16F164BE002CD340 /* OPEChangeset.m */; };
 		6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */; };
 		6383949A14EC85C100C74A57 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6383949914EC85C100C74A57 /* Security.framework */; };
@@ -718,8 +718,6 @@
 		6326690D17164579002CD7E4 /* SPOI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SPOI.bundle; sourceTree = "<group>"; };
 		6326690E17164579002CD7E4 /* x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x.png; sourceTree = "<group>"; };
 		6326690F17164579002CD7E4 /* x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x@2x.png"; sourceTree = "<group>"; };
-		6326691017164579002CD7E4 /* Optional.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Optional.plist; sourceTree = "<group>"; };
-		6326691117164579002CD7E4 /* OptionalCategorySort.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OptionalCategorySort.plist; sourceTree = "<group>"; };
 		63266A1C1716469B002CD7E4 /* GTMHTTPFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetcher.h; sourceTree = "<group>"; };
 		63266A1D1716469B002CD7E4 /* GTMHTTPFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMHTTPFetcher.m; sourceTree = "<group>"; };
 		63266A1E1716469B002CD7E4 /* GTMOAuthAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMOAuthAuthentication.h; sourceTree = "<group>"; };
@@ -815,6 +813,8 @@
 		636549E6171CDE8000F16772 /* OPEGeoCentroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEGeoCentroid.h; sourceTree = "<group>"; };
 		636549E7171CDE8000F16772 /* OPEGeoCentroid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEGeoCentroid.m; sourceTree = "<group>"; };
 		6370D354151A8BAE0081206A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		6372F80017419F3100DE5909 /* Optional.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Optional.json; sourceTree = "<group>"; };
+		6372F80717419F6A00DE5909 /* OptionalCategorySort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OptionalCategorySort.json; sourceTree = "<group>"; };
 		637C7CC916F164BE002CD340 /* OPEChangeset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEChangeset.h; sourceTree = "<group>"; };
 		637C7CCA16F164BE002CD340 /* OPEChangeset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEChangeset.m; sourceTree = "<group>"; };
 		6383947E14EC4DDD00C74A57 /* OPEInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEInfoViewController.h; sourceTree = "<group>"; };
@@ -1039,8 +1039,8 @@
 			isa = PBXGroup;
 			children = (
 				6326680717164578002CD7E4 /* Images */,
-				6326691017164579002CD7E4 /* Optional.plist */,
-				6326691117164579002CD7E4 /* OptionalCategorySort.plist */,
+				6372F80017419F3100DE5909 /* Optional.json */,
+				6372F80717419F6A00DE5909 /* OptionalCategorySort.json */,
 				63FD2DAC172F329A0094B969 /* Tags.json */,
 			);
 			path = Resources;
@@ -2177,13 +2177,13 @@
 				63266A1517164579002CD7E4 /* SPOI.bundle in Resources */,
 				63266A1617164579002CD7E4 /* x.png in Resources */,
 				63266A1717164579002CD7E4 /* x@2x.png in Resources */,
-				63266A1817164579002CD7E4 /* Optional.plist in Resources */,
-				63266A1917164579002CD7E4 /* OptionalCategorySort.plist in Resources */,
 				63266A291716469B002CD7E4 /* GTMOAuthViewTouch.xib in Resources */,
 				63266A3717164732002CD7E4 /* OPECategoryViewController.xib in Resources */,
 				63FBA59F171DFBED0098A2F3 /* optimizeDb.sql in Resources */,
 				63FBA5A8171DFBED0098A2F3 /* roadNetworkInit.sql in Resources */,
 				63FD2DAD172F329A0094B969 /* Tags.json in Resources */,
+				6372F80117419F3100DE5909 /* Optional.json in Resources */,
+				6372F80817419F6A00DE5909 /* OptionalCategorySort.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

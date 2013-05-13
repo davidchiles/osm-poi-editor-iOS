@@ -53,6 +53,19 @@
     }
     return YES;
 }
+-(void)doneButtonPressed:(id)sender
+{
+    NSString * newValue = [self newOsmValue];
+    if ([newValue length]) {
+        [self saveNewValue:newValue];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+-(void) saveNewValue:(NSString *)value
+{
+    [self.delegate newOsmKey:self.osmKey value:value];
+}
 
 - (void)didReceiveMemoryWarning
 {

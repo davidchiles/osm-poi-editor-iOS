@@ -6,11 +6,12 @@
 //
 //
 
-#import "OPETextEditViewController.h"
+#import "OPETagEditViewController.h"
 
-@interface OPETextViewEditViewController : OPETextEditViewController <UITextViewDelegate>
+@interface OPETextViewEditViewController : OPETagEditViewController <UITextViewDelegate>
 {
     UITextView * textView;
 }
+-(void)doneButtonPressed:(id)sender;
 
 @end

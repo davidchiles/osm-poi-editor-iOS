@@ -737,7 +737,9 @@
     "Book Store" : {
       "optional" : [
         "wheelchair",
-        "address"
+        "address",
+        "books",
+        "books_second_hand"
       ],
       "image" : "book",
       "tags" : {

@@ -18,7 +18,7 @@
 #import "OSMDAO.h"
 
 #define tagsFilePath [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"json"]
-#define optionalPlistFilePath [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"plist"]
+#define optionalPlistFilePath [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"json"]
 
 
 @implementation OPECoreDataImporter
@@ -49,8 +49,10 @@
 
 -(void)importSqliteOptionalSections
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"OptionalCategorySort" ofType:@"plist"];
-    __block NSDictionary* optionalDictionary = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"OptionalCategorySort" ofType:@"json"];
+    NSError * error = nil;
+    NSData * data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:&error];
+    NSDictionary * optionalDictionary = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
     [queue inDatabase:^(FMDatabase *db) {
         for (NSString * name in optionalDictionary)
         {
@@ -63,8 +65,10 @@
 -(void)importSqliteOptionalTags
 {
     [self importSqliteOptionalSections];
-    __block
-    NSDictionary* optionalDictionary = [NSDictionary dictionaryWithContentsOfFile:optionalPlistFilePath];
+    NSString * filePath = optionalPlistFilePath;
+    NSError * error = nil;
+    NSData * data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:&error];
+    NSDictionary * optionalDictionary = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
     [queue inDatabase:^(FMDatabase *db) {
         db.logsErrors = YES;
         

@@ -1,0 +1,752 @@
+{
+  "website" : {
+    "displayName" : "Website",
+    "osmKey" : "website",
+    "values" : "url",
+    "section" : "Address",
+    "sectionSortOrder" : 8
+  },
+  "bench" : {
+    "displayName" : "Bench",
+    "osmKey" : "bench",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "addr:postcode" : {
+    "displayName" : "Post Code",
+    "osmKey" : "addr:postcode",
+    "values" : "label",
+    "section" : "Address",
+    "sectionSortOrder" : 6
+  },
+  "addr:country" : {
+    "displayName" : "Country",
+    "osmKey" : "addr:country",
+    "values" : "label",
+    "section" : "Address",
+    "sectionSortOrder" : 7
+  },
+  "map_size" : {
+    "displayName" : "Size",
+    "osmKey" : "map_size",
+    "values" : {
+      "Region" : "region",
+      "Village" : "village",
+      "Building" : "building",
+      "Site" : "site",
+      "City" : "city"
+    },
+    "section" : "Other"
+  },
+  "internet_access" : {
+    "displayName" : "Internet",
+    "osmKey" : "internet_access",
+    "values" : {
+      "Terminal" : "terminal",
+      "Yes" : "yes",
+      "No" : "no",
+      "Wired" : "wired",
+      "Wifi" : "wlan"
+    },
+    "section" : "Other"
+  },
+  "clock_thermometer" : {
+    "displayName" : "Thrermometer",
+    "osmKey" : "thermometer",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "outdoor_seating" : {
+    "displayName" : "Outdoor Seating",
+    "osmKey" : "outdoor_seating",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "addr:city" : {
+    "displayName" : "City",
+    "osmKey" : "addr:city",
+    "values" : "label",
+    "section" : "Address",
+    "sectionSortOrder" : 3
+  },
+  "ref" : {
+    "displayName" : "Ref",
+    "osmKey" : "ref",
+    "values" : "label",
+    "section" : "Other"
+  },
+  "operator" : {
+    "displayName" : "Operator",
+    "osmKey" : "operator",
+    "values" : "label",
+    "section" : "Other"
+  },
+  "bicycle_parking" : {
+    "displayName" : "Type",
+    "osmKey" : "bicycle_parking",
+    "values" : {
+      "Stands" : "stands",
+      "Wall Loops" : "wall_loops",
+      "Informal" : "informal",
+      "Shed" : "shed",
+      "Building" : "building",
+      "Lockers" : "lockers"
+    },
+    "section" : "Other"
+  },
+  "note" : {
+    "displayName" : "Note",
+    "osmKey" : "note",
+    "values" : "text",
+    "section" : "Note",
+    "sectionSortOrder" : 1
+  },
+  "voltage" : {
+    "displayName" : "Voltage",
+    "osmKey" : "voltage",
+    "values" : "number",
+    "section" : "Other"
+  },
+  "maxtents" : {
+    "displayName" : "Max Tents",
+    "osmKey" : "maxtents",
+    "values" : "number",
+    "section" : "Other"
+  },
+  "route_ref" : {
+    "displayName" : "Route Ref",
+    "osmKey" : "route_ref",
+    "values" : "label",
+    "section" : "Other"
+  },
+  "bicycle_repair" : {
+    "displayName" : "Bicycles Repaired",
+    "osmKey" : "service:bicycle:repair",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "addr:street" : {
+    "displayName" : "Street",
+    "osmKey" : "addr:street",
+    "values" : "label",
+    "section" : "Address",
+    "sectionSortOrder" : 2
+  },
+  "cuisine" : {
+    "displayName" : "Cuisine",
+    "osmKey" : "cuisine",
+    "values" : {
+      "Burger" : "burger",
+      "Korean" : "korean",
+      "Kebab" : "kebab",
+      "Fish and Chips" : "fish_and_chips",
+      "Seafood" : "seafood",
+      "Barbecue" : "barbecue",
+      "German" : "german",
+      "Pizza" : "pizza",
+      "Ethiopian" : "ethiopian",
+      "Mexican" : "mexican",
+      "Asian" : "asian",
+      "Sandwich" : "sandwich",
+      "Persian" : "persian",
+      "Crêpes" : "crepe",
+      "Vietnamese" : "vietnamese",
+      "Mediterranean" : "mediterranean",
+      "French" : "french",
+      "Ice Cream" : "ice_cream",
+      "Chinese" : "chinese",
+      "Regional" : "regional",
+      "Coffee Shop" : "coffee_shop",
+      "Steak House" : "steak_house",
+      "Thai" : "thai",
+      "Italian" : "italian",
+      "Lebanese" : "lebanese",
+      "Indian" : "indian",
+      "Greek" : "greek",
+      "Japanese" : "japanese",
+      "Spanish" : "spanish"
+    },
+    "section" : "Other"
+  },
+  "wheelchair" : {
+    "displayName" : "Wheelchair",
+    "osmKey" : "wheelchair",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no",
+      "Limited" : "limited"
+    },
+    "section" : "Other"
+  },
+  "ski_guidepost" : {
+    "displayName" : "Skiing",
+    "osmKey" : "ski",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "source" : {
+    "displayName" : "Source",
+    "osmKey" : "source",
+    "values" : "text",
+    "section" : "Note",
+    "sectionSortOrder" : 2
+  },
+  "addr:state" : {
+    "displayName" : "State",
+    "osmKey" : "addr:state",
+    "values" : "label",
+    "section" : "Address",
+    "sectionSortOrder" : 4
+  },
+  "bicycle_second_hand" : {
+    "displayName" : "Used Bikes Sold",
+    "osmKey" : "service:bicycle:second_hand",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "internet_access_fee" : {
+    "displayName" : "Internet Fee",
+    "osmKey" : "internet_access:fee",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "dispensing" : {
+    "displayName" : "Dispensing",
+    "osmKey" : "dispensing",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "wifi" : {
+    "displayName" : "Wifi",
+    "osmKey" : "wifi",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no",
+      "Free" : "free"
+    },
+    "section" : "Other"
+  },
+  "map_type" : {
+    "displayName" : "Type",
+    "osmKey" : "map_type",
+    "values" : {
+      "Street" : "street",
+      "Scheme" : "scheme",
+      "Aerial Photograph" : "orthophoto",
+      "Topo" : "topo"
+    },
+    "section" : "Other"
+  },
+  "clock_hygrometer" : {
+    "displayName" : "Humidity",
+    "osmKey" : "hygrometer",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "capacity" : {
+    "displayName" : "Capacity",
+    "osmKey" : "capacity",
+    "values" : "number",
+    "section" : "Other"
+  },
+  "fee" : {
+    "displayName" : "Fee",
+    "osmKey" : "fee",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "tower:type" : {
+    "displayName" : "Tower Type",
+    "osmKey" : "tower:type",
+    "values" : {
+      "Communication" : "communication",
+      "Bell Tower" : "bell_tower",
+      "Observation" : "observation",
+      "Defensive" : "defensive"
+    },
+    "section" : "Other"
+  },
+  "shelter" : {
+    "displayName" : "Shelter",
+    "osmKey" : "shelter",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "bicycle_pump" : {
+    "displayName" : "Bicycle Pump",
+    "osmKey" : "service:bicycle:pump",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "parking_access" : {
+    "displayName" : "Access",
+    "osmKey" : "access",
+    "values" : {
+      "Permissive" : "permissive",
+      "Private" : "private",
+      "Yes" : "yes",
+      "Customers" : "customers",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "elevator" : {
+    "displayName" : "Elevator",
+    "osmKey" : "highway",
+    "values" : {
+      "Yes" : "elevator"
+    },
+    "section" : "Other"
+  },
+  "clock_support" : {
+    "displayName" : "Support",
+    "osmKey" : "support",
+    "values" : {
+      "Ground" : "ground",
+      "Billboard" : "billboard",
+      "Wall Mounted" : "wall_mounted",
+      "Tree" : "tree",
+      "Pole" : "pole"
+    },
+    "section" : "Other"
+  },
+  "fire_hydrant:type" : {
+    "displayName" : "Type",
+    "osmKey" : "fire_hydrant:type",
+    "values" : {
+      "Pillar" : "pillar",
+      "Wall" : "wall",
+      "Pond" : "pond",
+      "Underground" : "underground"
+    },
+    "section" : "Other"
+  },
+  "generator-source" : {
+    "displayName" : "Source",
+    "osmKey" : "generator:source",
+    "values" : {
+      "Waste" : "waste",
+      "Coal" : "coal",
+      "Biogas" : "biogas",
+      "Solar" : "solar",
+      "Diesel" : "diesel",
+      "Natural Gass" : "gas",
+      "Biofuel" : "biofuel",
+      "Gasoline" : "gasoline",
+      "Oil" : "oil",
+      "Tidal" : "tidal",
+      "Wave" : "wave",
+      "Nuclear" : "nuclear",
+      "Biomass" : "biomass",
+      "Wind" : "wind",
+      "Hydro" : "hydro",
+      "Geothermal" : "geothermal",
+      "Osmotic" : "osmotic"
+    },
+    "section" : "Other"
+  },
+  "clock_barometer" : {
+    "displayName" : "Barometer",
+    "osmKey" : "barometer",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "bicycle_rental" : {
+    "displayName" : "Bicycles Rented",
+    "osmKey" : "service:bicycle:rental",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "smoking" : {
+    "displayName" : "Smoking",
+    "osmKey" : "smoking",
+    "values" : {
+      "Separated" : "separated",
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "denomination:muslim" : {
+    "displayName" : "Denomination",
+    "osmKey" : "denomination",
+    "values" : {
+      "Shia" : "shia",
+      "Ahmadiya" : "ahmadiya",
+      "Druze" : "druze",
+      "Ismaili" : "ismaili",
+      "Nondenominational" : "nondenominational",
+      "Sunni" : "sunni",
+      "Ibadi" : "ibadi",
+      "Alaouite" : "alaouite"
+    },
+    "section" : "Other"
+  },
+  "board_type" : {
+    "displayName" : "Type",
+    "osmKey" : "board_type",
+    "values" : {
+      "Nature" : "nature",
+      "Notice" : "notice",
+      "Plants" : "plants",
+      "Public Transport" : "public_transport",
+      "Wildlife" : "wildlife",
+      "Art" : "art",
+      "Geology" : "geology",
+      "History" : "history",
+      "Technology" : "technology"
+    },
+    "section" : "Other"
+  },
+  "clock_faces" : {
+    "displayName" : "Faces",
+    "osmKey" : "faces",
+    "values" : "number",
+    "section" : "Other"
+  },
+  "takeaway" : {
+    "displayName" : "Takeaway",
+    "osmKey" : "takeaway",
+    "values" : {
+      "Yes" : "yes",
+      "Only" : "only",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "microbrewery" : {
+    "displayName" : "Microbrewery",
+    "osmKey" : "microbrewery",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "generator-method" : {
+    "displayName" : "Method",
+    "osmKey" : "generator:method",
+    "values" : {
+      "Pumping" : "pumping",
+      "Gasification" : "gasification",
+      "Anaerobic Digestion" : "anaerobic_digestion",
+      "Dam" : "dam",
+      "Photovoltaic" : "photovoltaic",
+      "Fusion" : "fusion",
+      "Thermal" : "thermal",
+      "Fission" : "fission",
+      "Pumped-Storage" : "pumped-storage",
+      "Run of the River" : "run-of-the-river",
+      "Cumbustion" : "combustion",
+      "Pyrolysis" : "Pyrolysis"
+    },
+    "section" : "Other"
+  },
+  "addr:housenumber" : {
+    "displayName" : "Number",
+    "osmKey" : "addr:housenumber",
+    "values" : "label",
+    "section" : "Address",
+    "sectionSortOrder" : 1
+  },
+  "fire_hydrant:position" : {
+    "displayName" : "Position",
+    "osmKey" : "fire_hydrant:position",
+    "values" : {
+      "Road" : "lane",
+      "Green" : "green",
+      "Sidewalk" : "sidewalk",
+      "Parking Lot" : "parking_lot"
+    },
+    "section" : "Other"
+  },
+  "information" : {
+    "displayName" : "Type",
+    "osmKey" : "information",
+    "values" : {
+      "Office" : "office",
+      "Board" : "board",
+      "Guidepost" : "guidepost",
+      "Tactile Model" : "tactilve_model",
+      "Audio Guide" : "audioguide",
+      "Map" : "map",
+      "Tactile Map" : "tactile_map"
+    },
+    "section" : "Other"
+  },
+  "clock_display" : {
+    "displayName" : "Display",
+    "osmKey" : "display",
+    "values" : {
+      "Analog" : "analog",
+      "Sundial" : "sundial",
+      "Digital" : "digital",
+      "Unorthodox" : "unorthodox"
+    },
+    "section" : "Other"
+  },
+  "addr:province" : {
+    "displayName" : "Province",
+    "osmKey" : "addr:province",
+    "values" : "label",
+    "section" : "Address",
+    "sectionSortOrder" : 5
+  },
+  "covered" : {
+    "displayName" : "Covered",
+    "osmKey" : "covered",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "bicycle_cleaning" : {
+    "displayName" : "Bicycles Cleaned",
+    "osmKey" : "service:bicycle:cleaning",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "bicycle" : {
+    "displayName" : "Bicycle",
+    "osmKey" : "bicycle",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "swimming_pool_access" : {
+    "displayName" : "Access",
+    "osmKey" : "access",
+    "values" : {
+      "Permissive" : "permissive",
+      "Private" : "private",
+      "Customer" : "customer",
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "bicycle_retail" : {
+    "displayName" : "Bicycles Sold",
+    "osmKey" : "service:bicycle:retail",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "phone" : {
+    "displayName" : "Phone #",
+    "osmKey" : "phone",
+    "values" : "phone",
+    "section" : "Address",
+    "sectionSortOrder" : 9
+  },
+  "denomination:christian" : {
+    "displayName" : "Denomination",
+    "osmKey" : "denomination",
+    "values" : {
+      "Seventh Day Adventist" : "seventh_day_adventist",
+      "Alliance" : "alliance",
+      "Anglican" : "anglican",
+      "Roman Catholic" : "roman_catholic",
+      "Evangelical" : "evangelical",
+      "Moravian" : "moravian",
+      "Mormon" : "mormon",
+      "Mennonite" : "mennonite",
+      "Lutheran" : "lutheran",
+      "Baptist" : "baptist",
+      "Russian Orthodox" : "russian_orthodox",
+      "Christian Scientist" : "christ_scientist",
+      "Greek Catholic" : "greek_catholic",
+      "Methodist" : "methodist",
+      "Quaker" : "quaker",
+      "Assemblies of God" : "assemblies_of_god",
+      "United Church of Christ" : "united_church_of_christ",
+      "Presbyterian" : "presbyterian",
+      "Jehovahs Witness" : "jehovahs_witness",
+      "Pentecostal" : "pentecostal"
+    },
+    "section" : "Other"
+  },
+  "drive_through" : {
+    "displayName" : "Drive-through",
+    "osmKey" : "drive_through",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "shelter_type" : {
+    "displayName" : "Type",
+    "osmKey" : "shelter_type",
+    "values" : {
+      "Lean-to" : "lean-to",
+      "Public Transport" : "public_transport",
+      "Rock Shelter" : "rock_shelter",
+      "Picnic Shelter" : "picnic_shelter",
+      "Weather Shelter" : "weather_shelter",
+      "Basic Hut" : "basic_hut"
+    },
+    "section" : "Other"
+  },
+  "bicycle_diy" : {
+    "displayName" : "Bicycle DIY",
+    "osmKey" : "service:bicycle:diy",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "drive_in" : {
+    "displayName" : "Drive In",
+    "osmKey" : "drive_in",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "hiking_guidepost" : {
+    "displayName" : "Hiking",
+    "osmKey" : "hiking",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "bicycle_guidepost" : {
+    "displayName" : "Biking",
+    "osmKey" : "bicycle",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "clock_date" : {
+    "displayName" : "Date",
+    "osmKey" : "date",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "tents" : {
+    "displayName" : "Tents",
+    "osmKey" : "tents",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "denomination:jewish" : {
+    "displayName" : "Denomination",
+    "osmKey" : "denomination",
+    "values" : {
+      "Reform" : "reform",
+      "Karaite" : "karaite",
+      "Jehovahs Witness" : "jehovahs_witness",
+      "Hasidic" : "Hasidic",
+      "Neo Orthodox" : "neo_orthodox",
+      "Conservative" : "conservative",
+      "Progressive" : "progressive",
+      "Reconstructionist" : "reconstructionist",
+      "Ultra Orthodox" : "ultra_orthodox",
+      "Samaritan" : "samaritan",
+      "Orthodox" : "orthodox",
+      "Nondenominational" : "nondenominational",
+      "Renewal" : "renewal",
+      "Modern Orthodox" : "modern_orthodox",
+      "humanistic" : "Humanistic",
+      "Alternative" : "alternative",
+      "Methodist" : "methodist",
+      "Liberal" : "liberal"
+    },
+    "section" : "Other"
+  },
+  "atm" : {
+    "displayName" : "ATM",
+    "osmKey" : "atm",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "books" : {
+    "displayName" : "Type",
+    "osmKey" : "books",
+    "values" : {
+      "Antique" : "antiquarian",
+      "Comics" : "comics",
+      "Children" : "children",
+      "Academic" : "academic",
+      "Music" : "music",
+      "Religion" : "religion"
+      },
+    "section" : "Other"
+  },
+  "books_second_hand" : {
+    "displayName" : "Used",
+    "osmKey" : "second_hand",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no",
+      "Only" : "only",
+      },
+    "section" : "Other"
+  }
+}

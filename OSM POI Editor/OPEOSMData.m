@@ -394,7 +394,7 @@
 {
     __block BOOL result = NO;
     if ([way.element.tags count]) {
-        if ([way.element.tags objectForKey:@"highway"] && ![way.element.tags objectForKey:@"name"]) {
+        if ([highwayTypes containsObject:[way.element.tags objectForKey:@"highway"]] && ![way.element.tags objectForKey:@"name"]) {
             result = YES;
         }
         else
