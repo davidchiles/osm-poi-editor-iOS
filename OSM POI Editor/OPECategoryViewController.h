@@ -28,10 +28,8 @@
     NSArray * searchArray;
 }
 
-@property (nonatomic,strong) IBOutlet UITableView * mainTableView;
+//@property (nonatomic,strong) UITableView * categoriesTableView;
 @property (nonatomic,strong) UISearchDisplayController * searchDisplayController;
-@property (nonatomic,strong) IBOutlet UISearchBar * searchBar;
-//@property (nonatomic,strong) NSDictionary * categoriesAndTypes;
 @property (nonatomic,strong) NSArray * categoriesArray;
 @property (nonatomic,strong) NSArray * typesArray;
 

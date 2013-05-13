@@ -27,7 +27,7 @@
 
 @implementation OPECategoryViewController
 
-@synthesize mainTableView,searchBar,searchDisplayController;
+@synthesize searchDisplayController;
 @synthesize categoriesArray,typesArray,searchResults;
 @synthesize delegate;
 
@@ -46,12 +46,25 @@
     [super viewDidLoad];
     
     OPEOSMData * osmData = [[OPEOSMData alloc] init];
-    
-
     categoriesArray = [osmData allSortedCategories];
-    
     typesArray = [osmData allTypesIncludeLegacy:NO];
-    //NSLog(@"Types: %@",types);
+    
+    
+    UITableView * tableView  = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    
+    
+    UISearchBar * searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 44)];
+    tableView.tableHeaderView = searchBar;
+    
+    searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+    
+    searchDisplayController.delegate = self;
+    searchDisplayController.searchResultsDataSource = self;
+    searchDisplayController.searchResultsDelegate = self;
+    
+    [self.view addSubview:tableView];
     
 }
 

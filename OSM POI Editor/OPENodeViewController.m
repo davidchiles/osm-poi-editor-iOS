@@ -368,7 +368,7 @@
     {
         if(indexPath.row == 0 || !self.managedOsmElement.type)
         {
-            OPECategoryViewController * viewer = [[OPECategoryViewController alloc] initWithNibName:@"OPECategoryViewController" bundle:[NSBundle mainBundle]];
+            OPECategoryViewController * viewer = [[OPECategoryViewController alloc] init];
             viewer.title = @"Category";
             [viewer setDelegate:self];
             

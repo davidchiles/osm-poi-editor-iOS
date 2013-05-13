@@ -295,7 +295,6 @@
 		63266A2F171646F0002CD7E4 /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 63266A2C171646F0002CD7E4 /* NSDataAdditions.m */; };
 		63266A30171646F0002CD7E4 /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63266A2E171646F0002CD7E4 /* TBXML.m */; };
 		63266A3617164732002CD7E4 /* OPECategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63266A3417164732002CD7E4 /* OPECategoryViewController.m */; };
-		63266A3717164732002CD7E4 /* OPECategoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63266A3517164732002CD7E4 /* OPECategoryViewController.xib */; };
 		63292E6B1593ED670010A11B /* OPEBinaryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E621593ED670010A11B /* OPEBinaryCell.m */; };
 		63292E6C1593ED670010A11B /* OPEPhoneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E651593ED670010A11B /* OPEPhoneCell.m */; };
 		63292E6D1593ED670010A11B /* OPESpecialCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E671593ED670010A11B /* OPESpecialCell2.m */; };
@@ -733,7 +732,6 @@
 		63266A2E171646F0002CD7E4 /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
 		63266A3317164732002CD7E4 /* OPECategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECategoryViewController.h; sourceTree = "<group>"; };
 		63266A3417164732002CD7E4 /* OPECategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECategoryViewController.m; sourceTree = "<group>"; };
-		63266A3517164732002CD7E4 /* OPECategoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OPECategoryViewController.xib; sourceTree = "<group>"; };
 		63292E611593ED670010A11B /* OPEBinaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBinaryCell.h; sourceTree = "<group>"; };
 		63292E621593ED670010A11B /* OPEBinaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBinaryCell.m; sourceTree = "<group>"; };
 		63292E631593ED670010A11B /* OPEConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEConstants.h; sourceTree = "<group>"; };
@@ -1457,7 +1455,6 @@
 				63D0A5CF1701129F007A595E /* TagEdit */,
 				63266A3317164732002CD7E4 /* OPECategoryViewController.h */,
 				63266A3417164732002CD7E4 /* OPECategoryViewController.m */,
-				63266A3517164732002CD7E4 /* OPECategoryViewController.xib */,
 				63CB49DF14E9E3BE008C4551 /* OPETypeViewController.h */,
 				63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */,
 				6383947E14EC4DDD00C74A57 /* OPEInfoViewController.h */,
@@ -2178,7 +2175,6 @@
 				63266A1617164579002CD7E4 /* x.png in Resources */,
 				63266A1717164579002CD7E4 /* x@2x.png in Resources */,
 				63266A291716469B002CD7E4 /* GTMOAuthViewTouch.xib in Resources */,
-				63266A3717164732002CD7E4 /* OPECategoryViewController.xib in Resources */,
 				63FBA59F171DFBED0098A2F3 /* optimizeDb.sql in Resources */,
 				63FBA5A8171DFBED0098A2F3 /* roadNetworkInit.sql in Resources */,
 				63FD2DAD172F329A0094B969 /* Tags.json in Resources */,
