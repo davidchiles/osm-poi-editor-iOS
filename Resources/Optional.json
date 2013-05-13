@@ -859,4 +859,24 @@
     },
     "section" : "Recycling Accepts"
   },
+  "artwork_type" : {
+    "displayName" : "Art Type",
+    "osmKey" : "artwork_type",
+    "values" : {
+      "Sculpture" : "sculpture",
+      "Statue" : "statue",
+      "Mural" : "mural",
+      "Painting" : "painting",
+      "Architecture" : "architecture",
+      "Graffiti" : "graffiti",
+      "Mosaic" : "mosaic"
+    },
+    "section" : "Other"
+  },
+  "artist_name" : {
+    "displayName" : "Artist",
+    "osmKey" : "artist_name",
+    "values" : "label",
+    "section" : "Other"
+  },
 }

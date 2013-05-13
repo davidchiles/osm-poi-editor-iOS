@@ -326,10 +326,7 @@
                 aCell.binaryControl.selectedSegmentIndex = UISegmentedControlNoSegment;
             }
             return aCell;
-            
         }
-        
-        
     }
 
     return cell;

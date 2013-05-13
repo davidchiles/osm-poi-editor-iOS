@@ -343,7 +343,11 @@
       "image" : "art",
       "tags" : {
         "tourism" : "artwork"
-      }
+      },
+      "optional" : [
+        "artwork_type",
+        "artist_name"
+      ]
     },
     "Arts Center" : {
       "optional" : [
@@ -1424,7 +1428,8 @@
         "internet_access",
         "internet_access_fee",
         "address",
-        "smoking"
+        "smoking",
+        "operator"
       ],
       "image" : "bed",
       "tags" : {
@@ -1459,7 +1464,8 @@
         "address",
         "internet_access",
         "internet_access_fee",
-        "smoking"
+        "smoking",
+        "operator"
       ],
       "image" : "bed",
       "tags" : {
