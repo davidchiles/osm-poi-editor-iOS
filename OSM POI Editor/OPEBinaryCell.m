@@ -63,10 +63,10 @@
         binaryControl.segmentedControlStyle = UISegmentedControlStylePlain;
         switch ([controlArray count]) {
             case 1:
-                binaryControl.frame = CGRectMake(0, 0, 50, 40);
+                binaryControl.frame = CGRectMake(0, 0, 190, 40);
                 break;
             case 2:
-                 binaryControl.frame = CGRectMake(0, 0, 100, 40);
+                 binaryControl.frame = CGRectMake(0, 0, 190, 40);
                 break;
             case 3:
                 binaryControl.frame = CGRectMake(0, 0, 190, 40);

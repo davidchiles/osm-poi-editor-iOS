@@ -412,8 +412,25 @@
     "Recycling Can" : {
       "image" : "recycle",
       "tags" : {
-        "amenity" : "recycling"
+        "amenity" : "recycling",
+        "recycling_type" : "container"
       }
+    },
+    "Recycling Center" : {
+      "image" : "recycle",
+      "tags" : {
+        "amenity" : "recycling",
+        "recycling_type" : "centre"
+      }
+    },"Generic Recycling" : {
+      "image" : "recycle",
+      "editOnly" : 1,
+      "tags" : {
+        "amenity" : "recycling",
+      },
+      "optional" : [
+        "recycling_type"
+      ]
     },
     "Trash Can" : {
       "image" : "trash",

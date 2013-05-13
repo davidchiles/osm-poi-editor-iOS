@@ -920,7 +920,7 @@
 {
     __block NSMutableArray * array = [NSMutableArray array];
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        NSString * sqlString = @"SELECT *,poi.rowid AS id FROM poi,pois_tags WHERE  poi.rowid = pois_tags.poi_id";
+        NSString * sqlString = @"SELECT *,poi.rowid AS id FROM poi,pois_tags WHERE  poi.rowid = pois_tags.poi_id AND editOnly=0";
         if (!includeLegacy) {
             sqlString = [sqlString stringByAppendingFormat:@" AND isLegacy = 0"];
         }

@@ -1366,11 +1366,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEManagedReferencePoi.m"
-         timestampString = "389665789.006917"
+         timestampString = "390178709.479858"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "136"
-         endingLineNumber = "136"
+         startingLineNumber = "142"
+         endingLineNumber = "142"
          landmarkName = "-numberOfOptionalSections"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2059,11 +2059,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEManagedReferencePoi.m"
-         timestampString = "389665789.006917"
+         timestampString = "390178709.479858"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "114"
-         endingLineNumber = "114"
+         startingLineNumber = "120"
+         endingLineNumber = "120"
          landmarkName = "-sqliteTagsInsertString"
          landmarkType = "5">
       </FileBreakpoint>

@@ -6,7 +6,7 @@
 @property (nonatomic,strong) NSString * name;
 @property (nonatomic,strong) NSString * categoryName;
 @property (nonatomic) BOOL isLegacy;
-@property (nonatomic) BOOL canAdd;
+@property (nonatomic) BOOL editOnly;
 @property (nonatomic) NSString * imageString;
 @property (nonatomic,strong) OPEManagedReferencePoi * currentTagMethod;
 @property (nonatomic,strong) OPEManagedReferencePoi * oldTagMethod;

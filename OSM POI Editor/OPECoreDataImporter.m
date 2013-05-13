@@ -223,7 +223,7 @@
         result = [db executeUpdate:@"DROP TABLE IF EXISTS optionals_tags"];
         result = [db executeUpdate:@"DROP TABLE IF EXISTS pois_optionals"];
         
-        result = [db executeUpdateWithFormat:@"create table poi(canAdd INTEGER DEFAULT 1,imageString TEXT,isLegacy INTEGER DEFAULT 0,displayName TEXT NOT NULL,category TEXT NOT NULL,UNIQUE(displayName,category))"];
+        result = [db executeUpdateWithFormat:@"create table poi(editOnly INTEGER DEFAULT 0,imageString TEXT,isLegacy INTEGER DEFAULT 0,displayName TEXT NOT NULL,category TEXT NOT NULL,UNIQUE(displayName,category))"];
         result = [db executeUpdateWithFormat:@"create table optional(name TEXT PRIMARY KEY NOT NULL, displayName TEXT NOT NULL, osmKey TEXT,sectionSortOrder INTEGER,type TEXT,section_id INTEGER)"];
         result = [db executeUpdate:@"create table pois_tags(poi_id INTEGER NOT NULL,key TEXT NOT NULL,value TEXT NOT NULL,UNIQUE(poi_id,key,value))"];
         result = [db executeUpdate:@"create table optionals_tags(optional_id INTEGER NOT NULL,name TEXT NOT NULL,key TEXT NOT NULL,value TEXT NOT NULL)"];

@@ -13,7 +13,7 @@
 
 @implementation OPEManagedReferencePoi
 
-@synthesize name,isLegacy,canAdd,imageString,currentTagMethod,oldTagMethod,optionalsSet,tags;
+@synthesize name,isLegacy,editOnly,imageString,currentTagMethod,oldTagMethod,optionalsSet,tags;
 
 -(id)init
 {
@@ -34,6 +34,12 @@
         self.categoryName = newCategoryName;
         self.imageString = [dictionary objectForKey:@"image"];
         self.tags = [dictionary objectForKey:@"tags"];
+        
+        self.editOnly = NO;
+        if ([dictionary objectForKey:@"editOnly"]) {
+            self.editOnly = [[dictionary objectForKey:@"editOnly"] boolValue];
+        }
+        
         
         NSMutableSet * tempSet = [NSMutableSet set];
         for(NSString * key in [dictionary objectForKey:@"optional"])
@@ -69,7 +75,7 @@
     if (self = [self init]) {
         self.name = dictionary[@"displayName"];
         self.imageString = dictionary[@"imageString"];
-        self.canAdd = [dictionary[@"canAdd"] boolValue];
+        self.editOnly = [dictionary[@"editOnly"] boolValue];
         self.isLegacy = [dictionary[@"isLegacy"]boolValue];
         self.categoryName = dictionary[@"category"];
         id itemId = dictionary[@"id"];
@@ -83,7 +89,7 @@
 
 -(NSString *)sqliteInsertString
 {
-    return [NSString stringWithFormat:@"insert or replace into poi(canAdd,imageString,isLegacy,displayName,category) values(%d,\'%@\',%d,\'%@\',\'%@\')",YES,self.imageString,self.isLegacy,self.name,self.categoryName];
+    return [NSString stringWithFormat:@"insert or replace into poi(editOnly,imageString,isLegacy,displayName,category) values(%d,\'%@\',%d,\'%@\',\'%@\')",self.editOnly,self.imageString,self.isLegacy,self.name,self.categoryName];
 }
 -(NSString *)sqliteOptionalInsertString
 {

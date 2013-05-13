@@ -748,5 +748,14 @@
       "Only" : "only",
       },
     "section" : "Other"
+  },
+  "recycling_type" : {
+    "displayName" : "Type",
+    "osmKey" : "recycling_type",
+    "values" : {
+      "Container" : "container",
+      "Center" : "centre"
+      },
+    "section" : "Other"
   }
 }
