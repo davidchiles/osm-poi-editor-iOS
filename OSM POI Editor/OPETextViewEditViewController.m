@@ -15,15 +15,6 @@
 
 @implementation OPETextViewEditViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -32,6 +23,9 @@
     [textView setFont:[UIFont systemFontOfSize:14.0]];
     textView.returnKeyType = UIReturnKeyDone;
     textView.delegate = self;
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle: @"Done" style:  UIBarButtonItemStyleDone target: self action: @selector(doneButtonPressed:)];
+    [[self navigationItem] setRightBarButtonItem:doneButton];
     
     if ([self.osmKey isEqualToString:@"name"]) {
         textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
@@ -52,6 +46,19 @@
         return NO;
     }
     return YES;
+}
+-(void)doneButtonPressed:(id)sender
+{
+    NSString * newValue = [self newOsmValue];
+    if ([newValue length]) {
+        [self saveNewValue:newValue];
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+-(void) saveNewValue:(NSString *)value
+{
+    [self.delegate newOsmKey:self.osmKey value:value];
 }
 
 - (void)didReceiveMemoryWarning

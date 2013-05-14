@@ -20,7 +20,8 @@
 
 @implementation OPETagEditViewController
 
-@synthesize delegate = _delegate,osmKey = _osmKey,currentOsmValue = _currentOsmValue, manageedOptionalObjectID,managedObjectID;
+@synthesize delegate = _delegate,osmKey = _osmKey,currentOsmValue = _currentOsmValue;
+@synthesize managedOptional,element;
 
 -(id)initWithOsmKey:(NSString *)newOsmKey delegate:(id<OPETagEditViewControllerDelegate>)newDelegate
 {
@@ -42,10 +43,10 @@
     
 }
 
-+(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey andType:(NSString *)type delegate:(id<OPETagEditViewControllerDelegate>)delegate
++(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey andType:(OPEOptionalType)type delegate:(id<OPETagEditViewControllerDelegate>)delegate
 {
     OPETagEditViewController * viewController = nil;
-    if ([type isEqualToString:kTypeList]) {
+    if (type == OPEOptionalTypeList) {
         viewController = [[OPETagValueList alloc] initWithOsmKey:osmKey delegate:delegate];
     }
     else if ([@[@"addr:street",@"addr:postcode",@"addr:city",@"addr:state",@"addr:province"]containsObject:osmKey]) {
@@ -53,10 +54,10 @@
         rView.showRecent = YES;
         viewController = rView;
     }
-    else if ([@[@"addr:housenumber",@"addr:country",@"website"]containsObject:osmKey] || [@[kTypeNumber,kTypeLabel]containsObject:type]) {
+    else if ([@[@"addr:housenumber",@"addr:country",@"website"]containsObject:osmKey] || type == OPEOptionalTypeNumber || type == OPEOptionalTypeLabel) {
         OPERecentlyUsedViewController * rView = [[OPERecentlyUsedViewController alloc] initWithOsmKey:osmKey delegate:delegate];
         rView.showRecent = [osmKey isEqualToString:@"addr:country"];
-        if ([type isEqualToString:kTypeNumber]) {
+        if (type == OPEOptionalTypeNumber) {
             rView.textField.keyboardType = UIKeyboardTypeNumberPad;
         }
         viewController = rView;

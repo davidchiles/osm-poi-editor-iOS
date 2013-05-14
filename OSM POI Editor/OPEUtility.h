@@ -30,4 +30,8 @@
 
 +(id <RMTileSource>)currentTileSource;
 
++(NSString *)appVersion;
++(NSString *)iOSVersion;
++(NSString *)tileSourceName;
+
 @end

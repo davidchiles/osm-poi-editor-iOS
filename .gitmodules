@@ -14,3 +14,6 @@
 [submodule "lib/uservoice"]
 	path = lib/uservoice
 	url = git://github.com/uservoice/uservoice-iphone-sdk.git
+[submodule "lib/osm-parser"]
+	path = lib/osm-parser
+	url = git@github.com:davidchiles/osm-parser.git

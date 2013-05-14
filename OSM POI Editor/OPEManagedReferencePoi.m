@@ -1,6 +1,7 @@
 #import "OPEManagedReferencePoi.h"
-#import "OPEManagedReferenceOptionalCategory.h"
-#import "OPEManagedReferencePoiCategory.h"
+#import "OPEManagedReferenceOptional.h"
+#import "FMDatabase.h"
+#import "OPEConstants.h"
 #import "OPETranslate.h"
 
 @interface OPEManagedReferencePoi ()
@@ -12,75 +13,145 @@
 
 @implementation OPEManagedReferencePoi
 
+@synthesize isLegacy,editOnly,imageString,currentTagMethod,oldTagMethod,optionalsSet,tags;
+@synthesize categoryName = _categoryName;
+@synthesize name = _name;
+
+-(id)init
+{
+    if (self = [super init]) {
+        self.isLegacy = NO;
+        self.optionalsSet = [NSMutableSet set];
+        self.tags = [NSMutableDictionary dictionary];
+    }
+    return self;
+    
+    
+}
+
+-(id)initWithName:(NSString *)newName withCategory:(NSString *)newCategoryName andDictionary:(NSDictionary *)dictionary
+{
+    if (self = [self init]) {
+        self.name = newName;
+        self.categoryName = newCategoryName;
+        self.imageString = [dictionary objectForKey:@"image"];
+        self.tags = [dictionary objectForKey:@"tags"];
+        
+        self.editOnly = NO;
+        if ([dictionary objectForKey:@"editOnly"]) {
+            self.editOnly = [[dictionary objectForKey:@"editOnly"] boolValue];
+        }
+        
+        
+        NSMutableSet * tempSet = [NSMutableSet set];
+        for(NSString * key in [dictionary objectForKey:@"optional"])
+        {
+            if ([key isEqualToString:@"address"]) {
+                NSArray * addressArray = kExpandedAddressArray;
+                for( NSString * addr in addressArray)
+                {
+                    OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] init];
+                    optional.name = addr;
+                    [tempSet addObject:optional];
+                }
+            }
+            else
+            {
+                OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] init];
+                optional.name = key;
+                [tempSet addObject:optional];
+            }
+            
+            
+            
+        }
+        self.optionalsSet = tempSet;
+        
+        self.isLegacy = ([self.name rangeOfString:@" (legacy)"].location != NSNotFound);
+    }
+    return self;
+    
+}
+-(id)initWithSqliteResultDictionary:(NSDictionary *)dictionary
+{
+    if (self = [self init]) {
+        self.name = dictionary[@"displayName"];
+        self.imageString = dictionary[@"imageString"];
+        self.editOnly = [dictionary[@"editOnly"] boolValue];
+        self.isLegacy = [dictionary[@"isLegacy"]boolValue];
+        self.categoryName = dictionary[@"category"];
+        id itemId = dictionary[@"id"];
+        if ([itemId isKindOfClass:[NSNumber class]]) {
+            self.rowID = [itemId intValue];
+        }
+    }
+    return self;
+    
+}
+
+-(NSString *)sqliteInsertString
+{
+    return [NSString stringWithFormat:@"insert or replace into poi(editOnly,imageString,isLegacy,displayName,category) values(%d,\'%@\',%d,\'%@\',\'%@\')",self.editOnly,self.imageString,self.isLegacy,self.name,self.categoryName];
+}
+-(NSString *)sqliteOptionalInsertString
+{
+    NSMutableString * sqlString = nil;
+    if ([self.optionalsSet count] && self.rowID) {
+        BOOL first = YES;
+        for ( OPEManagedReferenceOptional * optional in self.optionalsSet)
+        {
+            if (first) {
+                sqlString =  [NSMutableString stringWithFormat:@"insert or replace into pois_optionals select %lld as poi_id,(select optional.rowid from optional where optional.name = \'%@\') as optional_id",self.rowID,optional.name];
+            }
+            else{
+                [sqlString appendFormat:@" union select %lld,(select optional.rowid from optional where optional.name = \'%@\')",self.rowID,optional.name];
+            }
+            [sqlString appendFormat:@" union select %lld,(select optional.rowid from optional where optional.name = \'note\')",self.rowID];
+            [sqlString appendFormat:@" union select %lld,(select optional.rowid from optional where optional.name = \'source\')",self.rowID];
+            
+            
+            first = NO;
+        }
+    }
+    return sqlString;
+    
+}
+
+-(NSString *)sqliteTagsInsertString
+{
+    NSMutableString * sqlString = nil;
+    if ([self.tags count] && self.rowID) {
+        BOOL first = YES;
+        for(NSString * osmKey in self.tags)
+        {
+            if (first) {
+                sqlString = [NSMutableString stringWithFormat:@"insert or replace into pois_tags select %lld as poi_id,\'%@\' as key,\'%@\' as value",self.rowID,osmKey,self.tags[osmKey]];
+            }
+            else
+            {
+                [sqlString appendFormat:@" union select %lld,'\%@\','\%@\'",self.rowID,osmKey,self.tags[osmKey]];
+                
+            }
+            first = NO;
+            
+            
+        }
+    }
+    return sqlString;
+}
+
 -(NSInteger)numberOfOptionalSections
 {
-    NSLog(@"Optionals: %d",[self.optional count]);
-    NSArray * uniqueSections =[self.optional valueForKeyPath:@"@distinctUnionOfObjects.referenceSection"];
+    NSArray * uniqueSections =[self.optionalsSet valueForKeyPath:@"@distinctUnionOfObjects.sectionName"];
     return [uniqueSections count];
 }
 
--(NSArray *)optionalDisplayNames
+-(NSString *)categoryName
 {
-    NSMutableArray * displayNameArray = [NSMutableArray array];
-    NSArray * tempArray = [[self.optional valueForKeyPath:@"@distinctUnionOfObjects.referenceSection"] allObjects];
-    
-    NSSortDescriptor *sortDescriptor;
-    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sortOrder"
-                                                  ascending:YES];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    NSArray *uniqueSections;
-    uniqueSections = [tempArray sortedArrayUsingDescriptors:sortDescriptors];
-    
-    
-    //NSArray * uniqueSections =[[[[[self.optional valueForKeyPath:@"@distinctUnionOfObjects.referenceSection"] allObjects] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)] reverseObjectEnumerator] allObjects];;
-    
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"sectionSortOrder"  ascending:YES];
-    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"displayName" ascending:YES];
-    
-    
-    for(OPEManagedReferenceOptionalCategory * managedOptionalCategory in uniqueSections)
-    {
-        //NSString * sectionName = managedOptionalCategory.displayName;
-        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"referenceSection == %@", managedOptionalCategory];
-        NSArray * names = [[[self.optional filteredSetUsingPredicate:predicate] allObjects] sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nameDescriptor, nil]];
-        [displayNameArray addObject:names];
-    }
-    return displayNameArray;
+    return [OPETranslate translateString:_categoryName];
 }
-
-+(NSArray *) allTypes
+-(NSString *)name
 {
-    return [OPEManagedReferencePoi MR_findAllSortedBy:@"name" ascending:YES];
+    return [OPETranslate translateString:_name];
 }
-
-+(OPEManagedReferencePoi *) fetchOrCreateWithName:(NSString *)name category:(OPEManagedReferencePoiCategory *)category didCreate:(BOOL *)didCreate
-{
-    NSPredicate *osmPoiFilter = [NSPredicate predicateWithFormat:@"name == %@ AND category == %@",name,category];
-    NSArray * results = [OPEManagedReferencePoi MR_findAllWithPredicate:osmPoiFilter];
-    
-    OPEManagedReferencePoi * referencePoi = nil;
-    
-    if(![results count])
-    {
-        referencePoi = [OPEManagedReferencePoi MR_createEntity];
-        referencePoi.name = name;
-        referencePoi.category =  category;
-        
-        *didCreate = YES;
-    }
-    else
-    {
-        *didCreate = NO;
-        referencePoi = [results objectAtIndex:0];
-    }
-    return referencePoi;
-}
-- (NSString *)name
-{
-    [self willAccessValueForKey:@"name"];
-    NSString *myName = [self primitiveName];
-    [self didAccessValueForKey:@"name"];
-    return [OPETranslate translateString:myName];
-}
-
 @end

@@ -24,6 +24,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import "GTMOAuthViewControllerTouch.h"
 #import "AFNetworking.h"
+#import "FMDatabaseQueue.h"
+#import "OSMDAO.h"
+#import "OPEManagedReferencePoi.h"
 
 @class OPEManagedOsmNode;
 @class OPEManagedOsmElement;
@@ -43,24 +46,24 @@
 
 -(void)willStartParsing:(NSString *)typeString;
 -(void)didEndParsing:(NSString *)typeString;
+-(void)didEndParsing;
 
 -(void) downloadFailed:(NSError *)error;
 
+-(void) didFindNewElements:(NSArray *)newElementsArray updatedElements:(NSArray *)updatedElementsArray;
+
 @end
 
-@interface OPEOSMData : NSObject <NSXMLParserDelegate>
+@interface OPEOSMData : NSObject <OSMDAODelegate>
 {
-    GTMOAuthAuthentication *auth;
-    OPEManagedOsmWay * currentWay;
-    OPEManagedOsmRelation * currentRelation;
     dispatch_queue_t q;
-    AFHTTPClient * httpClient;
-    
+    NSMutableDictionary * typeDictionary;
 }
 
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
 @property (nonatomic, weak) id <OPEOSMDataControllerDelegate> delegate;
-@property (nonatomic, strong) OPEManagedOsmElement * currentElement;
+@property (nonatomic,strong) FMDatabaseQueue * databaseQueue;
+@property (nonatomic,strong) AFHTTPClient * httpClient;
 
 - (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 - (void) openChangeset:(OPEChangeset *)changeset;
@@ -68,6 +71,37 @@
 
 - (void) uploadElement: (OPEManagedOsmElement *) element;
 - (void) deleteElement: (OPEManagedOsmElement *) element;
+
+- (NSString *)nameWithElement: (OPEManagedOsmElement *) element;
+
+-(void)removeOsmKey:(NSString *)osmKey forElement:(OPEManagedOsmElement *)element;
+-(void)setOsmKey:(NSString *)osmKey andValue:(NSString *)osmValue forElement:(OPEManagedOsmElement *)element;
+-(void)setNewType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element;
+
+-(void)getTypeFor:(OPEManagedOsmElement *)element;
+-(NSString *)nameForElement:(OPEManagedOsmElement *)element;
+-(CLLocationCoordinate2D)centerForElement:(OPEManagedOsmElement *)element;
+-(NSArray *)pointsForWay:(OPEManagedOsmWay *)way;
+-(NSArray *)outerPolygonsForRelation:(OPEManagedOsmRelation *)relation;
+-(NSArray *)innerPolygonsForRelation:(OPEManagedOsmRelation *)relation;
+-(void)getTagsForElement:(OPEManagedOsmElement *)element;
+-(void)updateLegacyTags:(OPEManagedOsmElement *)element;
+
+-(void)getOptionalsFor:(OPEManagedReferencePoi *)poi;
+-(NSDictionary *)optionalSectionSortOrder;
+
+-(NSArray *)allSortedCategories;
+-(NSArray *)allSortedTypesWithCategory:(NSString *)category;
+-(NSArray *)allTypesIncludeLegacy:(BOOL)includeLegacy;
+
+-(int64_t)newElementId;
+-(BOOL)hasParentElement:(OPEManagedOsmElement *)element;
+-(NSString *)highwayTypeForOsmWay:(OPEManagedOsmWay *)way;
+
+
+
+
+-(NSArray *)allElementsWithType:(BOOL)withType;
 
 -(BOOL) canAuth;
 

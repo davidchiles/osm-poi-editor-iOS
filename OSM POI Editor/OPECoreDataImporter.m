@@ -1,4 +1,4 @@
-//
+ //
 //  OPECoreDataImporter.m
 //  OSM POI Editor
 //
@@ -11,206 +11,124 @@
 #import "CoreData+MagicalRecord.h"
 #import "OPEConstants.h"
 #import "OPEManagedOsmTag.h"
-#import "OPEManagedReferenceOptionalCategory.h"
-#import "OPEManagedReferencePoiCategory.h"
 #import "OPEUtility.h"
+#import "FMDatabase.h"
+#import "FMDatabaseQueue.h"
+#import "OSMDAO.h"
 
-#define tagsPlistFilePath [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"plist"]
-#define optionalPlistFilePath [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"plist"]
+#define tagsFilePath [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"json"]
+#define optionalPlistFilePath [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"json"]
 
 
 @implementation OPECoreDataImporter
 
+-(id)init
+{
+    if(self = [super init])
+    {
+        queue = [FMDatabaseQueue databaseQueueWithPath:kDatabasePath];
+    }
+    return self;
+}
+
 -(void)import
 {
+    [self setupDatabase];
+    [self importSqliteOptionalTags];
+    [self importSqlitePoiTags];
     if ([self shouldDoImport]) {
-        [OPEManagedReferenceOptional MR_deleteAllMatchingPredicate:nil];
-        [OPEManagedReferencePoi MR_deleteAllMatchingPredicate:nil];
-        [OPEManagedReferenceOptionalCategory MR_deleteAllMatchingPredicate:nil];
-        [OPEManagedReferencePoiCategory MR_deleteAllMatchingPredicate:nil];
         
-        [self importOptionalTags];
-        [self importTagsPlist];
-        [self setImportVersionNumber];
+        
+        //[self importTagsPlist];
+        //[self setImportVersionNumber];
     }
-    
+        
 }
 
--(void)importTagsPlist
+
+-(void)importSqliteOptionalSections
 {
-    NSString *filePath = tagsPlistFilePath;
-    NSDictionary* plistDict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-    for(NSString * category in plistDict)
-    {
-        NSDictionary * categoryDictionary = [plistDict objectForKey:category];
-        for(NSString * type in categoryDictionary)
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"OptionalCategorySort" ofType:@"json"];
+    NSError * error = nil;
+    NSData * data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:&error];
+    NSDictionary * optionalDictionary = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
+    [queue inDatabase:^(FMDatabase *db) {
+        for (NSString * name in optionalDictionary)
         {
-            NSDictionary * typeDictionary = [categoryDictionary objectForKey:type];
-            NSString *imageString = [typeDictionary objectForKey:@"image"];
-            NSDictionary * tags = [typeDictionary objectForKey:@"tags"];
-            NSArray * optionalTags = [typeDictionary objectForKey:@"optional"];
-            
-            BOOL legacy = ([type rangeOfString:@" (legacy)"].location != NSNotFound);
-            
-            [self addPOIWithName:type category:category imageString:imageString legacy:legacy optional:optionalTags tags:tags];
-            
+            int sortOrer = [optionalDictionary[name] intValue];
+            BOOL result = [db executeUpdateWithFormat:@"insert or replace into optional_section(name,sortOrder) values(%@,%d)",name,sortOrer];
         }
-    }
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    [context MR_saveToPersistentStoreAndWait];
-    NSLog(@"Number of POIs: %u",[[OPEManagedOsmTag MR_findAll] count]);
+    }];
 }
 
--(void)importOptionalSection
+-(void)importSqliteOptionalTags
 {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"OptionalCategorySort" ofType:@"plist"];
-    NSDictionary* optionalDictionary = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-    for (NSString * name in optionalDictionary)
-    {
-        [OPEManagedReferenceOptionalCategory fetchOrCreateWithName:name sortOrder:[[optionalDictionary objectForKey:name] intValue]];
-    }
-    
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    [context MR_saveToPersistentStoreAndWait];
-    
-    
-}
-
--(void)importOptionalTags
-{
-    [self importOptionalSection];
-    NSString *filePath = optionalPlistFilePath;
-    NSDictionary* optionalDictionary = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-    
-    for(NSString * key in optionalDictionary)
-    {
-        [self importOptionalDictionary:[optionalDictionary objectForKey:key] name:key];
-    }
-    [self addOptionalWithName:@"note" displayName:@"Note" section:@"Note" sectionSortOrder:[NSNumber numberWithInt:1] osmkey:@"note" values:nil type:kTypeText];
-    [self addOptionalWithName:@"source" displayName:@"Source" section:@"Note" sectionSortOrder:[NSNumber numberWithInt:2] osmkey:@"source" values:nil type:kTypeText];
-    
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    [context MR_saveToPersistentStoreAndWait];
-    
-}
-
--(void)addPOIWithName:(NSString *)name  category:(NSString *)category imageString:(NSString *)imageString legacy:(BOOL )isLegacy optional:(NSArray *)optionalTags tags:(NSDictionary *) tagDictionary
-{
-    BOOL didCreate;
-    OPEManagedReferencePoiCategory * poiCategory = [OPEManagedReferencePoiCategory fetchOrCreateWithName:category];
-    OPEManagedReferencePoi * newPoi = [OPEManagedReferencePoi fetchOrCreateWithName:name category:poiCategory didCreate:&didCreate];
-    
-    
-    newPoi.name = name;
-    newPoi.isLegacyValue = isLegacy;
-    newPoi.imageString = imageString;
-    [newPoi setCanAddValue:YES];
-    
-    if (isLegacy) {
-        NSString * newName = [name componentsSeparatedByString:@" (legacy)"][0];
-        newPoi.newTagMethod = [OPEManagedReferencePoi fetchOrCreateWithName:newName category:poiCategory didCreate:&didCreate];
-    }
-    
-    newPoi.category = [OPEManagedReferencePoiCategory fetchOrCreateWithName:category];
-    
-    for(NSString * optionalString in optionalTags)
-    {
-        OPEManagedReferenceOptional * optional;
-        if([optionalString isEqualToString:@"address"])
+    [self importSqliteOptionalSections];
+    NSString * filePath = optionalPlistFilePath;
+    NSError * error = nil;
+    NSData * data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:&error];
+    NSDictionary * optionalDictionary = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
+    [queue inDatabase:^(FMDatabase *db) {
+        db.logsErrors = YES;
+        
+        for(NSString * key in optionalDictionary)
         {
-            NSArray * exppandedAddress = kExpandedAddressArray;
-            for(NSString * addressString in exppandedAddress)
-            {
-                didCreate = NO;
-                optional = [OPEManagedReferenceOptional fetchOrCreateWithName:addressString didCreate:&didCreate];
-                [newPoi addOptionalObject:optional];
+            [db beginTransaction];
+            
+            OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] initWithDictionary:optionalDictionary[key] withName:key];
+            
+            BOOL result = [db executeUpdate:[optional sqliteInsertString]];
+            if (result) {
+                optional.rowID = [db lastInsertRowId];
+                NSString * tagsQuery = [optional sqliteOptionalTagsInsertString];
+                if ([tagsQuery length]) {
+                    result = [db executeUpdate:tagsQuery];
+                }
+                
             }
-        }
-        else
-        {
-            optional = [OPEManagedReferenceOptional fetchOrCreateWithName:optionalString didCreate:&didCreate];
-            [newPoi addOptionalObject:optional];
+            [db commit];
         }
         
-    }
-    OPEManagedReferenceOptional * optionalNote = [OPEManagedReferenceOptional fetchOrCreateWithName:@"note" didCreate:&didCreate];
-    [newPoi addOptionalObject:optionalNote];
-    OPEManagedReferenceOptional * optionalSource = [OPEManagedReferenceOptional fetchOrCreateWithName:@"source" didCreate:&didCreate];
-    [newPoi addOptionalObject:optionalSource];
-    
-    for (NSString * key in tagDictionary)
-    {
-        [newPoi addTagsObject:[OPEManagedOsmTag fetchOrCreateWithKey:key value:[tagDictionary objectForKey:key]]];
-    }
-    
-   /* NSError *error;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"Couldn't save: %@", [error localizedDescription]);
-    }
-    */
-
+    }];
 }
-
--(OPEManagedReferenceOptional *)importOptionalDictionary:(NSDictionary *)dictionary name:(NSString *)name
+-(void)importSqlitePoiTags
 {
-    BOOL didCreate = NO;
-    OPEManagedReferenceOptional * newOptional = [OPEManagedReferenceOptional fetchOrCreateWithName:name didCreate:&didCreate];
-    
-    [newOptional MR_importValuesForKeysWithObject:dictionary];
-    
-    OPEManagedReferenceOptionalCategory * cat = [OPEManagedReferenceOptionalCategory fetchWithName:[dictionary objectForKey:@"section"]];
-    newOptional.referenceSection = cat;
-    NSDictionary * possibleValues = nil;
-    
-    if([[dictionary objectForKey:@"values"] isKindOfClass:[NSString class]])
-    {
-        newOptional.type = [dictionary objectForKey:@"values"];
-    }
-    else
-    {
-        possibleValues = [dictionary objectForKey:@"values"];
-    }
-    
-    for(NSString * value in possibleValues)
-    {
+    NSString * filePath = tagsFilePath;
+    NSError * error = nil;
+    NSData * data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:&error];
+    NSDictionary * dictionary = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
+    [queue inDatabase:^(FMDatabase *db) {
+        db.logsErrors = YES;
         
-        OPEManagedReferenceOsmTag * tag = [OPEManagedReferenceOsmTag fetchOrCreateWithName:value key:newOptional.osmKey value:[possibleValues objectForKey:value]];
-        [newOptional addTagsObject:tag];
-    }
-    
-    return newOptional;
-    
-}
-
--(OPEManagedReferenceOptional *)addOptionalWithName:(NSString *)name displayName:(NSString *)displayName section:(NSString *)section sectionSortOrder:(NSNumber *)sectionSortOrder osmkey:(NSString *)osmKey values:(NSDictionary *)tagValues type:(NSString *)type;
-{
-    //OPTIONAL * newOptional = [NSEntityDescription insertNewObjectForEntityForName:OPTIONALEntity inManagedObjectContext:managedObjectContext];
-    NSLog(@"Tag Values: %@",tagValues);
-    BOOL didCreate = NO;
-    
-    OPEManagedReferenceOptional * newOptional = [OPEManagedReferenceOptional fetchOrCreateWithName:name didCreate:&didCreate];
-    
-    if (didCreate) {
-        newOptional.name = name;
-        newOptional.displayName = displayName;
-        [newOptional setReferenceSection:[OPEManagedReferenceOptionalCategory fetchWithName:section]];
-        newOptional.sectionSortOrder = sectionSortOrder;
-        newOptional.osmKey = osmKey;
-        newOptional.type = type;
-        NSMutableSet * osmTags = [NSMutableSet set];
-        
-        
-        
-        for(NSString * value in tagValues)
+        for(NSString * category in dictionary)
         {
+            [db beginTransaction];
+            NSDictionary * categoryDictionary = [dictionary objectForKey:category];
+            for(NSString * type in categoryDictionary)
+            {
+                
+                NSDictionary * typeDictionary = [categoryDictionary objectForKey:type];
+                OPEManagedReferencePoi * poi = [[OPEManagedReferencePoi alloc] initWithName:type withCategory:category andDictionary:typeDictionary];
+                BOOL result = [db executeUpdate:[poi sqliteInsertString]];
+                
+                if (result) {
+                    poi.rowID = [db lastInsertRowId];
+                    result = [db executeUpdate:[poi sqliteTagsInsertString]];
+                    NSString * optionalUpdate = [poi sqliteOptionalInsertString];
+                    if (optionalUpdate) {
+                        result = [db executeUpdate:optionalUpdate];
+                    }
+                }
+                else
+                {
+                    NSLog(@"Failed");
+                }
+            }
+            [db commit];
             
-            OPEManagedReferenceOsmTag * tag = [OPEManagedReferenceOsmTag fetchOrCreateWithName:value key:osmKey value:[tagValues objectForKey:value]];
-            [osmTags addObject: tag];
         }
-        [newOptional setTags:osmTags];
-    }
-    
-    return newOptional;
+        
+    }];
 }
 
 -(NSString *)lastImportHash
@@ -229,7 +147,7 @@
 -(NSString *)currentFileHash;
 {
     NSMutableData * data = [NSMutableData dataWithContentsOfFile:optionalPlistFilePath];
-    [data appendData:[NSData dataWithContentsOfFile:tagsPlistFilePath]];
+    [data appendData:[NSData dataWithContentsOfFile:tagsFilePath]];
     NSString * hash = [OPEUtility hasOfData:data];
     
     
@@ -248,7 +166,7 @@
 -(NSDate *)currentMostRecentFileDate
 {
     NSFileManager* fm = [NSFileManager defaultManager];
-    NSDictionary* tagsAttrs = [fm attributesOfItemAtPath:tagsPlistFilePath error:nil];
+    NSDictionary* tagsAttrs = [fm attributesOfItemAtPath:tagsFilePath error:nil];
     NSDictionary* optionalAttrs = [fm attributesOfItemAtPath:optionalPlistFilePath error:nil];
     
     if (tagsAttrs != nil || optionalAttrs != nil) {
@@ -271,8 +189,8 @@
 
 -(BOOL)shouldDoImport
 {
-    double numberOfOptionals = [[OPEManagedReferenceOptional MR_numberOfEntities] doubleValue];
-    double numberOfPOI = [[OPEManagedReferencePoi MR_numberOfEntities] doubleValue];
+    double numberOfOptionals = 1;//[[OPEManagedReferenceOptional MR_numberOfEntities] doubleValue];
+    double numberOfPOI = 1;//[[OPEManagedReferencePoi MR_numberOfEntities] doubleValue];
     if ([[self lastImportDate] compare:[self currentMostRecentFileDate]] != NSOrderedSame) {
         return YES;
     }
@@ -288,6 +206,41 @@
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:[self currentMostRecentFileDate] forKey:kLastImportFileDate];
     [userDefaults synchronize];
+}
+
+-(void)setupDatabase
+{
+    [queue inDatabase:^(FMDatabase *db) {
+        BOOL result = NO;
+        OSMDAO * osmData = [[OSMDAO alloc] initWithFilePath:kDatabasePath overrideIfExists:YES];
+        osmData = nil;
+        [db beginTransaction];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS poi"];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS optional"];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS optional_section"];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS pois_tags"];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS optionals_tags"];
+        result = [db executeUpdate:@"DROP TABLE IF EXISTS pois_optionals"];
+        
+        result = [db executeUpdateWithFormat:@"create table poi(editOnly INTEGER DEFAULT 0,imageString TEXT,isLegacy INTEGER DEFAULT 0,displayName TEXT NOT NULL,category TEXT NOT NULL,UNIQUE(displayName,category))"];
+        result = [db executeUpdateWithFormat:@"create table optional(name TEXT PRIMARY KEY NOT NULL, displayName TEXT NOT NULL, osmKey TEXT,sectionSortOrder INTEGER,type TEXT,section_id INTEGER)"];
+        result = [db executeUpdate:@"create table pois_tags(poi_id INTEGER NOT NULL,key TEXT NOT NULL,value TEXT NOT NULL,UNIQUE(poi_id,key,value))"];
+        result = [db executeUpdate:@"create table optionals_tags(optional_id INTEGER NOT NULL,name TEXT NOT NULL,key TEXT NOT NULL,value TEXT NOT NULL)"];
+        result = [db executeUpdate:@"create table optional_section(name TEXT PRIMARY KEY NOT NULL,sortOrder INTEGER)"];
+        result = [db executeUpdate:@"create table pois_optionals(poi_id INTEGER NOT NULL,optional_id INTEGER NOT NULL,UNIQUE(poi_id,optional_id))"];
+        
+        result = [db executeUpdate:@"ALTER TABLE nodes ADD COLUMN poi_id INTEGER;"];
+        result = [db executeUpdate:@"ALTER TABLE ways ADD COLUMN poi_id INTEGER;"];
+        result = [db executeUpdate:@"ALTER TABLE relations ADD COLUMN poi_id INTEGER;"];
+        
+        result = [db executeUpdate:@"ALTER TABLE nodes ADD COLUMN isVisible INTEGER DEFAULT 1;"];
+        result = [db executeUpdate:@"ALTER TABLE ways ADD COLUMN isVisible INTEGER DEFAULT 1;"];
+        result = [db executeUpdate:@"ALTER TABLE relations ADD COLUMN isVisible INTEGER DEFAULT 1;"];
+        
+        [db commit];
+        
+    }];
+    
 }
 
 @end

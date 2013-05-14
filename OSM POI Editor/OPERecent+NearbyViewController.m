@@ -10,6 +10,7 @@
 #import "OPEUtility.h"
 #import "OPEMRUtility.h"
 #import "OPEManagedOsmElement.h"
+#import "OPEOSMSearchManager.h"
 
 @interface OPERecent_NearbyViewController ()
 
@@ -29,9 +30,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	OPEManagedOsmElement * element = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:self.managedObjectID];
     
-    nearbyDictionary = [element nearbyValuesForOsmKey:self.osmKey];
+    //nearbyDictionary = [self.element nearbyValuesForOsmKey:self.osmKey];
+    nearbyDictionary = [OPEOSMSearchManager nearbyValuesForElement:self.element withOsmKey:self.osmKey];
     
     if (nearbyDictionary) {
         NSMutableArray * array = [NSMutableArray array];

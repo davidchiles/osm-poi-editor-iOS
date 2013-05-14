@@ -34,4 +34,6 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier array:(NSArray *)array withTextWidth:(float)textWidth;
 -(void)selectSegmentWithTitle:(NSString *)title;
 
+-(void)setupBinaryControl:(NSArray *)array;
+
 @end

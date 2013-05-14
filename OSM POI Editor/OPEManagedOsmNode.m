@@ -10,10 +10,19 @@
 
 
 @implementation OPEManagedOsmNode
+@synthesize element;
+
+-(id)initWithDictionary:(NSDictionary *)dictionary
+{
+    if (self = [super initWithDictionary:dictionary]) {
+        self.element = [[Node alloc] initWithDictionary:dictionary];
+    }
+    return self;
+}
 
 -(CLLocationCoordinate2D) center
 {
-    return CLLocationCoordinate2DMake(self.latitudeValue, self.longitudeValue);
+    return [self.element coordinate];
 }
 
 -(NSData *) uploadXMLforChangset:(int64_t)changesetNumber
@@ -36,11 +45,11 @@
     NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
     [xml appendString:@"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"];
     
-    if (self.osmIDValue < 0) {
-        [xml appendFormat:@"<node lat=\"%f\" lon=\"%f\" changeset=\"%lld\">",self.latitudeValue,self.longitudeValue, changesetNumber];
+    if (self.element.elementID < 0) {
+        [xml appendFormat:@"<node lat=\"%f\" lon=\"%f\" changeset=\"%lld\">",self.element.latitude,self.element.longitude, changesetNumber];
     }
     else{
-        [xml appendFormat:@"<node id=\"%lld\" lat=\"%f\" lon=\"%f\" version=\"%lld\" changeset=\"%lld\">",self.osmIDValue,self.latitudeValue,self.longitudeValue,self.versionValue, changesetNumber];
+        [xml appendFormat:@"<node id=\"%lld\" lat=\"%f\" lon=\"%f\" version=\"%lld\" changeset=\"%lld\">",self.element.elementID,self.element.latitude,self.element.longitude,self.element.version, changesetNumber];
     }
     
     if (tags) {
@@ -52,12 +61,9 @@
     return xml;
 }
 
--(BOOL)memberOfOtherElement
+-(NSString *)idKeyPrefix
 {
-    if ([self.ways count]) {
-        return YES;
-    }
-    return [super memberOfOtherElement];
+    return @"n";
 }
 
 -(NSString *)osmType
@@ -67,10 +73,9 @@
 
 +(OPEManagedOsmNode *)newNode
 {
-    OPEManagedOsmNode * newNode = [OPEManagedOsmNode MR_createEntity];
-    newNode.osmIDValue = [OPEManagedOsmElement minID]-1;
-    
-    return newNode;
+    OPEManagedOsmNode * node = [[OPEManagedOsmNode alloc] init];
+    node.element = [[Node alloc] init];
+    return node;
 }
 
 @end

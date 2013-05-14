@@ -169,4 +169,17 @@
     return nil;
 }
 
++(NSString *)appVersion
+{
+    return [NSString stringWithFormat:@"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+}
++(NSString *)iOSVersion
+{
+    return [NSString stringWithFormat:@"%@ %@",[UIDevice currentDevice].systemName,[UIDevice currentDevice].systemVersion];
+}
++(NSString *)tileSourceName
+{
+    return [[self currentTileSource] shortName];
+}
+
 @end

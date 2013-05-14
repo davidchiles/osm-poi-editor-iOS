@@ -4,7 +4,6 @@
 #import "OPEManagedOsmWay.h"
 #import "OPEManagedOsmNode.h"
 #import "OPEGeo.h"
-#import "OPEManagedOsmNodeReference.h"
 #import "OPEManagedOsmRelation.h"
 
 #import "OPEManagedOsmTag.h"
@@ -19,6 +18,31 @@
 
 
 @implementation OPEManagedOsmElement
+@synthesize typeID,type,isVisible,element,action;
+@synthesize idKeyPrefix,idKey;
+
+-(id)init
+{
+    if (self = [super init]) {
+        self.isVisible = YES;
+    }
+    return self;
+}
+-(id)initWithDictionary:(NSDictionary *)dictionary
+{
+    if (self = [self init]) {
+        //self.element = [[Element alloc] initWithDictionary:dictionary];
+        self.isVisible = dictionary[@"isVisible"];
+        
+        self.action = dictionary[@"action"];
+        if ([dictionary[@"poi_id"] isKindOfClass:[NSNumber class]]) {
+            self.typeID = [dictionary[@"poi_id"] intValue];
+        }
+        
+    }
+    return self;
+    
+}
 
 -(CLLocationCoordinate2D)center
 {
@@ -27,96 +51,31 @@
 
 -(NSString *)valueForOsmKey:(NSString *)osmKey
 {
-    NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"key == %@",osmKey];
-    NSSet * filteredSet = [self.tags filteredSetUsingPredicate:tagFilter];
-    if ([filteredSet count]) {
-        OPEManagedOsmTag * tag = [filteredSet anyObject];
-        return tag.value;
-    }
-    return @"";
+    return self.element.tags[osmKey];
 }
 
--(NSString *)name
+-(int64_t)elementID
 {
-    NSString * possibleName = [self valueForOsmKey:@"name"];
-    if ([possibleName length]) {
-        return possibleName;
-    }
-    else if (self.type)
-    {
-        return self.type.name;
-    }
-    else
-    {
-        return @"";
-    }
+    return self.element.elementID;
 }
--(void)addKey:(NSString *)key value:(NSString *)value
+-(void)setElementID:(int64_t)elementID
 {
-    [self removeTagWithOsmKey:key];
-    OPEManagedOsmTag * newTag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
-    [self.tagsSet addObject:newTag];
+    self.element.elementID = elementID;
 }
 
 -(NSString *)tagsXML
 {
     NSMutableString * xml = [NSMutableString stringWithString:@""];
-    for (OPEManagedOsmTag *tag in self.tags)
+    for (NSString *osmKey in self.element.tags)
     {
-        [xml appendFormat:@"<tag k=\"%@\" v=\"%@\"/>",tag.key,[OPEUtility addHTML:tag.value]];
+        [xml appendFormat:@"<tag k=\"%@\" v=\"%@\"/>",osmKey,[OPEUtility addHTML:self.element.tags[osmKey]]];
     }
     return xml;
 }
 
--(BOOL)findType
-{
-    if ([self.tags count]) {
-        
-        
-        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(SUBQUERY(tags, $tag, $tag IN %@).@count == tags.@count)",self.tags];
-       // NSArray * matches = [OPEManagedReferencePoi MR_findAllSortedBy:OPEManagedReferencePoiAttributes.isLegacy ascending:NO withPredicate:predicate];
-        NSFetchRequest * request = [OPEManagedReferencePoi MR_requestAllSortedBy:OPEManagedReferencePoiAttributes.isLegacy ascending:NO withPredicate:predicate];
-        [request setFetchLimit:1];
-        [request setFetchBatchSize:2];
-        
-        OPEManagedReferencePoi * newType = [OPEManagedReferencePoi MR_executeFetchRequestAndReturnFirstObject:request];
-        
-        
-        if (newType) {
-            
-            self.type =newType;
-            return YES;
-        }
-    }
-    
-    return NO;
-    
-}
-
--(void)removeTagWithOsmKey:(NSString *)osmKey
-{
-    NSPredicate * keyFilter = [NSPredicate predicateWithFormat:@"%K == %@",OPEManagedOsmTagAttributes.key,osmKey];
-    NSSet * removeSet = [self.tags filteredSetUsingPredicate:keyFilter];
-    [self.tagsSet minusSet:removeSet];
-}
-
--(void)newType:(OPEManagedReferencePoi *)newType
-{
-    if (self.type) {
-        [self.tagsSet minusSet:self.type.tags];
-    }
-    [self.tagsSet unionSet:newType.tags];
-    self.type = newType;
-}
-
 -(NSString *)tagsDescription
 {
-    NSMutableString * string = [NSMutableString stringWithString:@""];
-    for (OPEManagedOsmTag * tag in self.tags)
-    {
-        [string appendFormat:@"\n%@ = %@",tag.key,tag.value];
-    }
-    return string;
+    return @"";
 }
 
 -(NSString *)description
@@ -129,219 +88,42 @@
     return kOPEOsmElementNone;
 }
 
-+(NSInteger) minID
+-(NSString *)idKey
 {
-    NSFetchRequest * request = [OPEManagedOsmElement MR_requestAllSortedBy:OPEManagedOsmElementAttributes.osmID ascending:YES];
-    request.fetchLimit = 1;
-    
-    NSArray * results = [OPEManagedOsmElement MR_executeFetchRequest:request];
-    if ([results count]) {
-        OPEManagedOsmElement * element = [results lastObject];
-        if (element.osmIDValue < 0) {
-            return  element.osmIDValue;
-        }
-    }
-    return 0;
+    return [NSString stringWithFormat:@"%@%lld",self.idKeyPrefix,self.elementID];
 }
 
--(NSDictionary *)nearbyValuesForOsmKey:(NSString *)osmKey
++(OPEManagedOsmElement *)elementWithBasicOsmElement:(Element *)element
 {
-    NSDictionary * values = nil;
-    if ([osmKey isEqualToString:@"addr:street"]) {
-        values = [self nearbyHighwayNames];
+    if ([element isKindOfClass:[Node class]]) {
+        OPEManagedOsmNode * node = [[OPEManagedOsmNode alloc] init];
+        node.element = (Node *)element;
+        return node;
     }
-    else if ([osmKey isEqualToString:@"addr:city"]) {
-        values = [self nearbyCities];
+    else if ([element isKindOfClass:[Way class]]) {
+        OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] init];
+        way.element = (Way *)element;
+        return way;
     }
-    else if ([osmKey isEqualToString:@"addr:state"])
-    {
-        values = [self nearbyStates];
+    else if ([element isKindOfClass:[Relation class]]) {
+        OPEManagedOsmRelation * relation = [[OPEManagedOsmRelation alloc] init];
+        relation.element = (Relation *)element;
+        return relation;
     }
-    else if ([osmKey isEqualToString:@"addr:province"])
-    {
-        values = [self nearbyProvinces];
-    }
-    else if ([osmKey isEqualToString:@"addr:postcode"])
-    {
-        values = [self nearbyPostcodes];
-    }
-    
-    
-    return values;
-}
-+(NSArray *)allElementsWithTag:(OPEManagedOsmTag *)tag
-{
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"%@ IN self.tags",tag];
-    
-    return [OPEManagedOsmElement MR_findAllWithPredicate:predicate];
+    return nil;
 }
 
--(NSDictionary *)nearbyCities
-{
-    NSArray *values = [OPEManagedOsmTag uniqueValuesForOsmKeys:@[@"addr:city"]];
-    
-    OPEManagedOsmTag * cityTag = [OPEManagedOsmTag fetchOrCreateWithKey:@"place" value:@"city"];
-    
-    NSArray * cities = [OPEManagedOsmElement allElementsWithTag:cityTag];
-    NSArray *cityNames = [cities valueForKey:@"name"];
-    
-    NSMutableSet * allCityNamesSet = [NSMutableSet setWithArray:values];
-    [allCityNamesSet addObjectsFromArray:cityNames];
-    
-    NSNumber * num = [NSNumber numberWithInt:-1];
-    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
-    for (NSString * name in allCityNamesSet)
-    {
-        [dictionary setObject:num forKey:name];
-    }
-    
-    return dictionary;
-}
--(NSDictionary *)nearbyStates
-{
-    NSArray *values = [OPEManagedOsmTag uniqueValuesForOsmKeys:@[@"addr:state"]];
-    NSArray *uppercaseStrings = [values valueForKey:@"uppercaseString"];
-    
-    NSNumber * num = [NSNumber numberWithInt:-1];
-    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
-    for (NSString * name in uppercaseStrings)
-    {
-        [dictionary setObject:num forKey:name];
-    }
-    
-    return dictionary;
-    
-    
-}
--(NSDictionary *)nearbyProvinces
-{
-    NSArray *values = [OPEManagedOsmTag uniqueValuesForOsmKeys:@[@"addr:province"]];
-    
-    NSNumber * num = [NSNumber numberWithInt:-1];
-    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
-    for (NSString * name in values)
-    {
-        [dictionary setObject:num forKey:name];
-    }
-    
-    return dictionary;
-}
--(NSDictionary *)nearbyPostcodes
-{
-    NSArray *values = [OPEManagedOsmTag uniqueValuesForOsmKeys:@[@"addr:postcode",@"tiger:zip_left",@"tiger:zip_right"]];
-    
-    NSNumber * num = [NSNumber numberWithInt:-1];
-    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
-    for (NSString * name in values)
-    {
-        [dictionary setObject:num forKey:name];
-    }
-    
-    return dictionary;
-}
-
--(double)minDistanceTo:(OPEManagedOsmWay *)way
-{
-    double distance = DBL_MAX;
-    for (NSInteger index = 0; index<[way.orderedNodes count]-1; index++) {
-        OPEManagedOsmNode * node1 = ((OPEManagedOsmNodeReference *)[way.orderedNodes objectAtIndex:index]).node;
-        OPEManagedOsmNode * node2 = ((OPEManagedOsmNodeReference *)[way.orderedNodes objectAtIndex:index+1]).node;
-        OPELineSegment line = [OPEGeo lineSegmentFromPoint:[node1 center] toPoint:[node2 center]];
-        
-        double tempDistance  =  [OPEGeo distanceFromlineSegment:line toPoint:[self center]];
-        distance = MIN(distance, tempDistance);
-        
-        
-    }
-    return distance;
-    
-}
-
--(NSDictionary *)nearbyHighwayNames
-{
-    NSPredicate * tagPredicate = [NSPredicate predicateWithFormat:@"%K == %@",OPEManagedOsmTagAttributes.key,@"highway"];
-    NSArray * tags = [OPEManagedOsmTag MR_findAllWithPredicate:tagPredicate];
-    
-    NSPredicate * prediacte = [NSPredicate predicateWithFormat:@"(SUBQUERY(tags, $tag, $tag IN %@).@count >0)",tags];
-    
-    
-    NSArray * ways = [OPEManagedOsmWay MR_findAllWithPredicate:prediacte];
-    
-    NSMutableDictionary * highwayDictionary = [NSMutableDictionary dictionary];
-    
-    for (OPEManagedOsmWay * way in ways)
-    {
-        NSString * wayName = [way valueForOsmKey:@"name"];
-        if ([wayName length]) {
-            double wayDistance = [self minDistanceTo:way];
-            
-            if (wayDistance < 20000) {
-                if (![highwayDictionary objectForKey:wayName]) {
-                    [highwayDictionary setObject:[NSNumber numberWithDouble:wayDistance] forKey:wayName];
-                }
-                else
-                {
-                    double tempDistance = [[highwayDictionary objectForKey:wayName] doubleValue];
-                    double distance = MIN(tempDistance, wayDistance);
-                    [highwayDictionary setObject:[NSNumber numberWithDouble:distance] forKey:wayName];
-                }
-
-            }
-            
-                    }
-    }
-    
-    return highwayDictionary;
-}
-
--(void)updateLegacyTags
-{
-    if (self.type.isLegacyValue && self.type.newTagMethod) {
-        OPEManagedReferencePoi * newType = self.type.newTagMethod;
-        for (OPEManagedOsmTag * tag in newType.tags)
-        {
-            [self addKey:tag.key value:tag.value];
-        }
-        self.type = newType;
-        
-    }
-    
-    
-}
--(BOOL)memberOfOtherElement
-{
-    if ([self.parentRelations count]) {
-        return YES;
-    }
-    return NO;
-}
-
-+(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID
-{
-    Class class = self;
-    
-    OPEManagedOsmElement * element = [class MR_findFirstByAttribute:OPEManagedOsmElementAttributes.osmID withValue:[NSNumber numberWithLongLong:ID]];
-    
-    if (!element) {
-        element = [class MR_createEntity];
-        element.osmIDValue = ID;
-    }
-    
-    return element;
-    
-}
-
-+(OPEManagedOsmElement *)fetchOrCreateWithOsmID:(int64_t)ID type:(NSString *)typeString
++(OPEManagedOsmElement *)elementWithType:(NSString *)elementTypeString withDictionary:(NSDictionary *)dictionary;
 {
     OPEManagedOsmElement * element = nil;
-    if ([typeString isEqualToString:kOPEOsmElementNode]) {
-        element = [OPEManagedOsmNode fetchOrCreateWithOsmID:ID];
+    if ([elementTypeString isEqualToString:kOPEOsmElementNode]) {
+        element = [[OPEManagedOsmNode alloc] initWithDictionary:dictionary];
     }
-    else if ([typeString isEqualToString:kOPEOsmElementWay]) {
-        element = [OPEManagedOsmWay fetchOrCreateWithOsmID:ID];
+    else if ([elementTypeString isEqualToString:kOPEOsmElementWay]) {
+        element = [[OPEManagedOsmWay alloc] initWithDictionary:dictionary];
     }
-    else if ([typeString isEqualToString:kOPEOsmElementRelation]) {
-        element = [OPEManagedOsmRelation fetchOrCreateWithOsmID:ID];
+    else if ([elementTypeString isEqualToString:kOPEOsmElementRelation]) {
+        element = [[OPEManagedOsmRelation alloc] initWithDictionary:dictionary];
     }
     return element;
 }

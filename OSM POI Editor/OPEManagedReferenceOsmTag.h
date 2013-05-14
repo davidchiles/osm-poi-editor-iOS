@@ -1,8 +1,10 @@
-#import "_OPEManagedReferenceOsmTag.h"
+#import "OPEManagedOsmTag.h"
 
-@interface OPEManagedReferenceOsmTag : _OPEManagedReferenceOsmTag {}
+@interface OPEManagedReferenceOsmTag : OPEManagedOsmTag {}
 
 
-+(OPEManagedReferenceOsmTag *)fetchOrCreateWithName:(NSString *)name key:(NSString *)key value:(NSString *)value;
+@property (nonatomic,strong) NSString * name;
+
+-(NSString *)sqliteInsertString;
 
 @end

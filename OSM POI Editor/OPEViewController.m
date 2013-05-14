@@ -42,6 +42,7 @@
 #import "OPEGeo.h"
 #import "OPEGeoCentroid.h"
 
+
 #define noNameTag 100
 
 
@@ -79,6 +80,8 @@
     UIBarButtonItem * addBarButton;
     UIBarButtonItem * settingsBarButton;
     
+    
+    
     locationBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"location.png"]style:UIBarButtonItemStylePlain target:self action:@selector(locationButtonPressed:)];
     
     
@@ -112,7 +115,9 @@
     [self.navigationController setToolbarHidden:NO animated:NO];
     //Check OAuth
     
-    mapView = [[RMMapView alloc] initWithFrame:self.view.bounds];
+    id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
+    
+    mapView = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:newTileSource];
     mapView.showLogoBug = NO;
     mapView.hideAttribution = YES;
     mapView.userTrackingMode = RMUserTrackingModeFollow;
@@ -157,11 +162,6 @@
     //[mapView setCenterCoordinate:initLocation animated:YES];
     
     [mapView setZoom: 18];
-    id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
-    
-    
-    
-    [self setTileSource:newTileSource];
     
     currentSquare = [mapView latitudeLongitudeBoundingBox];
     
@@ -170,6 +170,9 @@
     message.userInteractionEnabled = NO;
     
     imagesDic = [[NSMutableDictionary alloc] init];
+    
+    downloadedNoNameHighways = [NSMutableDictionary dictionary];
+    searchManager = [[OPEOSMSearchManager alloc] init];
 }
 
 - (UIImage*)imageWithBorderFromImage:(UIImage*)source  //Draw box around centered image
@@ -205,9 +208,8 @@
     return newImage;
 }
 
--(RMMarker *)markerWithManagedObjectID:(NSManagedObjectID *)managedObjectID
+-(RMMarker *)markerWithManagedObjectID:(OPEManagedOsmElement *)managedOsmElement
 {
-    OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:managedObjectID];
     UIImage * icon = nil;
     if (managedOsmElement.type) {
         if ([imagesDic objectForKey:managedOsmElement.type.imageString]) {
@@ -223,7 +225,7 @@
         }
     }
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
-    newMarker.userInfo = managedObjectID;
+    newMarker.userInfo = managedOsmElement;
     newMarker.zPosition = 0.2;
     return newMarker;
 }
@@ -231,7 +233,7 @@
 -(RMShape *) shapeForNoNameStreet:(OPEManagedOsmWay *)osmWay
 {
     RMShape * line = [[RMShape alloc]initWithView:mapView];
-    NSArray * points = osmWay.points;
+    NSArray * points = [self.osmData pointsForWay:osmWay];
     
     [line performBatchOperations:^(RMShape *aShape) {
             [aShape moveToCoordinate:((CLLocation *)[points objectAtIndex:0]).coordinate];
@@ -252,17 +254,16 @@
 
 -(RMMapLayer *) mapView:(RMMapView *)mView layerForAnnotation:(RMAnnotation *)annotation
 {
-    NSManagedObjectID * managedObjectID = annotation.userInfo;
     
-    OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:managedObjectID];
+    OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)annotation.userInfo;;
     if ([managedOsmElement isKindOfClass:[OPEManagedOsmWay class]]) {
-        if (((OPEManagedOsmWay *)managedOsmElement).isNoNameStreetValue) {
+        if (((OPEManagedOsmWay *)managedOsmElement).isNoNameStreet) {
             return [self shapeForNoNameStreet:(OPEManagedOsmWay *)managedOsmElement];
         }
     }
     
     
-    RMMarker * marker = [self markerWithManagedObjectID:managedObjectID];
+    RMMarker * marker = [self markerWithManagedObjectID:managedOsmElement];
     marker.canShowCallout = YES;
     marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     
@@ -272,8 +273,10 @@
 -(NSArray *)annotationWithOsmElement:(OPEManagedOsmElement *)managedOsmElement
 {
     //NSLog(@"center: %@",[managedOsmElement center]);
-    RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[managedOsmElement center] andTitle:[managedOsmElement name]];
-    NSMutableString * subtitleString = [NSMutableString stringWithFormat:@"%@",managedOsmElement.type.category.name];
+    [self.osmData getTypeFor:managedOsmElement];
+    RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[self.osmData centerForElement:managedOsmElement] andTitle:[self.osmData nameForElement:managedOsmElement]];
+    
+    NSMutableString * subtitleString = [NSMutableString stringWithFormat:@"%@",managedOsmElement.type.categoryName];
     
     if ([[managedOsmElement valueForOsmKey:@"name"] length]) {
         [subtitleString appendFormat:@" - %@",managedOsmElement.type.name];
@@ -281,12 +284,12 @@
     annotation.subtitle = subtitleString;
     
     
-    annotation.userInfo = [managedOsmElement objectID];
+    annotation.userInfo = managedOsmElement;
     
     if ([managedOsmElement isKindOfClass:[OPEManagedOsmRelation class]]) {
         OPEManagedOsmRelation * managedRelation = (OPEManagedOsmRelation *)managedOsmElement;
         
-        NSArray * outerPolygonArray = [managedRelation outerPolygons];
+        NSArray * outerPolygonArray = [self.osmData outerPolygonsForRelation:managedRelation];
         
         NSMutableArray * annotationsArray = [NSMutableArray array];
         for (NSArray * pointsArray in outerPolygonArray)
@@ -325,8 +328,8 @@
 
 -(RMAnnotation *)shapeForRelation:(OPEManagedOsmRelation *)relation
 {
-    NSArray * outerPoints = [relation outerPolygons];
-    NSArray * innerPoints = [relation innerPolygons];
+    NSArray * outerPoints = [self.osmData outerPolygonsForRelation:relation];
+    NSArray * innerPoints = [self.osmData innerPolygonsForRelation:relation];
     
     if (![outerPoints count]) {
         return nil;
@@ -384,7 +387,7 @@
 -(RMAnnotation *)shapeForWay:(OPEManagedOsmWay *)way
 {
     
-    NSArray * points = [way points];
+    NSArray * points = [self.osmData pointsForWay:way];
     
     RMAnnotation * newAnnotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:((CLLocation *)[points objectAtIndex:0]).coordinate andTitle:nil];
     
@@ -419,14 +422,15 @@
     
     [self removeNonameView];
     
-    id osmElement = [OPEMRUtility managedObjectWithID:annotation.userInfo];
+    id osmElement = annotation.userInfo;
     
     if ([osmElement isKindOfClass:[OPEManagedOsmWay class]]) {
         OPEManagedOsmWay * osmWay = (OPEManagedOsmWay *)osmElement;
-        if (osmWay.isNoNameStreetValue) {
+        if (osmWay.isNoNameStreet) {
             
             self.selectedNoNameHighway = annotation;
-            [self showNoNameViewWithType:[NSString stringWithFormat:@"%@ - missing name",[osmWay highwayType]]];
+            [self centerOnOsmWay:osmWay];
+            [self showNoNameViewWithType:[NSString stringWithFormat:@"%@ - missing name",[self.osmData highwayTypeForOsmWay:osmWay]]];
             return;
         }
         
@@ -454,6 +458,13 @@
     [self presentNodeInfoViewControllerWithElement:annotation.userInfo];
 }
 
+-(void)centerOnOsmWay:(OPEManagedOsmWay *)way
+{
+    NSArray * points = [self.osmData pointsForWay:way];
+    NSInteger centerPoint = floor([points count]/2.0);
+    mapView.centerCoordinate = ((CLLocation *)[points objectAtIndex:centerPoint]).coordinate;
+}
+
 -(void)showNoNameViewWithType:(NSString *)type;
 {
     CGFloat height = 50.0;
@@ -476,7 +487,7 @@
         
     }
     [UIView commitAnimations];
-    [nameView.textField becomeFirstResponder];
+    //[nameView.textField becomeFirstResponder];
     
 }
 
@@ -513,12 +524,9 @@
         [self.view endEditing:YES];
         [self startSave];
         
-        OPEManagedOsmTag * tag = [OPEManagedOsmTag fetchOrCreateWithKey:@"name" value:value];
-        OPEManagedOsmElement * managedElement = (OPEManagedOsmElement*)[OPEMRUtility managedObjectWithID:self.selectedNoNameHighway.userInfo];
-        [managedElement addTagsObject:tag];
+        OPEManagedOsmElement * managedElement = (OPEManagedOsmElement*)self.selectedNoNameHighway.userInfo;
+        [managedElement.element.tags setObject:value forKey:@"name"];
         managedElement.action = kActionTypeModify;
-        NSManagedObjectContext * context = [NSManagedObjectContext MR_contextForCurrentThread];
-        [context MR_saveToPersistentStoreAndWait];
         
         [self.osmData uploadElement:managedElement];
     }
@@ -636,12 +644,11 @@
     if (mapView.zoom > MINZOOM) {
         
         OPEManagedOsmNode * node = [OPEManagedOsmNode newNode];
-        node.latitudeValue = center.latitude;
-        node.longitudeValue = center.longitude;
+        node.element.elementID = [self.osmData newElementId];
+        node.element.latitude = center.latitude;
+        node.element.longitude = center.longitude;
         
-        [OPEMRUtility saveAll];
-        
-        [self presentNodeInfoViewControllerWithElement:node.objectID];
+        [self presentNodeInfoViewControllerWithElement:node];
     }
     else {
         UIAlertView * zoomAlert = [[UIAlertView alloc]
@@ -693,9 +700,9 @@
     [[self navigationController] pushViewController:viewer animated:YES];
 }
 
--(void)presentNodeInfoViewControllerWithElement:(NSManagedObjectID *)elementID
+-(void)presentNodeInfoViewControllerWithElement:(OPEManagedOsmElement *)element
 {
-    OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithOsmElementObjectID:elementID delegate:self];
+    OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithOsmElement:element delegate:self];
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:nodeViewController];
     
     [self.navigationController presentModalViewController:navController animated:YES];
@@ -719,9 +726,15 @@
     [self.navigationController setToolbarHidden:NO animated:YES];
     //[self.navigationController setNavigationBarHidden:YES animated:YES];
     //[self.navigationController setToolbarHidden:NO animated:YES];
-    [self updateAllAnnotations];
+    //[self updateAllAnnotations];
     [self setupButtons];
     userPressedLocatoinButton = NO;
+    
+    [self removeAllNoNameStreets];
+    if ([[OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey] boolValue]) {
+        [self addAllNoNameStreets];
+    }
+    
     
 }
 
@@ -753,33 +766,10 @@
     }
 }
 
--(void)updateAllAnnotations
-{
-    [mapView removeAllAnnotations];
-    for (OPEManagedOsmElement * element in [self.osmElementFetchedResultsController fetchedObjects])
-    {
-        [self updateOsmElementWithID:element.objectID];
-    }
-    
-    if ([self showNoNameStreets]) {
-        for (OPEManagedOsmElement * element in [self.noNameStreetsFetchedResultsController fetchedObjects])
-        {
-            [self updateOsmElementWithID:element.objectID];
-        }
-    }
-    else
-    {
-        _noNameStreetsFetchedResultsController.delegate = nil;
-        _noNameStreetsFetchedResultsController = nil;
-    }
-}
-
 #pragma FetchedResultsController
 
--(void)updateOsmElementWithID:(NSManagedObjectID *)objectID
-{
-    [self removeAnnotationWithOsmElementID:objectID];
-    OPEManagedOsmElement * element = (OPEManagedOsmElement *)[OPEMRUtility managedObjectWithID:objectID];
+-(void)updateAnnotationForOsmElement:(OPEManagedOsmElement *)element{
+    [self removeAnnotationWithOsmElementIDKey:element.idKey];
     if (![element.action isEqualToString:kActionTypeDelete]) {
         NSArray * annotationsArray = [self annotationWithOsmElement:element];
         for(RMAnnotation * annotation in annotationsArray)
@@ -789,18 +779,18 @@
     
 }
 
--(void)removeAnnotationWithOsmElementID:(NSManagedObjectID *)objectID
+-(void)removeAnnotationWithOsmElementIDKey:(NSString *)idKey
 {
-    NSSet * annotationSet = [self annotationsForOsmElementID:objectID];
+    NSSet * annotationSet = [self annotationsForOsmElementIDKey:idKey];
     if ([annotationSet count])
     {
         [mapView removeAnnotations:[annotationSet allObjects]];
     }
 }
 
--(NSSet *)annotationsForOsmElementID:(NSManagedObjectID *)objectID
+-(NSSet *)noNameHighwayAnnotaitons
 {
-    NSIndexSet * indexSet = [self indexesOfOsmElementID:objectID];
+    NSIndexSet * indexSet = [self indexesOfNoNameHighways];
     NSMutableSet * annotationSet = [NSMutableSet set];
     
     [indexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
@@ -810,66 +800,84 @@
     return annotationSet;
 }
 
--(NSIndexSet *)indexesOfOsmElementID:(NSManagedObjectID *)objectID
+-(NSSet *)annotationsForOsmElementIDKey:(NSString *)idKey;
+{
+    NSIndexSet * indexSet = [self indexesOfOsmElementIDKey:idKey];
+    NSMutableSet * annotationSet = [NSMutableSet set];
+    
+    [indexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [annotationSet addObject:[mapView.annotations objectAtIndex:idx]];
+    }];
+    
+    return annotationSet;
+}
+
+-(NSIndexSet *)indexesOfOsmElementIDKey:(NSString *)idKey;
 {
     NSIndexSet * set = [mapView.annotations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         RMAnnotation * annotation = (RMAnnotation *)obj;
-        return [annotation.userInfo isEqual:objectID];
+        OPEManagedOsmElement * element = annotation.userInfo;
+        return [element.idKey isEqualToString:idKey];
+    }];
+    return set;
+}
+-(NSIndexSet *)indexesOfNoNameHighways
+{
+    NSIndexSet * set = [mapView.annotations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        RMAnnotation * annotation = (RMAnnotation *)obj;
+        if ([annotation.userInfo isKindOfClass:[OPEManagedOsmWay class]]) {
+            OPEManagedOsmWay * element = annotation.userInfo;
+            if (element.isNoNameStreet) {
+                return YES;
+            }
+
+        }
+        return NO;
     }];
     return set;
 }
 
--(NSFetchedResultsController *)osmElementFetchedResultsController
+-(void)removeAllNoNameStreets
 {
-    if(_osmElementFetchedResultsController)
-        return _osmElementFetchedResultsController;
-    
-    NSPredicate * osmElementFilter = [NSPredicate predicateWithFormat:@"type != nil AND isVisible == YES AND action!=%@",kActionTypeDelete];
-    
-    _osmElementFetchedResultsController = [OPEManagedOsmElement MR_fetchAllGroupedBy:nil withPredicate:osmElementFilter sortedBy:OPEManagedOsmElementAttributes.osmID ascending:NO delegate:self];
-    
-    return _osmElementFetchedResultsController;
-}
-
--(NSFetchedResultsController *)noNameStreetsFetchedResultsController
-{
-    if(_noNameStreetsFetchedResultsController)
-        return _noNameStreetsFetchedResultsController;
-    
-    NSPredicate * noNameFilter = [NSPredicate predicateWithFormat:@"%K == YES",OPEManagedOsmWayAttributes.isNoNameStreet];
-    
-    _noNameStreetsFetchedResultsController = [OPEManagedOsmWay MR_fetchAllGroupedBy:nil withPredicate:noNameFilter sortedBy:OPEManagedOsmElementAttributes.osmID ascending:NO delegate:self];
-    
-    return _noNameStreetsFetchedResultsController;
+    NSSet * annotationSet = [self noNameHighwayAnnotaitons];
+    if ([annotationSet count])
+    {
+        [mapView removeAnnotations:[annotationSet allObjects]];
+    }
     
 }
-
--(void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+-(void)addAllNoNameStreets
 {
-    switch (type) {
-        case NSFetchedResultsChangeInsert:
+    NSArray * allNoNameHighways =[searchManager noNameHighways];
+    for (OPEManagedOsmWay * way in allNoNameHighways)
+    {
+        NSArray * annotationsArray = [self annotationWithOsmElement:way];
+        for (RMAnnotation * annotation in annotationsArray)
         {
-            OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:newIndexPath];
-            [self updateOsmElementWithID:managedOsmElement.objectID];
+             [mapView addAnnotation:annotation];
         }
-            break;
-        case NSFetchedResultsChangeMove:
-            break;
-        case NSFetchedResultsChangeUpdate:
-        {
-            OPEManagedOsmElement * managedOsmElement = [controller objectAtIndexPath:indexPath];
-            [self updateOsmElementWithID:managedOsmElement.objectID];
-        }
-            break;
-        case NSFetchedResultsChangeDelete:
-            break;
-            
-        default:
-            break;
     }
 }
 
 #pragma OPEOsmDataDelegate
+
+-(void)didFindNewElements:(NSArray *)newElementsArray updatedElements:(NSArray *)updatedElementsArray
+{
+    for(OPEManagedOsmElement * element in newElementsArray)
+    {
+        NSArray * annotationsArray = [self annotationWithOsmElement:element];
+        for (RMAnnotation * annotation in annotationsArray)
+        {
+            [mapView addAnnotation:annotation];
+        }
+        
+    }
+    
+    for(OPEManagedOsmElement * element in updatedElementsArray)
+    {
+        [self updateAnnotationForOsmElement:element];
+    }
+}
 
 -(void)didCloseChangeset:(int64_t)changesetNumber
 {
@@ -916,6 +924,22 @@
         [self.parsingMessageView removeFromSuperview];
         self.parsingMessageView = nil;
     }
+}
+
+-(void)didEndParsing
+{
+    /*
+    NSArray * elementsArray = [self.osmData allElementsWithType:YES];
+    for(OPEManagedOsmElement * element in elementsArray)
+    {
+        NSArray * annotationsArray = [self annotationWithOsmElement:element];
+        for (RMAnnotation * annotation in annotationsArray)
+        {
+            [mapView addAnnotation:annotation];
+        }
+        
+    }
+    */
 }
 
 -(void)downloadFailed:(NSError *)error

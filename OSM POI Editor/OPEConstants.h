@@ -28,12 +28,22 @@
 
 #define kTypeText @"text"
 #define KTypeName @"name"
-#define kTypeBinary @"binary"
 #define kTypeList @"list"
 #define kTypeLabel @"label"
 #define kTypeNumber @"number"
 #define kTypeUrl @"url"
 #define kTypePhone @"phone"
+
+typedef enum{
+    OPEOptionalTypeNone,
+    OPEOptionalTypeList,
+    OPEOptionalTypeText,
+    OPEOptionalTypeName,
+    OPEOptionalTypeLabel,
+    OPEOptionalTypeNumber,
+    OPEOptionalTypeUrl,
+    OPEOptionalTypePhone
+}OPEOptionalType;
 
 #define kLeftTextDefaultSize 76
 #define kOPEAPIURL @"http://www.overpass-api.de/api/xapi?*"
@@ -66,6 +76,7 @@
 
 #define kOTRAppleLanguagesKey @"AppleLanguages"
 #define kOTRUserSetLanguageKey @"userSetLanguageKey"
+#define kDatabasePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"spatialdb.sqlite"]
 
 
 

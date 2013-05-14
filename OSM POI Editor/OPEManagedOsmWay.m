@@ -3,7 +3,6 @@
 #import "OPEManagedOsmTag.h"
 #import "OPEGeo.h"
 #import "OPEGeoCentroid.h"
-#import "OPEManagedOsmNodeReference.h"
 
 
 @interface OPEManagedOsmWay ()
@@ -15,47 +14,25 @@
 
 @implementation OPEManagedOsmWay
 
--(CLLocationCoordinate2D)center
+@synthesize points = _points;
+
+-(id)initWithDictionary:(NSDictionary *)dictionary
 {
-    if (self.isNoNameStreetValue) {
-        return ((CLLocation *)[self.points objectAtIndex:0]).coordinate;
+    if (self = [super initWithDictionary:dictionary]) {
+        self.element = [[Way alloc] initWithDictionary:dictionary];
     }
-    
-    if([self.orderedNodes count])
-    {
-        //double centerLat=0.0;
-        //double centerLon=0.0;
-        
-        //centerLat = [[self.nodes valueForKeyPath:@"@sum.latitude"] doubleValue];
-        //centerLon = [[self.nodes valueForKeyPath:@"@sum.longitude"] doubleValue];
-        
-        //return CLLocationCoordinate2DMake(centerLat/[self.nodes count], centerLon/[self.nodes count]);
-        
-        NSMutableArray * array = [NSMutableArray array];
-        for (OPEManagedOsmNodeReference * nodeRef in self.orderedNodes)
-        {
-            OPEManagedOsmNode * node = nodeRef.node;
-            [array addObject:[[CLLocation alloc] initWithLatitude:node.latitudeValue longitude:node.longitudeValue]];
-        }
-        
-        
-        //CLLocationCoordinate2D center = [OPEGeo centroidOfPolygon:array];
-        CLLocationCoordinate2D center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:array];
-        return center;
-    }
-    return CLLocationCoordinate2DMake(0, 0);
+    return self;
 }
 
 -(NSData *) uploadXMLforChangset:(int64_t)changesetNumber
 {
     NSMutableString * xml = [NSMutableString stringWithFormat: @"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
     [xml appendString:[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"]];
-    [xml appendFormat:@"<way id=\"%lld\" version=\"%lld\" changeset=\"%lld\">",self.osmIDValue,self.versionValue, changesetNumber];
+    [xml appendFormat:@"<way id=\"%lld\" version=\"%lld\" changeset=\"%lld\">",self.element.elementID,self.element.version, changesetNumber];
     
-    for(OPEManagedOsmNodeReference * nodeRef in self.orderedNodes)
+    for(Node * node in self.element.nodes)
     {
-        OPEManagedOsmNode * node = nodeRef.node;
-        [xml appendFormat:@"<nd ref=\"%lld\"/>",node.osmIDValue];
+        [xml appendFormat:@"<nd ref=\"%lld\"/>",node.elementID];
     }
     
     [xml appendString:[self tagsXML]];
@@ -70,75 +47,25 @@
 {
     return kOPEOsmElementWay;
 }
+-(NSString *)idKeyPrefix
+{
+    return @"w";
+}
 
 -(NSArray *)points
 {
-    NSMutableArray * mutablePointsArray = [NSMutableArray array];
-    for (OPEManagedOsmNodeReference * nodeRef in self.orderedNodes)
-    {
-        if(nodeRef.node)
+    if (!_points) {
+        NSMutableArray * mutablePointsArray = [NSMutableArray array];
+        for (Node * node in self.element.nodes)
         {
-            CLLocationCoordinate2D center = [nodeRef.node center];
+            CLLocationCoordinate2D center = node.coordinate;
             CLLocation * location = [[CLLocation alloc]initWithLatitude:center.latitude longitude:center.longitude];
             [mutablePointsArray addObject:location];
         }
-        
-        
+        _points = mutablePointsArray;
     }
-    return mutablePointsArray;
-}
--(NSString *)name
-{
-    if (self.isNoNameStreetValue) {
-        return @"Highway Missing Name";
-    }
-    return [super name];
-}
-
--(BOOL)noNameStreet
-{
-    if ([[self name] length]) {
-        return NO;
-    }
+    return _points;
     
-    
-    
-    NSString * highwayValue = [self valueForOsmKey:@"highway"];
-    
-    if ([highwayValue length])
-    {
-        NSSet * highwaySet = [NSSet setWithArray:highwayTypes];
-        
-        if ([highwaySet containsObject:highwayValue]) {
-            return YES;
-        }
-        
-    }
-    return NO;
-    
-}
-
--(NSString *)highwayType
-{
-    NSString * type = nil;
-    
-    NSString * highwayValue = [self valueForOsmKey:@"highway"];
-    if ([highwayValue length]) {
-        type = [[highwayValue stringByReplacingOccurrencesOfString:@"_" withString:@" "] capitalizedString];
-    }
-    
-    
-    
-    
-    return type;
-}
-
--(void)addNodeInOrder:(OPEManagedOsmNode *)node
-{
-    [self addNodesObject:node];
-    OPEManagedOsmNodeReference * nodeRef = [OPEManagedOsmNodeReference MR_createEntity];
-    nodeRef.node = node;
-    nodeRef.way = self;
 }
 
 @end

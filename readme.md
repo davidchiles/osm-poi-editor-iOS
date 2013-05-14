@@ -6,9 +6,8 @@ POI+ is a simple and straightforward iPhone app that can add or edit exisiting n
 [![App Store](http://linkmaker.itunes.apple.com/htmlResources/assets/images/web/linkmaker/badge_appstore-lrg.svg)](https://itunes.apple.com/us/app/poi+-open-street-map-poi-editor/id518401562?mt=8&uo=4)
 
 ## Project Setup
-	git clone git@github.com:davidchiles/osm-poi-editor-iOS.git
-	cd osm-poi-editor-iOS/
-	git submodule update --init --recursive
+
+`git clone git@github.com:davidchiles/osm-poi-editor-iOS.git --recursive`
 
 change `OPEAPIConstants_example.h` to `OPEAPIConstants.h`
 
@@ -19,8 +18,6 @@ To use bing as a tile source or make edits to OpenStreetMap fill in the necessar
 Translate at [Transifex](https://www.transifex.com/projects/p/poi/resource/localizablestrings/)
 
 ![localization Progress](https://www.transifex.com/projects/p/poi/resource/localizablestrings/chart/image_png)
-
-## Thrid-party Libraries
 
 - [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking)

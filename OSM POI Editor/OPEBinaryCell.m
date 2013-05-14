@@ -22,8 +22,6 @@
 
 #import "OPEBinaryCell.h"
 #import "OPEConstants.h"
-#import "OPEManagedReferenceOsmTag.h"
-#import "OPEManagedOsmTag.h"
 
 @implementation OPEBinaryCell
 
@@ -50,7 +48,7 @@
         leftLabel.textAlignment = UITextAlignmentRight;
         [self addSubview:leftLabel];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
-
+        
     }
     return self;
 }
@@ -60,26 +58,7 @@
     self = [self initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withTextWidth:(float)textWidth];
     if(self)
     {
-        NSArray * controlArray = [NSArray arrayWithArray:[self orderArray:array]];
-        binaryControl = [[UISegmentedControl alloc] initWithItems:[controlArray valueForKey:@"name"]];
-        binaryControl.segmentedControlStyle = UISegmentedControlStylePlain;
-        switch ([controlArray count]) {
-            case 1:
-                binaryControl.frame = CGRectMake(0, 0, 50, 40);
-                break;
-            case 2:
-                 binaryControl.frame = CGRectMake(0, 0, 100, 40);
-                break;
-            case 3:
-                binaryControl.frame = CGRectMake(0, 0, 190, 40);
-                [binaryControl setWidth:44 forSegmentAtIndex:0];
-                [binaryControl setWidth:44 forSegmentAtIndex:1];
-                [binaryControl setWidth:100 forSegmentAtIndex:2];
-                break;
-            default:
-                break;
-        }
-        self.accessoryView = binaryControl;
+        [self setupBinaryControl:(NSArray *)array];
         
         
     }
@@ -89,36 +68,23 @@
 }
 -(NSArray *)orderArray:(NSArray *) array
 {
+    NSMutableArray * tempArray = [array mutableCopy];
+    NSMutableArray * resultArray = [[NSMutableArray alloc] init ];
     
-    return [array sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        OPEManagedReferenceOsmTag * tag1 = (OPEManagedReferenceOsmTag *)obj1;
-        OPEManagedReferenceOsmTag * tag2 = (OPEManagedReferenceOsmTag *)obj2;
-        
-        if([tag1.tag.value isEqualToString:@"yes"])
-        {
-            return NSOrderedAscending;
-        }
-        else if ([tag2.tag.value isEqualToString:@"yes"])
-        {
-            return NSOrderedDescending;
-        }
-        else if([tag1.tag.value isEqualToString:@"no"])
-        {
-            return NSOrderedAscending;
-        }
-        else if ([tag2.tag.value isEqualToString:@"no"])
-        {
-            return NSOrderedDescending;
-        }
-        
-        if ([tag1.name length] > [tag2.name length]) {
-            return (NSComparisonResult)NSOrderedDescending;
-        }
-        if ([tag1.name length] < [tag2.name length]) {
-            return (NSComparisonResult)NSOrderedAscending;
-        }
-        return (NSComparisonResult)NSOrderedSame;
-    }];
+    NSString *search = @"Yes";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[c] %@", search];
+    [resultArray addObjectsFromArray: [array filteredArrayUsingPredicate:predicate]];
+    
+    search = @"No";
+    predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[c] %@", search];
+    [resultArray addObjectsFromArray: [array filteredArrayUsingPredicate:predicate]];
+    
+    for (NSString * item in resultArray) {
+        [tempArray removeObject:item];
+    }
+    
+    [resultArray addObjectsFromArray:tempArray];
+    return [resultArray copy];
 }
 -(void)selectSegmentWithTitle:(NSString *)title
 {
@@ -151,10 +117,35 @@
     leftLabel.text=txt;
 }
 
+-(void)setupBinaryControl:(NSArray *)array
+{
+    NSArray * controlArray = [NSArray arrayWithArray:[self orderArray:array]];
+    binaryControl = [[UISegmentedControl alloc] initWithItems:controlArray];
+    binaryControl.segmentedControlStyle = UISegmentedControlStylePlain;
+    switch ([controlArray count]) {
+        case 1:
+            binaryControl.frame = CGRectMake(0, 0, 190, 40);
+            break;
+        case 2:
+            binaryControl.frame = CGRectMake(0, 0, 190, 40);
+            break;
+        case 3:
+            binaryControl.frame = CGRectMake(0, 0, 190, 40);
+            [binaryControl setWidth:44 forSegmentAtIndex:0];
+            [binaryControl setWidth:44 forSegmentAtIndex:1];
+            [binaryControl setWidth:100 forSegmentAtIndex:2];
+            break;
+        default:
+            break;
+    }
+    self.accessoryView = binaryControl;
+    
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

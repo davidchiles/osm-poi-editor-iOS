@@ -10,10 +10,11 @@
 #import "OPEMRUtility.h"
 #import "OPEManagedReferenceOptional.h"
 #import "OPEConstants.h"
+#import "OPEManagedOsmElement.h"
 
 @protocol OPETagEditViewControllerDelegate <NSObject>
 @required
-- (void) setNewTag:(NSManagedObjectID *)managedOsmTagID;
+- (void) newOsmKey:(NSString *)key value:(NSString *)value;
 @end
 
 @interface OPETagEditViewController : UIViewController
@@ -22,13 +23,13 @@
 
 @property (nonatomic, strong) NSString * osmKey;
 @property (nonatomic, strong) NSString * currentOsmValue;
-@property (nonatomic, strong) NSManagedObjectID * managedObjectID;
-@property (nonatomic, strong) NSManagedObjectID * manageedOptionalObjectID;
+@property (nonatomic, strong) OPEManagedReferenceOptional * managedOptional;
+@property (nonatomic, strong) OPEManagedOsmElement * element;
 
 -(id)initWithOsmKey:(NSString *)osmKey delegate:(id<OPETagEditViewControllerDelegate>)delegate;
 -(id)initWithOsmKey:(NSString *)osmKey currentValue:(NSString *)currentValue delegate:(id<OPETagEditViewControllerDelegate>)delegate;
 
-+(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey andType:(NSString *)type delegate:(id<OPETagEditViewControllerDelegate>)delegate;
++(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey andType:(OPEOptionalType)type delegate:(id<OPETagEditViewControllerDelegate>)delegate;
 +(NSString *)sectionFootnoteForOsmKey:(NSString *)osmKey;
 
 @end

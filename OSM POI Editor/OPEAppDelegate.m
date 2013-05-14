@@ -43,16 +43,16 @@
 {
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     // DATABASE TESTS
-    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"db.sqlite"];
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    [context setRetainsRegisteredObjects:YES];
+    //[MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"db.sqlite"];
+    //NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
+    //[context setRetainsRegisteredObjects:YES];
 
     
     OPECoreDataImporter * importer = [[OPECoreDataImporter alloc] init];
 
     [importer import];
     
-    [OPEMRUtility deleteDownloaded];
+    //[OPEMRUtility deleteDownloaded];
 
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

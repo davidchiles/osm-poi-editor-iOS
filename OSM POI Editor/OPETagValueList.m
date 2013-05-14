@@ -37,9 +37,7 @@
 {
     [super viewDidLoad];
     
-    OPEManagedReferenceOptional * referenceOptional = (OPEManagedReferenceOptional *)[OPEMRUtility managedObjectWithID:self.manageedOptionalObjectID];
-    
-    valuesArray = [referenceOptional allSortedTags];
+    valuesArray = [self.managedOptional allSortedTags];
     
     
     
@@ -103,7 +101,7 @@
 {
     OPEManagedReferenceOsmTag * refTag = (OPEManagedReferenceOsmTag *)[valuesArray objectAtIndex: indexPath.row];
     
-    [self.delegate setNewTag:refTag.tag.objectID];
+    [self.delegate newOsmKey:refTag.key value:refTag.value];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
     

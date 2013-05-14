@@ -10,38 +10,17 @@
 
 
 @implementation OPEManagedReferenceOsmTag
+@synthesize name =_name;
 
-+(OPEManagedReferenceOsmTag *)fetchOrCreateWithName:(NSString *)name key:(NSString *)key value:(NSString *)value;
+-(void)loadWithResult:(FMResultSet *)set
 {
-    NSPredicate *osmTagFilter = [NSPredicate predicateWithFormat:@"name == %@ AND (tag.key == %@ AND tag.value == %@)",name,key,value];
-    NSArray * results = [OPEManagedReferenceOsmTag MR_findAllWithPredicate:osmTagFilter];
-    
-    OPEManagedReferenceOsmTag * referenceOsmTag = nil;
-    
-    if(![results count])
-    {
-        referenceOsmTag = [OPEManagedReferenceOsmTag MR_createEntity];
-        referenceOsmTag.name = name;
-        referenceOsmTag.tag = [OPEManagedOsmTag fetchOrCreateWithKey:key value:value];
-    }
-    else
-    {
-        referenceOsmTag = [results objectAtIndex:0];
-        NSLog(@"found \nname: %@\nkey: %@\nvalue: %@",referenceOsmTag.name,referenceOsmTag.tag.key,referenceOsmTag.tag.value);
-    }
-    
-    return referenceOsmTag;
-    
-    
-    
+    [super loadWithResult:set];
+    self.name = [set stringForColumn:@"name"];
 }
 
 -(NSString *)name
 {
-    [self willAccessValueForKey:@"name"];
-    NSString *myName = [self primitiveName];
-    [self didAccessValueForKey:@"name"];
-    return [OPETranslate translateString:myName];
+    return [OPETranslate translateString:_name];
 }
 
 @end
