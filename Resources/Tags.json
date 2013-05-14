@@ -378,7 +378,8 @@
     "Movie Theater" : {
       "optional" : [
         "wheelchair",
-        "address"
+        "address",
+        "operator"
       ],
       "image" : "movie",
       "tags" : {

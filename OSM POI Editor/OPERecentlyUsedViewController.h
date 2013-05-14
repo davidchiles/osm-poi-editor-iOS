@@ -9,7 +9,7 @@
 #import "OPETextEditViewController.h"
 
 
-@interface OPERecentlyUsedViewController : OPETextEditViewController <UITableViewDelegate, UITableViewDataSource>
+@interface OPERecentlyUsedViewController : OPETextEditViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 {
     NSArray * recentValues;
 }

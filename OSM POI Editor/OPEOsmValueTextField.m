@@ -17,7 +17,6 @@
         
         self.font = [UIFont systemFontOfSize:24.0];
         self.returnKeyType = UIReturnKeyDone;
-        self.delegate = self;
         
         if ([osmKey isEqualToString:@"name"] || [osmKey isEqualToString:@"addr:city"]  || [osmKey isEqualToString:@"addr:province"]|| [osmKey isEqualToString:@"addr:street"]) {
             self.autocapitalizationType = UITextAutocapitalizationTypeWords;
@@ -53,13 +52,6 @@
         
     }
     return self;
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [self resignFirstResponder];
-    
-    return NO;
 }
 
 @end

@@ -31,13 +31,16 @@
 	
     
     self.textField = [[OPEOsmValueTextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35) withOsmKey:self.osmKey andValue:self.currentOsmValue];
-    [self.textField becomeFirstResponder];
+    self.textField.delegate = self;
     if (self.managedOptional.type == OPEOptionalTypeNumber) {
         self.textField.keyboardType = UIKeyboardTypeNumberPad;
     }
     
     if ([recentValues count]) {
         [self.textField resignFirstResponder];
+    }
+    else{
+        [self.textField becomeFirstResponder];
     }
     
     
@@ -175,12 +178,11 @@
     
     return newValue;
 }
-
-
-- (void)didReceiveMemoryWarning
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.textField resignFirstResponder];
+    
+    return NO;
 }
 
 @end
