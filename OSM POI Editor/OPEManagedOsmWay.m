@@ -14,6 +14,8 @@
 
 @implementation OPEManagedOsmWay
 
+@synthesize points = _points;
+
 -(id)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super initWithDictionary:dictionary]) {
@@ -52,14 +54,18 @@
 
 -(NSArray *)points
 {
-    NSMutableArray * mutablePointsArray = [NSMutableArray array];
-    for (Node * node in self.element.nodes)
-    {
-        CLLocationCoordinate2D center = node.coordinate;
-        CLLocation * location = [[CLLocation alloc]initWithLatitude:center.latitude longitude:center.longitude];
-        [mutablePointsArray addObject:location];
+    if (!_points) {
+        NSMutableArray * mutablePointsArray = [NSMutableArray array];
+        for (Node * node in self.element.nodes)
+        {
+            CLLocationCoordinate2D center = node.coordinate;
+            CLLocation * location = [[CLLocation alloc]initWithLatitude:center.latitude longitude:center.longitude];
+            [mutablePointsArray addObject:location];
+        }
+        _points = mutablePointsArray;
     }
-    return mutablePointsArray;
+    return _points;
+    
 }
 
 @end

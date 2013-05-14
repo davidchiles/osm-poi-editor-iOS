@@ -564,13 +564,17 @@
 }
 -(NSArray *)pointsForWay:(OPEManagedOsmWay *)way
 {
-    __block NSMutableArray * resultsArray = [NSMutableArray array];
+    __block NSMutableArray * resultsArray = [[way points] mutableCopy];
+    if ([resultsArray count]) {
+        return resultsArray;
+    }
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQueryWithFormat:@"SELECT latitude,longitude FROM ways_nodes,nodes WHERE ways_nodes.way_id = %lld AND ways_nodes.node_id = nodes.id ORDER BY local_order ASC",way.elementID];
         while ([set next]) {
             [resultsArray addObject:[[CLLocation alloc] initWithLatitude:[set doubleForColumn:@"latitude"] longitude:[set doubleForColumn:@"longitude"]]];
         }
     }];
+    way.points = resultsArray;
     return resultsArray;
 }
 

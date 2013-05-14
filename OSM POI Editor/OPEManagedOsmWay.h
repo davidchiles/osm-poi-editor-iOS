@@ -7,5 +7,6 @@
 
 @property (nonatomic,strong) Way * element;
 @property (nonatomic) BOOL isNoNameStreet;
+@property (nonatomic,strong) NSArray * points;
 
 @end

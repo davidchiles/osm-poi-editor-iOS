@@ -428,6 +428,7 @@
         if (osmWay.isNoNameStreet) {
             
             self.selectedNoNameHighway = annotation;
+            [self centerOnOsmWay:osmWay];
             [self showNoNameViewWithType:[NSString stringWithFormat:@"%@ - missing name",[self.osmData highwayTypeForOsmWay:osmWay]]];
             return;
         }
@@ -456,6 +457,13 @@
     [self presentNodeInfoViewControllerWithElement:annotation.userInfo];
 }
 
+-(void)centerOnOsmWay:(OPEManagedOsmWay *)way
+{
+    NSArray * points = [self.osmData pointsForWay:way];
+    NSInteger centerPoint = floor([points count]/2.0);
+    mapView.centerCoordinate = ((CLLocation *)[points objectAtIndex:centerPoint]).coordinate;
+}
+
 -(void)showNoNameViewWithType:(NSString *)type;
 {
     CGFloat height = 50.0;
@@ -478,7 +486,7 @@
         
     }
     [UIView commitAnimations];
-    [nameView.textField becomeFirstResponder];
+    //[nameView.textField becomeFirstResponder];
     
 }
 
