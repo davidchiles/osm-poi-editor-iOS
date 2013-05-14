@@ -204,7 +204,8 @@
     [changesetString appendString:@"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
     [changesetString appendString:@"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"];
     [changesetString appendString:@"<changeset>"];
-    [changesetString appendString:@"<tag k=\"created_by\" v=\"OSMPOIEditor\"/>"];
+    [changesetString appendFormat:@"<tag k=\"created_by\" v=\"POI+ (%@) %@\"/>",[OPEUtility appVersion],[OPEUtility iOSVersion]];
+    [changesetString appendFormat:@"<tag k=\"imagery_used\" v=\"%@\"/>",[OPEUtility tileSourceName]];
     [changesetString appendFormat:@"<tag k=\"comment\" v=\"%@\"/>",[OPEUtility addHTML:changeset.message]];
     [changesetString appendString:@"</changeset>"];
     [changesetString appendString:@"</osm>"];
