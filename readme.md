@@ -26,7 +26,7 @@ Translate at [Transifex](https://www.transifex.com/projects/p/poi/resource/local
 - [gtm-oauth2](http://code.google.com/p/gtm-oauth2/)
 - [TBXML](https://github.com/71squared/TBXML)
 - [MapBox iOS SDK](https://github.com/mapbox/mapbox-ios-sdk)
-- [Magical Record](https://github.com/magicalpanda/MagicalRecord)
+- [FMDB](https://github.com/ccgus/fmdb)
 
 ## License
 This software is available under the terms of the GNU GPLv3. [Full license terms](http://www.gnu.org/licenses/gpl.html)
