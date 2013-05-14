@@ -19,6 +19,8 @@ Translate at [Transifex](https://www.transifex.com/projects/p/poi/resource/local
 
 ![localization Progress](https://www.transifex.com/projects/p/poi/resource/localizablestrings/chart/image_png)
 
+## Third Party Libraries
+
 - [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 - [gtm-oauth2](http://code.google.com/p/gtm-oauth2/)
