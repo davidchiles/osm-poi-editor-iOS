@@ -887,7 +887,7 @@
 }
 -(void)willStartParsing:(NSString *)typeString
 {
-    NSString * elementTypeString = nil;
+    NSString * elementTypeString = @"";
     if ([typeString isEqualToString:kOPEOsmElementNode]) {
         elementTypeString = @"Nodes";
     }
@@ -900,7 +900,7 @@
     
     
     if (self.numberOfOngoingParses < 1) {
-        CGRect frame = CGRectMake(0, 0, 200, 40);
+        CGRect frame = CGRectMake(0, 0, 130, 40);
         frame.origin.y = self.view.frame.size.height -frame.size.height-10;
         frame.origin.x = (self.view.frame.size.width -frame.size.width)/2;
         
@@ -910,7 +910,7 @@
         //self.parsingMessageView.textLabel.text = [NSString stringWithFormat:@"Finding %@ ...",elementTypeString];
         [self.view addSubview:self.parsingMessageView];
     }
-    self.parsingMessageView.textLabel.text = [NSString stringWithFormat:@"%@ %@ ...",FINDING_STRING,elementTypeString];
+    self.parsingMessageView.textLabel.text = [NSString stringWithFormat:@"%@ %@ ...",@"Parsing",elementTypeString];
     
     
     
@@ -928,18 +928,11 @@
 
 -(void)didEndParsing
 {
-    /*
-    NSArray * elementsArray = [self.osmData allElementsWithType:YES];
-    for(OPEManagedOsmElement * element in elementsArray)
-    {
-        NSArray * annotationsArray = [self annotationWithOsmElement:element];
-        for (RMAnnotation * annotation in annotationsArray)
-        {
-            [mapView addAnnotation:annotation];
-        }
-        
+    self.numberOfOngoingParses -=1;
+    if (self.numberOfOngoingParses < 1) {
+        [self.parsingMessageView removeFromSuperview];
+        self.parsingMessageView = nil;
     }
-    */
 }
 
 -(void)downloadFailed:(NSError *)error

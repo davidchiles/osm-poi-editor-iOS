@@ -69,7 +69,7 @@
             
             activityIndicatorView.frame = frame;
             frame = self.textLabel.frame;
-            frame.origin.x = activityIndicatorView.frame.size.width+activityIndicatorView.frame.origin.x+2;
+            frame.origin.x = activityIndicatorView.frame.size.width+activityIndicatorView.frame.origin.x+4;
             frame.size.width = self.frame.size.width - frame.origin.x;
             self.textLabel.frame=frame;
             self.textLabel.textAlignment = UITextAlignmentLeft;

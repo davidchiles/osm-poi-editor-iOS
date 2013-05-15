@@ -126,6 +126,14 @@
             OSMParserHandlerDefault* handler = [[OSMParserHandlerDefault alloc] initWithOutputFilePath:kDatabasePath overrideIfExists:NO];
             parser.delegate=handler;
             handler.outputDao.delegate = self;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([delegate respondsToSelector:@selector(willStartParsing:)]) {
+                    [delegate willStartParsing:nil];
+                }
+            });
+            
+            
             [parser parse];
             
             dispatch_async(dispatch_get_main_queue(), ^{
