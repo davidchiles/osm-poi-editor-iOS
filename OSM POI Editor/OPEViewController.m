@@ -525,7 +525,7 @@
         [self startSave];
         
         OPEManagedOsmElement * managedElement = (OPEManagedOsmElement*)self.selectedNoNameHighway.userInfo;
-        [managedElement.element.tags setObject:value forKey:@"name"];
+        [self.osmData setOsmKey:@"name" andValue:value forElement:managedElement];
         managedElement.action = kActionTypeModify;
         
         [self.osmData uploadElement:managedElement];
@@ -882,6 +882,7 @@
 -(void)didCloseChangeset:(int64_t)changesetNumber
 {
     [super didCloseChangeset:changesetNumber];
+    [mapView removeAnnotation:self.selectedNoNameHighway];
     [self removeNonameView];
     
 }

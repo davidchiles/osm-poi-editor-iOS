@@ -695,13 +695,16 @@
         [db beginTransaction];
         
         [db executeUpdate:[OSMDAO sqliteInsertOrReplaceString:element.element]];
-        [db executeUpdateWithFormat:@"DELETE FROM %@ WHERE node_id = %lld",element.element.tagsTableName,element.elementID];
+        NSString * columnID = [NSString stringWithFormat:@"%@_id",[element.element.tableName substringToIndex:[element.element.tableName length] - 1]];
+        NSString * deleteStatement = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %lld",element.element.tagsTableName,columnID,element.elementID];
+        [db executeUpdate:deleteStatement];
         NSArray * sqlArray = [OSMDAO sqliteInsertTagsString:element.element];
         for (NSString * sqlString in sqlArray)
         {
             [db executeUpdate:sqlString];
         }
-        [db executeUpdateWithFormat:@"UPDATE %@ SET poi_id = %d,isVisible = %d,action= %@ WHERE id = %lld",element.element.tableName,element.typeID,element.isVisible,element.action,element.elementID];
+        NSString * updatePOIStatement = [NSString stringWithFormat:@"UPDATE %@ SET poi_id = %d,isVisible = %d,action = \'%@\' WHERE id = %lld",element.element.tableName,element.typeID,element.isVisible,element.action,element.elementID];
+        [db executeUpdateWithFormat:updatePOIStatement];
         [db commit];
         
     }];

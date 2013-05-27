@@ -60,7 +60,7 @@ typedef enum{
 
 #define kExpandedAddressArray [NSArray arrayWithObjects:@"addr:housenumber",@"addr:street",@"addr:city",@"addr:postcode",@"addr:state",@"addr:country",@"addr:province",@"website",@"phone", nil];
 
-#define kActionTypeModify @"modify"
+#define kActionTypeModify @"update"
 #define kActionTypeDelete @"delete"
 
 #define kOPEOsmElementNode @"node"
