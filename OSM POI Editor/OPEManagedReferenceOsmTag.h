@@ -5,6 +5,4 @@
 
 @property (nonatomic,strong) NSString * name;
 
--(NSString *)sqliteInsertString;
-
 @end

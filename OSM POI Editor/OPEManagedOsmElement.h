@@ -20,7 +20,6 @@
 -(id)initWithDictionary:(NSDictionary *)dictionary;
 -(NSString *)valueForOsmKey:(NSString *)osmKey;
 -(NSString *)tagsDescription;
--(void)addKey:(NSString *)key value:(NSString *)value;
 
 -(NSString *)tagsXML;
 

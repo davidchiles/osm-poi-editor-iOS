@@ -79,7 +79,7 @@
         originalTypeID = self.managedOsmElement.typeID;
         [self.osmData updateLegacyTags:managedOsmElement];
         
-        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: @"Cancel" style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
+        UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: CANCEL_STRING style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         
         [[self navigationItem] setLeftBarButtonItem: newBackButton];
         
@@ -131,7 +131,7 @@
         
         
         deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [deleteButton setTitle:DELETING_STRING forState:UIControlStateNormal];
+        [deleteButton setTitle:DELETE_STRING forState:UIControlStateNormal];
         [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
                                                stretchableImageWithLeftCapWidth:8.0f
                                                topCapHeight:0.0f]

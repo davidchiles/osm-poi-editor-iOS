@@ -10,7 +10,4 @@
 
 @interface OPEMRUtility : NSObject
 
-+(void)deleteDownloaded;
-+(void)saveAll;
-+(NSManagedObject *)managedObjectWithID:(NSManagedObjectID *)managedObjectID;
 @end

@@ -34,7 +34,7 @@
 #import "OPEBaseViewController.h"
 #import "OPEOSMSearchManager.h"
 
-@interface OPEViewController : OPEBaseViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,NSFetchedResultsControllerDelegate,OPENameEditViewDelegate, OPEOSMDataControllerDelegate> {
+@interface OPEViewController : OPEBaseViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,OPENameEditViewDelegate, OPEOSMDataControllerDelegate> {
     RMMapView* mapView;
     UIImageView * plusImageView;
     RMAnnotation * wayAnnotation;
@@ -63,9 +63,6 @@
 @property (nonatomic) BOOL firstDownload;
 @property (nonatomic, strong) RMAnnotation * selectedNoNameHighway;
 @property (nonatomic, strong) MBProgressHUD * HUD;
-
-@property (nonatomic,strong) NSFetchedResultsController * osmElementFetchedResultsController;
-@property (nonatomic,strong) NSFetchedResultsController * noNameStreetsFetchedResultsController;
 
 -(IBAction)infoButtonPressed:(id)sender;
 -(IBAction)addPointButtonPressed:(id)sender;

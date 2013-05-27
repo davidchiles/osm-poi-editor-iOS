@@ -16,31 +16,4 @@
 
 @implementation OPEMRUtility
 
-+(NSManagedObject *)managedObjectWithID:(NSManagedObjectID *)managedObjectID
-{
-    NSError * error = nil;
-    NSManagedObject * managedObject = (OPEManagedOsmElement *)[[NSManagedObjectContext MR_contextForCurrentThread] existingObjectWithID:managedObjectID error:&error];
-    if (error) {
-        NSLog(@"Error: %@",error);
-    }
-    return managedObject;
-}
-+(void)saveAll
-{
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    [context MR_saveToPersistentStoreAndWait];
-}
-
-+(void)deleteDownloaded
-{
-    
-    NSPredicate *osmTagFilter = [NSPredicate predicateWithFormat:@"referencePois.@count == 0 AND referenceOsmTag.@count == 0"];
-    
-    
-    
-    
-    
-    [OPEMRUtility saveAll];
-}
-
 @end

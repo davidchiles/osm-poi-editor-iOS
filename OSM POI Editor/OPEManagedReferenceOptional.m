@@ -64,9 +64,9 @@
     return OPEOptionalTypeNone;
 }
 
--(NSString *)displayNameForKey:(NSString *)osmKey withValue:(NSString *)osmValue
+-(NSString *)displayNameForKey:(NSString *)oKey withValue:(NSString *)osmValue
 {
-    NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"self.key == %@ AND self.value == %@",osmKey,osmValue];
+    NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"self.key == %@ AND self.value == %@",oKey,osmValue];
     NSSet * filteredSet = [self.optionalTags filteredSetUsingPredicate:tagFilter];
     
     if ([filteredSet count]) {

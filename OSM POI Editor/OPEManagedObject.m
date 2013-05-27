@@ -22,4 +22,13 @@
     return _databaseQueue;
 }
 
+-(void)loadWithResult:(FMResultSet *)set
+{
+    return;
+}
+-(NSString *)sqliteInsertString
+{
+    return nil;
+}
+
 @end

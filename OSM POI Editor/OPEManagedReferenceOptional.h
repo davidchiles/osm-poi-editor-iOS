@@ -21,6 +21,5 @@
 -(OPEManagedReferenceOsmTag *)managedReferenceOsmTagWithName:(NSString *)name;
 -(NSString *)sqliteInsertString;
 
--(void)addNewReferenceTag:(OPEManagedReferenceOsmTag *)refTag;
 -(NSString *)sqliteOptionalTagsInsertString;
 @end

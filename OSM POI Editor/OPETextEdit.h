@@ -41,7 +41,6 @@
 @property (nonatomic, strong) NSSet * osmKeysStoreRecent;
 @property (nonatomic, strong) NSString * type;
 @property (nonatomic, strong) UITextField * textField;
-@property (nonatomic, strong) NSManagedObjectID * managedObjectID;
 
 @property (nonatomic, weak) id<editTagDelegate> delegate;
 

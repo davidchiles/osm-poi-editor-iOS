@@ -485,7 +485,7 @@
 {
     if (rowId) {
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
-            BOOL result = [db executeUpdateWithFormat:@"UPDATE %@ SET poi_id = %d WHERE id = %lld",[OSMDAO tableName:element.element],rowId,element.element.elementID];
+            [db executeUpdateWithFormat:@"UPDATE %@ SET poi_id = %d WHERE id = %lld",[OSMDAO tableName:element.element],rowId,element.element.elementID];
         }];
     }
     

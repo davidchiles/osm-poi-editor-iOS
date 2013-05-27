@@ -128,4 +128,13 @@
     return element;
 }
 
+-(NSData *) uploadXMLforChangset: (int64_t)changesetNumber
+{
+    return nil;
+}
+-(NSData *) deleteXMLforChangset: (int64_t) changesetNumber
+{
+    return nil;
+}
+
 @end

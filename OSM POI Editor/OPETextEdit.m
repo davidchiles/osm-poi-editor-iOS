@@ -35,7 +35,6 @@
 @synthesize osmKeysStoreRecent;
 @synthesize type;
 @synthesize textField;
-@synthesize managedObjectID;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -291,9 +290,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)saveNewOsmKey:(NSString *)osmKey andValue:(NSString *)value
+-(void)saveNewOsmKey:(NSString *)oKey andValue:(NSString *)value
 {
-    [delegate newOsmKey:osmKey value:value];
+    [delegate newOsmKey:oKey value:value];
     
 }
 

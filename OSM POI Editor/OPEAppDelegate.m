@@ -31,7 +31,6 @@
 #import "OPEFileUpdater.h"
 #import <Parse/Parse.h>
 #import "OPECoreDataImporter.h"
-#import "CoreData+MagicalRecord.h"
 #import "OPEMRUtility.h"
 
 @implementation OPEAppDelegate
@@ -42,11 +41,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-    // DATABASE TESTS
-    //[MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:@"db.sqlite"];
-    //NSManagedObjectContext *context = [NSManagedObjectContext MR_contextForCurrentThread];
-    //[context setRetainsRegisteredObjects:YES];
-
     
     OPECoreDataImporter * importer = [[OPECoreDataImporter alloc] init];
 
@@ -116,9 +110,7 @@
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
-    [OPEMRUtility deleteDownloaded];
-    
-    [MagicalRecord cleanUp];
+    //[OPEMRUtility deleteDownloaded];
 }
 
 @end

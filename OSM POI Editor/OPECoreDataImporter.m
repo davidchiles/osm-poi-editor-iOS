@@ -56,7 +56,7 @@
         for (NSString * name in optionalDictionary)
         {
             int sortOrer = [optionalDictionary[name] intValue];
-            BOOL result = [db executeUpdateWithFormat:@"insert or replace into optional_section(name,sortOrder) values(%@,%d)",name,sortOrer];
+            [db executeUpdateWithFormat:@"insert or replace into optional_section(name,sortOrder) values(%@,%d)",name,sortOrer];
         }
     }];
 }
