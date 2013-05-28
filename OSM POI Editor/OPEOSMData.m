@@ -242,8 +242,8 @@
     }failure:^(AFHTTPRequestOperation *operation, NSError * error)
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([delegate respondsToSelector:@selector(downloadFailed:)]) {
-                [delegate downloadFailed:error];
+            if ([delegate respondsToSelector:@selector(uploadFailed:)]) {
+                [delegate uploadFailed:error];
             }
         });
         NSLog(@"Failed: %@",urlRequest.URL);

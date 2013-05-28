@@ -705,7 +705,8 @@
     OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithOsmElement:element delegate:self];
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:nodeViewController];
     
-    [self.navigationController presentModalViewController:navController animated:YES];
+    //[self.navigationController presentModalViewController:navController animated:YES];
+    [self.navigationController presentViewController:navController animated:YES completion:nil];
     
 }
 
