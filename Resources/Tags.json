@@ -1299,8 +1299,7 @@
     "Shower" : {
       "optional" : [
         "wheelchair",
-        "fee",
-        "maxtents"
+        "fee"
       ],
       "image" : "shower",
       "tags" : {
@@ -1417,7 +1416,12 @@
         "wheelchair",
         "address",
         "tents",
-        "maxtents"
+        "maxtents",
+        "caravans",
+        "openfire",
+        "backcountry",
+        "group_only",
+        "operator"
       ],
       "image" : "tent",
       "tags" : {
