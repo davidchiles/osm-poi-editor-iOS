@@ -52,10 +52,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
 #ifdef CRITTERCISM_ENABLED
-        [Crittercism initWithAppID:CRITTERCISM_APP_ID
-                            andKey:CRITTERCISM_KEY
-                         andSecret:CRITTERCISM_SECRET];
+        [Crittercism enableWithAppID: CRITTERCISM_APP_ID];
 #endif
+    
     
     
     
