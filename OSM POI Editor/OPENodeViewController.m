@@ -421,6 +421,7 @@
 - (void) saveButtonPressed
 {
     self.managedOsmElement.action = kActionTypeModify;
+    [osmData saveDate:[NSDate date] forType:self.managedOsmElement.type];
     
     if (![self.osmData canAuth])
     {

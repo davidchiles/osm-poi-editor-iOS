@@ -771,6 +771,14 @@
     return type;
 }
 
+-(void)saveDate:(NSDate *)date forType:(OPEManagedReferencePoi *)poi
+{
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        //[db executeUpdate:@"UPDATE poi SET lastUsed = ? WHERE rowid = ?",([OPEUtility ],poi.rowID)];
+    }];
+    
+}
+
 -(NSArray *)allElementsWithType:(BOOL)withType
 {
     NSMutableArray * resultArray = [NSMutableArray array];

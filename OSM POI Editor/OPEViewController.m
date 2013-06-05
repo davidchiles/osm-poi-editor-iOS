@@ -118,6 +118,9 @@
     id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
     
     mapView = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:newTileSource];
+    mapView.clusteringEnabled = YES;
+    mapView.clusterAreaSize = CGSizeMake(10.0, 10.0);
+    mapView.clusterMarkerSize = CGSizeMake(10.0, 10.0);
     mapView.showLogoBug = NO;
     mapView.hideAttribution = YES;
     mapView.userTrackingMode = RMUserTrackingModeFollow;
@@ -254,19 +257,24 @@
 
 -(RMMapLayer *) mapView:(RMMapView *)mView layerForAnnotation:(RMAnnotation *)annotation
 {
-    
-    OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)annotation.userInfo;;
-    if ([managedOsmElement isKindOfClass:[OPEManagedOsmWay class]]) {
-        if (((OPEManagedOsmWay *)managedOsmElement).isNoNameStreet) {
-            return [self shapeForNoNameStreet:(OPEManagedOsmWay *)managedOsmElement];
+    if (!annotation.isClusterAnnotation) {
+        OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)annotation.userInfo;;
+        if ([managedOsmElement isKindOfClass:[OPEManagedOsmWay class]]) {
+            if (((OPEManagedOsmWay *)managedOsmElement).isNoNameStreet) {
+                annotation.clusteringEnabled = NO;
+                return [self shapeForNoNameStreet:(OPEManagedOsmWay *)managedOsmElement];
+            }
         }
+        
+        
+        RMMarker * marker = [self markerWithManagedObjectID:managedOsmElement];
+        marker.canShowCallout = YES;
+        marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        
+        return marker;
     }
-    
-    
-    RMMarker * marker = [self markerWithManagedObjectID:managedOsmElement];
+    RMMarker * marker = [[RMMarker alloc] initWithMapBoxMarkerImage];
     marker.canShowCallout = YES;
-    marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    
     return marker;
 }
 
@@ -445,6 +453,11 @@
         wayAnnotation = [self shapeForRelation:osmRelation];
         wayAnnotation.userInfo = annotation.userInfo;
         [mapView addAnnotation:wayAnnotation];
+    }
+    else if(annotation.isClusterAnnotation)
+    {
+        NSLog(@"cluster: %@",annotation);
+        NSArray * annonations = [annotation clusteredAnnotations];
     }
     
     

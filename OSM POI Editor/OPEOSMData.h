@@ -98,6 +98,8 @@
 -(BOOL)hasParentElement:(OPEManagedOsmElement *)element;
 -(NSString *)highwayTypeForOsmWay:(OPEManagedOsmWay *)way;
 
+-(void)saveDate:(NSDate *)date forType:(OPEManagedReferencePoi *)poi;
+
 
 
 
