@@ -7,6 +7,7 @@
 //
 
 #import "OPENewNodeSelectViewController.h"
+#import "OPEOSMSearchManager.h"
 
 @interface OPENewNodeSelectViewController ()
 
@@ -27,32 +28,32 @@
 {
     [super viewDidLoad];
     
-    UITableView * tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    tableView.delegate = self;
-    tableView.dataSource = self;
+    OPEOSMSearchManager * searchManager = [[OPEOSMSearchManager alloc] init];
+    recentlyUsedPoisArray = [searchManager recentlyUsedPoisArrayWithLength:3];
     
-    
-    [self.view addSubview:tableView];
+}
+-(UITableViewStyle)tableViewStyle
+{
+    return UITableViewStyleGrouped;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if ([recentlyUsedPoisArray count]) {
+    if ([recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]) {
         return 2;
     }
-    return 1;
+    return [super numberOfSectionsInTableView:tableView];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0 && [recentlyUsedPoisArray count]){
+    if (section == 0 && [recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]){
         return [recentlyUsedPoisArray count];
     }
-    return [categoriesArray count];
+    return [super tableView:tableView numberOfRowsInSection:section];
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if ([recentlyUsedPoisArray count]){
+    if ([recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]){
         if (section == 0) {
             return @"Recently Used";
         }
@@ -65,6 +66,26 @@
     {
         return @"";
     }
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString * cellIdentifierString = @"cell";
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierString];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifierString];
+    }
+    
+    if (indexPath.section == 0 && [recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView] ) {
+        OPEManagedReferencePoi * poi = recentlyUsedPoisArray[indexPath.row];
+        cell.textLabel.text = poi.name;
+        cell.detailTextLabel.text = poi.categoryName;
+    }
+    else
+    {
+        cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    }
+    return cell;
 }
 
 

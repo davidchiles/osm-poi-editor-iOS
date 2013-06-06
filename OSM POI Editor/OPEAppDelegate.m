@@ -40,32 +40,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+#ifdef CRITTERCISM_ENABLED
+    [Crittercism enableWithAppID: CRITTERCISM_APP_ID];
+#endif
+    
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
     OPECoreDataImporter * importer = [[OPECoreDataImporter alloc] init];
 
     [importer import];
     
-    //[OPEMRUtility deleteDownloaded];
-
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-#ifdef CRITTERCISM_ENABLED
-        [Crittercism enableWithAppID: CRITTERCISM_APP_ID];
-#endif
-    
-    
-    
-    
-    
-    
     UIViewController *rootView = [[OPEViewController alloc] init];
-    //rootView.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
     self.navController = [[UINavigationController alloc] initWithRootViewController:rootView];
     [[self window] setRootViewController:self.navController];
-    
     
     [self.window makeKeyAndVisible];
     return YES;

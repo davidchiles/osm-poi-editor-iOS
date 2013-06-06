@@ -45,11 +45,11 @@
     [super viewDidLoad];
     
     OPEOSMData * osmData = [[OPEOSMData alloc] init];
-    categoriesArray = [osmData allSortedCategories];
-    typesArray = [osmData allTypesIncludeLegacy:NO];
+    self.categoriesArray = [osmData allSortedCategories];
+    self.typesArray = [osmData allTypesIncludeLegacy:NO];
     
     
-    UITableView * tableView  = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    UITableView * tableView  = [[UITableView alloc] initWithFrame:self.view.bounds style:[self tableViewStyle]];
     tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -66,6 +66,11 @@
     
     [self.view addSubview:tableView];
     
+}
+
+-(UITableViewStyle)tableViewStyle
+{
+    return UITableViewStylePlain;
 }
 
 - (void)viewDidUnload
@@ -106,7 +111,7 @@
     searchResults = [[NSMutableArray alloc] init];
     if ([searchTerm length] != 0)
     {
-        for (OPEManagedReferencePoi * currentPoi in typesArray)
+        for (OPEManagedReferencePoi * currentPoi in self.typesArray)
         {
             //NSLog(@"CurrentString: %@",currentString);
             NSString * currentString = currentPoi.name;
@@ -129,19 +134,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     if (tableView == [[self searchDisplayController] searchResultsTableView]) {
         
         return [searchResults count];
     }
     return [categoriesArray count];
-    //return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

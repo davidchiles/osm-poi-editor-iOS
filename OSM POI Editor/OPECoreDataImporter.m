@@ -34,8 +34,8 @@
 -(void)import
 {
     [self setupDatabase];
-    [self importSqliteOptionalTags];
-    [self importSqlitePoiTags];
+    //[self importSqliteOptionalTags];
+    //[self importSqlitePoiTags];
     if ([self shouldDoImport]) {
         
         
@@ -215,6 +215,7 @@
         OSMDAO * osmData = [[OSMDAO alloc] initWithFilePath:kDatabasePath overrideIfExists:YES];
         osmData = nil;
         [db beginTransaction];
+        /*
         result = [db executeUpdate:@"DROP TABLE IF EXISTS poi"];
         result = [db executeUpdate:@"DROP TABLE IF EXISTS optional"];
         result = [db executeUpdate:@"DROP TABLE IF EXISTS optional_section"];
@@ -228,7 +229,7 @@
         result = [db executeUpdate:@"create table optionals_tags(optional_id INTEGER NOT NULL,name TEXT NOT NULL,key TEXT NOT NULL,value TEXT NOT NULL)"];
         result = [db executeUpdate:@"create table optional_section(name TEXT PRIMARY KEY NOT NULL,sortOrder INTEGER)"];
         result = [db executeUpdate:@"create table pois_optionals(poi_id INTEGER NOT NULL,optional_id INTEGER NOT NULL,UNIQUE(poi_id,optional_id))"];
-        
+        */
         result = [db executeUpdate:@"ALTER TABLE nodes ADD COLUMN poi_id INTEGER;"];
         result = [db executeUpdate:@"ALTER TABLE ways ADD COLUMN poi_id INTEGER;"];
         result = [db executeUpdate:@"ALTER TABLE relations ADD COLUMN poi_id INTEGER;"];

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "OPECategoryViewController.h"
 
-@interface OPENewNodeSelectViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
+@interface OPENewNodeSelectViewController : OPECategoryViewController <UITableViewDataSource,UITableViewDelegate>
 {
     NSArray * recentlyUsedPoisArray;
     NSArray * categoriesArray;

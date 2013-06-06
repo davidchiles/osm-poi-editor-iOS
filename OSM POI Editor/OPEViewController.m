@@ -41,6 +41,7 @@
 #import "OpeManagedOsmRelationMember.h"
 #import "OPEGeo.h"
 #import "OPEGeoCentroid.h"
+#import "OPENewNodeSelectViewController.h"
 
 
 #define noNameTag 100
@@ -661,7 +662,14 @@
         node.element.latitude = center.latitude;
         node.element.longitude = center.longitude;
         
-        [self presentNodeInfoViewControllerWithElement:node];
+        OPENewNodeSelectViewController * newNodeController = [[OPENewNodeSelectViewController alloc] initWithLocation:center];
+        
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:newNodeController];
+        
+        //[self.navigationController presentModalViewController:navController animated:YES];
+        [self.navigationController presentViewController:navController animated:YES completion:nil];
+        
+        //[self presentNodeInfoViewControllerWithElement:node];
     }
     else {
         UIAlertView * zoomAlert = [[UIAlertView alloc]

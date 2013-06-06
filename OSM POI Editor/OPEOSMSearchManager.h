@@ -22,6 +22,7 @@
 
 -(NSDictionary *)nearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey;
 -(NSArray *)noNameHighways;
+-(NSArray *)recentlyUsedPoisArrayWithLength:(NSInteger)length;
 
 +(NSDictionary *)nearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey;
 
