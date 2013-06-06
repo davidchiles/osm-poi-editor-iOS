@@ -496,6 +496,10 @@
     [self removeType:element.type forElement:element];
     element.typeID = type.rowID;
     element.type = type;
+    if (![type.tags count]) {
+        [self getTagsForType:type];
+    }
+    
     for (NSString * osmKey in type.tags)
     {
         [self setOsmKey:osmKey andValue:type.tags[osmKey] forElement:element];
@@ -514,6 +518,9 @@
 }
 -(void)removeType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element
 {
+    if (![type.tags count]) {
+        [self getTagsForType:type];
+    }
     element.typeID = 0;
     for (NSString * osmKey in type.tags)
     {
@@ -940,6 +947,21 @@
     return array;
     
 }
+-(void)getTagsForType:(OPEManagedReferencePoi *)poi
+{
+    __block OPEManagedReferencePoi * blockPoi = poi;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        db.traceExecution = YES;
+        db.logsErrors = YES;
+        FMResultSet * set = [db executeQuery:@"SELECT * FROM pois_tags WHERE poi_id = ?",[NSNumber numberWithLongLong:blockPoi.rowID]];
+        
+        while ([set next]) {
+            [blockPoi.tags setObject:[set stringForColumn:@"value"] forKey:[set stringForColumn:@"key"]];
+        }
+    }];
+    
+}
+
 -(NSArray *)allTypesIncludeLegacy:(BOOL)includeLegacy
 {
     __block NSMutableArray * array = [NSMutableArray array];

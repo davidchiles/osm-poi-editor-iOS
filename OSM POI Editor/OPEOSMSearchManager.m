@@ -223,7 +223,7 @@
     [databaseQueue inDatabase:^(FMDatabase *db) {
         db.logsErrors = YES;
         db.traceExecution = YES;
-        FMResultSet * resultsSet = [db executeQuery:@"select * from poi where lastUsed IS NOT NULL AND editOnly = 0 AND isLegacy = 0 order by datetime(lastUsed) limit ?",[NSNumber numberWithInt:length]];
+        FMResultSet * resultsSet = [db executeQuery:@"select *,rowid AS id from poi where lastUsed IS NOT NULL AND editOnly = 0 AND isLegacy = 0 order by datetime(lastUsed) limit ?",[NSNumber numberWithInt:length]];
         
         while ([resultsSet next]) {
             [resultArray addObject:[[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[resultsSet resultDictionary]]];

@@ -173,13 +173,12 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
      if (tableView == [[self searchDisplayController] searchResultsTableView]) {
-         [[self delegate] newType: [[searchResults objectAtIndex:indexPath.row] objectForKey:@"poi"]];
-         [self.navigationController popViewControllerAnimated:YES];
+         [self newType: [[searchResults objectAtIndex:indexPath.row] objectForKey:@"poi"]];
      }
      else {
-         OPETypeViewController * viewer = [[OPETypeViewController alloc] initWithCategory:[tableView cellForRowAtIndexPath:indexPath].textLabel.text];
-         [viewer setDelegate: [[[self navigationController] viewControllers] objectAtIndex:0]];
-         [self.navigationController pushViewController:viewer animated:YES];
+         OPETypeViewController * typeViewController = [[OPETypeViewController alloc] initWithCategory:[tableView cellForRowAtIndexPath:indexPath].textLabel.text];
+         typeViewController.delegate = self;
+         [self.navigationController pushViewController:typeViewController animated:YES];
      }  
 }
 
@@ -191,6 +190,14 @@ shouldReloadTableForSearchString:(NSString *)searchString
     
     return YES;
 }
+
+#pragma mark - type delegate
+-(void)newType:(OPEManagedReferencePoi *)type
+{
+    [self.delegate newType:type];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 
 
 @end

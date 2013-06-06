@@ -23,7 +23,7 @@
 #import <UIKit/UIKit.h>
 #import "OPETypeViewController.h"
 
-@interface OPECategoryViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate>
+@interface OPECategoryViewController : UIViewController <OPETypeViewControllerDelegate,UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate>
 {
     NSArray * searchArray;
 }
@@ -33,7 +33,7 @@
 @property (nonatomic,strong) NSArray * categoriesArray;
 @property (nonatomic,strong) NSArray * typesArray;
 
-@property (nonatomic, strong) id <PassCategoryAndType> delegate;
+@property (nonatomic, strong) id <OPETypeViewControllerDelegate> delegate;
 
 @property (nonatomic, retain) NSMutableArray *searchResults;
 

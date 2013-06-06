@@ -8,18 +8,22 @@
 
 #import "OPENewNodeSelectViewController.h"
 #import "OPEOSMSearchManager.h"
+#import "OPENodeViewController.h"
+#import "OPEOSMData.h"
 
 @interface OPENewNodeSelectViewController ()
 
 @end
 
 @implementation OPENewNodeSelectViewController
-@synthesize location;
+@synthesize nodeViewDelegate;
 
--(id)initWithLocation:(CLLocationCoordinate2D)newLocation
+-(id)initWithNewElement:(OPEManagedOsmElement *)element
 {
     if (self = [super init]) {
-        self.location = newLocation;
+        newElement = element;
+        OPEOSMSearchManager * searchManager = [[OPEOSMSearchManager alloc] init];
+        recentlyUsedPoisArray = [searchManager recentlyUsedPoisArrayWithLength:3];
     }
     return self;
 }
@@ -28,13 +32,22 @@
 {
     [super viewDidLoad];
     
-    OPEOSMSearchManager * searchManager = [[OPEOSMSearchManager alloc] init];
-    recentlyUsedPoisArray = [searchManager recentlyUsedPoisArrayWithLength:3];
+    self.title = @"New Node";
     
+    UIBarButtonItem * cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
 }
+-(void)cancelButtonPressed:(id)sender
+{
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+}
+
 -(UITableViewStyle)tableViewStyle
 {
-    return UITableViewStyleGrouped;
+    if ([recentlyUsedPoisArray count]) {
+        return UITableViewStyleGrouped;
+    }
+    return UITableViewStylePlain;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -88,6 +101,25 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && [recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView] )
+    {
+        [self newType:recentlyUsedPoisArray[indexPath.row]];
+        
+    }
+    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+}
+
+
+#pragma mark - type delegate
+-(void)newType:(OPEManagedReferencePoi *)type
+{
+    [[[OPEOSMData alloc] init] setNewType:type forElement:newElement];
+    OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithOsmElement:newElement delegate:nodeViewDelegate];
+    
+    [self.navigationController setViewControllers:@[nodeViewController] animated:YES];
+}
 
 
 @end

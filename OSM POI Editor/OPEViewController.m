@@ -662,7 +662,8 @@
         node.element.latitude = center.latitude;
         node.element.longitude = center.longitude;
         
-        OPENewNodeSelectViewController * newNodeController = [[OPENewNodeSelectViewController alloc] initWithLocation:center];
+        OPENewNodeSelectViewController * newNodeController = [[OPENewNodeSelectViewController alloc] initWithNewElement:node];
+        newNodeController.nodeViewDelegate = self;
         
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:newNodeController];
         

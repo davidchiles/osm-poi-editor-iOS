@@ -527,7 +527,7 @@
 - (void)checkSaveButton
 {
     //NSLog(@"cAndT count %d",[catAndType count]);
-    if ([self tagsHaveChanged] && managedOsmElement.type) {
+    if (([self tagsHaveChanged] && managedOsmElement.type) || managedOsmElement.elementID < 0) {
         self.saveButton.enabled = YES;
     }
     else
