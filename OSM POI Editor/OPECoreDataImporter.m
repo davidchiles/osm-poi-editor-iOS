@@ -34,15 +34,8 @@
 -(void)import
 {
     [self setupDatabase];
-    //[self importSqliteOptionalTags];
-    //[self importSqlitePoiTags];
-    if ([self shouldDoImport]) {
-        
-        
-        //[self importTagsPlist];
-        //[self setImportVersionNumber];
-    }
-        
+    [self importSqliteOptionalTags];
+    [self importSqlitePoiTags];
 }
 
 
@@ -215,7 +208,7 @@
         OSMDAO * osmData = [[OSMDAO alloc] initWithFilePath:kDatabasePath overrideIfExists:YES];
         osmData = nil;
         [db beginTransaction];
-        /*
+        
         result = [db executeUpdate:@"DROP TABLE IF EXISTS poi"];
         result = [db executeUpdate:@"DROP TABLE IF EXISTS optional"];
         result = [db executeUpdate:@"DROP TABLE IF EXISTS optional_section"];
@@ -223,13 +216,15 @@
         result = [db executeUpdate:@"DROP TABLE IF EXISTS optionals_tags"];
         result = [db executeUpdate:@"DROP TABLE IF EXISTS pois_optionals"];
         
-        result = [db executeUpdateWithFormat:@"create table poi(lastUsed TEXT,editOnly INTEGER DEFAULT 0,imageString TEXT,isLegacy INTEGER DEFAULT 0,displayName TEXT NOT NULL,category TEXT NOT NULL,UNIQUE(displayName,category))"];
+        result = [db executeUpdateWithFormat:@"create table poi(editOnly INTEGER DEFAULT 0,imageString TEXT,isLegacy INTEGER DEFAULT 0,displayName TEXT NOT NULL,category TEXT NOT NULL,UNIQUE(displayName,category))"];
         result = [db executeUpdateWithFormat:@"create table optional(name TEXT PRIMARY KEY NOT NULL, displayName TEXT NOT NULL, osmKey TEXT,sectionSortOrder INTEGER,type TEXT,section_id INTEGER)"];
         result = [db executeUpdate:@"create table pois_tags(poi_id INTEGER NOT NULL,key TEXT NOT NULL,value TEXT NOT NULL,UNIQUE(poi_id,key,value))"];
         result = [db executeUpdate:@"create table optionals_tags(optional_id INTEGER NOT NULL,name TEXT NOT NULL,key TEXT NOT NULL,value TEXT NOT NULL)"];
         result = [db executeUpdate:@"create table optional_section(name TEXT PRIMARY KEY NOT NULL,sortOrder INTEGER)"];
         result = [db executeUpdate:@"create table pois_optionals(poi_id INTEGER NOT NULL,optional_id INTEGER NOT NULL,UNIQUE(poi_id,optional_id))"];
-        */
+        
+        result = [db executeUpdate:@"CREATE TABLE IF NOT EXISTS poi_lastUsed(date TEXT,displayName TEXT,UNIQUE(date,displayName))"];
+        
         result = [db executeUpdate:@"ALTER TABLE nodes ADD COLUMN poi_id INTEGER;"];
         result = [db executeUpdate:@"ALTER TABLE ways ADD COLUMN poi_id INTEGER;"];
         result = [db executeUpdate:@"ALTER TABLE relations ADD COLUMN poi_id INTEGER;"];
