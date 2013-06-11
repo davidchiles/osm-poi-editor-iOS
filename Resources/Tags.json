@@ -1,5 +1,27 @@
 {
   "Fun and Leisure" : {
+    "Stadium" : {
+      "optional" : [
+        "operator",
+        "address",
+        "capacity",
+        "sport"
+      ],
+      "image" : "none",
+      "tags" : {
+        "leisure" : "stadium"
+      }
+    },
+    "Pitch" : {
+      "optional" : [
+        "operator",
+        "sport"
+      ],
+      "image" : "none",
+      "tags" : {
+        "leisure" : "pitch"
+      }
+    },
     "Water Park" : {
       "optional" : [
         "operator",

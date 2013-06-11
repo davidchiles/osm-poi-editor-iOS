@@ -914,4 +914,22 @@
     "values" : "label",
     "section" : "Other"
   },
+  "sport" : {
+    "displayName" : "Sport",
+    "osmKey" : "sport",
+    "values" : {
+      "Soccer" : "soccer",
+      "Tennis" : "tennis",
+      "Baseball" : "baseball",
+      "Swimming" : "swimming",
+      "Multi-Sport" : "multi",
+      "Basketball" : "basketball",
+      "Golf" : "golf",
+      "Athletics" : "athletics",
+      "Cricket" : "cricket",
+      "Hockey" : "hockey",
+      "American Football" : "american_football"
+    },
+    "section" : "Other"
+  }
 }
