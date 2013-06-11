@@ -308,7 +308,6 @@
 		633CD872164B24EE00678D58 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD871164B24EE00678D58 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		633CD874164B24F700678D58 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD873164B24F700678D58 /* StoreKit.framework */; };
 		633CD877164B28DA00678D58 /* OPEFileUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 633CD876164B28DA00678D58 /* OPEFileUpdater.m */; };
-		634205A716449197009C6BA4 /* libCrittercismCrashOnly_v3_3_4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6342058D16449197009C6BA4 /* libCrittercismCrashOnly_v3_3_4.a */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
 		63570A901640F3C00009D8A3 /* libMapBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63570A8C1640F3B10009D8A3 /* libMapBox.a */; };
 		636549E8171CDE8000F16772 /* OPEGeoCentroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 636549E7171CDE8000F16772 /* OPEGeoCentroid.m */; };
@@ -320,10 +319,12 @@
 		6383949A14EC85C100C74A57 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6383949914EC85C100C74A57 /* Security.framework */; };
 		638445EA1665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */; };
 		6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */; };
+		6387126D17582655006C3A4E /* OPENewNodeSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */; };
 		638E994F1665C9FF00C29F9A /* MapBox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 638E99201665C2CC00C29F9A /* MapBox.bundle */; };
 		6391C67316AE2B370084D579 /* Model.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 6391C67216AE2B370084D579 /* Model.xcdatamodel */; };
 		639953FE16113A200070CBAF /* about.css in Resources */ = {isa = PBXBuildFile; fileRef = 639953FD16113A200070CBAF /* about.css */; };
 		63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A964981729FA6100D14CA1 /* OPEManagedObject.m */; };
+		63AB03811760005F00003878 /* libCrittercism_v3_5_3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63AB03801760005F00003878 /* libCrittercism_v3_5_3.a */; };
 		63AD8F7A15E8570B006F92B8 /* OPECategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7915E8570B006F92B8 /* OPECategory.m */; };
 		63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7C15E8577E006F92B8 /* OPEType.m */; };
 		63B1B15016F285DB00323E9F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B1B14F16F285DB00323E9F /* MBProgressHUD.m */; };
@@ -331,6 +332,7 @@
 		63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49D114E9C5A0008C4551 /* OPETextEdit.m */; };
 		63CB49E214E9E3BF008C4551 /* OPETypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */; };
 		63CE5DC115BE085E00C84B90 /* OPEOptionalTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */; };
+		63CFCA95176160340006BE38 /* OPEOSMAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CFCA94176160330006BE38 /* OPEOSMAPIManager.m */; };
 		63D0A5C41700EEEB007A595E /* OPEGeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5C31700E9AD007A595E /* OPEGeo.m */; };
 		63D0A5D2170112BF007A595E /* OPETagEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D1170112BF007A595E /* OPETagEditViewController.m */; };
 		63D0A5D517011659007A595E /* OPETextEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D417011659007A595E /* OPETextEditViewController.m */; };
@@ -740,36 +742,6 @@
 		633CD873164B24F700678D58 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		633CD875164B28DA00678D58 /* OPEFileUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEFileUpdater.h; sourceTree = "<group>"; };
 		633CD876164B28DA00678D58 /* OPEFileUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEFileUpdater.m; sourceTree = "<group>"; };
-		6342058916449197009C6BA4 /* CrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashReporter.h; sourceTree = "<group>"; };
-		6342058A16449197009C6BA4 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
-		6342058B16449197009C6BA4 /* CrittercismJSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismJSONKit.h; sourceTree = "<group>"; };
-		6342058C16449197009C6BA4 /* CrittercismReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismReachability.h; sourceTree = "<group>"; };
-		6342058D16449197009C6BA4 /* libCrittercismCrashOnly_v3_3_4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercismCrashOnly_v3_3_4.a; sourceTree = "<group>"; };
-		6342058E16449197009C6BA4 /* PLCrashAsync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashAsync.h; sourceTree = "<group>"; };
-		6342058F16449197009C6BA4 /* PLCrashAsyncImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashAsyncImage.h; sourceTree = "<group>"; };
-		6342059016449197009C6BA4 /* PLCrashAsyncSignalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashAsyncSignalInfo.h; sourceTree = "<group>"; };
-		6342059116449197009C6BA4 /* PLCrashFrameWalker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker.h; sourceTree = "<group>"; };
-		6342059216449197009C6BA4 /* PLCrashFrameWalker_arm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_arm.h; sourceTree = "<group>"; };
-		6342059316449197009C6BA4 /* PLCrashFrameWalker_i386.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_i386.h; sourceTree = "<group>"; };
-		6342059416449197009C6BA4 /* PLCrashFrameWalker_ppc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_ppc.h; sourceTree = "<group>"; };
-		6342059516449197009C6BA4 /* PLCrashFrameWalker_x86_64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashFrameWalker_x86_64.h; sourceTree = "<group>"; };
-		6342059616449197009C6BA4 /* PLCrashLogWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashLogWriter.h; sourceTree = "<group>"; };
-		6342059716449197009C6BA4 /* PLCrashLogWriterEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashLogWriterEncoding.h; sourceTree = "<group>"; };
-		6342059816449197009C6BA4 /* PLCrashReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReport.h; sourceTree = "<group>"; };
-		6342059916449197009C6BA4 /* PLCrashReportApplicationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportApplicationInfo.h; sourceTree = "<group>"; };
-		6342059A16449197009C6BA4 /* PLCrashReportBinaryImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportBinaryImageInfo.h; sourceTree = "<group>"; };
-		6342059B16449197009C6BA4 /* PLCrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReporter.h; sourceTree = "<group>"; };
-		6342059C16449197009C6BA4 /* PLCrashReportExceptionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportExceptionInfo.h; sourceTree = "<group>"; };
-		6342059D16449197009C6BA4 /* PLCrashReportFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportFormatter.h; sourceTree = "<group>"; };
-		6342059E16449197009C6BA4 /* PLCrashReportMachineInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportMachineInfo.h; sourceTree = "<group>"; };
-		6342059F16449197009C6BA4 /* PLCrashReportProcessInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportProcessInfo.h; sourceTree = "<group>"; };
-		634205A016449197009C6BA4 /* PLCrashReportProcessorInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportProcessorInfo.h; sourceTree = "<group>"; };
-		634205A116449197009C6BA4 /* PLCrashReportSignalInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportSignalInfo.h; sourceTree = "<group>"; };
-		634205A216449197009C6BA4 /* PLCrashReportSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportSystemInfo.h; sourceTree = "<group>"; };
-		634205A316449197009C6BA4 /* PLCrashReportTextFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportTextFormatter.h; sourceTree = "<group>"; };
-		634205A416449197009C6BA4 /* PLCrashReportThreadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashReportThreadInfo.h; sourceTree = "<group>"; };
-		634205A516449197009C6BA4 /* PLCrashSignalHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashSignalHandler.h; sourceTree = "<group>"; };
-		634205A616449197009C6BA4 /* PLCrashSysctl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLCrashSysctl.h; sourceTree = "<group>"; };
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
 		63570A801640F3B10009D8A3 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = "<group>"; };
@@ -787,11 +759,16 @@
 		638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpenMapQuestAerialTileSource.m; sourceTree = "<group>"; };
 		6384D80A1738766500B58AF4 /* OPEOSMSearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMSearchManager.h; sourceTree = "<group>"; };
 		6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMSearchManager.m; sourceTree = "<group>"; };
+		6387126B17582655006C3A4E /* OPENewNodeSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENewNodeSelectViewController.h; sourceTree = "<group>"; };
+		6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENewNodeSelectViewController.m; sourceTree = "<group>"; };
 		6391C67216AE2B370084D579 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		63968298153CB8B4008F4C0E /* OPEAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAPIConstants.h; sourceTree = "<group>"; };
 		639953FD16113A200070CBAF /* about.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = about.css; sourceTree = "<group>"; };
 		63A964971729FA6100D14CA1 /* OPEManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedObject.h; sourceTree = "<group>"; };
 		63A964981729FA6100D14CA1 /* OPEManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedObject.m; sourceTree = "<group>"; };
+		63AB037E1760005F00003878 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
+		63AB037F1760005F00003878 /* CrittercismDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismDelegate.h; sourceTree = "<group>"; };
+		63AB03801760005F00003878 /* libCrittercism_v3_5_3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercism_v3_5_3.a; sourceTree = "<group>"; };
 		63AD8F7815E8570B006F92B8 /* OPECategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECategory.h; sourceTree = "<group>"; };
 		63AD8F7915E8570B006F92B8 /* OPECategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECategory.m; sourceTree = "<group>"; };
 		63AD8F7B15E8577D006F92B8 /* OPEType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEType.h; sourceTree = "<group>"; };
@@ -806,6 +783,8 @@
 		63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETypeViewController.m; sourceTree = "<group>"; };
 		63CE5DBF15BE085E00C84B90 /* OPEOptionalTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOptionalTag.h; sourceTree = "<group>"; };
 		63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOptionalTag.m; sourceTree = "<group>"; };
+		63CFCA93176160330006BE38 /* OPEOSMAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMAPIManager.h; sourceTree = "<group>"; };
+		63CFCA94176160330006BE38 /* OPEOSMAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMAPIManager.m; sourceTree = "<group>"; };
 		63D0A5C21700E9AD007A595E /* OPEGeo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEGeo.h; sourceTree = "<group>"; };
 		63D0A5C31700E9AD007A595E /* OPEGeo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEGeo.m; sourceTree = "<group>"; };
 		63D0A5D0170112BF007A595E /* OPETagEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETagEditViewController.h; sourceTree = "<group>"; };
@@ -930,8 +909,8 @@
 				6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */,
 				6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */,
 				6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */,
-				634205A716449197009C6BA4 /* libCrittercismCrashOnly_v3_3_4.a in Frameworks */,
 				633CD868164B242C00678D58 /* Parse.framework in Frameworks */,
+				63AB03811760005F00003878 /* libCrittercism_v3_5_3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1291,7 +1270,6 @@
 				6330AB7414DB519A00448852 /* OSM POI Editor */,
 				6326680617164578002CD7E4 /* Resources */,
 				63E8210F16F12A2A0040B892 /* Submodules */,
-				6342058816449197009C6BA4 /* CrittercismSDK */,
 				6330AB6D14DB519A00448852 /* Frameworks */,
 				6330AB6B14DB519A00448852 /* Products */,
 			);
@@ -1356,6 +1334,8 @@
 				633CD876164B28DA00678D58 /* OPEFileUpdater.m */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,
 				631539E014DC98D0000236F0 /* OPEOSMData.m */,
+				63CFCA93176160330006BE38 /* OPEOSMAPIManager.h */,
+				63CFCA94176160330006BE38 /* OPEOSMAPIManager.m */,
 				6384D80A1738766500B58AF4 /* OPEOSMSearchManager.h */,
 				6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */,
 				637C7CC916F164BE002CD340 /* OPEChangeset.h */,
@@ -1373,6 +1353,8 @@
 				631AB0AB1727686E003F5F6F /* OPETranslate.h */,
 				631AB0AC1727686E003F5F6F /* OPETranslate.m */,
 				63D0A5CF1701129F007A595E /* TagEdit */,
+				6387126B17582655006C3A4E /* OPENewNodeSelectViewController.h */,
+				6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */,
 				63266A3317164732002CD7E4 /* OPECategoryViewController.h */,
 				63266A3417164732002CD7E4 /* OPECategoryViewController.m */,
 				63CB49DF14E9E3BE008C4551 /* OPETypeViewController.h */,
@@ -1449,39 +1431,12 @@
 		6342058816449197009C6BA4 /* CrittercismSDK */ = {
 			isa = PBXGroup;
 			children = (
-				6342058916449197009C6BA4 /* CrashReporter.h */,
-				6342058A16449197009C6BA4 /* Crittercism.h */,
-				6342058B16449197009C6BA4 /* CrittercismJSONKit.h */,
-				6342058C16449197009C6BA4 /* CrittercismReachability.h */,
-				6342058D16449197009C6BA4 /* libCrittercismCrashOnly_v3_3_4.a */,
-				6342058E16449197009C6BA4 /* PLCrashAsync.h */,
-				6342058F16449197009C6BA4 /* PLCrashAsyncImage.h */,
-				6342059016449197009C6BA4 /* PLCrashAsyncSignalInfo.h */,
-				6342059116449197009C6BA4 /* PLCrashFrameWalker.h */,
-				6342059216449197009C6BA4 /* PLCrashFrameWalker_arm.h */,
-				6342059316449197009C6BA4 /* PLCrashFrameWalker_i386.h */,
-				6342059416449197009C6BA4 /* PLCrashFrameWalker_ppc.h */,
-				6342059516449197009C6BA4 /* PLCrashFrameWalker_x86_64.h */,
-				6342059616449197009C6BA4 /* PLCrashLogWriter.h */,
-				6342059716449197009C6BA4 /* PLCrashLogWriterEncoding.h */,
-				6342059816449197009C6BA4 /* PLCrashReport.h */,
-				6342059916449197009C6BA4 /* PLCrashReportApplicationInfo.h */,
-				6342059A16449197009C6BA4 /* PLCrashReportBinaryImageInfo.h */,
-				6342059B16449197009C6BA4 /* PLCrashReporter.h */,
-				6342059C16449197009C6BA4 /* PLCrashReportExceptionInfo.h */,
-				6342059D16449197009C6BA4 /* PLCrashReportFormatter.h */,
-				6342059E16449197009C6BA4 /* PLCrashReportMachineInfo.h */,
-				6342059F16449197009C6BA4 /* PLCrashReportProcessInfo.h */,
-				634205A016449197009C6BA4 /* PLCrashReportProcessorInfo.h */,
-				634205A116449197009C6BA4 /* PLCrashReportSignalInfo.h */,
-				634205A216449197009C6BA4 /* PLCrashReportSystemInfo.h */,
-				634205A316449197009C6BA4 /* PLCrashReportTextFormatter.h */,
-				634205A416449197009C6BA4 /* PLCrashReportThreadInfo.h */,
-				634205A516449197009C6BA4 /* PLCrashSignalHandler.h */,
-				634205A616449197009C6BA4 /* PLCrashSysctl.h */,
+				63AB037E1760005F00003878 /* Crittercism.h */,
+				63AB037F1760005F00003878 /* CrittercismDelegate.h */,
+				63AB03801760005F00003878 /* libCrittercism_v3_5_3.a */,
 			);
 			name = CrittercismSDK;
-			path = lib/CrittercismSDK;
+			path = ../lib/CrittercismSDK;
 			sourceTree = "<group>";
 		};
 		63570A811640F3B10009D8A3 /* Products */ = {
@@ -1568,6 +1523,7 @@
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				6342058816449197009C6BA4 /* CrittercismSDK */,
 				63FBA586171DFBED0098A2F3 /* osm-parser */,
 				63266A2A171646F0002CD7E4 /* TBXML */,
 				63266A1B1716469B002CD7E4 /* gtm-oauth */,
@@ -2090,6 +2046,8 @@
 				63FBA5AC171E00F20098A2F3 /* Element.m in Sources */,
 				63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */,
 				6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */,
+				6387126D17582655006C3A4E /* OPENewNodeSelectViewController.m in Sources */,
+				63CFCA95176160340006BE38 /* OPEOSMAPIManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2201,6 +2159,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/lib/CrittercismSDK\"",
 					"\"$(SRCROOT)/OSM POI Editor\"",
+					"\"$(SRCROOT)/lib/spatialite/libs\"",
+					"\"$(SRCROOT)/OSM POI Editor/lib\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -2240,6 +2200,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/lib/CrittercismSDK\"",
 					"\"$(SRCROOT)/OSM POI Editor\"",
+					"\"$(SRCROOT)/lib/spatialite/libs\"",
+					"\"$(SRCROOT)/OSM POI Editor/lib\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";

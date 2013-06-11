@@ -38,7 +38,7 @@
 @end
 
 
-@interface OPENodeViewController : OPEBaseViewController <UITableViewDelegate, UITableViewDataSource, OPETagEditViewControllerDelegate, PassCategoryAndType>
+@interface OPENodeViewController : OPEBaseViewController <UITableViewDelegate, UITableViewDataSource, OPETagEditViewControllerDelegate, OPETypeViewControllerDelegate>
 {
     NSDictionary * osmKeyValue;
     float optionalTagWidth;

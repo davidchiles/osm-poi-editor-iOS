@@ -25,7 +25,7 @@
 #import "OPEManagedReferencePoi.h"
 
 
-@protocol PassCategoryAndType <NSObject>
+@protocol OPETypeViewControllerDelegate <NSObject>
 @required
 -(void)newType:(OPEManagedReferencePoi *)type;
 @end

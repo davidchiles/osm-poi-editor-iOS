@@ -217,6 +217,22 @@
     return resultArray;
 }
 
+-(NSArray *)recentlyUsedPoisArrayWithLength:(NSInteger)length
+{
+    NSMutableArray * resultArray = [NSMutableArray array];
+    [databaseQueue inDatabase:^(FMDatabase *db) {
+        db.logsErrors = YES;
+        db.traceExecution = YES;
+        FMResultSet * resultsSet = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi NATURAL JOIN poi_lastUsed where date IS NOT NULL AND editOnly = 0 AND isLegacy = 0 order by datetime(date) limit ?",[NSNumber numberWithInt:length]];
+        
+        while ([resultsSet next]) {
+            [resultArray addObject:[[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[resultsSet resultDictionary]]];
+        }
+    }];
+    
+    return resultArray;
+}
+
 
 +(NSDictionary *)nearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey
 {

@@ -182,4 +182,22 @@
     return [[self currentTileSource] shortName];
 }
 
++(NSString *)currentDateFormatted
+{
+    NSDateFormatter * dateFormatter = [[self class] defaultDateFormatter];
+    return [dateFormatter stringFromDate:[NSDate date]];
+    
+}
++(NSDate *)dateFromString:(NSString *)dateString
+{
+    NSDateFormatter * dateFormatter = [[self class] defaultDateFormatter];
+    return [dateFormatter dateFromString:dateString];
+}
++(NSDateFormatter *)defaultDateFormatter
+{
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"YYYY-MM-dd'T'HH:mm:ssZ"];
+    return formatter;
+}
+
 @end

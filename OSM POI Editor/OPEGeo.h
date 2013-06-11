@@ -25,6 +25,7 @@ typedef struct {
 
 +(double)degreesToRadians:(double)degrees;
 +(double)radiansToDegrees:(double)radians;
++(double)distance:(CLLocationCoordinate2D)point1 to:(CLLocationCoordinate2D)point2;
 +(double)bearingFrom:(CLLocation *)location1 to:(CLLocation *)location2;
 +(OPELineSegment)lineSegmentFromPoint:(CLLocationCoordinate2D)point1 toPoint:(CLLocationCoordinate2D)point2;
 +(double)distanceFromlineSegment:(OPELineSegment)lineSegment toPoint:(CLLocationCoordinate2D)point;

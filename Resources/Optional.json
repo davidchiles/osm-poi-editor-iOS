@@ -71,6 +71,42 @@
     },
     "section" : "Other"
   },
+  "caravans" : {
+    "displayName" : "Caravans (RV)",
+    "osmKey" : "caravans",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "openfire" : {
+    "displayName" : "Open-fire",
+    "osmKey" : "openfire",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "backcountry" : {
+    "displayName" : "Backcountry",
+    "osmKey" : "backcountry",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "group_only" : {
+    "displayName" : "Group Only",
+    "osmKey" : "group_only",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
   "addr:city" : {
     "displayName" : "City",
     "osmKey" : "addr:city",

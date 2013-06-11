@@ -77,6 +77,7 @@
 -(void)removeOsmKey:(NSString *)osmKey forElement:(OPEManagedOsmElement *)element;
 -(void)setOsmKey:(NSString *)osmKey andValue:(NSString *)osmValue forElement:(OPEManagedOsmElement *)element;
 -(void)setNewType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element;
+-(void)getTagsForType:(OPEManagedReferencePoi *)poi;
 
 -(void)getTypeFor:(OPEManagedOsmElement *)element;
 -(NSString *)nameForElement:(OPEManagedOsmElement *)element;
@@ -98,6 +99,8 @@
 -(BOOL)hasParentElement:(OPEManagedOsmElement *)element;
 -(NSString *)highwayTypeForOsmWay:(OPEManagedOsmWay *)way;
 
+-(void)saveDate:(NSDate *)date forType:(OPEManagedReferencePoi *)poi;
+-(BOOL)isArea:(OPEManagedOsmElement *)element;
 
 
 

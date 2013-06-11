@@ -41,6 +41,7 @@
 #import "OpeManagedOsmRelationMember.h"
 #import "OPEGeo.h"
 #import "OPEGeoCentroid.h"
+#import "OPENewNodeSelectViewController.h"
 
 
 #define noNameTag 100
@@ -118,6 +119,9 @@
     id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
     
     mapView = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:newTileSource];
+    //mapView.clusteringEnabled = YES;
+    mapView.clusterAreaSize = CGSizeMake(10.0, 10.0);
+    mapView.clusterMarkerSize = CGSizeMake(10.0, 10.0);
     mapView.showLogoBug = NO;
     mapView.hideAttribution = YES;
     mapView.userTrackingMode = RMUserTrackingModeFollow;
@@ -208,7 +212,7 @@
     return newImage;
 }
 
--(RMMarker *)markerWithManagedObjectID:(OPEManagedOsmElement *)managedOsmElement
+-(RMMarker *)markerWithManagedObject:(OPEManagedOsmElement *)managedOsmElement
 {
     UIImage * icon = nil;
     if (managedOsmElement.type) {
@@ -254,19 +258,24 @@
 
 -(RMMapLayer *) mapView:(RMMapView *)mView layerForAnnotation:(RMAnnotation *)annotation
 {
-    
-    OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)annotation.userInfo;;
-    if ([managedOsmElement isKindOfClass:[OPEManagedOsmWay class]]) {
-        if (((OPEManagedOsmWay *)managedOsmElement).isNoNameStreet) {
-            return [self shapeForNoNameStreet:(OPEManagedOsmWay *)managedOsmElement];
+    if (!annotation.isClusterAnnotation) {
+        OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)annotation.userInfo;;
+        if ([managedOsmElement isKindOfClass:[OPEManagedOsmWay class]]) {
+            if (((OPEManagedOsmWay *)managedOsmElement).isNoNameStreet) {
+                annotation.clusteringEnabled = NO;
+                return [self shapeForNoNameStreet:(OPEManagedOsmWay *)managedOsmElement];
+            }
         }
+        
+        
+        RMMarker * marker = [self markerWithManagedObject:managedOsmElement];
+        marker.canShowCallout = YES;
+        marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        
+        return marker;
     }
-    
-    
-    RMMarker * marker = [self markerWithManagedObjectID:managedOsmElement];
+    RMMarker * marker = [[RMMarker alloc] initWithMapBoxMarkerImage];
     marker.canShowCallout = YES;
-    marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    
     return marker;
 }
 
@@ -274,6 +283,7 @@
 {
     //NSLog(@"center: %@",[managedOsmElement center]);
     [self.osmData getTypeFor:managedOsmElement];
+    
     RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[self.osmData centerForElement:managedOsmElement] andTitle:[self.osmData nameForElement:managedOsmElement]];
     
     NSMutableString * subtitleString = [NSMutableString stringWithFormat:@"%@",managedOsmElement.type.categoryName];
@@ -388,6 +398,7 @@
 {
     
     NSArray * points = [self.osmData pointsForWay:way];
+    BOOL isArea = [self.osmData isArea:way];
     
     RMAnnotation * newAnnotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:((CLLocation *)[points objectAtIndex:0]).coordinate andTitle:nil];
     
@@ -400,13 +411,22 @@
         for (CLLocation *point in points)
             [aShape addLineToCoordinate:point.coordinate];
         
-        [aShape closePath];
+        if (isArea) {
+            [aShape closePath];
+        }
+     
         
         
     }];
     shape.lineColor = [UIColor blackColor];
     shape.lineWidth +=1;
-    shape.fillColor = [UIColor colorWithWhite:.5 alpha:.6];
+    if (isArea) {
+        shape.fillColor = [UIColor colorWithWhite:.5 alpha:.6];
+    }
+    else
+    {
+        shape.fillColor = [UIColor clearColor];
+    }
     newAnnotation.layer = shape;
     return newAnnotation;
     
@@ -445,6 +465,11 @@
         wayAnnotation = [self shapeForRelation:osmRelation];
         wayAnnotation.userInfo = annotation.userInfo;
         [mapView addAnnotation:wayAnnotation];
+    }
+    else if(annotation.isClusterAnnotation)
+    {
+        NSLog(@"cluster: %@",annotation);
+        NSArray * annonations = [annotation clusteredAnnotations];
     }
     
     
@@ -648,7 +673,15 @@
         node.element.latitude = center.latitude;
         node.element.longitude = center.longitude;
         
-        [self presentNodeInfoViewControllerWithElement:node];
+        OPENewNodeSelectViewController * newNodeController = [[OPENewNodeSelectViewController alloc] initWithNewElement:node];
+        newNodeController.nodeViewDelegate = self;
+        
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:newNodeController];
+        
+        //[self.navigationController presentModalViewController:navController animated:YES];
+        [self.navigationController presentViewController:navController animated:YES completion:nil];
+        
+        //[self presentNodeInfoViewControllerWithElement:node];
     }
     else {
         UIAlertView * zoomAlert = [[UIAlertView alloc]

@@ -27,6 +27,7 @@
     if(self = [super init])
     {
         queue = [FMDatabaseQueue databaseQueueWithPath:kDatabasePath];
+        
     }
     return self;
 }
@@ -36,13 +37,6 @@
     [self setupDatabase];
     [self importSqliteOptionalTags];
     [self importSqlitePoiTags];
-    if ([self shouldDoImport]) {
-        
-        
-        //[self importTagsPlist];
-        //[self setImportVersionNumber];
-    }
-        
 }
 
 
@@ -213,8 +207,11 @@
     [queue inDatabase:^(FMDatabase *db) {
         BOOL result = NO;
         OSMDAO * osmData = [[OSMDAO alloc] initWithFilePath:kDatabasePath overrideIfExists:YES];
+        [OSMDAO initialize];
         osmData = nil;
         [db beginTransaction];
+        
+        
         result = [db executeUpdate:@"DROP TABLE IF EXISTS poi"];
         result = [db executeUpdate:@"DROP TABLE IF EXISTS optional"];
         result = [db executeUpdate:@"DROP TABLE IF EXISTS optional_section"];
@@ -228,6 +225,8 @@
         result = [db executeUpdate:@"create table optionals_tags(optional_id INTEGER NOT NULL,name TEXT NOT NULL,key TEXT NOT NULL,value TEXT NOT NULL)"];
         result = [db executeUpdate:@"create table optional_section(name TEXT PRIMARY KEY NOT NULL,sortOrder INTEGER)"];
         result = [db executeUpdate:@"create table pois_optionals(poi_id INTEGER NOT NULL,optional_id INTEGER NOT NULL,UNIQUE(poi_id,optional_id))"];
+        
+        result = [db executeUpdate:@"CREATE TABLE IF NOT EXISTS poi_lastUsed(date TEXT,displayName TEXT,UNIQUE(date,displayName))"];
         
         result = [db executeUpdate:@"ALTER TABLE nodes ADD COLUMN poi_id INTEGER;"];
         result = [db executeUpdate:@"ALTER TABLE ways ADD COLUMN poi_id INTEGER;"];

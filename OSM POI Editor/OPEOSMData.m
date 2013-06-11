@@ -496,6 +496,10 @@
     [self removeType:element.type forElement:element];
     element.typeID = type.rowID;
     element.type = type;
+    if (![type.tags count]) {
+        [self getTagsForType:type];
+    }
+    
     for (NSString * osmKey in type.tags)
     {
         [self setOsmKey:osmKey andValue:type.tags[osmKey] forElement:element];
@@ -514,6 +518,9 @@
 }
 -(void)removeType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element
 {
+    if (![type.tags count]) {
+        [self getTagsForType:type];
+    }
     element.typeID = 0;
     for (NSString * osmKey in type.tags)
     {
@@ -606,6 +613,25 @@
     
 }
 
+-(BOOL)isArea:(OPEManagedOsmElement *)element
+{
+    if (![element isKindOfClass:[OPEManagedOsmNode class]]) {
+        [self getTagsForElement:element];
+        if ([[element.element.tags objectForKey:@"area"] isEqualToString:@"yes"] || [[element.element.tags objectForKey:@"type"] isEqualToString:@"multipolygon"]) {
+            return YES;
+        }
+
+        if ([element isKindOfClass:[OPEManagedOsmWay class]]) {
+            OPEManagedOsmWay * way = (OPEManagedOsmWay *)element;
+            return [way.element isFirstNodeId:way.element.lastNodeId];
+        }
+        
+        
+        
+    }
+    return NO;
+}
+
 -(CLLocationCoordinate2D)centerForElement:(OPEManagedOsmElement *)element
 {
     CLLocationCoordinate2D center = CLLocationCoordinate2DMake(0, 0);
@@ -618,8 +644,12 @@
         if (((OPEManagedOsmWay *)element).isNoNameStreet) {
             center = ((CLLocation *)array[0]).coordinate;
         }
-        else{
+        else if ([self isArea:element])
+        {
             center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:array];
+        }
+        else{
+            center = [OPEGeoCentroid centroidOfPolyline:array];
         }
         
         
@@ -769,6 +799,14 @@
     }
     
     return type;
+}
+
+-(void)saveDate:(NSDate *)date forType:(OPEManagedReferencePoi *)poi
+{
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db executeUpdate:@"insert or replace into poi_lastUsed(date,displayName) values(datetime('now','localtime'),?)",[poi refName]];
+    }];
+    
 }
 
 -(NSArray *)allElementsWithType:(BOOL)withType
@@ -932,6 +970,21 @@
     return array;
     
 }
+-(void)getTagsForType:(OPEManagedReferencePoi *)poi
+{
+    __block OPEManagedReferencePoi * blockPoi = poi;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        db.traceExecution = YES;
+        db.logsErrors = YES;
+        FMResultSet * set = [db executeQuery:@"SELECT * FROM pois_tags WHERE poi_id = ?",[NSNumber numberWithLongLong:blockPoi.rowID]];
+        
+        while ([set next]) {
+            [blockPoi.tags setObject:[set stringForColumn:@"value"] forKey:[set stringForColumn:@"key"]];
+        }
+    }];
+    
+}
+
 -(NSArray *)allTypesIncludeLegacy:(BOOL)includeLegacy
 {
     __block NSMutableArray * array = [NSMutableArray array];
