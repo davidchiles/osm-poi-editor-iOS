@@ -309,11 +309,11 @@
         {
             OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
             if (aCell == nil) {
-                aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[managedOptionalTag allDisplayNames] withTextWidth:optionalTagWidth];
+                aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[managedOptionalTag.optionalTags allObjects] withTextWidth:optionalTagWidth];
                 
             }
             [aCell setLeftText: managedOptionalTag.displayName];
-            [aCell setupBinaryControl:[managedOptionalTag allDisplayNames]];
+            [aCell setupBinaryControl:[managedOptionalTag.optionalTags allObjects]];
             //aCell.controlArray = [[cellDictionary objectForKey:@"values"] allKeys];
             
             [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];

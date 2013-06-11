@@ -244,8 +244,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "621"
          endingLineNumber = "621"
-         landmarkName = "@implementation OPEViewController"
-         landmarkType = "3">
+         landmarkName = "-afterMapZoom:byUser:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -491,8 +491,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "631"
          endingLineNumber = "631"
-         landmarkName = "-locationManager:didFailWithError:"
-         landmarkType = "5">
+         landmarkName = "@implementation OPEViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -673,8 +673,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "915"
          endingLineNumber = "915"
-         landmarkName = "-didFindNewElements:updatedElements:"
-         landmarkType = "5">
+         landmarkName = "@implementation OPEViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -686,7 +686,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "916"
          endingLineNumber = "916"
-         landmarkName = "-didFindNewElements:updatedElements:"
+         landmarkName = "-didCloseChangeset:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -751,8 +751,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "481"
          endingLineNumber = "481"
-         landmarkName = "@implementation OPEViewController"
-         landmarkType = "3">
+         landmarkName = "-tapOnCalloutAccessoryControl:forAnnotation:onMap:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1167,7 +1167,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "435"
          endingLineNumber = "435"
-         landmarkName = "-shapeForWay:"
+         landmarkName = "-tapOnAnnotation:onMap:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1180,7 +1180,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "542"
          endingLineNumber = "542"
-         landmarkName = "-removeNonameView"
+         landmarkName = "-saveValue:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1345,8 +1345,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "338"
          endingLineNumber = "338"
-         landmarkName = "-setSelectedNoNameHighway:"
-         landmarkType = "5">
+         landmarkName = "@implementation OPEViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1454,7 +1454,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "975"
          endingLineNumber = "975"
-         landmarkName = "-didEndParsing"
+         landmarkName = "-downloadFailed:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2231,7 +2231,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "341"
          endingLineNumber = "341"
-         landmarkName = "-setSelectedNoNameHighway:"
+         landmarkName = "-shapeForRelation:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2843,19 +2843,6 @@
          startingLineNumber = "737"
          endingLineNumber = "737"
          landmarkName = "-updateElement:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "OSM POI Editor/OPEViewController.m"
-         timestampString = "392605351.766475"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "475"
-         endingLineNumber = "475"
-         landmarkName = "-tapOnAnnotation:onMap:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

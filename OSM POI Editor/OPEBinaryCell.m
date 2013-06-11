@@ -58,7 +58,7 @@
     self = [self initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withTextWidth:(float)textWidth];
     if(self)
     {
-        [self setupBinaryControl:(NSArray *)array];
+        [self setupBinaryControl:array];
         
         
     }
@@ -71,12 +71,12 @@
     NSMutableArray * tempArray = [array mutableCopy];
     NSMutableArray * resultArray = [[NSMutableArray alloc] init ];
     
-    NSString *search = @"Yes";
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[c] %@", search];
+    NSString *search = @"yes";
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF.value BEGINSWITH[c] %@", search];
     [resultArray addObjectsFromArray: [array filteredArrayUsingPredicate:predicate]];
     
-    search = @"No";
-    predicate = [NSPredicate predicateWithFormat:@"SELF BEGINSWITH[c] %@", search];
+    search = @"no";
+    predicate = [NSPredicate predicateWithFormat:@"SELF.value BEGINSWITH[c] %@", search];
     [resultArray addObjectsFromArray: [array filteredArrayUsingPredicate:predicate]];
     
     for (NSString * item in resultArray) {
@@ -84,7 +84,7 @@
     }
     
     [resultArray addObjectsFromArray:tempArray];
-    return [resultArray copy];
+    return [[resultArray copy] valueForKeyPath:@"name"];
 }
 -(void)selectSegmentWithTitle:(NSString *)title
 {
