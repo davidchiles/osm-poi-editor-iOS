@@ -427,7 +427,7 @@
     {
         [self showAuthError];
     }
-    else if ([self tagsHaveChanged])
+    else if ([self tagsHaveChanged] || (self.managedOsmElement.elementID < 0 && [self.managedOsmElement.element.tags count]))
     {
         [self startSave];
         dispatch_queue_t q = dispatch_queue_create("queue", NULL);
