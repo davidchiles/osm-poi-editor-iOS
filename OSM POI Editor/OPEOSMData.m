@@ -613,6 +613,25 @@
     
 }
 
+-(BOOL)isArea:(OPEManagedOsmElement *)element
+{
+    if (![element isKindOfClass:[OPEManagedOsmNode class]]) {
+        [self getTagsForElement:element];
+        if ([[element.element.tags objectForKey:@"area"] isEqualToString:@"yes"] || [[element.element.tags objectForKey:@"type"] isEqualToString:@"multipolygon"]) {
+            return YES;
+        }
+
+        if ([element isKindOfClass:[OPEManagedOsmWay class]]) {
+            OPEManagedOsmWay * way = (OPEManagedOsmWay *)element;
+            return [way.element isFirstNodeId:way.element.lastNodeId];
+        }
+        
+        
+        
+    }
+    return NO;
+}
+
 -(CLLocationCoordinate2D)centerForElement:(OPEManagedOsmElement *)element
 {
     CLLocationCoordinate2D center = CLLocationCoordinate2DMake(0, 0);
@@ -625,8 +644,12 @@
         if (((OPEManagedOsmWay *)element).isNoNameStreet) {
             center = ((CLLocation *)array[0]).coordinate;
         }
-        else{
+        else if ([self isArea:element])
+        {
             center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:array];
+        }
+        else{
+            center = [OPEGeoCentroid centroidOfPolyline:array];
         }
         
         
@@ -781,7 +804,7 @@
 -(void)saveDate:(NSDate *)date forType:(OPEManagedReferencePoi *)poi
 {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        [db executeUpdate:@"insert or replace into poi_lastUsed(date,displayName) values(datetime('now','localtime'),?)",poi.name];
+        [db executeUpdate:@"insert or replace into poi_lastUsed(date,displayName) values(datetime('now','localtime'),?)",[poi refName]];
     }];
     
 }

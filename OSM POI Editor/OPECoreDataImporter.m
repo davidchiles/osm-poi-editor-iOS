@@ -27,6 +27,7 @@
     if(self = [super init])
     {
         queue = [FMDatabaseQueue databaseQueueWithPath:kDatabasePath];
+        
     }
     return self;
 }
@@ -206,8 +207,10 @@
     [queue inDatabase:^(FMDatabase *db) {
         BOOL result = NO;
         OSMDAO * osmData = [[OSMDAO alloc] initWithFilePath:kDatabasePath overrideIfExists:YES];
+        [OSMDAO initialize];
         osmData = nil;
         [db beginTransaction];
+        
         
         result = [db executeUpdate:@"DROP TABLE IF EXISTS poi"];
         result = [db executeUpdate:@"DROP TABLE IF EXISTS optional"];

@@ -119,7 +119,7 @@
     id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
     
     mapView = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:newTileSource];
-    mapView.clusteringEnabled = YES;
+    //mapView.clusteringEnabled = YES;
     mapView.clusterAreaSize = CGSizeMake(10.0, 10.0);
     mapView.clusterMarkerSize = CGSizeMake(10.0, 10.0);
     mapView.showLogoBug = NO;
@@ -212,7 +212,7 @@
     return newImage;
 }
 
--(RMMarker *)markerWithManagedObjectID:(OPEManagedOsmElement *)managedOsmElement
+-(RMMarker *)markerWithManagedObject:(OPEManagedOsmElement *)managedOsmElement
 {
     UIImage * icon = nil;
     if (managedOsmElement.type) {
@@ -268,7 +268,7 @@
         }
         
         
-        RMMarker * marker = [self markerWithManagedObjectID:managedOsmElement];
+        RMMarker * marker = [self markerWithManagedObject:managedOsmElement];
         marker.canShowCallout = YES;
         marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         
@@ -283,6 +283,7 @@
 {
     //NSLog(@"center: %@",[managedOsmElement center]);
     [self.osmData getTypeFor:managedOsmElement];
+    
     RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[self.osmData centerForElement:managedOsmElement] andTitle:[self.osmData nameForElement:managedOsmElement]];
     
     NSMutableString * subtitleString = [NSMutableString stringWithFormat:@"%@",managedOsmElement.type.categoryName];
@@ -397,6 +398,7 @@
 {
     
     NSArray * points = [self.osmData pointsForWay:way];
+    BOOL isArea = [self.osmData isArea:way];
     
     RMAnnotation * newAnnotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:((CLLocation *)[points objectAtIndex:0]).coordinate andTitle:nil];
     
@@ -409,13 +411,22 @@
         for (CLLocation *point in points)
             [aShape addLineToCoordinate:point.coordinate];
         
-        [aShape closePath];
+        if (isArea) {
+            [aShape closePath];
+        }
+     
         
         
     }];
     shape.lineColor = [UIColor blackColor];
     shape.lineWidth +=1;
-    shape.fillColor = [UIColor colorWithWhite:.5 alpha:.6];
+    if (isArea) {
+        shape.fillColor = [UIColor colorWithWhite:.5 alpha:.6];
+    }
+    else
+    {
+        shape.fillColor = [UIColor clearColor];
+    }
     newAnnotation.layer = shape;
     return newAnnotation;
     

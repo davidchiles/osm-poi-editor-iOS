@@ -17,5 +17,6 @@
 @property (nonatomic) double area;
 
 -(CLLocationCoordinate2D)centroidOfPolygon:(NSArray *)points;
++(CLLocationCoordinate2D)centroidOfPolyline:(NSArray *)points;
 
 @end

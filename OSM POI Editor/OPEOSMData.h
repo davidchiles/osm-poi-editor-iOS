@@ -100,7 +100,7 @@
 -(NSString *)highwayTypeForOsmWay:(OPEManagedOsmWay *)way;
 
 -(void)saveDate:(NSDate *)date forType:(OPEManagedReferencePoi *)poi;
-
+-(BOOL)isArea:(OPEManagedOsmElement *)element;
 
 
 

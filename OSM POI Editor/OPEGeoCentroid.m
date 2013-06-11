@@ -78,4 +78,63 @@
     
 }
 
++(CLLocationCoordinate2D)centroidOfPolyline:(NSArray *)points
+{
+    double TotalDistance = 0;
+    for (int index = 0; index < [points count]-1; index++)
+    {
+        TotalDistance += [OPEGeo distance:((CLLocation *)points[index]).coordinate to:((CLLocation *)points[index+1]).coordinate];
+    }
+    
+    double DistanceSoFar = 0;
+    for (int index = 0; index < [points count]-1; index++) {
+        //
+        // If this linesegment puts us past the middle then this
+        // is the segment in which the midpoint appears
+        //
+        if (DistanceSoFar + [OPEGeo distance:((CLLocation *)points[index]).coordinate to:((CLLocation *)points[index+1]).coordinate] > TotalDistance / 2.0) {
+            //
+            // Figure out how far to the midpoint
+            //
+            double DistanceToMidpoint = TotalDistance / 2 - DistanceSoFar;
+            
+            //
+            // Given the start/end of a line and a distance return the point
+            // on the line the specified distance away
+            //
+            return [self lineInterpolateFrom:((CLLocation *)points[index]).coordinate to:((CLLocation *)points[index+1]).coordinate withDistance:DistanceToMidpoint];
+        }
+        
+        DistanceSoFar += [OPEGeo distance:((CLLocation *)points[index]).coordinate to:((CLLocation *)points[index+1]).coordinate];
+    }
+    
+    //
+    // Can happen when the line is of zero length... so just return the first segment
+    //
+    return ((CLLocation *)points[0]).coordinate;
+    
+}
+
++(CLLocationCoordinate2D)lineInterpolateFrom:(CLLocationCoordinate2D) point1 to:(CLLocationCoordinate2D) point2 withDistance:(double)distance {
+    OPEProjectedPoint projectedPoint1 = [OPEGeo coordinateToProjectedPoint:point1];
+    OPEProjectedPoint projectedPoint2 = [OPEGeo coordinateToProjectedPoint:point2];
+    
+    double xabs = fabs(projectedPoint1.x - projectedPoint2.x);
+    double yabs = fabs(projectedPoint1.y - projectedPoint2.y);
+    double xdiff = projectedPoint2.x - projectedPoint1.x;
+    double ydiff = projectedPoint2.y - projectedPoint1.y;
+    
+    double length = sqrt((pow(xabs, 2) + pow(yabs, 2)));
+    double steps = length / distance;
+    double xstep = xdiff / steps;
+    double ystep = ydiff / steps;
+    
+    OPEProjectedPoint newPoint;
+    newPoint.x = projectedPoint1.x + xstep;
+    newPoint.y = projectedPoint1.y + ystep;
+    
+    return [OPEGeo toCoordinate:newPoint];
+}
+
+
 @end

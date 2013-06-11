@@ -154,4 +154,8 @@
 {
     return [OPETranslate translateString:_name];
 }
+-(NSString *)refName
+{
+    return _name;
+}
 @end

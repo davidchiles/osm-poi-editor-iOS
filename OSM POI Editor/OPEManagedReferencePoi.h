@@ -20,6 +20,7 @@
 -(NSInteger)numberOfOptionalSections;
 -(id)initWithName:(NSString *)name withCategory:(NSString *)categoryName andDictionary:(NSDictionary *)dictionary;
 -(id)initWithSqliteResultDictionary:(NSDictionary *)dictionary;
+-(NSString *)refName;
 
 
 @end
