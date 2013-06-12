@@ -33,6 +33,7 @@
 #import "MBProgressHUD.h"
 #import "OPEBaseViewController.h"
 #import "OPEOSMSearchManager.h"
+#import "OPEOSMAPIManager.h"
 
 @interface OPEViewController : OPEBaseViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,OPENameEditViewDelegate, OPEOSMDataControllerDelegate> {
     RMMapView* mapView;
@@ -40,7 +41,7 @@
     RMAnnotation * wayAnnotation;
     NSMutableDictionary * downloadedNoNameHighways;
     OPEOSMSearchManager * searchManager;
-    
+    OPEOSMAPIManager * apiManager;
 }
 
 @property (nonatomic,strong) CLLocationManager* locationManager;

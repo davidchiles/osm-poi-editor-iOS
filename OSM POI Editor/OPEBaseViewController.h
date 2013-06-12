@@ -15,6 +15,7 @@
 
 
 @property (nonatomic,strong)OPEOSMData * osmData;
+@property (nonatomic,strong)OPEOSMAPIManager * apiManager;
 @property (nonatomic,strong)MBProgressHUD * HUD;
 @property (nonatomic) NSInteger numberOfOngoingParses;
 

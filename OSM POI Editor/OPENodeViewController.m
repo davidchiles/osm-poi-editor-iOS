@@ -23,7 +23,6 @@
 #import "OPENodeViewController.h"
 #import "OPETextEdit.h"
 #import "OPECategoryViewController.h"
-#import "OPEOSMData.h"
 #import "OPEInfoViewController.h"
 #import "OPEBinaryCell.h"
 #import "OPEConstants.h"
@@ -38,7 +37,6 @@
 #import "OPEManagedOsmNode.h"
 #import "OPETagEditViewController.h"
 #import "OPEStrings.h"
-#import "OPEOSMAPIManager.h"
 #import "BButton.h"
 
 
@@ -67,22 +65,20 @@
     self = [self init];
     if(self)
     {
-        osmData = [[OPEOSMData alloc] init];
         self.delegate = newDelegate;
         
         self.managedOsmElement = element;
         
         //LOAD ALL DATA FROM DATABASE
-        [osmData getTagsForElement:self.managedOsmElement];
-        [osmData getTypeFor:self.managedOsmElement];
-        [osmData getOptionalsFor:self.managedOsmElement.type];
+        [self.osmData getTagsForElement:self.managedOsmElement];
+        [self.osmData getTypeFor:self.managedOsmElement];
+        [self.osmData getOptionalsFor:self.managedOsmElement.type];
         
         originalTags = [self.managedOsmElement.element.tags copy];
         originalTypeID = self.managedOsmElement.typeID;
-        [osmData updateLegacyTags:managedOsmElement];
+        [self.osmData updateLegacyTags:managedOsmElement];
         
-        apiManager = [[OPEOSMAPIManager alloc] init];
-        //apiManager.delegate = self;
+        //self.apiManager.delegate = self;
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: CANCEL_STRING style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         
@@ -109,7 +105,7 @@
     {
         self.managedOsmElement.element.tags = [originalTags mutableCopy];
         self.managedOsmElement.typeID = originalTypeID;
-        [osmData getTypeFor:managedOsmElement];
+        [self.osmData getTypeFor:managedOsmElement];
     }
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
@@ -132,7 +128,7 @@
     nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     
-    if (self.managedOsmElement.element.elementID > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![osmData hasParentElement:self.managedOsmElement]) {
+    if (self.managedOsmElement.element.elementID > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![self.osmData hasParentElement:self.managedOsmElement]) {
         
         
         deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -433,7 +429,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         OPEManagedReferenceOptional * optional = [self optionalAtIndexPath:indexPath];
         NSString * osmKey = optional.osmKey;
-        [osmData removeOsmKey:osmKey forElement:self.managedOsmElement];
+        [self.osmData removeOsmKey:osmKey forElement:self.managedOsmElement];
         [nodeInfoTableView reloadData];
         [self checkSaveButton];
     }
@@ -442,16 +438,16 @@
 
 -(void)lookupAddress
 {
-    CLLocationCoordinate2D center = [osmData centerForElement:self.managedOsmElement];
-    [apiManager reverseLookupAddress:center];
+    CLLocationCoordinate2D center = [self.osmData centerForElement:self.managedOsmElement];
+    [self.apiManager reverseLookupAddress:center];
 }
 
 - (void) saveButtonPressed
 {
     self.managedOsmElement.action = kActionTypeModify;
-    [osmData saveDate:[NSDate date] forType:self.managedOsmElement.type];
+    [self.osmData saveDate:[NSDate date] forType:self.managedOsmElement.type];
     
-    if (![apiManager canAuth])
+    if (![self.apiManager canAuth])
     {
         [self showAuthError];
     }
@@ -459,10 +455,10 @@
     {
         [self startSave];
         
-        [apiManager uploadElement:self.managedOsmElement withChangesetComment:[osmData changesetCommentfor:self.managedOsmElement] openedChangeset:^(int64_t changesetID) {
+        [self.apiManager uploadElement:self.managedOsmElement withChangesetComment:[self.osmData changesetCommentfor:self.managedOsmElement] openedChangeset:^(int64_t changesetID) {
             [self didOpenChangeset:changesetID withMessage:nil];
         } updatedElements:^(NSArray *updatedElements) {
-            [osmData updateElements:updatedElements];
+            [self.osmData updateElements:updatedElements];
             [delegate updateAnnotationForOsmElements:updatedElements];
         } closedChangeSet:^(int64_t changesetID) {
             
@@ -478,7 +474,7 @@
         dispatch_async(q, ^{
             NSLog(@"saveBottonPressed");
             
-            [osmData uploadElement:self.managedOsmElement];
+            [self.osmData uploadElement:self.managedOsmElement];
             
         });
         //[self didCloseChangeset:1];
@@ -493,7 +489,7 @@
 
 - (void) deleteButtonPressed
 {
-    if (![apiManager canAuth])
+    if (![self.apiManager canAuth])
     {
         [self showAuthError];
     }
@@ -527,10 +523,10 @@
             [self.HUD setLabelText:[NSString stringWithFormat:@"%@ ...",DELETING_STRING]];
             [self.HUD show:YES];
             
-            [apiManager uploadElement:self.managedOsmElement withChangesetComment:[osmData changesetCommentfor:self.managedOsmElement] openedChangeset:^(int64_t changesetID) {
+            [self.apiManager uploadElement:self.managedOsmElement withChangesetComment:[self.osmData changesetCommentfor:self.managedOsmElement] openedChangeset:^(int64_t changesetID) {
                 [self didOpenChangeset:changesetID withMessage:nil];
             } updatedElements:^(NSArray *updatedElements) {
-                [osmData updateElements:updatedElements];
+                [self.osmData updateElements:updatedElements];
                 [delegate updateAnnotationForOsmElements:updatedElements];
             } closedChangeSet:^(int64_t changesetID) {
                 [super didCloseChangeset:changesetID ];
@@ -547,7 +543,7 @@
                 dispatch_async(q, ^{
                     
                     
-                    [osmData deleteElement:self.managedOsmElement];
+                    [self.osmData deleteElement:self.managedOsmElement];
                 });
                 //dispatch_release(q);
             }
@@ -565,15 +561,15 @@
 
 - (void) newOsmKey:(NSString *)key value:(NSString *)value
 {
-    [osmData setOsmKey:key andValue:value forElement:self.managedOsmElement];
+    [self.osmData setOsmKey:key andValue:value forElement:self.managedOsmElement];
     [self checkSaveButton];
     [nodeInfoTableView reloadData];
 }
 
 -(void)newType:(OPEManagedReferencePoi *)newType;
 {
-    [osmData setNewType:newType forElement:self.managedOsmElement];
-    [osmData getOptionalsFor:self.managedOsmElement.type];
+    [self.osmData setNewType:newType forElement:self.managedOsmElement];
+    [self.osmData getOptionalsFor:self.managedOsmElement.type];
     [self reloadTags];
     [nodeInfoTableView reloadData];
 }
@@ -602,7 +598,7 @@
     NSMutableArray * displayNameArray = [NSMutableArray array];
     NSArray * tempArray = [[self.managedOsmElement.type.optionalsSet valueForKeyPath:@"@distinctUnionOfObjects.sectionName"] allObjects];
     
-    __block NSDictionary * sortDictioanry = [osmData optionalSectionSortOrder];
+    __block NSDictionary * sortDictioanry = [self.osmData optionalSectionSortOrder];
     NSSortDescriptor * sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:nil ascending:YES comparator:^NSComparisonResult(id obj1, id obj2) {
         return [[sortDictioanry objectForKey:obj1] compare:[sortDictioanry objectForKey:obj2]];
     }];
@@ -641,18 +637,18 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma OPEOSMAPIManagerDelegate
+#pragma OPEOSMself.apiManagerDelegate
 -(void)didFindAddress:(NSDictionary *)addressDictionary
 {
-    [osmData setOsmKey:@"addr:city" andValue:[addressDictionary objectForKey:@"city"] forElement:self.managedOsmElement];
-    [osmData setOsmKey:@"addr:postcode" andValue:[addressDictionary objectForKey:@"postcode"] forElement:self.managedOsmElement];
-    [osmData setOsmKey:@"addr:street" andValue:[addressDictionary objectForKey:@"road"] forElement:self.managedOsmElement];
+    [self.osmData setOsmKey:@"addr:city" andValue:[addressDictionary objectForKey:@"city"] forElement:self.managedOsmElement];
+    [self.osmData setOsmKey:@"addr:postcode" andValue:[addressDictionary objectForKey:@"postcode"] forElement:self.managedOsmElement];
+    [self.osmData setOsmKey:@"addr:street" andValue:[addressDictionary objectForKey:@"road"] forElement:self.managedOsmElement];
     
     [nodeInfoTableView reloadData];
     NSLog(@"address: %@",addressDictionary);
 }
 
-#pragma OPEOsmDataDelegate
+#pragma OPEosmDataDelegate
 
 -(void)uploadFailed:(NSError *)error
 {

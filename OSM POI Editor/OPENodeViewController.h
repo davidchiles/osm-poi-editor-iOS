@@ -28,10 +28,8 @@
 #import "OPEType.h"
 #import "RMAnnotation.h"
 #import "OPEManagedOsmElement.h"
-#import "OPEOSMData.h"
 #import "OPETagEditViewController.h"
 #import "OPEBaseViewController.h"
-#import "OPEOSMAPIManager.h"
 
 @protocol OPENodeViewDelegate
 @required
@@ -46,8 +44,6 @@
     NSManagedObjectContext * editContext;
     NSDictionary * originalTags;
     int originalTypeID;
-    OPEOSMData * osmData;
-    OPEOSMAPIManager * apiManager;
 }
 
 @property (nonatomic, strong) UITableView * nodeInfoTableView;

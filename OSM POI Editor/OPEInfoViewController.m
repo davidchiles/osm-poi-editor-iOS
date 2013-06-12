@@ -41,6 +41,8 @@
 {
     [super viewDidLoad];
     
+    apiManager = [[OPEOSMAPIManager alloc] init];
+    
     settingsTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     [settingsTableView setDataSource:self];
     [settingsTableView setDelegate:self];
@@ -276,7 +278,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:buttonIdentifier];
         }
         
-        if(![self.osmData canAuth])
+        if(![apiManager canAuth])
         {
             cell.textLabel.text = LOGIN_STRING;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -327,7 +329,7 @@
     }
     else if (indexPath.section == 2)
     {
-        if(![self.osmData canAuth])
+        if(![apiManager canAuth])
         {
             [self signIntoOSM];
         }

@@ -25,6 +25,7 @@
 #import "RMMapView.h"
 #import "OPECreditViewController.h"
 #import "OPEBaseViewController.h"
+#import "OPEOSMAPIManager.h"
 
 @protocol OPEInfoViewControllerDelegate
 @optional
@@ -33,6 +34,9 @@
 @end
 
 @interface OPEInfoViewController : OPEBaseViewController <UITableViewDelegate, UITableViewDataSource>
+{
+    OPEOSMAPIManager * apiManager;
+}
 
 @property (nonatomic, strong) UITableView * settingsTableView;
 @property (nonatomic, strong) id<OPEInfoViewControllerDelegate> delegate;

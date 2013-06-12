@@ -16,7 +16,9 @@
 @end
 
 @implementation OPEBaseViewController
-@synthesize HUD,osmData,numberOfOngoingParses;
+@synthesize HUD,numberOfOngoingParses;
+@synthesize osmData = _osmData;
+@synthesize apiManager = _apiManager;
 
 - (void)viewDidLoad
 {
@@ -24,6 +26,23 @@
     self.numberOfOngoingParses = 0;
 	self.osmData = [[OPEOSMData alloc] init];
     self.osmData.delegate = self;
+}
+
+-(OPEOSMAPIManager *)apiManager
+{
+    if (!_apiManager) {
+        _apiManager = [[OPEOSMAPIManager alloc] init];
+    }
+    return _apiManager;
+}
+
+-(OPEOSMData *)osmData
+{
+    if(!_osmData)
+    {
+        _osmData = [[OPEOSMData alloc] init];
+    }
+    return _osmData;
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,7 +82,7 @@
     NSURL *authorizeURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/authorize"];
     NSString *scope = @"http://api.openstreetmap.org/";
     
-    GTMOAuthAuthentication *auth = [OPEOSMData osmAuth];
+    GTMOAuthAuthentication *auth = [OPEOSMAPIManager osmAuth];
     if (auth == nil) {
         // perhaps display something friendlier in the UI?
         NSLog(@"A valid consumer key and consumer secret are required for signing in to OSM");

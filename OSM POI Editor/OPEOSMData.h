@@ -68,11 +68,6 @@
 @property (nonatomic,strong) AFHTTPClient * httpClient;
 
 - (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
-- (void) openChangeset:(OPEChangeset *)changeset;
-- (void) closeChangeset: (int64_t) changesetNumber;
-
-- (void) uploadElement: (OPEManagedOsmElement *) element;
-- (void) deleteElement: (OPEManagedOsmElement *) element;
 
 - (NSString *)changesetCommentfor:(OPEManagedOsmElement *)element;
 - (NSString *)nameWithElement: (OPEManagedOsmElement *) element;
@@ -111,8 +106,8 @@
 
 -(NSArray *)allElementsWithType:(BOOL)withType;
 
--(BOOL) canAuth;
+//-(BOOL) canAuth;
 
-+(GTMOAuthAuthentication *)osmAuth;
+//+(GTMOAuthAuthentication *)osmAuth;
 
 @end

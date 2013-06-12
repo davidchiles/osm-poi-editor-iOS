@@ -63,12 +63,6 @@
 
 @synthesize userPressedLocatoinButton;
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
 
 #define MINZOOM 17.0
@@ -539,7 +533,7 @@
 }
 -(void)saveValue:(NSString *)value
 {
-    if (![self.osmData canAuth]) {
+    if (![self.apiManager canAuth]) {
         [self showAuthError];
     }
     else
@@ -551,7 +545,25 @@
         [self.osmData setOsmKey:@"name" andValue:value forElement:managedElement];
         managedElement.action = kActionTypeModify;
         
-        [self.osmData uploadElement:managedElement];
+        //[self.osmData uploadElement:managedElement];
+        [self.apiManager uploadElement:managedElement withChangesetComment:[self.osmData changesetCommentfor:managedElement] openedChangeset:^(int64_t changesetID) {
+            self.HUD.mode = MBProgressHUDModeIndeterminate;
+            self.HUD.labelText = [NSString stringWithFormat:@"%@...",UPLOADING_STRING];
+        } updatedElements:^(NSArray *updatedElements) {
+            [self.osmData updateElements:updatedElements];
+            [self updateAnnotationForOsmElements:updatedElements];
+        } closedChangeSet:^(int64_t changesetID) {
+            self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark.png"]];
+            HUD.mode = MBProgressHUDModeCustomView;
+            self.HUD.labelText = @"Complete";
+            [self.HUD hide:YES afterDelay:1.0];
+        } failure:^(NSError *response) {
+            self.HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"x.png"]];
+            HUD.mode = MBProgressHUDModeCustomView;
+            self.HUD.labelText =ERROR_STRING;
+            [self.HUD hide:YES afterDelay:2.0];
+        }];
+        
     }
 }
 
