@@ -680,11 +680,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPENodeViewController.m"
-         timestampString = "392758296.311381"
+         timestampString = "392760666.437464"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "522"
-         endingLineNumber = "522"
+         startingLineNumber = "531"
+         endingLineNumber = "531"
          landmarkName = "-alertView:clickedButtonAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -875,11 +875,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPENodeViewController.m"
-         timestampString = "392699830.927168"
+         timestampString = "392760666.437464"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "449"
-         endingLineNumber = "449"
+         startingLineNumber = "458"
+         endingLineNumber = "458"
          landmarkName = "-saveButtonPressed"
          landmarkType = "5">
       </FileBreakpoint>
@@ -971,7 +971,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "96"
          endingLineNumber = "96"
-         landmarkName = "-viewController:finishedWithAuth:error:"
+         landmarkName = "-signIntoOSM"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1045,8 +1045,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "213"
          endingLineNumber = "213"
-         landmarkName = "-numberOfSectionsInTableView:"
-         landmarkType = "5">
+         landmarkName = "@implementation OPENodeViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1071,7 +1071,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "214"
          endingLineNumber = "214"
-         landmarkName = "-numberOfSectionsInTableView:"
+         landmarkName = "-tableView:numberOfRowsInSection:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1814,7 +1814,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "479"
          endingLineNumber = "479"
-         landmarkName = "-setNewTypeRow:forElement:"
+         landmarkName = "-innerPolygonsForRelation:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1827,7 +1827,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "429"
          endingLineNumber = "429"
-         landmarkName = "-findType:"
+         landmarkName = "-centerForElement:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1879,7 +1879,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "438"
          endingLineNumber = "438"
-         landmarkName = "-findType:"
+         landmarkName = "-centerForElement:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1918,7 +1918,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "832"
          endingLineNumber = "832"
-         landmarkName = "-allElementsOfKind:withType:"
+         landmarkName = "-updateElements:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1944,7 +1944,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "558"
          endingLineNumber = "558"
-         landmarkName = "-nameForElement:"
+         landmarkName = "-nameWithElement:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1957,7 +1957,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "562"
          endingLineNumber = "562"
-         landmarkName = "-nameForElement:"
+         landmarkName = "-highwayTypeForOsmWay:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1970,7 +1970,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "802"
          endingLineNumber = "802"
-         landmarkName = "-saveDate:forType:"
+         landmarkName = "-newElementId"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -1996,7 +1996,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "686"
          endingLineNumber = "686"
-         landmarkName = "-outerPolygonsForRelation:"
+         landmarkName = "-getOptionalsFor:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2009,7 +2009,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "680"
          endingLineNumber = "680"
-         landmarkName = "-outerPolygonsForRelation:"
+         landmarkName = "-getOptionalsFor:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2035,7 +2035,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "881"
          endingLineNumber = "881"
-         landmarkName = "-optionalSectionSortOrder"
+         landmarkName = "-didFinishSavingNewElements:updatedElements:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2048,7 +2048,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "897"
          endingLineNumber = "897"
-         landmarkName = "-getOptionalsFor:"
+         landmarkName = "+osmAuth"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2056,11 +2056,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPENodeViewController.m"
-         timestampString = "392758296.311381"
+         timestampString = "392760666.437464"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "601"
-         endingLineNumber = "601"
+         startingLineNumber = "610"
+         endingLineNumber = "610"
          landmarkName = "-sortedOptionalDisplayNames"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2069,11 +2069,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPENodeViewController.m"
-         timestampString = "392758296.311381"
+         timestampString = "392760666.437464"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "607"
-         endingLineNumber = "607"
+         startingLineNumber = "616"
+         endingLineNumber = "616"
          landmarkName = "-sortedOptionalDisplayNames"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2082,24 +2082,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPENodeViewController.m"
-         timestampString = "392758296.311381"
+         timestampString = "392760666.437464"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "581"
-         endingLineNumber = "581"
-         landmarkName = "-tagsHaveChanged"
-         landmarkType = "5">
+         startingLineNumber = "590"
+         endingLineNumber = "590"
+         landmarkName = "@implementation OPENodeViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPENodeViewController.m"
-         timestampString = "392758296.311381"
+         timestampString = "392760666.437464"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "573"
-         endingLineNumber = "573"
+         startingLineNumber = "582"
+         endingLineNumber = "582"
          landmarkName = "-newType:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2121,11 +2121,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPENodeViewController.m"
-         timestampString = "392758296.311381"
+         timestampString = "392760666.437464"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "575"
-         endingLineNumber = "575"
+         startingLineNumber = "584"
+         endingLineNumber = "584"
          landmarkName = "-newType:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2138,9 +2138,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1008"
-         endingLineNumber = "1008"
-         landmarkName = "-allTypesIncludeLegacy:"
-         landmarkType = "5">
+         endingLineNumber = "1008">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2151,9 +2149,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1006"
-         endingLineNumber = "1006"
-         landmarkName = "-allTypesIncludeLegacy:"
-         landmarkType = "5">
+         endingLineNumber = "1006">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2165,7 +2161,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "799"
          endingLineNumber = "799"
-         landmarkName = "-saveDate:forType:"
+         landmarkName = "-newElementId"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2177,9 +2173,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1045"
-         endingLineNumber = "1045"
-         landmarkName = "-hasParentElement:"
-         landmarkType = "5">
+         endingLineNumber = "1045">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2190,9 +2184,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1065"
-         endingLineNumber = "1065"
-         landmarkName = "-didFinishSavingNewElements:updatedElements:"
-         landmarkType = "5">
+         endingLineNumber = "1065">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2203,9 +2195,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1099"
-         endingLineNumber = "1099"
-         landmarkName = "-didFinishSavingNewElements:updatedElements:"
-         landmarkType = "5">
+         endingLineNumber = "1099">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2216,9 +2206,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1096"
-         endingLineNumber = "1096"
-         landmarkName = "-didFinishSavingNewElements:updatedElements:"
-         landmarkType = "5">
+         endingLineNumber = "1096">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2242,9 +2230,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1021"
-         endingLineNumber = "1021"
-         landmarkName = "-newElementId"
-         landmarkType = "5">
+         endingLineNumber = "1021">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2321,7 +2307,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "580"
          endingLineNumber = "580"
-         landmarkName = "-pointsForWay:"
+         landmarkName = "-saveDate:forType:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2334,8 +2320,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "575"
          endingLineNumber = "575"
-         landmarkName = "-pointsForWay:"
-         landmarkType = "5">
+         landmarkName = "@implementation OPEOSMData"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2424,9 +2410,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1070"
-         endingLineNumber = "1070"
-         landmarkName = "-didFinishSavingNewElements:updatedElements:"
-         landmarkType = "5">
+         endingLineNumber = "1070">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2437,9 +2421,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1084"
-         endingLineNumber = "1084"
-         landmarkName = "-didFinishSavingNewElements:updatedElements:"
-         landmarkType = "5">
+         endingLineNumber = "1084">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2541,9 +2523,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "1068"
-         endingLineNumber = "1068"
-         landmarkName = "-didFinishSavingNewElements:updatedElements:"
-         landmarkType = "5">
+         endingLineNumber = "1068">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2555,7 +2535,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "723"
          endingLineNumber = "723"
-         landmarkName = "-updateElement:"
+         landmarkName = "-allSortedTypesWithCategory:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2568,7 +2548,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "734"
          endingLineNumber = "734"
-         landmarkName = "-updateElement:"
+         landmarkName = "-allSortedTypesWithCategory:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2581,7 +2561,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "730"
          endingLineNumber = "730"
-         landmarkName = "-updateElement:"
+         landmarkName = "-allSortedTypesWithCategory:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2685,7 +2665,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "489"
          endingLineNumber = "489"
-         landmarkName = "-setNewType:forElement:"
+         landmarkName = "-innerPolygonsForRelation:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2697,9 +2677,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "974"
-         endingLineNumber = "974"
-         landmarkName = "-getTagsForType:"
-         landmarkType = "5">
+         endingLineNumber = "974">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2710,9 +2688,7 @@
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "968"
-         endingLineNumber = "968"
-         landmarkName = "-getTagsForType:"
-         landmarkType = "5">
+         endingLineNumber = "968">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -2763,7 +2739,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "619"
          endingLineNumber = "619"
-         landmarkName = "-isArea:"
+         landmarkName = "-allElementsOfKind:withType:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint

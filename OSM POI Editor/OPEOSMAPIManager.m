@@ -23,7 +23,6 @@ typedef struct {
 @implementation OPEOSMAPIManager
 @synthesize auth = _auth;
 @synthesize httpClient = _httpClient;
-@synthesize delegate;
 
 -(id)init
 {
@@ -89,10 +88,6 @@ typedef struct {
     
     [AFXMLRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"application/osm3s+xml"]];
     
-    if ([delegate respondsToSelector:@selector(willStartDownloading)]) {
-        [delegate willStartDownloading];
-    }
-    
     AFHTTPRequestOperation * httpRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
     [httpRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -120,17 +115,20 @@ typedef struct {
     
 }
 
-
--(void)reverseLookupAddress:(CLLocationCoordinate2D)coordinate
+-(void)reverseLookupAddress:(CLLocationCoordinate2D )coordinate
+                    success:(void (^)(NSDictionary * addressDictionary))success
+                    failure:(void (^)(NSError * error))failure
 {
     NSString * urlString = [NSString stringWithFormat:@"http://open.mapquestapi.com/nominatim/v1/reverse.php?format=json&lat=%@&lon=%@&zoom=18&addressdetails=1",[NSNumber numberWithDouble:coordinate.latitude],[NSNumber numberWithDouble:coordinate.longitude]];
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     AFJSONRequestOperation * jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        //if ([self.delegate respondsToSelector:@selector(didFindAddress:)]) {
-            //[self.delegate didFindAddress:[JSON objectForKey:@"address"]];
-        //}
+        if (success) {
+            success([JSON objectForKey:@"address"]);
+        }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"Error!");
+        if (failure) {
+            failure(error);
+        }
     }];
     [jsonOperation start];
 }

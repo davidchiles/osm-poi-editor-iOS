@@ -439,7 +439,16 @@
 -(void)lookupAddress
 {
     CLLocationCoordinate2D center = [self.osmData centerForElement:self.managedOsmElement];
-    [self.apiManager reverseLookupAddress:center];
+    [self.apiManager reverseLookupAddress:center success:^(NSDictionary *addressDictionary) {
+        [self.osmData setOsmKey:@"addr:city" andValue:[addressDictionary objectForKey:@"city"] forElement:self.managedOsmElement];
+        [self.osmData setOsmKey:@"addr:postcode" andValue:[addressDictionary objectForKey:@"postcode"] forElement:self.managedOsmElement];
+        [self.osmData setOsmKey:@"addr:street" andValue:[addressDictionary objectForKey:@"road"] forElement:self.managedOsmElement];
+        
+        [nodeInfoTableView reloadData];
+        NSLog(@"address: %@",addressDictionary);
+    } failure:^(NSError *error) {
+        NSLog(@"error");
+    }];
 }
 
 - (void) saveButtonPressed
@@ -635,17 +644,6 @@
 {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-#pragma OPEOSMself.apiManagerDelegate
--(void)didFindAddress:(NSDictionary *)addressDictionary
-{
-    [self.osmData setOsmKey:@"addr:city" andValue:[addressDictionary objectForKey:@"city"] forElement:self.managedOsmElement];
-    [self.osmData setOsmKey:@"addr:postcode" andValue:[addressDictionary objectForKey:@"postcode"] forElement:self.managedOsmElement];
-    [self.osmData setOsmKey:@"addr:street" andValue:[addressDictionary objectForKey:@"road"] forElement:self.managedOsmElement];
-    
-    [nodeInfoTableView reloadData];
-    NSLog(@"address: %@",addressDictionary);
 }
 
 #pragma OPEosmDataDelegate

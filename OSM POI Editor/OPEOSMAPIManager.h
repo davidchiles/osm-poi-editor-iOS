@@ -15,20 +15,6 @@
 #import "AFNetworking.h"
 #import "OPEManagedOsmElement.h"
 
-@protocol OPEOSMAPIManagerDelegate <NSObject>
-
-@optional
--(void)didOpenChangeset:(int64_t)changesetNumber withMessage:(NSString *)message;
--(void)didCloseChangeset:(int64_t)changesetNumber;
--(void)uploadFailed:(NSError *)error;
-
--(void)willStartDownloading;
--(void)didEndDownloading;
-
--(void)didFindAddress:(NSDictionary *)addressDictionary;
-
-@end
-
 @interface OPEOSMAPIManager : NSObject
 {
     NSMutableDictionary * apiFailures;
@@ -36,7 +22,6 @@
 
 @property (nonatomic,strong) AFHTTPClient * httpClient;
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
-@property (nonatomic, weak) id <OPEOSMAPIManagerDelegate> delegate;
 
 -(void)getDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
              success:(void (^)(NSData * response))success
@@ -50,7 +35,9 @@ withChangesetComment:(NSString *)changesetComment
              failure:(void (^)(NSError * response))failure;
 
 
--(void)reverseLookupAddress:(CLLocationCoordinate2D)coordinate;
+-(void)reverseLookupAddress:(CLLocationCoordinate2D )coordinate
+                    success:(void (^)(NSDictionary * addressDictionary))success
+                    failure:(void (^)(NSError * error))failure;
 
 +(GTMOAuthAuthentication *)osmAuth;
 -(BOOL) canAuth;
