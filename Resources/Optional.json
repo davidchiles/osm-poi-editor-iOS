@@ -132,7 +132,6 @@
       "Stands" : "stands",
       "Wall Loops" : "wall_loops",
       "Informal" : "informal",
-      "Shed" : "shed",
       "Building" : "building",
       "Lockers" : "lockers"
     },
@@ -929,6 +928,24 @@
     "displayName" : "Artist",
     "osmKey" : "artist_name",
     "values" : "label",
+    "section" : "Other"
+  },
+  "sport" : {
+    "displayName" : "Sport",
+    "osmKey" : "sport",
+    "values" : {
+      "Soccer" : "soccer",
+      "Tennis" : "tennis",
+      "Baseball" : "baseball",
+      "Swimming" : "swimming",
+      "Multi-Sport" : "multi",
+      "Basketball" : "basketball",
+      "Golf" : "golf",
+      "Athletics" : "athletics",
+      "Cricket" : "cricket",
+      "Hockey" : "hockey",
+      "American Football" : "american_football"
+    },
     "section" : "Other"
   }
 }
