@@ -8,6 +8,8 @@
 
 #import "OPEManagedOsmTag.h"
 
+#import "OPEStrings.h"
+
 
 
 @interface OPEManagedOsmElement ()
@@ -135,6 +137,25 @@
 -(NSData *) deleteXMLforChangset: (int64_t) changesetNumber
 {
     return nil;
+}
+
+-(NSString *)displayNameForChangeset
+{
+    if ([self isKindOfClass:[OPEManagedOsmWay class]]) {
+        if(((OPEManagedOsmWay *)self).isNoNameStreet)
+        {
+            return NO_NAME_STRING;
+        }
+    }
+    else if ([[self valueForOsmKey:@"name"] length])
+    {
+        return [self valueForOsmKey:@"name"];
+    }
+    else if(self.type)
+    {
+        return self.type.name;
+    }
+    return [self osmType];
 }
 
 @end

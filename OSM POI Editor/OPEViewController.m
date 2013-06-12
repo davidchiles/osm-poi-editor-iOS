@@ -800,15 +800,16 @@
 
 #pragma FetchedResultsController
 
--(void)updateAnnotationForOsmElement:(OPEManagedOsmElement *)element{
-    [self removeAnnotationWithOsmElementIDKey:element.idKey];
-    if (![element.action isEqualToString:kActionTypeDelete]) {
-        NSArray * annotationsArray = [self annotationWithOsmElement:element];
-        for(RMAnnotation * annotation in annotationsArray)
-        [mapView addAnnotation:annotation];
+-(void)updateAnnotationForOsmElements:(NSArray *)elementsArray {
+    for (OPEManagedOsmElement * element in elementsArray)
+    {
+        [self removeAnnotationWithOsmElementIDKey:element.idKey];
+        if (![element.action isEqualToString:kActionTypeDelete]) {
+            NSArray * annotationsArray = [self annotationWithOsmElement:element];
+            for(RMAnnotation * annotation in annotationsArray)
+                [mapView addAnnotation:annotation];
+        }
     }
-    
-    
 }
 
 -(void)removeAnnotationWithOsmElementIDKey:(NSString *)idKey
@@ -905,10 +906,7 @@
         
     }
     
-    for(OPEManagedOsmElement * element in updatedElementsArray)
-    {
-        [self updateAnnotationForOsmElement:element];
-    }
+    [self updateAnnotationForOsmElements:updatedElementsArray];
 }
 
 -(void)didCloseChangeset:(int64_t)changesetNumber

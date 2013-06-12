@@ -10,6 +10,8 @@
 #import "GTMOAuthViewControllerTouch.h"
 #import "OPEConstants.h"
 #import "OPEAPIConstants.h"
+#import "OPEChangeset.h"
+#import "OPEUtility.h"
 
 typedef struct {
 	double left;
@@ -167,6 +169,234 @@ typedef struct {
     }
     return finalUrl;
 }
+
+-(void)uploadElement:(OPEManagedOsmElement *)element
+withChangesetComment:(NSString *)changesetComment
+     openedChangeset:(void (^)(int64_t changesetID))openedChangeset
+     updatedElements:(void (^)(NSArray * updatedElements))updatedElements
+     closedChangeSet:(void (^)(int64_t changesetID))closedChangeset
+             failure:(void (^)(NSError * response))failure
+{
+    OPEChangeset * changeset = [[OPEChangeset alloc] init];
+    [changeset addElement:element];
+    changeset.message = changesetComment;
+    
+    [self openChangeset:changeset success:^(int64_t changesetID) {
+        if (openedChangeset) {
+            openedChangeset(changesetID);
+        }
+        [self uploadElements:changeset success:^(NSArray *elements) {
+            if (updatedElements) {
+                updatedElements(elements);
+            }
+            
+            [self closeChangeset:changesetID success:^(id response) {
+                if (closedChangeset) {
+                    closedChangeset(changesetID
+                                    );
+                }
+        } failure:^(NSError *error) {
+            if (failure) {
+                failure(error);
+            }
+        }];
+        } failure:^(OPEManagedOsmElement * element,NSError *error) {
+            if (failure) {
+                failure(error);
+            }
+        }];
+        
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+    
+}
+
+-(void)openChangeset:(OPEChangeset *)changeset
+             success:(void (^)(int64_t changesetID))success
+             failure: (void (^)(NSError * error))failure
+{
+    NSString * createdByString = [NSString stringWithFormat:@"POI+ (%@) %@",[OPEUtility appVersion],[OPEUtility iOSVersion]];
+    
+    [changeset.tags setObject:createdByString forKey:@"created_by"];
+    [changeset.tags setObject:[OPEUtility tileSourceName] forKey:@"imagery_used"];
+    [changeset.tags setObject:[OPEUtility addHTML:changeset.message] forKey:@"comment"];
+    
+    NSData * changesetData = [[changeset xml] dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"PUT" path:@"changeset/create" parameters:nil];
+    [urlRequest setHTTPBody:changesetData];
+    [self.auth authorizeRequest:urlRequest];
+    
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        changeset.changesetID = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] longLongValue];
+        if (success) {
+            success(changeset.changesetID);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    [requestOperation start];
+}
+
+-(void)uploadElements:(OPEChangeset *)changeset success:(void (^)(NSArray * elements))success failure:(void (^)(OPEManagedOsmElement * element, NSError * error))failure
+{
+    if (!changeset.changesetID && failure) {
+        failure(nil,nil);
+    }
+    NSMutableArray * requestOperations = [NSMutableArray array];
+    NSMutableArray * updatedElements = [NSMutableArray array];
+    NSArray * elements =  @[changeset.nodes,changeset.ways,changeset.relations];
+    for( NSArray * elmentArray in elements)
+    {
+        for(OPEManagedOsmElement * element in elmentArray)
+        {
+            if([element.action isEqualToString:kActionTypeDelete])
+            {
+                AFHTTPRequestOperation * deleteOperation = [self deleteRequestOperationWithElement:element changeset:changeset.changesetID success:^(OPEManagedOsmElement *Element) {
+                    [updatedElements addObject:element];
+                } failure:^(OPEManagedOsmElement * element,NSError *error) {
+                    if (failure) {
+                        failure(element,error);
+                    }
+                }];
+                
+                [requestOperations addObject:deleteOperation];
+            }
+            else if([element.action isEqualToString:kActionTypeModify])
+            {
+                AFHTTPRequestOperation * updateOperation = [self uploadRequestOperationWithElement:element changeset:changeset.changesetID success:^(OPEManagedOsmElement *Element) {
+                    [updatedElements addObject:element];
+                } failure:^(OPEManagedOsmElement * element,NSError *error) {
+                    if (failure) {
+                        failure(element,error);
+                    }
+                }];
+                
+                [requestOperations addObject:updateOperation];
+                
+            }
+        }
+    }
+    
+    [self.httpClient enqueueBatchOfHTTPRequestOperations:requestOperations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+        NSLog(@"uploaded: %d/%d",numberOfFinishedOperations,totalNumberOfOperations);
+        
+    } completionBlock:^(NSArray *operations) {
+        if (success) {
+            success(updatedElements);
+        }
+    }];
+    
+    
+}
+
+-(void)closeChangeset:(int64_t) changesetNumber
+              success:(void (^)(id response))success
+              failure:(void (^)(NSError * error))failure
+{
+    NSString * path = [NSString stringWithFormat:@"changeset/%lld/close",changesetNumber];
+    
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"PUT" path:path parameters:nil];
+    [self.auth authorizeRequest:urlRequest];
+    
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    [requestOperation start];
+}
+  
+
+
+-(AFHTTPRequestOperation *)uploadRequestOperationWithElement:(OPEManagedOsmElement *) element changeset: (int64_t) changesetNumber success:(void (^)(OPEManagedOsmElement * Element))updateElement failure:(void (^)(OPEManagedOsmElement * element, NSError * error))failure
+{
+    NSData * xmlData = [element uploadXMLforChangset:changesetNumber];
+    
+    NSMutableString * path = [NSMutableString stringWithFormat:@"%@/",[element osmType]];
+    int64_t elementOsmID = element.element.elementID;
+    
+    if (elementOsmID < 0) {
+        [path appendString:@"create"];
+    }
+    else{
+        [path appendFormat:@"%lld",element.element.elementID];
+    }
+    
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"PUT" path:path parameters:nil];
+    [urlRequest setHTTPBody:xmlData];
+    [self.auth authorizeRequest:urlRequest];
+    
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"changeset %@",responseObject);
+        int64_t response = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] longLongValue];
+        
+        if (elementOsmID < 0) {
+            element.element.elementID = response;
+            element.element.version = 1;
+        }
+        else{
+            element.element.version = response;
+        }
+        
+        if (updateElement) {
+            updateElement(element);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(element,error);
+        }
+    }];
+    return requestOperation;
+}
+
+-(AFHTTPRequestOperation *)deleteRequestOperationWithElement:(OPEManagedOsmElement *) element changeset: (int64_t) changesetNumber success:(void (^)(OPEManagedOsmElement * Element))updateElement failure:(void (^)(OPEManagedOsmElement * element, NSError * error))failure
+{
+    NSData * xmlData = [element deleteXMLforChangset:changesetNumber];
+    NSString * path = [NSString stringWithFormat:@"%@/%lld",[element osmType],element.element.elementID];
+    
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"DELETE" path:path parameters:nil];
+    [urlRequest setHTTPBody:xmlData];
+    [self.auth authorizeRequest:urlRequest];
+    
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"changeset %@",responseObject);
+        NSInteger newVersion = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] integerValue];
+        
+        element.element.version = newVersion;
+        element.isVisible = NO;
+        
+        if (updateElement) {
+            updateElement(element);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(element,error);
+        }
+    }];
+    
+    return requestOperation;
+}
+
 
 +(GTMOAuthAuthentication *)osmAuth {
     NSString *myConsumerKey = osmConsumerKey; //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service

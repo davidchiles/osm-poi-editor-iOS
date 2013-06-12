@@ -35,7 +35,7 @@
 
 @protocol OPENodeViewDelegate
 @required
--(void)updateAnnotationForOsmElement:(OPEManagedOsmElement *)element;
+-(void)updateAnnotationForOsmElements:(NSArray *)elementsArray;
 @end
 
 

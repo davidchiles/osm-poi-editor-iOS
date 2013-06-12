@@ -18,9 +18,11 @@
 @property (nonatomic, strong) NSMutableArray * relations;
 @property (nonatomic) int64_t changesetID;
 @property (nonatomic, strong) NSString * message;
+@property (nonatomic, strong) NSMutableDictionary * tags;
 
 -(void)addElement:(OPEManagedOsmElement *)element;
 -(BOOL)hasNodes;
 -(BOOL)hasWays;
 -(BOOL)hasRelations;
+-(NSString *)xml;
 @end

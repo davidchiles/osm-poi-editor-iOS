@@ -13,6 +13,7 @@
 #import "OPEManagedOsmElement.h"
 #import "GTMOAuthAuthentication.h"
 #import "AFNetworking.h"
+#import "OPEManagedOsmElement.h"
 
 @protocol OPEOSMAPIManagerDelegate <NSObject>
 
@@ -37,15 +38,21 @@
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
 @property (nonatomic, weak) id <OPEOSMAPIManagerDelegate> delegate;
 
--(void)getDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast success:(void (^)(NSData * response))success failure:(void (^)(NSError *error))failure;
-- (void) openChangeset:(OPEChangeset *)changeset;
-- (void) closeChangeset: (int64_t) changesetNumber;
+-(void)getDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
+             success:(void (^)(NSData * response))success
+             failure:(void (^)(NSError *error))failure;
 
-- (void) uploadElement: (OPEManagedOsmElement *) element;
-- (void) deleteElement: (OPEManagedOsmElement *) element;
+-(void)uploadElement:(OPEManagedOsmElement *)element
+withChangesetComment:(NSString *)changesetComment
+     openedChangeset:(void (^)(int64_t changesetID))openedChangeset
+     updatedElements:(void (^)(NSArray * updatedElements))updatedElements
+     closedChangeSet:(void (^)(int64_t changesetID))closedChangeset
+             failure:(void (^)(NSError * response))failure;
+
 
 -(void)reverseLookupAddress:(CLLocationCoordinate2D)coordinate;
 
 +(GTMOAuthAuthentication *)osmAuth;
+-(BOOL) canAuth;
 
 @end

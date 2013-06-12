@@ -74,6 +74,7 @@
 - (void) uploadElement: (OPEManagedOsmElement *) element;
 - (void) deleteElement: (OPEManagedOsmElement *) element;
 
+- (NSString *)changesetCommentfor:(OPEManagedOsmElement *)element;
 - (NSString *)nameWithElement: (OPEManagedOsmElement *) element;
 
 -(void)removeOsmKey:(NSString *)osmKey forElement:(OPEManagedOsmElement *)element;
@@ -89,6 +90,8 @@
 -(NSArray *)innerPolygonsForRelation:(OPEManagedOsmRelation *)relation;
 -(void)getTagsForElement:(OPEManagedOsmElement *)element;
 -(void)updateLegacyTags:(OPEManagedOsmElement *)element;
+
+-(void)updateElements:(NSArray *)elementsArray;
 
 -(void)getOptionalsFor:(OPEManagedReferencePoi *)poi;
 -(NSDictionary *)optionalSectionSortOrder;

@@ -44,6 +44,8 @@
 #define CATEGORY_STRING NSLocalizedString(@"Category",@"Label for category")
 #define TYPE_STRING NSLocalizedString(@"Type",@"Label for type")
 
+#define NO_NAME_STRING NSLocalizedString(@"No Name Street",@"label for street with missing name tag")
+
 
 
 @end

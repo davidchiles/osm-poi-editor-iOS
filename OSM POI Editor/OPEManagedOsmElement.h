@@ -31,6 +31,8 @@
 +(OPEManagedOsmElement *)elementWithBasicOsmElement:(Element *)element;
 +(OPEManagedOsmElement *)elementWithType:(NSString *)elementTypeString withDictionary:(NSDictionary *)dictionary;
 
+-(NSString *)displayNameForChangeset;
+
 //+(OPEManagedOsmElement *)fetchOrCreateElementWithOsmID:(int64_t)elementID;
 
 @end

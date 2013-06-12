@@ -451,13 +451,29 @@
     self.managedOsmElement.action = kActionTypeModify;
     [osmData saveDate:[NSDate date] forType:self.managedOsmElement.type];
     
-    if (![osmData canAuth])
+    if (![apiManager canAuth])
     {
         [self showAuthError];
     }
     else if ([self tagsHaveChanged])
     {
         [self startSave];
+        
+        [apiManager uploadElement:self.managedOsmElement withChangesetComment:[osmData changesetCommentfor:self.managedOsmElement] openedChangeset:^(int64_t changesetID) {
+            [self didOpenChangeset:changesetID withMessage:nil];
+        } updatedElements:^(NSArray *updatedElements) {
+            [osmData updateElements:updatedElements];
+            [delegate updateAnnotationForOsmElements:updatedElements];
+        } closedChangeSet:^(int64_t changesetID) {
+            
+            [super didCloseChangeset:changesetID ];
+            [self checkSaveButton];
+            [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];
+        } failure:^(NSError *error) {
+            [super uploadFailed:error];
+            [self checkSaveButton];
+        }];
+        /*
         dispatch_queue_t q = dispatch_queue_create("queue", NULL);
         dispatch_async(q, ^{
             NSLog(@"saveBottonPressed");
@@ -467,7 +483,7 @@
         });
         //[self didCloseChangeset:1];
         //dispatch_release(q);
-
+         */
         
     }
     else {
@@ -477,7 +493,7 @@
 
 - (void) deleteButtonPressed
 {
-    if (![osmData canAuth])
+    if (![apiManager canAuth])
     {
         [self showAuthError];
     }
@@ -511,6 +527,21 @@
             [self.HUD setLabelText:[NSString stringWithFormat:@"%@ ...",DELETING_STRING]];
             [self.HUD show:YES];
             
+            [apiManager uploadElement:self.managedOsmElement withChangesetComment:[osmData changesetCommentfor:self.managedOsmElement] openedChangeset:^(int64_t changesetID) {
+                [self didOpenChangeset:changesetID withMessage:nil];
+            } updatedElements:^(NSArray *updatedElements) {
+                [osmData updateElements:updatedElements];
+                [delegate updateAnnotationForOsmElements:updatedElements];
+            } closedChangeSet:^(int64_t changesetID) {
+                [super didCloseChangeset:changesetID ];
+                [self checkSaveButton];
+                [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];
+            } failure:^(NSError *error) {
+                [super uploadFailed:error];
+                [self checkSaveButton];
+            }];
+            
+            /*
             if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
                 dispatch_queue_t q = dispatch_queue_create("queue", NULL);
                 dispatch_async(q, ^{
@@ -520,6 +551,7 @@
                 });
                 //dispatch_release(q);
             }
+             */
         }
         else
         {
@@ -622,15 +654,6 @@
 
 #pragma OPEOsmDataDelegate
 
--(void)didCloseChangeset:(int64_t)changesetNumber
-{
-    [delegate updateAnnotationForOsmElement:self.managedOsmElement];
-    [super didCloseChangeset:changesetNumber];
-    [self checkSaveButton];
-    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(dismissViewController) userInfo:nil repeats:nil];
-    //[self.navigationController dismissModalViewControllerAnimated: YES];
-    
-}
 -(void)uploadFailed:(NSError *)error
 {
     [super uploadFailed:error];

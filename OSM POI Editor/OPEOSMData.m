@@ -135,67 +135,6 @@
             }
         });
     }];
-    /*
-    double boxleft = southWest.longitude;
-    double boxbottom = southWest.latitude;
-    double boxright = northEast.longitude;
-    double boxtop = northEast.latitude;
-    
-    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",kOPEAPIURL3,boxleft,boxbottom,boxright,boxtop]];
-    NSURLRequest * request =[NSURLRequest requestWithURL:url];
-    
-    [AFXMLRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"application/osm3s+xml"]];
-    //dispatch_queue_t t = dispatch_queue_create(NULL, NULL);
-    
-    if ([delegate respondsToSelector:@selector(willStartDownloading)]) {
-        [delegate willStartDownloading];
-    }
-    
-    AFHTTPRequestOperation * httpRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [httpRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if ([delegate respondsToSelector:@selector(didEndDownloading)]) {
-            [delegate didEndDownloading];
-        }
-        
-        
-        dispatch_async(q,  ^{
-            
-            OSMParser* parser = [[OSMParser alloc] initWithOSMData:responseObject];
-            OSMParserHandlerDefault* handler = [[OSMParserHandlerDefault alloc] initWithOutputFilePath:kDatabasePath overrideIfExists:NO];
-            parser.delegate=handler;
-            handler.outputDao.delegate = self;
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([delegate respondsToSelector:@selector(willStartParsing:)]) {
-                    [delegate willStartParsing:nil];
-                }
-            });
-            
-            
-            [parser parse];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([delegate respondsToSelector:@selector(didEndParsing)]) {
-                    [delegate didEndParsing];
-                }
-            });
-            
-            NSLog(@"done Parsing");
-        });
-        //dispatch_release(t);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if ([delegate respondsToSelector:@selector(downloadFailed:)]) {
-                [delegate downloadFailed:error];
-            }
-        });
-    }];
-    [httpRequestOperation start];
-    
-    NSLog(@"Download URL %@",url);
-     */
 }
 
 -(BOOL) canAuth;
@@ -213,6 +152,23 @@
         return didAuth && canAuth;
     
     
+}
+
+- (NSString *)changesetCommentfor:(OPEManagedOsmElement *)element
+{
+    NSString * comment;
+    if ([element.action isEqualToString:kActionTypeDelete]) {
+        comment = [NSString stringWithFormat:@"Deleted POI: %@",[self nameForElement: element]];
+    }
+    else{
+        if (element.element.elementID < 0) {
+            comment = [NSString stringWithFormat:@"Created new POI: %@",[self nameForElement: element]];
+        }
+        else{
+            comment = [NSString stringWithFormat:@"Updated POI: %@",[self nameForElement: element]];
+        }
+    }
+    return comment;
 }
 
 -(void)uploadElement:(OPEManagedOsmElement *)element
@@ -406,8 +362,6 @@
          NSLog(@"Failed: %@",urlRequest.URL);
      }];
     return requestOperation;
-
-    
 }
 
 - (void) closeChangeset: (int64_t) changesetNumber
@@ -1091,6 +1045,14 @@
         hasParent = hasWayParent && hasRelationParent;
     }];
     return hasParent;
+}
+
+-(void)updateElements:(NSArray *)elementsArray
+{
+    for (OPEManagedOsmElement * element in elementsArray)
+    {
+        [self updateElement:element];
+    }
 }
 
 //OSMDAODelegate Mehtod
