@@ -82,7 +82,7 @@
         [osmData updateLegacyTags:managedOsmElement];
         
         apiManager = [[OPEOSMAPIManager alloc] init];
-        apiManager.delegate = self;
+        //apiManager.delegate = self;
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: CANCEL_STRING style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         

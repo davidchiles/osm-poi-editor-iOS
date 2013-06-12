@@ -60,7 +60,8 @@
         //NSString * baseUrl = @"http://api06.dev.openstreetmap.org/";
         
         typeDictionary      = [NSMutableDictionary dictionary];
-        [self auth];
+        apiManager = [[OPEOSMAPIManager alloc] init];
+        
         
         //[httpClient setAuthorizationHeaderWithToken:auth.token];
     }
@@ -98,12 +99,49 @@
  
 -(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
 {
+    [apiManager getDataWithSW:southWest NE:northEast success:^(NSData *response) {
+        if ([delegate respondsToSelector:@selector(didEndDownloading)]) {
+            [delegate didEndDownloading];
+        }
+        dispatch_async(q,  ^{
+            
+            OSMParser* parser = [[OSMParser alloc] initWithOSMData:response];
+            OSMParserHandlerDefault* handler = [[OSMParserHandlerDefault alloc] initWithOutputFilePath:kDatabasePath overrideIfExists:NO];
+            parser.delegate=handler;
+            handler.outputDao.delegate = self;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([delegate respondsToSelector:@selector(willStartParsing:)]) {
+                    [delegate willStartParsing:nil];
+                }
+            });
+            
+            
+            [parser parse];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([delegate respondsToSelector:@selector(didEndParsing)]) {
+                    [delegate didEndParsing];
+                }
+            });
+            
+            NSLog(@"done Parsing");
+        });
+
+    } failure:^(NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([delegate respondsToSelector:@selector(downloadFailed:)]) {
+                [delegate downloadFailed:error];
+            }
+        });
+    }];
+    /*
     double boxleft = southWest.longitude;
     double boxbottom = southWest.latitude;
     double boxright = northEast.longitude;
     double boxtop = northEast.latitude;
     
-    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",kOPEAPIURL,boxleft,boxbottom,boxright,boxtop]];
+    NSURL* url = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",kOPEAPIURL3,boxleft,boxbottom,boxright,boxtop]];
     NSURLRequest * request =[NSURLRequest requestWithURL:url];
     
     [AFXMLRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"application/osm3s+xml"]];
@@ -157,6 +195,7 @@
     [httpRequestOperation start];
     
     NSLog(@"Download URL %@",url);
+     */
 }
 
 -(BOOL) canAuth;

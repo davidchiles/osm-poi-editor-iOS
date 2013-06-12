@@ -27,6 +27,7 @@
 #import "FMDatabaseQueue.h"
 #import "OSMDAO.h"
 #import "OPEManagedReferencePoi.h"
+#import "OPEOSMAPIManager.h"
 
 @class OPEManagedOsmNode;
 @class OPEManagedOsmElement;
@@ -58,6 +59,7 @@
 {
     dispatch_queue_t q;
     NSMutableDictionary * typeDictionary;
+    OPEOSMAPIManager * apiManager;
 }
 
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;

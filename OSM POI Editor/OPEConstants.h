@@ -48,7 +48,12 @@ typedef enum{
 }OPEOptionalType;
 
 #define kLeftTextDefaultSize 76
-#define kOPEAPIURL @"http://www.overpass-api.de/api/xapi?*"
+
+#define kOPEAPIURL1 @"http://www.overpass-api.de/api/xapi?*"
+#define kOPEAPIURL2 @"http://overpass.osm.rambler.ru/cgi/xapi?*"
+#define kOPEAPIURL3 @"http://api.openstreetmap.fr/xapi?*"
+#define kOPEAPIURL4 @"http://api.openstreetmap.org/api/0.6/"
+#define kOPEAPIURL5 @"http://api.openstreetmap.fr/api/0.6/"
 
 #define kPointTypeNode @"node"
 #define kPointTypeWay @"way"

@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+
 #import "OPEChangeset.h"
 #import "OPEManagedOsmElement.h"
+#import "GTMOAuthAuthentication.h"
+#import "AFNetworking.h"
 
 @protocol OPEOSMAPIManagerDelegate <NSObject>
 
@@ -26,10 +29,15 @@
 @end
 
 @interface OPEOSMAPIManager : NSObject
+{
+    NSMutableDictionary * apiFailures;
+}
 
-@property (nonatomic,weak) id <OPEOSMAPIManagerDelegate> delegate;
+@property (nonatomic,strong) AFHTTPClient * httpClient;
+@property (nonatomic, strong) GTMOAuthAuthentication * auth;
+@property (nonatomic, weak) id <OPEOSMAPIManagerDelegate> delegate;
 
-- (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
+-(void)getDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast success:(void (^)(NSData * response))success failure:(void (^)(NSError *error))failure;
 - (void) openChangeset:(OPEChangeset *)changeset;
 - (void) closeChangeset: (int64_t) changesetNumber;
 
@@ -37,5 +45,7 @@
 - (void) deleteElement: (OPEManagedOsmElement *) element;
 
 -(void)reverseLookupAddress:(CLLocationCoordinate2D)coordinate;
+
++(GTMOAuthAuthentication *)osmAuth;
 
 @end
