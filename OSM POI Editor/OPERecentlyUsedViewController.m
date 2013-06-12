@@ -50,6 +50,7 @@
     UITableView * tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     tableView.delegate = self;
     tableView.dataSource = self;
+    tableView.tag = kTableViewTag;
     
     [self.view addSubview:tableView];
 }

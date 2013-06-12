@@ -13,6 +13,7 @@
 #import "OPETextViewEditViewController.h"
 #import "OPEConstants.h"
 #import "OPETagValueList.h"
+#import "OPEWikipediaEditViewController.h"
 
 @interface OPETagEditViewController ()
 
@@ -49,6 +50,12 @@
     if (type == OPEOptionalTypeList) {
         viewController = [[OPETagValueList alloc] initWithOsmKey:osmKey delegate:delegate];
     }
+    else if ([osmKey isEqualToString:@"wikipedia"])
+    {
+        OPEWikipediaEditViewController * wView = [[OPEWikipediaEditViewController alloc] initWithOsmKey:osmKey delegate:delegate];
+        wView.showRecent = NO;
+        viewController = wView;
+    }
     else if ([@[@"addr:street",@"addr:postcode",@"addr:city",@"addr:state",@"addr:province"]containsObject:osmKey]) {
         OPERecentlyUsedViewController * rView = [[OPERecent_NearbyViewController alloc] initWithOsmKey:osmKey delegate:delegate];
         rView.showRecent = YES;
@@ -62,16 +69,25 @@
         }
         viewController = rView;
     }
-    else if ([@[@"phone"] containsObject:osmKey])
+    else if ([@[@"phone",@"fax"] containsObject:osmKey])
     {
         OPERecentlyUsedViewController * rView = [[OPEPhoneEditViewController alloc] initWithOsmKey:osmKey delegate:delegate];
         rView.showRecent = NO;
         viewController = rView;
     }
+    else if ([osmKey isEqualToString:@"email"])
+    {
+        OPERecentlyUsedViewController * rView = [[OPERecentlyUsedViewController alloc] initWithOsmKey:osmKey delegate:delegate];
+        rView.showRecent = NO;
+        rView.textField.keyboardType = UIKeyboardTypeEmailAddress;
+        viewController = rView;
+        
+    }
     else if ([@[@"name",@"source",@"note"] containsObject:osmKey])
     {
         viewController = [[OPETextViewEditViewController alloc] initWithOsmKey:osmKey delegate:delegate];
     }
+    
     
     return viewController;
 }

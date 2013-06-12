@@ -44,6 +44,12 @@
                 self.text = @"www.";
             }
         }
+        else if([osmKey isEqualToString:@"email"])
+        {
+            self.keyboardType = UIKeyboardTypeEmailAddress;
+            self.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            self.autocorrectionType = UITextAutocorrectionTypeNo;
+        }
         
         if ([value length]) {
             self.text = value;

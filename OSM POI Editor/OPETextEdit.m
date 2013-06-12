@@ -73,7 +73,7 @@
     
     
     
-    if ([type isEqualToString:kTypeLabel] || [type isEqualToString:kTypeNumber] || [type isEqualToString:kTypePhone] || [type isEqualToString:kTypeUrl]) {
+    if ([type isEqualToString:kTypeLabel] || [type isEqualToString:kTypeNumber] || [type isEqualToString:kTypePhone] || [type isEqualToString:kTypeUrl] || [type isEqualToString:kTypeEmail]) {
         NSLog(@"It's a label");
         self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35)];
         self.textField.delegate = self;
@@ -114,10 +114,14 @@
             if (osmValue) {
                 [self fillPhoneNumber:osmValue];
             }
-            
-            
         }
-        
+        else if([type isEqualToString:kTypeEmail])
+        {
+            self.textField.keyboardType = UIKeyboardTypeEmailAddress;
+            self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+
+        }
         
         
         

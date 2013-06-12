@@ -8,6 +8,7 @@
 
 #import "OPETextEditViewController.h"
 
+#define kTableViewTag 101
 
 @interface OPERecentlyUsedViewController : OPETextEditViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 {

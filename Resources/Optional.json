@@ -3,8 +3,7 @@
     "displayName" : "Website",
     "osmKey" : "website",
     "values" : "url",
-    "section" : "Address",
-    "sectionSortOrder" : 8
+    "section" : "Contact/Annotate"
   },
   "bench" : {
     "displayName" : "Bench",
@@ -622,8 +621,25 @@
     "displayName" : "Phone #",
     "osmKey" : "phone",
     "values" : "phone",
-    "section" : "Address",
-    "sectionSortOrder" : 9
+    "section" : "Contact/Annotate"
+  },
+  "fax" : {
+    "displayName" : "Fax #",
+    "osmKey" : "fax",
+    "values" : "phone",
+    "section" : "Contact/Annotate"
+  },
+  "email" : {
+    "displayName" : "Email",
+    "osmKey" : "email",
+    "values" : "email",
+    "section" : "Contact/Annotate"
+  },
+  "wikipedia" : {
+    "displayName" : "Wikipedia",
+    "osmKey" : "wikipedia",
+    "values" : "text",
+    "section" : "Contact/Annotate"
   },
   "denomination:christian" : {
     "displayName" : "Denomination",
@@ -781,7 +797,7 @@
     "values" : {
       "Yes" : "yes",
       "No" : "no",
-      "Only" : "only",
+      "Only" : "only"
       },
     "section" : "Other"
   },
@@ -914,5 +930,5 @@
     "osmKey" : "artist_name",
     "values" : "label",
     "section" : "Other"
-  },
+  }
 }

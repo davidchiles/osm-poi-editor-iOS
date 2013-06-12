@@ -342,13 +342,14 @@
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierAddressButton];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierAddressButton];
+            BButton * lookupButton = [[BButton alloc] initWithFrame:cell.contentView.frame type:BButtonTypePrimary];
+            lookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+            [lookupButton setTitle:@"Lookup Address in Nominatim" forState:UIControlStateNormal];
+            [lookupButton addTarget:self action:@selector(lookupAddress) forControlEvents:UIControlEventTouchUpInside];
+            cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+            [cell.contentView addSubview:lookupButton];
         }
-        BButton * lookupButton = [[BButton alloc] initWithFrame:cell.contentView.frame type:BButtonTypePrimary];
-        lookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        [lookupButton setTitle:@"Lookup Address in Nominatim" forState:UIControlStateNormal];
-        [lookupButton addTarget:self action:@selector(lookupAddress) forControlEvents:UIControlEventTouchUpInside];
-        cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-        [cell.contentView addSubview:lookupButton];
+        
     }
 
     return cell;

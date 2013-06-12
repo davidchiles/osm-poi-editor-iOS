@@ -33,6 +33,7 @@
 #define kTypeNumber @"number"
 #define kTypeUrl @"url"
 #define kTypePhone @"phone"
+#define kTypeEmail @"email"
 
 typedef enum{
     OPEOptionalTypeNone,
@@ -42,7 +43,8 @@ typedef enum{
     OPEOptionalTypeLabel,
     OPEOptionalTypeNumber,
     OPEOptionalTypeUrl,
-    OPEOptionalTypePhone
+    OPEOptionalTypePhone,
+    OPEOptionalTypeEmail
 }OPEOptionalType;
 
 #define kLeftTextDefaultSize 76
@@ -58,7 +60,8 @@ typedef enum{
 #define kLastImportFileDate @"kLastImportFileDate"
 
 
-#define kExpandedAddressArray [NSArray arrayWithObjects:@"addr:housenumber",@"addr:street",@"addr:city",@"addr:postcode",@"addr:state",@"addr:country",@"addr:province",@"website",@"phone", nil];
+#define kExpandedAddressArray @[@"addr:housenumber",@"addr:street",@"addr:city",@"addr:postcode",@"addr:state",@"addr:country",@"addr:province"]
+#define kExpandedContactArray @[@"website",@"phone",@"fax",@"email",@"wikipedia"]
 
 #define kActionTypeModify @"update"
 #define kActionTypeDelete @"delete"

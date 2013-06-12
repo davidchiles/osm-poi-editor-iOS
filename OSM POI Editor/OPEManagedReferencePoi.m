@@ -55,6 +55,15 @@
                     [tempSet addObject:optional];
                 }
             }
+            else if ([key isEqualToString:@"contact"]) {
+                NSArray * addressArray = kExpandedContactArray;
+                for( NSString * addr in addressArray)
+                {
+                    OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] init];
+                    optional.name = addr;
+                    [tempSet addObject:optional];
+                }
+            }
             else
             {
                 OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] init];

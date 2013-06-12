@@ -183,5 +183,9 @@
     return [NSString stringWithFormat:@"insert or replace into optional(name,displayName,osmKey,sectionSortOrder,type,section_id) select \'%@\',\'%@\',\'%@\',%d,%d,optional_section.rowid from optional_section where optional_section.name = \'%@\'",self.name,self.displayName,self.osmKey,self.sectionSortOrder,self.type,self.sectionName];
 }
 
+-(NSString *)description
+{
+    return self.name;
+}
 
 @end
