@@ -31,6 +31,7 @@
 #import "OPEOSMData.h"
 #import "OPETagEditViewController.h"
 #import "OPEBaseViewController.h"
+#import "OPEOSMAPIManager.h"
 
 @protocol OPENodeViewDelegate
 @required
@@ -38,7 +39,7 @@
 @end
 
 
-@interface OPENodeViewController : OPEBaseViewController <UITableViewDelegate, UITableViewDataSource, OPETagEditViewControllerDelegate, OPETypeViewControllerDelegate>
+@interface OPENodeViewController : OPEBaseViewController <UITableViewDelegate, UITableViewDataSource, OPETagEditViewControllerDelegate, OPETypeViewControllerDelegate, OPEOSMAPIManagerDelegate>
 {
     NSDictionary * osmKeyValue;
     float optionalTagWidth;
@@ -46,6 +47,7 @@
     NSDictionary * originalTags;
     int originalTypeID;
     OPEOSMData * osmData;
+    OPEOSMAPIManager * apiManager;
 }
 
 @property (nonatomic, strong) UITableView * nodeInfoTableView;

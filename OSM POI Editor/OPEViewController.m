@@ -471,8 +471,6 @@
         NSLog(@"cluster: %@",annotation);
         NSArray * annonations = [annotation clusteredAnnotations];
     }
-    
-    
 }
 
 

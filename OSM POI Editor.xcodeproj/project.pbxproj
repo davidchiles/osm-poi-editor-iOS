@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		630A878D17680FE1003C9423 /* BButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 630A878617680FE1003C9423 /* BButton.m */; };
+		630A878E17680FE1003C9423 /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 630A878817680FE1003C9423 /* NSString+FontAwesome.m */; };
+		630A878F17680FE1003C9423 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 630A878A17680FE1003C9423 /* FontAwesome.ttf */; };
+		630A879017680FE1003C9423 /* UIColor+BButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 630A878C17680FE1003C9423 /* UIColor+BButton.m */; };
 		6310F4B6153736D000C65FD8 /* OPEMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6310F4B5153736D000C65FD8 /* OPEMessageView.m */; };
 		6314D13C17039A5B00AE91E3 /* OPENameEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6314D13B17039A5B00AE91E3 /* OPENameEditView.m */; };
 		6314D13F1703C27B00AE91E3 /* OPEBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6314D13E1703C27A00AE91E3 /* OPEBaseViewController.m */; };
@@ -409,6 +413,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		630A878517680FE1003C9423 /* BButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BButton.h; sourceTree = "<group>"; };
+		630A878617680FE1003C9423 /* BButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BButton.m; sourceTree = "<group>"; };
+		630A878717680FE1003C9423 /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
+		630A878817680FE1003C9423 /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
+		630A878A17680FE1003C9423 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
+		630A878B17680FE1003C9423 /* UIColor+BButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+BButton.h"; sourceTree = "<group>"; };
+		630A878C17680FE1003C9423 /* UIColor+BButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+BButton.m"; sourceTree = "<group>"; };
 		6310F4B4153736D000C65FD8 /* OPEMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMessageView.h; sourceTree = "<group>"; };
 		6310F4B5153736D000C65FD8 /* OPEMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMessageView.m; sourceTree = "<group>"; };
 		6314D13A17039A5B00AE91E3 /* OPENameEditView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENameEditView.h; sourceTree = "<group>"; };
@@ -917,6 +928,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		630A878417680FE1003C9423 /* BButton */ = {
+			isa = PBXGroup;
+			children = (
+				630A878517680FE1003C9423 /* BButton.h */,
+				630A878617680FE1003C9423 /* BButton.m */,
+				630A878717680FE1003C9423 /* NSString+FontAwesome.h */,
+				630A878817680FE1003C9423 /* NSString+FontAwesome.m */,
+				630A878917680FE1003C9423 /* resources */,
+				630A878B17680FE1003C9423 /* UIColor+BButton.h */,
+				630A878C17680FE1003C9423 /* UIColor+BButton.m */,
+			);
+			name = BButton;
+			path = lib/BButton/BButton;
+			sourceTree = SOURCE_ROOT;
+		};
+		630A878917680FE1003C9423 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				630A878A17680FE1003C9423 /* FontAwesome.ttf */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
 		632573DC152108C300478B78 /* MapSources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1523,6 +1557,7 @@
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				630A878417680FE1003C9423 /* BButton */,
 				6342058816449197009C6BA4 /* CrittercismSDK */,
 				63FBA586171DFBED0098A2F3 /* osm-parser */,
 				63266A2A171646F0002CD7E4 /* TBXML */,
@@ -1960,6 +1995,7 @@
 				63FD2DAD172F329A0094B969 /* Tags.json in Resources */,
 				6372F80117419F3100DE5909 /* Optional.json in Resources */,
 				6372F80817419F6A00DE5909 /* OptionalCategorySort.json in Resources */,
+				630A878F17680FE1003C9423 /* FontAwesome.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2048,6 +2084,9 @@
 				6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */,
 				6387126D17582655006C3A4E /* OPENewNodeSelectViewController.m in Sources */,
 				63CFCA95176160340006BE38 /* OPEOSMAPIManager.m in Sources */,
+				630A878D17680FE1003C9423 /* BButton.m in Sources */,
+				630A878E17680FE1003C9423 /* NSString+FontAwesome.m in Sources */,
+				630A879017680FE1003C9423 /* UIColor+BButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -38,6 +38,8 @@
 #import "OPEManagedOsmNode.h"
 #import "OPETagEditViewController.h"
 #import "OPEStrings.h"
+#import "OPEOSMAPIManager.h"
+#import "BButton.h"
 
 
 
@@ -77,7 +79,10 @@
         
         originalTags = [self.managedOsmElement.element.tags copy];
         originalTypeID = self.managedOsmElement.typeID;
-        [self.osmData updateLegacyTags:managedOsmElement];
+        [osmData updateLegacyTags:managedOsmElement];
+        
+        apiManager = [[OPEOSMAPIManager alloc] init];
+        apiManager.delegate = self;
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: CANCEL_STRING style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         
@@ -127,7 +132,7 @@
     nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     
-    if (self.managedOsmElement.element.elementID > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![self.osmData hasParentElement:self.managedOsmElement]) {
+    if (self.managedOsmElement.element.elementID > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![osmData hasParentElement:self.managedOsmElement]) {
         
         
         deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -223,6 +228,9 @@
     }
     else
     {
+        if ([((OPEManagedReferenceOptional *)[[optionalSectionsArray objectAtIndex:(section -2)] lastObject]).sectionName isEqualToString:@"Address"]) {
+            return [[optionalSectionsArray objectAtIndex:(section - 2)] count] +1;
+        }
         return [[optionalSectionsArray objectAtIndex:(section - 2)] count];
     }
 }
@@ -247,10 +255,11 @@
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString *CellIdentifierText = @"Cell_Section_1";
-    NSString *CellIdentifierCategory = @"Cell_Section_2";
-    NSString *CellIdentifierSpecialBinary = @"Cell_Section_5";
-    NSString *CellIdentifierSpecial2 = @"Cell_Section_6";
+    NSString *CellIdentifierText = @"CellIdentifierText";
+    NSString *CellIdentifierCategory = @"CellIdentifierCategory";
+    NSString *CellIdentifierSpecialBinary = @"CellIdentifierSpecialBinary";
+    NSString *CellIdentifierSpecial2 = @"CellIdentifierSpecial2";
+    NSString *cellIdentifierAddressButton = @"cellIdentifierAddressButton";
     
     UITableViewCell *cell;
     
@@ -286,7 +295,7 @@
         return cell;
     }
     //OPTIONAL TAGS
-    else if(indexPath.section>1 && indexPath.section<[self.optionalSectionsArray count]+2)
+    else if([[self.optionalSectionsArray objectAtIndex:(indexPath.section-2) ] count] > indexPath.row)
     {
         OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
         
@@ -328,6 +337,18 @@
             return aCell;
 
         }
+    }
+    else{
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierAddressButton];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierAddressButton];
+        }
+        BButton * lookupButton = [[BButton alloc] initWithFrame:cell.contentView.frame type:BButtonTypePrimary];
+        lookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        [lookupButton setTitle:@"Lookup Address in Nominatim" forState:UIControlStateNormal];
+        [lookupButton addTarget:self action:@selector(lookupAddress) forControlEvents:UIControlEventTouchUpInside];
+        cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+        [cell.contentView addSubview:lookupButton];
     }
 
     return cell;
@@ -418,12 +439,18 @@
     
 }
 
+-(void)lookupAddress
+{
+    CLLocationCoordinate2D center = [osmData centerForElement:self.managedOsmElement];
+    [apiManager reverseLookupAddress:center];
+}
+
 - (void) saveButtonPressed
 {
     self.managedOsmElement.action = kActionTypeModify;
     [osmData saveDate:[NSDate date] forType:self.managedOsmElement.type];
     
-    if (![self.osmData canAuth])
+    if (![osmData canAuth])
     {
         [self showAuthError];
     }
@@ -434,7 +461,7 @@
         dispatch_async(q, ^{
             NSLog(@"saveBottonPressed");
             
-            [self.osmData uploadElement:self.managedOsmElement];
+            [osmData uploadElement:self.managedOsmElement];
             
         });
         //[self didCloseChangeset:1];
@@ -449,7 +476,7 @@
 
 - (void) deleteButtonPressed
 {
-    if (![self.osmData canAuth])
+    if (![osmData canAuth])
     {
         [self showAuthError];
     }
@@ -488,7 +515,7 @@
                 dispatch_async(q, ^{
                     
                     
-                    [self.osmData deleteElement:self.managedOsmElement];
+                    [osmData deleteElement:self.managedOsmElement];
                 });
                 //dispatch_release(q);
             }
@@ -580,6 +607,18 @@
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+#pragma OPEOSMAPIManagerDelegate
+-(void)didFindAddress:(NSDictionary *)addressDictionary
+{
+    [osmData setOsmKey:@"addr:city" andValue:[addressDictionary objectForKey:@"city"] forElement:self.managedOsmElement];
+    [osmData setOsmKey:@"addr:postcode" andValue:[addressDictionary objectForKey:@"postcode"] forElement:self.managedOsmElement];
+    [osmData setOsmKey:@"addr:street" andValue:[addressDictionary objectForKey:@"road"] forElement:self.managedOsmElement];
+    
+    [nodeInfoTableView reloadData];
+    NSLog(@"address: %@",addressDictionary);
+}
+
 #pragma OPEOsmDataDelegate
 
 -(void)didCloseChangeset:(int64_t)changesetNumber

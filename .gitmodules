@@ -17,3 +17,6 @@
 [submodule "lib/osm-parser"]
 	path = lib/osm-parser
 	url = git@github.com:davidchiles/osm-parser.git
+[submodule "lib/BButton"]
+	path = lib/BButton
+	url = git@github.com:mattlawer/BButton.git
