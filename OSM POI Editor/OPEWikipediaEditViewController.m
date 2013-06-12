@@ -7,6 +7,7 @@
 //
 
 #import "OPEWikipediaEditViewController.h"
+#import "OPEWikipediaWebViewController.h"
 
 
 @interface OPEWikipediaEditViewController ()
@@ -122,6 +123,8 @@
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
+    OPEWikipediaWebViewController * webView = [[OPEWikipediaWebViewController alloc] initWithWikipediaArticaleTitle:[wikipediaResultsArray objectAtIndex:indexPath.row] withLocale:@"en"];
+    [self.navigationController pushViewController:webView animated:YES];
     
 }
 

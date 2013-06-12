@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OPEWikipediaWebViewController : UIViewController
+@interface OPEWikipediaWebViewController : UIViewController <UIWebViewDelegate>
+{
+    NSString * articleTitleString;
+    NSString * locale;
+}
+
+-(id)initWithWikipediaArticaleTitle:(NSString *)titleString withLocale:(NSString *)locale;
 
 @end

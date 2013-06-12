@@ -14,11 +14,11 @@
 
 @implementation OPEWikipediaWebViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+-(id)initWithWikipediaArticaleTitle:(NSString *)titleString withLocale:(NSString *)newLocale
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self = [super init]) {
+        locale = newLocale;
+        articleTitleString = titleString;
     }
     return self;
 }
@@ -26,7 +26,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    
+    self.title = articleTitleString;
+	
+    UIWebView * webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    
+    NSString * urlString = [NSString stringWithFormat:@"http://%@.wikipedia.org/wiki/%@",locale,articleTitleString];
+    NSURLRequest * requeset = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [webView loadRequest:requeset];
+    
+    [self.view addSubview:webView];
 }
 
 - (void)didReceiveMemoryWarning
