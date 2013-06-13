@@ -45,7 +45,7 @@
     if (![language length]) {
         language = @"en";
     }
-    NSString * urlString = [NSString stringWithFormat:@"http://%@.wikipedia.org/w/api.php?action=opensearch&search=%@&limit=10&format=json",language,query];
+    NSString * urlString = [NSString stringWithFormat:@"http://%@.wikipedia.org/w/api.php?action=opensearch&search=%@&limit=10&format=json",language,[query stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     AFJSONRequestOperation * jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         NSArray * results = (NSArray *)JSON;

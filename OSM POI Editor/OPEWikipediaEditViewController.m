@@ -175,4 +175,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+-(NSString *)newOsmValue
+{
+    return[NSString stringWithFormat:@"%@:%@",self.locale,[super newOsmValue]];
+}
+
 @end
