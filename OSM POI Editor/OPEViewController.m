@@ -463,7 +463,7 @@
     else if(annotation.isClusterAnnotation)
     {
         NSLog(@"cluster: %@",annotation);
-        NSArray * annonations = [annotation clusteredAnnotations];
+        //NSArray * annonations = [annotation clusteredAnnotations];
     }
 }
 

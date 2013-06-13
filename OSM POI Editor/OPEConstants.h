@@ -55,6 +55,9 @@ typedef enum{
 #define kOPEAPIURL4 @"http://api.openstreetmap.org/api/0.6/"
 #define kOPEAPIURL5 @"http://api.openstreetmap.fr/api/0.6/"
 
+#define kOPENominatimURL1 @"http://open.mapquestapi.com/nominatim/v1/reverse.php"
+#define kOPENominatimURL2 @"http://nominatim.openstreetmap.org/reverse"
+
 #define kPointTypeNode @"node"
 #define kPointTypeWay @"way"
 #define kPointTypePoint @"point"

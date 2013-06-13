@@ -576,9 +576,7 @@
 -(void)saveDate:(NSDate *)date forType:(OPEManagedReferencePoi *)poi
 {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        BOOL success = [db executeUpdate:@"insert or replace into poi_lastUsed(date,displayName) values(datetime('now','localtime'),?)",[poi refName]];
-        
-        
+        [db executeUpdate:@"insert or replace into poi_lastUsed(date,displayName) values(datetime('now','localtime'),?)",[poi refName]];
     }];
     
 }

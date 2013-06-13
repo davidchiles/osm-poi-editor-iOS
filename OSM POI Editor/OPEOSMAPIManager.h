@@ -18,6 +18,7 @@
 @interface OPEOSMAPIManager : NSObject
 {
     NSMutableDictionary * apiFailures;
+    NSMutableDictionary * nominatimFailures;
 }
 
 @property (nonatomic,strong) AFHTTPClient * httpClient;

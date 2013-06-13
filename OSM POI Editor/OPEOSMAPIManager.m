@@ -30,6 +30,7 @@ typedef struct {
     {
         [self auth];
         apiFailures = [NSMutableDictionary dictionary];
+        nominatimFailures = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -119,18 +120,40 @@ typedef struct {
                     success:(void (^)(NSDictionary * addressDictionary))success
                     failure:(void (^)(NSError * error))failure
 {
-    NSString * urlString = [NSString stringWithFormat:@"http://open.mapquestapi.com/nominatim/v1/reverse.php?format=json&lat=%@&lon=%@&zoom=18&addressdetails=1",[NSNumber numberWithDouble:coordinate.latitude],[NSNumber numberWithDouble:coordinate.longitude]];
-    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[self nominatimURLWithCoordinate:coordinate]];
     AFJSONRequestOperation * jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         if (success) {
             success([JSON objectForKey:@"address"]);
         }
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        if (failure) {
+        [nominatimFailures setObject:[NSNumber numberWithBool:YES] forKey:[request.URL.absoluteString componentsSeparatedByString:@"reverse"][0]];
+        if ([apiFailures count] < 2) {
+            [self reverseLookupAddress:coordinate success:success failure:failure];
+        }
+        else if (failure)
+        {
+            [nominatimFailures removeAllObjects];
             failure(error);
         }
     }];
     [jsonOperation start];
+}
+
+-(NSURL *)nominatimURLWithCoordinate:(CLLocationCoordinate2D)coordinate
+{
+    NSURL * finalURL;
+    NSString * baseUrlString;
+    switch ([nominatimFailures count]) {
+        case 0:
+            baseUrlString = kOPENominatimURL1;
+            break;
+        default:
+            baseUrlString = kOPENominatimURL2;
+            break;
+    }
+    finalURL = [NSURL URLWithString: [NSString stringWithFormat:@"%@?format=json&lat=%@&lon=%@&zoom=18&addressdetails=1",baseUrlString,[NSNumber numberWithDouble:coordinate.latitude],[NSNumber numberWithDouble:coordinate.longitude]]];
+    
+    return finalURL;
 }
 
 -(NSURL *)downloadURLWithBoundingBox:(boundingBox)bbox
