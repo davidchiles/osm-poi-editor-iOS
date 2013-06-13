@@ -32,7 +32,7 @@
     UIWebView * webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
-    NSString * urlString = [NSString stringWithFormat:@"http://%@.wikipedia.org/wiki/%@",locale,articleTitleString];
+    NSString * urlString = [NSString stringWithFormat:@"http://%@.wikipedia.org/wiki/%@",locale,[articleTitleString stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
     NSURLRequest * requeset = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [webView loadRequest:requeset];
     
