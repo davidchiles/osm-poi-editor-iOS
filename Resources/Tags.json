@@ -2298,7 +2298,7 @@
         "amenity" : "fuel"
       }
     },
-    "Bicycle Rental" : {
+    "Bicycle Rental/Share" : {
       "optional" : [
         "capacity",
         "ref",
