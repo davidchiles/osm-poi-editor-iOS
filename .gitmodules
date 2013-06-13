@@ -20,3 +20,6 @@
 [submodule "lib/BButton"]
 	path = lib/BButton
 	url = git@github.com:mattlawer/BButton.git
+[submodule "lib/ActionSheetPicker"]
+	path = lib/ActionSheetPicker
+	url = git@github.com:TimCinel/ActionSheetPicker.git

@@ -8,6 +8,7 @@
 
 #import "OPEWikipediaEditViewController.h"
 #import "OPEWikipediaWebViewController.h"
+#import "ActionSheetStringPicker.h"
 
 
 @interface OPEWikipediaEditViewController ()
@@ -32,7 +33,9 @@
     languageButton = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
     [languageButton setTitle:self.locale forState:UIControlStateNormal];
     [languageButton addTarget:self action:@selector(languageButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
-     __block NSMutableArray * languages = [[wikipediaManager mostPopularLanguages]mutableCopy];
+    
+    
+    __block NSMutableArray * languages = [[wikipediaManager mostPopularLanguages]mutableCopy];
     supportedWikipedialanguges = languages;
     [wikipediaManager fetchAllWikipediaLanguagesSucess:^(NSArray *results) {
         NSPredicate *relativeComplementPredicate = [NSPredicate predicateWithFormat:@"NOT SELF.code IN %@", [languages valueForKey:@"code"]];
@@ -46,10 +49,18 @@
 -(void)languageButtonSelected:(id)sender
 {
     [self.view resignFirstResponder];
-    UIPickerView * pickerView = [[UIPickerView alloc] init];
-    pickerView.delegate = self;
     
-    [self.view addSubview:pickerView];
+    NSUInteger index = [((NSArray *)[supportedWikipedialanguges valueForKey:@"code"]) indexOfObject:self.locale];
+    
+    [ActionSheetStringPicker showPickerWithTitle:@"Wikipedia Language" rows:[supportedWikipedialanguges valueForKey:@"*"] initialSelection:index doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+        NSLog(@"selected %@",selectedValue);
+        self.locale = [[supportedWikipedialanguges objectAtIndex:selectedIndex] objectForKey:@"code"];
+        [languageButton setTitle:self.locale forState:UIControlStateNormal];
+    } cancelBlock:^(ActionSheetStringPicker *picker) {
+        NSLog(@"cancel selected");
+    } origin:sender];
+    
+    //[self.view addSubview:pickerView];
 }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
