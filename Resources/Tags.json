@@ -2300,9 +2300,10 @@
     },
     "Bicycle Rental" : {
       "optional" : [
-        "wheelchair",
-        "contact",
-        "address"
+        "capacity",
+        "ref",
+        "operator",
+        "network"
       ],
       "image" : "bicycle",
       "tags" : {

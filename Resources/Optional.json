@@ -125,6 +125,12 @@
     "values" : "label",
     "section" : "Other"
   },
+  "network" : {
+    "displayName" : "Network",
+    "osmKey" : "network",
+    "values" : "label",
+    "section" : "Other"
+  },
   "bicycle_parking" : {
     "displayName" : "Type",
     "osmKey" : "bicycle_parking",

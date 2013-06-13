@@ -2269,6 +2269,7 @@
 					"\"$(SRCROOT)/OSM POI Editor\"",
 					"\"$(SRCROOT)/lib/spatialite/libs\"",
 					"\"$(SRCROOT)/OSM POI Editor/lib\"",
+					"\"$(SRCROOT)/Resources/lib\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -2310,6 +2311,7 @@
 					"\"$(SRCROOT)/OSM POI Editor\"",
 					"\"$(SRCROOT)/lib/spatialite/libs\"",
 					"\"$(SRCROOT)/OSM POI Editor/lib\"",
+					"\"$(SRCROOT)/Resources/lib\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
