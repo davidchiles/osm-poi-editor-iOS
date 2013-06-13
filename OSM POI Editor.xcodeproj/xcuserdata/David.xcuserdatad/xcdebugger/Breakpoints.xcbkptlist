@@ -230,7 +230,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "621"
          endingLineNumber = "621"
-         landmarkName = "-afterMapZoom:byUser:"
+         landmarkName = "-afterMapMove:byUser:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -477,8 +477,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "631"
          endingLineNumber = "631"
-         landmarkName = "@implementation OPEViewController"
-         landmarkType = "3">
+         landmarkName = "-afterMapZoom:byUser:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -568,8 +568,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "634"
          endingLineNumber = "634"
-         landmarkName = "-afterMapZoom:byUser:"
-         landmarkType = "5">
+         landmarkName = "@implementation OPEViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -659,8 +659,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "915"
          endingLineNumber = "915"
-         landmarkName = "@implementation OPEViewController"
-         landmarkType = "3">
+         landmarkName = "-didFindNewElements:updatedElements:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -672,7 +672,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "916"
          endingLineNumber = "916"
-         landmarkName = "-didCloseChangeset:"
+         landmarkName = "-didFindNewElements:updatedElements:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -737,7 +737,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "481"
          endingLineNumber = "481"
-         landmarkName = "-tapOnCalloutAccessoryControl:forAnnotation:onMap:"
+         landmarkName = "-centerOnOsmWay:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -802,8 +802,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "276"
          endingLineNumber = "276"
-         landmarkName = "@implementation OPEViewController"
-         landmarkType = "3">
+         landmarkName = "-annotationWithOsmElement:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1123,8 +1123,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "338"
          endingLineNumber = "338"
-         landmarkName = "@implementation OPEViewController"
-         landmarkType = "3">
+         landmarkName = "-shapeForRelation:"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -1232,7 +1232,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "975"
          endingLineNumber = "975"
-         landmarkName = "-downloadFailed:"
+         landmarkName = "-didEndParsing"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
