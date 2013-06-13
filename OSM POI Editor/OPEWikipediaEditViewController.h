@@ -15,6 +15,7 @@
     OPEWikipediaManager * wikipediaManager;
     NSArray * wikipediaResultsArray;
     NSMutableArray * supportedWikipedialanguges;
+    NSArray * nearbyTitles;
 }
 
 @property (nonatomic,strong) BButton * languageButton;

@@ -9,7 +9,6 @@
 #import "OPEWikipediaManager.h"
 #import "AFNetworking.h"
 
-//http://fr.wikipedia.org/w/api.php?action=opensearch&search=state&limit=10&format=json
 
 @implementation OPEWikipediaManager
 
@@ -77,6 +76,25 @@
         }
     }];
     [jsonOperation start];
+}
+
+-(void)fetchNearbyPoint:(CLLocationCoordinate2D)center withLocale:(NSString *)locale success:(void (^)(NSArray *results))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error, id JSON))failure
+{
+    NSString * urlString = [NSString stringWithFormat:@"http://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=%@|%@&format=json",[[NSNumber numberWithDouble:center.latitude] stringValue],[[NSNumber numberWithDouble:center.longitude] stringValue]];
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    AFJSONRequestOperation * jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        NSDictionary * results = (NSDictionary *)JSON;
+        if (success) {
+            success([results[@"query"][@"geosearch"] valueForKey:@"title"]);
+        }
+        
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        if (failure) {
+            failure(response,error,JSON);
+        }
+    }];
+    [jsonOperation start];
+    
 }
 
 -(NSArray *)mostPopularLanguages

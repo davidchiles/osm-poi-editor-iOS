@@ -10,6 +10,8 @@
 #import "OPEWikipediaWebViewController.h"
 #import "ActionSheetStringPicker.h"
 
+#import "OPEOSMData.h"
+
 
 @interface OPEWikipediaEditViewController ()
 
@@ -23,7 +25,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
+    
     wikipediaManager = [[OPEWikipediaManager alloc] init];
     wikipediaResultsArray = [NSArray array];
     
@@ -41,6 +43,17 @@
         NSPredicate *relativeComplementPredicate = [NSPredicate predicateWithFormat:@"NOT SELF.code IN %@", [languages valueForKey:@"code"]];
         NSArray *relativeComplement = [results filteredArrayUsingPredicate:relativeComplementPredicate];
         [languages addObjectsFromArray:relativeComplement];
+    } failure:^(NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"Error");
+    }];
+    
+    OPEOSMData * osmData = [[OPEOSMData alloc] init];
+    CLLocationCoordinate2D center = [osmData centerForElement:self.element];
+    
+    [wikipediaManager fetchNearbyPoint:center withLocale:self.locale success:^(NSArray *results) {
+        nearbyTitles = results;
+        [self updateResults:results];
+        
     } failure:^(NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"Error");
     }];
@@ -66,10 +79,19 @@
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
     [wikipediaManager fetchSuggesionsWithLanguage:self.locale query:newString success:^(NSArray *results) {
-        [self updateResults:results];
+        
+        if ([results count]) {
+            [self updateResults:results];
+        }
+        else
+        {
+            [self updateResults:nearbyTitles];
+        }
     } failure:^(NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"error");
+        [self updateResults:@[]];
     }];
     
     return YES;
@@ -120,7 +142,7 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if ([wikipediaResultsArray count]) {
+    if ([wikipediaResultsArray count]){
         return 2;
     }
     return 1;
@@ -154,7 +176,10 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierConstant];
             cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
         }
+        
         cell.textLabel.text = [wikipediaResultsArray objectAtIndex:indexPath.row];
+        
+       
         
     }
     return cell;
@@ -162,7 +187,9 @@
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    OPEWikipediaWebViewController * webView = [[OPEWikipediaWebViewController alloc] initWithWikipediaArticaleTitle:[wikipediaResultsArray objectAtIndex:indexPath.row] withLocale:@"en"];
+    NSString * title = [wikipediaResultsArray objectAtIndex:indexPath.row];
+    
+    OPEWikipediaWebViewController * webView = [[OPEWikipediaWebViewController alloc] initWithWikipediaArticaleTitle:title withLocale:@"en"];
     [self.navigationController pushViewController:webView animated:YES];
     
 }
@@ -171,6 +198,7 @@
 {
     if (indexPath.section ==1) {
         self.textField.text = [wikipediaResultsArray objectAtIndex:indexPath.row];
+        
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
