@@ -285,8 +285,9 @@
 }
 -(void)setOsmKey:(NSString *)osmKey andValue:(NSString *)osmValue forElement:(OPEManagedOsmElement *)element
 {
-    [element.element.tags setObject:osmValue forKey:osmKey];
-    
+    if ([osmValue length] && [osmKey length]) {
+        [element.element.tags setObject:osmValue forKey:osmKey];
+    }
 }
 -(void)removeType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element
 {
