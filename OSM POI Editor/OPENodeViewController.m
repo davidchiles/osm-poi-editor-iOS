@@ -354,7 +354,7 @@
             
             BButton * localLookupButton = [[BButton alloc]initWithFrame:CGRectZero type:BButtonTypePrimary];
             localLookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-            [localLookupButton setTitle:@"Local Data" forState:UIControlStateNormal];
+            [localLookupButton setTitle:LOCA_DATA_STRING forState:UIControlStateNormal];
             [localLookupButton addTarget:self action:@selector(localLookupAddress) forControlEvents:UIControlEventTouchUpInside];
             
             localLookupButton.frame = CGRectMake(0, 0, buttonWidth, cellSize.height);
