@@ -1,5 +1,15 @@
 {
   "Fun and Leisure" : {
+    "Hackspace" : {
+      "optional" : [
+        "contact",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "leisure" : "hackspace"
+      }
+    },
     "Stadium" : {
       "optional" : [
         "operator",
