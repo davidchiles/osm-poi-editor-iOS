@@ -458,6 +458,42 @@
     }
   },
   "Other" : {
+    "Cemetery" : {
+      "optional" : [
+        "operator",
+        "religion",
+        "address",
+        "contact"
+      ],
+      "image" : "none",
+      "editOnly" : 1,
+      "tags" : {
+        "landuse" : "cemetery"
+      }
+    },
+    "Christian Cemetery" : {
+      "optional" : [
+        "operator",
+        "denomination:christian",
+        "address",
+        "contact"
+      ],
+      "image" : "none",
+      "editOnly" : 1,
+      "tags" : {
+        "landuse" : "cemetery",
+        "religion" : "christian"
+      }
+    },
+    "Grave Yard" : {
+      "optional" : [
+        "religion"
+      ],
+      "image" : "none",
+      "tags" : {
+        "amenity" : "grave_yard"
+      }
+    },
     "Surveillance Camera" : {
       "optional" : [
         "operator"

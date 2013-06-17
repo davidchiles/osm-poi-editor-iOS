@@ -953,5 +953,21 @@
       "American Football" : "american_football"
     },
     "section" : "Other"
+  },
+  "religion" : {
+    "displayName" : "Religion",
+    "osmKey" : "religion",
+    "values" : {
+      "Christian" : "christian",
+      "Muslim" : "muslim",
+      "Buddhist" : "buddhist",
+      "Jewish" : "jewish",
+      "Hindu" : "hindu",
+      "Shinto" : "shinto",
+      "Taoist" : "taoist",
+      "Sikh" : "sikh",
+      "Voodoo" : "voodoo"
+    },
+    "section" : "Other"
   }
 }
