@@ -1,4 +1,3 @@
-from plistlib import *
 from pprint import *
 import os
 import json
@@ -6,7 +5,9 @@ from subprocess import call
 
 def loadStrings():
 	allStrings = dict()
-	tags = readPlist('Tags.plist')
+	json_data=open('Tags.json')
+	tags = json.load(json_data)
+	json_data.close()
 	
 	for category in tags.keys():
 		allStrings[category] = 'Title For Category'
@@ -23,12 +24,14 @@ def loadStrings():
 				
 			allStrings[pointType] = description
 
-	optional = readPlist('Optional.plist')
+	json_data=open('Optional.json')
+	optional = json.load(json_data)
+	json_data.close()
 
 	for key in optional.keys():
 		allStrings[optional[key]['displayName']] = 'Optional tag with osm key: '+optional[key]['osmKey']
 		values = optional[key]['values']
-		if type(values) is not str:
+		if type(values) is not unicode:
 			for key in values.keys():
 				allStrings[key] = 'Optional value with osm value: '+values[key]
 	return allStrings
@@ -38,10 +41,13 @@ def writeToFile(allStings):
 	appStringsFile = open('../OSM POI Editor/OPEStrings.h','r')
 	i =0
 	for string in allStrings:
-		#try:
-		f.write('#define string'+str(i)+' NSLocalizedString(@\"'+string.encode('utf-8')+'\",@\"'+allStrings[string] +'\")\n')
-		#except:
-		#print string
+		try:
+			f.write('#define string'+str(i)+' NSLocalizedString(@\"')
+			f.write(string.encode('utf-8'))
+			f.write('\",@\"'+allStrings[string] +'\")\n')
+		except:
+
+			print type(string)
 		i+=1
 	for line in appStringsFile:
 		if '#define' in line:
@@ -159,15 +165,6 @@ if __name__ == '__main__':
 	
 	
 	allStrings = loadStrings()
-	json_data=open('./locales.json').read()
-	data = json.loads(json_data)
-	for languageStr in data:
-		presetStrings = FindiDPresetStrings(allStrings, languageStr)
-		fieldStrings = FindiDFieldsStrings(allStrings, languageStr)
-	
-		translatedStrings = dict(presetStrings.items() + fieldStrings.items())
-		pprint(len(translatedStrings))
-		writeLocalizedStrings(translatedStrings,languageStr)
 	
 	writeToFile(allStrings)
 	
