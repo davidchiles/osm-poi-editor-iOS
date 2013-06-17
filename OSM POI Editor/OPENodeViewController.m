@@ -38,6 +38,7 @@
 #import "OPETagEditViewController.h"
 #import "OPEStrings.h"
 #import "BButton.h"
+#import "OPEOSMSearchManager.h"
 
 
 
@@ -338,12 +339,33 @@
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierAddressButton];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierAddressButton];
-            BButton * lookupButton = [[BButton alloc] initWithFrame:cell.contentView.frame type:BButtonTypePrimary];
+            
+            CGSize cellSize = cell.contentView.frame.size;
+            CGFloat buttonWidth = 150;
+            
+            
+            
+            
+            BButton * lookupButton = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
             lookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-            [lookupButton setTitle:@"Lookup Address in Nominatim" forState:UIControlStateNormal];
-            [lookupButton addTarget:self action:@selector(lookupAddress) forControlEvents:UIControlEventTouchUpInside];
+            [lookupButton setTitle:@"Nominatim" forState:UIControlStateNormal];
+            [lookupButton addTarget:self action:@selector(nominatimLookupAddress) forControlEvents:UIControlEventTouchUpInside];
+            
+            
+            BButton * localLookupButton = [[BButton alloc]initWithFrame:CGRectZero type:BButtonTypePrimary];
+            localLookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+            [localLookupButton setTitle:@"Local Data" forState:UIControlStateNormal];
+            [localLookupButton addTarget:self action:@selector(localLookupAddress) forControlEvents:UIControlEventTouchUpInside];
+            
+            localLookupButton.frame = CGRectMake(0, 0, buttonWidth, cellSize.height);
+            lookupButton.frame = CGRectMake(cellSize.width-buttonWidth, 0, buttonWidth, cellSize.height);
+            localLookupButton.autoresizingMask  = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin  ;
+            lookupButton.autoresizingMask =UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin ;
+            
+            
             cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
             [cell.contentView addSubview:lookupButton];
+            [cell.contentView addSubview:localLookupButton];
         }
         
     }
@@ -436,19 +458,35 @@
     
 }
 
--(void)lookupAddress
+-(void)nominatimLookupAddress
 {
-    CLLocationCoordinate2D center = [self.osmData centerForElement:self.managedOsmElement];
-    [self.apiManager reverseLookupAddress:center success:^(NSDictionary *addressDictionary) {
+    [self lookupAddress:NO];
+}
+-(void)localLookupAddress
+{
+    [self lookupAddress:YES];
+}
+
+-(void)lookupAddress:(BOOL)local
+{
+    void (^saveDict)(NSDictionary *) = ^(NSDictionary * addressDictionary) {
         [self.osmData setOsmKey:@"addr:city" andValue:[addressDictionary objectForKey:@"city"] forElement:self.managedOsmElement];
-        [self.osmData setOsmKey:@"addr:postcode" andValue:[addressDictionary objectForKey:@"postcode"] forElement:self.managedOsmElement];
+        //[self.osmData setOsmKey:@"addr:postcode" andValue:[addressDictionary objectForKey:@"postcode"] forElement:self.managedOsmElement];
         [self.osmData setOsmKey:@"addr:street" andValue:[addressDictionary objectForKey:@"road"] forElement:self.managedOsmElement];
         
         [nodeInfoTableView reloadData];
-        NSLog(@"address: %@",addressDictionary);
-    } failure:^(NSError *error) {
-        NSLog(@"error");
-    }];
+    };
+    CLLocationCoordinate2D center = [self.osmData centerForElement:self.managedOsmElement];
+    if (local) {
+        NSDictionary * dict = [[[OPEOSMSearchManager alloc] init] localReverseGeocode:center];
+        saveDict(dict);
+        
+    }
+    else{
+        [self.apiManager reverseLookupAddress:center success:saveDict failure:^(NSError *error) {
+             NSLog(@"error");
+        }];
+    }
 }
 
 - (void) saveButtonPressed

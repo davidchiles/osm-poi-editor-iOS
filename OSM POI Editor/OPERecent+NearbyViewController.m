@@ -32,19 +32,9 @@
     [super viewDidLoad];
     
     //nearbyDictionary = [self.element nearbyValuesForOsmKey:self.osmKey];
-    nearbyDictionary = [OPEOSMSearchManager nearbyValuesForElement:self.element withOsmKey:self.osmKey];
+    distances = [OPEOSMSearchManager sortedNearbyValuesForElement:self.element withOsmKey:self.osmKey];
     
-    if (nearbyDictionary) {
-        NSMutableArray * array = [NSMutableArray array];
-        for (NSString * key in nearbyDictionary)
-        {
-            [array addObject:@{@"name": key,@"distance":[nearbyDictionary objectForKey:key]}];
-        }
-        
-        NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"distance"  ascending:YES];
-        NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-        
-        distances = [array sortedArrayUsingDescriptors:@[descriptor,nameDescriptor]];
+    if (distances) {
         [self.textField resignFirstResponder];
     }
     
@@ -55,7 +45,7 @@
 {
     NSInteger num = [super numberOfSectionsInTableView:tableView];
     
-    if ([nearbyDictionary count]) {
+    if ([distances count]) {
         num+=1;
     }
     return num;
@@ -67,9 +57,9 @@
     {
         return [super tableView:tableView numberOfRowsInSection:section];
     }
-    else if ((section == 1 && [nearbyDictionary count]) || section == 2)
+    else if ((section == 1 && [distances count]) || section == 2)
     {
-        return [nearbyDictionary count];
+        return [distances count];
     }
     return 0;
 }
@@ -81,7 +71,7 @@
     {
         title = [super tableView:tableView titleForHeaderInSection:section];
     }
-    else if ((section == 1 && [nearbyDictionary count]) || section == 2)
+    else if ((section == 1 && [distances count]) || section == 2)
     {
         return @"Nearby";
     }
@@ -96,13 +86,13 @@
     {
         cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     }
-    else if ((indexPath.section == 1 && nearbyDictionary) || indexPath.section == 2)
+    else if ((indexPath.section == 1 && distances) || indexPath.section == 2)
     {
         cell = [tableView dequeueReusableCellWithIdentifier:nearbyCellIdentifier];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nearbyCellIdentifier];
         }
-        cell.textLabel.text = [[distances objectAtIndex:indexPath.row] objectForKey:@"name"];
+        cell.textLabel.text = [[distances objectAtIndex:indexPath.row] objectForKey:@"value"];
         cell.detailTextLabel.text = [OPEUtility formatDistanceMeters:[[[distances objectAtIndex:indexPath.row] objectForKey:@"distance"]doubleValue]];
         
         

@@ -20,10 +20,12 @@
 }
 
 
--(NSDictionary *)nearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey;
+-(NSArray *)nearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey;
+-(NSArray *)sortedNearbyValuesForCoordinate:(CLLocationCoordinate2D)coordinate withOsmKey:(NSString *)osmKey;
+-(NSDictionary *)localReverseGeocode:(CLLocationCoordinate2D)coordinate;
 -(NSArray *)noNameHighways;
 -(NSArray *)recentlyUsedPoisArrayWithLength:(NSInteger)length;
 
-+(NSDictionary *)nearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey;
++(NSArray *)sortedNearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey;
 
 @end

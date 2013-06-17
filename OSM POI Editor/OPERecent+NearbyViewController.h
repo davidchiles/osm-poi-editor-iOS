@@ -10,7 +10,6 @@
 
 @interface OPERecent_NearbyViewController : OPERecentlyUsedViewController
 {
-    NSDictionary * nearbyDictionary;
     NSArray * distances;
 }
 

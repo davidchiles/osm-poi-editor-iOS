@@ -491,7 +491,32 @@
     }
     return resultsArray;
 }
-
+-(NSArray *)allMembersOfRelation:(OPEManagedOsmRelation *)relation
+{
+    __block NSMutableArray * membersArray = [NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQuery:@"select * from relations_members,ways where relation_id = ? AND ref=id",[NSNumber numberWithLongLong:relation.elementID]];
+        while ([set next]) {
+            if ([[[set resultDictionary] objectForKey:@"type"] isEqualToString:kOPEOsmElementNode]) {
+                OPEManagedOsmNode * node = [[OPEManagedOsmNode alloc] initWithDictionary:[set resultDictionary]];
+                [membersArray addObject:node];
+            }
+            else if ([[[set resultDictionary] objectForKey:@"type"] isEqualToString:kOPEOsmElementWay])
+            {
+                OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] initWithDictionary:[set resultDictionary]];
+                [membersArray addObject:way];
+            }
+            else if ([[[set resultDictionary] objectForKey:@"type"] isEqualToString:kOPEOsmElementRelation])
+            {
+                OPEManagedOsmRelation * relation = [[OPEManagedOsmRelation alloc] initWithDictionary:[set resultDictionary]];
+                [membersArray addObject:relation];
+            }
+            
+        }
+    }];
+    return membersArray;
+    
+}
 -(void)updateElement:(OPEManagedOsmElement *)element
 {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {

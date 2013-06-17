@@ -83,6 +83,7 @@
 -(NSArray *)pointsForWay:(OPEManagedOsmWay *)way;
 -(NSArray *)outerPolygonsForRelation:(OPEManagedOsmRelation *)relation;
 -(NSArray *)innerPolygonsForRelation:(OPEManagedOsmRelation *)relation;
+-(NSArray *)allMembersOfRelation:(OPEManagedOsmRelation *)relation;
 -(void)getTagsForElement:(OPEManagedOsmElement *)element;
 -(void)updateLegacyTags:(OPEManagedOsmElement *)element;
 

@@ -9,6 +9,8 @@
 #import "OPEOSMSearchManager.h"
 #import "FMDatabase.h"
 #import "OPEManagedOsmWay.h"
+#import "OPEManagedOsmNode.h"
+#import "OPEManagedOsmRelation.h"
 #import "Node.h"
 #import "OPEGeo.h"
 
@@ -25,30 +27,40 @@
     return self;
 }
 
--(NSDictionary *)nearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey
+-(NSArray *)nearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey
 {
     currentElement = element;
+    CLLocationCoordinate2D coordinate = [osmData centerForElement:element];
+    
     NSDictionary * values = nil;
     if ([osmKey isEqualToString:@"addr:street"]) {
-        values = [self nearbyHighwayNames];
+        values = [self nearbyHighwayNamesToCoordinate:coordinate];
     }
     else if ([osmKey isEqualToString:@"addr:city"]) {
         values = [self nearbyCities];
     }
     else if ([osmKey isEqualToString:@"addr:state"])
     {
-        values = [self nearbyStates];
+        return [self nearbyStatesToCoodrinate:coordinate];
     }
     else if ([osmKey isEqualToString:@"addr:province"])
     {
-        values = [self nearbyProvinces];
+        return [self nearbyProvincesToCoodrdinate:coordinate];
     }
     else if ([osmKey isEqualToString:@"addr:postcode"])
     {
-        values = [self nearbyPostcodes];
+        return [self nearbyPostcodesToCoodrinate:coordinate];
+    }
+    NSMutableArray * array = [NSMutableArray array];
+    for (NSString * key in values)
+    {
+        [array addObject:@{@"value": key,@"distance":[values objectForKey:key]}];
     }
     
-    return values;
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"distance"  ascending:YES];
+    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"value" ascending:YES];
+    
+    return [array sortedArrayUsingDescriptors:@[descriptor,nameDescriptor]];
 }
 
 -(NSSet *)uniqueValuesForOsmKeys:(NSSet *)osmKeys
@@ -93,54 +105,92 @@
     
     return dictionary;
 }
--(NSDictionary *)nearbyStates
+-(NSArray *)nearbyStatesToCoodrinate:(CLLocationCoordinate2D)coordinate
 {
-    NSSet *values = [self uniqueValuesForOsmKeys:[NSSet setWithArray:@[@"addr:state"]]];
-    NSArray *uppercaseStrings = [values valueForKey:@"uppercaseString"];
+    NSDictionary * sortedResults = [self nearbyValuesForCoordinate:coordinate withOsmKey:@"addr:state"];
     
-    NSNumber * num = [NSNumber numberWithInt:-1];
-    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
-    for (NSString * name in uppercaseStrings)
-    {
-        [dictionary setObject:num forKey:name];
-    }
+    __block NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
+    [sortedResults enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        NSString * newKey = [(NSString * )key uppercaseString];
+        if (!dictionary[newKey]) {
+            [dictionary setObject:obj forKey:newKey];
+        }
+        else if((NSNumber *)obj < dictionary[newKey])
+        {
+            [dictionary setObject:obj forKey:newKey];
+        }
+    }];
     
-    return dictionary;
+    return [self sortNearbyValue:dictionary];
     
     
 }
--(NSDictionary *)nearbyProvinces
+-(NSArray *)nearbyProvincesToCoodrdinate:(CLLocationCoordinate2D)coordinate
 {
-    NSSet *values = [self uniqueValuesForOsmKeys:[NSSet setWithArray:@[@"addr:province"]]];
-    
-    NSNumber * num = [NSNumber numberWithInt:-1];
-    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
-    for (NSString * name in values)
-    {
-        [dictionary setObject:num forKey:name];
-    }
-    
-    return dictionary;
-}
--(NSDictionary *)nearbyPostcodes
-{
-    NSSet *values = [self uniqueValuesForOsmKeys:[NSSet setWithArray:@[@"addr:postcode",@"tiger:zip_left",@"tiger:zip_right"]]];
-    
-    NSNumber * num = [NSNumber numberWithInt:-1];
-    NSMutableDictionary * dictionary = [NSMutableDictionary dictionary];
-    for (NSString * name in values)
-    {
-        [dictionary setObject:num forKey:name];
-    }
-    
-    return dictionary;
+    return [self sortedNearbyValuesForCoordinate:coordinate withOsmKey:@"addr:province"];
 }
 
--(double)minDistanceTo:(OPEManagedOsmWay *)way
+-(NSArray *)nearbyPostcodesToCoodrinate:(CLLocationCoordinate2D)coordinate
+{
+    NSArray * tagsArray = @[@"addr:postcode",@"tiger:zip_left",@"tiger:zip_right"];
+    __block NSDictionary * distanceDictionary = [NSMutableDictionary dictionary];
+    
+    [tagsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSDictionary * newDistanceDictionary = [self nearbyValuesForCoordinate:coordinate withOsmKey:obj];
+        distanceDictionary = [self combineDistanceDictionary:newDistanceDictionary withDictionary:distanceDictionary];
+    }];
+    
+    return [self sortNearbyValue:distanceDictionary];
+}
+
+-(NSDictionary *)combineDistanceDictionary:(NSDictionary *)dictionary1 withDictionary:(NSDictionary *)dictionary2
+{
+    __block NSMutableDictionary * distanceDictioary = [NSMutableDictionary dictionaryWithDictionary:dictionary1];
+    [dictionary2 enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        if (!distanceDictioary[key]) {
+            [distanceDictioary setObject:obj forKey:key];
+        }
+        else if([(NSNumber *)obj doubleValue] < [distanceDictioary[key] doubleValue])
+        {
+            [distanceDictioary setObject:obj forKey:key];
+        }
+    }];
+    
+    return distanceDictioary;
+
+}
+
+-(double)minDistinceToElement:(OPEManagedOsmElement *)element fromCoordinate:(CLLocationCoordinate2D)fromCoordinate
+{
+    
+    double minDistance = DBL_MAX;
+    if ([element isKindOfClass:[OPEManagedOsmNode class]]) {
+        minDistance = [OPEGeo distance:fromCoordinate to:[osmData centerForElement:element]];
+    }
+    else if ([element isKindOfClass:[OPEManagedOsmWay class]])
+    {
+        minDistance = [self minDistanceToWay:(OPEManagedOsmWay *)element fromCoordinate:fromCoordinate];
+    }
+    else if ([element isKindOfClass:[OPEManagedOsmRelation class]])
+    {
+        NSArray * members = [osmData allMembersOfRelation:(OPEManagedOsmRelation *)element];
+        for (OPEManagedOsmElement * element in members)
+        {
+            double tempDistance = [self minDistinceToElement:element fromCoordinate:fromCoordinate];
+            if (tempDistance < minDistance) {
+                minDistance = tempDistance;
+            }
+            
+        }
+    }
+    return minDistance;
+    
+}
+
+-(double)minDistanceToWay:(OPEManagedOsmWay *)way fromCoordinate:(CLLocationCoordinate2D)currentCenter
 {
     double distance = DBL_MAX;
     NSArray * points = [osmData pointsForWay:way];
-    CLLocationCoordinate2D currentCenter = [osmData centerForElement:currentElement];
     
     for (NSInteger index = 0; index<[points count]-1; index++) {
         CLLocation * node1 = ((CLLocation *)[points objectAtIndex:index]);
@@ -157,7 +207,7 @@
     
 }
 
--(NSDictionary *)nearbyHighwayNames
+-(NSDictionary *)nearbyHighwayNamesToCoordinate:(CLLocationCoordinate2D)coordinate
 {
     __block NSMutableArray * namedHighways = [NSMutableArray array];
     [databaseQueue inDatabase:^(FMDatabase *db) {
@@ -178,7 +228,7 @@
      {
          NSString * wayName = [way valueForOsmKey:@"name"];
          if ([wayName length]) {
-            double wayDistance = [self minDistanceTo:way];
+            double wayDistance = [self minDistanceToWay:way fromCoordinate:coordinate];
      
              if (wayDistance < 20000) {
                  if (![highwayDictionary objectForKey:wayName]) {
@@ -233,8 +283,89 @@
     return resultArray;
 }
 
+-(NSDictionary *)localReverseGeocode:(CLLocationCoordinate2D)coordinate
+{
+    NSMutableDictionary * addressDictionary = [NSMutableDictionary dictionary];
+    NSArray * sortedCities = [self sortedNearbyValuesForCoordinate:coordinate withOsmKey:@"addr:city"];
+    if ([sortedCities count]) {
+        [addressDictionary setObject:sortedCities[0][@"value"] forKey:@"city"];
+    }
+    
+    NSDictionary * highwayWays = [self nearbyHighwayNamesToCoordinate:coordinate];
+    NSDictionary * highwayNodes = [self nearbyValuesForCoordinate:coordinate withOsmKey:@"addr:street"];
+    
+    NSArray * sortedStreets = [self sortNearbyValue:[self combineDistanceDictionary:highwayWays withDictionary:highwayNodes]];
+    if ([sortedStreets count]) {
+        [addressDictionary setObject:sortedStreets[0][@"value"] forKey:@"road"];
+    }
+    
+    
+    return addressDictionary;
+}
 
-+(NSDictionary *)nearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey
+-(NSArray *)sortNearbyValue:(NSDictionary *)values
+{
+    NSMutableArray * array = [NSMutableArray array];
+    [values enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [array addObject:@{@"value": key,@"distance":obj}];
+    }];
+    
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"distance"  ascending:YES];
+    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"value" ascending:YES];
+    
+    return [array sortedArrayUsingDescriptors:@[descriptor,nameDescriptor]];
+}
+
+-(NSArray *)sortedNearbyValuesForCoordinate:(CLLocationCoordinate2D)coordinate withOsmKey:(NSString *)osmKey
+{
+    NSDictionary * distanceDictionary = [self nearbyValuesForCoordinate:coordinate withOsmKey:osmKey];
+    return [self sortNearbyValue:distanceDictionary];
+}
+
+
+-(NSDictionary *)nearbyValuesForCoordinate:(CLLocationCoordinate2D)coordinate withOsmKey:(NSString *)osmKey
+{
+    __block NSMutableDictionary * distanceDictionary = [NSMutableDictionary dictionary];
+    for(NSString * osmType in @[kOPEOsmElementNode,kOPEOsmElementWay,kOPEOsmElementRelation])
+    {
+        [databaseQueue inDatabase:^(FMDatabase *db) {
+            db.logsErrors = YES;
+            db.traceExecution = YES;
+            NSString * dbQuery = [NSString stringWithFormat:@"select * from (select key,value,%@_id as id from %@s_tags where %@s_tags.key='%@') as tags,%@s where tags.id = %@s.id",osmType,osmType,osmType,osmKey,osmType,osmType];
+            FMResultSet * result = [db executeQuery:dbQuery];
+            
+            
+            while ([result next]) {
+                OPEManagedOsmElement * element =nil;
+                if ([osmType isEqualToString:kOPEOsmElementNode]) {
+                    element = [[OPEManagedOsmNode alloc] initWithDictionary:[result resultDictionary]];
+                }
+                else if ([osmType isEqualToString:kOPEOsmElementWay])
+                {
+                    element = [[OPEManagedOsmWay alloc] initWithDictionary:[result resultDictionary]];
+                }
+                else if ([osmType isEqualToString:kOPEOsmElementRelation])
+                {
+                    element = [[OPEManagedOsmRelation alloc] initWithDictionary:[result resultDictionary]];
+                }
+                double minDistance = [self minDistinceToElement:element fromCoordinate:coordinate];
+                NSString * osmValue = [[result resultDictionary] objectForKey:@"value"];
+                if (minDistance &&[distanceDictionary objectForKey:osmValue] && [[distanceDictionary objectForKey:osmValue] doubleValue] > minDistance) {
+                    [distanceDictionary setObject:[NSNumber numberWithDouble:minDistance] forKey:osmValue];
+                }
+                else if (minDistance)
+                {
+                    [distanceDictionary setObject:[NSNumber numberWithDouble:minDistance] forKey:osmValue];
+                }
+            }
+        }];
+        
+    }
+    return distanceDictionary;
+    
+}
+
++(NSArray *)sortedNearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey
 {
     return [[[OPEOSMSearchManager alloc] init] nearbyValuesForElement:element withOsmKey:osmKey];
 }
