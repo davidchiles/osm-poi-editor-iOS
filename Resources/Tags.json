@@ -1,13 +1,13 @@
 {
   "Fun and Leisure" : {
-    "Hackspace" : {
+    "Hackerspace" : {
       "optional" : [
         "contact",
         "address"
       ],
       "image" : "none",
       "tags" : {
-        "leisure" : "hackspace"
+        "leisure" : "hackerspace"
       }
     },
     "Stadium" : {
