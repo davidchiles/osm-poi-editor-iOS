@@ -449,9 +449,16 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        OPEManagedReferenceOptional * optional = [self optionalAtIndexPath:indexPath];
-        NSString * osmKey = optional.osmKey;
-        [self.osmData removeOsmKey:osmKey forElement:self.managedOsmElement];
+        if (indexPath.section == 0) {
+            [self.osmData removeOsmKey:@"name" forElement:self.managedOsmElement];
+        }
+        else{
+            OPEManagedReferenceOptional * optional = [self optionalAtIndexPath:indexPath];
+            NSString * osmKey = optional.osmKey;
+            [self.osmData removeOsmKey:osmKey forElement:self.managedOsmElement];
+        }
+        
+        
         [nodeInfoTableView reloadData];
         [self checkSaveButton];
     }
