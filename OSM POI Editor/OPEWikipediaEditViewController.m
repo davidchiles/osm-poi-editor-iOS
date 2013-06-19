@@ -66,7 +66,10 @@
         nearbyTitles = results;
         [self updateResults:results];
         UITableView * tableView = (UITableView *)[self.view viewWithTag:kTableViewTag];
-        [tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+        if ([tableView numberOfSections]>1) {
+            [tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+        
         
     } failure:^(NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"Error");
