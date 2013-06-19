@@ -2837,19 +2837,6 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "OSM POI Editor/OPEWikipediaEditViewController.m"
-         timestampString = "393363050.860294"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "110"
-         endingLineNumber = "110"
-         landmarkName = "-textField:shouldChangeCharactersInRange:replacementString:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEOSMSearchManager.m"
          timestampString = "393198280.711866"
          startingColumnNumber = "9223372036854775807"
@@ -2857,19 +2844,6 @@
          startingLineNumber = "303"
          endingLineNumber = "303"
          landmarkName = "-localReverseGeocode:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "OSM POI Editor/OPEWikipediaEditViewController.m"
-         timestampString = "393363050.860294"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "83"
-         endingLineNumber = "83"
-         landmarkName = "-languageButtonSelected:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -226,7 +226,15 @@
 
 -(NSString *)newOsmValue
 {
-    return[NSString stringWithFormat:@"%@:%@",self.locale,[super newOsmValue]];
+    if ([[super newOsmValue] length] && [self.locale length]) {
+        return[NSString stringWithFormat:@"%@:%@",self.locale,[super newOsmValue]];
+    }
+    else if ([[super newOsmValue] length])
+    {
+        return [super newOsmValue];
+    }
+    return @"";
+    
 }
 
 @end
