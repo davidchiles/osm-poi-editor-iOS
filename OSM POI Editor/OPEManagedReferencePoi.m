@@ -100,7 +100,7 @@
 
 -(NSString *)sqliteInsertString
 {
-    return [NSString stringWithFormat:@"insert or replace into poi(editOnly,imageString,isLegacy,displayName,category) values(%d,\'%@\',%d,\'%@\',\'%@\')",self.editOnly,self.imageString,self.isLegacy,self.name,self.categoryName];
+    return [NSString stringWithFormat:@"insert or replace into poi(editOnly,imageString,isLegacy,displayName,category) values(%d,\'%@\',%d,\'%@\',\'%@\')",self.editOnly,self.imageString,self.isLegacy,self.refName,self.categoryName];
 }
 -(NSString *)sqliteOptionalInsertString
 {
