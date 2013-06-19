@@ -81,6 +81,9 @@
     [self.view resignFirstResponder];
     
     NSUInteger index = [((NSArray *)[supportedWikipedialanguges valueForKey:@"code"]) indexOfObject:self.locale];
+    if (index == NSNotFound) {
+        index = 0;
+    }
     
     [ActionSheetStringPicker showPickerWithTitle:@"Wikipedia Language" rows:[supportedWikipedialanguges valueForKey:@"*"] initialSelection:index doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
         NSLog(@"selected %@",selectedValue);
