@@ -8,13 +8,15 @@
 
 #import "OPEWikipediaManager.h"
 #import "AFNetworking.h"
+#import "OPETranslate.h"
 
 
 @implementation OPEWikipediaManager
 
 -(NSArray *)seperateRawWikipediaValue:(NSString *)rawValue
 {
-    NSString * languageString = @"en"; //FIXME needs to be locilized
+    
+    NSString * languageString = @"";
     NSString * wikipediaString = @"";
     if ([rawValue length]) {
         wikipediaString = rawValue;
@@ -62,7 +64,7 @@
 
 -(void)fetchAllWikipediaLanguagesSucess:(void (^)(NSArray *results))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error, id JSON))failure
 {
-    NSString * urlString = @"http://de.wikipedia.org/w/api.php?action=query&meta=siteinfo&siprop=languages&format=json";
+    NSString * urlString = @"http://en.wikipedia.org/w/api.php?action=query&meta=siteinfo&siprop=languages&format=json";
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     AFJSONRequestOperation * jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         NSDictionary * results = (NSDictionary *)JSON;
@@ -80,7 +82,7 @@
 
 -(void)fetchNearbyPoint:(CLLocationCoordinate2D)center withLocale:(NSString *)locale success:(void (^)(NSArray *results))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error, id JSON))failure
 {
-    NSString * urlString = [NSString stringWithFormat:@"http://en.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=%@|%@&format=json",[[NSNumber numberWithDouble:center.latitude] stringValue],[[NSNumber numberWithDouble:center.longitude] stringValue]];
+    NSString * urlString = [NSString stringWithFormat:@"http://%@.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=%@|%@&format=json",locale,[[NSNumber numberWithDouble:center.latitude] stringValue],[[NSNumber numberWithDouble:center.longitude] stringValue]];
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     AFJSONRequestOperation * jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         NSDictionary * results = (NSDictionary *)JSON;
@@ -100,9 +102,22 @@
 -(NSArray *)mostPopularLanguages
 {
     NSError * error = nil;
+    NSString * systemLanguage = [[OPETranslate systemLocale] componentsSeparatedByString:@"-"][0];
+    NSLocale *currentLocale = [[NSLocale alloc] initWithLocaleIdentifier:systemLanguage];
+    NSDictionary * systemLanguageDictionary = @{@"code": systemLanguage,@"*":[currentLocale displayNameForKey:NSLocaleIdentifier value:systemLanguage]};
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"wikipediaLanguages" ofType:@"json"];
     NSData *jsonData = [NSData dataWithContentsOfFile:filePath];
-    NSArray * array = (NSArray *)[NSJSONSerialization JSONObjectWithData:jsonData options:nil error:&error];
+    NSArray * jsonArray = (NSArray *)[NSJSONSerialization JSONObjectWithData:jsonData options:nil error:&error];
+    NSMutableArray * array = [NSMutableArray array];
+    [jsonArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSLocale *currentLocale = [[NSLocale alloc] initWithLocaleIdentifier:systemLanguage];
+        NSDictionary * systemLanguageDictionary = @{@"code": obj,@"*":[currentLocale displayNameForKey:NSLocaleIdentifier value:obj]};
+        [array addObject:systemLanguageDictionary];
+    }];
+    
+    
+    [array removeObject:systemLanguageDictionary];
+    [array insertObject:systemLanguageDictionary atIndex:0];
     
     return array;
 }

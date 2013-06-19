@@ -35,4 +35,11 @@
     
 }
 
++(NSString *)systemLocale
+{
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"Languages: %@",[defaults objectForKey:kOTRAppleLanguagesKey]);
+    return [[defaults objectForKey:kOTRAppleLanguagesKey] objectAtIndex:0];
+}
+
 @end

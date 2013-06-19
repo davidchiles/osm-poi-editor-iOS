@@ -1,30 +1,9 @@
 [
-{
-  "code": "en",
-  "*": "English"
-},
-{
-  "code": "de",
-  "*": "Deutsch"
-},
-{
-  "code": "es",
-  "*": "Español"
-},
-{
-  "code": "fr",
-  "*": "Français"
-},
-{
-  "code": "it",
-  "*": "Italiano"
-},
-{
-  "code": "nl",
-  "*": "Nederlands"
-},
-{
-  "code": "ru",
-  "*": "Русский"
-}
+"en",
+"de",
+"es",
+"fr",
+"it",
+"nl",
+"ru"
 ]

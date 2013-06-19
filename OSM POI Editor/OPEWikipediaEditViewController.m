@@ -11,7 +11,7 @@
 #import "ActionSheetStringPicker.h"
 
 #import "OPEOSMData.h"
-
+#import "OPETranslate.h"
 
 @interface OPEWikipediaEditViewController ()
 
@@ -30,8 +30,15 @@
     wikipediaResultsArray = [NSArray array];
     
     NSArray * array = [wikipediaManager seperateRawWikipediaValue:self.currentOsmValue];
+    if (![array[0] length] && ![array[1] length]) {
+        self.locale = [[OPETranslate systemLocale] componentsSeparatedByString:@"-"][0];
+    }
+    else{
+        self.locale = array[0];
+    }
+    
     self.textField.text = array[1];
-    self.locale = array[0];
+    
     languageButton = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
     [languageButton setTitle:self.locale forState:UIControlStateNormal];
     [languageButton addTarget:self action:@selector(languageButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
@@ -47,12 +54,19 @@
         NSLog(@"Error");
     }];
     
+    [self updateLocalSeach];
+}
+
+-(void)updateLocalSeach
+{
     OPEOSMData * osmData = [[OPEOSMData alloc] init];
     CLLocationCoordinate2D center = [osmData centerForElement:self.element];
     
     [wikipediaManager fetchNearbyPoint:center withLocale:self.locale success:^(NSArray *results) {
         nearbyTitles = results;
         [self updateResults:results];
+        UITableView * tableView = (UITableView *)[self.view viewWithTag:kTableViewTag];
+        [tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
         
     } failure:^(NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"Error");
@@ -69,6 +83,7 @@
         NSLog(@"selected %@",selectedValue);
         self.locale = [[supportedWikipedialanguges objectAtIndex:selectedIndex] objectForKey:@"code"];
         [languageButton setTitle:self.locale forState:UIControlStateNormal];
+        [self updateLocalSeach];
     } cancelBlock:^(ActionSheetStringPicker *picker) {
         NSLog(@"cancel selected");
     } origin:sender];
@@ -189,7 +204,7 @@
 {
     NSString * title = [wikipediaResultsArray objectAtIndex:indexPath.row];
     
-    OPEWikipediaWebViewController * webView = [[OPEWikipediaWebViewController alloc] initWithWikipediaArticaleTitle:title withLocale:@"en"];
+    OPEWikipediaWebViewController * webView = [[OPEWikipediaWebViewController alloc] initWithWikipediaArticaleTitle:title withLocale:self.locale];
     [self.navigationController pushViewController:webView animated:YES];
     
 }

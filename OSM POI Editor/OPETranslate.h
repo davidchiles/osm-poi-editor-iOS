@@ -11,5 +11,6 @@
 @interface OPETranslate : NSObject
 
 +(NSString *)translateString:(NSString *)englishString;
++(NSString *)systemLocale;
 
 @end
