@@ -47,6 +47,7 @@
 #define NO_NAME_STRING NSLocalizedString(@"No Name Street",@"label for street with missing name tag")
 
 #define LOCA_DATA_STRING NSLocalizedString(@"Local Data",@"Button label for signifying using local or downloaded data")
+#define MOVE_NODE_STRING NSLocalizedString(@"Move Node",@"Button label and title for view to move location of node/point")
 
 
 

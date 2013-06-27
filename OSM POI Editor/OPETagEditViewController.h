@@ -12,6 +12,7 @@
 #import "OPEConstants.h"
 #import "OPEManagedOsmElement.h"
 
+
 @protocol OPETagEditViewControllerDelegate <NSObject>
 @required
 - (void) newOsmKey:(NSString *)key value:(NSString *)value;

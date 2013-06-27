@@ -39,13 +39,15 @@
 #import "OPEStrings.h"
 #import "BButton.h"
 #import "OPEOSMSearchManager.h"
+#import "OPEMoveNodeViewController.h"
+#import "OPEButtonCell.h"
 
 
 
 @implementation OPENodeViewController
 
 @synthesize nodeInfoTableView;
-@synthesize deleteButton, saveButton;
+@synthesize deleteButton = _deleteButton, saveButton, moveButton = _moveButton;
 @synthesize delegate;
 @synthesize tableSections;
 @synthesize managedOsmElement;
@@ -58,6 +60,8 @@
     self = [super init];
     if(self){
         self.title = INFO_TITLE_STRING;
+        showDeleteButton = YES;
+        showMoveButton = NO;
     }
     return self;
 }
@@ -129,31 +133,37 @@
     nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     
-    if (self.managedOsmElement.element.elementID > 0 && [managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![self.osmData hasParentElement:self.managedOsmElement]) {
+    if ([managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![self.osmData hasParentElement:self.managedOsmElement]) {
+        if (self.managedOsmElement.element.elementID > 0) {
+            /*
+            deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            [deleteButton setTitle:DELETE_STRING forState:UIControlStateNormal];
+            [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
+                                                   stretchableImageWithLeftCapWidth:8.0f
+                                                   topCapHeight:0.0f]
+                                         forState:UIControlStateNormal];
+            
+            [self.deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            self.deleteButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+            self.deleteButton.titleLabel.shadowColor = [UIColor lightGrayColor];
+            self.deleteButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
+            //self.deleteButton.frame = CGRectMake(0, 0, 300, 44);
+            [self.deleteButton addTarget:self action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+            self.deleteButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            
+            
+            UIView * footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, nodeInfoTableView.frame.size.width, 50)];
+            self.deleteButton.frame = CGRectMake(10, 0, nodeInfoTableView.frame.size.width-20, 46);
+            footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            [footerView addSubview:deleteButton];
+            
+            
+            self.nodeInfoTableView.tableFooterView = footerView;
+            */
+            showDeleteButton = YES;
+        }
+        showMoveButton = YES;
         
-        
-        deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [deleteButton setTitle:DELETE_STRING forState:UIControlStateNormal];
-        [self.deleteButton setBackgroundImage:[[UIImage imageNamed:@"iphone_delete_button.png"]
-                                               stretchableImageWithLeftCapWidth:8.0f
-                                               topCapHeight:0.0f]
-                                     forState:UIControlStateNormal];
-        
-        [self.deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.deleteButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
-        self.deleteButton.titleLabel.shadowColor = [UIColor lightGrayColor];
-        self.deleteButton.titleLabel.shadowOffset = CGSizeMake(0, -1);
-        //self.deleteButton.frame = CGRectMake(0, 0, 300, 44);
-        [self.deleteButton addTarget:self action:@selector(deleteButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-        self.deleteButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        
-        UIView * footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, nodeInfoTableView.frame.size.width, 50)];
-        self.deleteButton.frame = CGRectMake(10, 0, nodeInfoTableView.frame.size.width-20, 46);
-        footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [footerView addSubview:deleteButton];
-        
-        
-        self.nodeInfoTableView.tableFooterView = footerView;
         //self.nodeInfoTableView.tableFooterView.frame = CGRectMake(0, 0, 300, 50);
         //[nodeInfoTableView setContentOffset:CGPointMake(0, nodeInfoTableView.contentSize.height-50) animated:YES];
     }
@@ -175,6 +185,29 @@
     
     
     
+}
+
+-(UIButton *)deleteButton
+{
+    if(!_deleteButton)
+    {
+        BButton * button = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypeDanger];
+        [button setTitle:DELETE_STRING forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        _deleteButton = button;
+    }
+    return _deleteButton;
+}
+-(UIButton *)moveButton
+{
+    if(!_moveButton)
+    {
+        BButton * button = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
+        [button setTitle:MOVE_NODE_STRING forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(moveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        _moveButton = button;
+    }
+    return _moveButton;
 }
 -(void) reloadTags
 {
@@ -209,27 +242,24 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return [self.managedOsmElement.type numberOfOptionalSections] + 2;
+    return [self.managedOsmElement.type numberOfOptionalSections] + 2 + [[NSNumber numberWithBool:showDeleteButton] intValue] + [[NSNumber numberWithBool:showMoveButton] intValue];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     
-    if(section == 0)
-    {
-       return 1;
-    }
-    else if(section == 1)
+    if(section == 1)
     {
         return 2;
     }
-    else
+    else if(section > 1 && section < [self.managedOsmElement.type numberOfOptionalSections] + 2)
     {
         if ([((OPEManagedReferenceOptional *)[[optionalSectionsArray objectAtIndex:(section -2)] lastObject]).sectionName isEqualToString:@"Address"]) {
             return [[optionalSectionsArray objectAtIndex:(section - 2)] count] +1;
         }
         return [[optionalSectionsArray objectAtIndex:(section - 2)] count];
     }
+    return 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -241,12 +271,14 @@
     {
         return CATEGORY_STRING;
     }
-    else
+    else if(section < [self.managedOsmElement.type numberOfOptionalSections] + 2)
     {
         NSInteger index = section-2;
         OPEManagedReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
         return tempOptional.sectionName;
     }
+    
+    return @"";
 }
 
 // Customize the appearance of table view cells.
@@ -257,6 +289,7 @@
     NSString *CellIdentifierSpecialBinary = @"CellIdentifierSpecialBinary";
     NSString *CellIdentifierSpecial2 = @"CellIdentifierSpecial2";
     NSString *cellIdentifierAddressButton = @"cellIdentifierAddressButton";
+    NSString *cellIdentifierButton = @"cellIdentifierButton";
     
     UITableViewCell *cell;
     
@@ -292,82 +325,100 @@
         return cell;
     }
     //OPTIONAL TAGS
-    else if([[self.optionalSectionsArray objectAtIndex:(indexPath.section-2) ] count] > indexPath.row)
+    else if(indexPath.section < [self.managedOsmElement.type numberOfOptionalSections] + 2)
     {
-        OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
-        
-        NSString * valueForOptional = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
-        NSString * displayValueForOptional = [managedOptionalTag displayNameForKey:managedOptionalTag.osmKey withValue:valueForOptional];
-        
-        //more than 3 tags just show value not switch or Address
-        if ([managedOptionalTag.optionalTags count]>3 || ![managedOptionalTag.optionalTags count]) {
-            OPESpecialCell2 * specialCell;
-            specialCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
-            if (specialCell == nil) {
-                specialCell = [[OPESpecialCell2 alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecial2 withTextWidth:optionalTagWidth];
-            }
-            specialCell.leftText = managedOptionalTag.displayName;
-            specialCell.rightText = displayValueForOptional;
-            return specialCell;
-        }
-        //Show switch
-        else if([managedOptionalTag.optionalTags count] > 0)
+        if([[self.optionalSectionsArray objectAtIndex:(indexPath.section-2) ] count] > indexPath.row)
         {
-            OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
-            if (aCell == nil) {
-                aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[managedOptionalTag.optionalTags allObjects] withTextWidth:optionalTagWidth];
+            OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
+            
+            NSString * valueForOptional = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
+            NSString * displayValueForOptional = [managedOptionalTag displayNameForKey:managedOptionalTag.osmKey withValue:valueForOptional];
+            
+            //more than 3 tags just show value not switch or Address
+            if ([managedOptionalTag.optionalTags count]>3 || ![managedOptionalTag.optionalTags count]) {
+                OPESpecialCell2 * specialCell;
+                specialCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
+                if (specialCell == nil) {
+                    specialCell = [[OPESpecialCell2 alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecial2 withTextWidth:optionalTagWidth];
+                }
+                specialCell.leftText = managedOptionalTag.displayName;
+                specialCell.rightText = displayValueForOptional;
+                return specialCell;
+            }
+            //Show switch
+            else if([managedOptionalTag.optionalTags count] > 0)
+            {
+                OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
+                if (aCell == nil) {
+                    aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[managedOptionalTag.optionalTags allObjects] withTextWidth:optionalTagWidth];
+                    
+                }
+                [aCell setLeftText: managedOptionalTag.displayName];
+                [aCell setupBinaryControl:[managedOptionalTag.optionalTags allObjects]];
+                //aCell.controlArray = [[cellDictionary objectForKey:@"values"] allKeys];
+                
+                [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
+                aCell.tag = indexPath.section-2;
+                aCell.binaryControl.tag = indexPath.row;
+                if (![valueForOptional isEqualToString:displayValueForOptional] && [valueForOptional length]) {
+                    [aCell selectSegmentWithTitle:displayValueForOptional];
+                }
+                else {
+                    aCell.binaryControl.selectedSegmentIndex = UISegmentedControlNoSegment;
+                }
+                return aCell;
                 
             }
-            [aCell setLeftText: managedOptionalTag.displayName];
-            [aCell setupBinaryControl:[managedOptionalTag.optionalTags allObjects]];
-            //aCell.controlArray = [[cellDictionary objectForKey:@"values"] allKeys];
+        }
+        else{
+            cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierAddressButton];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierAddressButton];
+                
+                CGSize cellSize = cell.contentView.frame.size;
+                CGFloat buttonWidth = 150;
+                
+                BButton * lookupButton = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
+                lookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+                [lookupButton setTitle:@"Nominatim" forState:UIControlStateNormal];
+                [lookupButton addTarget:self action:@selector(nominatimLookupAddress) forControlEvents:UIControlEventTouchUpInside];
+                
+                
+                BButton * localLookupButton = [[BButton alloc]initWithFrame:CGRectZero type:BButtonTypePrimary];
+                localLookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+                [localLookupButton setTitle:LOCA_DATA_STRING forState:UIControlStateNormal];
+                [localLookupButton addTarget:self action:@selector(localLookupAddress) forControlEvents:UIControlEventTouchUpInside];
+                
+                localLookupButton.frame = CGRectMake(0, 0, buttonWidth, cellSize.height);
+                lookupButton.frame = CGRectMake(cellSize.width-buttonWidth, 0, buttonWidth, cellSize.height);
+                localLookupButton.autoresizingMask  = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin  ;
+                lookupButton.autoresizingMask =UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin ;
+                
+                
+                cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+                [cell.contentView addSubview:lookupButton];
+                [cell.contentView addSubview:localLookupButton];
+            }
             
-            [aCell.binaryControl addTarget:self action:@selector(binaryChanged:) forControlEvents:UIControlEventValueChanged];
-            aCell.tag = indexPath.section-2;
-            aCell.binaryControl.tag = indexPath.row;
-            if (![valueForOptional isEqualToString:displayValueForOptional] && [valueForOptional length]) {
-                [aCell selectSegmentWithTitle:displayValueForOptional];
-            }
-            else {
-                aCell.binaryControl.selectedSegmentIndex = UISegmentedControlNoSegment;
-            }
-            return aCell;
-
         }
     }
+    //Move and Cancel Buttons
     else{
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierAddressButton];
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierButton];
         if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierAddressButton];
+            cell = [[OPEButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierButton];
             
-            CGSize cellSize = cell.contentView.frame.size;
-            CGFloat buttonWidth = 150;
-            
-            
-            
-            
-            BButton * lookupButton = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
-            lookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-            [lookupButton setTitle:@"Nominatim" forState:UIControlStateNormal];
-            [lookupButton addTarget:self action:@selector(nominatimLookupAddress) forControlEvents:UIControlEventTouchUpInside];
-            
-            
-            BButton * localLookupButton = [[BButton alloc]initWithFrame:CGRectZero type:BButtonTypePrimary];
-            localLookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-            [localLookupButton setTitle:LOCA_DATA_STRING forState:UIControlStateNormal];
-            [localLookupButton addTarget:self action:@selector(localLookupAddress) forControlEvents:UIControlEventTouchUpInside];
-            
-            localLookupButton.frame = CGRectMake(0, 0, buttonWidth, cellSize.height);
-            lookupButton.frame = CGRectMake(cellSize.width-buttonWidth, 0, buttonWidth, cellSize.height);
-            localLookupButton.autoresizingMask  = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin  ;
-            lookupButton.autoresizingMask =UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin ;
-            
-            
-            cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-            [cell.contentView addSubview:lookupButton];
-            [cell.contentView addSubview:localLookupButton];
         }
-        
+        //move Button
+        if (indexPath.section == [tableView numberOfSections]-2 && showMoveButton)
+        {
+            ((OPEButtonCell *)cell).button = self.moveButton;
+        }
+        //Delete Button
+        else if (indexPath.section == [tableView numberOfSections]-1 && showDeleteButton)
+        {
+            ((OPEButtonCell *)cell).button = self.deleteButton;
+        }
     }
 
     return cell;
@@ -388,6 +439,13 @@
         
     }
     
+}
+
+-(void)moveButtonPressed:(id)sender
+{
+    OPEMoveNodeViewController * moveNodeViewController = [[OPEMoveNodeViewController alloc] initWithNode:(OPEManagedOsmNode *)self.managedOsmElement];
+    
+    [self.navigationController pushViewController:moveNodeViewController animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -541,7 +599,7 @@
     }
 }
 
-- (void) deleteButtonPressed
+- (void) deleteButtonPressed:(id)sender
 {
     if (![self.apiManager canAuth])
     {
@@ -632,12 +690,28 @@
 {
     return ![originalTags isEqualToDictionary:self.managedOsmElement.element.tags];
 }
+-(BOOL)locationChanged
+{
+    if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
+        if (<#condition#>) {
+            <#statements#>
+        }
+    }
+    return NO;
+}
+-(BOOL)elementModified
+{
+    if ([self tagsHaveChanged] || [self locationChanged]) {
+        return YES;
+    }
+    return NO;
+}
 
 
 - (void)checkSaveButton
 {
     //NSLog(@"cAndT count %d",[catAndType count]);
-    if (([self tagsHaveChanged] && managedOsmElement.type) || managedOsmElement.elementID < 0) {
+    if (([self elementModified] && managedOsmElement.type) || managedOsmElement.elementID < 0) {
         self.saveButton.enabled = YES;
     }
     else

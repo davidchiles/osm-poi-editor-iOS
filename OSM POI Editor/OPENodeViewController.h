@@ -44,10 +44,14 @@
     NSManagedObjectContext * editContext;
     NSDictionary * originalTags;
     int originalTypeID;
+    BOOL showDeleteButton;
+    BOOL showMoveButton;
+    CLLocationCoordinate2D originalLocation;
 }
 
 @property (nonatomic, strong) UITableView * nodeInfoTableView;
 @property (nonatomic, strong) UIButton * deleteButton;
+@property (nonatomic, strong) UIButton * moveButton;
 @property (nonatomic, strong) UIBarButtonItem * saveButton;
 @property (nonatomic, strong) id <OPENodeViewDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray * tableSections;

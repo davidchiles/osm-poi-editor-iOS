@@ -330,6 +330,9 @@
 		638E994F1665C9FF00C29F9A /* MapBox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 638E99201665C2CC00C29F9A /* MapBox.bundle */; };
 		6391C67316AE2B370084D579 /* Model.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 6391C67216AE2B370084D579 /* Model.xcdatamodel */; };
 		639953FE16113A200070CBAF /* about.css in Resources */ = {isa = PBXBuildFile; fileRef = 639953FD16113A200070CBAF /* about.css */; };
+		63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */; };
+		63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BB177BB0EB000C6A0D /* OPEMoveNodeViewController.m */; };
+		63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BE177BBD8C000C6A0D /* OPEButtonCell.m */; };
 		63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A964981729FA6100D14CA1 /* OPEManagedObject.m */; };
 		63AD8F7A15E8570B006F92B8 /* OPECategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7915E8570B006F92B8 /* OPECategory.m */; };
 		63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7C15E8577E006F92B8 /* OPEType.m */; };
@@ -790,6 +793,12 @@
 		6391C67216AE2B370084D579 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		63968298153CB8B4008F4C0E /* OPEAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAPIConstants.h; sourceTree = "<group>"; };
 		639953FD16113A200070CBAF /* about.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = about.css; sourceTree = "<group>"; };
+		63A3D5B4177BAEB1000C6A0D /* OPECrosshairMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECrosshairMapView.h; sourceTree = "<group>"; };
+		63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECrosshairMapView.m; sourceTree = "<group>"; };
+		63A3D5BA177BB0EB000C6A0D /* OPEMoveNodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMoveNodeViewController.h; sourceTree = "<group>"; };
+		63A3D5BB177BB0EB000C6A0D /* OPEMoveNodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMoveNodeViewController.m; sourceTree = "<group>"; };
+		63A3D5BD177BBD8C000C6A0D /* OPEButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEButtonCell.h; sourceTree = "<group>"; };
+		63A3D5BE177BBD8C000C6A0D /* OPEButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEButtonCell.m; sourceTree = "<group>"; };
 		63A964971729FA6100D14CA1 /* OPEManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedObject.h; sourceTree = "<group>"; };
 		63A964981729FA6100D14CA1 /* OPEManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedObject.m; sourceTree = "<group>"; };
 		63AB037E1760005F00003878 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
@@ -1420,6 +1429,12 @@
 				631AB0AB1727686E003F5F6F /* OPETranslate.h */,
 				631AB0AC1727686E003F5F6F /* OPETranslate.m */,
 				63D0A5CF1701129F007A595E /* TagEdit */,
+				63A3D5B4177BAEB1000C6A0D /* OPECrosshairMapView.h */,
+				63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */,
+				63A3D5BD177BBD8C000C6A0D /* OPEButtonCell.h */,
+				63A3D5BE177BBD8C000C6A0D /* OPEButtonCell.m */,
+				63A3D5BA177BB0EB000C6A0D /* OPEMoveNodeViewController.h */,
+				63A3D5BB177BB0EB000C6A0D /* OPEMoveNodeViewController.m */,
 				6387126B17582655006C3A4E /* OPENewNodeSelectViewController.h */,
 				6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */,
 				63266A3317164732002CD7E4 /* OPECategoryViewController.h */,
@@ -2156,6 +2171,9 @@
 				63E5E3AE176943040064A780 /* ActionSheetDistancePicker.m in Sources */,
 				63E5E3AF176943040064A780 /* ActionSheetStringPicker.m in Sources */,
 				63E5E3B0176943040064A780 /* DistancePickerView.m in Sources */,
+				63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */,
+				63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */,
+				63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

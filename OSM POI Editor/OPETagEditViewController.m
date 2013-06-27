@@ -26,7 +26,7 @@
 
 -(id)initWithOsmKey:(NSString *)newOsmKey delegate:(id<OPETagEditViewControllerDelegate>)newDelegate
 {
-    if ((self = [super self])) {
+    if ((self = [super init])) {
         self.osmKey = newOsmKey;
         self.delegate = newDelegate;
     }
@@ -35,7 +35,7 @@
 }
 -(id)initWithOsmKey:(NSString *)newOsmKey currentValue:(NSString *)newCurrentValue delegate:(id<OPETagEditViewControllerDelegate>)newDelegate
 {
-    if ((self = [super self])) {
+    if ((self = [super init])) {
         self.osmKey = newOsmKey;
         self.delegate = newDelegate;
         self.currentOsmValue = newCurrentValue;
