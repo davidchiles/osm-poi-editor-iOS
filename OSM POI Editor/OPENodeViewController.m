@@ -60,7 +60,7 @@
     self = [super init];
     if(self){
         self.title = INFO_TITLE_STRING;
-        showDeleteButton = YES;
+        showDeleteButton = NO;
         showMoveButton = NO;
     }
     return self;
