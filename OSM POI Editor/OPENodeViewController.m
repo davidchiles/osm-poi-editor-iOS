@@ -80,6 +80,10 @@
         [self.osmData getOptionalsFor:self.managedOsmElement.type];
         
         originalTags = [self.managedOsmElement.element.tags copy];
+        if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
+            originalLocation = ((OPEManagedOsmNode *)self.managedOsmElement).element.coordinate;
+        }
+        
         originalTypeID = self.managedOsmElement.typeID;
         [self.osmData updateLegacyTags:managedOsmElement];
         
@@ -109,6 +113,9 @@
     else
     {
         self.managedOsmElement.element.tags = [originalTags mutableCopy];
+        if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
+            ((OPEManagedOsmNode *)self.managedOsmElement).element.coordinate = originalLocation;
+        }
         self.managedOsmElement.typeID = originalTypeID;
         [self.osmData getTypeFor:managedOsmElement];
     }
@@ -563,7 +570,7 @@
     {
         [self showAuthError];
     }
-    else if ([self tagsHaveChanged] || (self.managedOsmElement.elementID < 0 && [self.managedOsmElement.element.tags count]))
+    else if ([self elementModified] || (self.managedOsmElement.elementID < 0 && [self.managedOsmElement.element.tags count]))
     {
         [self startSave];
         
@@ -693,8 +700,9 @@
 -(BOOL)locationChanged
 {
     if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
-        if (<#condition#>) {
-            <#statements#>
+        CLLocationCoordinate2D currentCoordinate = ((OPEManagedOsmNode *)self.managedOsmElement).element.coordinate;
+        if (currentCoordinate.latitude != originalLocation.latitude || currentCoordinate.longitude != originalLocation.longitude) {
+            return YES;
         }
     }
     return NO;
