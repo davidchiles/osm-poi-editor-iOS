@@ -325,6 +325,15 @@
     },
     "section" : "Other"
   },
+  "power_supply" : {
+    "displayName" : "Power Supply",
+    "osmKey" : "power_supply",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
   "tower:type" : {
     "displayName" : "Tower Type",
     "osmKey" : "tower:type",
@@ -445,6 +454,16 @@
     "values" : {
       "Separated" : "separated",
       "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
+  "organic" : {
+    "displayName" : "Organic",
+    "osmKey" : "organic",
+    "values" : {
+      "Yes" : "yes",
+      "Only" : "only",
       "No" : "no"
     },
     "section" : "Other"

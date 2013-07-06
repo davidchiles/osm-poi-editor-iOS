@@ -907,7 +907,8 @@
       "optional" : [
         "wheelchair",
         "contact",
-        "address"
+        "address",
+        "organic"
       ],
       "image" : "shop",
       "tags" : {
@@ -1345,7 +1346,8 @@
       "optional" : [
         "wheelchair",
         "contact",
-        "address"
+        "address",
+        "organic"
       ],
       "image" : "farm",
       "tags" : {
@@ -1367,7 +1369,8 @@
       "optional" : [
         "wheelchair",
         "contact",
-        "address"
+        "address",
+        "organic"
       ],
       "image" : "shop",
       "tags" : {
@@ -1482,7 +1485,13 @@
       "optional" : [
         "wheelchair",
         "contact",
-        "address"
+        "address",
+        "capacity",
+        "internet_access",
+        "internet_access_fee",
+        "fee",
+        "power_supply",
+        "tents"
       ],
       "image" : "trailer",
       "tags" : {
@@ -1690,6 +1699,17 @@
       "image" : "none",
       "tags" : {
         "shop" : "beauty"
+      }
+    },
+    "Tailor" : {
+      "optional" : [
+        "wheelchair",
+        "contact",
+        "address"
+      ],
+      "image" : "shirt",
+      "tags" : {
+        "craft" : "tailor"
       }
     },
     "Accountant" : {
@@ -2260,7 +2280,8 @@
         "wheelchair",
         "internet_access",
         "internet_access_fee",
-        "takeaway"
+        "takeaway",
+        "organic"
       ],
       "image" : "restaurant",
       "tags" : {
