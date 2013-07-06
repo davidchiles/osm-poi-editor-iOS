@@ -229,22 +229,26 @@
     if (element.type.isLegacy) {
         NSString * baseName = [element.type.name stringByReplacingOccurrencesOfString:@" (legacy)" withString:@""];
         OPEManagedReferencePoi * newPoi = [self getTypeWithName:baseName];
-        [element.element.tags addEntriesFromDictionary:newPoi.tags];
+        //[element.element.tags addEntriesFromDictionary:newPoi.tags];
+        element.type = nil;
+        [self setNewType:newPoi forElement:element];
     }
 }
 -(OPEManagedReferencePoi *)getTypeWithName:(NSString *)name;
 {
     __block OPEManagedReferencePoi * poi = nil;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        FMResultSet * set = [db executeQuery:@"SELECT * FROM poi WHERE displayName = ?",name];
+        db.logsErrors = YES;
+        db.traceExecution = YES;
+        FMResultSet * set = [db executeQuery:@"SELECT rowid as id,* FROM poi WHERE displayName = ?",name];
         
-        while (set) {
+        while ([set next]) {
             poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
         }
         
         set = [db executeQueryWithFormat:@"SELECT * FROM pois_tags WHERE poi_id = %d",poi.rowID];
         
-        while (set) {
+        while ([set next]) {
             [poi.tags setObject:[set stringForColumn:@"value"] forKey:[set stringForColumn:@"key"]];
         }
         
@@ -831,8 +835,6 @@
 {
     __block BOOL hasParent = YES;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        db.logsErrors = YES;
-        db.traceExecution = YES;
         BOOL hasWayParent = NO;
         BOOL hasRelationParent = NO;
         if ([element isKindOfClass:[OPEManagedOsmNode class]]) {

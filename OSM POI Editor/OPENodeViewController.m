@@ -77,15 +77,16 @@
         //LOAD ALL DATA FROM DATABASE
         [self.osmData getTagsForElement:self.managedOsmElement];
         [self.osmData getTypeFor:self.managedOsmElement];
-        [self.osmData getOptionalsFor:self.managedOsmElement.type];
+        originalTypeID = self.managedOsmElement.typeID;
         
         originalTags = [self.managedOsmElement.element.tags copy];
         if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
             originalLocation = ((OPEManagedOsmNode *)self.managedOsmElement).element.coordinate;
         }
-        
-        originalTypeID = self.managedOsmElement.typeID;
         [self.osmData updateLegacyTags:managedOsmElement];
+        
+        [self.osmData getOptionalsFor:self.managedOsmElement.type];
+        
         
         //self.apiManager.delegate = self;
         
