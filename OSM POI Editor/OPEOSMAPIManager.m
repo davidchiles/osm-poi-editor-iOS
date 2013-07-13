@@ -14,11 +14,8 @@
 #import "OPEUtility.h"
 
 typedef struct {
-	double left;
-    double right;
-	double bottom;
-    double top;
-} boundingBox;
+	double left,right,bottom,top;
+}boundingBox;
 
 @implementation OPEOSMAPIManager
 @synthesize auth = _auth;
@@ -72,15 +69,46 @@ typedef struct {
     return _httpClient;
 }
 
--(void)getDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
-             success:(void (^)(NSData * response))success
-             failure:(void (^)(NSError *error))failure
+-(boundingBox)boundingBoxSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
 {
     boundingBox bbox;
     bbox.left = southWest.longitude;
     bbox.bottom = southWest.latitude;
     bbox.right = northEast.longitude;
     bbox.top = northEast.latitude;
+    return bbox;
+}
+
+-(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
+                   success:(void (^)(NSData * response))success
+                   failure:(void (^)(NSError *error))failure
+{
+    
+    boundingBox bbox = [self boundingBoxSW:southWest NE:northEast];
+    NSString * bboxString = [NSString stringWithFormat:@"%f,%f,%f,%f",bbox.left,bbox.bottom,bbox.right,bbox.top];
+    NSDictionary * parametersDictionary = @{@"bbox": bboxString};
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"GET" path:@"notes.json" parameters:parametersDictionary];
+    
+    AFJSONRequestOperation * requestOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        if (success) {
+            success(JSON);
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        if (failure)
+        {
+            NSLog(@"Notes Download failed");
+            failure(error);
+        }
+    }];
+    
+    [requestOperation start];
+}
+
+-(void)getDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
+             success:(void (^)(NSData * response))success
+             failure:(void (^)(NSError *error))failure
+{
+    boundingBox bbox = [self boundingBoxSW:southWest NE:northEast];
     
     NSURL* url = [self downloadURLWithBoundingBox:bbox];
     NSMutableURLRequest * request =[NSMutableURLRequest requestWithURL:url];

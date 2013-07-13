@@ -320,6 +320,8 @@
 		6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6370D354151A8BAE0081206A /* libsqlite3.dylib */; };
 		6372F80117419F3100DE5909 /* Optional.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80017419F3100DE5909 /* Optional.json */; };
 		6372F80817419F6A00DE5909 /* OptionalCategorySort.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80717419F6A00DE5909 /* OptionalCategorySort.json */; };
+		63733B6A1790DE8E007FA7C7 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 63733B691790DE8E007FA7C7 /* Note.m */; };
+		63733B701790DEA9007FA7C7 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 63733B6F1790DEA8007FA7C7 /* Comment.m */; };
 		6375627E1772417D0050E84C /* libCrittercism.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6375627D1772417D0050E84C /* libCrittercism.a */; };
 		637C7CCB16F164BE002CD340 /* OPEChangeset.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C7CCA16F164BE002CD340 /* OPEChangeset.m */; };
 		6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */; };
@@ -778,6 +780,10 @@
 		6370D354151A8BAE0081206A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		6372F80017419F3100DE5909 /* Optional.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Optional.json; sourceTree = "<group>"; };
 		6372F80717419F6A00DE5909 /* OptionalCategorySort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OptionalCategorySort.json; sourceTree = "<group>"; };
+		63733B681790DE8E007FA7C7 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		63733B691790DE8E007FA7C7 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		63733B6E1790DEA8007FA7C7 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		63733B6F1790DEA8007FA7C7 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		6375627D1772417D0050E84C /* libCrittercism.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercism.a; sourceTree = "<group>"; };
 		637C7CC916F164BE002CD340 /* OPEChangeset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEChangeset.h; sourceTree = "<group>"; };
 		637C7CCA16F164BE002CD340 /* OPEChangeset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEChangeset.m; sourceTree = "<group>"; };
@@ -1696,6 +1702,10 @@
 				63FBA59C171DFBED0098A2F3 /* Way.m */,
 				63FBA598171DFBED0098A2F3 /* Relation.h */,
 				63FBA599171DFBED0098A2F3 /* Relation.m */,
+				63733B681790DE8E007FA7C7 /* Note.h */,
+				63733B691790DE8E007FA7C7 /* Note.m */,
+				63733B6E1790DEA8007FA7C7 /* Comment.h */,
+				63733B6F1790DEA8007FA7C7 /* Comment.m */,
 			);
 			name = "osm-parser";
 			path = "lib/osm-parser";
@@ -2174,6 +2184,8 @@
 				63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */,
 				63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */,
 				63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */,
+				63733B6A1790DE8E007FA7C7 /* Note.m in Sources */,
+				63733B701790DEA9007FA7C7 /* Comment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

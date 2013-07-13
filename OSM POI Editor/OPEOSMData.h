@@ -67,7 +67,8 @@
 @property (nonatomic,strong) FMDatabaseQueue * databaseQueue;
 @property (nonatomic,strong) AFHTTPClient * httpClient;
 
-- (void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
+- (void)getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
+-(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 
 - (NSString *)changesetCommentfor:(OPEManagedOsmElement *)element;
 - (NSString *)nameWithElement: (OPEManagedOsmElement *) element;

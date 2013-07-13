@@ -39,6 +39,8 @@
 
 #import "OSMParser.h"
 #import "OSMParserHandlerDefault.h"
+#import "Note.h"
+#import "Comment.h"
 
 @implementation OPEOSMData
 
@@ -96,9 +98,53 @@
     }
     return _databaseQueue;
 }
+
+-(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
+{
+    [apiManager downloadNotesWithSW:southWest NE:northEast success:^(id response) {
+        //NSString* newStr = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
+        
+        //Do async
+        __block NSMutableArray * newNotes = [NSMutableArray array];
+        NSArray * notes = [response objectForKey:@"features"];
+        [notes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSDictionary * noteDictionary = (NSDictionary *)obj;
+            Note * note = [[Note alloc] init];
+            note.coordinate = CLLocationCoordinate2DMake([noteDictionary[@"geometry"][@"coordinates"][0] doubleValue], [noteDictionary[@"geometry"][@"coordinates"][1] doubleValue]);
+            NSDictionary * propertiesDictionary = noteDictionary[@"properties"];
+            note.id = [propertiesDictionary[@"id"] longLongValue];
+            NSString * statusString = (NSString *)propertiesDictionary[@"status"];
+            note.isOpen = [statusString isEqualToString:@"open"];
+            //note.dateCreated =
+            __block NSMutableArray * newComments = [NSMutableArray array];
+            NSArray * comments = (NSArray *)propertiesDictionary[@"comments"];
+            [comments enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                NSDictionary * commentDictionary = (NSDictionary *)obj;
+                Comment * comment = [[Comment alloc] init];
+                NSString * username = commentDictionary[@"user"];
+                if ([username length]) {
+                    comment.username = username;
+                    comment.userID = [commentDictionary[@"uid"] longLongValue];
+                }
+                comment.text = commentDictionary[@"text"];
+                [newComments addObject:comment];
+                //comment.date =
+            }];
+            note.commentsArray = newComments;
+            [newNotes addObject:note];
+            NSLog(@"%@",obj);
+        }];
+        
+    } failure:^(NSError *error) {
+        NSLog(@"Error");
+        
+    }];
+    
+}
  
 -(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
 {
+    [self downloadNotesWithSW:southWest NE:northEast];
     [apiManager getDataWithSW:southWest NE:northEast success:^(NSData *response) {
         if ([delegate respondsToSelector:@selector(didEndDownloading)]) {
             [delegate didEndDownloading];

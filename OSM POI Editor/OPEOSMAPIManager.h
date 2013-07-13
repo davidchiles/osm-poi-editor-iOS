@@ -14,7 +14,6 @@
 #import "GTMOAuthAuthentication.h"
 #import "AFNetworking.h"
 #import "OPEManagedOsmElement.h"
-
 @interface OPEOSMAPIManager : NSObject
 {
     NSMutableDictionary * apiFailures;
@@ -25,6 +24,9 @@
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
 
 -(void)getDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
+             success:(void (^)(NSData * response))success
+             failure:(void (^)(NSError *error))failure;
+-(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
              success:(void (^)(NSData * response))success
              failure:(void (^)(NSError *error))failure;
 
