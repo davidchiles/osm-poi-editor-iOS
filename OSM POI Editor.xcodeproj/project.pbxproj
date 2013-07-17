@@ -331,6 +331,7 @@
 		6387126D17582655006C3A4E /* OPENewNodeSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */; };
 		638E994F1665C9FF00C29F9A /* MapBox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 638E99201665C2CC00C29F9A /* MapBox.bundle */; };
 		6391C67316AE2B370084D579 /* Model.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 6391C67216AE2B370084D579 /* Model.xcdatamodel */; };
+		63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1417961B8C008B897C /* OPENoteViewController.m */; };
 		639953FE16113A200070CBAF /* about.css in Resources */ = {isa = PBXBuildFile; fileRef = 639953FD16113A200070CBAF /* about.css */; };
 		63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */; };
 		63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BB177BB0EB000C6A0D /* OPEMoveNodeViewController.m */; };
@@ -797,6 +798,8 @@
 		6387126B17582655006C3A4E /* OPENewNodeSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENewNodeSelectViewController.h; sourceTree = "<group>"; };
 		6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENewNodeSelectViewController.m; sourceTree = "<group>"; };
 		6391C67216AE2B370084D579 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		63962B1317961B8C008B897C /* OPENoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENoteViewController.h; sourceTree = "<group>"; };
+		63962B1417961B8C008B897C /* OPENoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENoteViewController.m; sourceTree = "<group>"; };
 		63968298153CB8B4008F4C0E /* OPEAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAPIConstants.h; sourceTree = "<group>"; };
 		639953FD16113A200070CBAF /* about.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = about.css; sourceTree = "<group>"; };
 		63A3D5B4177BAEB1000C6A0D /* OPECrosshairMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECrosshairMapView.h; sourceTree = "<group>"; };
@@ -1432,6 +1435,8 @@
 				6330AB8114DB519A00448852 /* OPEViewController.m */,
 				6345E57D14E3122900F55486 /* OPENodeViewController.h */,
 				6345E57E14E3122900F55486 /* OPENodeViewController.m */,
+				63962B1317961B8C008B897C /* OPENoteViewController.h */,
+				63962B1417961B8C008B897C /* OPENoteViewController.m */,
 				631AB0AB1727686E003F5F6F /* OPETranslate.h */,
 				631AB0AC1727686E003F5F6F /* OPETranslate.m */,
 				63D0A5CF1701129F007A595E /* TagEdit */,
@@ -2186,6 +2191,7 @@
 				63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */,
 				63733B6A1790DE8E007FA7C7 /* Note.m in Sources */,
 				63733B701790DEA9007FA7C7 /* Comment.m in Sources */,
+				63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -48,6 +48,7 @@
 @synthesize delegate;
 @synthesize databaseQueue = _databaseQueue;
 @synthesize httpClient = _httpClient;
+@synthesize notes = _notes;
 
 
 -(id) init
@@ -99,6 +100,15 @@
     return _databaseQueue;
 }
 
+-(NSMutableDictionary *)notes
+{
+    if(!_notes)
+    {
+        _notes = [NSMutableDictionary dictionary];
+    }
+    return _notes;
+}
+
 -(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
 {
     [apiManager downloadNotesWithSW:southWest NE:northEast success:^(id response) {
@@ -109,37 +119,63 @@
         NSArray * notes = [response objectForKey:@"features"];
         [notes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             NSDictionary * noteDictionary = (NSDictionary *)obj;
-            Note * note = [[Note alloc] init];
-            note.coordinate = CLLocationCoordinate2DMake([noteDictionary[@"geometry"][@"coordinates"][0] doubleValue], [noteDictionary[@"geometry"][@"coordinates"][1] doubleValue]);
             NSDictionary * propertiesDictionary = noteDictionary[@"properties"];
-            note.id = [propertiesDictionary[@"id"] longLongValue];
-            NSString * statusString = (NSString *)propertiesDictionary[@"status"];
-            note.isOpen = [statusString isEqualToString:@"open"];
-            //note.dateCreated =
-            __block NSMutableArray * newComments = [NSMutableArray array];
-            NSArray * comments = (NSArray *)propertiesDictionary[@"comments"];
-            [comments enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                NSDictionary * commentDictionary = (NSDictionary *)obj;
-                Comment * comment = [[Comment alloc] init];
-                NSString * username = commentDictionary[@"user"];
-                if ([username length]) {
-                    comment.username = username;
-                    comment.userID = [commentDictionary[@"uid"] longLongValue];
-                }
-                comment.text = commentDictionary[@"text"];
-                [newComments addObject:comment];
-                //comment.date =
-            }];
-            note.commentsArray = newComments;
-            [newNotes addObject:note];
+            if ([self isNewNoteID:[propertiesDictionary[@"id"] longLongValue]]) {
+                Note * note = [[Note alloc] init];
+                note.id = [propertiesDictionary[@"id"] longLongValue];
+                note.coordinate = CLLocationCoordinate2DMake([noteDictionary[@"geometry"][@"coordinates"][1] doubleValue], [noteDictionary[@"geometry"][@"coordinates"][0] doubleValue]);
+                note.id = [propertiesDictionary[@"id"] longLongValue];
+                NSString * statusString = (NSString *)propertiesDictionary[@"status"];
+                note.isOpen = [statusString isEqualToString:@"open"];
+                note.dateCreated = [OPEUtility noteDateFromString:(NSString *)propertiesDictionary[@"date_created"]];
+                note.dateClosed = [OPEUtility noteDateFromString:(NSString *)propertiesDictionary[@"date_closed"]];
+                __block NSMutableArray * newComments = [NSMutableArray array];
+                NSArray * comments = (NSArray *)propertiesDictionary[@"comments"];
+                [comments enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                    NSDictionary * commentDictionary = (NSDictionary *)obj;
+                    Comment * comment = [[Comment alloc] init];
+                    NSString * username = commentDictionary[@"user"];
+                    if ([username length]) {
+                        comment.username = username;
+                        comment.userID = [commentDictionary[@"uid"] longLongValue];
+                    }
+                    comment.text = commentDictionary[@"text"];
+                    comment.date = [OPEUtility noteDateFromString:commentDictionary[@"date"]];
+                    [newComments addObject:comment];
+                    
+                }];
+                note.commentsArray = newComments;
+                [self addNewNote:note];
+                [newNotes addObject:note];
+            }
+            
+            
             NSLog(@"%@",obj);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if ([delegate respondsToSelector:@selector(didFindNewNotes:)]) {
+                    [delegate didFindNewNotes:newNotes];
+                }
+            });
         }];
         
     } failure:^(NSError *error) {
-        NSLog(@"Error");
+        NSLog(@"Error: %@",error);
         
     }];
     
+}
+
+-(BOOL)isNewNoteID:(int64_t)newNodeID
+{
+    if ([self.notes objectForKey:@(newNodeID)]) {
+        return NO;
+    }
+    return YES;
+}
+
+-(void)addNewNote:(Note *)newNote
+{
+    [self.notes setObject:newNote forKey:@(newNote.id)];
 }
  
 -(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast

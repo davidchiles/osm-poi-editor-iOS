@@ -196,8 +196,16 @@
 +(NSDateFormatter *)defaultDateFormatter
 {
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYY-MM-dd'T'HH:mm:ssZ"];
+    [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZ"];
     return formatter;
+}
+
++(NSDate *)noteDateFromString:(NSString *)dateString
+{
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss z"];
+    NSDate * date =  [formatter dateFromString:dateString];
+    return date;
 }
 
 @end

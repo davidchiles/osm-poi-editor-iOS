@@ -52,6 +52,7 @@
 -(void) downloadFailed:(NSError *)error;
 
 -(void) didFindNewElements:(NSArray *)newElementsArray updatedElements:(NSArray *)updatedElementsArray;
+-(void) didFindNewNotes:(NSArray *)newNotes;
 
 @end
 
@@ -66,6 +67,8 @@
 @property (nonatomic, weak) id <OPEOSMDataControllerDelegate> delegate;
 @property (nonatomic,strong) FMDatabaseQueue * databaseQueue;
 @property (nonatomic,strong) AFHTTPClient * httpClient;
+
+@property (nonatomic,strong) NSMutableDictionary * notes;
 
 - (void)getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 -(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;

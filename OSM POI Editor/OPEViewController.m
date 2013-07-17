@@ -31,6 +31,8 @@
 #import "OPEAPIConstants.h"
 #import "OPEUtility.h"
 #import "OPEStrings.h"
+#import "Note.h"
+#import "RMPointAnnotation.h"
 
 #import "OPEManagedOsmElement.h"
 #import "OPEManagedReferencePoi.h"
@@ -113,7 +115,7 @@
     id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
     
     mapView = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:newTileSource];
-    //mapView.clusteringEnabled = YES;
+    mapView.clusteringEnabled = NO;
     mapView.clusterAreaSize = CGSizeMake(10.0, 10.0);
     mapView.clusterMarkerSize = CGSizeMake(10.0, 10.0);
     mapView.showLogoBug = NO;
@@ -252,7 +254,7 @@
 
 -(RMMapLayer *) mapView:(RMMapView *)mView layerForAnnotation:(RMAnnotation *)annotation
 {
-    if (!annotation.isClusterAnnotation) {
+    if (!annotation.isClusterAnnotation && [annotation.userInfo isKindOfClass:[OPEManagedOsmElement class]]) {
         OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)annotation.userInfo;;
         if ([managedOsmElement isKindOfClass:[OPEManagedOsmWay class]]) {
             if (((OPEManagedOsmWay *)managedOsmElement).isNoNameStreet) {
@@ -271,6 +273,15 @@
     RMMarker * marker = [[RMMarker alloc] initWithMapBoxMarkerImage];
     marker.canShowCallout = YES;
     return marker;
+}
+
+-(RMAnnotation *)annotationWithNote:(Note *)note
+{
+    RMPointAnnotation * annotation = [RMPointAnnotation annotationWithMapView:mapView coordinate:note.coordinate andTitle:@"Note"];
+    annotation.userInfo = note;
+    annotation.layer = [[RMMarker alloc] initWithMapBoxMarkerImage];
+    annotation.layer.canShowCallout = YES;
+    return annotation;
 }
 
 -(NSArray *)annotationWithOsmElement:(OPEManagedOsmElement *)managedOsmElement
@@ -919,6 +930,14 @@
     }
     
     [self updateAnnotationForOsmElements:updatedElementsArray];
+}
+
+-(void)didFindNewNotes:(NSArray *)newNotes
+{
+    [newNotes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        RMAnnotation * annotation = [self annotationWithNote:(Note *)obj];
+        [mapView addAnnotation:annotation];
+    }];
 }
 
 -(void)didCloseChangeset:(int64_t)changesetNumber

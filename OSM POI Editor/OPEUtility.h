@@ -33,6 +33,7 @@
 +(NSString *)iOSVersion;
 +(NSString *)tileSourceName;
 
++(NSDate *)noteDateFromString:(NSString *)dateString;
 +(NSDate *)dateFromString:(NSString *)dateString;
 +(NSString *)currentDateFormatted;
 
