@@ -33,6 +33,7 @@
 #import "OPEStrings.h"
 #import "Note.h"
 #import "RMPointAnnotation.h"
+#import "OPENoteViewController.h"
 
 #import "OPEManagedOsmElement.h"
 #import "OPEManagedReferencePoi.h"
@@ -280,7 +281,7 @@
     RMPointAnnotation * annotation = [RMPointAnnotation annotationWithMapView:mapView coordinate:note.coordinate andTitle:@"Note"];
     annotation.userInfo = note;
     annotation.layer = [[RMMarker alloc] initWithMapBoxMarkerImage];
-    annotation.layer.canShowCallout = YES;
+    annotation.layer.canShowCallout = NO;
     return annotation;
 }
 
@@ -470,6 +471,11 @@
         wayAnnotation = [self shapeForRelation:osmRelation];
         wayAnnotation.userInfo = annotation.userInfo;
         [mapView addAnnotation:wayAnnotation];
+    }
+    else if ([osmElement isKindOfClass:[Note class]])
+    {
+        OPENoteViewController * viewController = [[OPENoteViewController alloc] initWithNote:osmElement];
+        [self.navigationController pushViewController:viewController animated:YES];
     }
     else if(annotation.isClusterAnnotation)
     {

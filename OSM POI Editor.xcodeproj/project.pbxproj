@@ -332,6 +332,9 @@
 		638E994F1665C9FF00C29F9A /* MapBox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 638E99201665C2CC00C29F9A /* MapBox.bundle */; };
 		6391C67316AE2B370084D579 /* Model.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 6391C67216AE2B370084D579 /* Model.xcdatamodel */; };
 		63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1417961B8C008B897C /* OPENoteViewController.m */; };
+		63962B1B17961FAB008B897C /* OPECommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1A17961FAB008B897C /* OPECommentCell.m */; };
+		63962B1F179621A0008B897C /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1E179621A0008B897C /* TTTAttributedLabel.m */; };
+		63962B2117962294008B897C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63962B2017962293008B897C /* CoreText.framework */; };
 		639953FE16113A200070CBAF /* about.css in Resources */ = {isa = PBXBuildFile; fileRef = 639953FD16113A200070CBAF /* about.css */; };
 		63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */; };
 		63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BB177BB0EB000C6A0D /* OPEMoveNodeViewController.m */; };
@@ -800,6 +803,11 @@
 		6391C67216AE2B370084D579 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		63962B1317961B8C008B897C /* OPENoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENoteViewController.h; sourceTree = "<group>"; };
 		63962B1417961B8C008B897C /* OPENoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENoteViewController.m; sourceTree = "<group>"; };
+		63962B1917961FAB008B897C /* OPECommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECommentCell.h; sourceTree = "<group>"; };
+		63962B1A17961FAB008B897C /* OPECommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECommentCell.m; sourceTree = "<group>"; };
+		63962B1D179621A0008B897C /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
+		63962B1E179621A0008B897C /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
+		63962B2017962293008B897C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		63968298153CB8B4008F4C0E /* OPEAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAPIConstants.h; sourceTree = "<group>"; };
 		639953FD16113A200070CBAF /* about.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = about.css; sourceTree = "<group>"; };
 		63A3D5B4177BAEB1000C6A0D /* OPECrosshairMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECrosshairMapView.h; sourceTree = "<group>"; };
@@ -945,6 +953,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63962B2117962294008B897C /* CoreText.framework in Frameworks */,
 				63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */,
 				63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */,
 				63FBA5B0171E08F50098A2F3 /* libstdc++.dylib in Frameworks */,
@@ -1369,6 +1378,7 @@
 		6330AB6D14DB519A00448852 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				63962B2017962293008B897C /* CoreText.framework */,
 				63FBA5AF171E08F40098A2F3 /* libstdc++.dylib */,
 				63FBA5AD171E08E70098A2F3 /* libiconv.dylib */,
 				6333D3A816811F2A00BF129E /* CoreData.framework */,
@@ -1437,6 +1447,8 @@
 				6345E57E14E3122900F55486 /* OPENodeViewController.m */,
 				63962B1317961B8C008B897C /* OPENoteViewController.h */,
 				63962B1417961B8C008B897C /* OPENoteViewController.m */,
+				63962B1917961FAB008B897C /* OPECommentCell.h */,
+				63962B1A17961FAB008B897C /* OPECommentCell.m */,
 				631AB0AB1727686E003F5F6F /* OPETranslate.h */,
 				631AB0AC1727686E003F5F6F /* OPETranslate.m */,
 				63D0A5CF1701129F007A595E /* TagEdit */,
@@ -1551,6 +1563,16 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
+		63962B1C179621A0008B897C /* TTTAttributedLabel */ = {
+			isa = PBXGroup;
+			children = (
+				63962B1D179621A0008B897C /* TTTAttributedLabel.h */,
+				63962B1E179621A0008B897C /* TTTAttributedLabel.m */,
+			);
+			name = TTTAttributedLabel;
+			path = lib/tttatributedlabel/TTTAttributedLabel;
+			sourceTree = SOURCE_ROOT;
+		};
 		63D0A5C11700E997007A595E /* Geo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1641,6 +1663,7 @@
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				63962B1C179621A0008B897C /* TTTAttributedLabel */,
 				63E5E39D176943040064A780 /* Pickers */,
 				630A878417680FE1003C9423 /* BButton */,
 				6342058816449197009C6BA4 /* CrittercismSDK */,
@@ -2192,6 +2215,8 @@
 				63733B6A1790DE8E007FA7C7 /* Note.m in Sources */,
 				63733B701790DEA9007FA7C7 /* Comment.m in Sources */,
 				63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */,
+				63962B1B17961FAB008B897C /* OPECommentCell.m in Sources */,
+				63962B1F179621A0008B897C /* TTTAttributedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

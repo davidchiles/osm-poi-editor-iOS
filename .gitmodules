@@ -23,3 +23,6 @@
 [submodule "lib/ActionSheetPicker"]
 	path = lib/ActionSheetPicker
 	url = git@github.com:TimCinel/ActionSheetPicker.git
+[submodule "lib/tttatributedlabel"]
+	path = lib/tttatributedlabel
+	url = git@github.com:mattt/TTTAttributedLabel.git
