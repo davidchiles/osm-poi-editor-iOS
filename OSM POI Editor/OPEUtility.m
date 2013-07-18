@@ -208,4 +208,24 @@
     return date;
 }
 
++(NSString *)displayFormatDate:(NSDate *)date
+{
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    NSTimeInterval timeInterval = fabs([date timeIntervalSinceNow]);
+    //last week
+    if (timeInterval < 518400)
+    {
+        [formatter setDateFormat:@"EEEE HH:mm"];
+    }
+    else if (timeInterval < 28908000)
+    {
+        [formatter setDateFormat:@"MMM d HH:mm"];
+    }
+    else{
+        [formatter setDateFormat:@"YYYY MMM d HH:mm"];
+    }
+    
+    return [formatter stringFromDate:date];
+}
+
 @end

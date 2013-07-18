@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Note.h"
 
-@interface OPENoteViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
+@interface OPENoteViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextViewDelegate>
 
 @property (nonatomic,strong) Note * note;
 

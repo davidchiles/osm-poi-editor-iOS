@@ -36,5 +36,6 @@
 +(NSDate *)noteDateFromString:(NSString *)dateString;
 +(NSDate *)dateFromString:(NSString *)dateString;
 +(NSString *)currentDateFormatted;
++(NSString *)displayFormatDate:(NSDate *)date;
 
 @end

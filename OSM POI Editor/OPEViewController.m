@@ -878,8 +878,11 @@
 {
     NSIndexSet * set = [mapView.annotations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         RMAnnotation * annotation = (RMAnnotation *)obj;
-        OPEManagedOsmElement * element = annotation.userInfo;
-        return [element.idKey isEqualToString:idKey];
+        if ([annotation.userInfo isKindOfClass:[OPEManagedObject class]]) {
+            OPEManagedOsmElement * element = annotation.userInfo;
+            return [element.idKey isEqualToString:idKey];
+        }
+        return NO;
     }];
     return set;
 }

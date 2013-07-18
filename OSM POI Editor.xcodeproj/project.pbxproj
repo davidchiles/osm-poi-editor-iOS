@@ -335,6 +335,11 @@
 		63962B1B17961FAB008B897C /* OPECommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1A17961FAB008B897C /* OPECommentCell.m */; };
 		63962B1F179621A0008B897C /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1E179621A0008B897C /* TTTAttributedLabel.m */; };
 		63962B2117962294008B897C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63962B2017962293008B897C /* CoreText.framework */; };
+		63962B2517975A95008B897C /* DAKeyboardControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B2417975A95008B897C /* DAKeyboardControl.m */; };
+		63962B2817977C22008B897C /* bubble_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 63962B2617977C22008B897C /* bubble_left.png */; };
+		63962B2917977C22008B897C /* bubble_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63962B2717977C22008B897C /* bubble_left@2x.png */; };
+		63962B2C17977E07008B897C /* bubble_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 63962B2A17977E07008B897C /* bubble_right.png */; };
+		63962B2D17977E07008B897C /* bubble_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63962B2B17977E07008B897C /* bubble_right@2x.png */; };
 		639953FE16113A200070CBAF /* about.css in Resources */ = {isa = PBXBuildFile; fileRef = 639953FD16113A200070CBAF /* about.css */; };
 		63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */; };
 		63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BB177BB0EB000C6A0D /* OPEMoveNodeViewController.m */; };
@@ -808,6 +813,12 @@
 		63962B1D179621A0008B897C /* TTTAttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTAttributedLabel.h; sourceTree = "<group>"; };
 		63962B1E179621A0008B897C /* TTTAttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTAttributedLabel.m; sourceTree = "<group>"; };
 		63962B2017962293008B897C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		63962B2317975A95008B897C /* DAKeyboardControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAKeyboardControl.h; sourceTree = "<group>"; };
+		63962B2417975A95008B897C /* DAKeyboardControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAKeyboardControl.m; sourceTree = "<group>"; };
+		63962B2617977C22008B897C /* bubble_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bubble_left.png; path = ../../../../../Desktop/bubble_left.png; sourceTree = "<group>"; };
+		63962B2717977C22008B897C /* bubble_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bubble_left@2x.png"; path = "../../../../../Desktop/bubble_left@2x.png"; sourceTree = "<group>"; };
+		63962B2A17977E07008B897C /* bubble_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bubble_right.png; path = ../../../../../Desktop/bubble_right.png; sourceTree = "<group>"; };
+		63962B2B17977E07008B897C /* bubble_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bubble_right@2x.png"; path = "../../../../../Desktop/bubble_right@2x.png"; sourceTree = "<group>"; };
 		63968298153CB8B4008F4C0E /* OPEAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAPIConstants.h; sourceTree = "<group>"; };
 		639953FD16113A200070CBAF /* about.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = about.css; sourceTree = "<group>"; };
 		63A3D5B4177BAEB1000C6A0D /* OPECrosshairMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECrosshairMapView.h; sourceTree = "<group>"; };
@@ -1037,6 +1048,10 @@
 		6326680717164578002CD7E4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				63962B2A17977E07008B897C /* bubble_right.png */,
+				63962B2B17977E07008B897C /* bubble_right@2x.png */,
+				63962B2617977C22008B897C /* bubble_left.png */,
+				63962B2717977C22008B897C /* bubble_left@2x.png */,
 				6326680817164578002CD7E4 /* @1x */,
 				6326688117164579002CD7E4 /* @2x */,
 				632668FA17164579002CD7E4 /* App Icon */,
@@ -1573,6 +1588,16 @@
 			path = lib/tttatributedlabel/TTTAttributedLabel;
 			sourceTree = SOURCE_ROOT;
 		};
+		63962B2217975A95008B897C /* DAKeyboardControl */ = {
+			isa = PBXGroup;
+			children = (
+				63962B2317975A95008B897C /* DAKeyboardControl.h */,
+				63962B2417975A95008B897C /* DAKeyboardControl.m */,
+			);
+			name = DAKeyboardControl;
+			path = lib/dakeyboardcontrol/DAKeyboardControl;
+			sourceTree = SOURCE_ROOT;
+		};
 		63D0A5C11700E997007A595E /* Geo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1663,6 +1688,7 @@
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				63962B2217975A95008B897C /* DAKeyboardControl */,
 				63962B1C179621A0008B897C /* TTTAttributedLabel */,
 				63E5E39D176943040064A780 /* Pickers */,
 				630A878417680FE1003C9423 /* BButton */,
@@ -2109,6 +2135,10 @@
 				6372F80817419F6A00DE5909 /* OptionalCategorySort.json in Resources */,
 				630A878F17680FE1003C9423 /* FontAwesome.ttf in Resources */,
 				63E5E39917693D4D0064A780 /* wikipediaLanguages.json in Resources */,
+				63962B2817977C22008B897C /* bubble_left.png in Resources */,
+				63962B2917977C22008B897C /* bubble_left@2x.png in Resources */,
+				63962B2C17977E07008B897C /* bubble_right.png in Resources */,
+				63962B2D17977E07008B897C /* bubble_right@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2217,6 +2247,7 @@
 				63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */,
 				63962B1B17961FAB008B897C /* OPECommentCell.m in Sources */,
 				63962B1F179621A0008B897C /* TTTAttributedLabel.m in Sources */,
+				63962B2517975A95008B897C /* DAKeyboardControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

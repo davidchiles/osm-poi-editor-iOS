@@ -26,3 +26,6 @@
 [submodule "lib/tttatributedlabel"]
 	path = lib/tttatributedlabel
 	url = git@github.com:mattt/TTTAttributedLabel.git
+[submodule "lib/dakeyboardcontrol"]
+	path = lib/dakeyboardcontrol
+	url = git@github.com:danielamitay/DAKeyboardControl.git

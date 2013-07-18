@@ -11,6 +11,10 @@
 #import "TTTAttributedLabel.h"
 
 @interface OPECommentCell : UITableViewCell <TTTAttributedLabelDelegate>
+{
+    UIImageView * imageView;
+    UIView * commentContents;
+}
 
 @property (nonatomic, strong) Comment * comment;
 @property (nonatomic, strong) TTTAttributedLabel * commentTextLabel;

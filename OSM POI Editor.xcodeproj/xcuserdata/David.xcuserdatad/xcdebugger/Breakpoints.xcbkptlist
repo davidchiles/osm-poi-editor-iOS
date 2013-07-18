@@ -654,11 +654,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEViewController.m"
-         timestampString = "395714020.941819"
+         timestampString = "395798769.031577"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "932"
-         endingLineNumber = "932"
+         startingLineNumber = "935"
+         endingLineNumber = "935"
          landmarkName = "-didFindNewElements:updatedElements:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -667,11 +667,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEViewController.m"
-         timestampString = "395714020.941819"
+         timestampString = "395798769.031577"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "933"
-         endingLineNumber = "933"
+         startingLineNumber = "936"
+         endingLineNumber = "936"
          landmarkName = "-didFindNewElements:updatedElements:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1066,11 +1066,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEViewController.m"
-         timestampString = "395714020.941819"
+         timestampString = "395798769.031577"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "981"
-         endingLineNumber = "981"
+         startingLineNumber = "984"
+         endingLineNumber = "984"
          landmarkName = "-willStartParsing:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1201,11 +1201,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEViewController.m"
-         timestampString = "395714020.941819"
+         timestampString = "395798769.031577"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "968"
-         endingLineNumber = "968"
+         startingLineNumber = "971"
+         endingLineNumber = "971"
          landmarkName = "-willStartParsing:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1214,11 +1214,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEViewController.m"
-         timestampString = "395714020.941819"
+         timestampString = "395798769.031577"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1000"
-         endingLineNumber = "1000"
+         startingLineNumber = "1003"
+         endingLineNumber = "1003"
          landmarkName = "-didEndParsing"
          landmarkType = "5">
       </FileBreakpoint>
@@ -1292,11 +1292,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEViewController.m"
-         timestampString = "395714020.941819"
+         timestampString = "395798769.031577"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1018"
-         endingLineNumber = "1018"
+         startingLineNumber = "1021"
+         endingLineNumber = "1021"
          landmarkName = "-downloadFailed:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2187,11 +2187,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEViewController.m"
-         timestampString = "395714020.941819"
+         timestampString = "395798769.031577"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "938"
-         endingLineNumber = "938"
+         startingLineNumber = "941"
+         endingLineNumber = "941"
          landmarkName = "-didFindNewElements:updatedElements:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -2402,11 +2402,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "OSM POI Editor/OPEViewController.m"
-         timestampString = "395714020.941819"
+         timestampString = "395798769.031577"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "917"
-         endingLineNumber = "917"
+         startingLineNumber = "920"
+         endingLineNumber = "920"
          landmarkName = "-addAllNoNameStreets"
          landmarkType = "5">
       </FileBreakpoint>

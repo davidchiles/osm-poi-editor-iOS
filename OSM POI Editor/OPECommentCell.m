@@ -7,8 +7,11 @@
 //
 
 #import "OPECommentCell.h"
+#import "OPEUtility.h"
 
-#define MESSAGE_TEXT_WIDTH_MAX 200
+#define MESSAGE_TEXT_WIDTH_MAX 210
+#define EDGE_MARGIN 20
+#define OPPOSITE_MARGIN 10
 
 @implementation OPECommentCell
 
@@ -18,21 +21,33 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
+        //
+        imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        
+        [self.contentView addSubview:imageView];
+        
+        commentContents = [[UIView alloc] initWithFrame:CGRectZero];
+        commentContents.backgroundColor = [UIColor yellowColor];
+        //commentContents.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
+        [imageView addSubview:commentContents];
+        
         //text label
         self.commentTextLabel = [[self class] defaultLabel];
         self.commentTextLabel.delegate = self;
-        [self.contentView addSubview:commentTextLabel];
+        [commentContents addSubview:commentTextLabel];
         
         //detail label
         self.commentDetailLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         self.commentDetailLabel.font = [UIFont systemFontOfSize:14.0];
-        [self.contentView addSubview:self.commentDetailLabel];
+        self.commentDetailLabel.backgroundColor = [UIColor clearColor];
+        [commentContents addSubview:self.commentDetailLabel];
         
         //action label
         self.commentActionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         self.commentActionLabel.font = [UIFont systemFontOfSize:14.0];
         self.commentActionLabel.textAlignment = UITextAlignmentRight;
-        [self.contentView addSubview:self.commentActionLabel];
+        self.commentActionLabel.backgroundColor = [UIColor clearColor];
+        [commentContents addSubview:self.commentActionLabel];
     }
     return self;
 }
@@ -48,19 +63,48 @@
 {
     _comment = comment;
     
-    CGFloat width = self.contentView.frame.size.width;
+    //CGFloat width = self.contentView.frame.size.width;
+    
     
     self.commentTextLabel.text = self.comment.text;
     self.commentActionLabel.text = @"Action";
-    self.commentDetailLabel.text = [NSString stringWithFormat:@"%@ %@",self.comment.username,self.comment.date];
+    self.commentDetailLabel.text = [NSString stringWithFormat:@"%@ %@",self.comment.username,[OPEUtility displayFormatDate:self.comment.date]];
     CGSize messageTextLabelSize = [self.commentTextLabel sizeThatFits:CGSizeMake(MESSAGE_TEXT_WIDTH_MAX, CGFLOAT_MAX)];
-    self.commentTextLabel.frame = CGRectMake(0, 0, messageTextLabelSize.width, messageTextLabelSize.height);
+    
+    CGFloat width = MESSAGE_TEXT_WIDTH_MAX;
     
     CGSize actionTextLabelSize = [self.commentActionLabel sizeThatFits:CGSizeMake(width, CGFLOAT_MAX)];
+    CGSize detailTextLabelSize = [self.commentDetailLabel sizeThatFits:CGSizeMake(width, CGFLOAT_MAX)];
+    
+    
+    
     self.commentActionLabel.frame = CGRectMake(width-actionTextLabelSize.width, messageTextLabelSize.height, actionTextLabelSize.width, actionTextLabelSize.height);
     
-    CGSize detailTextLabelSize = [self.commentDetailLabel sizeThatFits:CGSizeMake(width, CGFLOAT_MAX)];
     self.commentDetailLabel.frame = CGRectMake(0, messageTextLabelSize.height, detailTextLabelSize.width, detailTextLabelSize.height);
+    self.commentActionLabel.frame = CGRectMake(width-actionTextLabelSize.width, messageTextLabelSize.height+detailTextLabelSize.height, actionTextLabelSize.width, actionTextLabelSize.height);
+    
+    self.commentTextLabel.frame = CGRectMake(0, 0, messageTextLabelSize.width, messageTextLabelSize.height);
+    CGFloat height = messageTextLabelSize.height+actionTextLabelSize.height+detailTextLabelSize.height;
+    
+    //FIXME hard coding finding self
+    if ([self.comment.username isEqualToString:@"dchiles"]) {
+        CGFloat newWidth = width+EDGE_MARGIN+OPPOSITE_MARGIN;
+        commentContents.frame = CGRectMake(OPPOSITE_MARGIN, 0, width, height);
+        UIEdgeInsets insets = UIEdgeInsetsMake(2, 2, 12, 12);
+        imageView.image = [[UIImage imageNamed:@"bubble_right"] resizableImageWithCapInsets:insets];
+        //CGFloat newWidth = width+EDGE_MARGIN+OPPOSITE_MARGIN;
+        imageView.frame = CGRectMake(self.contentView.frame.size.width - newWidth, 0,newWidth, height);
+    }
+    else
+    {
+        
+        commentContents.frame = CGRectMake(EDGE_MARGIN, 0, width, height);
+        UIEdgeInsets insets = UIEdgeInsetsMake(2, 12, 12, 2);
+        imageView.image = [[UIImage imageNamed:@"bubble_left"] resizableImageWithCapInsets:insets];
+        imageView.frame = CGRectMake(0, 0, width+EDGE_MARGIN+OPPOSITE_MARGIN,height );
+    }
+    
+    
         
 }
 
@@ -73,7 +117,7 @@
     detailLabel.text = comment.username;
     CGSize detailTextLabelSize = [detailLabel sizeThatFits:CGSizeMake(240, CGFLOAT_MAX)];
     
-    return  [label sizeThatFits:CGSizeMake(MESSAGE_TEXT_WIDTH_MAX, CGFLOAT_MAX)].height+detailTextLabelSize.height;
+    return  [label sizeThatFits:CGSizeMake(MESSAGE_TEXT_WIDTH_MAX, CGFLOAT_MAX)].height+detailTextLabelSize.height*2;
 }
 
 +(TTTAttributedLabel *)defaultLabel
