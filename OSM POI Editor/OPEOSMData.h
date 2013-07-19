@@ -107,6 +107,8 @@
 -(void)saveDate:(NSDate *)date forType:(OPEManagedReferencePoi *)poi;
 -(BOOL)isArea:(OPEManagedOsmElement *)element;
 
+-(Note *)createNoteWithJSONDictionary:(NSDictionary *)noteDictionary;
+
 
 
 -(NSArray *)allElementsWithType:(BOOL)withType;

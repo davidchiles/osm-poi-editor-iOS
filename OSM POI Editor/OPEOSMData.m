@@ -109,6 +109,37 @@
     return _notes;
 }
 
+-(Note *)createNoteWithJSONDictionary:(NSDictionary *)noteDictionary
+{
+    NSDictionary * propertiesDictionary = noteDictionary[@"properties"];
+    Note * note = [[Note alloc] init];
+    note.id = [propertiesDictionary[@"id"] longLongValue];
+    note.coordinate = CLLocationCoordinate2DMake([noteDictionary[@"geometry"][@"coordinates"][1] doubleValue], [noteDictionary[@"geometry"][@"coordinates"][0] doubleValue]);
+    note.id = [propertiesDictionary[@"id"] longLongValue];
+    NSString * statusString = (NSString *)propertiesDictionary[@"status"];
+    note.isOpen = [statusString isEqualToString:@"open"];
+    note.dateCreated = [OPEUtility noteDateFromString:(NSString *)propertiesDictionary[@"date_created"]];
+    note.dateClosed = [OPEUtility noteDateFromString:(NSString *)propertiesDictionary[@"date_closed"]];
+    __block NSMutableArray * newComments = [NSMutableArray array];
+    NSArray * comments = (NSArray *)propertiesDictionary[@"comments"];
+    [comments enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSDictionary * commentDictionary = (NSDictionary *)obj;
+        Comment * comment = [[Comment alloc] init];
+        NSString * username = commentDictionary[@"user"];
+        if ([username length]) {
+            comment.username = username;
+            comment.userID = [commentDictionary[@"uid"] longLongValue];
+        }
+        comment.text = commentDictionary[@"text"];
+        comment.date = [OPEUtility noteDateFromString:commentDictionary[@"date"]];
+        comment.action = commentDictionary[@"action"];
+        [newComments addObject:comment];
+        
+    }];
+    note.commentsArray = newComments;
+    return note;
+}
+
 -(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
 {
     [apiManager downloadNotesWithSW:southWest NE:northEast success:^(id response) {
@@ -121,30 +152,7 @@
             NSDictionary * noteDictionary = (NSDictionary *)obj;
             NSDictionary * propertiesDictionary = noteDictionary[@"properties"];
             if ([self isNewNoteID:[propertiesDictionary[@"id"] longLongValue]]) {
-                Note * note = [[Note alloc] init];
-                note.id = [propertiesDictionary[@"id"] longLongValue];
-                note.coordinate = CLLocationCoordinate2DMake([noteDictionary[@"geometry"][@"coordinates"][1] doubleValue], [noteDictionary[@"geometry"][@"coordinates"][0] doubleValue]);
-                note.id = [propertiesDictionary[@"id"] longLongValue];
-                NSString * statusString = (NSString *)propertiesDictionary[@"status"];
-                note.isOpen = [statusString isEqualToString:@"open"];
-                note.dateCreated = [OPEUtility noteDateFromString:(NSString *)propertiesDictionary[@"date_created"]];
-                note.dateClosed = [OPEUtility noteDateFromString:(NSString *)propertiesDictionary[@"date_closed"]];
-                __block NSMutableArray * newComments = [NSMutableArray array];
-                NSArray * comments = (NSArray *)propertiesDictionary[@"comments"];
-                [comments enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                    NSDictionary * commentDictionary = (NSDictionary *)obj;
-                    Comment * comment = [[Comment alloc] init];
-                    NSString * username = commentDictionary[@"user"];
-                    if ([username length]) {
-                        comment.username = username;
-                        comment.userID = [commentDictionary[@"uid"] longLongValue];
-                    }
-                    comment.text = commentDictionary[@"text"];
-                    comment.date = [OPEUtility noteDateFromString:commentDictionary[@"date"]];
-                    [newComments addObject:comment];
-                    
-                }];
-                note.commentsArray = newComments;
+                Note * note = [self createNoteWithJSONDictionary:noteDictionary];
                 [self addNewNote:note];
                 [newNotes addObject:note];
             }

@@ -446,6 +446,103 @@ withChangesetComment:(NSString *)changesetComment
     return requestOperation;
 }
 
+-(void)createNewNote:(Note *)note
+             success:(void (^)(NSData * response))success
+             failure:(void (^)(NSError *error))failure
+{
+    
+    NSDictionary * parameters = @{@"lat": @(note.coordinate.latitude),@"lon":@(note.coordinate.longitude),@"text":((Comment *)[note.commentsArray lastObject]).text};
+    
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"POST" path:@"notes.json" parameters:parameters];
+    [self.auth authorizeRequest:urlRequest];
+    
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+    [requestOperation start];
+    
+}
+
+-(void)createNewComment:(Comment *)comment withNote:(Note *)note
+                success:(void (^)(id JSON))success
+                failure:(void (^)(NSError *error))failure
+{
+    NSDictionary * parameters = @{@"text":comment.text};
+    NSString * path = [NSString stringWithFormat:@"notes/%lld/comment.json",note.id];
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"POST" path:path parameters:parameters];
+    [self.auth authorizeRequest:urlRequest];
+    
+    AFHTTPRequestOperation * requestOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        if (success) {
+            success(JSON);
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+    [requestOperation start];
+
+    
+}
+-(void)closeNote:(Note *)note withComment:(NSString *)comment
+         success:(void (^)(id JSON))success
+         failure:(void (^)(NSError *error))failure
+{
+    NSDictionary * parameters = nil;
+    if ([comment length]) {
+        parameters = @{@"text":comment};
+    }
+    
+    NSString * path = [NSString stringWithFormat:@"notes/%lld/close.json",note.id];
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"POST" path:path parameters:parameters];
+    [self.auth authorizeRequest:urlRequest];
+    
+    AFJSONRequestOperation * requestOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+        if (success) {
+            success(JSON);
+        }
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+    [requestOperation start];
+    
+}
+
+-(void)reopenNote:(Note *)note
+          success:(void (^)(NSData * response))success
+          failure:(void (^)(NSError *error))failure
+{
+    NSString * path = [NSString stringWithFormat:@"notes/%lld/reopen    .json",note.id];
+    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"POST" path:path parameters:nil];
+    [self.auth authorizeRequest:urlRequest];
+    
+    AFJSONRequestOperation * requestOperation = [[AFJSONRequestOperation alloc] initWithRequest:urlRequest];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+    [requestOperation start];
+    
+}
 
 +(GTMOAuthAuthentication *)osmAuth {
     NSString *myConsumerKey = osmConsumerKey; //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service

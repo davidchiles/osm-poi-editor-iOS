@@ -11,9 +11,12 @@
 #import "OPECommentCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "DAKeyboardControl.h"
+#import "OPEOSMAPIManager.h"
+#import "OPEOSMData.h"
 
 #define kChatBarHeight1                      40
-#define kTableViewTag 101
+#define kTextViewTag 101
+#define kTableViewTag 102
 
 @interface OPENoteViewController ()
 
@@ -21,7 +24,8 @@
 
 @implementation OPENoteViewController
 
-@synthesize note;
+@synthesize note,osmApiManager = _osmApiManager;
+@synthesize osmData = _osmData;
 
 -(id)initWithNote:(Note *)newNote;
 {
@@ -65,10 +69,13 @@
     [commentButton setTitle:@"Comment" forState:UIControlStateNormal];
     [commentButton addTarget:self action:@selector(commentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     commentButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(commentButtonLongPressed:)];
+    [commentButton addGestureRecognizer:longPress];
     
     [commentInputBar addSubview:commentButton];
     
     UITextView * textView = [[UITextView alloc] initWithFrame:CGRectMake(5, 5, commentInputBar.frame.size.width-10-commentButton.frame.size.width, kChatBarHeight1 -10)];
+    textView.tag = kTextViewTag;
     textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     textView.delegate = self;
     textView.layer.borderColor = [UIColor darkGrayColor].CGColor;
@@ -95,7 +102,8 @@
         tableView.scrollIndicatorInsets = insets;
     }];
     
-    
+    UIBarButtonItem * cancelButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
+    [self.navigationItem setRightBarButtonItem:cancelButtonItem];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -139,9 +147,122 @@
     }
 }
 
+-(BOOL)textViewHasTextLength
+{
+    if ([[self textViewStrippedText] length])
+    {
+        return YES;
+    }
+    return NO;
+}
+-(NSString *)textViewStrippedText
+{
+    UITextView * textView = (UITextView *)[self.view viewWithTag:kTextViewTag];
+    return [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+-(void)clearTextViewText
+{
+    UITextView * textView = (UITextView *)[self.view viewWithTag:kTextViewTag];
+    textView.text = @"";
+}
+-(void)reloadData
+{
+    UITableView * tableView = (UITableView *)[self.view viewWithTag:kTableViewTag];
+    [tableView reloadData];
+}
+
+-(void)doneButtonPressed:(id)sender
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 -(void)commentButtonPressed:(id)sender
 {
+    if ([self textViewHasTextLength]) {
+        void (^succesBlock)(id) =  ^(id JSON) {
+            NSLog(@"return data: %@",JSON);
+            [self clearTextViewText];
+            self.note = [self.osmData createNoteWithJSONDictionary:JSON];
+            [self reloadData];
+            [self scrollToBottomAnimated:YES];
+        };
+        
+        if (self.note.id > 0) {
+            Comment * comment = [[Comment alloc] init];
+            comment.text = [self textViewStrippedText];
+            [self.osmApiManager createNewComment:comment withNote:self.note success:succesBlock failure:^(NSError *error) {
+                NSLog(@"error: %@",error);
+            }];
+        }
+        else{
+            //new note
+            [self.osmApiManager createNewNote:self.note success:succesBlock failure:^(NSError *error) {
+                NSLog(@"error: %@",error);
+            }];
+            
+            
+        }
+        
+        
+    }
     
+}
+
+-(void)commentButtonLongPressed:(UILongPressGestureRecognizer *)sender
+{
+    if (sender.state == UIGestureRecognizerStateBegan)
+    {
+        UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"Resolve", nil];
+        if ([self textViewHasTextLength]) {
+            [actionSheet addButtonWithTitle:@"Comment & Resolve"];
+        }
+        [actionSheet addButtonWithTitle:@"Cancel"];
+        actionSheet.cancelButtonIndex = actionSheet.numberOfButtons - 1;
+        [actionSheet showInView:self.view];
+    }
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        //Resolve
+        [self.osmApiManager closeNote:self.note withComment:nil success:^(id JSON) {
+            self.note = [self.osmData createNoteWithJSONDictionary:JSON];
+            [self reloadData];
+            [self scrollToBottomAnimated:YES];
+        } failure:^(NSError *error) {
+            NSLog(@"error: %@",error);
+        }];
+    }
+    else if (buttonIndex == 1 && actionSheet.numberOfButtons > 2)
+    {
+        //comment & resolve
+        
+        [self.osmApiManager closeNote:self.note withComment:[self textViewStrippedText] success:^(id JSON) {
+            self.note = [self.osmData createNoteWithJSONDictionary:JSON];
+            [self reloadData];
+            [self scrollToBottomAnimated:YES];
+        } failure:^(NSError *error) {
+            NSLog(@"error: %@",error);
+        }];
+    }
+    //[actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];
+}
+
+-(OPEOSMAPIManager *)osmApiManager
+{
+    if (!_osmApiManager) {
+        _osmApiManager = [[OPEOSMAPIManager alloc] init];
+    }
+    return _osmApiManager;
+}
+-(OPEOSMData *)osmData
+{
+    if(!_osmData)
+    {
+        _osmData = [[OPEOSMData alloc] init];
+    }
+    return _osmData;
 }
 
 @end

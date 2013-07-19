@@ -14,6 +14,9 @@
 #import "GTMOAuthAuthentication.h"
 #import "AFNetworking.h"
 #import "OPEManagedOsmElement.h"
+#import "Note.h"
+#import "Comment.h"
+
 @interface OPEOSMAPIManager : NSObject
 {
     NSMutableDictionary * apiFailures;
@@ -41,6 +44,22 @@ withChangesetComment:(NSString *)changesetComment
 -(void)reverseLookupAddress:(CLLocationCoordinate2D )coordinate
                     success:(void (^)(NSDictionary * addressDictionary))success
                     failure:(void (^)(NSError * error))failure;
+
+/////////////NOTES///////////////
+-(void)createNewNote:(Note *)note
+             success:(void (^)(NSData * response))success
+             failure:(void (^)(NSError *error))failure;
+
+-(void)createNewComment:(Comment *)comment withNote:(Note *)note
+                success:(void (^)(id JSON))success
+                failure:(void (^)(NSError *error))failure;
+
+-(void)closeNote:(Note *)note withComment:(NSString *)comment
+         success:(void (^)(id JSON))success
+         failure:(void (^)(NSError *error))failure;
+-(void)reopenNote:(Note *)note
+         success:(void (^)(NSData * response))success
+         failure:(void (^)(NSError *error))failure;
 
 +(GTMOAuthAuthentication *)osmAuth;
 -(BOOL) canAuth;

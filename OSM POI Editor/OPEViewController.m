@@ -475,7 +475,10 @@
     else if ([osmElement isKindOfClass:[Note class]])
     {
         OPENoteViewController * viewController = [[OPENoteViewController alloc] initWithNote:osmElement];
-        [self.navigationController pushViewController:viewController animated:YES];
+        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+        
+        //[self.navigationController presentModalViewController:navController animated:YES];
+        [self.navigationController presentViewController:navController animated:YES completion:nil];
     }
     else if(annotation.isClusterAnnotation)
     {
@@ -701,6 +704,7 @@
         node.element.longitude = center.longitude;
         
         OPENewNodeSelectViewController * newNodeController = [[OPENewNodeSelectViewController alloc] initWithNewElement:node];
+        newNodeController.location = center;
         newNodeController.nodeViewDelegate = self;
         
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:newNodeController];

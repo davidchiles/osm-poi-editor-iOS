@@ -9,6 +9,7 @@
 #import "OPENewNodeSelectViewController.h"
 #import "OPEOSMSearchManager.h"
 #import "OPENodeViewController.h"
+#import "OPENoteViewController.h"
 #import "OPEOSMData.h"
 
 @interface OPENewNodeSelectViewController ()
@@ -16,7 +17,7 @@
 @end
 
 @implementation OPENewNodeSelectViewController
-@synthesize nodeViewDelegate;
+@synthesize nodeViewDelegate,location;
 
 -(id)initWithNewElement:(OPEManagedOsmElement *)element
 {
@@ -52,14 +53,23 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     if ([recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]) {
-        return 2;
+        return 3;
     }
-    return [super numberOfSectionsInTableView:tableView];
+    return [super numberOfSectionsInTableView:tableView]+1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0 && [recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]){
-        return [recentlyUsedPoisArray count];
+    if ([recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]){
+        if (section == 0) {
+            return [recentlyUsedPoisArray count];
+        }
+        else if(section == 1){
+            return 1;
+        }
+    }
+    else if (section == 0 && ![recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView])
+    {
+        return 1;
     }
     return [super tableView:tableView numberOfRowsInSection:section];
 }
@@ -69,6 +79,10 @@
     if ([recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]){
         if (section == 0) {
             return @"Recently Used";
+        }
+        else if(section == 1)
+        {
+            return @"";
         }
         else
         {
@@ -94,10 +108,16 @@
         cell.textLabel.text = poi.name;
         cell.detailTextLabel.text = poi.categoryName;
     }
+    else if (((indexPath.section == 0 && ![recentlyUsedPoisArray count]) || (indexPath.section == 1 && [recentlyUsedPoisArray count]))&& tableView != [[self searchDisplayController] searchResultsTableView])
+    {
+        cell.textLabel.text = @"Create New Note";
+        cell.detailTextLabel.text = @"";
+    }
     else
     {
         cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     }
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
@@ -108,7 +128,16 @@
         [self newType:recentlyUsedPoisArray[indexPath.row]];
         
     }
-    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    else if (((indexPath.section == 0 && ![recentlyUsedPoisArray count]) || (indexPath.section == 1 && [recentlyUsedPoisArray count]))&& tableView != [[self searchDisplayController] searchResultsTableView])
+    {
+        Note * note = [[Note alloc] init];
+        note.coordinate = self.location;
+        OPENoteViewController * viewController = [[OPENoteViewController alloc] initWithNote:note];
+        [self.navigationController setViewControllers:@[viewController] animated:YES];
+    }
+    else{
+        [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    }
 }
 
 

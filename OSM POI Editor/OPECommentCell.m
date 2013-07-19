@@ -9,9 +9,10 @@
 #import "OPECommentCell.h"
 #import "OPEUtility.h"
 
-#define MESSAGE_TEXT_WIDTH_MAX 210
+#define MESSAGE_TEXT_WIDTH_MAX 240
 #define EDGE_MARGIN 20
 #define OPPOSITE_MARGIN 10
+#define BUBBLE_MARGIN 4
 
 @implementation OPECommentCell
 
@@ -27,7 +28,7 @@
         [self.contentView addSubview:imageView];
         
         commentContents = [[UIView alloc] initWithFrame:CGRectZero];
-        commentContents.backgroundColor = [UIColor yellowColor];
+        commentContents.backgroundColor = [UIColor clearColor];
         //commentContents.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
         [imageView addSubview:commentContents];
         
@@ -67,7 +68,7 @@
     
     
     self.commentTextLabel.text = self.comment.text;
-    self.commentActionLabel.text = @"Action";
+    self.commentActionLabel.text = self.comment.action;
     self.commentDetailLabel.text = [NSString stringWithFormat:@"%@ %@",self.comment.username,[OPEUtility displayFormatDate:self.comment.date]];
     CGSize messageTextLabelSize = [self.commentTextLabel sizeThatFits:CGSizeMake(MESSAGE_TEXT_WIDTH_MAX, CGFLOAT_MAX)];
     
@@ -93,7 +94,7 @@
         UIEdgeInsets insets = UIEdgeInsetsMake(2, 2, 12, 12);
         imageView.image = [[UIImage imageNamed:@"bubble_right"] resizableImageWithCapInsets:insets];
         //CGFloat newWidth = width+EDGE_MARGIN+OPPOSITE_MARGIN;
-        imageView.frame = CGRectMake(self.contentView.frame.size.width - newWidth, 0,newWidth, height);
+        imageView.frame = CGRectMake(self.contentView.frame.size.width - newWidth-BUBBLE_MARGIN, BUBBLE_MARGIN,newWidth, height);
     }
     else
     {
@@ -101,7 +102,7 @@
         commentContents.frame = CGRectMake(EDGE_MARGIN, 0, width, height);
         UIEdgeInsets insets = UIEdgeInsetsMake(2, 12, 12, 2);
         imageView.image = [[UIImage imageNamed:@"bubble_left"] resizableImageWithCapInsets:insets];
-        imageView.frame = CGRectMake(0, 0, width+EDGE_MARGIN+OPPOSITE_MARGIN,height );
+        imageView.frame = CGRectMake(BUBBLE_MARGIN, BUBBLE_MARGIN, width+EDGE_MARGIN+OPPOSITE_MARGIN,height );
     }
     
     
