@@ -183,7 +183,7 @@
     
     [self.view addSubview:nodeInfoTableView];
     
-    self.HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    self.HUD = [[MBProgressHUD alloc] initWithView:self.view];
     self.HUD.delegate = self;
     
     
@@ -262,9 +262,6 @@
     }
     else if(section > 1 && section < [self.managedOsmElement.type numberOfOptionalSections] + 2)
     {
-        if ([((OPEManagedReferenceOptional *)[[optionalSectionsArray objectAtIndex:(section -2)] lastObject]).sectionName isEqualToString:@"Address"]) {
-            return [[optionalSectionsArray objectAtIndex:(section - 2)] count] +1;
-        }
         return [[optionalSectionsArray objectAtIndex:(section - 2)] count];
     }
     return 1;
@@ -287,6 +284,53 @@
     }
     
     return @"";
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if(section < [self.managedOsmElement.type numberOfOptionalSections] + 2 && section > 1)
+    {
+        NSInteger index = section-2;
+        OPEManagedReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
+        if ([tempOptional.sectionName isEqualToString:@"Address"]) {
+            return 40;
+        }
+    }
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView * footerView = nil;
+    if(section < [self.managedOsmElement.type numberOfOptionalSections] + 2 && section > 1)
+    {
+        NSInteger index = section-2;
+        OPEManagedReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
+        if ([tempOptional.sectionName isEqualToString:@"Address"]) {
+            CGSize cellSize = CGSizeMake(tableView.frame.size.width, 40);
+            CGFloat buttonWidth = 150;
+            
+            BButton * lookupButton = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
+            lookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+            [lookupButton setTitle:@"Nominatim" forState:UIControlStateNormal];
+            [lookupButton addTarget:self action:@selector(nominatimLookupAddress) forControlEvents:UIControlEventTouchUpInside];
+            
+            
+            BButton * localLookupButton = [[BButton alloc]initWithFrame:CGRectZero type:BButtonTypePrimary];
+            localLookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+            [localLookupButton setTitle:LOCA_DATA_STRING forState:UIControlStateNormal];
+            [localLookupButton addTarget:self action:@selector(localLookupAddress) forControlEvents:UIControlEventTouchUpInside];
+            
+            localLookupButton.frame = CGRectMake(0, 0, buttonWidth, cellSize.height);
+            lookupButton.frame = CGRectMake(cellSize.width-buttonWidth, 0, buttonWidth, cellSize.height);
+            localLookupButton.autoresizingMask  = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin  ;
+            lookupButton.autoresizingMask =UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin ;
+            
+            footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cellSize.width, cellSize.height)];
+            [footerView addSubview:lookupButton];
+            [footerView addSubview:localLookupButton];
+        }
+    }
+    return footerView;
 }
 
 // Customize the appearance of table view cells.
@@ -377,37 +421,6 @@
                 return aCell;
                 
             }
-        }
-        else{
-            cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierAddressButton];
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierAddressButton];
-                
-                CGSize cellSize = cell.contentView.frame.size;
-                CGFloat buttonWidth = 150;
-                
-                BButton * lookupButton = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
-                lookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-                [lookupButton setTitle:@"Nominatim" forState:UIControlStateNormal];
-                [lookupButton addTarget:self action:@selector(nominatimLookupAddress) forControlEvents:UIControlEventTouchUpInside];
-                
-                
-                BButton * localLookupButton = [[BButton alloc]initWithFrame:CGRectZero type:BButtonTypePrimary];
-                localLookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-                [localLookupButton setTitle:LOCA_DATA_STRING forState:UIControlStateNormal];
-                [localLookupButton addTarget:self action:@selector(localLookupAddress) forControlEvents:UIControlEventTouchUpInside];
-                
-                localLookupButton.frame = CGRectMake(0, 0, buttonWidth, cellSize.height);
-                lookupButton.frame = CGRectMake(cellSize.width-buttonWidth, 0, buttonWidth, cellSize.height);
-                localLookupButton.autoresizingMask  = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin  ;
-                lookupButton.autoresizingMask =UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin ;
-                
-                
-                cell.backgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-                [cell.contentView addSubview:lookupButton];
-                [cell.contentView addSubview:localLookupButton];
-            }
-            
         }
     }
     //Move and Cancel Buttons
