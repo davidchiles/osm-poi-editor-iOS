@@ -296,13 +296,14 @@
         NSInteger index = section-2;
         OPEManagedReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
         if ([tempOptional.sectionName isEqualToString:@"Address"]) {
-            return 40;
+            return 45;
         }
     }
     else if (section > [self.managedOsmElement.type numberOfOptionalSections])
     {
-        return 40;
+        return 45;
     }
+    return 0;
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -327,8 +328,8 @@
             [localLookupButton setTitle:LOCA_DATA_STRING forState:UIControlStateNormal];
             [localLookupButton addTarget:self action:@selector(localLookupAddress) forControlEvents:UIControlEventTouchUpInside];
             
-            localLookupButton.frame = CGRectMake(0, 0, buttonWidth, cellSize.height);
-            lookupButton.frame = CGRectMake(cellSize.width-buttonWidth, 0, buttonWidth, cellSize.height);
+            localLookupButton.frame = CGRectMake(5, 5, buttonWidth, cellSize.height);
+            lookupButton.frame = CGRectMake(cellSize.width-buttonWidth-5, 5, buttonWidth, cellSize.height);
             localLookupButton.autoresizingMask  = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin  ;
             lookupButton.autoresizingMask =UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin ;
             
@@ -337,20 +338,19 @@
             [footerView addSubview:localLookupButton];
         }
     }
-    else if (section> [self.managedOsmElement.type numberOfOptionalSections]) {
+    else if (section >= [self.managedOsmElement.type numberOfOptionalSections]+2) {
         footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cellSize.width, cellSize.height)];
-        if (section == [tableView numberOfSections]-2 && showMoveButton)
+        CGRect buttonRect = CGRectMake(5, 5, cellSize.width-10, cellSize.height);
+        if (section == [tableView numberOfSections]-1 && showDeleteButton)
         {
-            //((OPEButtonCell *)cell).button = self.moveButton;
-            self.moveButton.frame = footerView.frame;
-            [footerView addSubview:self.moveButton];
-        }
-        //Delete Button
-        else if (section == [tableView numberOfSections]-1 && showDeleteButton)
-        {
-            self.deleteButton.frame = footerView.frame;
+            self.deleteButton.frame = buttonRect;
             [footerView addSubview:self.deleteButton];
-            //((OPEButtonCell *)cell).button = self.deleteButton;
+
+        }
+        else if (showMoveButton)
+        {
+            self.moveButton.frame = buttonRect;
+            [footerView addSubview:self.moveButton];
         }
 
     }
