@@ -37,7 +37,12 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
-
+-(void)dealloc
+{
+    self.searchDisplayController.delegate = nil;
+    self.searchDisplayController.searchResultsDelegate = nil;
+    self.searchDisplayController.searchResultsDataSource = nil;
+}
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad

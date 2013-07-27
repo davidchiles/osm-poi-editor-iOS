@@ -976,7 +976,7 @@
     
     if (self.numberOfOngoingParses < 1) {
         CGRect frame = CGRectMake(0, 0, 130, 40);
-        frame.origin.y = self.view.frame.size.height -frame.size.height-10;
+        frame.origin.y = self.view.frame.size.height -frame.size.height-self.navigationController.toolbar.frame.size.height-10;
         frame.origin.x = (self.view.frame.size.width -frame.size.width)/2;
         
         
