@@ -256,7 +256,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     
-    if(section == 1)
+    if (section == 0) {
+        return 1;
+    }
+    else if(section == 1)
     {
         return 2;
     }
@@ -264,7 +267,7 @@
     {
         return [[optionalSectionsArray objectAtIndex:(section - 2)] count];
     }
-    return 1;
+    return 0;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -296,17 +299,21 @@
             return 40;
         }
     }
+    else if (section > [self.managedOsmElement.type numberOfOptionalSections])
+    {
+        return 40;
+    }
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     UIView * footerView = nil;
+    CGSize cellSize = CGSizeMake(tableView.frame.size.width, 40);
     if(section < [self.managedOsmElement.type numberOfOptionalSections] + 2 && section > 1)
     {
         NSInteger index = section-2;
         OPEManagedReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
         if ([tempOptional.sectionName isEqualToString:@"Address"]) {
-            CGSize cellSize = CGSizeMake(tableView.frame.size.width, 40);
             CGFloat buttonWidth = 150;
             
             BButton * lookupButton = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
@@ -329,6 +336,23 @@
             [footerView addSubview:lookupButton];
             [footerView addSubview:localLookupButton];
         }
+    }
+    else if (section> [self.managedOsmElement.type numberOfOptionalSections]) {
+        footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cellSize.width, cellSize.height)];
+        if (section == [tableView numberOfSections]-2 && showMoveButton)
+        {
+            //((OPEButtonCell *)cell).button = self.moveButton;
+            self.moveButton.frame = footerView.frame;
+            [footerView addSubview:self.moveButton];
+        }
+        //Delete Button
+        else if (section == [tableView numberOfSections]-1 && showDeleteButton)
+        {
+            self.deleteButton.frame = footerView.frame;
+            [footerView addSubview:self.deleteButton];
+            //((OPEButtonCell *)cell).button = self.deleteButton;
+        }
+
     }
     return footerView;
 }
@@ -421,24 +445,6 @@
                 return aCell;
                 
             }
-        }
-    }
-    //Move and Cancel Buttons
-    else{
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierButton];
-        if (!cell) {
-            cell = [[OPEButtonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifierButton];
-            
-        }
-        //move Button
-        if (indexPath.section == [tableView numberOfSections]-2 && showMoveButton)
-        {
-            ((OPEButtonCell *)cell).button = self.moveButton;
-        }
-        //Delete Button
-        else if (indexPath.section == [tableView numberOfSections]-1 && showDeleteButton)
-        {
-            ((OPEButtonCell *)cell).button = self.deleteButton;
         }
     }
 
