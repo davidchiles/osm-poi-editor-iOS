@@ -193,7 +193,8 @@
         if ([delegate respondsToSelector:@selector(didEndDownloading)]) {
             [delegate didEndDownloading];
         }
-        dispatch_async(q,  ^{
+        dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_async(backgroundQueue,  ^{
             
             OSMParser* parser = [[OSMParser alloc] initWithOSMData:response];
             OSMParserHandlerDefault* handler = [[OSMParserHandlerDefault alloc] initWithOutputFilePath:kDatabasePath overrideIfExists:NO];

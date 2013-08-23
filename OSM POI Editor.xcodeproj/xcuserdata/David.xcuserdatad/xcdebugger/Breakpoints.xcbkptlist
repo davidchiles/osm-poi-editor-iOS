@@ -685,7 +685,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "642"
          endingLineNumber = "642"
-         landmarkName = "-alertView:clickedButtonAtIndex:"
+         landmarkName = "-deleteButtonPressed:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -711,7 +711,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "468"
          endingLineNumber = "468"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         landmarkName = "-binaryChanged:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -880,7 +880,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "570"
          endingLineNumber = "570"
-         landmarkName = "-saveButtonPressed"
+         landmarkName = "-localLookupAddress"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -919,7 +919,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "474"
          endingLineNumber = "474"
-         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         landmarkName = "-moveButtonPressed:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2035,7 +2035,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "738"
          endingLineNumber = "738"
-         landmarkName = "-sortedOptionalDisplayNames"
+         landmarkName = "-locationChanged"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2048,7 +2048,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "744"
          endingLineNumber = "744"
-         landmarkName = "-sortedOptionalDisplayNames"
+         landmarkName = "-elementModified"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2074,7 +2074,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "693"
          endingLineNumber = "693"
-         landmarkName = "-newType:"
+         landmarkName = "-alertView:clickedButtonAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -2100,7 +2100,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "695"
          endingLineNumber = "695"
-         landmarkName = "-newType:"
+         landmarkName = "-alertView:clickedButtonAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
