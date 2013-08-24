@@ -21,16 +21,10 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
+#import "OPEBaseSpecialCell.h"
 
-@interface OPESpecialCell2 : UITableViewCell
-{
-    UILabel * leftLabel;
-    UILabel * rightLabel;
-}
+@interface OPESpecialCell2 : OPEBaseSpecialCell
 
--(id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withTextWidth:(float)textWidth;
-
-@property (nonatomic, strong) NSString * leftText;
-@property (nonatomic, strong) NSString * rightText;
+@property (nonatomic,strong) UILabel * rightLabel;
 
 @end

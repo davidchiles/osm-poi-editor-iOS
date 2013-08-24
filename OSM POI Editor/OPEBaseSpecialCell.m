@@ -34,7 +34,7 @@
         leftLabel.backgroundColor = [UIColor clearColor];
         //leftLabel.text = leftText;
         leftLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-        leftLabel.textColor = [UIColor colorWithRed:.32 green:.4 blue:.57 alpha:1];
+        leftLabel.textColor = [UIColor colorWithRed:0 green:0.47843137 blue:1 alpha:1];
         leftLabel.textAlignment = NSTextAlignmentRight;
         [self.contentView addSubview:leftLabel];
         

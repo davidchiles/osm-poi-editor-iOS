@@ -417,10 +417,10 @@
                 OPESpecialCell2 * specialCell;
                 specialCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecial2];
                 if (specialCell == nil) {
-                    specialCell = [[OPESpecialCell2 alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecial2 withTextWidth:optionalTagWidth];
+                    specialCell = [[OPESpecialCell2 alloc] initWithTextWidth:optionalTagWidth reuseIdentifier:CellIdentifierSpecial2];
                 }
-                specialCell.leftText = managedOptionalTag.displayName;
-                specialCell.rightText = displayValueForOptional;
+                specialCell.leftLabel.text = managedOptionalTag.displayName;
+                specialCell.rightLabel.text = displayValueForOptional;
                 return specialCell;
             }
             //Show switch

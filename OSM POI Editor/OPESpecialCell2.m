@@ -25,38 +25,27 @@
 
 @implementation OPESpecialCell2
 
-@synthesize leftText,rightText;
+@synthesize rightLabel;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier withTextWidth:(float)textWidth
+- (id)initWithTextWidth:(CGFloat)newTextWidth reuseIdentifier:(NSString *)identifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self = [super initWithTextWidth:newTextWidth reuseIdentifier:identifier];
     if (self) {
         
-        if(textWidth > kLeftTextDefaultSize)
-            leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, textWidth, 30)];
-        else {
-            leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, kLeftTextDefaultSize, 30)];
-        }
-        leftLabel.backgroundColor = [UIColor clearColor];
-        leftLabel.text = leftText;
-        leftLabel.font = [UIFont boldSystemFontOfSize:12.0];
-        leftLabel.textColor = [UIColor colorWithRed:.32 green:.4 blue:.57 alpha:1];
-        leftLabel.textAlignment = UITextAlignmentRight;
         
-        int s = leftLabel.frame.origin.x+leftLabel.frame.size.width+6;
-        
-        rightLabel = [[UILabel alloc] initWithFrame:CGRectMake(s, 7, 300-s, 30)];
-        rightLabel.backgroundColor = [UIColor clearColor];
-        rightLabel.font = [UIFont boldSystemFontOfSize:16.0];
-        rightLabel.text = rightText;
-        rightLabel.textAlignment = UITextAlignmentLeft;
+        self.rightLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.rightLabel.backgroundColor = [UIColor clearColor];
+        self.rightLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+        self.rightLabel.textAlignment = NSTextAlignmentLeft;
+        self.rightLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
         
         
         
-        [self addSubview:rightLabel];
-        [self addSubview:leftLabel];
+        [self.contentView addSubview:rightLabel];
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [self needsUpdateConstraints];
+        
         
         
 
@@ -71,13 +60,44 @@
     // Configure the view for the selected state
 }
 
--(void)setLeftText:(NSString *)txt
+-(void)updateConstraints
 {
-    leftLabel.text=txt;
-}
--(void)setRightText:(NSString *)txt
-{
-    rightLabel.text=txt;
+    [super updateConstraints];
+    NSLayoutConstraint * constraint = [NSLayoutConstraint constraintWithItem:self.rightLabel
+                                                                   attribute:NSLayoutAttributeLeft
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.leftLabel
+                                                                   attribute:NSLayoutAttributeRight
+                                                                  multiplier:1.0
+                                                                    constant:6];
+    [self.contentView addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.rightLabel
+                                              attribute:NSLayoutAttributeCenterY
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.leftLabel
+                                              attribute:NSLayoutAttributeCenterY
+                                             multiplier:1.0
+                                               constant:0];
+    [self.contentView addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.rightLabel
+                                              attribute:NSLayoutAttributeHeight
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.leftLabel
+                                              attribute:NSLayoutAttributeHeight
+                                             multiplier:1.0
+                                               constant:0];
+    [self.contentView addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.rightLabel
+                                              attribute:NSLayoutAttributeRight
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.contentView
+                                              attribute:NSLayoutAttributeRight
+                                             multiplier:1.0
+                                               constant:0];
+    [self.contentView addConstraint:constraint];
 }
 
 

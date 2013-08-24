@@ -100,8 +100,8 @@
     //binaryControl.segmentedControlStyle = UISegmentedControlStylePlain;
     
     if ([controlArray count] == 3) {
-        [self.binaryControl setWidth:44 forSegmentAtIndex:0];
-        [self.binaryControl setWidth:44 forSegmentAtIndex:1];
+        [self.binaryControl setWidth:47 forSegmentAtIndex:0];
+        [self.binaryControl setWidth:47 forSegmentAtIndex:1];
         //[binaryControl setWidth:100 forSegmentAtIndex:2];
     }
     
