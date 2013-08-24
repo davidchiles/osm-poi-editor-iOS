@@ -342,7 +342,7 @@
     }
     else if (section >= [self.managedOsmElement.type numberOfOptionalSections]+2) {
         footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cellSize.width, cellSize.height)];
-        CGRect buttonRect = CGRectMake(0, 0, cellSize.width-10, cellSize.height);
+        CGRect buttonRect = CGRectMake(5, 0, cellSize.width-10, cellSize.height);
         if (section == [tableView numberOfSections]-1 && showDeleteButton)
         {
             self.deleteButton.frame = buttonRect;

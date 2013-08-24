@@ -24,12 +24,14 @@
 {
     [_button removeFromSuperview];
     _button = newButton;
-    CGRect contentViewFrame = self.contentView.frame;
-    CGRect buttonFrame = CGRectMake(0, 0, contentViewFrame.size.width, contentViewFrame.size.height);
-    newButton.frame = buttonFrame;
-    newButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    _button.translatesAutoresizingMaskIntoConstraints = NO;
+    //CGRect contentViewFrame = self.contentView.frame;
+    //CGRect buttonFrame = CGRectMake(0, 0, contentViewFrame.size.width, contentViewFrame.size.height);
+    //newButton.frame = buttonFrame;
+    //newButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
     [self.contentView addSubview:_button];
+    [self needsUpdateConstraints];
     
 }
 
@@ -38,6 +40,57 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void)updateConstraints
+{
+    [super updateConstraints];
+    
+    NSLayoutConstraint * constraint = [NSLayoutConstraint constraintWithItem:self.button
+                                                                   attribute:NSLayoutAttributeRight
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self
+                                                                   attribute:NSLayoutAttributeRight
+                                                                  multiplier:1.0
+                                                                    constant:0.0];
+    [self.contentView addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.button
+                                              attribute:NSLayoutAttributeLeft
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.contentView
+                                              attribute:NSLayoutAttributeLeft
+                                             multiplier:1.0
+                                               constant:20];
+    [self.contentView addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.button
+                                              attribute:NSLayoutAttributeCenterY
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.contentView
+                                              attribute:NSLayoutAttributeCenterY
+                                             multiplier:1.0
+                                               constant:0.0];
+    [self.contentView addConstraint:constraint];
+    
+    /*constraint = [NSLayoutConstraint constraintWithItem:self.button
+                                              attribute:NSLayoutAttributeWidth
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.contentView
+                                              attribute:NSLayoutAttributeWidth
+                                             multiplier:1.0
+                                               constant:0.0];
+    [self.contentView addConstraint:constraint];*/
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.button
+                                              attribute:NSLayoutAttributeHeight
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.contentView
+                                              attribute:NSLayoutAttributeHeight
+                                             multiplier:1.0
+                                               constant:0.0];
+    [self.contentView addConstraint:constraint];
+    
 }
 
 @end
