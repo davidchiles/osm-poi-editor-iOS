@@ -341,6 +341,7 @@
 		63962B2C17977E07008B897C /* bubble_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 63962B2A17977E07008B897C /* bubble_right.png */; };
 		63962B2D17977E07008B897C /* bubble_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63962B2B17977E07008B897C /* bubble_right@2x.png */; };
 		639953FE16113A200070CBAF /* about.css in Resources */ = {isa = PBXBuildFile; fileRef = 639953FD16113A200070CBAF /* about.css */; };
+		639F10AA17C82669003EB958 /* OPEBaseSpecialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 639F10A917C82669003EB958 /* OPEBaseSpecialCell.m */; };
 		63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */; };
 		63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BB177BB0EB000C6A0D /* OPEMoveNodeViewController.m */; };
 		63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BE177BBD8C000C6A0D /* OPEButtonCell.m */; };
@@ -821,6 +822,8 @@
 		63962B2B17977E07008B897C /* bubble_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bubble_right@2x.png"; path = "../../../../../Desktop/bubble_right@2x.png"; sourceTree = "<group>"; };
 		63968298153CB8B4008F4C0E /* OPEAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAPIConstants.h; sourceTree = "<group>"; };
 		639953FD16113A200070CBAF /* about.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = about.css; sourceTree = "<group>"; };
+		639F10A817C82669003EB958 /* OPEBaseSpecialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBaseSpecialCell.h; sourceTree = "<group>"; };
+		639F10A917C82669003EB958 /* OPEBaseSpecialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBaseSpecialCell.m; sourceTree = "<group>"; };
 		63A3D5B4177BAEB1000C6A0D /* OPECrosshairMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECrosshairMapView.h; sourceTree = "<group>"; };
 		63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECrosshairMapView.m; sourceTree = "<group>"; };
 		63A3D5BA177BB0EB000C6A0D /* OPEMoveNodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMoveNodeViewController.h; sourceTree = "<group>"; };
@@ -1428,13 +1431,8 @@
 				63D0A5C11700E997007A595E /* Geo */,
 				6333D39B1680F55900BF129E /* CoreData */,
 				6332CB3716261E470088F5B0 /* Model */,
-				63292E611593ED670010A11B /* OPEBinaryCell.h */,
-				63292E621593ED670010A11B /* OPEBinaryCell.m */,
+				639F10A717C82548003EB958 /* Cells */,
 				63292E631593ED670010A11B /* OPEConstants.h */,
-				63292E641593ED670010A11B /* OPEPhoneCell.h */,
-				63292E651593ED670010A11B /* OPEPhoneCell.m */,
-				63292E661593ED670010A11B /* OPESpecialCell2.h */,
-				63292E671593ED670010A11B /* OPESpecialCell2.m */,
 				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
 				63FCA44F1643363700A28470 /* OPEUtility.h */,
 				63FCA4501643363700A28470 /* OPEUtility.m */,
@@ -1462,8 +1460,6 @@
 				6345E57E14E3122900F55486 /* OPENodeViewController.m */,
 				63962B1317961B8C008B897C /* OPENoteViewController.h */,
 				63962B1417961B8C008B897C /* OPENoteViewController.m */,
-				63962B1917961FAB008B897C /* OPECommentCell.h */,
-				63962B1A17961FAB008B897C /* OPECommentCell.m */,
 				631AB0AB1727686E003F5F6F /* OPETranslate.h */,
 				631AB0AC1727686E003F5F6F /* OPETranslate.m */,
 				63D0A5CF1701129F007A595E /* TagEdit */,
@@ -1597,6 +1593,23 @@
 			name = DAKeyboardControl;
 			path = lib/dakeyboardcontrol/DAKeyboardControl;
 			sourceTree = SOURCE_ROOT;
+		};
+		639F10A717C82548003EB958 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				63962B1917961FAB008B897C /* OPECommentCell.h */,
+				63962B1A17961FAB008B897C /* OPECommentCell.m */,
+				63292E641593ED670010A11B /* OPEPhoneCell.h */,
+				63292E651593ED670010A11B /* OPEPhoneCell.m */,
+				639F10A817C82669003EB958 /* OPEBaseSpecialCell.h */,
+				639F10A917C82669003EB958 /* OPEBaseSpecialCell.m */,
+				63292E611593ED670010A11B /* OPEBinaryCell.h */,
+				63292E621593ED670010A11B /* OPEBinaryCell.m */,
+				63292E661593ED670010A11B /* OPESpecialCell2.h */,
+				63292E671593ED670010A11B /* OPESpecialCell2.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
 		};
 		63D0A5C11700E997007A595E /* Geo */ = {
 			isa = PBXGroup;
@@ -2232,6 +2245,7 @@
 				630A879017680FE1003C9423 /* UIColor+BButton.m in Sources */,
 				630A879617682275003C9423 /* OPEWikipediaManager.m in Sources */,
 				630A8799176827F3003C9423 /* OPEWikipediaEditViewController.m in Sources */,
+				639F10AA17C82669003EB958 /* OPEBaseSpecialCell.m in Sources */,
 				63F63D5C17684D340084E703 /* OPEWikipediaWebViewController.m in Sources */,
 				63E5E3AB176943040064A780 /* AbstractActionSheetPicker.m in Sources */,
 				63E5E3AC176943040064A780 /* ActionSheetCustomPicker.m in Sources */,
@@ -2354,7 +2368,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/lib\"/**";
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_MAP_FILE_PATH = "";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/lib/CrittercismSDK\"",
@@ -2396,7 +2410,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/lib\"/**";
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_MAP_FILE_PATH = "";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/lib/CrittercismSDK\"",

@@ -227,14 +227,16 @@
 
 -(float)getWidth;
 {
-    float maxWidth = 0.0;
+    CGFloat maxWidth = 0.0;
     
     for(NSArray * optionalArray in self.optionalSectionsArray)
     {
         for(OPEManagedReferenceOptional * optional in optionalArray)
         {
             NSString * name = optional.displayName;
-            float currentWidth = [name sizeWithFont:[UIFont boldSystemFontOfSize:12.0]].width;
+            //float currentWidth = [name sizeWithFont:[UIFont systemFontSize:[UIFont systemFontSize]]].width;
+            UIFont * font =[UIFont systemFontOfSize:[UIFont systemFontSize]];
+            CGFloat currentWidth = [name sizeWithAttributes:@{NSFontAttributeName:font}].width;
             maxWidth = MAX(maxWidth, currentWidth);
         }
         
@@ -426,10 +428,9 @@
             {
                 OPEBinaryCell * aCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierSpecialBinary];
                 if (aCell == nil) {
-                    aCell = [[OPEBinaryCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifierSpecialBinary array:[managedOptionalTag.optionalTags allObjects] withTextWidth:optionalTagWidth];
-                    
+                    aCell = [[OPEBinaryCell alloc] initWithArray:[managedOptionalTag.optionalTags allObjects] reuseIdentifier:CellIdentifierSpecialBinary withTextWidth:optionalTagWidth];
                 }
-                [aCell setLeftText: managedOptionalTag.displayName];
+                aCell.leftLabel.text = managedOptionalTag.displayName;
                 [aCell setupBinaryControl:[managedOptionalTag.optionalTags allObjects]];
                 //aCell.controlArray = [[cellDictionary objectForKey:@"values"] allKeys];
                 

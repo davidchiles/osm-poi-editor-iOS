@@ -159,6 +159,8 @@
         mapView.contentScaleFactor = 1.0;
     }
     
+    
+    
     [mapView setDelegate:self];
     //[mapView setCenterCoordinate:initLocation animated:YES];
     
@@ -805,6 +807,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    //FIXME
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     [super viewDidAppear:animated];
 }
 

@@ -21,17 +21,14 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
+#import "OPEBaseSpecialCell.h"
 
-@interface OPEBinaryCell : UITableViewCell
-{
-    UILabel * leftLabel;
-}
+@interface OPEBinaryCell : OPEBaseSpecialCell
 
-
-@property (nonatomic,strong) NSString * leftText;
 @property (nonatomic,strong) UISegmentedControl * binaryControl;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier array:(NSArray *)array withTextWidth:(float)textWidth;
+- (id)initWithArray:(NSArray *)array reuseIdentifier:(NSString *)reuseIdentifier  withTextWidth:(CGFloat)textWidth;
+
 -(void)selectSegmentWithTitle:(NSString *)title;
 
 -(void)setupBinaryControl:(NSArray *)array;
