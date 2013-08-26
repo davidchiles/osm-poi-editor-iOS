@@ -10,7 +10,6 @@
 #import "OPERecent+NearbyViewController.h"
 #import "OPERecentlyUsedViewController.h"
 #import "OPEPhoneEditViewController.h"
-#import "OPETextViewEditViewController.h"
 #import "OPEConstants.h"
 #import "OPETagValueList.h"
 #import "OPEWikipediaEditViewController.h"
@@ -88,7 +87,6 @@
         OPERecentlyUsedViewController * rView = [[OPERecentlyUsedViewController alloc] initWithOsmKey:osmKey delegate:delegate];
         rView.showRecent = NO;
         viewController = rView;
-        //viewController = [[OPETextViewEditViewController alloc] initWithOsmKey:osmKey delegate:delegate];
     }
     
     

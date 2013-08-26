@@ -27,7 +27,6 @@
 @implementation OPETextEdit
 
 @synthesize osmValue;
-@synthesize textView;
 @synthesize delegate;
 @synthesize osmKey;
 @synthesize recentControl;
@@ -99,21 +98,6 @@
                 self.textField.text = @"www.";
             }
         }
-        else if([type isEqualToString:kTypePhone])
-        {
-            self.textField.keyboardType = UIKeyboardTypeNumberPad;
-            phoneTextFieldArray = [[NSMutableArray alloc]init];
-            for( int i = 0; i<3; i++)
-            {
-                UITextField * tempText = [[UITextField alloc] init];
-                tempText.keyboardType = UIKeyboardTypeNumberPad;
-                [phoneTextFieldArray addObject:tempText];
-            }
-            [[phoneTextFieldArray objectAtIndex:0] becomeFirstResponder];
-            if (osmValue) {
-                [self fillPhoneNumber:osmValue];
-            }
-        }
         else if([type isEqualToString:kTypeEmail])
         {
             self.textField.keyboardType = UIKeyboardTypeEmailAddress;
@@ -134,37 +118,6 @@
         tableView.scrollEnabled = NO;
         [self.view addSubview:tableView];
     }
-    else if ([type isEqualToString:KTypeName])
-    {
-        textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 20, 300, 150)];
-        textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [textView setFont:[UIFont systemFontOfSize:14.0]];
-        textView.returnKeyType = UIReturnKeyDone;
-        self.textView.delegate = self;
-        
-        [[textView layer] setCornerRadius:7.0];
-        textView.text = osmValue;
-        textView.autocapitalizationType = UITextAutocapitalizationTypeWords;
-        
-        [self.view addSubview:self.textView];
-        [textView becomeFirstResponder];
-        
-        
-    }
-    else if ([type isEqualToString:kTypeText]) 
-    {
-        textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 20, 300, 150)];
-        [textView setFont:[UIFont systemFontOfSize:14.0]];
-        textView.returnKeyType = UIReturnKeyDone;
-        self.textView.delegate = self;
-        
-        [[textView layer] setCornerRadius:7.0];
-        textView.text = osmValue;
-        
-        [self.view addSubview:self.textView];
-        [textView becomeFirstResponder];
-        
-    }
     
     
     //Setup recenty used tags
@@ -176,7 +129,7 @@
         
         recentControl = [[UISegmentedControl alloc] initWithItems:recentArray];
         recentControl.frame = CGRectMake(0, 0, 300, 150);
-        recentControl.segmentedControlStyle = UISegmentedControlStylePlain;
+        //recentControl.segmentedControlStyle = UISegmentedControlStylePlain;
         [recentControl addTarget:self action:@selector(didTapRecent:) forControlEvents:UIControlEventValueChanged];
         //CGRect textViewFrame = self.textView.frame;
         //textViewFrame.size.height = 160.0;
@@ -207,48 +160,15 @@
     
     
 }
--(NSArray *)breakUpPhoneNumber:(NSString *)string
-{
-    return [[string stringByReplacingOccurrencesOfString:@"+" withString:@""]  componentsSeparatedByString:@" "];
-}
-
--(void) fillPhoneNumber:(NSString *)string
-{
-    NSArray * phoneArray = [self breakUpPhoneNumber:string];
-    for(int i =0; i<3 && i<[phoneArray count]; i++)
-    {
-        ((UITextField *)[phoneTextFieldArray objectAtIndex:2-i]).text = [phoneArray objectAtIndex:([phoneArray count]-i-1)];
-    }
-}
-
--(NSString *)formatPhoneNumber
-{
-    int cc = [[[phoneTextFieldArray objectAtIndex:0] text] intValue];
-    int ac = [[[phoneTextFieldArray objectAtIndex:1] text] intValue];
-    int ln = [[[phoneTextFieldArray objectAtIndex:2] text] intValue];
-    NSString * finalString = [NSString stringWithFormat:@"+%d %d %d",cc,ac,ln];
-    finalString = [[finalString stringByReplacingOccurrencesOfString:@"+0" withString:@""] stringByReplacingOccurrencesOfString:@" 0" withString:@""];
-    finalString = [finalString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    return finalString;
-}
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    textView.text = osmValue;
-    [textView becomeFirstResponder];
-}
+    textField.text = osmValue;
+    if(textField)
+    {
+        [textField becomeFirstResponder];
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (void) viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
+    }
     
 }
 
@@ -261,17 +181,7 @@
 - (void) saveButtonPressed
 {
     NSString * newOsmValue;
-    if ([type isEqualToString:kTypePhone]) {
-        newOsmValue = [self formatPhoneNumber];
-    }
-    else if(self.textView)
-    {
-        textView.text = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        newOsmValue = textView.text;
-        
-        
-    }
-    else if(self.textField)
+    if(self.textField)
     {
         textField.text = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         newOsmValue = textField.text;
@@ -332,11 +242,7 @@
 -(void) didTapRecent:(UISegmentedControl *)sender
 {
     NSLog(@"Selected: %d",[sender selectedSegmentIndex]);
-    if( self.textView)
-    {
-        self.textView.text = [sender titleForSegmentAtIndex: [sender selectedSegmentIndex]];
-    }
-    else if (self.textField)
+    if (self.textField)
     {
         self.textField.text = [sender titleForSegmentAtIndex: [sender selectedSegmentIndex]];
     }
@@ -346,20 +252,6 @@
 -(void) cancelButtonPressed
 {
     [self.navigationController popViewControllerAnimated:YES];
-}
-- (BOOL) textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    if ([text isEqual:@"\n"])
-    {
-        [self saveButtonPressed];
-        return NO;
-    }
-    else {
-        [recentControl setSelectedSegmentIndex:UISegmentedControlNoSegment];
-    }
-        
-    
-    return YES;
 }
 
 -(BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -387,9 +279,6 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([type isEqualToString:kTypePhone]) {
-        return 3;
-    }
     return 1;
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section

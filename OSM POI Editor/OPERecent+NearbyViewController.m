@@ -34,7 +34,7 @@
     //nearbyDictionary = [self.element nearbyValuesForOsmKey:self.osmKey];
     distances = [OPEOSMSearchManager sortedNearbyValuesForElement:self.element withOsmKey:self.osmKey];
     
-    if (distances) {
+    if ([distances count]) {
         [self.textField resignFirstResponder];
     }
     
@@ -99,12 +99,6 @@
     }
     
     return cell;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

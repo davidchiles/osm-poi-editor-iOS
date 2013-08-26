@@ -36,7 +36,7 @@
         self.textField.keyboardType = UIKeyboardTypeNumberPad;
     }
     
-    if ([recentValues count]) {
+    if ([recentValues count] > 1) {
         [self.textField resignFirstResponder];
     }
     else{
@@ -75,21 +75,6 @@
     }
     return @"";
 }
-/*
--(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    UILabel * label = [[UILabel alloc] initWithFrame:CGRectZero];
-    label.backgroundColor = [UIColor clearColor];
-    label.textColor = [UIColor lightGrayColor];
-    if (section == 0) {
-        NSString * footerText = [OPETagEditViewController sectionFootnoteForOsmKey:self.osmKey];
-        if ([footerText length]) {
-            label.text = footerText;
-        }
-    }
-    return label;
-}
- */
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
