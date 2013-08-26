@@ -26,43 +26,85 @@
 
 @implementation OPEPhoneCell
 
-@synthesize leftText,textField;
+@synthesize leftLabel,textField,delegate,maxTextFieldLength;
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+-(id)initWithTextWidth:(CGFloat)newTextWidth reuseIdentifier:(NSString *)identifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, 100, 30)];
-        leftLabel.backgroundColor = [UIColor clearColor];
-        leftLabel.text = leftText;
-        leftLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:12.0];
-        leftLabel.textColor = [UIColor colorWithRed:.32 green:.4 blue:.57 alpha:1];
-        leftLabel.textAlignment = UITextAlignmentRight;
-        [self addSubview:leftLabel];
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
+    if(self = [super initWithTextWidth:newTextWidth reuseIdentifier:identifier]) {
+        
+        self.textField = [[UITextField alloc] init];
+        self.textField.translatesAutoresizingMaskIntoConstraints = NO;
+        self.textField.keyboardType = UIKeyboardTypeNumberPad;
+        self.textField.font = [UIFont systemFontOfSize:24.0];
+        self.textField.delegate = self;
+        [self.contentView addSubview:self.textField];
+        self.textField.textAlignment = NSTextAlignmentRight;
+        self.maxTextFieldLength = 15;
+        [self needsUpdateConstraints];
     }
     return self;
 }
 
--(void) setLeftText:(NSString *)text
+-(void)updateConstraints
 {
-    [leftLabel setText:text];
-}
-
--(void) setTextField:(UITextField *)txtField
-{
-    txtField.frame = CGRectMake(100, 9, 190, 44);
-    txtField.font = [UIFont systemFontOfSize:24.0];
-    txtField.textAlignment = UITextAlignmentRight;
+    [super updateConstraints];
     
-    [self.contentView addSubview:txtField];
+    NSLayoutConstraint * constraint = [NSLayoutConstraint constraintWithItem:self.textField
+                                                                   attribute:NSLayoutAttributeLeft
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.leftLabel
+                                                                   attribute:NSLayoutAttributeRight
+                                                                  multiplier:1.0
+                                                                    constant:6];
+    [self.contentView addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.textField
+                                              attribute:NSLayoutAttributeCenterY
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.leftLabel
+                                              attribute:NSLayoutAttributeCenterY
+                                             multiplier:1.0
+                                               constant:0];
+    [self.contentView addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.textField
+                                              attribute:NSLayoutAttributeHeight
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.leftLabel
+                                              attribute:NSLayoutAttributeHeight
+                                             multiplier:1.0
+                                               constant:0];
+    [self.contentView addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.textField
+                                              attribute:NSLayoutAttributeRight
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self.contentView
+                                              attribute:NSLayoutAttributeRight
+                                             multiplier:1.0
+                                               constant:-6];
+    [self.contentView addConstraint:constraint];
+    
+    
 }
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+#pragma UITextFieldDelegate
+- (BOOL)textField:(UITextField *)tField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSUInteger oldLength = [textField.text length];
+    NSUInteger replacementLength = [string length];
+    NSUInteger rangeLength = range.length;
+    
+    NSUInteger newLength = oldLength - rangeLength + replacementLength;
+    
+    BOOL returnKey = [string rangeOfString: @"\n"].location != NSNotFound;
+    
+    BOOL result = newLength <= self.maxTextFieldLength || returnKey;
+    
+    
+    if (!result) {
+        return NO;
+    }
+    [self.delegate newValue:[tField.text stringByReplacingCharactersInRange:range withString:string] forCell:self];
+    return result;
 }
 
 @end

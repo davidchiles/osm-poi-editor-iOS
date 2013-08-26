@@ -49,6 +49,10 @@
 #define LOCA_DATA_STRING NSLocalizedString(@"Local Data",@"Button label for signifying using local or downloaded data")
 #define MOVE_NODE_STRING NSLocalizedString(@"Move Node",@"Button label and title for view to move location of node/point")
 
+#define COUNTRY_CODE_STRING NSLocalizedString(@"Contry Code",@"Label for country code entry for phone numbers")
+#define AREA_CODE_STRING NSLocalizedString(@"Area Code","Label for area code entry for phone numbers")
+#define LOCAL_NUMBER_STRING NSLocalizedString(@"Local Number","label for local number entry for phone numbers")
+
 
 
 @end

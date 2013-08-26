@@ -85,7 +85,10 @@
     }
     else if ([@[@"name",@"source",@"note"] containsObject:osmKey])
     {
-        viewController = [[OPETextViewEditViewController alloc] initWithOsmKey:osmKey delegate:delegate];
+        OPERecentlyUsedViewController * rView = [[OPERecentlyUsedViewController alloc] initWithOsmKey:osmKey delegate:delegate];
+        rView.showRecent = NO;
+        viewController = rView;
+        //viewController = [[OPETextViewEditViewController alloc] initWithOsmKey:osmKey delegate:delegate];
     }
     
     

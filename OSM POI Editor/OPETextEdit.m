@@ -23,7 +23,6 @@
 #import "OPETextEdit.h"
 #import <QuartzCore/QuartzCore.h>
 #import "OPEConstants.h"
-#import "OPEPhoneCell.h"
 
 @implementation OPETextEdit
 
@@ -447,46 +446,14 @@
     
     if(indexPath.section == 0)
     {
-        if ([type isEqualToString:kTypePhone]) {
-            OPEPhoneCell * phoneCell;
-            phoneCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
-            if (phoneCell == nil) {
-                phoneCell = [[OPEPhoneCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierText];
-            }
-            switch (indexPath.row) {
-                case 0:
-                    [phoneCell setLeftText:@"Country Code"];
-                    [phoneCell setTextField:[phoneTextFieldArray objectAtIndex:indexPath.row]];
-                    break;
-                case 1:
-                    [phoneCell setLeftText:@"Area Code"];
-                    [phoneCell setTextField:[phoneTextFieldArray objectAtIndex:indexPath.row]];
-                    break;
-                case 2:
-                    [phoneCell setLeftText:@"Local Number"];
-                    [phoneCell setTextField:[phoneTextFieldArray objectAtIndex:indexPath.row]];
-                    break;
-                default:
-                    break;
-            }
-            return phoneCell;
-            
-            
-        }       
-        else {
-            cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
-            }
-            textField.frame = CGRectMake(10, 9, cell.contentView.frame.size.width-10.0, cell.contentView.frame.size.height-9.0);
-            textField.adjustsFontSizeToFitWidth = YES;
-            textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-            [cell.contentView addSubview:textField];
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifierText];
         }
-        
-        
-
-        
+        textField.frame = CGRectMake(10, 9, cell.contentView.frame.size.width-10.0, cell.contentView.frame.size.height-9.0);
+        textField.adjustsFontSizeToFitWidth = YES;
+        textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [cell.contentView addSubview:textField];
     }
     else if( indexPath.section == 1)
     {

@@ -316,6 +316,7 @@
 		633CD877164B28DA00678D58 /* OPEFileUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 633CD876164B28DA00678D58 /* OPEFileUpdater.m */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
 		63570A901640F3C00009D8A3 /* libMapBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63570A8C1640F3B10009D8A3 /* libMapBox.a */; };
+		6362032A17CC050B0031B982 /* OPEOSMTagConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6362032917CC050B0031B982 /* OPEOSMTagConverter.m */; };
 		636549E8171CDE8000F16772 /* OPEGeoCentroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 636549E7171CDE8000F16772 /* OPEGeoCentroid.m */; };
 		6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6370D354151A8BAE0081206A /* libsqlite3.dylib */; };
 		6372F80117419F3100DE5909 /* Optional.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80017419F3100DE5909 /* Optional.json */; };
@@ -785,6 +786,8 @@
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
 		63570A801640F3B10009D8A3 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = "<group>"; };
+		6362032817CC050B0031B982 /* OPEOSMTagConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMTagConverter.h; sourceTree = "<group>"; };
+		6362032917CC050B0031B982 /* OPEOSMTagConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMTagConverter.m; sourceTree = "<group>"; };
 		636549E6171CDE8000F16772 /* OPEGeoCentroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEGeoCentroid.h; sourceTree = "<group>"; };
 		636549E7171CDE8000F16772 /* OPEGeoCentroid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEGeoCentroid.m; sourceTree = "<group>"; };
 		6370D354151A8BAE0081206A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -1436,6 +1439,8 @@
 				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
 				63FCA44F1643363700A28470 /* OPEUtility.h */,
 				63FCA4501643363700A28470 /* OPEUtility.m */,
+				6362032817CC050B0031B982 /* OPEOSMTagConverter.h */,
+				6362032917CC050B0031B982 /* OPEOSMTagConverter.m */,
 				633CD875164B28DA00678D58 /* OPEFileUpdater.h */,
 				633CD876164B28DA00678D58 /* OPEFileUpdater.m */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,
@@ -1599,10 +1604,10 @@
 				63A3D5BE177BBD8C000C6A0D /* OPEButtonCell.m */,
 				63962B1917961FAB008B897C /* OPECommentCell.h */,
 				63962B1A17961FAB008B897C /* OPECommentCell.m */,
-				63292E641593ED670010A11B /* OPEPhoneCell.h */,
-				63292E651593ED670010A11B /* OPEPhoneCell.m */,
 				639F10A817C82669003EB958 /* OPEBaseSpecialCell.h */,
 				639F10A917C82669003EB958 /* OPEBaseSpecialCell.m */,
+				63292E641593ED670010A11B /* OPEPhoneCell.h */,
+				63292E651593ED670010A11B /* OPEPhoneCell.m */,
 				63292E611593ED670010A11B /* OPEBinaryCell.h */,
 				63292E621593ED670010A11B /* OPEBinaryCell.m */,
 				63292E661593ED670010A11B /* OPESpecialCell2.h */,
@@ -2184,6 +2189,7 @@
 				633CD877164B28DA00678D58 /* OPEFileUpdater.m in Sources */,
 				638445EA1665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m in Sources */,
 				63B1B7DB16698FAB006CFD68 /* OPEOpenStreetMapSource.m in Sources */,
+				6362032A17CC050B0031B982 /* OPEOSMTagConverter.m in Sources */,
 				6333D3AC16811F6800BF129E /* OPECoreDataImporter.m in Sources */,
 				6391C67316AE2B370084D579 /* Model.xcdatamodel in Sources */,
 				63F03D2F16B09FD8004AF385 /* OPEManagedOsmElement.m in Sources */,

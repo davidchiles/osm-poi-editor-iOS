@@ -21,13 +21,18 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
+#import "OPEBaseSpecialCell.h"
 
-@interface OPEPhoneCell : UITableViewCell
-{
-    UILabel * leftLabel;
-}
+@protocol OPEPhoneCellDelegate <NSObject>
 
-@property (nonatomic,strong) NSString * leftText;
+-(void)newValue:(NSString *)value forCell:(UITableViewCell *)tableViewCell;
+
+@end
+
+@interface OPEPhoneCell : OPEBaseSpecialCell <UITextFieldDelegate>
+
 @property (nonatomic,strong) UITextField * textField;
+@property (nonatomic) NSUInteger maxTextFieldLength;
+@property (nonatomic,weak) id<OPEPhoneCellDelegate> delegate;
 
 @end

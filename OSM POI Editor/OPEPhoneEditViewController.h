@@ -7,10 +7,14 @@
 //
 
 #import "OPERecentlyUsedViewController.h"
+#import "OPEOSMTagConverter.h"
+#import "OPEPhoneCell.h"
 
-@interface OPEPhoneEditViewController : OPERecentlyUsedViewController
+@interface OPEPhoneEditViewController : OPERecentlyUsedViewController <OPEPhoneCellDelegate>
 {
-    NSMutableArray * phoneTextFieldArray;
+    CGFloat maxLabelLength;
 }
+
+@property (nonatomic) phoneNumber phoneNumber;
 
 @end

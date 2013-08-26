@@ -7,22 +7,13 @@
 //
 
 #import "OPEPhoneEditViewController.h"
-#import "OPEPhoneCell.h"
+#import "OPEStrings.h"
 
 @interface OPEPhoneEditViewController ()
 
 @end
 
 @implementation OPEPhoneEditViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -36,72 +27,97 @@
     OPEPhoneCell * phoneCell = nil;
     phoneCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifierText];
     if (!phoneCell) {
-        phoneCell = [[OPEPhoneCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifierText];
+        phoneCell = [[OPEPhoneCell alloc] initWithTextWidth:maxLabelLength reuseIdentifier:CellIdentifierText];
+        phoneCell.delegate = self;
     }
-    switch (indexPath.row) {
-        case 0:
-            [phoneCell setLeftText:@"Country Code"];
-            [phoneCell setTextField:[phoneTextFieldArray objectAtIndex:indexPath.row]];
-            break;
-        case 1:
-            [phoneCell setLeftText:@"Area Code"];
-            [phoneCell setTextField:[phoneTextFieldArray objectAtIndex:indexPath.row]];
-            break;
-        case 2:
-            [phoneCell setLeftText:@"Local Number"];
-            [phoneCell setTextField:[phoneTextFieldArray objectAtIndex:indexPath.row]];
-            break;
-        default:
-            break;
+    phoneCell.textField.text = @"";
+    if (indexPath.row == 0) {
+        phoneCell.leftLabel.text = COUNTRY_CODE_STRING;
+        phoneCell.maxTextFieldLength = 3;
+        if (self.phoneNumber.countryCode) {
+            phoneCell.textField.text = [NSString stringWithFormat:@"%lld",self.phoneNumber.countryCode];
+        }
     }
+    else if (indexPath.row == 1) {
+        phoneCell.leftLabel.text = AREA_CODE_STRING;
+        if (self.phoneNumber.areaCode) {
+            phoneCell.textField.text = [NSString stringWithFormat:@"%lld",self.phoneNumber.areaCode];
+        }
+    }
+    else if (indexPath.row == 2) {
+        phoneCell.leftLabel.text = LOCAL_NUMBER_STRING;
+        if (self.phoneNumber.localNumber) {
+            phoneCell.textField.text = [NSString stringWithFormat:@"%lld",self.phoneNumber.localNumber];
+        }
+    }
+    
     return phoneCell;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	self.textField.keyboardType = UIKeyboardTypeNumberPad;
-    phoneTextFieldArray = [[NSMutableArray alloc]init];
-    for( int i = 0; i<3; i++)
-    {
-        UITextField * tempText = [[UITextField alloc] init];
-        tempText.keyboardType = UIKeyboardTypeNumberPad;
-        [phoneTextFieldArray addObject:tempText];
-    }
-    [[phoneTextFieldArray objectAtIndex:0] becomeFirstResponder];
+    maxLabelLength = [self getWidth];
     if (self.currentOsmValue) {
-        [self fillPhoneNumber:self.currentOsmValue];
+        self.phoneNumber = [OPEOSMTagConverter phoneNumberWithOsmValue:self.currentOsmValue];
     }
-}
--(NSArray *)breakUpPhoneNumber:(NSString *)string
-{
-    return [[string stringByReplacingOccurrencesOfString:@"+" withString:@""]  componentsSeparatedByString:@" "];
 }
 
--(void) fillPhoneNumber:(NSString *)string
+-(void)viewDidAppear:(BOOL)animated
 {
-    NSArray * phoneArray = [self breakUpPhoneNumber:string];
-    for(int i =0; i<3 && i<[phoneArray count]; i++)
-    {
-        ((UITextField *)[phoneTextFieldArray objectAtIndex:2-i]).text = [phoneArray objectAtIndex:([phoneArray count]-i-1)];
-    }
+    [super viewDidAppear:animated];
+    [self selectTextFieldAtRow:0];
+}
+
+-(void)selectTextFieldAtRow:(NSUInteger)row
+{
+    UITableView * tableView = (UITableView *)[self.view viewWithTag:kTableViewTag];
+    OPEPhoneCell * phoneCell = (OPEPhoneCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0]];
+    [phoneCell.textField becomeFirstResponder];
 }
 
 -(NSString *)newOsmValue
 {
-    int cc = [[[phoneTextFieldArray objectAtIndex:0] text] intValue];
-    int ac = [[[phoneTextFieldArray objectAtIndex:1] text] intValue];
-    int ln = [[[phoneTextFieldArray objectAtIndex:2] text] intValue];
-    NSString * finalString = [NSString stringWithFormat:@"+%d %d %d",cc,ac,ln];
-    finalString = [[finalString stringByReplacingOccurrencesOfString:@"+0" withString:@""] stringByReplacingOccurrencesOfString:@" 0" withString:@""];
-    finalString = [finalString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    return finalString;
+    NSString * newOsmValueString = [OPEOSMTagConverter osmStringWithPhoneNumber:self.phoneNumber];
+    if ([newOsmValueString length]) {
+        return newOsmValueString;
+    }
+    return self.currentOsmValue;
 }
 
-- (void)didReceiveMemoryWarning
+-(float)getWidth;
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    __block CGFloat maxWidth = 0.0;
+    
+    NSArray * textArray = @[AREA_CODE_STRING,COUNTRY_CODE_STRING,LOCAL_NUMBER_STRING];
+    
+    [textArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSString * text = (NSString *)obj;
+        UIFont * font =[UIFont systemFontOfSize:[UIFont systemFontSize]];
+        CGFloat currentWidth = [text sizeWithAttributes:@{NSFontAttributeName:font}].width;
+        maxWidth = MAX(maxWidth, currentWidth);
+    }];
+    
+    return maxWidth;
+    
+}
+
+-(void)newValue:(NSString *)value forCell:(UITableViewCell *)tableViewCell
+{
+    UITableView * tableView = (UITableView *)[self.view viewWithTag:kTableViewTag];
+    NSIndexPath * indexPath = [tableView indexPathForCell:tableViewCell];
+    int64_t num = [value longLongValue];
+    phoneNumber newPhoneNumber = self.phoneNumber;
+    if (indexPath.row == 0) {
+        newPhoneNumber.countryCode = num;
+    }
+    else if (indexPath.row == 1) {
+        newPhoneNumber.areaCode = num;
+    }
+    else if (indexPath.row == 2) {
+        newPhoneNumber.localNumber = num;
+    }
+    self.phoneNumber = newPhoneNumber;
 }
 
 @end

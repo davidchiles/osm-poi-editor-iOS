@@ -366,8 +366,8 @@
     NSString *CellIdentifierCategory = @"CellIdentifierCategory";
     NSString *CellIdentifierSpecialBinary = @"CellIdentifierSpecialBinary";
     NSString *CellIdentifierSpecial2 = @"CellIdentifierSpecial2";
-    NSString *cellIdentifierAddressButton = @"cellIdentifierAddressButton";
-    NSString *cellIdentifierButton = @"cellIdentifierButton";
+    //NSString *cellIdentifierAddressButton = @"cellIdentifierAddressButton";
+    //NSString *cellIdentifierButton = @"cellIdentifierButton";
     
     UITableViewCell *cell;
     

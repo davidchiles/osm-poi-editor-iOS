@@ -19,24 +19,14 @@
         
         textWidth = MAX(newTextWidth, kLeftTextDefaultSize);
         
-        /*
-        if(textWidth > kLeftTextDefaultSize)
-        {
-            leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, textWidth, 30)];
-        }
-        else {
-            leftLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 7, kLeftTextDefaultSize, 30)];
-        }
-         */
-        
-        leftLabel = [[UILabel alloc] init];
-        leftLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        leftLabel.backgroundColor = [UIColor clearColor];
+        self.leftLabel = [[UILabel alloc] init];
+        self.leftLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.leftLabel.backgroundColor = [UIColor clearColor];
         //leftLabel.text = leftText;
-        leftLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
-        leftLabel.textColor = [UIColor colorWithRed:0 green:0.47843137 blue:1 alpha:1];
-        leftLabel.textAlignment = NSTextAlignmentRight;
-        [self.contentView addSubview:leftLabel];
+        self.leftLabel.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+        self.leftLabel.textColor = [UIColor colorWithRed:0 green:0.47843137 blue:1 alpha:1];
+        self.leftLabel.textAlignment = NSTextAlignmentRight;
+        [self.contentView addSubview:self.leftLabel];
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setNeedsUpdateConstraints];
