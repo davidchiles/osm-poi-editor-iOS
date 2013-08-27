@@ -11,6 +11,7 @@
 #import "OPENodeViewController.h"
 #import "OPENoteViewController.h"
 #import "OPEOSMData.h"
+#import "OPEStrings.h"
 
 @interface OPENewNodeSelectViewController ()
 
@@ -33,7 +34,7 @@
 {
     [super viewDidLoad];
     
-    self.title = @"New Node";
+    self.title = NEW_NODE_STRING;
     
     UIBarButtonItem * cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];
     self.navigationItem.leftBarButtonItem = cancelButton;
@@ -55,7 +56,7 @@
     if ([recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]) {
         return 3;
     }
-    return [super numberOfSectionsInTableView:tableView]+1;
+    return [super numberOfSectionsInTableView:tableView];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -78,7 +79,7 @@
 {
     if ([recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]){
         if (section == 0) {
-            return @"Recently Used";
+            return RECENTLY_USED_STRING;
         }
         else if(section == 1)
         {
@@ -86,7 +87,7 @@
         }
         else
         {
-            return @"Categories";
+            return CATEGORIES_STRING;
         }
     }
     else
@@ -110,7 +111,7 @@
     }
     else if (((indexPath.section == 0 && ![recentlyUsedPoisArray count]) || (indexPath.section == 1 && [recentlyUsedPoisArray count]))&& tableView != [[self searchDisplayController] searchResultsTableView])
     {
-        cell.textLabel.text = @"Create New Note";
+        cell.textLabel.text = CREATE_NEW_NOTE_STRING;
         cell.detailTextLabel.text = @"";
     }
     else

@@ -7,6 +7,7 @@
 //
 
 #import "OPERecentlyUsedViewController.h"
+#import "OPEStrings.h"
 
 
 @interface OPERecentlyUsedViewController ()
@@ -64,7 +65,7 @@
 }
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     if (section == 1 && recentValues) {
-        return @"Recently Used";
+        return RECENTLY_USED_STRING;
     }
     return @"";
 }
@@ -140,7 +141,6 @@
     //Recently used Tags
     if ([prefs objectForKey:self.osmKey]) {
         recentArray = [NSArray arrayWithArray:[prefs objectForKey:self.osmKey]];
-        NSLog(@"Recently Used: %@",recentArray);
     }
     return recentArray;
 }
@@ -175,7 +175,6 @@
     NSString * newValue = [super newOsmValue];
     
     [self saveToRecentlyUsed:newValue];
-    
     
     return newValue;
 }

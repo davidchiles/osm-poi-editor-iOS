@@ -49,7 +49,7 @@
 {
     [super viewDidLoad];
     
-    OPEOSMData * osmData = [[OPEOSMData alloc] init];
+    osmData = [[OPEOSMData alloc] init];
     self.categoriesArray = [osmData allSortedCategories];
     self.typesArray = [osmData allTypesIncludeLegacy:NO];
     
@@ -178,7 +178,10 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
      if (tableView == [[self searchDisplayController] searchResultsTableView]) {
-         [self newType: [[searchResults objectAtIndex:indexPath.row] objectForKey:@"poi"]];
+         OPEManagedReferencePoi * poi =[[searchResults objectAtIndex:indexPath.row] objectForKey:@"poi"];
+         [osmData getMetaDataForType:poi];
+         [self newType: poi];
+         
      }
      else {
          OPETypeViewController * typeViewController = [[OPETypeViewController alloc] initWithCategory:[tableView cellForRowAtIndexPath:indexPath].textLabel.text];

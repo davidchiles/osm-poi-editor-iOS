@@ -79,6 +79,7 @@
 -(void)removeOsmKey:(NSString *)osmKey forElement:(OPEManagedOsmElement *)element;
 -(void)setOsmKey:(NSString *)osmKey andValue:(NSString *)osmValue forElement:(OPEManagedOsmElement *)element;
 -(void)setNewType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element;
+-(void)getMetaDataForType:(OPEManagedReferencePoi *)poi;
 -(void)getTagsForType:(OPEManagedReferencePoi *)poi;
 
 -(void)getTypeFor:(OPEManagedOsmElement *)element;

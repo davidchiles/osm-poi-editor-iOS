@@ -882,7 +882,7 @@
 {
     __block NSMutableArray * array = [NSMutableArray array];
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        NSString * sqlString = @"SELECT *,poi.rowid AS id FROM poi,pois_tags WHERE  poi.rowid = pois_tags.poi_id AND editOnly=0";
+        NSString * sqlString = @"SELECT displayName,category,poi.rowid AS id FROM poi,pois_tags WHERE  poi.rowid = pois_tags.poi_id AND editOnly=0 GROUP BY id ORDER BY displayName";
         if (!includeLegacy) {
             sqlString = [sqlString stringByAppendingFormat:@" AND isLegacy = 0"];
         }
@@ -891,20 +891,26 @@
         OPEManagedReferencePoi * poi = nil;
         poi.name = @"";
         while ([set next]) {
-            if (![poi.name isEqualToString:[set stringForColumn:@"displayName"]]) {
-                poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
-                
-                [array addObject: poi];
-            }
-            [poi.tags setObject:[set stringForColumn:@"value"] forKey:[set stringForColumn:@"key"]];
+            poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+            
+            [array addObject: poi];
         }
         
     }];
-    
-    
     return array;
-    
-    
+}
+
+-(void)getMetaDataForType:(OPEManagedReferencePoi *)poi
+{
+    __block OPEManagedReferencePoi * newPOI;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        FMResultSet * set = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi WHERE id = ?",[NSNumber numberWithLongLong:newPOI.rowID]];
+        while ([set next]) {
+            newPOI = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+        }
+    }];
+    [self getTagsForType:newPOI];
+    poi=newPOI;
 }
 
 -(int64_t)newElementId

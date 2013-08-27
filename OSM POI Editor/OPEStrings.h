@@ -50,9 +50,13 @@
 #define MOVE_NODE_STRING NSLocalizedString(@"Move Node",@"Button label and title for view to move location of node/point")
 
 #define COUNTRY_CODE_STRING NSLocalizedString(@"Contry Code",@"Label for country code entry for phone numbers")
-#define AREA_CODE_STRING NSLocalizedString(@"Area Code","Label for area code entry for phone numbers")
-#define LOCAL_NUMBER_STRING NSLocalizedString(@"Local Number","label for local number entry for phone numbers")
+#define AREA_CODE_STRING NSLocalizedString(@"Area Code",@"Label for area code entry for phone numbers")
+#define LOCAL_NUMBER_STRING NSLocalizedString(@"Local Number",@"label for local number entry for phone numbers")
 
+#define RECENTLY_USED_STRING NSLocalizedString(@"Recently Used",@"Section header for recently used values")
+#define CATEGORIES_STRING NSLocalizedString(@"Categories",@"Section header for list of categories")
+#define CREATE_NEW_NOTE_STRING NSLocalizedString(@"Create New Note",@"label for creating a new note")
+#define NEW_NODE_STRING NSLocalizedString(@"New Node",@"Title for view for creating a new node")
 
 
 @end

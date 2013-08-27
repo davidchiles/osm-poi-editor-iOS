@@ -22,10 +22,13 @@
 
 #import <UIKit/UIKit.h>
 #import "OPETypeViewController.h"
+#import "OPEOSMData.h"
 
 @interface OPECategoryViewController : UIViewController <OPETypeViewControllerDelegate,UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate>
 {
     NSArray * searchArray;
+    OPEOSMData * osmData;
+    
 }
 
 //@property (nonatomic,strong) UITableView * categoriesTableView;
