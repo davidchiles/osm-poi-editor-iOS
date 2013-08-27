@@ -33,6 +33,8 @@
 #import "OPECoreDataImporter.h"
 #import "OPEMRUtility.h"
 
+#import "OPEOpeningHoursParser.h"
+
 @implementation OPEAppDelegate
 
 @synthesize window = _window;
@@ -40,6 +42,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [OPEOpeningHoursParser test];
 #ifdef CRITTERCISM_ENABLED
     [Crittercism enableWithAppID: CRITTERCISM_APP_ID];
 #endif

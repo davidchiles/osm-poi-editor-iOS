@@ -360,6 +360,7 @@
 		63D0A5D517011659007A595E /* OPETextEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D417011659007A595E /* OPETextEditViewController.m */; };
 		63D0A5D8170119B5007A595E /* OPERecentlyUsedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D7170119B4007A595E /* OPERecentlyUsedViewController.m */; };
 		63D0A5DB17011F18007A595E /* OPEOsmValueTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5DA17011F17007A595E /* OPEOsmValueTextField.m */; };
+		63E17ADA17CD190200C24868 /* OPEOpeningHoursParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E17AD917CD190200C24868 /* OPEOpeningHoursParser.m */; };
 		63E2796814E1F274009D02BD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796714E1F274009D02BD /* CFNetwork.framework */; };
 		63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796914E1F281009D02BD /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -863,6 +864,8 @@
 		63D0A5D7170119B4007A595E /* OPERecentlyUsedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPERecentlyUsedViewController.m; sourceTree = "<group>"; };
 		63D0A5D917011F17007A595E /* OPEOsmValueTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOsmValueTextField.h; sourceTree = "<group>"; };
 		63D0A5DA17011F17007A595E /* OPEOsmValueTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOsmValueTextField.m; sourceTree = "<group>"; };
+		63E17AD817CD190200C24868 /* OPEOpeningHoursParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOpeningHoursParser.h; sourceTree = "<group>"; };
+		63E17AD917CD190200C24868 /* OPEOpeningHoursParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpeningHoursParser.m; sourceTree = "<group>"; };
 		63E2796714E1F274009D02BD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		63E2796914E1F281009D02BD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -1436,6 +1439,7 @@
 				6332CB3716261E470088F5B0 /* Model */,
 				639F10A717C82548003EB958 /* Cells */,
 				63292E631593ED670010A11B /* OPEConstants.h */,
+				63E17AD417CD18E000C24868 /* opening_hours */,
 				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
 				63FCA44F1643363700A28470 /* OPEUtility.h */,
 				63FCA4501643363700A28470 /* OPEUtility.m */,
@@ -1664,6 +1668,15 @@
 				63D0A5C51700F03C007A595E /* TextEdit */,
 			);
 			name = TagEdit;
+			sourceTree = "<group>";
+		};
+		63E17AD417CD18E000C24868 /* opening_hours */ = {
+			isa = PBXGroup;
+			children = (
+				63E17AD817CD190200C24868 /* OPEOpeningHoursParser.h */,
+				63E17AD917CD190200C24868 /* OPEOpeningHoursParser.m */,
+			);
+			name = opening_hours;
 			sourceTree = "<group>";
 		};
 		63E38FE3170CE6BD006F35D0 /* UserVoice */ = {
@@ -2257,6 +2270,7 @@
 				63E5E3AC176943040064A780 /* ActionSheetCustomPicker.m in Sources */,
 				63E5E3AD176943040064A780 /* ActionSheetDatePicker.m in Sources */,
 				63E5E3AE176943040064A780 /* ActionSheetDistancePicker.m in Sources */,
+				63E17ADA17CD190200C24868 /* OPEOpeningHoursParser.m in Sources */,
 				63E5E3AF176943040064A780 /* ActionSheetStringPicker.m in Sources */,
 				63E5E3B0176943040064A780 /* DistancePickerView.m in Sources */,
 				63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */,
