@@ -22,11 +22,20 @@
 
 @synthesize startDateComponent,endDateComponent;
 
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"%d:%d - %d:%d",startDateComponent.hour,startDateComponent.minute,endDateComponent.hour,endDateComponent.minute];
+}
+
 @end
 
 @implementation OPEOpeningHourRule
 
 @synthesize monthsArray,daysOfWeekArray,timeRangesArray;
+
+-(NSString *)description {
+    return [NSString stringWithFormat:@"%@ \n%@ \n%@",monthsArray,daysOfWeekArray,timeRangesArray];
+}
 
 @end
 
@@ -76,12 +85,12 @@
     NSMutableArray * blocks = [NSMutableArray array];
     
     [rules enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSArray * tokenizedArray = [self tokenize:string];
-        [self parseTokens:tokenizedArray];
+        NSArray * tokenizedArray = [self tokenize:obj];
+        [blocks addObject:[self parseTokens:tokenizedArray]];
     }];
     
     
-    
+    NSLog(@"blocks: %@",blocks);
     
 }
 
@@ -100,6 +109,9 @@
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[TWENTY_FOUR_SEVEN_STRING]]) {
             
+            index = index+1;
+        }
+        else {
             index = index+1;
         }
     }
@@ -298,7 +310,7 @@
 
 +(void)test
 {
-    NSArray * testArray = @[@"24/7",@"Mo-We 10:30-15:00",@"Th-Tu 12:00-13:00,14:00-15:00"];
+    NSArray * testArray = @[@"24/7",@"Mo-We 10:30-15:00",@"Th-Tu 12:00-13:00,14:00-15:00",@"Tu-Su 08:00-15:00;Sa 08:00-12:00"];
     
     [testArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [[[OPEOpeningHoursParser alloc] init] parseString:obj success:^(NSArray *blocks) {
