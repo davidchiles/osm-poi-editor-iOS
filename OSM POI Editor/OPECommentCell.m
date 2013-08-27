@@ -46,7 +46,7 @@
         //action label
         self.commentActionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         self.commentActionLabel.font = [UIFont systemFontOfSize:14.0];
-        self.commentActionLabel.textAlignment = UITextAlignmentRight;
+        self.commentActionLabel.textAlignment = NSTextAlignmentRight;
         self.commentActionLabel.backgroundColor = [UIColor clearColor];
         [commentContents addSubview:self.commentActionLabel];
     }
@@ -127,7 +127,7 @@
     messageTextLabel.backgroundColor = [UIColor clearColor];
     messageTextLabel.numberOfLines = 0;
     //messageTextLabel.dataDetectorTypes = UIDataDetectorTypeLink;
-    messageTextLabel.lineBreakMode = UILineBreakModeWordWrap;
+    messageTextLabel.lineBreakMode = NSLineBreakByWordWrapping;
     messageTextLabel.font = [UIFont systemFontOfSize:16.0];
     
     return messageTextLabel;

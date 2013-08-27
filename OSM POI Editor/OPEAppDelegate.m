@@ -44,7 +44,7 @@
     [Crittercism enableWithAppID: CRITTERCISM_APP_ID];
 #endif
     
-    application.statusBarStyle = UIStatusBarStyleBlackOpaque;//FIXME background for status bar
+    application.statusBarStyle = UIStatusBarStyleLightContent;//FIXME background for status bar
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     

@@ -120,7 +120,7 @@
         self.managedOsmElement.typeID = originalTypeID;
         [self.osmData getTypeFor:managedOsmElement];
     }
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - View lifecycle
@@ -816,7 +816,7 @@
 
 -(void)dismissViewController
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

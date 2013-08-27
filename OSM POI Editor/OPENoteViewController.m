@@ -173,7 +173,7 @@
 
 -(void)doneButtonPressed:(id)sender
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)commentButtonPressed:(id)sender

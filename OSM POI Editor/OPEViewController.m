@@ -808,7 +808,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     //FIXME
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     [super viewDidAppear:animated];
 }
 

@@ -50,7 +50,7 @@
         typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(2, 2, frame.size.width - 6, 20)];
         typeLabel.text = typeString;
         typeLabel.numberOfLines = 1;
-        typeLabel.minimumFontSize = 8.;
+        typeLabel.minimumScaleFactor = 8;
         typeLabel.adjustsFontSizeToFitWidth = YES;
         
         [self addSubview:typeLabel];

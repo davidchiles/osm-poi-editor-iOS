@@ -37,7 +37,7 @@
         self.textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         textLabel.backgroundColor = [UIColor clearColor];
         textLabel.textColor = [UIColor whiteColor];
-        textLabel.textAlignment = UITextAlignmentCenter;
+        textLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.textLabel];   
     }
     return self;
@@ -72,7 +72,7 @@
             frame.origin.x = activityIndicatorView.frame.size.width+activityIndicatorView.frame.origin.x+4;
             frame.size.width = self.frame.size.width - frame.origin.x;
             self.textLabel.frame=frame;
-            self.textLabel.textAlignment = UITextAlignmentLeft;
+            self.textLabel.textAlignment = NSTextAlignmentLeft;
             
             [activityIndicatorView startAnimating];
             
