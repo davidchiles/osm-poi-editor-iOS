@@ -904,7 +904,9 @@
 {
     __block OPEManagedReferencePoi * newPOI;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        FMResultSet * set = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi WHERE id = ?",[NSNumber numberWithLongLong:newPOI.rowID]];
+        db.logsErrors = YES;
+        db.traceExecution =YES;
+        FMResultSet * set = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi WHERE id = ?",[NSNumber numberWithLongLong:poi.rowID]];
         while ([set next]) {
             newPOI = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
         }
