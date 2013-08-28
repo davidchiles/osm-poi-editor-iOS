@@ -8,11 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@interface OPEDateComponents : NSDateComponents
+
+@property (nonatomic) BOOL isSunrise;
+@property (nonatomic) BOOL isSunset;
+
+@end
 
 @interface OPEDateRange : NSObject
 
-@property (nonatomic,strong) NSDateComponents * startDateComponent;
-@property (nonatomic,strong) NSDateComponents * endDateComponent;
+@property (nonatomic,strong) OPEDateComponents * startDateComponent;
+@property (nonatomic,strong) OPEDateComponents * endDateComponent;
 
 @end
 
@@ -22,6 +28,8 @@
 @property (nonatomic,strong) NSArray * monthsArray;
 @property (nonatomic,strong) NSArray * daysOfWeekArray;
 @property (nonatomic,strong) NSArray * timeRangesArray;
+
+@property (nonatomic) BOOL isOpen;
 
 @end
 

@@ -15,8 +15,30 @@
 #define WEEKDAY_KEY @"weekday"
 #define NUMBER_KEY @"number"
 #define TIME_SEPERATOR_KEY @"timeSeperatorKey"
+#define SUN_KEY @"sun"
 
 #import "OPEOpeningHoursParser.h"
+
+@implementation OPEDateComponents
+@synthesize isSunrise=_isSunrise;
+@synthesize isSunset=_isSunset;
+
+/*
+-(BOOL)isSunset
+{
+    if (!_isSunset) {
+        return NO;
+    }
+    return _isSunset;
+}
+-(BOOL)isSunrise {
+    if (!_isSunrise) {
+        return NO;
+    }
+    return _isSunset;
+}*/
+
+@end
 
 @implementation OPEDateRange
 
@@ -104,7 +126,7 @@
         if ([self matchTokens:tokens atIndex:index matches:@[WEEKDAY_KEY]]) {
             rule.daysOfWeekArray = [self parseWeekdayRangeWithTokens:tokens atIndex:&index];
         }
-        else if ([self matchTokens:tokens atIndex:index matches:@[NUMBER_KEY,TIME_SEPERATOR_KEY]]) {
+        else if ([self matchTokens:tokens atIndex:index matches:@[NUMBER_KEY,TIME_SEPERATOR_KEY]] || [self matchTokens:tokens atIndex:index matches:@[SUN_KEY]]) {
             rule.timeRangesArray = [self parseTimeRangeWithTokens:tokens atIndex:&index];
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[TWENTY_FOUR_SEVEN_STRING]]) {
@@ -173,11 +195,11 @@
         if ([self matchTokens:tokens atIndex:*index matches:@[NUMBER_KEY, TIME_SEPERATOR_KEY, NUMBER_KEY, @"-", NUMBER_KEY, TIME_SEPERATOR_KEY, NUMBER_KEY]]) {
             
             
-            NSDateComponents * startTimeComponent = [[NSDateComponents alloc] init];
+            OPEDateComponents * startTimeComponent = [[OPEDateComponents alloc] init];
             startTimeComponent.hour = [((OPEOpeningHoursToken *)tokens[*index]).value intValue];
             startTimeComponent.minute = [((OPEOpeningHoursToken *)tokens[*index+2]).value intValue];
             
-            NSDateComponents * endTimeComponent = [[NSDateComponents alloc] init];
+            OPEDateComponents * endTimeComponent = [[OPEDateComponents alloc] init];
             endTimeComponent.hour = [((OPEOpeningHoursToken *)tokens[*index+4]).value intValue];
             endTimeComponent.minute = [((OPEOpeningHoursToken *)tokens[*index+6]).value intValue];
             
@@ -188,6 +210,74 @@
             [timeRangesArray addObject:timeRange];
             
             *index = *index+7;
+        }
+        else if ([self matchTokens:tokens atIndex:*index matches:@[NUMBER_KEY, TIME_SEPERATOR_KEY, NUMBER_KEY, @"-", SUN_KEY]]) {
+            
+            OPEDateComponents * startTimeComponent = [[OPEDateComponents alloc] init];
+            startTimeComponent.hour = [((OPEOpeningHoursToken *)tokens[*index]).value intValue];
+            startTimeComponent.minute = [((OPEOpeningHoursToken *)tokens[*index+2]).value intValue];
+            
+            OPEDateComponents * endTimeComponent = [[OPEDateComponents alloc] init];
+            if([((OPEOpeningHoursToken *)tokens[*index+2]).value isEqualToString:SUNRISE_STRING]) {
+                endTimeComponent.isSunrise = YES;
+            }
+            else {
+                endTimeComponent.isSunset = YES;
+            }
+            
+            OPEDateRange * timeRange = [[OPEDateRange alloc] init];
+            timeRange.startDateComponent = startTimeComponent;
+            timeRange.endDateComponent = endTimeComponent;
+            
+            [timeRangesArray addObject:timeRange];
+            *index = *index+5;
+        }
+        else if ([self matchTokens:tokens atIndex:*index matches:@[SUN_KEY, @"-", NUMBER_KEY, TIME_SEPERATOR_KEY, NUMBER_KEY]]) {
+            
+            OPEDateComponents * startTimeComponent = [[OPEDateComponents alloc] init];
+            if([((OPEOpeningHoursToken *)tokens[*index]).value isEqualToString:SUNRISE_STRING]) {
+                startTimeComponent.isSunrise = YES;
+            }
+            else {
+                startTimeComponent.isSunset = YES;
+            }
+            
+            OPEDateComponents * endTimeComponent = [[OPEDateComponents alloc] init];
+            endTimeComponent.hour = [((OPEOpeningHoursToken *)tokens[*index+4]).value intValue];
+            endTimeComponent.minute = [((OPEOpeningHoursToken *)tokens[*index+6]).value intValue];
+            
+            OPEDateRange * timeRange = [[OPEDateRange alloc] init];
+            timeRange.startDateComponent = startTimeComponent;
+            timeRange.endDateComponent = endTimeComponent;
+            
+            [timeRangesArray addObject:timeRange];
+            *index = *index+5;
+            
+        }
+        else if ([self matchTokens:tokens atIndex:*index matches:@[SUN_KEY, @"-", SUN_KEY]]) {
+            
+            OPEDateComponents * startTimeComponent = [[OPEDateComponents alloc] init];
+            if([((OPEOpeningHoursToken *)tokens[*index]).value isEqualToString:SUNRISE_STRING]) {
+                startTimeComponent.isSunrise = YES;
+            }
+            else {
+                startTimeComponent.isSunset = YES;
+            }
+            
+            OPEDateComponents * endTimeComponent = [[OPEDateComponents alloc] init];
+            if([((OPEOpeningHoursToken *)tokens[*index+2]).value isEqualToString:SUNRISE_STRING]) {
+                endTimeComponent.isSunrise = YES;
+            }
+            else {
+                endTimeComponent.isSunset = YES;
+            }
+            
+            OPEDateRange * timeRange = [[OPEDateRange alloc] init];
+            timeRange.startDateComponent = startTimeComponent;
+            timeRange.endDateComponent = endTimeComponent;
+            
+            [timeRangesArray addObject:timeRange];
+            *index = *index+3;
         }
         else {
             NSLog(@"Time Range Error at %d",*index);
@@ -232,6 +322,11 @@
         if ((foundRange = [self firstMatchForString:string withRegularExpression:@"^(?:24/7)"]).location != NSNotFound) {
             NSString * foundString = [string substringWithRange:foundRange];
             [tokens addObject:[OPEOpeningHoursToken tokenWithType:TWENTY_FOUR_SEVEN_STRING value:foundString]];
+            string = [string substringFromIndex:foundRange.length];
+        }
+        else if ((foundRange = [self firstMatchForString:string withRegularExpression:@"^(?:sunrise|sunset)"]).location != NSNotFound) {
+            NSString * foundString = [string substringWithRange:foundRange];
+            [tokens addObject:[OPEOpeningHoursToken tokenWithType:SUN_KEY value:foundString]];
             string = [string substringFromIndex:foundRange.length];
         }
         else if ((foundRange = [self firstMatchForString:string withRegularExpression:@"^(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)"]).location != NSNotFound) {
@@ -310,7 +405,7 @@
 
 +(void)test
 {
-    NSArray * testArray = @[@"24/7",@"Mo-We 10:30-15:00",@"Th-Tu 12:00-13:00,14:00-15:00",@"Tu-Su 08:00-15:00;Sa 08:00-12:00"];
+    NSArray * testArray = @[@"Mo Sunrise-Sunset;Tu 08:00-Sunset",@"24/7",@"Mo-We 10:30-15:00",@"Th-Tu 12:00-13:00,14:00-15:00",@"Tu-Su 08:00-15:00;Sa 08:00-12:00"];
     
     [testArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [[[OPEOpeningHoursParser alloc] init] parseString:obj success:^(NSArray *blocks) {
