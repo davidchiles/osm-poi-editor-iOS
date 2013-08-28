@@ -53,7 +53,16 @@
 
 @implementation OPEOpeningHourRule
 
-@synthesize monthsArray,daysOfWeekArray,timeRangesArray;
+@synthesize monthsArray,daysOfWeekArray,timeRangesArray,isTwentyFourSeven;
+@synthesize isOpen =_isOpen;
+
+-(id)init {
+    if (self = [super init]) {
+        self.isOpen = YES;
+        self.isTwentyFourSeven = NO;
+    }
+    return self;
+}
 
 -(NSString *)description {
     return [NSString stringWithFormat:@"%@ \n%@ \n%@",monthsArray,daysOfWeekArray,timeRangesArray];
@@ -130,7 +139,7 @@
             rule.timeRangesArray = [self parseTimeRangeWithTokens:tokens atIndex:&index];
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[TWENTY_FOUR_SEVEN_STRING]]) {
-            
+            rule.isTwentyFourSeven = YES;
             index = index+1;
         }
         else {

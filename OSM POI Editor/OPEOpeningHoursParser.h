@@ -30,6 +30,7 @@
 @property (nonatomic,strong) NSArray * timeRangesArray;
 
 @property (nonatomic) BOOL isOpen;
+@property (nonatomic) BOOL isTwentyFourSeven;
 
 @end
 
