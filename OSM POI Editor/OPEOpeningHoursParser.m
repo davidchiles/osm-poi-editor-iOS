@@ -53,22 +53,22 @@
 
 @implementation OPEOpeningHourRule
 
-@synthesize monthsArray,daysOfWeekArray,timeRangesArray,isTwentyFourSeven;
+@synthesize monthsOrderedSet,daysOfWeekOrderedSet,timeRangesOrderedSet,isTwentyFourSeven;
 @synthesize isOpen =_isOpen;
 
 -(id)init {
     if (self = [super init]) {
         self.isOpen = YES;
         self.isTwentyFourSeven = NO;
-        self.monthsArray = [NSArray array];
-        self.timeRangesArray = [NSArray array];
-        self.daysOfWeekArray = [NSArray array];
+        self.monthsOrderedSet = [NSOrderedSet orderedSet];
+        self.timeRangesOrderedSet = [NSOrderedSet orderedSet];
+        self.daysOfWeekOrderedSet = [NSOrderedSet orderedSet];
     }
     return self;
 }
 
 -(NSString *)description {
-    return [NSString stringWithFormat:@"%@ \n%@ \n%@",monthsArray,daysOfWeekArray,timeRangesArray];
+    return [NSString stringWithFormat:@"%@ \n%@ \n%@",monthsOrderedSet,daysOfWeekOrderedSet,timeRangesOrderedSet];
 }
 
 @end
@@ -105,7 +105,7 @@
 -(void)parseString:(NSString *)string
            success:(void (^)(NSArray *blocks))success
            failure:(void (^)(NSError *error))failure {
-    
+     NSLog(@"Original: %@",string);
     string = string.lowercaseString;
     
     if ([self containsMonth:string]||[self containsOff:string]) {
@@ -125,7 +125,8 @@
     
     
     //NSLog(@"blocks: %@",blocks);
-    NSLog(@"Round Trip %@",[self stringWithRules:blocks]);
+   
+    NSLog(@"Round Trip: %@",[self stringWithRules:blocks]);
     
 }
 
@@ -137,10 +138,10 @@
     while (index < [tokens count]) {
         //NSInteger idx = [index integerValue];
         if ([self matchTokens:tokens atIndex:index matches:@[WEEKDAY_KEY]]) {
-            rule.daysOfWeekArray = [self parseWeekdayRangeWithTokens:tokens atIndex:&index];
+            rule.daysOfWeekOrderedSet = [self parseWeekdayRangeWithTokens:tokens atIndex:&index];
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[NUMBER_KEY,TIME_SEPERATOR_KEY]] || [self matchTokens:tokens atIndex:index matches:@[SUN_KEY]]) {
-            rule.timeRangesArray = [self parseTimeRangeWithTokens:tokens atIndex:&index];
+            rule.timeRangesOrderedSet = [self parseTimeRangeWithTokens:tokens atIndex:&index];
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[TWENTY_FOUR_SEVEN_STRING]]) {
             rule.isTwentyFourSeven = YES;
@@ -153,9 +154,9 @@
     return rule;
 }
 
--(NSArray *)parseWeekdayRangeWithTokens:(NSArray *)tokens atIndex:(NSInteger *)index
+-(NSOrderedSet *)parseWeekdayRangeWithTokens:(NSArray *)tokens atIndex:(NSInteger *)index
 {
-    NSMutableArray * weekDayArray = [NSMutableArray array];
+    NSMutableOrderedSet * weekDayOrderedSet = [NSMutableOrderedSet orderedSet];
     while (*index < [tokens count]) {
         //NSInteger idx = [index integerValue];
         if ([self matchTokens:tokens atIndex:*index matches:@[WEEKDAY_KEY,@"-",WEEKDAY_KEY]]) {
@@ -167,7 +168,7 @@
                 for (NSInteger idx = start; idx<=end; idx++) {
                     NSDateComponents * weekDay = [[NSDateComponents alloc] init];
                     weekDay.weekday =idx +1;
-                    [weekDayArray addObject:weekDay];
+                    [weekDayOrderedSet addObject:weekDay];
                 }
                 
             };
@@ -181,28 +182,30 @@
                 findWeekDayRangeWithStartFinish(startWeekDayIndex,endWeekDayIndex);
             }
             
-            *index = *index+2;
+            *index = *index+3;
         }
         else if ([self matchTokens:tokens atIndex:*index matches:@[WEEKDAY_KEY]])
         {
             NSInteger weekDayIndex = [[self weekdaysArray] indexOfObject:((OPEOpeningHoursToken *)tokens[*index]).value];
             NSDateComponents * weekDay = [[NSDateComponents alloc] init];
             weekDay.weekday =weekDayIndex +1;
-            [weekDayArray addObject:weekDayArray];
+            [weekDayOrderedSet addObject:weekDay];
+            *index = *index+1;
+        }
+        
+        
+        if (![self matchTokens:tokens atIndex:*index matches:@[@","]]) {
+            break;
         }
         *index = *index+1;
         
-        if (![self matchTokens:tokens atIndex:index matches:@[@","]]) {
-            break;
-        }
-        
     }
-    return weekDayArray;
+    return weekDayOrderedSet;
     
 }
--(NSArray *)parseTimeRangeWithTokens:(NSArray *)tokens atIndex:(NSInteger *)index
+-(NSOrderedSet *)parseTimeRangeWithTokens:(NSArray *)tokens atIndex:(NSInteger *)index
 {
-    NSMutableArray * timeRangesArray = [NSMutableArray array];
+    NSMutableOrderedSet * timeRangesOrderedSet = [NSMutableOrderedSet orderedSet];
     while( *index<[tokens count]) {
         //NSInteger idx = [index integerValue];
         if ([self matchTokens:tokens atIndex:*index matches:@[NUMBER_KEY, TIME_SEPERATOR_KEY, NUMBER_KEY, @"-", NUMBER_KEY, TIME_SEPERATOR_KEY, NUMBER_KEY]]) {
@@ -220,7 +223,7 @@
             timeRange.startDateComponent = startTimeComponent;
             timeRange.endDateComponent = endTimeComponent;
             
-            [timeRangesArray addObject:timeRange];
+            [timeRangesOrderedSet addObject:timeRange];
             
             *index = *index+7;
         }
@@ -242,7 +245,7 @@
             timeRange.startDateComponent = startTimeComponent;
             timeRange.endDateComponent = endTimeComponent;
             
-            [timeRangesArray addObject:timeRange];
+            [timeRangesOrderedSet addObject:timeRange];
             *index = *index+5;
         }
         else if ([self matchTokens:tokens atIndex:*index matches:@[SUN_KEY, @"-", NUMBER_KEY, TIME_SEPERATOR_KEY, NUMBER_KEY]]) {
@@ -263,7 +266,7 @@
             timeRange.startDateComponent = startTimeComponent;
             timeRange.endDateComponent = endTimeComponent;
             
-            [timeRangesArray addObject:timeRange];
+            [timeRangesOrderedSet addObject:timeRange];
             *index = *index+5;
             
         }
@@ -289,7 +292,7 @@
             timeRange.startDateComponent = startTimeComponent;
             timeRange.endDateComponent = endTimeComponent;
             
-            [timeRangesArray addObject:timeRange];
+            [timeRangesOrderedSet addObject:timeRange];
             *index = *index+3;
         }
         else {
@@ -300,7 +303,7 @@
         }
         *index = *index+1;
     }
-    return timeRangesArray;
+    return timeRangesOrderedSet;
 }
 
 //Takes tokes start search for pattern from inded @["weekday","-","weekday"] OR @[@"number", @"timesep", @"number", @"-", @"number", @"timesep", @"number"]
@@ -392,16 +395,16 @@
             [ruleStringArray addObject:TWENTY_FOUR_SEVEN_STRING];
         }
         
-        if ([rule.monthsArray count]) {
-            [ruleStringArray addObject:[self stringWithMonthsArray:rule.monthsArray]];
+        if ([rule.monthsOrderedSet count]) {
+            [ruleStringArray addObject:[self stringWithmonthsOrderedSet:rule.monthsOrderedSet]];
         }
         
-        if ([rule.daysOfWeekArray count]) {
-            [ruleStringArray addObject:[self stringWithDaysOfWeekArray:rule.daysOfWeekArray]];
+        if ([rule.daysOfWeekOrderedSet count]) {
+            [ruleStringArray addObject:[self stringWithdaysOfWeekOrderedSet:rule.daysOfWeekOrderedSet]];
         }
         
-        if ([rule.timeRangesArray count]) {
-            [ruleStringArray addObject:[self stringWithtimeRangesArray:rule.timeRangesArray]];
+        if ([rule.timeRangesOrderedSet count]) {
+            [ruleStringArray addObject:[self stringWithtimeRangesOrderedSet:rule.timeRangesOrderedSet]];
         }
         
         [resultStrings addObject:[ruleStringArray componentsJoinedByString:@" "]];
@@ -411,42 +414,130 @@
     return [resultStrings componentsJoinedByString:@"; "];
 }
 
--(NSString *)stringWithMonthsArray:(NSArray *)monthsArray {
+-(NSString *)stringWithmonthsOrderedSet:(NSOrderedSet *)monthsOrderedSet {
     NSMutableArray * stringsArray = [NSMutableArray array];
+    if ([monthsOrderedSet count]>6 || ![monthsOrderedSet count]) {
+        return @"";
+    }
     
-    return [stringsArray componentsJoinedByString:@", "];
-}
--(NSString *)stringWithDaysOfWeekArray:(NSArray *)DaysOfWeekArray {
-    NSMutableArray * stringsArray = [NSMutableArray array];
-    NSArray * sortedArray = [DaysOfWeekArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        NSDateComponents * date1 = obj1;
-        NSDateComponents * date2 = obj2;
-        if (date1.weekday > date2.weekday) {
-            return (NSComparisonResult)NSOrderedDescending;
-        }
-        
-        if (date1.weekday < date2.weekday) {
-            return (NSComparisonResult)NSOrderedAscending;
-        }
-        return (NSComparisonResult)NSOrderedSame;
+    NSMutableArray * numbers = [NSMutableArray array];
+    [monthsOrderedSet enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [numbers addObject:[NSNumber numberWithInteger:((NSDateComponents *)obj).weekday]];
     }];
+    NSMutableArray * ranges = [[self intRangesFor:numbers] mutableCopy];
+    NSRange firstRange = [ranges[0] rangeValue];
+    NSRange lastRange = [[ranges lastObject] rangeValue];
+    //check wrap around fr-tu
+    if (firstRange.location == 1 && (lastRange.location +lastRange.length)==13) {
+        [ranges removeObjectAtIndex:0];
+        [ranges removeLastObject];
+        lastRange.length += firstRange.length;
+        [ranges addObject:[NSValue valueWithRange:lastRange]];
+    }
     
+    [ranges enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSRange range = [((NSValue *)obj) rangeValue];
+        if (range.length == 1) {
+            [stringsArray addObject:[[self weekdaysArray][range.location-1] capitalizedString]];
+        }
+        else if(range.length > 1)
+        {
+            NSInteger start = range.location-1;
+            NSInteger end = (start+range.length-1)%12;
+            NSString * string = [NSString stringWithFormat:@"%@-%@",[[self weekdaysArray][start] capitalizedString],[[self weekdaysArray][end] capitalizedString]];
+            [stringsArray addObject:string];
+        }
+    }];
+    return [stringsArray componentsJoinedByString:@","];
+}
+-(NSString *)stringWithdaysOfWeekOrderedSet:(NSOrderedSet *)daysOfWeekOrderedSet {
     
-    return [stringsArray componentsJoinedByString:@", "];
+    NSMutableArray * stringsArray = [NSMutableArray array];
+    if ([daysOfWeekOrderedSet count]>6 || ![daysOfWeekOrderedSet count]) {
+        return @"";
+    }
+    
+    NSMutableArray * numbers = [NSMutableArray array];
+    [daysOfWeekOrderedSet enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [numbers addObject:[NSNumber numberWithInteger:((NSDateComponents *)obj).weekday]];
+    }];
+    NSMutableArray * ranges = [[self intRangesFor:numbers] mutableCopy];
+    NSRange firstRange = [ranges[0] rangeValue];
+    NSRange lastRange = [[ranges lastObject] rangeValue];
+    //check wrap around fr-tu
+    if (firstRange.location == 1 && (lastRange.location +lastRange.length)==8) {
+        [ranges removeObjectAtIndex:0];
+        [ranges removeLastObject];
+        lastRange.length += firstRange.length;
+        [ranges addObject:[NSValue valueWithRange:lastRange]];
+    }
+    
+    [ranges enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSRange range = [((NSValue *)obj) rangeValue];
+        if (range.length == 1) {
+            [stringsArray addObject:[[self weekdaysArray][range.location-1] capitalizedString]];
+        }
+        else if(range.length > 1)
+        {
+            NSInteger start = range.location-1;
+            NSInteger end = (start+range.length-1)%7;
+            NSString * string = [NSString stringWithFormat:@"%@-%@",[[self weekdaysArray][start] capitalizedString],[[self weekdaysArray][end] capitalizedString]];
+            [stringsArray addObject:string];
+        }
+    }];
+    return [stringsArray componentsJoinedByString:@","];
     
 }
--(NSString *)stringWithtimeRangesArray:(NSArray *)timeRangesArray {
+-(NSString *)stringWithtimeRangesOrderedSet:(NSOrderedSet *)timeRangesOrderedSet {
     NSMutableArray * stringsArray = [NSMutableArray array];
     
-    [timeRangesArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [timeRangesOrderedSet enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         OPEDateRange * dateRange = (OPEDateRange *)obj;
         [stringsArray addObject:[NSString stringWithFormat:@"%@",dateRange]];
     }];
     
-    return [stringsArray componentsJoinedByString:@", "];
+    return [stringsArray componentsJoinedByString:@","];
 }
 
--(NSArray *)monthsArray
+//given array of nsnumbers find ranges and numbers that are equal
+-(NSArray *)intRangesFor:(NSArray *)array
+{
+    if (![array count]) {
+        return  @[];
+    }
+    else if([array count] == 1)
+    {
+        NSInteger integer = [[array lastObject] integerValue];
+        return @[[NSValue valueWithRange:NSMakeRange(integer, 1)]];
+    }
+    
+    NSMutableArray * resultRanges = [NSMutableArray array];
+    NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES];
+    NSArray * sortedNumbers = [array sortedArrayUsingDescriptors:@[highestToLowest]];
+    
+    __block NSRange currentRange = NSMakeRange(NSNotFound, 0);
+    [sortedNumbers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSInteger currentInteger = [((NSNumber *) obj) integerValue];
+        if (idx > 0) {
+            NSInteger previousInteger =[((NSNumber *) sortedNumbers[idx-1]) integerValue];
+            
+            if (previousInteger == currentInteger -1) {
+                currentRange.length +=1;
+            }
+            else {
+                [resultRanges addObject:[NSValue valueWithRange:currentRange]];
+                currentRange = NSMakeRange(currentInteger, 1);
+            }
+        }
+        else {
+            currentRange = NSMakeRange(currentInteger, 1);
+        }
+    }];
+    [resultRanges addObject:[NSValue valueWithRange:currentRange]];
+    return  resultRanges;
+}
+
+-(NSArray *)monthsOrderedSet
 {
     return  @[@"jan", @"feb", @"mar", @"apr", @"may", @"jun", @"jul", @"aug", @"sep", @"oct", @"nov", @"dec"];
 }
@@ -463,7 +554,7 @@
 -(BOOL)containsMonth:(NSString *)string
 {
     __block BOOL containsMonth = NO;
-    [self.monthsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [self.monthsOrderedSet enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if([string rangeOfString:(NSString *)obj].location!=NSNotFound){
             containsMonth = YES;
             stop = YES;
@@ -481,7 +572,7 @@
 
 +(void)test
 {
-    NSArray * testArray = @[@"Mo Sunrise-Sunset;Tu 08:00-Sunset",@"24/7",@"Mo-We 10:30-15:00",@"Th-Tu 12:00-13:00,14:00-15:00",@"Tu-Su 08:00-15:00;Sa 08:00-12:00"];
+    NSArray * testArray = @[@"Tu-Su 08:00-15:00;Sa 08:00-12:00",@"Mo,We Sunrise-Sunset;Tu-Sa 08:00-Sunset",@"24/7",@"Mo-We 10:30-15:00",@"Th-Tu 12:00-13:00,14:00-15:00"];
     
     [testArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [[[OPEOpeningHoursParser alloc] init] parseString:obj success:^(NSArray *blocks) {
