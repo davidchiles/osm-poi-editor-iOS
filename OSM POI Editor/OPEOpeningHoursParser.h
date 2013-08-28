@@ -44,6 +44,8 @@
            success:(void (^)(NSArray *blocks))success
            failure:(void (^)(NSError *error))failure;
 
+-(NSString *)stringWithRules:(NSArray *)rulesArray;
+
 
 +(void)test;
 

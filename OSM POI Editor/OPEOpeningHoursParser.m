@@ -23,20 +23,20 @@
 @synthesize isSunrise=_isSunrise;
 @synthesize isSunset=_isSunset;
 
-/*
--(BOOL)isSunset
+
+-(NSString *)description
 {
-    if (!_isSunset) {
-        return NO;
+    if (self.isSunrise) {
+        return SUNRISE_STRING;
     }
-    return _isSunset;
+    else if (self.isSunset) {
+        return SUNSET_STRING;
+    }
+    else {
+        return [NSString stringWithFormat:@"%02d:%02d",self.hour,self.minute];
+    }
+    return [super description];
 }
--(BOOL)isSunrise {
-    if (!_isSunrise) {
-        return NO;
-    }
-    return _isSunset;
-}*/
 
 @end
 
@@ -46,7 +46,7 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"%d:%d - %d:%d",startDateComponent.hour,startDateComponent.minute,endDateComponent.hour,endDateComponent.minute];
+    return [NSString stringWithFormat:@"%@-%@",startDateComponent,endDateComponent];
 }
 
 @end
@@ -60,6 +60,9 @@
     if (self = [super init]) {
         self.isOpen = YES;
         self.isTwentyFourSeven = NO;
+        self.monthsArray = [NSArray array];
+        self.timeRangesArray = [NSArray array];
+        self.daysOfWeekArray = [NSArray array];
     }
     return self;
 }
@@ -121,7 +124,8 @@
     }];
     
     
-    NSLog(@"blocks: %@",blocks);
+    //NSLog(@"blocks: %@",blocks);
+    NSLog(@"Round Trip %@",[self stringWithRules:blocks]);
     
 }
 
@@ -168,7 +172,7 @@
                 
             };
             
-
+            //Handle case where dates wrap around ex fr-mo (6->2 = 6,7,1,2)
             if (endWeekDayIndex < startWeekDayIndex) {
                 findWeekDayRangeWithStartFinish(startWeekDayIndex,6);
                 findWeekDayRangeWithStartFinish(0,endWeekDayIndex);
@@ -377,6 +381,69 @@
     }
     return [regularExpression rangeOfFirstMatchInString:string options:NSMatchingCompleted range:NSMakeRange(0, [string length])];
 
+}
+
+-(NSString *)stringWithRules:(NSArray *)rulesArray {
+    NSMutableArray * resultStrings = [NSMutableArray array];
+    [rulesArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSMutableArray * ruleStringArray = [NSMutableArray array];
+        OPEOpeningHourRule * rule = (OPEOpeningHourRule *)obj;
+        if (rule.isTwentyFourSeven) {
+            [ruleStringArray addObject:TWENTY_FOUR_SEVEN_STRING];
+        }
+        
+        if ([rule.monthsArray count]) {
+            [ruleStringArray addObject:[self stringWithMonthsArray:rule.monthsArray]];
+        }
+        
+        if ([rule.daysOfWeekArray count]) {
+            [ruleStringArray addObject:[self stringWithDaysOfWeekArray:rule.daysOfWeekArray]];
+        }
+        
+        if ([rule.timeRangesArray count]) {
+            [ruleStringArray addObject:[self stringWithtimeRangesArray:rule.timeRangesArray]];
+        }
+        
+        [resultStrings addObject:[ruleStringArray componentsJoinedByString:@" "]];
+        
+        
+    }];
+    return [resultStrings componentsJoinedByString:@"; "];
+}
+
+-(NSString *)stringWithMonthsArray:(NSArray *)monthsArray {
+    NSMutableArray * stringsArray = [NSMutableArray array];
+    
+    return [stringsArray componentsJoinedByString:@", "];
+}
+-(NSString *)stringWithDaysOfWeekArray:(NSArray *)DaysOfWeekArray {
+    NSMutableArray * stringsArray = [NSMutableArray array];
+    NSArray * sortedArray = [DaysOfWeekArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        NSDateComponents * date1 = obj1;
+        NSDateComponents * date2 = obj2;
+        if (date1.weekday > date2.weekday) {
+            return (NSComparisonResult)NSOrderedDescending;
+        }
+        
+        if (date1.weekday < date2.weekday) {
+            return (NSComparisonResult)NSOrderedAscending;
+        }
+        return (NSComparisonResult)NSOrderedSame;
+    }];
+    
+    
+    return [stringsArray componentsJoinedByString:@", "];
+    
+}
+-(NSString *)stringWithtimeRangesArray:(NSArray *)timeRangesArray {
+    NSMutableArray * stringsArray = [NSMutableArray array];
+    
+    [timeRangesArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        OPEDateRange * dateRange = (OPEDateRange *)obj;
+        [stringsArray addObject:[NSString stringWithFormat:@"%@",dateRange]];
+    }];
+    
+    return [stringsArray componentsJoinedByString:@", "];
 }
 
 -(NSArray *)monthsArray
