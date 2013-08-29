@@ -388,6 +388,7 @@
 		63EB72D917CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72D817CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m */; };
 		63EB72E017CFF8170042F4A4 /* OPEDone+CancelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72DF17CFF8170042F4A4 /* OPEDone+CancelViewController.m */; };
 		63EB72E317CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */; };
+		63F01BF717D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F01BF617D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m */; };
 		63F03D2F16B09FD8004AF385 /* OPEManagedOsmElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */; };
 		63F03D3016B09FD8004AF385 /* OPEManagedOsmNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2116B09FD8004AF385 /* OPEManagedOsmNode.m */; };
 		63F03D3116B09FD8004AF385 /* OPEManagedOsmRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2316B09FD8004AF385 /* OPEManagedOsmRelation.m */; };
@@ -924,6 +925,8 @@
 		63EB72DF17CFF8170042F4A4 /* OPEDone+CancelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OPEDone+CancelViewController.m"; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEDone+CancelViewController.m"; sourceTree = "<group>"; };
 		63EB72E117CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPEOpeningHoursRuleEditViewController.h; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEOpeningHoursRuleEditViewController.h"; sourceTree = "<group>"; };
 		63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPEOpeningHoursRuleEditViewController.m; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEOpeningHoursRuleEditViewController.m"; sourceTree = "<group>"; };
+		63F01BF517D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OPEOpeningHoursMonths+DaysOfWeekViewController.h"; sourceTree = "<group>"; };
+		63F01BF617D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OPEOpeningHoursMonths+DaysOfWeekViewController.m"; sourceTree = "<group>"; };
 		63F03D1E16B09FD8004AF385 /* OPEManagedOsmElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmElement.h; sourceTree = "<group>"; };
 		63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedOsmElement.m; sourceTree = "<group>"; };
 		63F03D2016B09FD8004AF385 /* OPEManagedOsmNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmNode.h; sourceTree = "<group>"; };
@@ -1781,6 +1784,8 @@
 				63EB72DF17CFF8170042F4A4 /* OPEDone+CancelViewController.m */,
 				63EB72E117CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.h */,
 				63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */,
+				63F01BF517D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.h */,
+				63F01BF617D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m */,
 			);
 			name = opening_hoursEditViewControllers;
 			sourceTree = "<group>";
@@ -2244,6 +2249,7 @@
 				63E8212816F12A850040B892 /* AFImageRequestOperation.m in Sources */,
 				63E8212916F12A850040B892 /* AFJSONRequestOperation.m in Sources */,
 				63E8212A16F12A850040B892 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				63F01BF717D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m in Sources */,
 				63E8212B16F12A850040B892 /* AFPropertyListRequestOperation.m in Sources */,
 				63E8212C16F12A850040B892 /* AFURLConnectionOperation.m in Sources */,
 				63E8212D16F12A850040B892 /* AFXMLRequestOperation.m in Sources */,

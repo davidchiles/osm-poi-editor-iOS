@@ -9,6 +9,7 @@
 #import "OPEOpeningHoursRuleEditViewController.h"
 
 #import "OPEOpeningHoursParser.h"
+#import "OPEOpeningHoursMonths+DaysOfWeekViewController.h"
 
 @interface OPEOpeningHoursRuleEditViewController ()
 
@@ -87,18 +88,26 @@
     
     if (indexPath.section == 0) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         switch (indexPath.row) {
             case 0:
                 cell.textLabel.text = @"Open 24/7";
                 cell.accessoryView = twentyFourSevenSwitch;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 break;
             case 1:
                 cell.textLabel.text = @"Months";
                 cell.detailTextLabel.text = [openingHoursParser stringWithMonthsOrderedSet:self.rule.monthsOrderedSet];
+                if (![cell.detailTextLabel.text length]) {
+                    cell.detailTextLabel.text = @"All Months";
+                }
                 break;
             case 2:
                 cell.textLabel.text = @"Days";
                 cell.detailTextLabel.text = [openingHoursParser stringWithDaysOfWeekOrderedSet:self.rule.daysOfWeekOrderedSet];
+                if (![cell.detailTextLabel.text length]) {
+                    cell.detailTextLabel.text = @"All Days";
+                }
                 break;
             case 3:
                 cell.textLabel.text = @"Times";
@@ -114,7 +123,25 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0) {
+        UIViewController * viewController = nil;
+        switch (indexPath.row) {
+            case 1:
+                viewController = [[OPEOpeningHoursMonths_DaysOfWeekViewController alloc] initWithType:OPETypeMonth forDateComponents:self.rule.monthsOrderedSet];
+                break;
+            case 2:
+                viewController = [[OPEOpeningHoursMonths_DaysOfWeekViewController alloc] initWithType:OPETypeDaysOfWeek forDateComponents:self.rule.daysOfWeekOrderedSet];
+                break;
+            case 3:
+                //times
+                break;
+                
+            default:
+                break;
+        }
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
 }
 
 -(void)switchChanged:(id)sender

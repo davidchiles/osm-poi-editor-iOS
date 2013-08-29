@@ -36,10 +36,16 @@
 -(void)doneButtonPressed:(id)sender
 {
     NSLog(@"%@",@"Done Button Pressed");
+    [self popViewController];
 }
 -(void)cancelButtonPressed:(id)sender
 {
     NSLog(@"%@",@"Cancel Button Pressed");
+    [self popViewController];
+}
+
+-(void)popViewController {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning
