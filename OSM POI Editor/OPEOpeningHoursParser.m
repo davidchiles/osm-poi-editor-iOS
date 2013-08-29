@@ -60,9 +60,9 @@
     if (self = [super init]) {
         self.isOpen = YES;
         self.isTwentyFourSeven = NO;
-        self.monthsOrderedSet = [NSOrderedSet orderedSet];
-        self.timeRangesOrderedSet = [NSOrderedSet orderedSet];
-        self.daysOfWeekOrderedSet = [NSOrderedSet orderedSet];
+        self.monthsOrderedSet = [NSMutableOrderedSet orderedSet];
+        self.timeRangesOrderedSet = [NSMutableOrderedSet orderedSet];
+        self.daysOfWeekOrderedSet = [NSMutableOrderedSet orderedSet];
     }
     return self;
 }
@@ -121,7 +121,6 @@
         success(blocks);
     }
     
-    
     //NSLog(@"blocks: %@",blocks);
    
     NSLog(@"Round Trip: %@",[self stringWithRules:blocks]);
@@ -136,13 +135,13 @@
     while (index < [tokens count]) {
         //NSInteger idx = [index integerValue];
         if ([self matchTokens:tokens atIndex:index matches:@[MONTH_KEY]]) {
-            rule.monthsOrderedSet = [self parseMonthRangeWithTokens:tokens atIndex:&index];
+            rule.monthsOrderedSet = [[self parseMonthRangeWithTokens:tokens atIndex:&index] mutableCopy];
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[WEEKDAY_KEY]]) {
-            rule.daysOfWeekOrderedSet = [self parseWeekdayRangeWithTokens:tokens atIndex:&index];
+            rule.daysOfWeekOrderedSet = [[self parseWeekdayRangeWithTokens:tokens atIndex:&index] mutableCopy];
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[NUMBER_KEY,TIME_SEPERATOR_KEY]] || [self matchTokens:tokens atIndex:index matches:@[SUN_KEY]]) {
-            rule.timeRangesOrderedSet = [self parseTimeRangeWithTokens:tokens atIndex:&index];
+            rule.timeRangesOrderedSet = [[self parseTimeRangeWithTokens:tokens atIndex:&index] mutableCopy];
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[TWENTY_FOUR_SEVEN_STRING]]) {
             rule.isTwentyFourSeven = YES;

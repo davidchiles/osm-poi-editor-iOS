@@ -25,9 +25,9 @@
 
 @interface OPEOpeningHourRule : NSObject
 
-@property (nonatomic,strong) NSOrderedSet * monthsOrderedSet;
-@property (nonatomic,strong) NSOrderedSet * daysOfWeekOrderedSet;
-@property (nonatomic,strong) NSOrderedSet * timeRangesOrderedSet;
+@property (nonatomic,strong) NSMutableOrderedSet * monthsOrderedSet;
+@property (nonatomic,strong) NSMutableOrderedSet * daysOfWeekOrderedSet;
+@property (nonatomic,strong) NSMutableOrderedSet * timeRangesOrderedSet;
 
 @property (nonatomic) BOOL isOpen;
 @property (nonatomic) BOOL isTwentyFourSeven;
