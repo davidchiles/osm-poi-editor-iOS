@@ -108,12 +108,6 @@
      NSLog(@"Original: %@",string);
     string = string.lowercaseString;
     
-    if ([self containsOff:string]) {
-        if (failure) {
-            failure([OPEOpeningHoursParser notSupportedError]);
-        }
-    }
-    
     NSArray * rules = [string componentsSeparatedByString:@";"];
     
     NSMutableArray * blocks = [NSMutableArray array];
@@ -152,6 +146,10 @@
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[TWENTY_FOUR_SEVEN_STRING]]) {
             rule.isTwentyFourSeven = YES;
+            index = index+1;
+        }
+        else if ([self matchTokens:tokens atIndex:index matches:@[OFF_STRING]]) {
+            rule.isOpen = NO;
             index = index+1;
         }
         else {
@@ -397,6 +395,11 @@
             [tokens addObject:[OPEOpeningHoursToken tokenWithType:TWENTY_FOUR_SEVEN_STRING value:foundString]];
             string = [string substringFromIndex:foundRange.length];
         }
+        else if ((foundRange = [self firstMatchForString:string withRegularExpression:@"^(?:off)"]).location != NSNotFound) {
+            NSString * foundString = [string substringWithRange:foundRange];
+            [tokens addObject:[OPEOpeningHoursToken tokenWithType:OFF_STRING value:foundString]];
+            string = [string substringFromIndex:foundRange.length];
+        }
         else if ((foundRange = [self firstMatchForString:string withRegularExpression:@"^(?:sunrise|sunset)"]).location != NSNotFound) {
             NSString * foundString = [string substringWithRange:foundRange];
             [tokens addObject:[OPEOpeningHoursToken tokenWithType:SUN_KEY value:foundString]];
@@ -466,6 +469,9 @@
             [ruleStringArray addObject:[self stringWithtimeRangesOrderedSet:rule.timeRangesOrderedSet]];
         }
         
+        if (!rule.isOpen) {
+            [ruleStringArray addObject:OFF_STRING];
+        }
         [resultStrings addObject:[ruleStringArray componentsJoinedByString:@" "]];
         
         
@@ -638,13 +644,13 @@
 
 +(void)test
 {
-    NSArray * testArray = @[@"Nov-May Tu-Su 08:00-15:00;Sa 08:00-12:00",@"Mo,We Sunrise-Sunset;Tu-Sa 08:00-Sunset",@"24/7",@"Mo-We 10:30-15:00",@"Th-Tu 12:00-13:00,14:00-15:00"];
+    NSArray * testArray = @[@"Nov-May Tu-Su 08:00-15:00;Sa 08:00-12:00;Jun off",@"Mo,We Sunrise-Sunset;Tu-Sa 08:00-Sunset",@"24/7",@"Mo-We 10:30-15:00",@"Th-Tu 12:00-13:00,14:00-15:00"];
     
     [testArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [[[OPEOpeningHoursParser alloc] init] parseString:obj success:^(NSArray *blocks) {
-            NSLog(@"%@",blocks);
+            //NSLog(@"%@",blocks);
         } failure:^(NSError *error) {
-            NSLog(@"%@",error);
+            //NSLog(@"%@",error);
         }];
     }];
     
