@@ -45,6 +45,10 @@
            failure:(void (^)(NSError *error))failure;
 
 -(NSString *)stringWithRules:(NSArray *)rulesArray;
+-(NSString *)stringWithRule:(OPEOpeningHourRule *)rule;
+-(NSString *)stringWithTimeRangesOrderedSet:(NSOrderedSet *)timeRangesOrderedSet;
+-(NSString *)stringWithMonthsOrderedSet:(NSOrderedSet *)monthsOrderedSet;
+-(NSString *)stringWithDaysOfWeekOrderedSet:(NSOrderedSet *)daysOfWeekOrderedSet;
 
 
 +(void)test;

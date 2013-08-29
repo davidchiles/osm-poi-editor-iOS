@@ -71,6 +71,17 @@
     return [NSString stringWithFormat:@"%@ \n%@ \n%@",monthsOrderedSet,daysOfWeekOrderedSet,timeRangesOrderedSet];
 }
 
+-(id)copy {
+    OPEOpeningHourRule * newRule = [[OPEOpeningHourRule alloc] init];
+    newRule.isOpen = self.isOpen;
+    newRule.isTwentyFourSeven = self.isTwentyFourSeven;
+    newRule.monthsOrderedSet = [self.monthsOrderedSet copy];
+    newRule.timeRangesOrderedSet = [self.monthsOrderedSet copy];
+    newRule.daysOfWeekOrderedSet = [self.daysOfWeekOrderedSet copy];
+    
+    return newRule;
+}
+
 @end
 
 @interface OPEOpeningHoursToken : NSObject
@@ -450,35 +461,37 @@
 -(NSString *)stringWithRules:(NSArray *)rulesArray {
     NSMutableArray * resultStrings = [NSMutableArray array];
     [rulesArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSMutableArray * ruleStringArray = [NSMutableArray array];
         OPEOpeningHourRule * rule = (OPEOpeningHourRule *)obj;
-        if (rule.isTwentyFourSeven) {
-            [ruleStringArray addObject:TWENTY_FOUR_SEVEN_STRING];
-        }
-        
-        if ([rule.monthsOrderedSet count]) {
-            [ruleStringArray addObject:[self stringWithmonthsOrderedSet:rule.monthsOrderedSet]];
-        }
-        
-        if ([rule.daysOfWeekOrderedSet count]) {
-            [ruleStringArray addObject:[self stringWithdaysOfWeekOrderedSet:rule.daysOfWeekOrderedSet]];
-        }
-        
-        if ([rule.timeRangesOrderedSet count]) {
-            [ruleStringArray addObject:[self stringWithtimeRangesOrderedSet:rule.timeRangesOrderedSet]];
-        }
-        
-        if (!rule.isOpen) {
-            [ruleStringArray addObject:OFF_STRING];
-        }
-        [resultStrings addObject:[ruleStringArray componentsJoinedByString:@" "]];
-        
-        
+        [resultStrings addObject:[self stringWithRule:rule]];
     }];
     return [resultStrings componentsJoinedByString:@"; "];
 }
 
--(NSString *)stringWithmonthsOrderedSet:(NSOrderedSet *)monthsOrderedSet {
+-(NSString *)stringWithRule:(OPEOpeningHourRule *)rule {
+    NSMutableArray * ruleStringArray = [NSMutableArray array];
+    if (rule.isTwentyFourSeven) {
+        [ruleStringArray addObject:TWENTY_FOUR_SEVEN_STRING];
+    }
+    
+    if ([rule.monthsOrderedSet count]) {
+        [ruleStringArray addObject:[self stringWithMonthsOrderedSet:rule.monthsOrderedSet]];
+    }
+    
+    if ([rule.daysOfWeekOrderedSet count]) {
+        [ruleStringArray addObject:[self stringWithDaysOfWeekOrderedSet:rule.daysOfWeekOrderedSet]];
+    }
+    
+    if ([rule.timeRangesOrderedSet count]) {
+        [ruleStringArray addObject:[self stringWithTimeRangesOrderedSet:rule.timeRangesOrderedSet]];
+    }
+    
+    if (!rule.isOpen) {
+        [ruleStringArray addObject:OFF_STRING];
+    }
+    return [ruleStringArray componentsJoinedByString:@" "];
+}
+
+-(NSString *)stringWithMonthsOrderedSet:(NSOrderedSet *)monthsOrderedSet {
     NSMutableArray * stringsArray = [NSMutableArray array];
     if ([monthsOrderedSet count]>11 || ![monthsOrderedSet count]) {
         return @"";
@@ -514,7 +527,7 @@
     }];
     return [stringsArray componentsJoinedByString:@","];
 }
--(NSString *)stringWithdaysOfWeekOrderedSet:(NSOrderedSet *)daysOfWeekOrderedSet {
+-(NSString *)stringWithDaysOfWeekOrderedSet:(NSOrderedSet *)daysOfWeekOrderedSet {
     
     NSMutableArray * stringsArray = [NSMutableArray array];
     if ([daysOfWeekOrderedSet count]>6 || ![daysOfWeekOrderedSet count]) {
@@ -552,7 +565,7 @@
     return [stringsArray componentsJoinedByString:@","];
     
 }
--(NSString *)stringWithtimeRangesOrderedSet:(NSOrderedSet *)timeRangesOrderedSet {
+-(NSString *)stringWithTimeRangesOrderedSet:(NSOrderedSet *)timeRangesOrderedSet {
     NSMutableArray * stringsArray = [NSMutableArray array];
     
     [timeRangesOrderedSet enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

@@ -385,6 +385,9 @@
 		63E8212C16F12A850040B892 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E8212116F12A850040B892 /* AFURLConnectionOperation.m */; };
 		63E8212D16F12A850040B892 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E8212316F12A850040B892 /* AFXMLRequestOperation.m */; };
 		63E8212E16F12A850040B892 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E8212516F12A850040B892 /* UIImageView+AFNetworking.m */; };
+		63EB72D917CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72D817CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m */; };
+		63EB72E017CFF8170042F4A4 /* OPEDone+CancelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72DF17CFF8170042F4A4 /* OPEDone+CancelViewController.m */; };
+		63EB72E317CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */; };
 		63F03D2F16B09FD8004AF385 /* OPEManagedOsmElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */; };
 		63F03D3016B09FD8004AF385 /* OPEManagedOsmNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2116B09FD8004AF385 /* OPEManagedOsmNode.m */; };
 		63F03D3116B09FD8004AF385 /* OPEManagedOsmRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2316B09FD8004AF385 /* OPEManagedOsmRelation.m */; };
@@ -915,6 +918,12 @@
 		63E8212316F12A850040B892 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		63E8212416F12A850040B892 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		63E8212516F12A850040B892 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		63EB72D717CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPEOpeningHoursEditViewController.h; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEOpeningHoursEditViewController.h"; sourceTree = "<group>"; };
+		63EB72D817CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPEOpeningHoursEditViewController.m; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEOpeningHoursEditViewController.m"; sourceTree = "<group>"; };
+		63EB72DE17CFF8170042F4A4 /* OPEDone+CancelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OPEDone+CancelViewController.h"; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEDone+CancelViewController.h"; sourceTree = "<group>"; };
+		63EB72DF17CFF8170042F4A4 /* OPEDone+CancelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OPEDone+CancelViewController.m"; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEDone+CancelViewController.m"; sourceTree = "<group>"; };
+		63EB72E117CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPEOpeningHoursRuleEditViewController.h; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEOpeningHoursRuleEditViewController.h"; sourceTree = "<group>"; };
+		63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPEOpeningHoursRuleEditViewController.m; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEOpeningHoursRuleEditViewController.m"; sourceTree = "<group>"; };
 		63F03D1E16B09FD8004AF385 /* OPEManagedOsmElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmElement.h; sourceTree = "<group>"; };
 		63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedOsmElement.m; sourceTree = "<group>"; };
 		63F03D2016B09FD8004AF385 /* OPEManagedOsmNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmNode.h; sourceTree = "<group>"; };
@@ -1439,7 +1448,7 @@
 				6332CB3716261E470088F5B0 /* Model */,
 				639F10A717C82548003EB958 /* Cells */,
 				63292E631593ED670010A11B /* OPEConstants.h */,
-				63E17AD417CD18E000C24868 /* opening_hours */,
+				63E17AD417CD18E000C24868 /* opening_hoursParser */,
 				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
 				63FCA44F1643363700A28470 /* OPEUtility.h */,
 				63FCA4501643363700A28470 /* OPEUtility.m */,
@@ -1665,18 +1674,19 @@
 				63292E691593ED670010A11B /* OPETagValueList.m */,
 				6314D13A17039A5B00AE91E3 /* OPENameEditView.h */,
 				6314D13B17039A5B00AE91E3 /* OPENameEditView.m */,
+				63EB72DD17CFF1580042F4A4 /* opening_hoursEditViewControllers */,
 				63D0A5C51700F03C007A595E /* TextEdit */,
 			);
 			name = TagEdit;
 			sourceTree = "<group>";
 		};
-		63E17AD417CD18E000C24868 /* opening_hours */ = {
+		63E17AD417CD18E000C24868 /* opening_hoursParser */ = {
 			isa = PBXGroup;
 			children = (
 				63E17AD817CD190200C24868 /* OPEOpeningHoursParser.h */,
 				63E17AD917CD190200C24868 /* OPEOpeningHoursParser.m */,
 			);
-			name = opening_hours;
+			name = opening_hoursParser;
 			sourceTree = "<group>";
 		};
 		63E38FE3170CE6BD006F35D0 /* UserVoice */ = {
@@ -1761,6 +1771,19 @@
 			name = AFNetworking;
 			path = lib/AFNetworking/AFNetworking;
 			sourceTree = SOURCE_ROOT;
+		};
+		63EB72DD17CFF1580042F4A4 /* opening_hoursEditViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				63EB72D717CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.h */,
+				63EB72D817CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m */,
+				63EB72DE17CFF8170042F4A4 /* OPEDone+CancelViewController.h */,
+				63EB72DF17CFF8170042F4A4 /* OPEDone+CancelViewController.m */,
+				63EB72E117CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.h */,
+				63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */,
+			);
+			name = opening_hoursEditViewControllers;
+			sourceTree = "<group>";
 		};
 		63FBA586171DFBED0098A2F3 /* osm-parser */ = {
 			isa = PBXGroup;
@@ -2191,6 +2214,7 @@
 				63E525D21534D90500D2DA35 /* OPECreditViewController.m in Sources */,
 				6310F4B6153736D000C65FD8 /* OPEMessageView.m in Sources */,
 				63292E6B1593ED670010A11B /* OPEBinaryCell.m in Sources */,
+				63EB72E017CFF8170042F4A4 /* OPEDone+CancelViewController.m in Sources */,
 				63292E6C1593ED670010A11B /* OPEPhoneCell.m in Sources */,
 				63292E6D1593ED670010A11B /* OPESpecialCell2.m in Sources */,
 				63292E6E1593ED670010A11B /* OPETagValueList.m in Sources */,
@@ -2248,11 +2272,13 @@
 				63FBA59E171DFBED0098A2F3 /* Node.m in Sources */,
 				63FBA5A0171DFBED0098A2F3 /* OSMDAO.m in Sources */,
 				63FBA5A1171DFBED0098A2F3 /* OSMParser.m in Sources */,
+				63EB72E317CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m in Sources */,
 				63FBA5A2171DFBED0098A2F3 /* OSMParserHandlerAdministrative.m in Sources */,
 				63FBA5A3171DFBED0098A2F3 /* OSMParserHandlerAllRoads.m in Sources */,
 				63FBA5A4171DFBED0098A2F3 /* OSMParserHandlerDefault.m in Sources */,
 				63FBA5A5171DFBED0098A2F3 /* OSMParserHandlerMotorway.m in Sources */,
 				63FBA5A7171DFBED0098A2F3 /* Relation.m in Sources */,
+				63EB72D917CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m in Sources */,
 				63FBA5A9171DFBED0098A2F3 /* Way.m in Sources */,
 				63FBA5AC171E00F20098A2F3 /* Element.m in Sources */,
 				63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */,

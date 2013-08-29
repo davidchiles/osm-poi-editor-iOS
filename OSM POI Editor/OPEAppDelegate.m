@@ -33,7 +33,7 @@
 #import "OPECoreDataImporter.h"
 #import "OPEMRUtility.h"
 
-#import "OPEOpeningHoursParser.h"
+#import "OPEOpeningHoursEditViewController.h"
 
 @implementation OPEAppDelegate
 
@@ -57,7 +57,9 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    UIViewController *rootView = [[OPEViewController alloc] init];
+    //UIViewController *rootView = [[OPEViewController alloc] init];
+    NSString * string = @"Nov-May Tu-Su 08:00-15:00;Sa 08:00-12:00;Jun off";
+    UIViewController * rootView = [[OPEOpeningHoursEditViewController alloc] initWithOsmKey:@"opening_hours" currentValue:string delegate:nil];
     self.navController = [[UINavigationController alloc] initWithRootViewController:rootView];
     [[self window] setRootViewController:self.navController];
     
