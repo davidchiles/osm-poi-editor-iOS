@@ -108,7 +108,7 @@
      NSLog(@"Original: %@",string);
     string = string.lowercaseString;
     
-    if ([self containsMonth:string]||[self containsOff:string]) {
+    if ([self containsOff:string]) {
         if (failure) {
             failure([OPEOpeningHoursParser notSupportedError]);
         }
@@ -122,6 +122,10 @@
         NSArray * tokenizedArray = [self tokenize:obj];
         [blocks addObject:[self parseTokens:tokenizedArray]];
     }];
+    
+    if (success) {
+        success(blocks);
+    }
     
     
     //NSLog(@"blocks: %@",blocks);
@@ -137,7 +141,10 @@
     NSInteger index = 0;
     while (index < [tokens count]) {
         //NSInteger idx = [index integerValue];
-        if ([self matchTokens:tokens atIndex:index matches:@[WEEKDAY_KEY]]) {
+        if ([self matchTokens:tokens atIndex:index matches:@[MONTH_KEY]]) {
+            rule.monthsOrderedSet = [self parseMonthRangeWithTokens:tokens atIndex:&index];
+        }
+        else if ([self matchTokens:tokens atIndex:index matches:@[WEEKDAY_KEY]]) {
             rule.daysOfWeekOrderedSet = [self parseWeekdayRangeWithTokens:tokens atIndex:&index];
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[NUMBER_KEY,TIME_SEPERATOR_KEY]] || [self matchTokens:tokens atIndex:index matches:@[SUN_KEY]]) {
@@ -152,6 +159,56 @@
         }
     }
     return rule;
+}
+
+-(NSOrderedSet *)parseMonthRangeWithTokens:(NSArray *)tokens atIndex:(NSInteger *)index
+{
+    NSMutableOrderedSet * monthOrderedSet = [NSMutableOrderedSet orderedSet];
+    while (*index < [tokens count]) {
+        //NSInteger idx = [index integerValue];
+        if ([self matchTokens:tokens atIndex:*index matches:@[MONTH_KEY,@"-",MONTH_KEY]]) {
+            //Weekday Range
+            NSInteger startMonthIndex = [[self monthsArray] indexOfObject:((OPEOpeningHoursToken *)tokens[*index]).value];
+            NSInteger endMonthIndex = [[self monthsArray] indexOfObject:((OPEOpeningHoursToken *)tokens[*index+2]).value];
+            
+            void (^findWeekDayRangeWithStartFinish)(NSInteger,NSInteger) = ^(NSInteger start,NSInteger end) {
+                for (NSInteger idx = start; idx<=end; idx++) {
+                    NSDateComponents * month = [[NSDateComponents alloc] init];
+                    month.month =idx +1;
+                    [monthOrderedSet addObject:month];
+                }
+                
+            };
+            
+            //Handle case where dates wrap around ex nov-may (11->5 = 11,12,1,2,3,4,5)
+            if (endMonthIndex < startMonthIndex) {
+                findWeekDayRangeWithStartFinish(startMonthIndex,11);
+                findWeekDayRangeWithStartFinish(0,endMonthIndex);
+            }
+            else {
+                findWeekDayRangeWithStartFinish(startMonthIndex,endMonthIndex);
+            }
+            
+            *index = *index+3;
+        }
+        else if ([self matchTokens:tokens atIndex:*index matches:@[MONTH_KEY]])
+        {
+            NSInteger monthIndex = [[self monthsArray] indexOfObject:((OPEOpeningHoursToken *)tokens[*index]).value];
+            NSDateComponents * month = [[NSDateComponents alloc] init];
+            month.month =monthIndex +1;
+            [monthOrderedSet addObject:month];
+            *index = *index+1;
+        }
+        
+        
+        if (![self matchTokens:tokens atIndex:*index matches:@[@","]]) {
+            break;
+        }
+        *index = *index+1;
+        
+    }
+    return monthOrderedSet;
+    
 }
 
 -(NSOrderedSet *)parseWeekdayRangeWithTokens:(NSArray *)tokens atIndex:(NSInteger *)index
@@ -386,6 +443,8 @@
 
 }
 
+#pragma mark BackToOsmString
+
 -(NSString *)stringWithRules:(NSArray *)rulesArray {
     NSMutableArray * resultStrings = [NSMutableArray array];
     [rulesArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -416,18 +475,18 @@
 
 -(NSString *)stringWithmonthsOrderedSet:(NSOrderedSet *)monthsOrderedSet {
     NSMutableArray * stringsArray = [NSMutableArray array];
-    if ([monthsOrderedSet count]>6 || ![monthsOrderedSet count]) {
+    if ([monthsOrderedSet count]>11 || ![monthsOrderedSet count]) {
         return @"";
     }
     
     NSMutableArray * numbers = [NSMutableArray array];
     [monthsOrderedSet enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [numbers addObject:[NSNumber numberWithInteger:((NSDateComponents *)obj).weekday]];
+        [numbers addObject:[NSNumber numberWithInteger:((NSDateComponents *)obj).month]];
     }];
     NSMutableArray * ranges = [[self intRangesFor:numbers] mutableCopy];
     NSRange firstRange = [ranges[0] rangeValue];
     NSRange lastRange = [[ranges lastObject] rangeValue];
-    //check wrap around fr-tu
+    //check wrap around nov-may
     if (firstRange.location == 1 && (lastRange.location +lastRange.length)==13) {
         [ranges removeObjectAtIndex:0];
         [ranges removeLastObject];
@@ -438,13 +497,13 @@
     [ranges enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSRange range = [((NSValue *)obj) rangeValue];
         if (range.length == 1) {
-            [stringsArray addObject:[[self weekdaysArray][range.location-1] capitalizedString]];
+            [stringsArray addObject:[[self monthsArray][range.location-1] capitalizedString]];
         }
         else if(range.length > 1)
         {
             NSInteger start = range.location-1;
             NSInteger end = (start+range.length-1)%12;
-            NSString * string = [NSString stringWithFormat:@"%@-%@",[[self weekdaysArray][start] capitalizedString],[[self weekdaysArray][end] capitalizedString]];
+            NSString * string = [NSString stringWithFormat:@"%@-%@",[[self monthsArray][start] capitalizedString],[[self monthsArray][end] capitalizedString]];
             [stringsArray addObject:string];
         }
     }];
@@ -537,7 +596,10 @@
     return  resultRanges;
 }
 
--(NSArray *)monthsOrderedSet
+
+#pragma  mark helpers
+
+-(NSArray *)monthsArray
 {
     return  @[@"jan", @"feb", @"mar", @"apr", @"may", @"jun", @"jul", @"aug", @"sep", @"oct", @"nov", @"dec"];
 }
@@ -554,7 +616,7 @@
 -(BOOL)containsMonth:(NSString *)string
 {
     __block BOOL containsMonth = NO;
-    [self.monthsOrderedSet enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [self.monthsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if([string rangeOfString:(NSString *)obj].location!=NSNotFound){
             containsMonth = YES;
             stop = YES;
@@ -563,6 +625,8 @@
     return containsMonth;
 }
 
+#pragma mark Error
+
 +(NSError *)notSupportedError
 {
     NSDictionary * details = @{NSLocalizedDescriptionKey:@"Not Supported"};
@@ -570,9 +634,11 @@
     return error;
 }
 
+#pragma Tests
+
 +(void)test
 {
-    NSArray * testArray = @[@"Tu-Su 08:00-15:00;Sa 08:00-12:00",@"Mo,We Sunrise-Sunset;Tu-Sa 08:00-Sunset",@"24/7",@"Mo-We 10:30-15:00",@"Th-Tu 12:00-13:00,14:00-15:00"];
+    NSArray * testArray = @[@"Nov-May Tu-Su 08:00-15:00;Sa 08:00-12:00",@"Mo,We Sunrise-Sunset;Tu-Sa 08:00-Sunset",@"24/7",@"Mo-We 10:30-15:00",@"Th-Tu 12:00-13:00,14:00-15:00"];
     
     [testArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [[[OPEOpeningHoursParser alloc] init] parseString:obj success:^(NSArray *blocks) {
