@@ -389,6 +389,8 @@
 		63EB72E017CFF8170042F4A4 /* OPEDone+CancelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72DF17CFF8170042F4A4 /* OPEDone+CancelViewController.m */; };
 		63EB72E317CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */; };
 		63F01BF717D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F01BF617D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m */; };
+		63F01BFD17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F01BFC17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.m */; };
+		63F01C0017D016AD00184A0C /* OPETimeRangeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F01BFF17D016AD00184A0C /* OPETimeRangeCell.m */; };
 		63F03D2F16B09FD8004AF385 /* OPEManagedOsmElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */; };
 		63F03D3016B09FD8004AF385 /* OPEManagedOsmNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2116B09FD8004AF385 /* OPEManagedOsmNode.m */; };
 		63F03D3116B09FD8004AF385 /* OPEManagedOsmRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2316B09FD8004AF385 /* OPEManagedOsmRelation.m */; };
@@ -927,6 +929,10 @@
 		63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPEOpeningHoursRuleEditViewController.m; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEOpeningHoursRuleEditViewController.m"; sourceTree = "<group>"; };
 		63F01BF517D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OPEOpeningHoursMonths+DaysOfWeekViewController.h"; sourceTree = "<group>"; };
 		63F01BF617D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OPEOpeningHoursMonths+DaysOfWeekViewController.m"; sourceTree = "<group>"; };
+		63F01BFB17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOpeningHoursTimeRangesViewController.h; sourceTree = "<group>"; };
+		63F01BFC17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpeningHoursTimeRangesViewController.m; sourceTree = "<group>"; };
+		63F01BFE17D016AD00184A0C /* OPETimeRangeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETimeRangeCell.h; sourceTree = "<group>"; };
+		63F01BFF17D016AD00184A0C /* OPETimeRangeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETimeRangeCell.m; sourceTree = "<group>"; };
 		63F03D1E16B09FD8004AF385 /* OPEManagedOsmElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmElement.h; sourceTree = "<group>"; };
 		63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedOsmElement.m; sourceTree = "<group>"; };
 		63F03D2016B09FD8004AF385 /* OPEManagedOsmNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmNode.h; sourceTree = "<group>"; };
@@ -1628,6 +1634,8 @@
 				63292E621593ED670010A11B /* OPEBinaryCell.m */,
 				63292E661593ED670010A11B /* OPESpecialCell2.h */,
 				63292E671593ED670010A11B /* OPESpecialCell2.m */,
+				63F01BFE17D016AD00184A0C /* OPETimeRangeCell.h */,
+				63F01BFF17D016AD00184A0C /* OPETimeRangeCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1786,6 +1794,8 @@
 				63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */,
 				63F01BF517D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.h */,
 				63F01BF617D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m */,
+				63F01BFB17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.h */,
+				63F01BFC17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.m */,
 			);
 			name = opening_hoursEditViewControllers;
 			sourceTree = "<group>";
@@ -2285,6 +2295,7 @@
 				63FBA5A5171DFBED0098A2F3 /* OSMParserHandlerMotorway.m in Sources */,
 				63FBA5A7171DFBED0098A2F3 /* Relation.m in Sources */,
 				63EB72D917CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m in Sources */,
+				63F01C0017D016AD00184A0C /* OPETimeRangeCell.m in Sources */,
 				63FBA5A9171DFBED0098A2F3 /* Way.m in Sources */,
 				63FBA5AC171E00F20098A2F3 /* Element.m in Sources */,
 				63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */,
@@ -2298,6 +2309,7 @@
 				630A8799176827F3003C9423 /* OPEWikipediaEditViewController.m in Sources */,
 				639F10AA17C82669003EB958 /* OPEBaseSpecialCell.m in Sources */,
 				63F63D5C17684D340084E703 /* OPEWikipediaWebViewController.m in Sources */,
+				63F01BFD17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.m in Sources */,
 				63E5E3AB176943040064A780 /* AbstractActionSheetPicker.m in Sources */,
 				63E5E3AC176943040064A780 /* ActionSheetCustomPicker.m in Sources */,
 				63E5E3AD176943040064A780 /* ActionSheetDatePicker.m in Sources */,

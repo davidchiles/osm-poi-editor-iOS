@@ -42,7 +42,7 @@
 	UITableView * tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     tableView.dataSource = self;
     tableView.delegate = self;
-    tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight || UIViewAutoresizingFlexibleWidth;
+    tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
     [self.view addSubview:tableView];
 }
