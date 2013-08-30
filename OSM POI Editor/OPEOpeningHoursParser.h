@@ -13,6 +13,9 @@
 @property (nonatomic) BOOL isSunrise;
 @property (nonatomic) BOOL isSunset;
 
+-(NSDate *)date;
+-(NSString *)displayString;
+
 @end
 
 @interface OPEDateRange : NSObject

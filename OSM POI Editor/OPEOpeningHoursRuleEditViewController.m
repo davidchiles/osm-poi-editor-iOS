@@ -10,6 +10,7 @@
 
 #import "OPEOpeningHoursParser.h"
 #import "OPEOpeningHoursMonths+DaysOfWeekViewController.h"
+#import "OPEOpeningHoursTimeRangesViewController.h"
 
 @interface OPEOpeningHoursRuleEditViewController ()
 
@@ -135,7 +136,7 @@
                 viewController = [[OPEOpeningHoursMonths_DaysOfWeekViewController alloc] initWithType:OPETypeDaysOfWeek forDateComponents:self.rule.daysOfWeekOrderedSet];
                 break;
             case 3:
-                //times
+                viewController = [[OPEOpeningHoursTimeRangesViewController alloc] initWithTimeRanges:self.rule.timeRangesOrderedSet];
                 break;
                 
             default:

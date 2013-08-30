@@ -6,30 +6,25 @@
 //
 //
 
-#import "OpeTimeRangeCell.h"
-#import "ActionSheetDatePicker.h"
+#import "OPETimeRangeCell.h"
+#import "OPEOpeningHoursParser.h"
+
 
 @implementation OPETimeRangeCell
 
-@synthesize delegate,dateRange;
+@synthesize dateRange=_dateRange;
 
--(id)initWithTimeRange:(OPEDateRange *)newDateRange withDelegate:(id<OPETimeRangeCellDelegate>)delegate reuseIdentifier:(NSString *)reuseIdentifier
+-(id)initWithIdentifier:(NSString *)reuseIdentifier
 {
     if (self = [self initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier]) {
-        self.dateRange = newDateRange;
-        self.delegate = delegate;
         
         startTimeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         startTimeButton.translatesAutoresizingMaskIntoConstraints = NO;
-        [startTimeButton addTarget:self action:@selector(didSelectStartTimeButton:) forControlEvents:UIControlEventTouchUpInside];
+        [startTimeButton addTarget:self action:@selector(didSelectTimeButton:) forControlEvents:UIControlEventTouchUpInside];
         
         endTimeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        startTimeButton.translatesAutoresizingMaskIntoConstraints = NO;
-        [endTimeButton addTarget:self action:@selector(didSelectEndTimeButton:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self datesWithTimeRange:self.dateRange completionBlock:^(NSDate *startDate, NSDate *endDate) {
-            
-        }];
+        endTimeButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [endTimeButton addTarget:self action:@selector(didSelectTimeButton:) forControlEvents:UIControlEventTouchUpInside];
         
         [self.contentView addSubview:startTimeButton];
         [self.contentView addSubview:endTimeButton];
@@ -39,27 +34,30 @@
         toLabel.text = @"to";
         
         [self.contentView addSubview:toLabel];
-        [self needsUpdateConstraints];
+        [self setNeedsUpdateConstraints];
         
     }
     return self;
 }
 
--(void)datesWithTimeRange:(OPEDateRange *)dateRange
-          completionBlock:(void (^)(NSDate *startDate,NSDate *endDate))dates {
-    //convert date range to dates
+-(void)setDateRange:(OPEDateRange *)newDateRange
+{
+    _dateRange = newDateRange;
     
-    
+    [startTimeButton setTitle:[_dateRange.startDateComponent displayString] forState:UIControlStateNormal];
+    [endTimeButton setTitle:[_dateRange.endDateComponent displayString] forState:UIControlStateNormal];
 }
 
--(void)didSelectStartTimeButton:(id)sender
+-(void)didSelectTimeButton:(id)sender
 {
-    
-}
-
--(void)didSelectEndTimeButton:(id)sender
-{
-    
+    if (self.didSelectDateButtonBlock) {
+        if ([sender isEqual: startTimeButton]) {
+            self.didSelectDateButtonBlock(self,YES);
+        }
+        else {
+            self.didSelectDateButtonBlock(self,NO);
+        }
+    }
 }
 
 -(void)updateConstraints
@@ -114,7 +112,7 @@
                                               attribute:NSLayoutAttributeHeight
                                               relatedBy:NSLayoutRelationEqual
                                                  toItem:self.contentView
-                                              attribute:NSLayoutAttributeLeft
+                                              attribute:NSLayoutAttributeHeight
                                              multiplier:1.0
                                                constant:0];
     [self.contentView addConstraint:constraint];
@@ -122,7 +120,7 @@
     constraint = [NSLayoutConstraint constraintWithItem:endTimeButton
                                               attribute:NSLayoutAttributeCenterY
                                               relatedBy:NSLayoutRelationEqual
-                                                 toItem:self.contentView
+                                                 toItem:toLabel
                                               attribute:NSLayoutAttributeCenterY
                                              multiplier:1.0
                                                constant:0];
@@ -150,7 +148,7 @@
                                               attribute:NSLayoutAttributeHeight
                                               relatedBy:NSLayoutRelationEqual
                                                  toItem:self.contentView
-                                              attribute:NSLayoutAttributeLeft
+                                              attribute:NSLayoutAttributeHeight
                                              multiplier:1.0
                                                constant:0];
     [self.contentView addConstraint:constraint];

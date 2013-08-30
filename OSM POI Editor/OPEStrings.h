@@ -58,5 +58,8 @@
 #define CREATE_NEW_NOTE_STRING NSLocalizedString(@"Create New Note",@"label for creating a new note")
 #define NEW_NODE_STRING NSLocalizedString(@"New Node",@"Title for view for creating a new node")
 
+#define SUNSET_STRING NSLocalizedString(@"Sunset",@"The time of day with the sun goes away")
+#define SUNRISE_STRING NSLocalizedString(@"Sunrise",@"The time of day when the sun comes back")
+
 
 @end

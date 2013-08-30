@@ -10,11 +10,7 @@
 
 @class OPEDateRange;
 
-@protocol OPETimeRangeCellDelegate <NSObject>
-
--(void)newTimeRange:(OPEDateRange *)dateRange forCell:(UITableViewCell *)cell;
-
-@end
+typedef void (^didSelectDateButton)(UITableViewCell * cell,BOOL isStartButton);
 
 @interface OPETimeRangeCell : UITableViewCell
 {
@@ -23,9 +19,9 @@
     UILabel * toLabel;
 }
 
-@property (nonatomic,weak) id <OPETimeRangeCellDelegate> delegate;
 @property (nonatomic,strong) OPEDateRange * dateRange;
+@property (nonatomic,copy) didSelectDateButton didSelectDateButtonBlock;
 
--(id)initWithTimeRange:(OPEDateRange *)dateRange withDelegate:(id<OPETimeRangeCellDelegate>)delegate reuseIdentifier:(NSString *)reuseIdentifier;
+-(id)initWithIdentifier:(NSString *)reuseIdentifier;
 
 @end

@@ -7,8 +7,8 @@
 //
 
 #define OFF_STRING @"off"
-#define SUNRISE_STRING @"sunrise"
-#define SUNSET_STRING @"sunset"
+#define SUNRISE_OSM_STRING @"sunrise"
+#define SUNSET_OSM_STRING @"sunset"
 #define TWENTY_FOUR_SEVEN_STRING @"24/7"
 
 #define MONTH_KEY @"month"
@@ -18,6 +18,7 @@
 #define SUN_KEY @"sun"
 
 #import "OPEOpeningHoursParser.h"
+#import "OPEStrings.h"
 
 @implementation OPEDateComponents
 @synthesize isSunrise=_isSunrise;
@@ -27,15 +28,42 @@
 -(NSString *)description
 {
     if (self.isSunrise) {
-        return SUNRISE_STRING;
+        return SUNRISE_OSM_STRING;
     }
     else if (self.isSunset) {
-        return SUNSET_STRING;
+        return SUNSET_OSM_STRING;
     }
     else {
         return [NSString stringWithFormat:@"%02d:%02d",self.hour,self.minute];
     }
     return [super description];
+}
+
+-(NSDate *)date
+{
+    if (!self.isSunrise || !self.isSunset) {
+        NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"HH:mm"];
+        NSDate * date = [dateFormatter dateFromString:[NSString stringWithFormat:@"%@",self]];
+        return date;
+    }
+    return nil;
+    
+}
+
+-(NSString *)displayString
+{
+    if (self.isSunrise) {
+        return [SUNRISE_STRING capitalizedString];
+    }
+    else if (self.isSunset) {
+        return [SUNSET_STRING capitalizedString];
+    }
+    else {
+        return [NSDateFormatter localizedStringFromDate:[self date]
+                                              dateStyle:NSDateFormatterNoStyle
+                                              timeStyle:NSDateFormatterShortStyle];
+    }
 }
 
 @end
@@ -49,6 +77,10 @@
     return [NSString stringWithFormat:@"%@-%@",startDateComponent,endDateComponent];
 }
 
+-(NSString *)displayString
+{
+    return [NSString stringWithFormat:@"%@ - %@",[startDateComponent displayString],[endDateComponent displayString]];
+}
 @end
 
 @implementation OPEOpeningHourRule
@@ -299,7 +331,7 @@
             startTimeComponent.minute = [((OPEOpeningHoursToken *)tokens[*index+2]).value intValue];
             
             OPEDateComponents * endTimeComponent = [[OPEDateComponents alloc] init];
-            if([((OPEOpeningHoursToken *)tokens[*index+2]).value isEqualToString:SUNRISE_STRING]) {
+            if([((OPEOpeningHoursToken *)tokens[*index+2]).value isEqualToString:SUNRISE_OSM_STRING]) {
                 endTimeComponent.isSunrise = YES;
             }
             else {
@@ -316,7 +348,7 @@
         else if ([self matchTokens:tokens atIndex:*index matches:@[SUN_KEY, @"-", NUMBER_KEY, TIME_SEPERATOR_KEY, NUMBER_KEY]]) {
             
             OPEDateComponents * startTimeComponent = [[OPEDateComponents alloc] init];
-            if([((OPEOpeningHoursToken *)tokens[*index]).value isEqualToString:SUNRISE_STRING]) {
+            if([((OPEOpeningHoursToken *)tokens[*index]).value isEqualToString:SUNRISE_OSM_STRING]) {
                 startTimeComponent.isSunrise = YES;
             }
             else {
@@ -338,7 +370,7 @@
         else if ([self matchTokens:tokens atIndex:*index matches:@[SUN_KEY, @"-", SUN_KEY]]) {
             
             OPEDateComponents * startTimeComponent = [[OPEDateComponents alloc] init];
-            if([((OPEOpeningHoursToken *)tokens[*index]).value isEqualToString:SUNRISE_STRING]) {
+            if([((OPEOpeningHoursToken *)tokens[*index]).value isEqualToString:SUNRISE_OSM_STRING]) {
                 startTimeComponent.isSunrise = YES;
             }
             else {
@@ -346,7 +378,7 @@
             }
             
             OPEDateComponents * endTimeComponent = [[OPEDateComponents alloc] init];
-            if([((OPEOpeningHoursToken *)tokens[*index+2]).value isEqualToString:SUNRISE_STRING]) {
+            if([((OPEOpeningHoursToken *)tokens[*index+2]).value isEqualToString:SUNRISE_OSM_STRING]) {
                 endTimeComponent.isSunrise = YES;
             }
             else {
