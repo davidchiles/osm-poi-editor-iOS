@@ -19,31 +19,6 @@
 
 @implementation OPEOpeningHoursTimeRangesViewController
 
-@synthesize doneBlock;
-
-- (id)initWithTimeRanges:(NSOrderedSet *)timeRanges
-{
-    if (self = [self init]) {
-        originalOrderedSet = timeRanges;
-        self.timeRangesOrderedSet = [NSMutableOrderedSet orderedSet];
-        if ([timeRanges count]) {
-            self.timeRangesOrderedSet = [timeRanges mutableCopy];
-        }
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    timeRangesTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    timeRangesTableView.dataSource = self;
-    timeRangesTableView.delegate = self;
-    timeRangesTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    
-    [self.view addSubview:timeRangesTableView];
-}
-
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -51,7 +26,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.timeRangesOrderedSet count]+1;
+    return [self.propertiesOrderedSet count]+1;
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -62,7 +37,7 @@
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.timeRangesOrderedSet removeObjectAtIndex:indexPath.row];
+        [self.propertiesOrderedSet removeObjectAtIndex:indexPath.row];
         [tableView beginUpdates];
         [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         //[tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -87,7 +62,7 @@
         if (!timeRangeCell) {
             timeRangeCell = [[OPETimeRangeCell alloc] initWithIdentifier:timeCelIdentifier];
         }
-        OPEDateRange * timeRange = self.timeRangesOrderedSet[indexPath.row];
+        OPEDateRange * timeRange = self.propertiesOrderedSet[indexPath.row];
         timeRangeCell.dateRange = timeRange;
         timeRangeCell.didSelectDateButtonBlock = ^(UITableViewCell * cell,BOOL isStartButton) {
             [self didSelecButtonAtIndex:[tableView indexPathForCell:cell].row isStartButton:isStartButton withTableView:tableView];
@@ -116,7 +91,7 @@
         dateRange.startDateComponent = startDateComponent;
         dateRange.endDateComponent = endDateComponent;
         
-        [self.timeRangesOrderedSet addObject:dateRange];
+        [self.propertiesOrderedSet addObject:dateRange];
         
         [tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
@@ -124,7 +99,7 @@
 
 -(void)didSelecButtonAtIndex:(NSInteger)index isStartButton:(BOOL)isStartButton withTableView:(UITableView *)tableView;
 {
-    OPEDateRange * dateRange = self.timeRangesOrderedSet[index];
+    OPEDateRange * dateRange = self.propertiesOrderedSet[index];
     NSDate * currentDate = nil;
     currentDateComponent = nil;
     NSString * pickerTitle = @"";
@@ -177,24 +152,7 @@
     currentDateComponent.minute = components.minute;
     currentDateComponent.isSunset = NO;
     currentDateComponent.isSunrise = NO;
-    [timeRangesTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-}
-
--(NSIndexPath *)lastIndexPathForTableView:(UITableView *)tableView
-{
-    NSInteger lastSectionIndex = [tableView numberOfSections] - 1;
-    NSIndexPath *lastIndexPath = [NSIndexPath indexPathForRow:([tableView numberOfRowsInSection:lastSectionIndex] - 1) inSection:lastSectionIndex];
-    
-    return lastIndexPath;
-}
-
--(void)doneButtonPressed:(id)sender
-{
-    if (doneBlock) {
-        doneBlock(self.timeRangesOrderedSet);
-    }
-    [super doneButtonPressed:sender];
-    
+    [self.propertiesTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 @end

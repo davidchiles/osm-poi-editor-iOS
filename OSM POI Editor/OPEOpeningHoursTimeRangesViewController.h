@@ -6,21 +6,13 @@
 //
 //
 
-#import "OPEDone+CancelViewController.h"
-#import "OPEOpeningHoursRuleEditViewController.h"
+#import "OPEOpeningHoursBaseTimeEditViewController.h"
 
 @class OPEDateComponents;
 
-@interface OPEOpeningHoursTimeRangesViewController : OPEDone_CancelViewController <UITableViewDataSource,UITableViewDelegate>
+@interface OPEOpeningHoursTimeRangesViewController : OPEOpeningHoursBaseTimeEditViewController
 {
-    NSOrderedSet * originalOrderedSet;
     OPEDateComponents * currentDateComponent;
-    UITableView * timeRangesTableView;
 }
-
-@property (nonatomic,strong) NSMutableOrderedSet * timeRangesOrderedSet;
-@property (nonatomic,copy) ruleEditPropertyCompleteBlock doneBlock;
-
--(id)initWithTimeRanges:(NSOrderedSet *)timeRanges;
 
 @end

@@ -6,22 +6,16 @@
 //
 //
 
-#import "OPEDone+CancelViewController.h"
-#import "OPEOpeningHoursRuleEditViewController.h"
+#import "OPEOpeningHoursBaseTimeEditViewController.h"
 
 typedef enum : NSUInteger {
     OPETypeMonth = 0,
     OPETypeDaysOfWeek = 1
 } OPEType;
 
-@interface OPEOpeningHoursMonths_DaysOfWeekViewController : OPEDone_CancelViewController <UITableViewDataSource,UITableViewDelegate>
-{
-    NSOrderedSet * originalOrderedSet;
-}
+@interface OPEOpeningHoursMonths_DaysOfWeekViewController : OPEOpeningHoursBaseTimeEditViewController
 
 @property (nonatomic) OPEType type;
-@property (nonatomic,strong) NSMutableOrderedSet * dateComponentsOrderedSet;
-@property (nonatomic,copy) ruleEditPropertyCompleteBlock doneBlock;
 
 -(id)initWithType:(OPEType)type forDateComponents:(NSOrderedSet *)dateComponentsOrderedSet;
 

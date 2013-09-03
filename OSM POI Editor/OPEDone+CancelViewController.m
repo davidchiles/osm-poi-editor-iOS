@@ -14,11 +14,13 @@
 
 @implementation OPEDone_CancelViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+@synthesize cancelButton,doneButton;
+
+-(id)initShowCancel:(BOOL)showCancel showDone:(BOOL)showBOOL
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+    if (self = [self init]) {
+        self.doneButton = [[UIBarButtonItem alloc] initWithTitle: @"Done" style:  UIBarButtonItemStyleDone target: self action: @selector(doneButtonPressed:)];
+        self.cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed:)];
     }
     return self;
 }
@@ -26,11 +28,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle: @"Done" style:  UIBarButtonItemStyleDone target: self action: @selector(doneButtonPressed:)];
+	
+    if (doneButton) {
+        [[self navigationItem] setRightBarButtonItem:self.doneButton];
+    }
     
-    [[self navigationItem] setRightBarButtonItem:doneButton];
+    if (cancelButton) {
+        self.navigationItem.leftBarButtonItem = self.cancelButton;
+    }
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed:)];
+    
 }
 
 -(void)doneButtonPressed:(id)sender
@@ -46,12 +53,6 @@
 
 -(void)popViewController {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

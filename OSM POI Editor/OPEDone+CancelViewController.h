@@ -10,6 +10,11 @@
 
 @interface OPEDone_CancelViewController : UIViewController
 
+-(id)initShowCancel:(BOOL)showCancel showDone:(BOOL)showBOOL;
+
+@property (nonatomic,strong) UIBarButtonItem * doneButton;
+@property (nonatomic,strong) UIBarButtonItem * cancelButton;
+
 
 -(void)doneButtonPressed:(id)sender;
 -(void)cancelButtonPressed:(id)sender;

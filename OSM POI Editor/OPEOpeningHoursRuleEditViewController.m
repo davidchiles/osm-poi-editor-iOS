@@ -135,24 +135,25 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        UIViewController * viewController = nil;
+        OPEOpeningHoursBaseTimeEditViewController * viewController = nil;
         if (indexPath.row == 1) {
             viewController = [[OPEOpeningHoursMonths_DaysOfWeekViewController alloc] initWithType:OPETypeMonth forDateComponents:self.rule.monthsOrderedSet];
-            ((OPEOpeningHoursMonths_DaysOfWeekViewController *)viewController).doneBlock = ^(NSOrderedSet * orderedSet){
+            viewController.doneBlock = ^(NSOrderedSet * orderedSet){
                 self.rule.monthsOrderedSet = [orderedSet mutableCopy];
                 [tableView reloadData];
             };
         }
         else if (indexPath.row == 2) {
             viewController = [[OPEOpeningHoursMonths_DaysOfWeekViewController alloc] initWithType:OPETypeDaysOfWeek forDateComponents:self.rule.daysOfWeekOrderedSet];
-            ((OPEOpeningHoursMonths_DaysOfWeekViewController *)viewController).doneBlock = ^(NSOrderedSet * orderedSet){
+            viewController.doneBlock = ^(NSOrderedSet * orderedSet){
                 self.rule.daysOfWeekOrderedSet = [orderedSet mutableCopy];
                 [tableView reloadData];
             };
         }
         else if (indexPath.row == 3) {
-            viewController = [[OPEOpeningHoursTimeRangesViewController alloc] initWithTimeRanges:self.rule.timeRangesOrderedSet];
-            ((OPEOpeningHoursTimeRangesViewController *)viewController).doneBlock = ^(NSOrderedSet * timeRanges){
+            viewController = [[OPEOpeningHoursTimeRangesViewController alloc] initWithOrderedSet:self.rule.timeRangesOrderedSet];
+            
+           viewController.doneBlock = ^(NSOrderedSet * timeRanges){
                 self.rule.timeRangesOrderedSet = [timeRanges mutableCopy];
                 [tableView reloadData];
             };

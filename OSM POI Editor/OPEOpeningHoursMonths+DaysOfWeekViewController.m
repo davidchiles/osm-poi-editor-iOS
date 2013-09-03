@@ -14,37 +14,14 @@
 
 @implementation OPEOpeningHoursMonths_DaysOfWeekViewController
 
-@synthesize type,dateComponentsOrderedSet,doneBlock;
-
--(id)initWithType:(OPEType)newType
-{
-    if (self = [self init]) {
-        self.type = newType;
-    }
-    return self;
-}
+@synthesize type;
 
 -(id)initWithType:(OPEType)newType forDateComponents:(NSOrderedSet *)newDateComponentsOrderedSet
 {
-    if (self = [self initWithType:newType]) {
-        originalOrderedSet = newDateComponentsOrderedSet;
-        self.dateComponentsOrderedSet = [newDateComponentsOrderedSet mutableCopy];
-        if (![newDateComponentsOrderedSet count]) {
-            self.dateComponentsOrderedSet = [NSMutableOrderedSet orderedSet];
-        }
+    if (self = [self initWithOrderedSet:newDateComponentsOrderedSet]) {
+        self.type = newType;
     }
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	UITableView * tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    tableView.dataSource = self;
-    tableView.delegate = self;
-    tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    
-    [self.view addSubview:tableView];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -79,7 +56,7 @@
         else if (self.type == OPETypeDaysOfWeek) {
             cell.textLabel.text = @"All Days";
         }
-        if (![self.dateComponentsOrderedSet count]) {
+        if (![self.propertiesOrderedSet count]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     }
@@ -98,7 +75,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == 0) {
-        [self.dateComponentsOrderedSet removeAllObjects];
+        [self.propertiesOrderedSet removeAllObjects];
         
     }
     else
@@ -111,14 +88,12 @@
             dateComponent.weekday = indexPath.row;
         }
         
-        if ([self.dateComponentsOrderedSet containsObject:dateComponent]) {
-            [self.dateComponentsOrderedSet removeObject:dateComponent];
+        if ([self.propertiesOrderedSet containsObject:dateComponent]) {
+            [self.propertiesOrderedSet removeObject:dateComponent];
         }
         else {
-            [self.dateComponentsOrderedSet addObject:dateComponent];
+            [self.propertiesOrderedSet addObject:dateComponent];
         }
-        //[tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-
     }
     [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 }
@@ -152,17 +127,9 @@
         dateComponent.weekday = index;
     }
     
-    if ([self.dateComponentsOrderedSet containsObject:dateComponent]) {
+    if ([self.propertiesOrderedSet containsObject:dateComponent]) {
         return YES;
     }
     return NO;
-}
-
--(void)doneButtonPressed:(id)sender
-{
-    if (doneBlock) {
-        doneBlock(self.dateComponentsOrderedSet);
-    }
-    [super doneButtonPressed:sender];
 }
 @end

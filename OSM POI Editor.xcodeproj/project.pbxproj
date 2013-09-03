@@ -318,6 +318,9 @@
 		63570A901640F3C00009D8A3 /* libMapBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63570A8C1640F3B10009D8A3 /* libMapBox.a */; };
 		6362032A17CC050B0031B982 /* OPEOSMTagConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6362032917CC050B0031B982 /* OPEOSMTagConverter.m */; };
 		636549E8171CDE8000F16772 /* OPEGeoCentroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 636549E7171CDE8000F16772 /* OPEGeoCentroid.m */; };
+		6366D33017D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6366D32F17D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m */; };
+		6366D33617D6A47B002C9EF7 /* bubble_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6366D33417D6A47B002C9EF7 /* bubble_left@2x.png */; };
+		6366D33717D6A47B002C9EF7 /* bubble_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6366D33517D6A47B002C9EF7 /* bubble_right@2x.png */; };
 		6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6370D354151A8BAE0081206A /* libsqlite3.dylib */; };
 		6372F80117419F3100DE5909 /* Optional.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80017419F3100DE5909 /* Optional.json */; };
 		6372F80817419F6A00DE5909 /* OptionalCategorySort.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80717419F6A00DE5909 /* OptionalCategorySort.json */; };
@@ -337,10 +340,6 @@
 		63962B1F179621A0008B897C /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1E179621A0008B897C /* TTTAttributedLabel.m */; };
 		63962B2117962294008B897C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63962B2017962293008B897C /* CoreText.framework */; };
 		63962B2517975A95008B897C /* DAKeyboardControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B2417975A95008B897C /* DAKeyboardControl.m */; };
-		63962B2817977C22008B897C /* bubble_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 63962B2617977C22008B897C /* bubble_left.png */; };
-		63962B2917977C22008B897C /* bubble_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63962B2717977C22008B897C /* bubble_left@2x.png */; };
-		63962B2C17977E07008B897C /* bubble_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 63962B2A17977E07008B897C /* bubble_right.png */; };
-		63962B2D17977E07008B897C /* bubble_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63962B2B17977E07008B897C /* bubble_right@2x.png */; };
 		639953FE16113A200070CBAF /* about.css in Resources */ = {isa = PBXBuildFile; fileRef = 639953FD16113A200070CBAF /* about.css */; };
 		639F10AA17C82669003EB958 /* OPEBaseSpecialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 639F10A917C82669003EB958 /* OPEBaseSpecialCell.m */; };
 		63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */; };
@@ -797,6 +796,10 @@
 		6362032917CC050B0031B982 /* OPEOSMTagConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMTagConverter.m; sourceTree = "<group>"; };
 		636549E6171CDE8000F16772 /* OPEGeoCentroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEGeoCentroid.h; sourceTree = "<group>"; };
 		636549E7171CDE8000F16772 /* OPEGeoCentroid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEGeoCentroid.m; sourceTree = "<group>"; };
+		6366D32E17D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOpeningHoursBaseTimeEditViewController.h; sourceTree = "<group>"; };
+		6366D32F17D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpeningHoursBaseTimeEditViewController.m; sourceTree = "<group>"; };
+		6366D33417D6A47B002C9EF7 /* bubble_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_left@2x.png"; sourceTree = "<group>"; };
+		6366D33517D6A47B002C9EF7 /* bubble_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_right@2x.png"; sourceTree = "<group>"; };
 		6370D354151A8BAE0081206A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		6372F80017419F3100DE5909 /* Optional.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Optional.json; sourceTree = "<group>"; };
 		6372F80717419F6A00DE5909 /* OptionalCategorySort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OptionalCategorySort.json; sourceTree = "<group>"; };
@@ -826,10 +829,6 @@
 		63962B2017962293008B897C /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		63962B2317975A95008B897C /* DAKeyboardControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAKeyboardControl.h; sourceTree = "<group>"; };
 		63962B2417975A95008B897C /* DAKeyboardControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAKeyboardControl.m; sourceTree = "<group>"; };
-		63962B2617977C22008B897C /* bubble_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bubble_left.png; path = ../../../../../Desktop/bubble_left.png; sourceTree = "<group>"; };
-		63962B2717977C22008B897C /* bubble_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bubble_left@2x.png"; path = "../../../../../Desktop/bubble_left@2x.png"; sourceTree = "<group>"; };
-		63962B2A17977E07008B897C /* bubble_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bubble_right.png; path = ../../../../../Desktop/bubble_right.png; sourceTree = "<group>"; };
-		63962B2B17977E07008B897C /* bubble_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bubble_right@2x.png"; path = "../../../../../Desktop/bubble_right@2x.png"; sourceTree = "<group>"; };
 		63968298153CB8B4008F4C0E /* OPEAPIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAPIConstants.h; sourceTree = "<group>"; };
 		639953FD16113A200070CBAF /* about.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = about.css; sourceTree = "<group>"; };
 		639F10A817C82669003EB958 /* OPEBaseSpecialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBaseSpecialCell.h; sourceTree = "<group>"; };
@@ -1075,10 +1074,8 @@
 		6326680717164578002CD7E4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				63962B2A17977E07008B897C /* bubble_right.png */,
-				63962B2B17977E07008B897C /* bubble_right@2x.png */,
-				63962B2617977C22008B897C /* bubble_left.png */,
-				63962B2717977C22008B897C /* bubble_left@2x.png */,
+				6366D33417D6A47B002C9EF7 /* bubble_left@2x.png */,
+				6366D33517D6A47B002C9EF7 /* bubble_right@2x.png */,
 				6326680817164578002CD7E4 /* @1x */,
 				6326688117164579002CD7E4 /* @2x */,
 				632668FA17164579002CD7E4 /* App Icon */,
@@ -1792,6 +1789,8 @@
 				63EB72DF17CFF8170042F4A4 /* OPEDone+CancelViewController.m */,
 				63EB72E117CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.h */,
 				63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */,
+				6366D32E17D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.h */,
+				6366D32F17D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m */,
 				63F01BF517D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.h */,
 				63F01BF617D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m */,
 				63F01BFB17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.h */,
@@ -1974,6 +1973,7 @@
 				6326693817164579002CD7E4 /* doctor.png in Resources */,
 				6326693917164579002CD7E4 /* dog.png in Resources */,
 				6326693A17164579002CD7E4 /* drinking_water.png in Resources */,
+				6366D33617D6A47B002C9EF7 /* bubble_left@2x.png in Resources */,
 				6326693B17164579002CD7E4 /* embassy.png in Resources */,
 				6326693C17164579002CD7E4 /* EV.png in Resources */,
 				6326693D17164579002CD7E4 /* farm.png in Resources */,
@@ -2162,6 +2162,7 @@
 				632669F417164579002CD7E4 /* tower@2x.png in Resources */,
 				632669F517164579002CD7E4 /* townhall@2x.png in Resources */,
 				632669F617164579002CD7E4 /* trailer@2x.png in Resources */,
+				6366D33717D6A47B002C9EF7 /* bubble_right@2x.png in Resources */,
 				632669F717164579002CD7E4 /* train@2x.png in Resources */,
 				632669F817164579002CD7E4 /* tram@2x.png in Resources */,
 				632669F917164579002CD7E4 /* trash@2x.png in Resources */,
@@ -2204,10 +2205,6 @@
 				6372F80817419F6A00DE5909 /* OptionalCategorySort.json in Resources */,
 				630A878F17680FE1003C9423 /* FontAwesome.ttf in Resources */,
 				63E5E39917693D4D0064A780 /* wikipediaLanguages.json in Resources */,
-				63962B2817977C22008B897C /* bubble_left.png in Resources */,
-				63962B2917977C22008B897C /* bubble_left@2x.png in Resources */,
-				63962B2C17977E07008B897C /* bubble_right.png in Resources */,
-				63962B2D17977E07008B897C /* bubble_right@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2225,6 +2222,7 @@
 				6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */,
 				63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */,
 				63CB49E214E9E3BF008C4551 /* OPETypeViewController.m in Sources */,
+				6366D33017D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m in Sources */,
 				6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */,
 				63E525D21534D90500D2DA35 /* OPECreditViewController.m in Sources */,
 				6310F4B6153736D000C65FD8 /* OPEMessageView.m in Sources */,
