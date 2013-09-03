@@ -80,14 +80,42 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OPEOpeningHourRule * rule = nil;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    __block OPEOpeningHourRule * rule = nil;
+    
     if (![indexPath isEqual:[self lastIndexPathForTableView:tableView]]) {
         //Edit Rule
         rule = self.rulesArray[indexPath.row];
+        
     }
     OPEOpeningHoursRuleEditViewController * ruleEditViewController = [[OPEOpeningHoursRuleEditViewController alloc] initWithRule:rule];
+    ruleEditViewController.doneBlock = ^(OPEOpeningHourRule * newRule) {
+        if (rule) {
+            rule = newRule;
+        }
+        else {
+            [self.rulesArray addObject:newRule];
+        }
+        
+        [tableView reloadData];
+        
+    };
+    
     [self.navigationController pushViewController:ruleEditViewController animated:YES];
     
+}
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return ![indexPath isEqual:[self lastIndexPathForTableView:tableView]];
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.rulesArray removeObjectAtIndex:indexPath.row];
+        [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 
 -(NSIndexPath *)lastIndexPathForTableView:(UITableView *)tableView

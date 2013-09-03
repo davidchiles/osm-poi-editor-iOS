@@ -19,6 +19,8 @@
 
 @implementation OPEOpeningHoursRuleEditViewController
 
+@synthesize doneBlock;
+
 - (id)initWithRule:(OPEOpeningHourRule *)newRule
 {
     if (self = [self init]) {
@@ -56,6 +58,12 @@
     }
     [openCloseSegmentedControl addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [ruleTableView reloadData];
 }
 
 #pragma mark TableView
@@ -128,19 +136,26 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
         UIViewController * viewController = nil;
-        switch (indexPath.row) {
-            case 1:
-                viewController = [[OPEOpeningHoursMonths_DaysOfWeekViewController alloc] initWithType:OPETypeMonth forDateComponents:self.rule.monthsOrderedSet];
-                break;
-            case 2:
-                viewController = [[OPEOpeningHoursMonths_DaysOfWeekViewController alloc] initWithType:OPETypeDaysOfWeek forDateComponents:self.rule.daysOfWeekOrderedSet];
-                break;
-            case 3:
-                viewController = [[OPEOpeningHoursTimeRangesViewController alloc] initWithTimeRanges:self.rule.timeRangesOrderedSet];
-                break;
-                
-            default:
-                break;
+        if (indexPath.row == 1) {
+            viewController = [[OPEOpeningHoursMonths_DaysOfWeekViewController alloc] initWithType:OPETypeMonth forDateComponents:self.rule.monthsOrderedSet];
+            ((OPEOpeningHoursMonths_DaysOfWeekViewController *)viewController).doneBlock = ^(NSOrderedSet * orderedSet){
+                self.rule.monthsOrderedSet = [orderedSet mutableCopy];
+                [tableView reloadData];
+            };
+        }
+        else if (indexPath.row == 2) {
+            viewController = [[OPEOpeningHoursMonths_DaysOfWeekViewController alloc] initWithType:OPETypeDaysOfWeek forDateComponents:self.rule.daysOfWeekOrderedSet];
+            ((OPEOpeningHoursMonths_DaysOfWeekViewController *)viewController).doneBlock = ^(NSOrderedSet * orderedSet){
+                self.rule.daysOfWeekOrderedSet = [orderedSet mutableCopy];
+                [tableView reloadData];
+            };
+        }
+        else if (indexPath.row == 3) {
+            viewController = [[OPEOpeningHoursTimeRangesViewController alloc] initWithTimeRanges:self.rule.timeRangesOrderedSet];
+            ((OPEOpeningHoursTimeRangesViewController *)viewController).doneBlock = ^(NSOrderedSet * timeRanges){
+                self.rule.timeRangesOrderedSet = [timeRanges mutableCopy];
+                [tableView reloadData];
+            };
         }
         [self.navigationController pushViewController:viewController animated:YES];
     }
@@ -167,6 +182,14 @@
         }
     }
     
+}
+
+-(void)doneButtonPressed:(id)sender
+{
+    if (doneBlock) {
+        doneBlock(self.rule);
+    }
+    [super doneButtonPressed:sender];
 }
 
 

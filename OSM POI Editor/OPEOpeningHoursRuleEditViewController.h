@@ -11,6 +11,9 @@
 @class OPEOpeningHourRule;
 @class OPEOpeningHoursParser;
 
+typedef void (^ruleEditPropertyCompleteBlock)(NSOrderedSet *);
+typedef void (^ruleEditCompleteBlock)(OPEOpeningHourRule *);
+
 @interface OPEOpeningHoursRuleEditViewController : OPEDone_CancelViewController <UITableViewDataSource, UITableViewDelegate>
 {
     OPEOpeningHourRule * originalRule;
@@ -23,6 +26,7 @@
 
 
 @property (nonatomic,strong) OPEOpeningHourRule * rule;
+@property (nonatomic,copy) ruleEditCompleteBlock doneBlock;
 
 - (id)initWithRule:(OPEOpeningHourRule *)newRule;
 

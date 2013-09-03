@@ -14,7 +14,7 @@
 
 @implementation OPEOpeningHoursMonths_DaysOfWeekViewController
 
-@synthesize type,dateComponentsOrderedSet;
+@synthesize type,dateComponentsOrderedSet,doneBlock;
 
 -(id)initWithType:(OPEType)newType
 {
@@ -24,9 +24,9 @@
     return self;
 }
 
--(id)initWithType:(OPEType)type forDateComponents:(NSOrderedSet *)newDateComponentsOrderedSet
+-(id)initWithType:(OPEType)newType forDateComponents:(NSOrderedSet *)newDateComponentsOrderedSet
 {
-    if (self = [self initWithType:type]) {
+    if (self = [self initWithType:newType]) {
         originalOrderedSet = newDateComponentsOrderedSet;
         self.dateComponentsOrderedSet = [newDateComponentsOrderedSet mutableCopy];
         if (![newDateComponentsOrderedSet count]) {
@@ -156,5 +156,13 @@
         return YES;
     }
     return NO;
+}
+
+-(void)doneButtonPressed:(id)sender
+{
+    if (doneBlock) {
+        doneBlock(self.dateComponentsOrderedSet);
+    }
+    [super doneButtonPressed:sender];
 }
 @end

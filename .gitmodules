@@ -22,7 +22,7 @@
 	url = git@github.com:mattlawer/BButton.git
 [submodule "lib/ActionSheetPicker"]
 	path = lib/ActionSheetPicker
-	url = git@github.com:TimCinel/ActionSheetPicker.git
+	url = git@github.com:davidchiles/ActionSheetPicker.git
 [submodule "lib/tttatributedlabel"]
 	path = lib/tttatributedlabel
 	url = git@github.com:mattt/TTTAttributedLabel.git

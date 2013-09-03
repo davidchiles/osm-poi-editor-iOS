@@ -66,6 +66,22 @@
     }
 }
 
+-(void)setIsSunrise:(BOOL)newIsSunrise
+{
+    if (newIsSunrise) {
+        self.isSunset = NO;
+    }
+    _isSunrise = newIsSunrise;
+    
+}
+-(void)setIsSunset:(BOOL)newIsSunset
+{
+    if (newIsSunset) {
+        self.isSunrise = NO;
+    }
+    _isSunset = newIsSunset;
+}
+
 @end
 
 @implementation OPEDateRange
