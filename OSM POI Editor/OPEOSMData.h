@@ -58,7 +58,7 @@
 
 @interface OPEOSMData : NSObject <OSMDAODelegate>
 {
-    dispatch_queue_t q;
+    NSOperationQueue * parseQueue;
     NSMutableDictionary * typeDictionary;
     OPEOSMAPIManager * apiManager;
 }

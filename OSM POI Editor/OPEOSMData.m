@@ -58,7 +58,8 @@
     {
         
         
-        q = dispatch_queue_create("Parse.Queue", NULL);
+        parseQueue = [[NSOperationQueue alloc] init];
+        parseQueue.maxConcurrentOperationCount = 2;
         
         //NSString * baseUrl = @"http://api06.dev.openstreetmap.org/";
         
@@ -146,25 +147,28 @@
         //NSString* newStr = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
         
         //Do async
-        __block NSMutableArray * newNotes = [NSMutableArray array];
-        NSArray * notes = [response objectForKey:@"features"];
-        [notes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSDictionary * noteDictionary = (NSDictionary *)obj;
-            NSDictionary * propertiesDictionary = noteDictionary[@"properties"];
-            if ([self isNewNoteID:[propertiesDictionary[@"id"] longLongValue]]) {
-                Note * note = [self createNoteWithJSONDictionary:noteDictionary];
-                [self addNewNote:note];
-                [newNotes addObject:note];
-            }
-            
-            
-            NSLog(@"%@",obj);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([delegate respondsToSelector:@selector(didFindNewNotes:)]) {
-                    [delegate didFindNewNotes:newNotes];
+        [parseQueue addOperationWithBlock:^{
+            __block NSMutableArray * newNotes = [NSMutableArray array];
+            NSArray * notes = [response objectForKey:@"features"];
+            [notes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                NSDictionary * noteDictionary = (NSDictionary *)obj;
+                NSDictionary * propertiesDictionary = noteDictionary[@"properties"];
+                if ([self isNewNoteID:[propertiesDictionary[@"id"] longLongValue]]) {
+                    Note * note = [self createNoteWithJSONDictionary:noteDictionary];
+                    [self addNewNote:note];
+                    [newNotes addObject:note];
                 }
-            });
+                
+                
+                NSLog(@"%@",obj);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([delegate respondsToSelector:@selector(didFindNewNotes:)]) {
+                        [delegate didFindNewNotes:newNotes];
+                    }
+                });
+            }];
         }];
+        
         
     } failure:^(NSError *error) {
         NSLog(@"Error: %@",error);
@@ -193,8 +197,8 @@
         if ([delegate respondsToSelector:@selector(didEndDownloading)]) {
             [delegate didEndDownloading];
         }
-        dispatch_queue_t backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-        dispatch_async(backgroundQueue,  ^{
+        
+        NSBlockOperation * parseOperation = [NSBlockOperation blockOperationWithBlock:^{
             
             OSMParser* parser = [[OSMParser alloc] initWithOSMData:response];
             OSMParserHandlerDefault* handler = [[OSMParserHandlerDefault alloc] initWithOutputFilePath:kDatabasePath overrideIfExists:NO];
@@ -217,7 +221,8 @@
             });
             
             NSLog(@"done Parsing");
-        });
+        }];
+        [parseQueue addOperation:parseOperation];
 
     } failure:^(NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
