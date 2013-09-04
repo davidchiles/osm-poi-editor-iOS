@@ -61,7 +61,13 @@
     if (self.currentOsmValue) {
         self.phoneNumber = [OPEOSMTagConverter phoneNumberWithOsmValue:self.currentOsmValue];
     }
-}
+    
+    phoneTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    phoneTableView.delegate = self;
+    phoneTableView.dataSource = self;
+    phoneTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    
+    [self.view addSubview:phoneTableView];}
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -71,18 +77,8 @@
 
 -(void)selectTextFieldAtRow:(NSUInteger)row
 {
-    UITableView * tableView = (UITableView *)[self.view viewWithTag:kTableViewTag];
-    OPEPhoneCell * phoneCell = (OPEPhoneCell *)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0]];
+    OPEPhoneCell * phoneCell = (OPEPhoneCell *)[phoneTableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:row inSection:0]];
     [phoneCell.textField becomeFirstResponder];
-}
-
--(NSString *)newOsmValue
-{
-    NSString * newOsmValueString = [OPEOSMTagConverter osmStringWithPhoneNumber:self.phoneNumber];
-    if ([newOsmValueString length]) {
-        return newOsmValueString;
-    }
-    return self.currentOsmValue;
 }
 
 -(float)getWidth;
@@ -102,10 +98,18 @@
     
 }
 
+-(NSString *)currentOsmValue
+{
+    if ((self.phoneNumber.countryCode || self.phoneNumber.areaCode || self.phoneNumber.localNumber)) {
+        return [OPEOSMTagConverter osmStringWithPhoneNumber:self.phoneNumber];
+    }
+    return [super currentOsmValue];
+    
+}
+
 -(void)newValue:(NSString *)value forCell:(UITableViewCell *)tableViewCell
 {
-    UITableView * tableView = (UITableView *)[self.view viewWithTag:kTableViewTag];
-    NSIndexPath * indexPath = [tableView indexPathForCell:tableViewCell];
+    NSIndexPath * indexPath = [phoneTableView indexPathForCell:tableViewCell];
     int64_t num = [value longLongValue];
     phoneNumber newPhoneNumber = self.phoneNumber;
     if (indexPath.row == 0) {

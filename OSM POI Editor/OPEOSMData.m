@@ -383,6 +383,9 @@
     if ([osmValue length] && [osmKey length]) {
         [element.element.tags setObject:osmValue forKey:osmKey];
     }
+    else if(osmKey){
+        [self removeOsmKey:osmKey forElement:element];
+    }
 }
 -(void)removeType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element
 {

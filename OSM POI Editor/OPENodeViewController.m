@@ -53,6 +53,7 @@
 @synthesize managedOsmElement;
 @synthesize newElement;
 @synthesize optionalSectionsArray;
+@synthesize newTagBlock;
 
 
 -(id)init
@@ -87,8 +88,10 @@
         
         [self.osmData getOptionalsFor:self.managedOsmElement.type];
         
-        
-        //self.apiManager.delegate = self;
+        __block __weak OPENodeViewController * weakNodeViewController = self;
+        self.newTagBlock = ^(NSString * osmKey,NSString * osmValue){
+            [weakNodeViewController newOsmKey:osmKey value:osmValue];
+        };
         
         UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle: CANCEL_STRING style: UIBarButtonItemStyleBordered target: self action:@selector(cancelButtonPressed:)];
         
@@ -483,10 +486,8 @@
     }
     
     if (indexPath.section == 0) {
-        OPETagEditViewController * viewController = nil;
-        viewController = [OPETagEditViewController viewControllerWithOsmKey:@"name" andType:nil delegate:self];
+        OPETagEditViewController * viewController = [OPETagEditViewController viewControllerWithOsmKey:@"name" currentOsmValue:[self.managedOsmElement valueForOsmKey:@"name"] andType:OPEOptionalTypeText withCompletionBlock:self.newTagBlock];
         viewController.title = NAME_STRING;
-        viewController.currentOsmValue = [self.managedOsmElement valueForOsmKey:@"name"];
         [self.navigationController pushViewController:viewController animated:YES];
     }
     else if(indexPath.section ==1)
@@ -510,12 +511,12 @@
     else{
         OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
         
-        OPETagEditViewController * viewController = nil;
-        viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey andType:managedOptionalTag.type delegate:self];
+        OPETagEditViewController * viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey currentOsmValue:[self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey] andType:managedOptionalTag.type withCompletionBlock:self.newTagBlock];
+        //viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey andType:managedOptionalTag.type delegate:self];
         viewController.title = managedOptionalTag.displayName;
         viewController.managedOptional = managedOptionalTag;
-        viewController.element = self.managedOsmElement;
-        viewController.currentOsmValue = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
+        //viewController.element = self.managedOsmElement;
+        //viewController.currentOsmValue =
         [self.navigationController pushViewController:viewController animated:YES];
         
     }

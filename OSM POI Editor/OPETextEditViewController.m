@@ -16,40 +16,25 @@
 @implementation OPETextEditViewController
 @synthesize textField;
 
-- (void)viewDidLoad
+-(id)init
+{
+    if (self = [super init]) {
+        self.textField = [[OPEOsmValueTextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35) withOsmKey:self.osmKey andValue:self.currentOsmValue];
+        self.textField.delegate = self;
+    }
+    return self;
+}
+
+-(void)viewDidLoad
 {
     [super viewDidLoad];
-	
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle: @"Done" style:  UIBarButtonItemStyleDone target: self action: @selector(doneButtonPressed:)];
-    
-    [[self navigationItem] setRightBarButtonItem:doneButton];
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed:)];
-    
+    self.textField.text = self.currentOsmValue;
 }
 
--(void)doneButtonPressed:(id)sender
+-(BOOL)textField:(UITextField *)tField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    NSString * newValue = [self newOsmValue];
-    if ([newValue length]) {
-        [self saveNewValue:newValue];
-    }
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
--(void)cancelButtonPressed:(id)sender
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void) saveNewValue:(NSString *)value
-{
-    [self.delegate newOsmKey:self.osmKey value:value];
-}
-
--(NSString *)newOsmValue
-{
-    return [self.textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    self.currentOsmValue = [tField.text stringByReplacingCharactersInRange:range withString:string];
+    return YES;
 }
 
 @end

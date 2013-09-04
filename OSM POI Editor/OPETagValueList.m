@@ -101,10 +101,11 @@
 {
     OPEManagedReferenceOsmTag * refTag = (OPEManagedReferenceOsmTag *)[valuesArray objectAtIndex: indexPath.row];
     
-    [self.delegate newOsmKey:refTag.key value:refTag.value];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.navigationController popViewControllerAnimated:YES];
+    self.currentOsmValue = refTag.value;
+    self.osmKey = refTag.key;
     
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self doneButtonPressed:self];
 }
 
 @end

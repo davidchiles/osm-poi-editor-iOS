@@ -118,6 +118,13 @@
     }
 }
 
+-(NSString *)currentOsmValue{
+    if ([self.rulesArray count]) {
+        return [openingHoursParser stringWithRules:self.rulesArray];
+    }
+    return [super currentOsmValue];
+}
+
 -(NSIndexPath *)lastIndexPathForTableView:(UITableView *)tableView
 {
     NSInteger lastSectionIndex = [tableView numberOfSections] - 1;

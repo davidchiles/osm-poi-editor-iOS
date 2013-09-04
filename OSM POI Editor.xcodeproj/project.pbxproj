@@ -305,7 +305,6 @@
 		6333D3AC16811F6800BF129E /* OPECoreDataImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6333D3AB16811F6800BF129E /* OPECoreDataImporter.m */; };
 		63397D8F170250AA00D411E7 /* OPERecent+NearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */; };
 		63397D9717026B0F00D411E7 /* OPEPhoneEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */; };
-		63397D9A1702732A00D411E7 /* OPETextViewEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D991702732A00D411E7 /* OPETextViewEditViewController.m */; };
 		633CD868164B242C00678D58 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD867164B242C00678D58 /* Parse.framework */; };
 		633CD86A164B249100678D58 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD869164B249100678D58 /* AudioToolbox.framework */; };
 		633CD86C164B249D00678D58 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86B164B249D00678D58 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -778,8 +777,6 @@
 		63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OPERecent+NearbyViewController.m"; sourceTree = "<group>"; };
 		63397D9517026B0F00D411E7 /* OPEPhoneEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEPhoneEditViewController.h; sourceTree = "<group>"; };
 		63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEPhoneEditViewController.m; sourceTree = "<group>"; };
-		63397D981702732A00D411E7 /* OPETextViewEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETextViewEditViewController.h; sourceTree = "<group>"; };
-		63397D991702732A00D411E7 /* OPETextViewEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETextViewEditViewController.m; sourceTree = "<group>"; };
 		633CD867164B242C00678D58 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = lib/Parse.framework; sourceTree = "<group>"; };
 		633CD869164B249100678D58 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		633CD86B164B249D00678D58 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1664,8 +1661,6 @@
 				63D0A5D1170112BF007A595E /* OPETagEditViewController.m */,
 				63D0A5D317011659007A595E /* OPETextEditViewController.h */,
 				63D0A5D417011659007A595E /* OPETextEditViewController.m */,
-				63397D981702732A00D411E7 /* OPETextViewEditViewController.h */,
-				63397D991702732A00D411E7 /* OPETextViewEditViewController.m */,
 				63D0A5D6170119B4007A595E /* OPERecentlyUsedViewController.h */,
 				63D0A5D7170119B4007A595E /* OPERecentlyUsedViewController.m */,
 				63397D9517026B0F00D411E7 /* OPEPhoneEditViewController.h */,
@@ -2271,7 +2266,6 @@
 				63D0A5DB17011F18007A595E /* OPEOsmValueTextField.m in Sources */,
 				63397D8F170250AA00D411E7 /* OPERecent+NearbyViewController.m in Sources */,
 				63397D9717026B0F00D411E7 /* OPEPhoneEditViewController.m in Sources */,
-				63397D9A1702732A00D411E7 /* OPETextViewEditViewController.m in Sources */,
 				6314D13C17039A5B00AE91E3 /* OPENameEditView.m in Sources */,
 				6314D13F1703C27B00AE91E3 /* OPEBaseViewController.m in Sources */,
 				63266A251716469B002CD7E4 /* GTMHTTPFetcher.m in Sources */,

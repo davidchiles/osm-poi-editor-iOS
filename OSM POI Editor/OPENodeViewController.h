@@ -37,7 +37,7 @@
 @end
 
 
-@interface OPENodeViewController : OPEBaseViewController <UITableViewDelegate, UITableViewDataSource, OPETagEditViewControllerDelegate, OPETypeViewControllerDelegate>
+@interface OPENodeViewController : OPEBaseViewController <UITableViewDelegate, UITableViewDataSource, OPETypeViewControllerDelegate>
 {
     NSDictionary * osmKeyValue;
     float optionalTagWidth;
@@ -58,6 +58,8 @@
 @property (nonatomic, strong) OPEManagedOsmElement * managedOsmElement;
 @property (nonatomic) BOOL newElement;
 @property (nonatomic, strong) NSArray * optionalSectionsArray;
+
+@property (nonatomic,copy) newTagBlock newTagBlock;
 
 - (id)initWithOsmElement:(OPEManagedOsmElement *)element delegate:(id<OPENodeViewDelegate>)delegate;
 

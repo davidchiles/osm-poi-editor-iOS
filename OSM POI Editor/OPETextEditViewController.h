@@ -9,12 +9,8 @@
 #import "OPETagEditViewController.h"
 #import "OPEOsmValueTextField.h"
 
-@interface OPETextEditViewController : OPETagEditViewController
+@interface OPETextEditViewController : OPETagEditViewController <UITextFieldDelegate>
 
 @property (nonatomic,strong)OPEOsmValueTextField * textField;
-
--(NSString *)newOsmValue;
--(void)saveNewValue:(NSString *)value;
--(void)doneButtonPressed:(id)sender;
 
 @end

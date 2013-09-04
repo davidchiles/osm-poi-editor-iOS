@@ -6,13 +6,14 @@
 //
 //
 
-#import "OPERecentlyUsedViewController.h"
+#import "OPETagEditViewController.h"
 #import "OPEOSMTagConverter.h"
 #import "OPEPhoneCell.h"
 
-@interface OPEPhoneEditViewController : OPERecentlyUsedViewController <OPEPhoneCellDelegate>
+@interface OPEPhoneEditViewController : OPETagEditViewController <OPEPhoneCellDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     CGFloat maxLabelLength;
+    UITableView * phoneTableView;
 }
 
 @property (nonatomic) phoneNumber phoneNumber;

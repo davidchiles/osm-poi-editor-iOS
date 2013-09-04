@@ -33,7 +33,7 @@
 #import "OPECoreDataImporter.h"
 #import "OPEMRUtility.h"
 
-#import "OPEOpeningHoursEditViewController.h"
+//#import "OPEOpeningHoursEditViewController.h"
 
 @implementation OPEAppDelegate
 
@@ -42,7 +42,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [OPEOpeningHoursParser test];
+    //[OPEOpeningHoursParser test];
 #ifdef CRITTERCISM_ENABLED
     [Crittercism enableWithAppID: CRITTERCISM_APP_ID];
 #endif
@@ -57,9 +57,12 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    //UIViewController *rootView = [[OPEViewController alloc] init];
-    NSString * string = @"Nov-May Tu-Su 08:00-15:00;Sa 08:00-12:00;Jun off";
-    UIViewController * rootView = [[OPEOpeningHoursEditViewController alloc] initWithOsmKey:@"opening_hours" currentValue:string delegate:nil];
+    UIViewController *rootView = [[OPEViewController alloc] init];
+    /*NSString * string = @"Nov-May Tu-Su 08:00-15:00;Sa 08:00-12:00;Jun off";
+    
+    //UIViewController * rootView = [[OPEOpeningHoursEditViewController alloc] initWithOsmKey:@"opening_hours" value:string withCompletionBlock:^(NSString *key, NSString *value) {
+        NSLog(@"Key: %@\nValue: %@",key,value);
+    }];*/
     self.navController = [[UINavigationController alloc] initWithRootViewController:rootView];
     [[self window] setRootViewController:self.navController];
     

@@ -61,6 +61,10 @@
     {
         return OPEOptionalTypePhone;
     }
+    else if ([typeString isEqualToString:kTypeHours])
+    {
+        return OPEOptionalTypeHours;
+    }
     return OPEOptionalTypeNone;
 }
 

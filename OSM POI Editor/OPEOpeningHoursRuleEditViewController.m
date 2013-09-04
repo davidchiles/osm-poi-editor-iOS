@@ -23,7 +23,7 @@
 
 - (id)initWithRule:(OPEOpeningHourRule *)newRule
 {
-    if (self = [self init]) {
+    if (self = [self initShowCancel:YES showDone:YES]) {
         originalRule = [newRule copy];
         if (!newRule) {
             newRule = [[OPEOpeningHourRule alloc] init];

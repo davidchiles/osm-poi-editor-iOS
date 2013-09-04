@@ -31,8 +31,7 @@
     }
 	
     
-    self.textField = [[OPEOsmValueTextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35) withOsmKey:self.osmKey andValue:self.currentOsmValue];
-    self.textField.delegate = self;
+    
     if (self.managedOptional.type == OPEOptionalTypeNumber) {
         self.textField.keyboardType = UIKeyboardTypeNumberPad;
     }
@@ -51,6 +50,7 @@
     UITableView * tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
     tableView.delegate = self;
     tableView.dataSource = self;
+    tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     tableView.tag = kTableViewTag;
     
     [self.view addSubview:tableView];
@@ -125,9 +125,9 @@
         NSString * newValue = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
         
         [self saveToRecentlyUsed:newValue];
-        [self saveNewValue:newValue];
+        self.currentOsmValue = newValue;
         
-        [self.navigationController popViewControllerAnimated:YES];
+        [self doneButtonPressed:self];
         
         
     }
@@ -169,20 +169,20 @@
     }
     
 }
-
--(NSString *)newOsmValue
-{
-    NSString * newValue = [super newOsmValue];
-    
-    [self saveToRecentlyUsed:newValue];
-    
-    return newValue;
-}
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self.textField resignFirstResponder];
     
     return NO;
+}
+
+-(void)doneButtonPressed:(id)sender
+{
+    if ([self.currentOsmValue length]) {
+        [self saveToRecentlyUsed:self.currentOsmValue];
+    }
+    [super doneButtonPressed:sender];
+    
 }
 
 @end

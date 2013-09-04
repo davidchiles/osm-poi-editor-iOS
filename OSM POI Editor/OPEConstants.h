@@ -34,6 +34,7 @@
 #define kTypeUrl @"url"
 #define kTypePhone @"phone"
 #define kTypeEmail @"email"
+#define kTypeHours @"hours"
 
 typedef enum{
     OPEOptionalTypeNone,
@@ -44,7 +45,8 @@ typedef enum{
     OPEOptionalTypeNumber,
     OPEOptionalTypeUrl,
     OPEOptionalTypePhone,
-    OPEOptionalTypeEmail
+    OPEOptionalTypeEmail,
+    OPEOptionalTypeHours
 }OPEOptionalType;
 
 #define kLeftTextDefaultSize 76
@@ -69,7 +71,7 @@ typedef enum{
 
 
 #define kExpandedAddressArray @[@"addr:housenumber",@"addr:street",@"addr:city",@"addr:postcode",@"addr:state",@"addr:country",@"addr:province"]
-#define kExpandedContactArray @[@"website",@"phone",@"fax",@"email",@"wikipedia"]
+#define kExpandedContactArray @[@"website",@"phone",@"fax",@"email",@"wikipedia",@"opening_hours"]
 
 #define kActionTypeModify @"update"
 #define kActionTypeDelete @"delete"

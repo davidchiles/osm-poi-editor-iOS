@@ -653,6 +653,12 @@
     "values" : "phone",
     "section" : "Contact/Annotate"
   },
+  "opening_hours" : {
+    "displayName" : "Opening Hours",
+    "osmKey" : "opening_hours",
+    "values" : "hours",
+    "section" : "Contact/Annotate"
+  },
   "email" : {
     "displayName" : "Email",
     "osmKey" : "email",

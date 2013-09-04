@@ -224,17 +224,18 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
--(NSString *)newOsmValue
+-(void)doneButtonPressed:(id)sender
 {
-    if ([[super newOsmValue] length] && [self.locale length]) {
-        return[NSString stringWithFormat:@"%@:%@",self.locale,[super newOsmValue]];
+    NSString * osmValue = [self.textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if([osmValue length]) {
+        self.currentOsmValue = [NSString stringWithFormat:@"%@:%@",self.locale,osmValue];
     }
-    else if ([[super newOsmValue] length])
-    {
-        return [super newOsmValue];
+    else {
+        self.currentOsmValue = @"";
     }
-    return @"";
     
+    [super doneButtonPressed:sender];
 }
+
 
 @end

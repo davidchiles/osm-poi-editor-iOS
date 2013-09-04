@@ -11,26 +11,25 @@
 #import "OPEManagedReferenceOptional.h"
 #import "OPEConstants.h"
 #import "OPEManagedOsmElement.h"
+#import "OPEDone+CancelViewController.h"
 
+typedef void (^newTagBlock)(NSString * key,NSString * value);
 
-@protocol OPETagEditViewControllerDelegate <NSObject>
-@required
-- (void) newOsmKey:(NSString *)key value:(NSString *)value;
-@end
-
-@interface OPETagEditViewController : UIViewController
-
-@property (nonatomic,weak) id<OPETagEditViewControllerDelegate> delegate;
+@interface OPETagEditViewController : OPEDone_CancelViewController
 
 @property (nonatomic, strong) NSString * osmKey;
 @property (nonatomic, strong) NSString * currentOsmValue;
 @property (nonatomic, strong) OPEManagedReferenceOptional * managedOptional;
 @property (nonatomic, strong) OPEManagedOsmElement * element;
 
--(id)initWithOsmKey:(NSString *)osmKey delegate:(id<OPETagEditViewControllerDelegate>)delegate;
--(id)initWithOsmKey:(NSString *)osmKey currentValue:(NSString *)currentValue delegate:(id<OPETagEditViewControllerDelegate>)delegate;
+@property (nonatomic, readonly) BOOL showDoneButton;
 
-+(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey andType:(OPEOptionalType)type delegate:(id<OPETagEditViewControllerDelegate>)delegate;
+@property (nonatomic, copy) newTagBlock completionBlock;
+
+-(id)initWithOsmKey:(NSString *)osmKey value:(NSString *)value withCompletionBlock:(newTagBlock)newCompletionBlock;
+
++(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey currentOsmValue:(NSString *)osmValue andType:(OPEOptionalType)type withCompletionBlock:(newTagBlock)newCompletionBlock;
+
 +(NSString *)sectionFootnoteForOsmKey:(NSString *)osmKey;
 
 @end
