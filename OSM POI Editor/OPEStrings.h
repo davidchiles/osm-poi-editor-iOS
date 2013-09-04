@@ -34,6 +34,7 @@
 
 #define REMOVE_STRING NSLocalizedString(@"Remove",@"Button label to remove tag")
 #define CANCEL_STRING NSLocalizedString(@"Cancel",@"Button label to cancel action")
+#define DONE_STRING NSLocalizedString(@"Done",@"Button label to done action")
 #define DELETE_STRING NSLocalizedString(@"Delete",@"Button label to delete item")
 #define DELETE_ALERT_TITLE_STRING NSLocalizedString(@"Delete Point of Interest",@"Title to aler to delete node")
 #define DELETE_ALERT_STRING NSLocalizedString(@"Are you Sure you want to delete this node?",@"Message when deleting a node")

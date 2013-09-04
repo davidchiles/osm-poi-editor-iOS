@@ -70,6 +70,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+-(BOOL)showDoneButton
+{
+    return NO;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

@@ -7,6 +7,7 @@
 //
 
 #import "OPEDone+CancelViewController.h"
+#import "OPEStrings.h"
 
 @interface OPEDone_CancelViewController ()
 
@@ -16,11 +17,17 @@
 
 @synthesize cancelButton,doneButton;
 
--(id)initShowCancel:(BOOL)showCancel showDone:(BOOL)showBOOL
+-(id)initShowCancel:(BOOL)showCancel showDone:(BOOL)showDone
 {
     if (self = [self init]) {
-        self.doneButton = [[UIBarButtonItem alloc] initWithTitle: @"Done" style:  UIBarButtonItemStyleDone target: self action: @selector(doneButtonPressed:)];
-        self.cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed:)];
+        if (showCancel) {
+            self.cancelButton = [[UIBarButtonItem alloc] initWithTitle:CANCEL_STRING style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonPressed:)];
+        }
+        if (showDone) {
+            self.doneButton = [[UIBarButtonItem alloc] initWithTitle:DONE_STRING style:  UIBarButtonItemStyleDone target: self action: @selector(doneButtonPressed:)];
+        }
+        
+        
     }
     return self;
 }
