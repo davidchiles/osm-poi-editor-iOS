@@ -146,7 +146,6 @@
     [apiManager downloadNotesWithSW:southWest NE:northEast success:^(id response) {
         //NSString* newStr = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
         
-        //Do async
         [parseQueue addOperationWithBlock:^{
             __block NSMutableArray * newNotes = [NSMutableArray array];
             NSArray * notes = [response objectForKey:@"features"];
@@ -212,13 +211,15 @@
             });
             
             
-            [parser parse];
+            [parser parseWithCompletionBlock:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if ([delegate respondsToSelector:@selector(didEndParsing)]) {
+                        [delegate didEndParsing];
+                    }
+                });
+            }];
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([delegate respondsToSelector:@selector(didEndParsing)]) {
-                    [delegate didEndParsing];
-                }
-            });
+            
             
             NSLog(@"done Parsing");
         }];
