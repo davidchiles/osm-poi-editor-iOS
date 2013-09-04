@@ -17,6 +17,8 @@ typedef void (^didSelectDateButton)(UITableViewCell * cell,BOOL isStartButton);
     UIButton * startTimeButton;
     UIButton * endTimeButton;
     UILabel * toLabel;
+    //CGSize startButtonSize;
+    //CGSize endButtonSize;
 }
 
 @property (nonatomic,strong) OPEDateRange * dateRange;

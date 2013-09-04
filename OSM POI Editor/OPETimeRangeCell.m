@@ -44,8 +44,19 @@
 {
     _dateRange = newDateRange;
     
-    [startTimeButton setTitle:[_dateRange.startDateComponent displayString] forState:UIControlStateNormal];
-    [endTimeButton setTitle:[_dateRange.endDateComponent displayString] forState:UIControlStateNormal];
+    NSString * startString =[_dateRange.startDateComponent displayString];
+    NSString * endString = [_dateRange.endDateComponent displayString];
+    
+    [startTimeButton setTitle:startString forState:UIControlStateNormal];
+    [endTimeButton setTitle:endString forState:UIControlStateNormal];
+    
+    //startButtonSize = [startString sizeWithAttributes:@{NSFontAttributeName:startTimeButton.titleLabel.font}];
+    //endButtonSize = [endString sizeWithAttributes:@{NSFontAttributeName:endTimeButton.titleLabel.font}];
+    
+    
+    
+    
+    [self needsUpdateConstraints];
 }
 
 -(void)didSelectTimeButton:(id)sender
@@ -63,6 +74,7 @@
 -(void)updateConstraints
 {
     [super updateConstraints];
+    
     NSLayoutConstraint * constraint = [NSLayoutConstraint constraintWithItem:toLabel
                                                                    attribute:NSLayoutAttributeCenterX
                                                                    relatedBy:NSLayoutRelationEqual
@@ -91,14 +103,15 @@
     [self.contentView addConstraint:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:startTimeButton
-                                              attribute:NSLayoutAttributeLeft
+                                              attribute:NSLayoutAttributeCenterX
                                               relatedBy:NSLayoutRelationEqual
                                                  toItem:self.contentView
-                                              attribute:NSLayoutAttributeLeft
-                                             multiplier:1.0
+                                              attribute:NSLayoutAttributeCenterX
+                                             multiplier:0.5
                                                constant:0];
     [self.contentView addConstraint:constraint];
     
+    /*
     constraint = [NSLayoutConstraint constraintWithItem:startTimeButton
                                               attribute:NSLayoutAttributeRight
                                               relatedBy:NSLayoutRelationEqual
@@ -107,6 +120,7 @@
                                              multiplier:1.0
                                                constant:0];
     [self.contentView addConstraint:constraint];
+     */
     
     constraint = [NSLayoutConstraint constraintWithItem:startTimeButton
                                               attribute:NSLayoutAttributeHeight
@@ -127,14 +141,15 @@
     [self.contentView addConstraint:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:endTimeButton
-                                              attribute:NSLayoutAttributeLeft
+                                              attribute:NSLayoutAttributeCenterX
                                               relatedBy:NSLayoutRelationEqual
                                                  toItem:toLabel
-                                              attribute:NSLayoutAttributeRight
-                                             multiplier:1.0
+                                              attribute:NSLayoutAttributeCenterX
+                                             multiplier:1.5
                                                constant:0];
     [self.contentView addConstraint:constraint];
     
+    /*
     constraint = [NSLayoutConstraint constraintWithItem:endTimeButton
                                               attribute:NSLayoutAttributeRight
                                               relatedBy:NSLayoutRelationEqual
@@ -143,6 +158,7 @@
                                              multiplier:1.0
                                                constant:0];
     [self.contentView addConstraint:constraint];
+     */
     
     constraint = [NSLayoutConstraint constraintWithItem:endTimeButton
                                               attribute:NSLayoutAttributeHeight
