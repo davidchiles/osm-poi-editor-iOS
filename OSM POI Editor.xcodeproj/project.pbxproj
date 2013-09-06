@@ -19,6 +19,8 @@
 		631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */ = {isa = PBXBuildFile; fileRef = 631539E014DC98D0000236F0 /* OPEOSMData.m */; };
 		631AB0AD1727686E003F5F6F /* OPETranslate.m in Sources */ = {isa = PBXBuildFile; fileRef = 631AB0AC1727686E003F5F6F /* OPETranslate.m */; };
 		631AB0B317276EBF003F5F6F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 631AB0B517276EBF003F5F6F /* Localizable.strings */; };
+		63233BA717DA8E5B0026CFC5 /* download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63233BA617DA8E5B0026CFC5 /* download@2x.png */; };
+		63233BAA17DA90990026CFC5 /* OPEDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63233BA917DA90990026CFC5 /* OPEDownloadManager.m */; };
 		6326691317164579002CD7E4 /* airplane.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326680917164578002CD7E4 /* airplane.png */; };
 		6326691417164579002CD7E4 /* alcohol.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326680A17164578002CD7E4 /* alcohol.png */; };
 		6326691517164579002CD7E4 /* apartment.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326680B17164578002CD7E4 /* apartment.png */; };
@@ -470,6 +472,9 @@
 		631AB0B617287907003F5F6F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		631AB0B717287915003F5F6F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		631FE88D1720C26000AEA107 /* OPEStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEStrings.h; sourceTree = "<group>"; };
+		63233BA617DA8E5B0026CFC5 /* download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download@2x.png"; sourceTree = "<group>"; };
+		63233BA817DA90990026CFC5 /* OPEDownloadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEDownloadManager.h; sourceTree = "<group>"; };
+		63233BA917DA90990026CFC5 /* OPEDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEDownloadManager.m; sourceTree = "<group>"; };
 		6326680917164578002CD7E4 /* airplane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = airplane.png; sourceTree = "<group>"; };
 		6326680A17164578002CD7E4 /* alcohol.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alcohol.png; sourceTree = "<group>"; };
 		6326680B17164578002CD7E4 /* apartment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apartment.png; sourceTree = "<group>"; };
@@ -1089,6 +1094,7 @@
 		6326680717164578002CD7E4 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				63233BA617DA8E5B0026CFC5 /* download@2x.png */,
 				6366D33417D6A47B002C9EF7 /* bubble_left@2x.png */,
 				6366D33517D6A47B002C9EF7 /* bubble_right@2x.png */,
 				6326680817164578002CD7E4 /* @1x */,
@@ -1479,6 +1485,8 @@
 				633CD876164B28DA00678D58 /* OPEFileUpdater.m */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,
 				631539E014DC98D0000236F0 /* OPEOSMData.m */,
+				63233BA817DA90990026CFC5 /* OPEDownloadManager.h */,
+				63233BA917DA90990026CFC5 /* OPEDownloadManager.m */,
 				63CFCA93176160330006BE38 /* OPEOSMAPIManager.h */,
 				63CFCA94176160330006BE38 /* OPEOSMAPIManager.m */,
 				630A879417682274003C9423 /* OPEWikipediaManager.h */,
@@ -2167,6 +2175,7 @@
 				632669DD17164579002CD7E4 /* pin@2x.png in Resources */,
 				632669DE17164579002CD7E4 /* pipe@2x.png in Resources */,
 				632669DF17164579002CD7E4 /* playground@2x.png in Resources */,
+				63233BA717DA8E5B0026CFC5 /* download@2x.png in Resources */,
 				632669E017164579002CD7E4 /* police@2x.png in Resources */,
 				632669E117164579002CD7E4 /* prayer@2x.png in Resources */,
 				632669E217164579002CD7E4 /* recycle@2x.png in Resources */,
@@ -2335,6 +2344,7 @@
 				630A8799176827F3003C9423 /* OPEWikipediaEditViewController.m in Sources */,
 				639F10AA17C82669003EB958 /* OPEBaseSpecialCell.m in Sources */,
 				63F63D5C17684D340084E703 /* OPEWikipediaWebViewController.m in Sources */,
+				63233BAA17DA90990026CFC5 /* OPEDownloadManager.m in Sources */,
 				63F01BFD17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.m in Sources */,
 				63E5E3AB176943040064A780 /* AbstractActionSheetPicker.m in Sources */,
 				63E5E3AC176943040064A780 /* ActionSheetCustomPicker.m in Sources */,

@@ -25,6 +25,7 @@
 #import "RMMapViewDelegate.h" 
 #import <CoreLocation/CoreLocation.h>
 #import "OPEOSMData.h"
+#import "OPEDownloadManager.h"
 #import "OPEInfoViewController.h"
 #import "OPENodeViewController.h"
 #import "OPEMessageView.h"
@@ -45,6 +46,8 @@
 }
 
 @property (nonatomic,strong) CLLocationManager* locationManager;
+
+@property (nonatomic,strong) OPEDownloadManager * downloadManger;
 
 @property (nonatomic,strong) UIBarButtonItem * infoButton;
 @property (nonatomic,strong) UIBarButtonItem * location;

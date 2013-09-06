@@ -70,8 +70,10 @@
 
 @property (nonatomic,strong) NSMutableDictionary * notes;
 
-- (void)getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 -(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
+
+-(BOOL)findType:(OPEManagedOsmElement *)element;
+-(BOOL)isNoNameStreet:(OPEManagedOsmWay *)way;
 
 - (NSString *)changesetCommentfor:(OPEManagedOsmElement *)element;
 - (NSString *)nameWithElement: (OPEManagedOsmElement *) element;

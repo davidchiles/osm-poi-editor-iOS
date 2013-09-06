@@ -13,9 +13,28 @@
 #import "OPEChangeset.h"
 #import "OPEUtility.h"
 
-typedef struct {
-	double left,right,bottom,top;
-}boundingBox;
+@implementation OPEBoundingBox
+
+@synthesize top,left,right,bottom;
+
+-(BOOL)containsPoint:(CLLocationCoordinate2D)point
+{
+    if (point.longitude > left && point.longitude < right && point.latitude < top && point.latitude < bottom) {
+        return YES;
+    }
+    return NO;
+}
+
++(id)boundingBoxSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast {
+    OPEBoundingBox * bbox = [[OPEBoundingBox alloc] init];
+    bbox.left = southWest.longitude;
+    bbox.bottom = southWest.latitude;
+    bbox.right = northEast.longitude;
+    bbox.top = northEast.latitude;
+    return bbox;
+}
+
+@end
 
 @implementation OPEOSMAPIManager
 @synthesize auth = _auth;
@@ -69,22 +88,12 @@ typedef struct {
     return _httpClient;
 }
 
--(boundingBox)boundingBoxSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
-{
-    boundingBox bbox;
-    bbox.left = southWest.longitude;
-    bbox.bottom = southWest.latitude;
-    bbox.right = northEast.longitude;
-    bbox.top = northEast.latitude;
-    return bbox;
-}
-
 -(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
                    success:(void (^)(NSData * response))success
                    failure:(void (^)(NSError *error))failure
 {
     
-    boundingBox bbox = [self boundingBoxSW:southWest NE:northEast];
+    OPEBoundingBox * bbox = [OPEBoundingBox boundingBoxSW:southWest NE:northEast];
     NSString * bboxString = [NSString stringWithFormat:@"%f,%f,%f,%f",bbox.left,bbox.bottom,bbox.right,bbox.top];
     NSDictionary * parametersDictionary = @{@"bbox": bboxString};
     NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"GET" path:@"notes.json" parameters:parametersDictionary];
@@ -104,11 +113,11 @@ typedef struct {
     [requestOperation start];
 }
 
--(void)getDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
+-(void)downloadDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
              success:(void (^)(NSData * response))success
              failure:(void (^)(NSError *error))failure
 {
-    boundingBox bbox = [self boundingBoxSW:southWest NE:northEast];
+    OPEBoundingBox * bbox = [OPEBoundingBox boundingBoxSW:southWest NE:northEast];
     
     NSURL* url = [self downloadURLWithBoundingBox:bbox];
     NSMutableURLRequest * request =[NSMutableURLRequest requestWithURL:url];
@@ -127,7 +136,7 @@ typedef struct {
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [apiFailures setObject:[NSNumber numberWithInt:1] forKey:[operation.request.URL.absoluteString componentsSeparatedByString:@"bbox"][0]];
         if ([apiFailures count] < 5) {
-            [self getDataWithSW:southWest NE:northEast success:success failure:failure];
+            [self downloadDataWithSW:southWest NE:northEast success:success failure:failure];
         }
         else if (failure)
         {
@@ -184,7 +193,7 @@ typedef struct {
     return finalURL;
 }
 
--(NSURL *)downloadURLWithBoundingBox:(boundingBox)bbox
+-(NSURL *)downloadURLWithBoundingBox:(OPEBoundingBox *)bbox
 {
     NSURL * finalUrl;
     NSString * baseURLString;

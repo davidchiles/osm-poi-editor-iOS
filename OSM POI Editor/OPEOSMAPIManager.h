@@ -17,6 +17,20 @@
 #import "Note.h"
 #import "Comment.h"
 
+@interface OPEBoundingBox : NSObject;
+
+@property (nonatomic) double left;
+@property (nonatomic) double right;
+@property (nonatomic) double top;
+@property (nonatomic) double bottom;
+
+-(BOOL)containsPoint:(CLLocationCoordinate2D)point;
+
++(id)boundingBoxSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast;
+
+
+@end
+
 @interface OPEOSMAPIManager : NSObject
 {
     NSMutableDictionary * apiFailures;
@@ -26,7 +40,7 @@
 @property (nonatomic,strong) AFHTTPClient * httpClient;
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
 
--(void)getDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
+-(void)downloadDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
              success:(void (^)(NSData * response))success
              failure:(void (^)(NSError *error))failure;
 -(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast

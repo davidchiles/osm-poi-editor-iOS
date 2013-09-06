@@ -63,6 +63,7 @@
 @synthesize selectedNoNameHighway = _selectedNoNameHighway;
 @synthesize HUD;
 @synthesize parsingMessageView;
+@synthesize downloadManger = _downloadManger;
 
 @synthesize userPressedLocatoinButton;
 
@@ -77,6 +78,7 @@
     UIBarButtonItem * locationBarButton;
     UIBarButtonItem * addBarButton;
     UIBarButtonItem * settingsBarButton;
+    UIBarButtonItem * downloadBarButton;
     
     
     
@@ -86,6 +88,10 @@
     addBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPointButtonPressed:)];
     
     settingsBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gear.png"] style:UIBarButtonItemStylePlain target:self action:@selector(infoButtonPressed:)];
+    
+    downloadBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(downloadButtonPressed:)];
+    
+    
     
     UIBarButtonItem * flexibleSpaceBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
@@ -100,7 +106,7 @@
     
     UIToolbar * toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, 320, 44)];
     toolBar.delegate = self;
-    [toolBar setItems:@[locationBarButton,flexibleSpaceBarItem,addBarButton,flexibleSpaceBarItem,settingsBarButton]];
+    [toolBar setItems:@[locationBarButton,flexibleSpaceBarItem,downloadBarButton,flexibleSpaceBarItem,addBarButton,flexibleSpaceBarItem,settingsBarButton]];
     [self.view addSubview:toolBar];
 
     //self.toolbarItems = [    //self.navigationItem.rightBarButtonItem = settingsBarButton;
@@ -339,6 +345,17 @@
     
     
     return @[annotation];
+}
+
+-(OPEDownloadManager *)downloadManger{
+    if (!_downloadManger) {
+        _downloadManger = [[OPEDownloadManager alloc] init];
+        __block __weak  OPEViewController * viewController =  self;
+        _downloadManger.foundMatchingElementsBlock = ^void(NSArray * newElements, NSArray * updatedElements) {
+            [viewController didFindNewElements:newElements updatedElements:updatedElements];
+        };
+    }
+    return _downloadManger;
 }
 
 -(void)setSelectedNoNameHighway:(RMAnnotation *)newSelectedNoNameHighway
@@ -617,6 +634,7 @@
     [UIView animateWithDuration:1.0 animations:^{
         self.message.alpha = .8;
     }];
+    [self removeZoomWarning];
     
 }
 -(void) removeZoomWarning
@@ -641,7 +659,15 @@
     if (map.zoom > MINZOOM) {
         [self removeZoomWarning];
         //dispatch_async(q, ^{
-        [self.osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
+        //[self.osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
+        [self.downloadManger downloadDataWithSW:geoBox.southWest forNE:geoBox.northEast didStartParsing:^{
+            [self willStartParsing:nil];
+        } didFinsihParsing:^{
+            [self didEndParsing];
+        } faiure:^(NSError *error) {
+            [self didEndParsing];
+        }];
+        
         //});
         //dispatch_release(q);
     }
@@ -653,7 +679,7 @@
 - (void)afterMapMove:(RMMapView *)map byUser:(BOOL)wasUserAction
 {
     if (wasUserAction || userPressedLocatoinButton) {
-        [self downloadNewArea:map];
+        //[self downloadNewArea:map];
     }
     
 }
@@ -661,7 +687,7 @@
 - (void)afterMapZoom:(RMMapView *)map byUser:(BOOL)wasUserAction
 {
     if (wasUserAction || userPressedLocatoinButton) {
-        [self downloadNewArea:map];
+        //[self downloadNewArea:map];
     }
 }
 
@@ -679,7 +705,7 @@
         userPressedLocatoinButton = YES;
         if(!firstDownload)
         {
-            [self downloadNewArea:mapView];
+            //[self downloadNewArea:mapView];
             firstDownload = YES;
         }
         
@@ -701,7 +727,7 @@
 
 #pragma - Actions
 
-- (IBAction)addPointButtonPressed:(id)sender
+- (void)addPointButtonPressed:(id)sender
 {
     CLLocationCoordinate2D center = mapView.centerCoordinate;
     
@@ -738,7 +764,7 @@
     }
 }
 
--(IBAction)locationButtonPressed:(id)sender
+-(void)locationButtonPressed:(id)sender
 {
     userPressedLocatoinButton = YES;
     [mapView setCenterCoordinate: mapView.userLocation.coordinate animated:YES];
@@ -751,8 +777,11 @@
     return boolValue;
     //[[OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey]boolValue];
 }
-
-- (IBAction)infoButtonPressed:(id)sender
+-(void)downloadButtonPressed:(id)sender
+{
+    [self downloadNewArea:mapView];
+}
+- (void)infoButtonPressed:(id)sender
 {
     NSMutableString *attribution = [NSMutableString string];
     
@@ -817,11 +846,6 @@
     }
     
     
-}
-
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

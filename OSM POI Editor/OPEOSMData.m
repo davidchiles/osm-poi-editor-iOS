@@ -188,67 +188,21 @@
 {
     [self.notes setObject:newNote forKey:@(newNote.id)];
 }
- 
--(void) getDataWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
-{
-    [self downloadNotesWithSW:southWest NE:northEast];
-    [apiManager getDataWithSW:southWest NE:northEast success:^(NSData *response) {
-        if ([delegate respondsToSelector:@selector(didEndDownloading)]) {
-            [delegate didEndDownloading];
-        }
-        
-        NSBlockOperation * parseOperation = [NSBlockOperation blockOperationWithBlock:^{
-            
-            OSMParser* parser = [[OSMParser alloc] initWithOSMData:response];
-            OSMParserHandlerDefault* handler = [[OSMParserHandlerDefault alloc] initWithOutputFilePath:kDatabasePath overrideIfExists:NO];
-            parser.delegate=handler;
-            handler.outputDao.delegate = self;
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if ([delegate respondsToSelector:@selector(willStartParsing:)]) {
-                    [delegate willStartParsing:nil];
-                }
-            });
-            
-            
-            [parser parseWithCompletionBlock:^{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if ([delegate respondsToSelector:@selector(didEndParsing)]) {
-                        [delegate didEndParsing];
-                    }
-                });
-            }];
-            
-            
-            
-            NSLog(@"done Parsing");
-        }];
-        [parseQueue addOperation:parseOperation];
 
-    } failure:^(NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if ([delegate respondsToSelector:@selector(downloadFailed:)]) {
-                [delegate downloadFailed:error];
-            }
-        });
-    }];
-}
 
 -(BOOL) canAuth;
 {
-        BOOL didAuth = NO;
-        BOOL canAuth = NO;
-        if (_auth) {
-                didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor" authentication:_auth];
-                // if the auth object contains an access token, didAuth is now true
-                canAuth = [_auth canAuthorize];
-            }
-        else {
-                return NO;
-            }
-        return didAuth && canAuth;
-    
-    
+    BOOL didAuth = NO;
+    BOOL canAuth = NO;
+    if (_auth) {
+            didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor" authentication:_auth];
+            // if the auth object contains an access token, didAuth is now true
+            canAuth = [_auth canAuthorize];
+        }
+    else {
+            return NO;
+        }
+    return didAuth && canAuth;
 }
 
 - (NSString *)changesetCommentfor:(OPEManagedOsmElement *)element
