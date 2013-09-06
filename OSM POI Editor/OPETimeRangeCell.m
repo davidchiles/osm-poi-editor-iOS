@@ -8,6 +8,7 @@
 
 #import "OPETimeRangeCell.h"
 #import "OPEOpeningHoursParser.h"
+#import "OPEStrings.h"
 
 
 @implementation OPETimeRangeCell
@@ -31,7 +32,7 @@
         
         toLabel = [[UILabel alloc] init];
         toLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        toLabel.text = @"to";
+        toLabel.text = TO_STRING;
         
         [self.contentView addSubview:toLabel];
         [self setNeedsUpdateConstraints];
@@ -49,12 +50,6 @@
     
     [startTimeButton setTitle:startString forState:UIControlStateNormal];
     [endTimeButton setTitle:endString forState:UIControlStateNormal];
-    
-    //startButtonSize = [startString sizeWithAttributes:@{NSFontAttributeName:startTimeButton.titleLabel.font}];
-    //endButtonSize = [endString sizeWithAttributes:@{NSFontAttributeName:endTimeButton.titleLabel.font}];
-    
-    
-    
     
     [self needsUpdateConstraints];
 }
@@ -111,17 +106,6 @@
                                                constant:0];
     [self.contentView addConstraint:constraint];
     
-    /*
-    constraint = [NSLayoutConstraint constraintWithItem:startTimeButton
-                                              attribute:NSLayoutAttributeRight
-                                              relatedBy:NSLayoutRelationEqual
-                                                 toItem:toLabel
-                                              attribute:NSLayoutAttributeLeft
-                                             multiplier:1.0
-                                               constant:0];
-    [self.contentView addConstraint:constraint];
-     */
-    
     constraint = [NSLayoutConstraint constraintWithItem:startTimeButton
                                               attribute:NSLayoutAttributeHeight
                                               relatedBy:NSLayoutRelationEqual
@@ -148,17 +132,6 @@
                                              multiplier:1.5
                                                constant:0];
     [self.contentView addConstraint:constraint];
-    
-    /*
-    constraint = [NSLayoutConstraint constraintWithItem:endTimeButton
-                                              attribute:NSLayoutAttributeRight
-                                              relatedBy:NSLayoutRelationEqual
-                                                 toItem:self.contentView
-                                              attribute:NSLayoutAttributeRight
-                                             multiplier:1.0
-                                               constant:0];
-    [self.contentView addConstraint:constraint];
-     */
     
     constraint = [NSLayoutConstraint constraintWithItem:endTimeButton
                                               attribute:NSLayoutAttributeHeight

@@ -8,6 +8,7 @@
 
 #import "OPEOpeningHoursEditViewController.h"
 #import "OPEOpeningHoursRuleEditViewController.h"
+#import "OPEStrings.h"
 
 @interface OPEOpeningHoursEditViewController ()
 
@@ -27,6 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = RULES_STRING;
     if ([self.currentOsmValue length]) {
         [self.openingHoursParser parseString:self.currentOsmValue success:^(NSArray *blocks) {
             self.rulesArray = [blocks mutableCopy];
@@ -69,7 +71,7 @@
     }
     
     if ([indexPath isEqual:[self lastIndexPathForTableView:tableView]]) {
-        cell.textLabel.text = @"Add Rule";
+        cell.textLabel.text = ADD_RULE_STRING;
     }
     else {
         OPEOpeningHourRule * rule = self.rulesArray[indexPath.row];

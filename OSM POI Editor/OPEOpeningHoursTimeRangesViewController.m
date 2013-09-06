@@ -55,7 +55,7 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addCellIdentifier];
         }
-        cell.textLabel.text = @"Add Time Range";
+        cell.textLabel.text = ADD_TIME_RANGE_STRING;
     }
     else {
         OPETimeRangeCell * timeRangeCell = (OPETimeRangeCell *)[tableView dequeueReusableCellWithIdentifier:timeCelIdentifier];
@@ -106,12 +106,12 @@
     if (isStartButton) {
         currentDate = [dateRange.startDateComponent date];
         currentDateComponent = dateRange.startDateComponent;
-        pickerTitle = @"Start Time";
+        pickerTitle = START_TIME_STRING;
     }
     else {
         currentDate = [dateRange.endDateComponent date];
         currentDateComponent = dateRange.endDateComponent;
-        pickerTitle = @"End Time";
+        pickerTitle = END_TIME_STIRNG;
     }
     
     if (!currentDate) {

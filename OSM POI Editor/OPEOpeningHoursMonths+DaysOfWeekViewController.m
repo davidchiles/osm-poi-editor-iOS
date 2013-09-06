@@ -7,6 +7,7 @@
 //
 
 #import "OPEOpeningHoursMonths+DaysOfWeekViewController.h"
+#import "OPEStrings.h"
 
 @interface OPEOpeningHoursMonths_DaysOfWeekViewController ()
 
@@ -22,6 +23,17 @@
         self.type = newType;
     }
     return self;
+}
+
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    if (self.type == OPETypeDaysOfWeek) {
+        self.title = DAYS_OF_WEEK_STRING;
+    }
+    else {
+        self.title = MONTHS_STRING;
+    }
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -51,10 +63,10 @@
     
     if (indexPath.row == 0) {
         if (self.type == OPETypeMonth) {
-            cell.textLabel.text = @"All Months";
+            cell.textLabel.text = ALL_MONTHS_STRING;
         }
         else if (self.type == OPETypeDaysOfWeek) {
-            cell.textLabel.text = @"All Days";
+            cell.textLabel.text = ALL_DAYS_STRING;
         }
         if (![self.propertiesArray count]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;

@@ -62,5 +62,32 @@
 #define SUNSET_STRING NSLocalizedString(@"Sunset",@"The time of day with the sun goes away")
 #define SUNRISE_STRING NSLocalizedString(@"Sunrise",@"The time of day when the sun comes back")
 
+#define ADD_RULE_STRING NSLocalizedString(@"Add Rule",@"Label for button to add opening_hours rule")
+#define RULE_STRING NSLocalizedString(@"Rule",@"Title for view where opening_hours rules are edited, singular")
+#define RULES_STRING NSLocalizedString(@"Rules",@"Title for view where opening_hours rules are edited, plural")
+#define OPEN_TWENTY_FOUR_SEVEN_STRING NSLocalizedString(@"Open 24/7","Label for switch denoting if open 24/7 or all the time")
+#define OPEN_STRING NSLocalizedString(@"Open",@"label denoting a business is open")
+#define CLOSED_STRING NSLocalizedString(@"Closed",@"label denoting a business is closed")
+#define MONTHS_STRING NSLocalizedString(@"Months",@"There's twelve of them and the first one is January")
+#define ALL_MONTHS_STRING NSLocalizedString(@"All Months",@"There's twelve of them and the first one is January")
+
+#define DAYS_OF_WEEK_STRING NSLocalizedString(@"Days of the Week",@"There's seven of them and the first one is Sunday or is it monday?")
+#define ALL_DAYS_STRING NSLocalizedString(@"All Days",@"Label")
+
+#define TIME_RANGES_STRING NSLocalizedString(@"Time Ranges",@"label for time ranges in opening_hours")
+#define TIMES_STRING NSLocalizedString(@"Times",@"label for times in opening_hours")
+
+#define ADD_TIME_RANGE_STRING NSLocalizedString(@"Add Time Range",@"Button to add new time range for opening_hours")
+#define ADD_TIME_STIRNG NSLocalizedString(@"Add Time",@"Button to add new time for opening_hours")
+
+#define START_TIME_STRING NSLocalizedString(@"Start Time",@"Title for time when a shop opens")
+#define END_TIME_STIRNG NSLocalizedString(@"End Time",@"Title for when a shop closes")
+
+#define TIME_STRING NSLocalizedString(@"Time",@"Time like on a watch")
+
+#define TO_STRING NSLocalizedString(@"to",@"as in from 10 *to* 12 we'll be open")
+
+
+
 
 @end

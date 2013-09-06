@@ -12,6 +12,7 @@
 #import "OPEOpeningHoursMonths+DaysOfWeekViewController.h"
 #import "OPEOpeningHoursTimeRangesViewController.h"
 #import "OPEOpeningHoursTimesEditViewController.h"
+#import "OPEStrings.h"
 
 @interface OPEOpeningHoursRuleEditViewController ()
 
@@ -39,6 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = RULE_STRING;
 	ruleTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     ruleTableView.dataSource = self;
     ruleTableView.delegate = self;
@@ -50,7 +52,7 @@
     [twentyFourSevenSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     twentyFourSevenSwitch.on = self.rule.isTwentyFourSeven;
     
-    openCloseSegmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Open",@"Close"]];
+    openCloseSegmentedControl = [[UISegmentedControl alloc] initWithItems:@[OPEN_STRING,CLOSED_STRING]];
     if (self.rule.isOpen) {
         [openCloseSegmentedControl setSelectedSegmentIndex:0];
     }
@@ -119,22 +121,22 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"Open 24/7";
+            cell.textLabel.text = OPEN_TWENTY_FOUR_SEVEN_STRING;
             cell.accessoryView = twentyFourSevenSwitch;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         else if (indexPath.row == 1) {
-            cell.textLabel.text = @"Months";
+            cell.textLabel.text = MONTHS_STRING;
             cell.detailTextLabel.text = [openingHoursParser stringWithMonthsOrderedSet:self.rule.monthsOrderedSet];
             if (![cell.detailTextLabel.text length]) {
-                cell.detailTextLabel.text = @"All Months";
+                cell.detailTextLabel.text = ALL_MONTHS_STRING;
             }
         }
         else if (indexPath.row == 2) {
-            cell.textLabel.text = @"Days";
+            cell.textLabel.text = DAYS_OF_WEEK_STRING;
             cell.detailTextLabel.text = [openingHoursParser stringWithDaysOfWeekOrderedSet:self.rule.daysOfWeekOrderedSet];
             if (![cell.detailTextLabel.text length]) {
-                cell.detailTextLabel.text = @"All Days";
+                cell.detailTextLabel.text = ALL_DAYS_STRING;
             }
         }
         else if (indexPath.row == 3) {
@@ -154,13 +156,13 @@
 
 -(void)formatTimeRangesCell:(UITableViewCell *)cell
 {
-    cell.textLabel.text = @"Time Ranges";
+    cell.textLabel.text = TIME_RANGES_STRING;
     cell.detailTextLabel.text = [openingHoursParser stringWithTimeRangesOrderedSet:self.rule.timeRangesOrderedSet];
 }
 
 -(void)formatTimesCell:(UITableViewCell *)cell
 {
-    cell.textLabel.text = @"Times";
+    cell.textLabel.text = TIMES_STRING;
     cell.detailTextLabel.text = [openingHoursParser stringWithTimeRangesOrderedSet:self.rule.timesOrderedSet];
 }
 
