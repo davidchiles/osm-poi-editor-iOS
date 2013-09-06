@@ -11,6 +11,7 @@
 #import "OPEMRUtility.h"
 #import "OPEManagedOsmElement.h"
 #import "OPEOSMSearchManager.h"
+#import "OPEStrings.h"
 
 @interface OPERecent_NearbyViewController ()
 
@@ -73,7 +74,7 @@
     }
     else if ((section == 1 && [distances count]) || section == 2)
     {
-        return @"Nearby";
+        return NEARBY_STRING;
     }
     return  title;
 }

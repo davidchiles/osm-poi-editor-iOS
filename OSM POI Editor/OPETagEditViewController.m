@@ -14,6 +14,7 @@
 #import "OPETagValueList.h"
 #import "OPEWikipediaEditViewController.h"
 #import "OPEOpeningHoursEditViewController.h"
+#import "OPEStrings.h"
 
 @interface OPETagEditViewController ()
 
@@ -107,30 +108,30 @@
 
 +(NSString *)sectionFootnoteForOsmKey:(NSString *)osmKey
 {
-    NSString * string = @"Example: ";
+    NSString * string = [NSString stringWithFormat:@"%@: ",EXAMPLE_STRING];
     if([osmKey isEqualToString:@"addr:state"])
     {
-        string = [string stringByAppendingFormat:@"CA, PA, NY, MA ..."];
+        string = [string stringByAppendingFormat:STATE_EXAMPLE_STRING];
     }
     else if([osmKey isEqualToString:@"addr:country"])
     {
-        string = [string stringByAppendingFormat:@"US, CA, MX, GB ..."];
+        string = [string stringByAppendingFormat:COUNTRY_CODE_STRING];
     }
     else if([osmKey isEqualToString:@"addr:province"])
     {
-        string = [string stringByAppendingFormat:@"British Columbia, Ontario, Quebec ..."];
+        string = [string stringByAppendingFormat:PROVINCE_EXAMPLE_STRING];
     }
     else if([osmKey isEqualToString:@"addr:postcode"])
     {
-        string = @"In US use 5 digit ZIP Code";
+        string = POSTCODE_EXAMPLE_STRING;
     }
     else if([osmKey isEqualToString:@"addr:housenumber"])
     {
-        string = @"House or building number \nExample: 1600, 10, 221B ...";
+        string = ADDRESS_EXAMPLE_STRING;
     }
     else if([osmKey isEqualToString:@"phone"])
     {
-        string = @"US and Canada country code is 1";
+        string = COUNTRY_PHONE_CODE_STRING;
     }
 
     else {

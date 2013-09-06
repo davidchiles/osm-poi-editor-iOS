@@ -87,6 +87,15 @@
 
 #define TO_STRING NSLocalizedString(@"to",@"as in from 10 *to* 12 we'll be open")
 
+#define NEARBY_STRING NSLocalizedString(@"Nearby",@"Title for list of close by objects")
+
+#define EXAMPLE_STRING NSLocalizedString(@"Example",@"Start to list examples of tag values")
+#define STATE_EXAMPLE_STRING NSLocalizedString(@"CA, PA, NY, MA ...", @"Examples of states for addr:state")
+#define COUNTRY_CODE_EXAMPLE_STRING NSLocalizedString(@"US, CA, MX, GB ...",@"Country code examples for addr:country. Use local countries that someone would be familiar with")
+#define PROVINCE_EXAMPLE_STRING NSLocalizedString(@"British Columbia, Ontario, Quebec ...",@"Province examples for addr:province. Use local provinces that someone would be familiar with")
+#define POSTCODE_EXAMPLE_STRING NSLocalizedString(@"In US use 5 digit ZIP Code",@"Explain addr:postcode . Use local postcodes that someone would be familiar with")
+#define ADDRESS_EXAMPLE_STRING NSLocalizedString(@"House or building number \nExample: 1600, 10, 221B ...",@"Explain addr:housenumber. Use local customs that someone would be familiar with")
+#define COUNTRY_PHONE_CODE_STRING NSLocalizedString(@"US and Canada country code is 1",@"Explain phone country codes. Use local number that makes sense for language")
 
 
 
