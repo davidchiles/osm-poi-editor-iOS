@@ -14,16 +14,16 @@
 
 @implementation OPEOpeningHoursBaseTimeEditViewController
 
-@synthesize propertiesTableView,propertiesOrderedSet,doneBlock;
+@synthesize propertiesTableView,propertiesArray,doneBlock;
 
 -(id)initWithOrderedSet:(NSOrderedSet *)orderedSet
 {
     if (self = [self initShowCancel:YES showDone:YES]) {
         if ([orderedSet count]) {
-            self.propertiesOrderedSet = [orderedSet mutableCopy];
+            self.propertiesArray = [[orderedSet array] mutableCopy];
         }
         else {
-            self.propertiesOrderedSet = [NSMutableOrderedSet orderedSet];
+            self.propertiesArray = [NSMutableArray array];
         }
     }
     return self;
@@ -43,7 +43,7 @@
 -(void)doneButtonPressed:(id)sender
 {
     if (doneBlock) {
-        doneBlock(self.propertiesOrderedSet);
+        doneBlock([NSOrderedSet orderedSetWithArray:self.propertiesArray]);
     }
     [super doneButtonPressed:sender];
 }

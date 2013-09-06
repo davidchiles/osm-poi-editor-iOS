@@ -659,6 +659,18 @@
     "values" : "hours",
     "section" : "Contact/Annotate"
   },
+  "service_times" : {
+    "displayName" : "Service Times",
+    "osmKey" : "service_times",
+    "values" : "hours",
+    "section" : "Other"
+  },
+  "collection_times" : {
+    "displayName" : "Collection Times",
+    "osmKey" : "collection_times",
+    "values" : "hours",
+    "section" : "Other"
+  },
   "email" : {
     "displayName" : "Email",
     "osmKey" : "email",

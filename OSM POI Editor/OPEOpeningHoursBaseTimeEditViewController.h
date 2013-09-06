@@ -12,7 +12,7 @@ typedef void (^ruleEditPropertyCompleteBlock)(NSOrderedSet *);
 
 @interface OPEOpeningHoursBaseTimeEditViewController : OPEDone_CancelViewController <UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,strong) NSMutableOrderedSet * propertiesOrderedSet;
+@property (nonatomic,strong) NSMutableArray * propertiesArray;
 @property (nonatomic,copy) ruleEditPropertyCompleteBlock doneBlock;
 @property (nonatomic,strong) UITableView * propertiesTableView;
 

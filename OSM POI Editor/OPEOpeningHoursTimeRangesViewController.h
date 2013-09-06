@@ -15,4 +15,6 @@
     OPEDateComponents * currentDateComponent;
 }
 
+-(void)showDatePickerWithTitle:(NSString *)pickerTitle withDate:(NSDate *)currentDate withIndex:(NSInteger)index;
+
 @end

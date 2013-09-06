@@ -100,9 +100,19 @@
         [tableView reloadData];
         
     };
+    ruleEditViewController.ruleEditType = [self editType];
     
     [self.navigationController pushViewController:ruleEditViewController animated:YES];
-    
+}
+
+-(OPERuleEditType)editType {
+    if ([self.osmKey isEqualToString:@"service_times"] || [self.osmKey isEqualToString:@"collection_times"]) {
+        return OPERuleEditTypeTime;
+    }
+    else if ([self.osmKey isEqualToString:@"opening_hours"]) {
+        return OPERuleEditTypeTimeRange;
+    }
+    return OPERuleEditTypeDefault;
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

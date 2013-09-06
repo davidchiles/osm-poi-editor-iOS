@@ -275,6 +275,7 @@
     "Post Box" : {
       "optional" : [
         "operator",
+        "collection_times",
         "drive_through",
         "ref"
       ],
@@ -1971,6 +1972,7 @@
       "optional" : [
         "denomination:muslim",
         "wheelchair",
+        "service_times",
         "contact",
         "address"
       ],
@@ -1983,6 +1985,7 @@
     "Shinto" : {
       "optional" : [
         "wheelchair",
+        "service_times",
         "contact",
         "address"
       ],
@@ -1995,6 +1998,7 @@
     "Unitarian" : {
       "optional" : [
         "wheelchair",
+        "service_times",
         "contact",
         "address"
       ],
@@ -2007,6 +2011,7 @@
     "Spiritualist" : {
       "optional" : [
         "wheelchair",
+        "service_times",
         "contact",
         "address"
       ],
@@ -2020,6 +2025,7 @@
       "optional" : [
         "wheelchair",
         "contact",
+        "service_times",
         "address"
       ],
       "image" : "prayer",
@@ -2031,6 +2037,7 @@
     "Pagan" : {
       "optional" : [
         "wheelchair",
+        "service_times",
         "contact",
         "address"
       ],
@@ -2043,6 +2050,7 @@
     "Scientologist" : {
       "optional" : [
         "wheelchair",
+        "service_times",
         "contact",
         "address"
       ],
@@ -2055,6 +2063,7 @@
     "Jewish" : {
       "optional" : [
         "denomination:jewish",
+        "service_times",
         "wheelchair",
         "contact",
         "address"
@@ -2068,6 +2077,7 @@
     "Hindu" : {
       "optional" : [
         "wheelchair",
+        "service_times",
         "contact",
         "address"
       ],
@@ -2080,6 +2090,7 @@
     "Taoist" : {
       "optional" : [
         "wheelchair",
+        "service_times",
         "contact",
         "address"
       ],
@@ -2092,6 +2103,7 @@
     "Christian" : {
       "optional" : [
         "denomination:christian",
+        "service_times",
         "wheelchair",
         "contact",
         "address"
@@ -2105,6 +2117,7 @@
     "Sikh" : {
       "optional" : [
         "wheelchair",
+        "service_times",
         "contact",
         "address"
       ],
@@ -2117,6 +2130,7 @@
     "Voodoo" : {
       "optional" : [
         "wheelchair",
+        "service_times",
         "contact",
         "address"
       ],
@@ -2129,6 +2143,7 @@
     "Multifaith" : {
       "optional" : [
         "wheelchair",
+        "service_times",
         "contact",
         "address"
       ],

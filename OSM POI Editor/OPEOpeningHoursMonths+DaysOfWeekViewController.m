@@ -56,7 +56,7 @@
         else if (self.type == OPETypeDaysOfWeek) {
             cell.textLabel.text = @"All Days";
         }
-        if (![self.propertiesOrderedSet count]) {
+        if (![self.propertiesArray count]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     }
@@ -75,7 +75,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == 0) {
-        [self.propertiesOrderedSet removeAllObjects];
+        [self.propertiesArray removeAllObjects];
         
     }
     else
@@ -88,11 +88,11 @@
             dateComponent.weekday = indexPath.row;
         }
         
-        if ([self.propertiesOrderedSet containsObject:dateComponent]) {
-            [self.propertiesOrderedSet removeObject:dateComponent];
+        if ([self.propertiesArray containsObject:dateComponent]) {
+            [self.propertiesArray removeObject:dateComponent];
         }
         else {
-            [self.propertiesOrderedSet addObject:dateComponent];
+            [self.propertiesArray addObject:dateComponent];
         }
     }
     [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
@@ -127,7 +127,7 @@
         dateComponent.weekday = index;
     }
     
-    if ([self.propertiesOrderedSet containsObject:dateComponent]) {
+    if ([self.propertiesArray containsObject:dateComponent]) {
         return YES;
     }
     return NO;

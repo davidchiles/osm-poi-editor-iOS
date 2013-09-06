@@ -26,7 +26,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.propertiesOrderedSet count]+1;
+    return [self.propertiesArray count]+1;
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -37,7 +37,7 @@
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.propertiesOrderedSet removeObjectAtIndex:indexPath.row];
+        [self.propertiesArray removeObjectAtIndex:indexPath.row];
         [tableView beginUpdates];
         [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         //[tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -62,7 +62,7 @@
         if (!timeRangeCell) {
             timeRangeCell = [[OPETimeRangeCell alloc] initWithIdentifier:timeCelIdentifier];
         }
-        OPEDateRange * timeRange = self.propertiesOrderedSet[indexPath.row];
+        OPEDateRange * timeRange = self.propertiesArray[indexPath.row];
         timeRangeCell.dateRange = timeRange;
         timeRangeCell.didSelectDateButtonBlock = ^(UITableViewCell * cell,BOOL isStartButton) {
             [self didSelecButtonAtIndex:[tableView indexPathForCell:cell].row isStartButton:isStartButton withTableView:tableView];
@@ -81,9 +81,9 @@
         OPEDateComponents * startDateComponent = [[OPEDateComponents alloc] init];
         OPEDateComponents * endDateComponent = [[OPEDateComponents alloc] init];
         
-        startDateComponent.hour = 9;
+        startDateComponent.hour = 12;
         startDateComponent.minute = 0;
-        endDateComponent.hour = 17;
+        endDateComponent.hour = 12;
         endDateComponent.minute = 0;
         
         OPEDateRange * dateRange = [[OPEDateRange alloc] init];
@@ -91,7 +91,7 @@
         dateRange.startDateComponent = startDateComponent;
         dateRange.endDateComponent = endDateComponent;
         
-        [self.propertiesOrderedSet addObject:dateRange];
+        [self.propertiesArray addObject:dateRange];
         
         [tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
@@ -99,7 +99,7 @@
 
 -(void)didSelecButtonAtIndex:(NSInteger)index isStartButton:(BOOL)isStartButton withTableView:(UITableView *)tableView;
 {
-    OPEDateRange * dateRange = self.propertiesOrderedSet[index];
+    OPEDateRange * dateRange = self.propertiesArray[index];
     NSDate * currentDate = nil;
     currentDateComponent = nil;
     NSString * pickerTitle = @"";
@@ -124,6 +124,11 @@
         currentDate = [gregorian dateFromComponents:todayComponents];
     }
     
+    [self showDatePickerWithTitle:pickerTitle withDate:currentDate withIndex:index];
+}
+
+-(void)showDatePickerWithTitle:(NSString *)pickerTitle withDate:(NSDate *)currentDate withIndex:(NSInteger)index
+{
     ActionSheetDatePicker * datePicker = [[ActionSheetDatePicker alloc] initWithTitle:pickerTitle datePickerMode:UIDatePickerModeTime selectedDate:currentDate target:self action:@selector(dateWasSelected:element:) origin:self.view];
     datePicker.hideCancel = YES;
     __weak ActionSheetDatePicker * weakDatepicker = datePicker;
@@ -131,7 +136,7 @@
         NSLog(@"SUNRISE BUTTON");
         currentDateComponent.isSunrise = YES;
         [weakDatepicker dismissActionPicker];
-        [tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        [self.propertiesTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
         
     }];
     //[datePicker addCustomButtonWithTitle:SUNSET_STRING value:SUNSET_STRING];
@@ -139,10 +144,9 @@
         NSLog(@"SUNSET BUTTON");
         currentDateComponent.isSunset = YES;
         [weakDatepicker dismissActionPicker];
-        [tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        [self.propertiesTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
     }];
     [datePicker showActionSheetPicker];
-    
 }
 
 - (void)dateWasSelected:(NSDate *)selectedDate element:(id)element {

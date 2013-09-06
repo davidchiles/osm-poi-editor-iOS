@@ -24,6 +24,23 @@
 @synthesize isSunrise=_isSunrise;
 @synthesize isSunset=_isSunset;
 
+-(id)initWithDate:(NSDate *)date
+{
+    if (self = [self init]) {
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+        self.hour = components.hour;
+        self.minute = components.minute;
+        self.isSunset = NO;
+        self.isSunrise = NO;
+    }
+    return self;
+}
+
++(id)dateComponentWithDate:(NSDate *)date
+{
+    return [[self alloc] initWithDate:date];
+}
 
 -(NSString *)description
 {
@@ -82,6 +99,21 @@
     _isSunset = newIsSunset;
 }
 
+-(BOOL)isEqual:(id)object {
+    if ([object isKindOfClass:[self class]]) {
+        OPEDateComponents * otherDateCompnonet =(OPEDateComponents *)object;
+        if (self.isSunrise == otherDateCompnonet.isSunrise && self.isSunset == otherDateCompnonet.isSunset && [super isEqual:object]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+-(NSUInteger)hash
+{
+    return [[self description] hash];
+}
+
 @end
 
 @implementation OPEDateRange
@@ -97,11 +129,28 @@
 {
     return [NSString stringWithFormat:@"%@ - %@",[startDateComponent displayString],[endDateComponent displayString]];
 }
+-(BOOL)isEqual:(id)object
+{
+    if ([object isKindOfClass:[self class]]) {
+        OPEDateRange * otherDateRange = (OPEDateRange *)object;
+        if ([self.startDateComponent isEqual:otherDateRange.startDateComponent] && [self.endDateComponent isEqual:otherDateRange.endDateComponent]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+-(NSUInteger)hash
+{
+    return [[self description] hash];
+}
+
 @end
 
 @implementation OPEOpeningHourRule
 
-@synthesize monthsOrderedSet,daysOfWeekOrderedSet,timeRangesOrderedSet,isTwentyFourSeven;
+@synthesize monthsOrderedSet,daysOfWeekOrderedSet,timeRangesOrderedSet,timesOrderedSet,isTwentyFourSeven;
 @synthesize isOpen =_isOpen;
 
 -(id)init {
@@ -111,12 +160,13 @@
         self.monthsOrderedSet = [NSMutableOrderedSet orderedSet];
         self.timeRangesOrderedSet = [NSMutableOrderedSet orderedSet];
         self.daysOfWeekOrderedSet = [NSMutableOrderedSet orderedSet];
+        self.timesOrderedSet = [NSMutableOrderedSet orderedSet];
     }
     return self;
 }
 
 -(NSString *)description {
-    return [NSString stringWithFormat:@"%@ \n%@ \n%@",monthsOrderedSet,daysOfWeekOrderedSet,timeRangesOrderedSet];
+    return [NSString stringWithFormat:@"%@\n%@\n%@\n%@",monthsOrderedSet,daysOfWeekOrderedSet,timeRangesOrderedSet,timesOrderedSet];
 }
 
 -(id)copy {
@@ -200,7 +250,11 @@
             rule.daysOfWeekOrderedSet = [[self parseWeekdayRangeWithTokens:tokens atIndex:&index] mutableCopy];
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[NUMBER_KEY,TIME_SEPERATOR_KEY]] || [self matchTokens:tokens atIndex:index matches:@[SUN_KEY]]) {
-            rule.timeRangesOrderedSet = [[self parseTimeRangeWithTokens:tokens atIndex:&index] mutableCopy];
+            [self parseTimeRangeWithTokens:tokens atIndex:&index foundTimeRangesBlock:^(NSOrderedSet *orderedSet) {
+                rule.timeRangesOrderedSet = [orderedSet mutableCopy];
+            } foundTimesBlock:^(NSOrderedSet *orderedSet) {
+                rule.timesOrderedSet = [orderedSet mutableCopy];
+            }];
         }
         else if ([self matchTokens:tokens atIndex:index matches:@[TWENTY_FOUR_SEVEN_STRING]]) {
             rule.isTwentyFourSeven = YES;
@@ -316,9 +370,10 @@
     return weekDayOrderedSet;
     
 }
--(NSOrderedSet *)parseTimeRangeWithTokens:(NSArray *)tokens atIndex:(NSInteger *)index
+-(void)parseTimeRangeWithTokens:(NSArray *)tokens atIndex:(NSInteger *)index foundTimeRangesBlock:(void (^)(NSOrderedSet * orderedSet))timeRangesBlock foundTimesBlock:(void (^)(NSOrderedSet * orderedSet))timesBlock
 {
     NSMutableOrderedSet * timeRangesOrderedSet = [NSMutableOrderedSet orderedSet];
+    NSMutableOrderedSet * timesOrderedSet = [NSMutableOrderedSet orderedSet];
     while( *index<[tokens count]) {
         //NSInteger idx = [index integerValue];
         if ([self matchTokens:tokens atIndex:*index matches:@[NUMBER_KEY, TIME_SEPERATOR_KEY, NUMBER_KEY, @"-", NUMBER_KEY, TIME_SEPERATOR_KEY, NUMBER_KEY]]) {
@@ -408,6 +463,31 @@
             [timeRangesOrderedSet addObject:timeRange];
             *index = *index+3;
         }
+        ///For points in time for service_times collection_times
+        else if ([self matchTokens:tokens atIndex:*index matches:@[NUMBER_KEY,TIME_SEPERATOR_KEY,NUMBER_KEY]])
+        {
+            OPEDateComponents * timeComponent = [[OPEDateComponents alloc] init];
+            timeComponent.hour = [((OPEOpeningHoursToken *)tokens[*index]).value intValue];
+            timeComponent.minute = [((OPEOpeningHoursToken *)tokens[*index+2]).value intValue];
+            
+            [timesOrderedSet addObject:timeComponent];
+            
+            *index = *index+3;
+        }
+        else if ([self matchTokens:tokens atIndex:*index matches:@[SUN_KEY]])
+        {
+            OPEDateComponents * timeComponent = [[OPEDateComponents alloc] init];
+            if([((OPEOpeningHoursToken *)tokens[*index]).value isEqualToString:SUNRISE_OSM_STRING]) {
+                timeComponent.isSunrise = YES;
+            }
+            else {
+                timeComponent.isSunset = YES;
+            }
+            
+            [timesOrderedSet addObject:timeComponent];
+            
+            *index = *index+1;
+        }
         else {
             NSLog(@"Time Range Error at %d",*index);
         }
@@ -416,7 +496,12 @@
         }
         *index = *index+1;
     }
-    return timeRangesOrderedSet;
+    if (timesBlock) {
+        timesBlock(timesOrderedSet);
+    }
+    if (timeRangesBlock) {
+        timeRangesBlock(timeRangesOrderedSet);
+    }
 }
 
 //Takes tokes start search for pattern from inded @["weekday","-","weekday"] OR @[@"number", @"timesep", @"number", @"-", @"number", @"timesep", @"number"]
@@ -533,6 +618,10 @@
         [ruleStringArray addObject:[self stringWithTimeRangesOrderedSet:rule.timeRangesOrderedSet]];
     }
     
+    if ([rule.timesOrderedSet count]) {
+        [ruleStringArray addObject:[self stringWithTimesOrderedSet:rule.timesOrderedSet]];
+    }
+    
     if (!rule.isOpen) {
         [ruleStringArray addObject:OFF_STRING];
     }
@@ -619,6 +708,17 @@
     [timeRangesOrderedSet enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         OPEDateRange * dateRange = (OPEDateRange *)obj;
         [stringsArray addObject:[NSString stringWithFormat:@"%@",dateRange]];
+    }];
+    
+    return [stringsArray componentsJoinedByString:@","];
+}
+
+-(NSString *)stringWithTimesOrderedSet:(NSOrderedSet *)timesOrderedSet {
+    NSMutableArray * stringsArray = [NSMutableArray array];
+    
+    [timesOrderedSet enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        OPEDateComponents * timeComponent = (OPEDateComponents *)obj;
+        [stringsArray addObject:[NSString stringWithFormat:@"%@",timeComponent]];
     }];
     
     return [stringsArray componentsJoinedByString:@","];

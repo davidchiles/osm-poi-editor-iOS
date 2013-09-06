@@ -11,6 +11,7 @@
 #import "OPEOpeningHoursParser.h"
 #import "OPEOpeningHoursMonths+DaysOfWeekViewController.h"
 #import "OPEOpeningHoursTimeRangesViewController.h"
+#import "OPEOpeningHoursTimesEditViewController.h"
 
 @interface OPEOpeningHoursRuleEditViewController ()
 
@@ -19,7 +20,7 @@
 
 @implementation OPEOpeningHoursRuleEditViewController
 
-@synthesize doneBlock;
+@synthesize doneBlock,ruleEditType,rule;
 
 - (id)initWithRule:(OPEOpeningHourRule *)newRule
 {
@@ -75,7 +76,25 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    NSInteger numRows = 3;
+    
+    if([self hasTimeRangesCell])  {
+        numRows +=1;
+    }
+    
+    if([self hasTimesCell])
+    {
+        numRows +=1;
+    }
+    
+    return numRows;
+}
+
+-(BOOL)hasTimeRangesCell {
+    return (self.ruleEditType == OPERuleEditTypeTimeRange ||self.ruleEditType == OPERuleEditTypeDefault || [self.rule.timeRangesOrderedSet count] );
+}
+-(BOOL)hasTimesCell {
+    return (self.ruleEditType == OPERuleEditTypeTime ||self.ruleEditType == OPERuleEditTypeDefault || [self.rule.timesOrderedSet count]);
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -99,36 +118,50 @@
     if (indexPath.section == 0) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-        switch (indexPath.row) {
-            case 0:
-                cell.textLabel.text = @"Open 24/7";
-                cell.accessoryView = twentyFourSevenSwitch;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                break;
-            case 1:
-                cell.textLabel.text = @"Months";
-                cell.detailTextLabel.text = [openingHoursParser stringWithMonthsOrderedSet:self.rule.monthsOrderedSet];
-                if (![cell.detailTextLabel.text length]) {
-                    cell.detailTextLabel.text = @"All Months";
-                }
-                break;
-            case 2:
-                cell.textLabel.text = @"Days";
-                cell.detailTextLabel.text = [openingHoursParser stringWithDaysOfWeekOrderedSet:self.rule.daysOfWeekOrderedSet];
-                if (![cell.detailTextLabel.text length]) {
-                    cell.detailTextLabel.text = @"All Days";
-                }
-                break;
-            case 3:
-                cell.textLabel.text = @"Times";
-                cell.detailTextLabel.text = [openingHoursParser stringWithTimeRangesOrderedSet:self.rule.timeRangesOrderedSet];
-                break;
-                
-            default:
-                break;
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"Open 24/7";
+            cell.accessoryView = twentyFourSevenSwitch;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        else if (indexPath.row == 1) {
+            cell.textLabel.text = @"Months";
+            cell.detailTextLabel.text = [openingHoursParser stringWithMonthsOrderedSet:self.rule.monthsOrderedSet];
+            if (![cell.detailTextLabel.text length]) {
+                cell.detailTextLabel.text = @"All Months";
+            }
+        }
+        else if (indexPath.row == 2) {
+            cell.textLabel.text = @"Days";
+            cell.detailTextLabel.text = [openingHoursParser stringWithDaysOfWeekOrderedSet:self.rule.daysOfWeekOrderedSet];
+            if (![cell.detailTextLabel.text length]) {
+                cell.detailTextLabel.text = @"All Days";
+            }
+        }
+        else if (indexPath.row == 3) {
+            if ([self hasTimeRangesCell]) {
+                [self formatTimeRangesCell:cell];
+            }
+            else {
+                [self formatTimesCell:cell];
+            }
+        }
+        else if (indexPath.row == 4) {
+            [self formatTimesCell:cell];
         }
     }
     return cell;
+}
+
+-(void)formatTimeRangesCell:(UITableViewCell *)cell
+{
+    cell.textLabel.text = @"Time Ranges";
+    cell.detailTextLabel.text = [openingHoursParser stringWithTimeRangesOrderedSet:self.rule.timeRangesOrderedSet];
+}
+
+-(void)formatTimesCell:(UITableViewCell *)cell
+{
+    cell.textLabel.text = @"Times";
+    cell.detailTextLabel.text = [openingHoursParser stringWithTimeRangesOrderedSet:self.rule.timesOrderedSet];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -151,15 +184,33 @@
             };
         }
         else if (indexPath.row == 3) {
-            viewController = [[OPEOpeningHoursTimeRangesViewController alloc] initWithOrderedSet:self.rule.timeRangesOrderedSet];
-            
-           viewController.doneBlock = ^(NSOrderedSet * timeRanges){
-                self.rule.timeRangesOrderedSet = [timeRanges mutableCopy];
-                [tableView reloadData];
-            };
+            if ([self hasTimeRangesCell]) {
+                viewController = [[OPEOpeningHoursTimeRangesViewController alloc] initWithOrderedSet:self.rule.timeRangesOrderedSet];
+                viewController.doneBlock = ^(NSOrderedSet * timeRanges){
+                    self.rule.timeRangesOrderedSet = [timeRanges mutableCopy];
+                    [tableView reloadData];
+                };
+            }
+            else {
+                viewController = [self TimesEditViewControllerwithTableView:tableView];
+            }
         }
+        else if (indexPath.row == 4) {
+            viewController = [self TimesEditViewControllerwithTableView:tableView];
+        }
+        
         [self.navigationController pushViewController:viewController animated:YES];
     }
+}
+
+-(OPEOpeningHoursTimesEditViewController *)TimesEditViewControllerwithTableView:(UITableView *)tableView
+{
+    OPEOpeningHoursTimesEditViewController *viewController = [[OPEOpeningHoursTimesEditViewController alloc] initWithOrderedSet:self.rule.timesOrderedSet];
+    viewController.doneBlock = ^(NSOrderedSet * times) {
+        self.rule.timesOrderedSet = [times mutableCopy];
+        [tableView reloadData];
+    };
+    return viewController;
 }
 
 -(void)switchChanged:(id)sender

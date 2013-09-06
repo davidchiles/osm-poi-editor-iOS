@@ -320,6 +320,7 @@
 		6366D33017D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6366D32F17D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m */; };
 		6366D33617D6A47B002C9EF7 /* bubble_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6366D33417D6A47B002C9EF7 /* bubble_left@2x.png */; };
 		6366D33717D6A47B002C9EF7 /* bubble_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6366D33517D6A47B002C9EF7 /* bubble_right@2x.png */; };
+		636C77C517D94C0400FCDB10 /* OPEOpeningHoursTimesEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 636C77C417D94C0400FCDB10 /* OPEOpeningHoursTimesEditViewController.m */; };
 		6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6370D354151A8BAE0081206A /* libsqlite3.dylib */; };
 		6372F80117419F3100DE5909 /* Optional.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80017419F3100DE5909 /* Optional.json */; };
 		6372F80817419F6A00DE5909 /* OptionalCategorySort.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80717419F6A00DE5909 /* OptionalCategorySort.json */; };
@@ -797,6 +798,8 @@
 		6366D32F17D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpeningHoursBaseTimeEditViewController.m; sourceTree = "<group>"; };
 		6366D33417D6A47B002C9EF7 /* bubble_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_left@2x.png"; sourceTree = "<group>"; };
 		6366D33517D6A47B002C9EF7 /* bubble_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_right@2x.png"; sourceTree = "<group>"; };
+		636C77C317D94C0400FCDB10 /* OPEOpeningHoursTimesEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOpeningHoursTimesEditViewController.h; sourceTree = "<group>"; };
+		636C77C417D94C0400FCDB10 /* OPEOpeningHoursTimesEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpeningHoursTimesEditViewController.m; sourceTree = "<group>"; };
 		6370D354151A8BAE0081206A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		6372F80017419F3100DE5909 /* Optional.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Optional.json; sourceTree = "<group>"; };
 		6372F80717419F6A00DE5909 /* OptionalCategorySort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OptionalCategorySort.json; sourceTree = "<group>"; };
@@ -1790,6 +1793,8 @@
 				63F01BF617D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m */,
 				63F01BFB17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.h */,
 				63F01BFC17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.m */,
+				636C77C317D94C0400FCDB10 /* OPEOpeningHoursTimesEditViewController.h */,
+				636C77C417D94C0400FCDB10 /* OPEOpeningHoursTimesEditViewController.m */,
 			);
 			name = opening_hoursEditViewControllers;
 			sourceTree = "<group>";
@@ -2219,6 +2224,7 @@
 				63CB49E214E9E3BF008C4551 /* OPETypeViewController.m in Sources */,
 				6366D33017D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m in Sources */,
 				6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */,
+				636C77C517D94C0400FCDB10 /* OPEOpeningHoursTimesEditViewController.m in Sources */,
 				63E525D21534D90500D2DA35 /* OPECreditViewController.m in Sources */,
 				6310F4B6153736D000C65FD8 /* OPEMessageView.m in Sources */,
 				63292E6B1593ED670010A11B /* OPEBinaryCell.m in Sources */,

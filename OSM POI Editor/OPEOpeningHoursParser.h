@@ -16,6 +16,8 @@
 -(NSDate *)date;
 -(NSString *)displayString;
 
++(id)dateComponentWithDate:(NSDate *)date;
+
 @end
 
 @interface OPEDateRange : NSObject
@@ -31,6 +33,7 @@
 @property (nonatomic,strong) NSMutableOrderedSet * monthsOrderedSet;
 @property (nonatomic,strong) NSMutableOrderedSet * daysOfWeekOrderedSet;
 @property (nonatomic,strong) NSMutableOrderedSet * timeRangesOrderedSet;
+@property (nonatomic,strong) NSMutableOrderedSet * timesOrderedSet;
 
 @property (nonatomic) BOOL isOpen;
 @property (nonatomic) BOOL isTwentyFourSeven;
