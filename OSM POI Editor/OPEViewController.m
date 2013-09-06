@@ -98,8 +98,14 @@
     plusImageView.center = mapView.center;
     [self.view addSubview:plusImageView];
     
-    
-    self.toolbarItems = [NSArray arrayWithObjects:locationBarButton,flexibleSpaceBarItem,addBarButton,flexibleSpaceBarItem,settingsBarButton, nil];
+    UIToolbar * toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, 320, 44)];
+    toolBar.delegate = self;
+    [toolBar setItems:@[locationBarButton,flexibleSpaceBarItem,addBarButton,flexibleSpaceBarItem,settingsBarButton]];
+    [self.view addSubview:toolBar];
+
+    //self.toolbarItems = [    //self.navigationItem.rightBarButtonItem = settingsBarButton;
+    //self.navigationItem.leftBarButtonItem = locationBarButton;
+    //self.navigationItem.titleView = [UIButton buttonWithType:UIButtonTypeContactAdd];
 }
 
 - (void)viewDidLoad
@@ -110,7 +116,7 @@
     firstDownload = NO;
     
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    [self.navigationController setToolbarHidden:NO animated:NO];
+    [self.navigationController setToolbarHidden:YES animated:NO];
     //Check OAuth
     
     id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
@@ -176,6 +182,11 @@
     
     downloadedNoNameHighways = [NSMutableDictionary dictionary];
     searchManager = [[OPEOSMSearchManager alloc] init];
+}
+
+-(UIBarPosition)positionForBar:(id<UIBarPositioning>)bar
+{
+    return UIBarPositionTopAttached;
 }
 
 - (UIImage*)imageWithBorderFromImage:(UIImage*)source  //Draw box around centered image
@@ -784,13 +795,16 @@
     [locationManager stopUpdatingLocation];
 }
 
-
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self.navigationController setToolbarHidden:NO animated:YES];
+    [self.navigationController setToolbarHidden:YES animated:YES];
     //[self.navigationController setNavigationBarHidden:YES animated:YES];
     //[self.navigationController setToolbarHidden:NO animated:YES];
     //[self updateAllAnnotations];
@@ -805,11 +819,9 @@
     
 }
 
-- (void)viewDidAppear:(BOOL)animated
+-(UIStatusBarStyle)preferredStatusBarStyle
 {
-    //FIXME
-    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-    [super viewDidAppear:animated];
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
