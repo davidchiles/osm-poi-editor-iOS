@@ -5,3 +5,8 @@ host = https://www.transifex.com
 source_lang = en_US
 source_file = en.lproj/Localizable.strings
 file_filter = <lang>.lproj/Localizable.strings
+
+[poi.appstorestrings]
+source_lang = en_US
+source_file = en.lproj/AppStore.strings
+file_filter = <lang>.lproj/AppStore.strings
