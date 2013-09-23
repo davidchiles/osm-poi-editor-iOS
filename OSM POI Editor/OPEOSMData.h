@@ -45,6 +45,7 @@
 
 
 -(BOOL)findType:(OPEManagedOsmElement *)element;
+-(void)findType:(NSArray *)elements completion:(void (^)(NSArray * foundElements))completion;
 -(BOOL)isNoNameStreet:(OPEManagedOsmWay *)way;
 
 - (NSString *)changesetCommentfor:(OPEManagedOsmElement *)element;

@@ -182,8 +182,10 @@
     BOOL latRight = point.longitude < boundingBox.right;
     BOOL lonTop = point.latitude < boundingBox.top;
     BOOL lonBottom =  point.latitude > boundingBox.bottom;
+    
     BOOL insideLat= latLeft && latRight;
     BOOL insedeLon = lonTop && lonBottom;
+    
     return insedeLon && insideLat;
 }
 

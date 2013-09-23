@@ -140,6 +140,40 @@
     
 }
 
+-(void)findType:(NSArray *)elements completion:(void (^)(NSArray * foundElements))completion
+{
+    __block NSMutableArray * foundElements = [NSMutableArray array];
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        [db beginTransaction];
+        
+        
+        [elements enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            OPEManagedOsmElement * element = obj;
+            if (![obj isKindOfClass:[OPEManagedOsmElement class]]) {
+                 element = [OPEManagedOsmElement elementWithBasicOsmElement:obj];
+            }
+           
+            NSString * baseTableName = [OSMDAO tableName:element.element];
+            NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
+            NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
+            if (tagsTable && columnID && [element.element.tags count]) {
+                NSString * sql =  [NSString stringWithFormat:@"SELECT poi_id FROM (SELECT D.poi_id,%@ FROM (SELECT poi_id,%@,isLegacy,COUNT(*) AS count FROM (SELECT poi_id,%@ FROM pois_tags NATURAL JOIN %@) AS A JOIN poi AS B ON A.poi_id = B.rowid AND A.%@ = %lld GROUP BY poi_id ORDER BY isLegacy ASC) AS C, (SELECT poi_id,COUNT(*)AS count FROM pois_tags GROUP BY poi_id) AS D WHERE C.poi_id = D.poi_id AND C.count = D.count) LIMIT 1",columnID,columnID,columnID,tagsTable,columnID,element.element.elementID];
+                FMResultSet * result = [db executeQuery:sql];
+                
+                if ([result next]) {
+                    int poi_id  = [result intForColumn:@"poi_id"];
+                    element.typeID = poi_id;
+                    //sql = [NSString stringWithFormat:@"UPDATE %@ SET poi_id=%d WHERE id=%lld",baseTableName,poi_id,element.element.elementID];
+                    [db executeUpdate:@"UPDATE ? Set poi_id=? Where id=?",baseTableName,[NSNumber numberWithInt:poi_id],[NSNumber numberWithLongLong:element.element.elementID]];
+                    [foundElements addObject:element];
+                }
+            }
+        }];
+        [db commit];
+    }];
+    completion(foundElements);
+}
+
 -(BOOL)findType:(OPEManagedOsmElement *)element
 {
     NSString * baseTableName = [OSMDAO tableName:element.element];

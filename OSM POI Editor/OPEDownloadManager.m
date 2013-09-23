@@ -128,45 +128,18 @@
 //OSMDAODelegate Mehtod
 -(void)didFinishSavingNewElements:(NSArray *)newElements updatedElements:(NSArray *)updatedElements
 {
-    NSMutableArray * newMatchedElements = [NSMutableArray array];
-    NSMutableArray * updatedMatchedElements = [NSMutableArray array];
-    
-    BOOL showNoNameStreets = [[OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey] boolValue];
+    __block NSArray * newMatchedElements;
+    __block NSArray * updatedMatchedElements;
     
     //match new elements
-    for(Element * element in newElements)
-    {
-        if ([element.tags count]) {
-            OPEManagedOsmElement * managedElement = [OPEManagedOsmElement elementWithBasicOsmElement:element];
-            if([osmData findType:managedElement])
-            {
-                [newMatchedElements addObject: managedElement];
-            }
-            else if (showNoNameStreets && [managedElement isKindOfClass:[OPEManagedOsmWay class]]) {
-                if([osmData isNoNameStreet:(OPEManagedOsmWay *)managedElement])
-                {
-                    [newMatchedElements addObject:managedElement];
-                }
-            }
-        }
-    }
+    [osmData findType:newElements completion:^(NSArray *foundElements) {
+        newMatchedElements = foundElements;
+    }];
+    
     //match updated elements in case any tags have changed enough to change type
-    for(Element * element in updatedElements)
-    {
-        if ([element.tags count]) {
-            OPEManagedOsmElement * managedElement = [OPEManagedOsmElement elementWithBasicOsmElement:element];
-            if([osmData findType:managedElement])
-            {
-                [updatedMatchedElements addObject: managedElement];
-            }
-            else if (showNoNameStreets && [managedElement isKindOfClass:[OPEManagedOsmWay class]]) {
-                if([osmData isNoNameStreet:(OPEManagedOsmWay *)managedElement])
-                {
-                    [updatedMatchedElements addObject:managedElement];
-                }
-            }
-        }
-    }
+    [osmData findType:updatedElements completion:^(NSArray *foundElements) {
+        updatedMatchedElements = foundElements;
+    }];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         self.foundMatchingElementsBlock(newMatchedElements,updatedMatchedElements);
