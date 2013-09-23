@@ -75,7 +75,7 @@
 #define ALL_DAYS_STRING NSLocalizedString(@"All Days",@"Label")
 
 #define TIME_RANGES_STRING NSLocalizedString(@"Time Ranges",@"label for time ranges in opening_hours")
-#define TIMES_STRING NSLocalizedString(@"Times",@"label for times in opening_hours")
+#define TIMES_STRING NSLocalizedString(@"Time",@"label for times in opening_hours")
 
 #define ADD_TIME_RANGE_STRING NSLocalizedString(@"Add Time Range",@"Button to add new time range for opening_hours")
 #define ADD_TIME_STIRNG NSLocalizedString(@"Add Time",@"Button to add new time for opening_hours")

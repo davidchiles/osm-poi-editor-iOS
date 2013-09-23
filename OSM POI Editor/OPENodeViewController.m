@@ -515,7 +515,7 @@
         //viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey andType:managedOptionalTag.type delegate:self];
         viewController.title = managedOptionalTag.displayName;
         viewController.managedOptional = managedOptionalTag;
-        //viewController.element = self.managedOsmElement;
+        viewController.element = self.managedOsmElement;
         //viewController.currentOsmValue =
         [self.navigationController pushViewController:viewController animated:YES];
         
