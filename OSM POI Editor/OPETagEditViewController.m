@@ -75,6 +75,9 @@
         if (type == OPEOptionalTypeNumber) {
             rView.textField.keyboardType = UIKeyboardTypeNumberPad;
         }
+        if ([osmKey isEqualToString: @"website"]) {
+            rView.textField.keyboardType = UIKeyboardTypeURL;
+        }
         viewController = rView;
     }
     else if ([@[@"phone",@"fax"] containsObject:osmKey])
@@ -94,6 +97,9 @@
     {
         OPERecentlyUsedViewController * rView = [[OPERecentlyUsedViewController alloc] initWithOsmKey:osmKey value:osmValue withCompletionBlock:newCompletionBlock];
         rView.showRecent = NO;
+        if ([osmKey isEqualToString:@"name"]) {
+            rView.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+        }
         viewController = rView;
     }
     else if (type == OPEOptionalTypeHours)

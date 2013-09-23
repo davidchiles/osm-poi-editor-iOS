@@ -70,6 +70,15 @@
     },
     "section" : "Other"
   },
+  "backrest" : {
+    "displayName" : "Backrest",
+    "osmKey" : "backrest",
+    "values" : {
+      "Yes" : "yes",
+      "No" : "no"
+    },
+    "section" : "Other"
+  },
   "caravans" : {
     "displayName" : "Caravans (RV)",
     "osmKey" : "caravans",

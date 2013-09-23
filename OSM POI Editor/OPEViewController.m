@@ -749,6 +749,7 @@
     
     if ([self.downloadManger downloadedAreaContainsPoint:center]) {
         NSLog(@"Should be allowed to download");
+        //FIXME
     }
     else {
         NSLog(@"Outside downloaded area");
