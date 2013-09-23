@@ -676,10 +676,25 @@
     }
 }
 
+-(void)downloadNotes:(RMMapView * )map
+{
+    RMSphericalTrapezium geoBox = [map latitudeLongitudeBoundingBox];
+    if (map.zoom > MINZOOM) {
+        [self.downloadManger downloadNotesWithSW:geoBox.southWest forNE:geoBox.northEast didStartParsing:^{
+            NSLog(@"Start parsing Notes");
+        } didFinsihParsing:^(NSArray *newNotes) {
+            [self didFindNewNotes:newNotes];
+        } faiure:^(NSError *error) {
+            NSLog(@"Error");
+        }];
+    }
+}
+
 - (void)afterMapMove:(RMMapView *)map byUser:(BOOL)wasUserAction
 {
     if (wasUserAction || userPressedLocatoinButton) {
         //[self downloadNewArea:map];
+        [self downloadNotes:map];
     }
     
 }
@@ -688,6 +703,7 @@
 {
     if (wasUserAction || userPressedLocatoinButton) {
         //[self downloadNewArea:map];
+        [self downloadNotes:map];
     }
 }
 
@@ -731,6 +747,12 @@
 {
     CLLocationCoordinate2D center = mapView.centerCoordinate;
     
+    if ([self.downloadManger downloadedAreaContainsPoint:center]) {
+        NSLog(@"Should be allowed to download");
+    }
+    else {
+        NSLog(@"Outside downloaded area");
+    }
     
     
     

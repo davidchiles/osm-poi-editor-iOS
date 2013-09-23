@@ -44,53 +44,17 @@
 
 @implementation OPEOSMData
 
-@synthesize auth=_auth;
-@synthesize delegate;
 @synthesize databaseQueue = _databaseQueue;
-@synthesize httpClient = _httpClient;
-@synthesize notes = _notes;
-
 
 -(id) init
 {
     self = [super init];
     if(self)
     {
-        
-        
-        parseQueue = [[NSOperationQueue alloc] init];
-        parseQueue.maxConcurrentOperationCount = 2;
-        
-        //NSString * baseUrl = @"http://api06.dev.openstreetmap.org/";
-        
-        typeDictionary      = [NSMutableDictionary dictionary];
         apiManager = [[OPEOSMAPIManager alloc] init];
-        
-        
-        //[httpClient setAuthorizationHeaderWithToken:auth.token];
     }
     
     return self;
-}
-
--(AFHTTPClient *)httpClient
-{
-    if (!_httpClient) {
-        NSString * baseUrl = @"http://api.openstreetmap.org/api/0.6/";
-        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
-    }
-    return _httpClient;
-}
-
--(GTMOAuthAuthentication *)auth
-{
-    if(!_auth)
-    {
-        _auth = [OPEOSMData osmAuth];
-        [self canAuth];
-    }
-    return _auth;
-    
 }
 
 -(FMDatabaseQueue *)databaseQueue
@@ -99,15 +63,6 @@
         _databaseQueue = [FMDatabaseQueue databaseQueueWithPath:kDatabasePath];
     }
     return _databaseQueue;
-}
-
--(NSMutableDictionary *)notes
-{
-    if(!_notes)
-    {
-        _notes = [NSMutableDictionary dictionary];
-    }
-    return _notes;
 }
 
 -(Note *)createNoteWithJSONDictionary:(NSDictionary *)noteDictionary
@@ -139,70 +94,6 @@
     }];
     note.commentsArray = newComments;
     return note;
-}
-
--(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast
-{
-    [apiManager downloadNotesWithSW:southWest NE:northEast success:^(id response) {
-        //NSString* newStr = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-        
-        [parseQueue addOperationWithBlock:^{
-            __block NSMutableArray * newNotes = [NSMutableArray array];
-            NSArray * notes = [response objectForKey:@"features"];
-            [notes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                NSDictionary * noteDictionary = (NSDictionary *)obj;
-                NSDictionary * propertiesDictionary = noteDictionary[@"properties"];
-                if ([self isNewNoteID:[propertiesDictionary[@"id"] longLongValue]]) {
-                    Note * note = [self createNoteWithJSONDictionary:noteDictionary];
-                    [self addNewNote:note];
-                    [newNotes addObject:note];
-                }
-                
-                
-                NSLog(@"%@",obj);
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if ([delegate respondsToSelector:@selector(didFindNewNotes:)]) {
-                        [delegate didFindNewNotes:newNotes];
-                    }
-                });
-            }];
-        }];
-        
-        
-    } failure:^(NSError *error) {
-        NSLog(@"Error: %@",error);
-        
-    }];
-    
-}
-
--(BOOL)isNewNoteID:(int64_t)newNodeID
-{
-    if ([self.notes objectForKey:@(newNodeID)]) {
-        return NO;
-    }
-    return YES;
-}
-
--(void)addNewNote:(Note *)newNote
-{
-    [self.notes setObject:newNote forKey:@(newNote.id)];
-}
-
-
--(BOOL) canAuth;
-{
-    BOOL didAuth = NO;
-    BOOL canAuth = NO;
-    if (_auth) {
-            didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor" authentication:_auth];
-            // if the auth object contains an access token, didAuth is now true
-            canAuth = [_auth canAuthorize];
-        }
-    else {
-            return NO;
-        }
-    return didAuth && canAuth;
 }
 
 - (NSString *)changesetCommentfor:(OPEManagedOsmElement *)element
@@ -922,78 +813,6 @@
     {
         [self updateElement:element];
     }
-}
-
-//OSMDAODelegate Mehtod
--(void)didFinishSavingNewElements:(NSArray *)newElements updatedElements:(NSArray *)updatedElements
-{
-    NSMutableArray * newMatchedElements = [NSMutableArray array];
-    NSMutableArray * updatedMatchedElements = [NSMutableArray array];
-    
-    BOOL showNoNameStreets = [[OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey] boolValue];
-    
-    //match new elements
-    for(Element * element in newElements)
-    {
-        if ([element.tags count]) {
-            OPEManagedOsmElement * managedElement = [OPEManagedOsmElement elementWithBasicOsmElement:element];
-            if([self findType:managedElement])
-            {
-                [newMatchedElements addObject: managedElement];
-            }
-            else if (showNoNameStreets && [managedElement isKindOfClass:[OPEManagedOsmWay class]]) {
-                if([self isNoNameStreet:(OPEManagedOsmWay *)managedElement])
-                {
-                    [newMatchedElements addObject:managedElement];
-                }
-            }
-        }
-    }
-    //match updated elements in case any tags have changed enough to change type
-    for(Element * element in updatedElements)
-    {
-        if ([element.tags count]) {
-            OPEManagedOsmElement * managedElement = [OPEManagedOsmElement elementWithBasicOsmElement:element];
-            if([self findType:managedElement])
-            {
-                [updatedMatchedElements addObject: managedElement];
-            }
-            else if (showNoNameStreets && [managedElement isKindOfClass:[OPEManagedOsmWay class]]) {
-                if([self isNoNameStreet:(OPEManagedOsmWay *)managedElement])
-                {
-                    [updatedMatchedElements addObject:managedElement];
-                }
-            }
-        }
-    }
-    
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ([self.delegate respondsToSelector:@selector(didFindNewElements:updatedElements:)]) {
-            [self.delegate didFindNewElements:newMatchedElements updatedElements:updatedMatchedElements];
-        }
-    });
-    
-    
-    
-}
-
-
-
-+(GTMOAuthAuthentication *)osmAuth {
-    NSString *myConsumerKey = osmConsumerKey; //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
-    NSString *myConsumerSecret = osmConsumerSecret; //@"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
-    
-    GTMOAuthAuthentication *auth;
-    auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
-                                                       consumerKey:myConsumerKey
-                                                        privateKey:myConsumerSecret];
-    
-    // setting the service name lets us inspect the auth object later to know
-    // what service it is for
-    auth.serviceProvider = @"OSMPOIEditor";
-    
-    return auth;
 }
 
 @end

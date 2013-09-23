@@ -10,7 +10,7 @@
 #import "OPEOSMData.h"
 #import "MBProgressHUD.h"
 
-@interface OPEBaseViewController : UIViewController <MBProgressHUDDelegate,OPEOSMDataControllerDelegate, UIAlertViewDelegate>
+@interface OPEBaseViewController : UIViewController <MBProgressHUDDelegate, UIAlertViewDelegate>
 
 
 
@@ -24,5 +24,9 @@
 -(void)signIntoOSM;
 
 -(void)findishedAuthWithError:(NSError *)error;
+
+-(void)didOpenChangeset:(int64_t)changesetNumber withMessage:(NSString *)message;
+-(void)didCloseChangeset:(int64_t)changesetNumber;
+-(void)uploadFailed:(NSError *)error;
 
 @end

@@ -24,8 +24,8 @@
 {
     [super viewDidLoad];
     self.numberOfOngoingParses = 0;
-	self.osmData = [[OPEOSMData alloc] init];
-    self.osmData.delegate = self;
+	//self.osmData = [[OPEOSMData alloc] init];
+    //self.osmData.delegate = self;
 }
 
 -(OPEOSMAPIManager *)apiManager

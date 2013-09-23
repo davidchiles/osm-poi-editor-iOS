@@ -9,6 +9,25 @@
 #import "OPEGeo.h"
 #import "proj_api.h"
 
+
+@implementation OPEBoundingBox
+
+@synthesize top,left,right,bottom;
+-(NSString *)description
+{
+    return [NSString stringWithFormat:@"Left: %f\nRight: %f\nTop: %f\nBottom: %f",self.left,self.right,self.top,self.bottom];
+}
++(id)boundingBoxSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast {
+    OPEBoundingBox * bbox = [[OPEBoundingBox alloc] init];
+    bbox.left = southWest.longitude;
+    bbox.bottom = southWest.latitude;
+    bbox.right = northEast.longitude;
+    bbox.top = northEast.latitude;
+    return bbox;
+}
+
+@end
+
 @implementation OPEGeo
 
 +(double)degreesToRadians:(double)degrees
@@ -155,6 +174,17 @@
         double dist = [OPEGeo distanceFromProjectedPoint:pPoint to:p3];
         return dist;
     }
+}
+
++(BOOL)boundingBox:(OPEBoundingBox *)boundingBox containsPoint:(CLLocationCoordinate2D)point
+{
+    BOOL latLeft =  point.longitude > boundingBox.left;
+    BOOL latRight = point.longitude < boundingBox.right;
+    BOOL lonTop = point.latitude < boundingBox.top;
+    BOOL lonBottom =  point.latitude > boundingBox.bottom;
+    BOOL insideLat= latLeft && latRight;
+    BOOL insedeLon = lonTop && lonBottom;
+    return insedeLon && insideLat;
 }
 
 @end

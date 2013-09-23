@@ -35,42 +35,14 @@
 @class OPEManagedOsmWay;
 @class OPEChangeset;
 
-@protocol OPEOSMDataControllerDelegate <NSObject>
-
-@optional
--(void)didOpenChangeset:(int64_t)changesetNumber withMessage:(NSString *)message;
--(void)didCloseChangeset:(int64_t)changesetNumber;
--(void)uploadFailed:(NSError *)error;
-
--(void)willStartDownloading;
--(void)didEndDownloading;
-
--(void)willStartParsing:(NSString *)typeString;
--(void)didEndParsing:(NSString *)typeString;
--(void)didEndParsing;
-
--(void) downloadFailed:(NSError *)error;
-
--(void) didFindNewElements:(NSArray *)newElementsArray updatedElements:(NSArray *)updatedElementsArray;
--(void) didFindNewNotes:(NSArray *)newNotes;
-
-@end
-
 @interface OPEOSMData : NSObject <OSMDAODelegate>
 {
-    NSOperationQueue * parseQueue;
     NSMutableDictionary * typeDictionary;
     OPEOSMAPIManager * apiManager;
 }
 
-@property (nonatomic, strong) GTMOAuthAuthentication * auth;
-@property (nonatomic, weak) id <OPEOSMDataControllerDelegate> delegate;
 @property (nonatomic,strong) FMDatabaseQueue * databaseQueue;
-@property (nonatomic,strong) AFHTTPClient * httpClient;
 
-@property (nonatomic,strong) NSMutableDictionary * notes;
-
--(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE: (CLLocationCoordinate2D) northEast;
 
 -(BOOL)findType:(OPEManagedOsmElement *)element;
 -(BOOL)isNoNameStreet:(OPEManagedOsmWay *)way;
@@ -112,12 +84,6 @@
 
 -(Note *)createNoteWithJSONDictionary:(NSDictionary *)noteDictionary;
 
-
-
 -(NSArray *)allElementsWithType:(BOOL)withType;
-
-//-(BOOL) canAuth;
-
-//+(GTMOAuthAuthentication *)osmAuth;
 
 @end

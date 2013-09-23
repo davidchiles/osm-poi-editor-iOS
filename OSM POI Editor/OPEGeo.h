@@ -9,6 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
+@interface OPEBoundingBox : NSObject;
+
+@property (nonatomic) double left;
+@property (nonatomic) double right;
+@property (nonatomic) double top;
+@property (nonatomic) double bottom;
+
++(id)boundingBoxSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast;
+
+@end
+
 @interface OPEGeo : NSObject
 
 typedef struct {
@@ -32,5 +43,7 @@ typedef struct {
 //+(CLLocationCoordinate2D)centroidOfPolygon:(NSArray *)points;
 +(OPEProjectedPoint)coordinateToProjectedPoint:(CLLocationCoordinate2D)aLatLong;
 +(CLLocationCoordinate2D)toCoordinate:(OPEProjectedPoint)point;
+
++(BOOL)boundingBox:(OPEBoundingBox *)boundingBox containsPoint:(CLLocationCoordinate2D)point;
 
 @end

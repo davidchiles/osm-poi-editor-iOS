@@ -17,19 +17,7 @@
 #import "Note.h"
 #import "Comment.h"
 
-@interface OPEBoundingBox : NSObject;
 
-@property (nonatomic) double left;
-@property (nonatomic) double right;
-@property (nonatomic) double top;
-@property (nonatomic) double bottom;
-
--(BOOL)containsPoint:(CLLocationCoordinate2D)point;
-
-+(id)boundingBoxSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast;
-
-
-@end
 
 @interface OPEOSMAPIManager : NSObject
 {

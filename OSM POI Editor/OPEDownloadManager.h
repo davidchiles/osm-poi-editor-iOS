@@ -26,6 +26,7 @@ typedef void (^foundMatchingElements)(NSArray * newElements,NSArray * updatedEle
 
 
 @property (nonatomic,strong)NSMutableSet * dowloadedAreas;
+@property (nonatomic,strong)NSMutableDictionary * notesDictionary;
 @property (nonatomic,copy)foundMatchingElements foundMatchingElementsBlock;
 
 
@@ -38,7 +39,7 @@ typedef void (^foundMatchingElements)(NSArray * newElements,NSArray * updatedEle
 - (void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest
                      forNE: (CLLocationCoordinate2D) northEast
            didStartParsing:(void (^)(void))startParsing
-          didFinsihParsing:(void (^)(NSArray * newElements, NSArray * updatedElements))finishParsing
+          didFinsihParsing:(void (^)(NSArray * newNotes))finishParsing
                     faiure:(void (^)(NSError * error))failure;
 
 - (BOOL)downloadedAreaContainsPoint:(CLLocationCoordinate2D)point;

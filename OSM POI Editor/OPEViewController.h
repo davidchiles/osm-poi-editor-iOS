@@ -36,7 +36,7 @@
 #import "OPEOSMSearchManager.h"
 #import "OPEOSMAPIManager.h"
 
-@interface OPEViewController : OPEBaseViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,OPENameEditViewDelegate, OPEOSMDataControllerDelegate,UIToolbarDelegate> {
+@interface OPEViewController : OPEBaseViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,OPENameEditViewDelegate,UIToolbarDelegate> {
     RMMapView* mapView;
     UIImageView * plusImageView;
     RMAnnotation * wayAnnotation;

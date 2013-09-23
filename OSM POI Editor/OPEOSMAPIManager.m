@@ -13,28 +13,9 @@
 #import "OPEChangeset.h"
 #import "OPEUtility.h"
 
-@implementation OPEBoundingBox
+#import "OPEGeo.h"
 
-@synthesize top,left,right,bottom;
 
--(BOOL)containsPoint:(CLLocationCoordinate2D)point
-{
-    if (point.longitude > left && point.longitude < right && point.latitude < top && point.latitude < bottom) {
-        return YES;
-    }
-    return NO;
-}
-
-+(id)boundingBoxSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast {
-    OPEBoundingBox * bbox = [[OPEBoundingBox alloc] init];
-    bbox.left = southWest.longitude;
-    bbox.bottom = southWest.latitude;
-    bbox.right = northEast.longitude;
-    bbox.top = northEast.latitude;
-    return bbox;
-}
-
-@end
 
 @implementation OPEOSMAPIManager
 @synthesize auth = _auth;
