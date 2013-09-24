@@ -56,6 +56,9 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:addCellIdentifier];
         }
         cell.textLabel.text = ADD_TIME_RANGE_STRING;
+        UIButton * addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+        [addButton addTarget:self action:@selector(didSelectAddButton:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryView = addButton;
     }
     else {
         OPETimeRangeCell * timeRangeCell = (OPETimeRangeCell *)[tableView dequeueReusableCellWithIdentifier:timeCelIdentifier];
@@ -69,6 +72,7 @@
         };
         timeRangeCell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell = timeRangeCell;
+        cell.accessoryView = nil;
     }
     
     return cell;
@@ -78,23 +82,32 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([indexPath isEqual:[self lastIndexPathForTableView:tableView]]) {
-        OPEDateComponents * startDateComponent = [[OPEDateComponents alloc] init];
-        OPEDateComponents * endDateComponent = [[OPEDateComponents alloc] init];
-        
-        startDateComponent.hour = 12;
-        startDateComponent.minute = 0;
-        endDateComponent.hour = 12;
-        endDateComponent.minute = 0;
-        
-        OPEDateRange * dateRange = [[OPEDateRange alloc] init];
-        
-        dateRange.startDateComponent = startDateComponent;
-        dateRange.endDateComponent = endDateComponent;
-        
-        [self.propertiesArray addObject:dateRange];
-        
-        [tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self addRange];
     }
+}
+
+-(void)addRange
+{
+    OPEDateComponents * startDateComponent = [[OPEDateComponents alloc] init];
+    OPEDateComponents * endDateComponent = [[OPEDateComponents alloc] init];
+    
+    startDateComponent.hour = 12;
+    startDateComponent.minute = 0;
+    endDateComponent.hour = 12;
+    endDateComponent.minute = 0;
+    
+    OPEDateRange * dateRange = [[OPEDateRange alloc] init];
+    
+    dateRange.startDateComponent = startDateComponent;
+    dateRange.endDateComponent = endDateComponent;
+    
+    [self.propertiesArray addObject:dateRange];
+    
+    [self.propertiesTableView insertRowsAtIndexPaths:@[[self lastIndexPathForTableView:self.propertiesTableView]] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+-(void)didSelectAddButton:(id)sender
+{
+    [self addRange];
 }
 
 -(void)didSelecButtonAtIndex:(NSInteger)index isStartButton:(BOOL)isStartButton withTableView:(UITableView *)tableView;

@@ -38,6 +38,8 @@
 @property (nonatomic) BOOL isOpen;
 @property (nonatomic) BOOL isTwentyFourSeven;
 
+- (BOOL)isEmpty;
+
 @end
 
 @interface OPEOpeningHoursParser : NSObject

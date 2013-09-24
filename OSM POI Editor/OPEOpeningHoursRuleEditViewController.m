@@ -241,6 +241,9 @@
 -(void)doneButtonPressed:(id)sender
 {
     if (doneBlock) {
+        if([self.rule isEmpty]) {
+            self.rule= nil;
+        }
         doneBlock(self.rule);
     }
     [super doneButtonPressed:sender];

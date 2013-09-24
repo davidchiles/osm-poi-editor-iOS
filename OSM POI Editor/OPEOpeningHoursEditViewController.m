@@ -72,10 +72,14 @@
     
     if ([indexPath isEqual:[self lastIndexPathForTableView:tableView]]) {
         cell.textLabel.text = ADD_RULE_STRING;
+        UIButton * addButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+        [addButton addTarget:self action:@selector(didSelectAddButton:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryView = addButton;
     }
     else {
         OPEOpeningHourRule * rule = self.rulesArray[indexPath.row];
         cell.textLabel.text = [self.openingHoursParser stringWithRule:rule];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     return cell;
 }
@@ -90,21 +94,32 @@
         rule = self.rulesArray[indexPath.row];
         
     }
+    [self didSelectRule:rule];
+    
+}
+
+-(void)didSelectRule:(OPEOpeningHourRule *)rule
+{
+    __block OPEOpeningHourRule *blockRule = rule;
     OPEOpeningHoursRuleEditViewController * ruleEditViewController = [[OPEOpeningHoursRuleEditViewController alloc] initWithRule:rule];
     ruleEditViewController.doneBlock = ^(OPEOpeningHourRule * newRule) {
-        if (rule) {
-            rule = newRule;
+        if (blockRule) {
+            blockRule = newRule;
         }
-        else {
+        else if(newRule){
             [self.rulesArray addObject:newRule];
         }
         
-        [tableView reloadData];
+        [rulesTableView reloadData];
         
     };
     ruleEditViewController.ruleEditType = [self editType];
     
     [self.navigationController pushViewController:ruleEditViewController animated:YES];
+}
+-(void)didSelectAddButton:(id)sender
+{
+    [self didSelectRule:nil];
 }
 
 -(OPERuleEditType)editType {

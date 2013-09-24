@@ -169,6 +169,11 @@
     return [NSString stringWithFormat:@"%@\n%@\n%@\n%@",monthsOrderedSet,daysOfWeekOrderedSet,timeRangesOrderedSet,timesOrderedSet];
 }
 
+- (BOOL)isEmpty
+{
+    return !([self isTwentyFourSeven] || [self.monthsOrderedSet count] || [self.daysOfWeekOrderedSet count] || [self.timeRangesOrderedSet count] || [self.timesOrderedSet count]);
+}
+
 -(id)copy {
     OPEOpeningHourRule * newRule = [[OPEOpeningHourRule alloc] init];
     newRule.isOpen = self.isOpen;
