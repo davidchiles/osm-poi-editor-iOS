@@ -193,7 +193,7 @@
 #pragma - TableView
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 3;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -259,20 +259,6 @@
     }
     else if (indexPath.section == 1)
     {
-        cell = [tableView dequeueReusableCellWithIdentifier:switchIdentifier];
-
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:switchIdentifier];
-        }
-        cell.textLabel.text = NO_NAME_HIGHWAY_STRING;
-        cell.accessoryView = showNoNameStreetsSwitch;
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        
-        
-    }
-    else if (indexPath.section == 2)
-    {
         cell = [tableView dequeueReusableCellWithIdentifier:buttonIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:buttonIdentifier];
@@ -287,7 +273,7 @@
             cell.textLabel.text = LOGOUT_STRING;
         
     }
-    else if (indexPath.section == 3)
+    else if (indexPath.section == 2)
     {
         cell = [tableView dequeueReusableCellWithIdentifier:aboutIdentifier];
 

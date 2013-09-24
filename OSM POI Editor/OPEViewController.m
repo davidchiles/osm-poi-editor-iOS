@@ -795,9 +795,9 @@
 
 -(BOOL)showNoNameStreets
 {
-    NSNumber * number = [OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey];
-    BOOL boolValue = [number boolValue];
-    return boolValue;
+    //NSNumber * number = [OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey];
+    //BOOL boolValue = [number boolValue];
+    return NO;
     //[[OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey]boolValue];
 }
 -(void)downloadButtonPressed:(id)sender
