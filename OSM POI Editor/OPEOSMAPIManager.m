@@ -14,6 +14,7 @@
 #import "OPEUtility.h"
 
 #import "OPEGeo.h"
+#import "OPEOSMRequestSerializer.h"
 
 
 
@@ -72,8 +73,8 @@
         xmlParserResponseSerializer.acceptableContentTypes = contentTypes;
         _httpClient.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:@[[AFJSONResponseSerializer serializer],xmlParserResponseSerializer]];
         
-        AFHTTPRequestSerializer * requestSerializer = [AFHTTPRequestSerializer serializer];
-        [requestSerializer setAuthorizationHeaderFieldWithToken:self.auth.token];
+        OPEOSMRequestSerializer * requestSerializer = [OPEOSMRequestSerializer serializer];
+        [requestSerializer setAuth:self.auth];
         [_httpClient setRequestSerializer:requestSerializer];
     }
     return _httpClient;
@@ -113,14 +114,19 @@
     
     NSURL* url = [self downloadURLWithBoundingBox:bbox];
     NSMutableURLRequest * request =[NSMutableURLRequest requestWithURL:url];
-    [request setTimeoutInterval:30];
+    [request setTimeoutInterval:20];
     
     
     //[AFXMLRequestOperation addAcceptableContentTypes:];
     
-    AFHTTPRequestOperation * httpRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    requestOperation.responseSerializer=[AFHTTPResponseSerializer serializer];
+    [requestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        NSLog(@"Bytes Read: %d\nTotalBytesRead: %lld\nExpected: %lld",bytesRead,totalBytesRead,totalBytesExpectedToRead);
+    }];
     
-    [httpRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
             success(responseObject);
         }
@@ -139,7 +145,7 @@
         
         
     }];
-    [httpRequestOperation start];
+    [requestOperation start];
     
     NSLog(@"Download URL %@",url);
     
@@ -281,7 +287,6 @@ withChangesetComment:(NSString *)changesetComment
     
     NSMutableURLRequest *request = [self.httpClient.requestSerializer requestWithMethod:@"PUT" URLString:[[NSURL URLWithString:@"changeset/create" relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
     [request setHTTPBody:changesetData];
-    [self.auth authorizeRequest:request];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     requestOperation.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -340,13 +345,15 @@ withChangesetComment:(NSString *)changesetComment
         }
     }
     
-    [AFURLConnectionOperation batchOfRequestOperations:requestOperations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+    NSArray * batched = [AFURLConnectionOperation batchOfRequestOperations:requestOperations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
         NSLog(@"uploaded: %d/%d",numberOfFinishedOperations,totalNumberOfOperations);
     } completionBlock:^(NSArray *operations) {
         if (success) {
             success(updatedElements);
         }
     }];
+    
+    [self.httpClient.operationQueue addOperations:batched waitUntilFinished:NO];
     
 }
 
@@ -357,7 +364,6 @@ withChangesetComment:(NSString *)changesetComment
     NSString * path = [NSString stringWithFormat:@"changeset/%lld/close",changesetNumber];
     
     NSMutableURLRequest *request = [self.httpClient.requestSerializer requestWithMethod:@"PUT" URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
-    //[self.auth authorizeRequest:request];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -393,9 +399,9 @@ withChangesetComment:(NSString *)changesetComment
     
     NSMutableURLRequest *urlRequest = [self.httpClient.requestSerializer requestWithMethod:@"PUT" URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
     [urlRequest setHTTPBody:xmlData];
-    //[self.auth authorizeRequest:urlRequest];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    requestOperation.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"changeset %@",responseObject);
@@ -428,9 +434,9 @@ withChangesetComment:(NSString *)changesetComment
     
     NSMutableURLRequest *urlRequest = [self.httpClient.requestSerializer requestWithMethod:@"DELETE" URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
     [urlRequest setHTTPBody:xmlData];
-    //[self.auth authorizeRequest:urlRequest];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    requestOperation.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"changeset %@",responseObject);

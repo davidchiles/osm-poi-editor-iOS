@@ -7,7 +7,11 @@
 //
 
 #import "AFURLRequestSerialization.h"
+#import "GTMOAuthAuthentication.h"
 
 @interface OPEOSMRequestSerializer : AFHTTPRequestSerializer
+
+
+@property (nonatomic,strong) GTMOAuthAuthentication * auth;
 
 @end

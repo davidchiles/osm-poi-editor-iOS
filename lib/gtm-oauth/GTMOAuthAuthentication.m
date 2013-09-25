@@ -26,7 +26,7 @@
 #define GTMOAUTHAUTHENTICATION_DEFINE_GLOBALS 1
 #import "GTMOAuthAuthentication.h"
 
-#define GTL_DEBUG_OAUTH_SIGNING 1
+#define GTL_DEBUG_OAUTH_SIGNING 0
 
 // standard OAuth keys
 static NSString *const kOAuthConsumerKey          = @"oauth_consumer_key";
