@@ -341,6 +341,7 @@
 		63723A8817F25F2900DDCCAD /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 63723A8017F25F2900DDCCAD /* UIProgressView+AFNetworking.m */; };
 		63723A8917F25F2900DDCCAD /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 63723A8217F25F2900DDCCAD /* UIWebView+AFNetworking.m */; };
 		63723A8C17F2742B00DDCCAD /* OPEOSMRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 63723A8B17F2742B00DDCCAD /* OPEOSMRequestSerializer.m */; };
+		63723A8F17F2A3BF00DDCCAD /* OPEMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63723A8E17F2A3BF00DDCCAD /* OPEMapManager.m */; };
 		6372F80117419F3100DE5909 /* Optional.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80017419F3100DE5909 /* Optional.json */; };
 		6372F80817419F6A00DE5909 /* OptionalCategorySort.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80717419F6A00DE5909 /* OptionalCategorySort.json */; };
 		63733B6A1790DE8E007FA7C7 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 63733B691790DE8E007FA7C7 /* Note.m */; };
@@ -859,6 +860,8 @@
 		63723A8217F25F2900DDCCAD /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		63723A8A17F2742B00DDCCAD /* OPEOSMRequestSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMRequestSerializer.h; sourceTree = "<group>"; };
 		63723A8B17F2742B00DDCCAD /* OPEOSMRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMRequestSerializer.m; sourceTree = "<group>"; };
+		63723A8D17F2A3BF00DDCCAD /* OPEMapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMapManager.h; sourceTree = "<group>"; };
+		63723A8E17F2A3BF00DDCCAD /* OPEMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMapManager.m; sourceTree = "<group>"; };
 		6372F80017419F3100DE5909 /* Optional.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Optional.json; sourceTree = "<group>"; };
 		6372F80717419F6A00DE5909 /* OptionalCategorySort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OptionalCategorySort.json; sourceTree = "<group>"; };
 		63733B681790DE8E007FA7C7 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
@@ -1529,6 +1532,8 @@
 				6314D13E1703C27A00AE91E3 /* OPEBaseViewController.m */,
 				6330AB8014DB519A00448852 /* OPEViewController.h */,
 				6330AB8114DB519A00448852 /* OPEViewController.m */,
+				63723A8D17F2A3BF00DDCCAD /* OPEMapManager.h */,
+				63723A8E17F2A3BF00DDCCAD /* OPEMapManager.m */,
 				6345E57D14E3122900F55486 /* OPENodeViewController.h */,
 				6345E57E14E3122900F55486 /* OPENodeViewController.m */,
 				63962B1317961B8C008B897C /* OPENoteViewController.h */,
@@ -2392,6 +2397,7 @@
 				63CFCA95176160340006BE38 /* OPEOSMAPIManager.m in Sources */,
 				630A878D17680FE1003C9423 /* BButton.m in Sources */,
 				63723A8617F25F2900DDCCAD /* UIButton+AFNetworking.m in Sources */,
+				63723A8F17F2A3BF00DDCCAD /* OPEMapManager.m in Sources */,
 				630A878E17680FE1003C9423 /* NSString+FontAwesome.m in Sources */,
 				630A879017680FE1003C9423 /* UIColor+BButton.m in Sources */,
 				630A879617682275003C9423 /* OPEWikipediaManager.m in Sources */,

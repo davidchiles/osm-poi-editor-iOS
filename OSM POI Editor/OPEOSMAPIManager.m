@@ -311,7 +311,6 @@ withChangesetComment:(NSString *)changesetComment
         failure(nil,nil);
     }
     NSMutableArray * requestOperations = [NSMutableArray array];
-    NSMutableArray * updatedElements = [NSMutableArray array];
     NSArray * elements =  @[changeset.nodes,changeset.ways,changeset.relations];
     for( NSArray * elmentArray in elements)
     {

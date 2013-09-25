@@ -36,6 +36,8 @@
 #import "OPEOSMSearchManager.h"
 #import "OPEOSMAPIManager.h"
 
+@class OPEMapManager;
+
 @interface OPEViewController : OPEBaseViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,OPENameEditViewDelegate,UIToolbarDelegate> {
     RMMapView* mapView;
     UIImageView * plusImageView;
@@ -48,6 +50,8 @@
 @property (nonatomic,strong) CLLocationManager* locationManager;
 
 @property (nonatomic,strong) OPEDownloadManager * downloadManger;
+
+@property (nonatomic,strong) OPEMapManager * mapManager;
 
 @property (nonatomic,strong) UIBarButtonItem * infoButton;
 @property (nonatomic,strong) UIBarButtonItem * location;
