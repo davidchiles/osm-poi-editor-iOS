@@ -899,13 +899,44 @@
 -(void)updateAnnotationForOsmElements:(NSArray *)elementsArray {
     for (OPEManagedOsmElement * element in elementsArray)
     {
-        [self removeAnnotationWithOsmElementIDKey:element.idKey];
+        [self removeAnnotationWithOsmElement:element];
         if (![element.action isEqualToString:kActionTypeDelete]) {
             NSArray * annotationsArray = [self annotationWithOsmElement:element];
             for(RMAnnotation * annotation in annotationsArray)
                 [mapView addAnnotation:annotation];
         }
     }
+}
+-(void)removeAnnotationWithOsmElement:(OPEManagedOsmElement *)element
+{
+    NSSet * annotationSet = [self annotationsForOsmElement:element];
+    if ([annotationSet count])
+    {
+        [mapView removeAnnotations:[annotationSet allObjects]];
+    }
+}
+
+-(NSSet *)annotationsForOsmElement:(OPEManagedOsmElement *)element {
+    NSIndexSet * indexSet = [self indexesOfOsmElement:element];
+    NSMutableSet * annotationSet = [NSMutableSet set];
+    
+    [indexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+        [annotationSet addObject:[mapView.annotations objectAtIndex:idx]];
+    }];
+    
+    return annotationSet;
+}
+
+-(NSIndexSet *)indexesOfOsmElement:(OPEManagedOsmElement *)element
+{
+    NSIndexSet * set = [mapView.annotations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+        RMAnnotation * annotation = (RMAnnotation *)obj;
+        if ([annotation.userInfo isKindOfClass:[OPEManagedObject class]]) {
+            return [annotation.userInfo isEqual:element];
+        }
+        return NO;
+    }];
+    return set;
 }
 
 -(void)removeAnnotationWithOsmElementIDKey:(NSString *)idKey

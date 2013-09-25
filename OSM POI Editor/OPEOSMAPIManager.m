@@ -320,7 +320,9 @@ withChangesetComment:(NSString *)changesetComment
             if([element.action isEqualToString:kActionTypeDelete])
             {
                 AFHTTPRequestOperation * deleteOperation = [self deleteRequestOperationWithElement:element changeset:changeset.changesetID success:^(OPEManagedOsmElement *Element) {
-                    [updatedElements addObject:element];
+                    if (success) {
+                        success(@[element]);
+                    }
                 } failure:^(OPEManagedOsmElement * element,NSError *error) {
                     if (failure) {
                         failure(element,error);
@@ -331,8 +333,10 @@ withChangesetComment:(NSString *)changesetComment
             }
             else if([element.action isEqualToString:kActionTypeModify])
             {
-                AFHTTPRequestOperation * updateOperation = [self uploadRequestOperationWithElement:element changeset:changeset.changesetID success:^(OPEManagedOsmElement *Element) {
-                    [updatedElements addObject:element];
+                AFHTTPRequestOperation * updateOperation = [self uploadRequestOperationWithElement:element changeset:changeset.changesetID success:^(OPEManagedOsmElement *element) {
+                    if (success) {
+                        success(@[element]);
+                    }
                 } failure:^(OPEManagedOsmElement * element,NSError *error) {
                     if (failure) {
                         failure(element,error);
@@ -347,11 +351,7 @@ withChangesetComment:(NSString *)changesetComment
     
     NSArray * batched = [AFURLConnectionOperation batchOfRequestOperations:requestOperations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
         NSLog(@"uploaded: %d/%d",numberOfFinishedOperations,totalNumberOfOperations);
-    } completionBlock:^(NSArray *operations) {
-        if (success) {
-            success(updatedElements);
-        }
-    }];
+    } completionBlock:nil];
     
     [self.httpClient.operationQueue addOperations:batched waitUntilFinished:NO];
     

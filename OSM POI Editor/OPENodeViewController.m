@@ -621,17 +621,6 @@
             [super uploadFailed:error];
             [self checkSaveButton];
         }];
-        /*
-        dispatch_queue_t q = dispatch_queue_create("queue", NULL);
-        dispatch_async(q, ^{
-            NSLog(@"saveBottonPressed");
-            
-            [self.osmData uploadElement:self.managedOsmElement];
-            
-        });
-        //[self didCloseChangeset:1];
-        //dispatch_release(q);
-         */
         
     }
     else {
