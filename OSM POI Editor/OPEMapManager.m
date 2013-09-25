@@ -116,10 +116,8 @@
 
 -(RMAnnotation *)annotationWForNote:(Note *)note withMapView:(RMMapView *)mapView
 {
-    RMPointAnnotation * annotation = [RMPointAnnotation annotationWithMapView:mapView coordinate:note.coordinate andTitle:@"Note"];
+    RMAnnotation * annotation = [RMAnnotation annotationWithMapView:mapView coordinate:note.coordinate andTitle:@"Note"];
     annotation.userInfo = note;
-    annotation.layer = [[RMMarker alloc] initWithMapBoxMarkerImage];
-    annotation.layer.canShowCallout = NO;
     return annotation;
 }
 
@@ -325,18 +323,26 @@
 
 -(RMMapLayer *) mapView:(RMMapView *)mView layerForAnnotation:(RMAnnotation *)annotation
 {
-    if (!annotation.isClusterAnnotation && [annotation.userInfo isKindOfClass:[OPEManagedOsmElement class]]) {
+    RMMarker * marker = nil;
+    if ([annotation.userInfo isKindOfClass:[OPEManagedOsmElement class]]) {
         OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)annotation.userInfo;;
         
-        
-        RMMarker * marker = [self markerWithManagedObject:managedOsmElement];
+        marker = [self markerWithManagedObject:managedOsmElement];
         marker.canShowCallout = YES;
         marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        
-        return marker;
     }
-    RMMarker * marker = [[RMMarker alloc] initWithMapBoxMarkerImage];
-    marker.canShowCallout = YES;
+    else if ([annotation.userInfo isKindOfClass:[Note class]]) {
+        Note * note = annotation.userInfo;
+        UIImage * image = nil;
+        if (note.isOpen) {
+            image = [UIImage imageNamed:@"note_open.png"];
+        }
+        else {
+            image = [UIImage imageNamed:@"note_closed.png"];
+        }
+        marker = [[RMMarker alloc] initWithUIImage:image anchorPoint:CGPointMake(0.5, 0.5)];
+        marker.canShowCallout = NO;
+    }
     return marker;
 }
 

@@ -81,14 +81,13 @@
     UIBarButtonItem * locationBarButton;
     UIBarButtonItem * addBarButton;
     UIBarButtonItem * settingsBarButton;
-    UIBarButtonItem * downloadBarButton;
     
     
     
     locationBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"location.png"]style:UIBarButtonItemStylePlain target:self action:@selector(locationButtonPressed:)];
     
     
-    addBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPointButtonPressed:)];
+    addBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"50-plus.png"] style:UIBarButtonItemStylePlain target:self action:@selector(addPointButtonPressed:)];
     
     settingsBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gear.png"] style:UIBarButtonItemStylePlain target:self action:@selector(infoButtonPressed:)];
     
@@ -99,22 +98,16 @@
     UIBarButtonItem * flexibleSpaceBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     
-    mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    [self.view addSubview:mapView];
     
     plusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"plus.png"]];
     plusImageView.center = mapView.center;
     [self.view addSubview:plusImageView];
     
-    UIToolbar * toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, 320, 44)];
+    UIToolbar * toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, self.view.bounds.size.width, 44)];
     toolBar.delegate = self;
     [toolBar setItems:@[locationBarButton,flexibleSpaceBarItem,downloadBarButton,flexibleSpaceBarItem,addBarButton,flexibleSpaceBarItem,settingsBarButton]];
     [self.view addSubview:toolBar];
-
-    //self.toolbarItems = [    //self.navigationItem.rightBarButtonItem = settingsBarButton;
-    //self.navigationItem.leftBarButtonItem = locationBarButton;
-    //self.navigationItem.titleView = [UIButton buttonWithType:UIButtonTypeContactAdd];
 }
 
 - (void)viewDidLoad
@@ -162,6 +155,11 @@
     }
     
     [mapView setZoom: 18];
+    
+    mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    [self.view addSubview:mapView];
+    [self setupButtons];
     
     currentSquare = [mapView latitudeLongitudeBoundingBox];
     
@@ -422,7 +420,7 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.navigationController setToolbarHidden:YES animated:YES];
-    [self setupButtons];
+    
     userPressedLocatoinButton = NO;
 }
 

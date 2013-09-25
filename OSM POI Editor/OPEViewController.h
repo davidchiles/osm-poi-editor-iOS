@@ -45,6 +45,7 @@
     NSMutableDictionary * downloadedNoNameHighways;
     OPEOSMSearchManager * searchManager;
     OPEOSMAPIManager * apiManager;
+    UIBarButtonItem * downloadBarButton;
 }
 
 @property (nonatomic,strong) CLLocationManager* locationManager;
