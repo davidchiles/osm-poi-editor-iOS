@@ -16,6 +16,38 @@
 #import "OPEGeo.h"
 #import "OPEOSMRequestSerializer.h"
 
+#import "OSMParser.h"
+@interface NSStream (BoundPairAdditions)
++ (void)createBoundInputStream:(NSInputStream **)inputStreamPtr outputStream:(NSOutputStream **)outputStreamPtr bufferSize:(NSUInteger)bufferSize;
+@end
+@implementation NSStream (BoundPairAdditions)
+
++ (void)createBoundInputStream:(NSInputStream **)inputStreamPtr outputStream:(NSOutputStream **)outputStreamPtr bufferSize:(NSUInteger)bufferSize
+{
+    CFReadStreamRef     readStream;
+    CFWriteStreamRef    writeStream;
+    
+    assert( (inputStreamPtr != NULL) || (outputStreamPtr != NULL) );
+    
+    readStream = NULL;
+    writeStream = NULL;
+    
+    CFStreamCreateBoundPair(
+                            NULL,
+                            ((inputStreamPtr  != nil) ? &readStream : NULL),
+                            ((outputStreamPtr != nil) ? &writeStream : NULL),
+                            (CFIndex) bufferSize
+                            );
+    
+    if (inputStreamPtr != NULL) {
+        *inputStreamPtr  = CFBridgingRelease(readStream);
+    }
+    if (outputStreamPtr != NULL) {
+        *outputStreamPtr = CFBridgingRelease(writeStream);
+    }
+}
+
+@end
 
 
 @implementation OPEOSMAPIManager
@@ -145,6 +177,13 @@
         
         
     }];
+    
+    NSOutputStream * outputStream;
+    NSInputStream * inpuStream;
+    [NSStream createBoundInputStream:&inpuStream outputStream:&outputStream bufferSize:2048];
+    requestOperation.outputStream = outputStream;
+    OSMParser * parser = [[OSMParser alloc] initWithStream:inpuStream];
+    
     [requestOperation start];
     
     NSLog(@"Download URL %@",url);
@@ -197,34 +236,32 @@
 {
     NSURL * finalUrl;
     NSString * baseURLString;
+    NSString * path;
     switch ([apiFailures count]) {
         case 0:
             baseURLString = kOPEAPIURL1;
+            finalUrl = [NSURL URLWithString: [NSString stringWithFormat:@"%@map?bbox=%f,%f,%f,%f",baseURLString,bbox.left,bbox.bottom,bbox.right,bbox.top]];
             break;
         case 1:
             baseURLString = kOPEAPIURL2;
+            finalUrl = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",baseURLString,bbox.left,bbox.bottom,bbox.right,bbox.top]];
             break;
         case 2:
             baseURLString = kOPEAPIURL3;
+            finalUrl = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",baseURLString,bbox.left,bbox.bottom,bbox.right,bbox.top]];
             break;
         case 3:
             baseURLString = kOPEAPIURL4;
+            finalUrl = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",baseURLString,bbox.left,bbox.bottom,bbox.right,bbox.top]];
             break;
         case 4:
             baseURLString = kOPEAPIURL5;
+            finalUrl = [NSURL URLWithString: [NSString stringWithFormat:@"%@map?bbox=%f,%f,%f,%f",baseURLString,bbox.left,bbox.bottom,bbox.right,bbox.top]];
             break;
         default:
             break;
     }
-    
-    if ([apiFailures count] < 3) {
-        finalUrl = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",baseURLString,bbox.left,bbox.bottom,bbox.right,bbox.top]];
-    }
-    else
-    {
-        finalUrl = [NSURL URLWithString: [NSString stringWithFormat:@"%@map?bbox=%f,%f,%f,%f",baseURLString,bbox.left,bbox.bottom,bbox.right,bbox.top]];
-        
-    }
+
     return finalUrl;
 }
 
@@ -556,3 +593,4 @@ withChangesetComment:(NSString *)changesetComment
 }
 
 @end
+
