@@ -865,7 +865,7 @@
     
     [self removeAllNoNameStreets];
     if ([[OPEUtility currentValueForSettingKey:kShowNoNameStreetsKey] boolValue]) {
-        [self addAllNoNameStreets];
+        //[self addAllNoNameStreets];
     }
     
     

@@ -25,7 +25,7 @@
     NSMutableDictionary * nominatimFailures;
 }
 
-@property (nonatomic,strong) AFHTTPClient * httpClient;
+@property (nonatomic,strong) AFHTTPRequestOperationManager * httpClient;
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;
 
 -(void)downloadDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast

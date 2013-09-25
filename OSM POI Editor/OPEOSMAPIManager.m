@@ -60,11 +60,21 @@
     
 }
 
--(AFHTTPClient *)httpClient
+-(AFHTTPRequestOperationManager *)httpClient
 {
     if (!_httpClient) {
         NSString * baseUrl = @"http://api.openstreetmap.org/api/0.6/";
-        _httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        _httpClient = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:baseUrl]];
+        
+        AFXMLParserResponseSerializer * xmlParserResponseSerializer =  [AFXMLParserResponseSerializer serializer];
+        NSMutableSet * contentTypes = [xmlParserResponseSerializer.acceptableContentTypes mutableCopy];
+        [contentTypes addObject:@"application/osm3s+xml"];
+        xmlParserResponseSerializer.acceptableContentTypes = contentTypes;
+        _httpClient.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:@[[AFJSONResponseSerializer serializer],xmlParserResponseSerializer]];
+        
+        AFHTTPRequestSerializer * requestSerializer = [AFHTTPRequestSerializer serializer];
+        [requestSerializer setAuthorizationHeaderFieldWithToken:self.auth.token];
+        [_httpClient setRequestSerializer:requestSerializer];
     }
     return _httpClient;
 }
@@ -77,21 +87,22 @@
     OPEBoundingBox * bbox = [OPEBoundingBox boundingBoxSW:southWest NE:northEast];
     NSString * bboxString = [NSString stringWithFormat:@"%f,%f,%f,%f",bbox.left,bbox.bottom,bbox.right,bbox.top];
     NSDictionary * parametersDictionary = @{@"bbox": bboxString};
-    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"GET" path:@"notes.json" parameters:parametersDictionary];
-    
-    AFJSONRequestOperation * requestOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+    AFHTTPRequestOperation * httpRequestOperation = [self.httpClient GET:@"notes.json" parameters:parametersDictionary success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
-            success(JSON);
+            success(responseObject);
         }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure)
         {
             NSLog(@"Notes Download failed");
             failure(error);
         }
     }];
+    [httpRequestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        NSLog(@"Bytes Read: %d\nTotalBytesRead: %lld\nExpected: %lld",bytesRead,totalBytesRead,totalBytesExpectedToRead);
+    }];
     
-    [requestOperation start];
+    [httpRequestOperation start];
 }
 
 -(void)downloadDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
@@ -105,7 +116,7 @@
     [request setTimeoutInterval:30];
     
     
-    [AFXMLRequestOperation addAcceptableContentTypes:[NSSet setWithObject:@"application/osm3s+xml"]];
+    //[AFXMLRequestOperation addAcceptableContentTypes:];
     
     AFHTTPRequestOperation * httpRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
@@ -139,12 +150,14 @@
                     failure:(void (^)(NSError * error))failure
 {
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[self nominatimURLWithCoordinate:coordinate]];
-    AFJSONRequestOperation * jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+    AFHTTPRequestOperation * jsonOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    jsonOperation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [jsonOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
-            success([JSON objectForKey:@"address"]);
+            success([responseObject objectForKey:@"address"]);
         }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        [nominatimFailures setObject:[NSNumber numberWithBool:YES] forKey:[request.URL.absoluteString componentsSeparatedByString:@"reverse"][0]];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [nominatimFailures setObject:[NSNumber numberWithBool:YES] forKey:[operation.request.URL.absoluteString componentsSeparatedByString:@"reverse"][0]];
         if ([apiFailures count] < 2) {
             [self reverseLookupAddress:coordinate success:success failure:failure];
         }
@@ -266,11 +279,12 @@ withChangesetComment:(NSString *)changesetComment
     
     NSData * changesetData = [[changeset xml] dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"PUT" path:@"changeset/create" parameters:nil];
-    [urlRequest setHTTPBody:changesetData];
-    [self.auth authorizeRequest:urlRequest];
+    NSMutableURLRequest *request = [self.httpClient.requestSerializer requestWithMethod:@"PUT" URLString:[[NSURL URLWithString:@"changeset/create" relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
+    [request setHTTPBody:changesetData];
+    [self.auth authorizeRequest:request];
     
-    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    requestOperation.responseSerializer = [AFHTTPResponseSerializer serializer];
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         changeset.changesetID = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] longLongValue];
         if (success) {
@@ -282,6 +296,7 @@ withChangesetComment:(NSString *)changesetComment
             failure(error);
         }
     }];
+    [self.httpClient.operationQueue addOperation:requestOperation];
     [requestOperation start];
 }
 
@@ -325,15 +340,13 @@ withChangesetComment:(NSString *)changesetComment
         }
     }
     
-    [self.httpClient enqueueBatchOfHTTPRequestOperations:requestOperations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
+    [AFURLConnectionOperation batchOfRequestOperations:requestOperations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
         NSLog(@"uploaded: %d/%d",numberOfFinishedOperations,totalNumberOfOperations);
-        
     } completionBlock:^(NSArray *operations) {
         if (success) {
             success(updatedElements);
         }
     }];
-    
     
 }
 
@@ -343,19 +356,21 @@ withChangesetComment:(NSString *)changesetComment
 {
     NSString * path = [NSString stringWithFormat:@"changeset/%lld/close",changesetNumber];
     
-    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"PUT" path:path parameters:nil];
-    [self.auth authorizeRequest:urlRequest];
+    NSMutableURLRequest *request = [self.httpClient.requestSerializer requestWithMethod:@"PUT" URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
+    //[self.auth authorizeRequest:request];
     
-    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
             success(responseObject);
         }
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure) {
             failure(error);
         }
     }];
+    [self.httpClient.operationQueue addOperation:requestOperation];
     [requestOperation start];
 }
   
@@ -375,9 +390,10 @@ withChangesetComment:(NSString *)changesetComment
         [path appendFormat:@"%lld",element.element.elementID];
     }
     
-    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"PUT" path:path parameters:nil];
+    
+    NSMutableURLRequest *urlRequest = [self.httpClient.requestSerializer requestWithMethod:@"PUT" URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
     [urlRequest setHTTPBody:xmlData];
-    [self.auth authorizeRequest:urlRequest];
+    //[self.auth authorizeRequest:urlRequest];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     
@@ -410,9 +426,9 @@ withChangesetComment:(NSString *)changesetComment
     NSData * xmlData = [element deleteXMLforChangset:changesetNumber];
     NSString * path = [NSString stringWithFormat:@"%@/%lld",[element osmType],element.element.elementID];
     
-    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"DELETE" path:path parameters:nil];
+    NSMutableURLRequest *urlRequest = [self.httpClient.requestSerializer requestWithMethod:@"DELETE" URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
     [urlRequest setHTTPBody:xmlData];
-    [self.auth authorizeRequest:urlRequest];
+    //[self.auth authorizeRequest:urlRequest];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
     
@@ -442,12 +458,7 @@ withChangesetComment:(NSString *)changesetComment
 {
     
     NSDictionary * parameters = @{@"lat": @(note.coordinate.latitude),@"lon":@(note.coordinate.longitude),@"text":((Comment *)[note.commentsArray lastObject]).text};
-    
-    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"POST" path:@"notes.json" parameters:parameters];
-    [self.auth authorizeRequest:urlRequest];
-    
-    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
-    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPRequestOperation * requestOperation = [self.httpClient POST:@"notes.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
             success(responseObject);
         }
@@ -467,19 +478,16 @@ withChangesetComment:(NSString *)changesetComment
 {
     NSDictionary * parameters = @{@"text":comment.text};
     NSString * path = [NSString stringWithFormat:@"notes/%lld/comment.json",note.id];
-    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"POST" path:path parameters:parameters];
-    [self.auth authorizeRequest:urlRequest];
     
-    AFHTTPRequestOperation * requestOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+    AFHTTPRequestOperation * requestOperation = [self.httpClient POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
-            success(JSON);
+            success(responseObject);
         }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure) {
             failure(error);
         }
     }];
-    
     [requestOperation start];
 
     
@@ -494,33 +502,25 @@ withChangesetComment:(NSString *)changesetComment
     }
     
     NSString * path = [NSString stringWithFormat:@"notes/%lld/close.json",note.id];
-    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"POST" path:path parameters:parameters];
-    [self.auth authorizeRequest:urlRequest];
-    
-    AFJSONRequestOperation * requestOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+    AFHTTPRequestOperation * requestOperation = [self.httpClient POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
-            success(JSON);
+            success(responseObject);
         }
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure) {
             failure(error);
         }
     }];
     
     [requestOperation start];
-    
 }
 
 -(void)reopenNote:(Note *)note
           success:(void (^)(NSData * response))success
           failure:(void (^)(NSError *error))failure
 {
-    NSString * path = [NSString stringWithFormat:@"notes/%lld/reopen    .json",note.id];
-    NSMutableURLRequest * urlRequest = [self.httpClient requestWithMethod:@"POST" path:path parameters:nil];
-    [self.auth authorizeRequest:urlRequest];
-    
-    AFJSONRequestOperation * requestOperation = [[AFJSONRequestOperation alloc] initWithRequest:urlRequest];
-    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString * path = [NSString stringWithFormat:@"notes/%lld/reopen.json",note.id];
+    AFHTTPRequestOperation * requestOperation = [self.httpClient POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
             success(responseObject);
         }

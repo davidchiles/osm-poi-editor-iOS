@@ -48,54 +48,58 @@
     }
     NSString * urlString = [NSString stringWithFormat:@"http://%@.wikipedia.org/w/api.php?action=opensearch&search=%@&limit=10&format=json",language,[query stringByReplacingOccurrencesOfString:@" " withString:@"_"]];
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    AFJSONRequestOperation * jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        NSArray * results = (NSArray *)JSON;
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    requestOperation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray * results = (NSArray *)responseObject;
         if (success) {
             success(results[1]);
         }
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure) {
-            failure(response,error,JSON);
+            failure(operation.response,error,operation.responseData);
         }
     }];
-    [jsonOperation start];
+    
+    [requestOperation start];
 }
 
 -(void)fetchAllWikipediaLanguagesSucess:(void (^)(NSArray *results))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error, id JSON))failure
 {
     NSString * urlString = @"http://en.wikipedia.org/w/api.php?action=query&meta=siteinfo&siprop=languages&format=json";
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    AFJSONRequestOperation * jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        NSDictionary * results = (NSDictionary *)JSON;
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    requestOperation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary * results = (NSDictionary *)responseObject;
         if (success) {
             success(results[@"query"][@"languages"]);
         }
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure) {
-            failure(response,error,JSON);
+            failure(operation.response,error,operation.responseData);
         }
     }];
-    [jsonOperation start];
+    [requestOperation start];
 }
 
 -(void)fetchNearbyPoint:(CLLocationCoordinate2D)center withLocale:(NSString *)locale success:(void (^)(NSArray *results))success failure:(void (^)(NSHTTPURLResponse *response, NSError *error, id JSON))failure
 {
     NSString * urlString = [NSString stringWithFormat:@"http://%@.wikipedia.org/w/api.php?action=query&list=geosearch&gsradius=10000&gscoord=%@|%@&format=json",locale,[[NSNumber numberWithDouble:center.latitude] stringValue],[[NSNumber numberWithDouble:center.longitude] stringValue]];
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    AFJSONRequestOperation * jsonOperation = [AFJSONRequestOperation JSONRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        NSDictionary * results = (NSDictionary *)JSON;
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+    requestOperation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary * results = (NSDictionary *)responseObject;
         if (success) {
             success([results[@"query"][@"geosearch"] valueForKey:@"title"]);
         }
-        
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure) {
-            failure(response,error,JSON);
+            failure(operation.response,error,operation.responseData);
         }
     }];
-    [jsonOperation start];
+    [requestOperation start];
     
 }
 
