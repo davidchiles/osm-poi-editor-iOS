@@ -114,11 +114,7 @@
 {
     [super viewDidLoad];
     
-    mapManager = [[OPEMapManager alloc] initWithDelegate:self];
-    
-    //[self.navigationController setNavigationBarHidden:YES animated:NO];
-    //[self.navigationController setToolbarHidden:YES animated:NO];
-    //Check OAuth
+    mapManager = [[OPEMapManager alloc] init];
     
     id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
     
@@ -130,7 +126,7 @@
     mapView.hideAttribution = YES;
     mapView.userTrackingMode = RMUserTrackingModeFollow;
     
-    [mapView setDelegate:mapManager];
+    [mapView setDelegate:self];
     
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
@@ -191,6 +187,11 @@
 
 #pragma mark RMMapViewDelegate
 
+- (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
+{
+    return [mapManager mapView:mapView layerForAnnotation:annotation];
+}
+
 -(void)tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
     id osmElement = annotation.userInfo;
@@ -201,6 +202,9 @@
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:viewController];
         
         [self.navigationController presentViewController:navController animated:YES completion:nil];
+    }
+    else {
+        [mapManager tapOnAnnotation:annotation onMap:map];
     }
 }
 
@@ -223,6 +227,11 @@
     if (wasUserAction) {
         [self downloadNotes:map];
     }
+}
+
+- (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
+{
+    return NO;
 }
 
 

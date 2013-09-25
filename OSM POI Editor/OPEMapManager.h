@@ -18,9 +18,6 @@
     NSOperationQueue * operationQueue;
 }
 
-- (id)initWithDelegate:(id<RMMapViewDelegate>)delegate;
-
-@property (nonatomic,weak) id<RMMapViewDelegate> delegate;
 @property (nonatomic,strong) OPEOSMData * osmData;
 
 

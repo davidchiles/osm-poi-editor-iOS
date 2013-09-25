@@ -27,7 +27,6 @@
 @implementation OPEMapManager
 
 @synthesize osmData = _osmData;
-@synthesize delegate;
 
 
 
@@ -38,14 +37,6 @@
         imageDictionary = [NSMutableDictionary dictionary];
         operationQueue = [[NSOperationQueue alloc] init];
         operationQueue.maxConcurrentOperationCount = 2;
-    }
-    return self;
-}
-
-- (id)initWithDelegate:(id<RMMapViewDelegate>)newDelegate
-{
-    if (self = [self init]) {
-        self.delegate = newDelegate;
     }
     return self;
 }
@@ -369,38 +360,9 @@
         wayAnnotation.userInfo = annotation.userInfo;
         [mapView addAnnotation:wayAnnotation];
     }
-
-    if ([self.delegate respondsToSelector:@selector(tapOnAnnotation:onMap:)]) {
-        [self.delegate tapOnAnnotation:annotation onMap:mapView];
-    }
 }
 
-- (BOOL) mapView:(RMMapView *)map shouldDragMarker:(RMMarker *)marker withEvent:(UIEvent *)event
-{
-    return NO;
-}
 
-- (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)mapView
-{
-    if ([self.delegate respondsToSelector:@selector(tapOnCalloutAccessoryControl:forAnnotation:onMap:)]) {
-        [self.delegate tapOnCalloutAccessoryControl:control forAnnotation:annotation onMap:mapView];
-    }
-}
-
-- (void)afterMapMove:(RMMapView *)map byUser:(BOOL)wasUserAction
-{
-    if ([self.delegate respondsToSelector:@selector(afterMapMove:byUser:)]) {
-        [self.delegate afterMapMove:map byUser:wasUserAction];
-    }
-    
-}
-
-- (void)afterMapZoom:(RMMapView *)map byUser:(BOOL)wasUserAction
-{
-    if([self.delegate respondsToSelector:@selector(afterMapZoom:byUser:)]) {
-        [self.delegate afterMapZoom:map byUser:wasUserAction];
-    }
-}
 
 
 
