@@ -47,6 +47,7 @@
     OPEOSMAPIManager * apiManager;
     UIBarButtonItem * downloadBarButton;
     UIBarButtonItem * downloadOrSpinnerBarButton;
+    UIBarButtonItem * addBarButton;
     UIToolbar * toolBar;
 }
 

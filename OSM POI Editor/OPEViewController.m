@@ -79,7 +79,6 @@
     //mapView.frame = self.view.bounds;
     
     UIBarButtonItem * locationBarButton;
-    UIBarButtonItem * addBarButton;
     UIBarButtonItem * settingsBarButton;
     
     
@@ -217,6 +216,7 @@
 
 - (void)afterMapMove:(RMMapView *)map byUser:(BOOL)wasUserAction
 {
+    [self checkZoomWithMapview:map];
     if (wasUserAction) {
         [self downloadNotes:map];
     }
@@ -225,6 +225,7 @@
 
 - (void)afterMapZoom:(RMMapView *)map byUser:(BOOL)wasUserAction
 {
+    [self checkZoomWithMapview:map];
     if (wasUserAction) {
         [self downloadNotes:map];
     }
@@ -255,6 +256,20 @@
     [items insertObject:downloadOrSpinnerBarButton atIndex:index];
     toolBar.items = items;
     
+}
+
+-(void)checkZoomWithMapview:(RMMapView *)map
+{
+    if (map.zoom > MINZOOM) {
+        //enablebuttons
+        addBarButton.enabled = YES;
+        downloadBarButton.enabled = YES;
+    }
+    else {
+        addBarButton.enabled = NO;
+        downloadBarButton.enabled = NO;
+        //disable buttons
+    }
 }
 -(void) showZoomWarning
 {
