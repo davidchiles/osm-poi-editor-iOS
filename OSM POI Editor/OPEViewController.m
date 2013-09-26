@@ -92,6 +92,7 @@
     settingsBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"gear.png"] style:UIBarButtonItemStylePlain target:self action:@selector(infoButtonPressed:)];
     
     downloadBarButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(downloadButtonPressed:)];
+    downloadOrSpinnerBarButton = downloadBarButton;
     
     
     
@@ -104,9 +105,9 @@
     plusImageView.center = mapView.center;
     [self.view addSubview:plusImageView];
     
-    UIToolbar * toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, self.view.bounds.size.width, 44)];
+    toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, self.view.bounds.size.width, 44)];
     toolBar.delegate = self;
-    [toolBar setItems:@[locationBarButton,flexibleSpaceBarItem,downloadBarButton,flexibleSpaceBarItem,addBarButton,flexibleSpaceBarItem,settingsBarButton]];
+    [toolBar setItems:@[locationBarButton,flexibleSpaceBarItem,downloadOrSpinnerBarButton,flexibleSpaceBarItem,addBarButton,flexibleSpaceBarItem,settingsBarButton]];
     [self.view addSubview:toolBar];
 }
 
@@ -187,9 +188,9 @@
 
 #pragma mark RMMapViewDelegate
 
-- (RMMapLayer *)mapView:(RMMapView *)mapView layerForAnnotation:(RMAnnotation *)annotation
+- (RMMapLayer *)mapView:(RMMapView *)map layerForAnnotation:(RMAnnotation *)annotation
 {
-    return [mapManager mapView:mapView layerForAnnotation:annotation];
+    return [mapManager mapView:map layerForAnnotation:annotation];
 }
 
 -(void)tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
@@ -235,7 +236,26 @@
 }
 
 
+- (void)startDownloading {
+    UIActivityIndicatorView * spinnerView= [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinnerView startAnimating];
+    NSMutableArray * items = [toolBar.items mutableCopy];
+    NSUInteger index = [items indexOfObject:downloadOrSpinnerBarButton];
+    [items removeObjectAtIndex:index];
+    downloadOrSpinnerBarButton = [[UIBarButtonItem alloc] initWithCustomView:spinnerView];
+    [items insertObject:downloadOrSpinnerBarButton atIndex:index];
+    toolBar.items = items;
+}
 
+- (void)endDownloading {
+    NSMutableArray * items = [toolBar.items mutableCopy];
+    NSUInteger index = [items indexOfObject:downloadOrSpinnerBarButton];
+    [items removeObjectAtIndex:index];
+    downloadOrSpinnerBarButton = downloadBarButton;
+    [items insertObject:downloadOrSpinnerBarButton atIndex:index];
+    toolBar.items = items;
+    
+}
 -(void) showZoomWarning
 {
     self.message.textLabel.text = ZOOM_ERROR_STRING;
@@ -271,7 +291,8 @@
     
     RMSphericalTrapezium geoBox = [map latitudeLongitudeBoundingBox];
     if (map.zoom > MINZOOM) {
-        [self removeZoomWarning];
+        [self startDownloading];
+        //[self removeZoomWarning];
         //dispatch_async(q, ^{
         //[self.osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
         [self.downloadManger downloadDataWithSW:geoBox.southWest forNE:geoBox.northEast didStartParsing:^{
@@ -279,6 +300,7 @@
         } didFinsihParsing:^{
             [self didEndParsing];
         } faiure:^(NSError *error) {
+            [self endDownloading];
             [self didEndParsing];
         }];
         
@@ -286,7 +308,7 @@
         //dispatch_release(q);
     }
     else {
-        [self showZoomWarning];
+        //[self showZoomWarning];
     }
 }
 
@@ -465,6 +487,7 @@
 
 -(void)willStartParsing:(NSString *)typeString
 {
+    [self endDownloading];
     NSString * elementTypeString = @"";
     if ([typeString isEqualToString:kOPEOsmElementNode]) {
         elementTypeString = @"Nodes";
@@ -495,14 +518,6 @@
     self.numberOfOngoingParses += 1;
 
 }
--(void)didEndParsing:(NSString *)typeString
-{
-    self.numberOfOngoingParses -=1;
-    if (self.numberOfOngoingParses < 1) {
-        [self.parsingMessageView removeFromSuperview];
-        self.parsingMessageView = nil;
-    }
-}
 
 -(void)didEndParsing
 {
@@ -515,6 +530,7 @@
 
 -(void)downloadFailed:(NSError *)error
 {
+    [self endDownloading];
     message.textLabel.text = DOWNLOAD_ERROR_STRING;
     if (![message.superview isEqual:self.view]) {
         message.alpha = 0.0;

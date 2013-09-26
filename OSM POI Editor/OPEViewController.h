@@ -46,6 +46,8 @@
     OPEOSMSearchManager * searchManager;
     OPEOSMAPIManager * apiManager;
     UIBarButtonItem * downloadBarButton;
+    UIBarButtonItem * downloadOrSpinnerBarButton;
+    UIToolbar * toolBar;
 }
 
 @property (nonatomic,strong) CLLocationManager* locationManager;
