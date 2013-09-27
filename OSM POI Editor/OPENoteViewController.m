@@ -186,16 +186,18 @@
             [self reloadData];
             [self scrollToBottomAnimated:YES];
         };
-        
+        Comment * comment = [[Comment alloc] init];
+        comment.text = [self textViewStrippedText];
+        [self.note addComment:comment];
         if (self.note.id > 0) {
-            Comment * comment = [[Comment alloc] init];
-            comment.text = [self textViewStrippedText];
+            
             [self.osmApiManager createNewComment:comment withNote:self.note success:succesBlock failure:^(NSError *error) {
                 NSLog(@"error: %@",error);
             }];
         }
         else{
             //new note
+            
             [self.osmApiManager createNewNote:self.note success:succesBlock failure:^(NSError *error) {
                 NSLog(@"error: %@",error);
             }];

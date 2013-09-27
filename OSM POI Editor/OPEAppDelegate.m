@@ -28,8 +28,6 @@
 
 #import "OPEAppDelegate.h"
 #import "OPEViewController.h"
-#import "OPEFileUpdater.h"
-#import <Parse/Parse.h>
 #import "OPECoreDataImporter.h"
 #import "OPEMRUtility.h"
 #import "AFNetworkActivityIndicatorManager.h"

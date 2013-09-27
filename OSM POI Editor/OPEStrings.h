@@ -18,6 +18,8 @@
 #define ZOOM_ALERT_STRING NSLocalizedString(@"You need to zoom in to add a new POI",@"Alert message for user to zoom in on map more to add new POI")
 #define OK_STRING NSLocalizedString(@"OK",@"affirmative ok")
 #define ZOOM_ALERT_TITLE_STRING NSLocalizedString(@"Zoom Level",@"Title of alert for zoom")
+#define ADD_ALERT_TITLE_STRING NSLocalizedString(@"Add Point Error",@"Title for alert when trying add point in area not already downloaded")
+#define ADD_ALERT_MESSAGE_STRNG NSLocalizedString(@"You need to first download this area before adding a new point",@"Error message and instruction to show when trying to add a point to an area that has not been downloaded")
 #define FINDING_STRING NSLocalizedString(@"Finding",@"Message to User alerting that the app is parsing or finding the nodes/ways/relations")
 #define DOWNLOAD_ERROR_STRING NSLocalizedString(@"Download Error",@"Error shown to user that error downloading existing data")
 
@@ -57,6 +59,7 @@
 #define RECENTLY_USED_STRING NSLocalizedString(@"Recently Used",@"Section header for recently used values")
 #define CATEGORIES_STRING NSLocalizedString(@"Categories",@"Section header for list of categories")
 #define CREATE_NEW_NOTE_STRING NSLocalizedString(@"Create New Note",@"label for creating a new note")
+#define NOTE_STRING NSLocalizedString(@"Note",@"Title for note")
 #define NEW_NODE_STRING NSLocalizedString(@"New Node",@"Title for view for creating a new node")
 
 #define SUNSET_STRING NSLocalizedString(@"Sunset",@"The time of day with the sun goes away")
@@ -71,7 +74,7 @@
 #define MONTHS_STRING NSLocalizedString(@"Months",@"There's twelve of them and the first one is January")
 #define ALL_MONTHS_STRING NSLocalizedString(@"All Months",@"There's twelve of them and the first one is January")
 
-#define DAYS_OF_WEEK_STRING NSLocalizedString(@"Days of the Week",@"There's seven of them and the first one is Sunday or is it monday?")
+#define DAYS_OF_WEEK_STRING NSLocalizedString(@"Days",@"There's seven of them and the first one is Sunday or is it monday?")
 #define ALL_DAYS_STRING NSLocalizedString(@"All Days",@"Label")
 
 #define TIME_RANGES_STRING NSLocalizedString(@"Time Ranges",@"label for time ranges in opening_hours")

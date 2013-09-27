@@ -420,7 +420,7 @@ finishedWithAuth:(GTMOAuthAuthentication *)auth
 
   [rightBarButtonItem_ setCustomView:navButtonsView_];
   [[self navigationItem] setRightBarButtonItem:rightBarButtonItem_];
-    self.activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]autorelease];
+    self.activityIndicator = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]autorelease];
     self.activityIndicator.frame = CGRectMake(0, 0, 44, 44);
     [rightBarButtonItem_ setCustomView:self.activityIndicator];
 }

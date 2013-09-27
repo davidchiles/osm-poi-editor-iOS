@@ -53,14 +53,21 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if ([recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]) {
+    if ([self.searchDisplayController.searchResultsTableView isEqual:tableView]) {
+        return [super numberOfSectionsInTableView:tableView];
+    }
+    if ([recentlyUsedPoisArray count]) {
         return 3;
     }
-    return [super numberOfSectionsInTableView:tableView];
+    return [super numberOfSectionsInTableView:tableView]+1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]){
+    if ([self.searchDisplayController.searchResultsTableView isEqual:tableView]) {
+        return [super tableView:tableView numberOfRowsInSection:section];
+    }
+    
+    if ([recentlyUsedPoisArray count]){
         if (section == 0) {
             return [recentlyUsedPoisArray count];
         }
@@ -68,7 +75,7 @@
             return 1;
         }
     }
-    else if (section == 0 && ![recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView])
+    else if (section == 0)
     {
         return 1;
     }
@@ -77,13 +84,17 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if ([recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView]){
+    if ([self.searchDisplayController.searchResultsTableView isEqual:tableView]) {
+        return @"";
+    }
+    
+    if ([recentlyUsedPoisArray count]){
         if (section == 0) {
             return RECENTLY_USED_STRING;
         }
         else if(section == 1)
         {
-            return @"";
+            return NOTE_STRING;
         }
         else
         {
@@ -92,7 +103,14 @@
     }
     else
     {
-        return @"";
+        if(section == 0)
+        {
+            return NOTE_STRING;
+        }
+        else
+        {
+            return CATEGORIES_STRING;
+        }
     }
 }
 

@@ -183,11 +183,11 @@
 - (void) signOutOfOSM
 {
     [GTMOAuthViewControllerTouch removeParamsFromKeychainForName:@"OSMPOIEditor"];
-    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 -(void)findishedAuthWithError:(NSError *)error
 {
-    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma - TableView
@@ -313,7 +313,7 @@
         [delegate setTileSource:newTileSource];
         [self.navigationController popViewControllerAnimated:YES];
     }
-    else if (indexPath.section == 2)
+    else if (indexPath.section == 1)
     {
         if(![apiManager canAuth])
         {
@@ -323,7 +323,7 @@
             [self signOutOfOSM];
         
     }
-    else if (indexPath.section == 3) {
+    else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
             //USer voice Feedback
 #ifdef USERVOICE_ENABLED

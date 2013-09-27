@@ -309,14 +309,12 @@
 		6333D3AC16811F6800BF129E /* OPECoreDataImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6333D3AB16811F6800BF129E /* OPECoreDataImporter.m */; };
 		63397D8F170250AA00D411E7 /* OPERecent+NearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */; };
 		63397D9717026B0F00D411E7 /* OPEPhoneEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */; };
-		633CD868164B242C00678D58 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD867164B242C00678D58 /* Parse.framework */; };
 		633CD86A164B249100678D58 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD869164B249100678D58 /* AudioToolbox.framework */; };
 		633CD86C164B249D00678D58 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86B164B249D00678D58 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		633CD86E164B24AA00678D58 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86D164B24AA00678D58 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		633CD870164B24D900678D58 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86F164B24D900678D58 /* libz.1.1.3.dylib */; };
 		633CD872164B24EE00678D58 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD871164B24EE00678D58 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		633CD874164B24F700678D58 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD873164B24F700678D58 /* StoreKit.framework */; };
-		633CD877164B28DA00678D58 /* OPEFileUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 633CD876164B28DA00678D58 /* OPEFileUpdater.m */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
 		63570A901640F3C00009D8A3 /* libMapBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63570A8C1640F3B10009D8A3 /* libMapBox.a */; };
 		6362032A17CC050B0031B982 /* OPEOSMTagConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6362032917CC050B0031B982 /* OPEOSMTagConverter.m */; };
@@ -806,15 +804,12 @@
 		63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OPERecent+NearbyViewController.m"; sourceTree = "<group>"; };
 		63397D9517026B0F00D411E7 /* OPEPhoneEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEPhoneEditViewController.h; sourceTree = "<group>"; };
 		63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEPhoneEditViewController.m; sourceTree = "<group>"; };
-		633CD867164B242C00678D58 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = lib/Parse.framework; sourceTree = "<group>"; };
 		633CD869164B249100678D58 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		633CD86B164B249D00678D58 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		633CD86D164B24AA00678D58 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		633CD86F164B24D900678D58 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
 		633CD871164B24EE00678D58 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		633CD873164B24F700678D58 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		633CD875164B28DA00678D58 /* OPEFileUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEFileUpdater.h; sourceTree = "<group>"; };
-		633CD876164B28DA00678D58 /* OPEFileUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEFileUpdater.m; sourceTree = "<group>"; };
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
 		63570A801640F3B10009D8A3 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = "<group>"; };
@@ -1065,7 +1060,6 @@
 				6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */,
 				6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */,
 				6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */,
-				633CD868164B242C00678D58 /* Parse.framework in Frameworks */,
 				6375627E1772417D0050E84C /* libCrittercism.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1485,7 +1479,6 @@
 				633CD86D164B24AA00678D58 /* AdSupport.framework */,
 				633CD86B164B249D00678D58 /* Accounts.framework */,
 				633CD869164B249100678D58 /* AudioToolbox.framework */,
-				633CD867164B242C00678D58 /* Parse.framework */,
 				6383949914EC85C100C74A57 /* Security.framework */,
 				63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */,
 				63E2796914E1F281009D02BD /* SystemConfiguration.framework */,
@@ -1514,8 +1507,6 @@
 				63FCA4501643363700A28470 /* OPEUtility.m */,
 				6362032817CC050B0031B982 /* OPEOSMTagConverter.h */,
 				6362032917CC050B0031B982 /* OPEOSMTagConverter.m */,
-				633CD875164B28DA00678D58 /* OPEFileUpdater.h */,
-				633CD876164B28DA00678D58 /* OPEFileUpdater.m */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,
 				631539E014DC98D0000236F0 /* OPEOSMData.m */,
 				63233BA817DA90990026CFC5 /* OPEDownloadManager.h */,
@@ -2338,7 +2329,6 @@
 				63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */,
 				63FCA4421643127D00A28470 /* OPEBingTileSource.m in Sources */,
 				63FCA4511643363800A28470 /* OPEUtility.m in Sources */,
-				633CD877164B28DA00678D58 /* OPEFileUpdater.m in Sources */,
 				638445EA1665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m in Sources */,
 				63B1B7DB16698FAB006CFD68 /* OPEOpenStreetMapSource.m in Sources */,
 				6362032A17CC050B0031B982 /* OPEOSMTagConverter.m in Sources */,

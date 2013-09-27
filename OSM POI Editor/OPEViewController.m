@@ -301,15 +301,9 @@
 
 -(void)downloadNewArea:(RMMapView *)map
 {
-    //dispatch_queue_t q = dispatch_queue_create("queue", NULL);
-    
-    
     RMSphericalTrapezium geoBox = [map latitudeLongitudeBoundingBox];
     if (map.zoom > MINZOOM) {
         [self startDownloading];
-        //[self removeZoomWarning];
-        //dispatch_async(q, ^{
-        //[self.osmData getDataWithSW:geoBox.southWest NE:geoBox.northEast];
         [self.downloadManger downloadDataWithSW:geoBox.southWest forNE:geoBox.northEast didStartParsing:^{
             [self willStartParsing:nil];
         } didFinsihParsing:^{
@@ -318,12 +312,6 @@
             [self endDownloading];
             [self didEndParsing];
         }];
-        
-        //});
-        //dispatch_release(q);
-    }
-    else {
-        //[self showZoomWarning];
     }
 }
 
@@ -371,37 +359,31 @@
     
     if ([self.downloadManger downloadedAreaContainsPoint:center]) {
         NSLog(@"Should be allowed to download");
-        //FIXME
+        if (mapView.zoom > MINZOOM) {
+            
+            OPEManagedOsmNode * node = [OPEManagedOsmNode newNode];
+            node.element.elementID = [self.osmData newElementId];
+            node.element.latitude = center.latitude;
+            node.element.longitude = center.longitude;
+            
+            OPENewNodeSelectViewController * newNodeController = [[OPENewNodeSelectViewController alloc] initWithNewElement:node];
+            newNodeController.location = center;
+            newNodeController.nodeViewDelegate = self;
+            
+            UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:newNodeController];
+            
+            //[self.navigationController presentModalViewController:navController animated:YES];
+            [self.navigationController presentViewController:navController animated:YES completion:nil];
+            
+            //[self presentNodeInfoViewControllerWithElement:node];
+        }
     }
     else {
         NSLog(@"Outside downloaded area");
-    }
-    
-    
-    
-    //center = [mapView pixelToCoordinate:plusImageView.center];
-    if (mapView.zoom > MINZOOM) {
         
-        OPEManagedOsmNode * node = [OPEManagedOsmNode newNode];
-        node.element.elementID = [self.osmData newElementId];
-        node.element.latitude = center.latitude;
-        node.element.longitude = center.longitude;
-        
-        OPENewNodeSelectViewController * newNodeController = [[OPENewNodeSelectViewController alloc] initWithNewElement:node];
-        newNodeController.location = center;
-        newNodeController.nodeViewDelegate = self;
-        
-        UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:newNodeController];
-        
-        //[self.navigationController presentModalViewController:navController animated:YES];
-        [self.navigationController presentViewController:navController animated:YES completion:nil];
-        
-        //[self presentNodeInfoViewControllerWithElement:node];
-    }
-    else {
         UIAlertView * zoomAlert = [[UIAlertView alloc]
-                                   initWithTitle: ZOOM_ALERT_TITLE_STRING
-                                   message: ZOOM_ALERT_STRING
+                                   initWithTitle: ADD_ALERT_TITLE_STRING
+                                   message: ADD_ALERT_MESSAGE_STRNG
                                    delegate: nil
                                    cancelButtonTitle:OK_STRING
                                    otherButtonTitles:nil];
