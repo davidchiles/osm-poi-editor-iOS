@@ -43,6 +43,7 @@
 {
     //[OPEOpeningHoursParser test];
 #ifdef CRITTERCISM_ENABLED
+    [TestFlight takeOff:TEST_FLIGHT_SECRET];
     [Crittercism enableWithAppID: CRITTERCISM_APP_ID];
 #endif
     
