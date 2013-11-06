@@ -346,7 +346,6 @@
 		6372F80817419F6A00DE5909 /* OptionalCategorySort.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80717419F6A00DE5909 /* OptionalCategorySort.json */; };
 		63733B6A1790DE8E007FA7C7 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 63733B691790DE8E007FA7C7 /* Note.m */; };
 		63733B701790DEA9007FA7C7 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 63733B6F1790DEA8007FA7C7 /* Comment.m */; };
-		6375627E1772417D0050E84C /* libCrittercism.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6375627D1772417D0050E84C /* libCrittercism.a */; };
 		637C7CCB16F164BE002CD340 /* OPEChangeset.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C7CCA16F164BE002CD340 /* OPEChangeset.m */; };
 		6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */; };
 		6383949A14EC85C100C74A57 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6383949914EC85C100C74A57 /* Security.framework */; };
@@ -362,6 +361,9 @@
 		63962B2517975A95008B897C /* DAKeyboardControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B2417975A95008B897C /* DAKeyboardControl.m */; };
 		639953FE16113A200070CBAF /* about.css in Resources */ = {isa = PBXBuildFile; fileRef = 639953FD16113A200070CBAF /* about.css */; };
 		639F10AA17C82669003EB958 /* OPEBaseSpecialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 639F10A917C82669003EB958 /* OPEBaseSpecialCell.m */; };
+		63A12A9C17F63E1B0084291D /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A12A9617F63E1B0084291D /* libTestFlight.a */; };
+		63A12A9D17F63E1B0084291D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 63A12A9717F63E1B0084291D /* README.md */; };
+		63A12A9E17F63E1B0084291D /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 63A12A9817F63E1B0084291D /* release_notes.md */; };
 		63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */; };
 		63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BB177BB0EB000C6A0D /* OPEMoveNodeViewController.m */; };
 		63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BE177BBD8C000C6A0D /* OPEButtonCell.m */; };
@@ -867,7 +869,6 @@
 		63733B691790DE8E007FA7C7 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		63733B6E1790DEA8007FA7C7 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
 		63733B6F1790DEA8007FA7C7 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
-		6375627D1772417D0050E84C /* libCrittercism.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libCrittercism.a; sourceTree = "<group>"; };
 		637C7CC916F164BE002CD340 /* OPEChangeset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEChangeset.h; sourceTree = "<group>"; };
 		637C7CCA16F164BE002CD340 /* OPEChangeset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEChangeset.m; sourceTree = "<group>"; };
 		6383947E14EC4DDD00C74A57 /* OPEInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEInfoViewController.h; sourceTree = "<group>"; };
@@ -893,6 +894,12 @@
 		639953FD16113A200070CBAF /* about.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = about.css; sourceTree = "<group>"; };
 		639F10A817C82669003EB958 /* OPEBaseSpecialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBaseSpecialCell.h; sourceTree = "<group>"; };
 		639F10A917C82669003EB958 /* OPEBaseSpecialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBaseSpecialCell.m; sourceTree = "<group>"; };
+		63A12A9617F63E1B0084291D /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		63A12A9717F63E1B0084291D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		63A12A9817F63E1B0084291D /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		63A12A9917F63E1B0084291D /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		63A12A9A17F63E1B0084291D /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		63A12A9B17F63E1B0084291D /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		63A3D5B4177BAEB1000C6A0D /* OPECrosshairMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECrosshairMapView.h; sourceTree = "<group>"; };
 		63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECrosshairMapView.m; sourceTree = "<group>"; };
 		63A3D5BA177BB0EB000C6A0D /* OPEMoveNodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMoveNodeViewController.h; sourceTree = "<group>"; };
@@ -906,8 +913,6 @@
 		63A70B5F17D9924000A671E8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63A964971729FA6100D14CA1 /* OPEManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedObject.h; sourceTree = "<group>"; };
 		63A964981729FA6100D14CA1 /* OPEManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedObject.m; sourceTree = "<group>"; };
-		63AB037E1760005F00003878 /* Crittercism.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crittercism.h; sourceTree = "<group>"; };
-		63AB037F1760005F00003878 /* CrittercismDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrittercismDelegate.h; sourceTree = "<group>"; };
 		63AD8F7815E8570B006F92B8 /* OPECategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECategory.h; sourceTree = "<group>"; };
 		63AD8F7915E8570B006F92B8 /* OPECategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECategory.m; sourceTree = "<group>"; };
 		63AD8F7B15E8577D006F92B8 /* OPEType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEType.h; sourceTree = "<group>"; };
@@ -1045,6 +1050,7 @@
 				63E39018170CEEE0006F35D0 /* libUserVoice.a in Frameworks */,
 				6333D3A916811F2A00BF129E /* CoreData.framework in Frameworks */,
 				633CD874164B24F700678D58 /* StoreKit.framework in Frameworks */,
+				63A12A9C17F63E1B0084291D /* libTestFlight.a in Frameworks */,
 				633CD872164B24EE00678D58 /* Social.framework in Frameworks */,
 				633CD870164B24D900678D58 /* libz.1.1.3.dylib in Frameworks */,
 				6330AB7314DB519A00448852 /* CoreGraphics.framework in Frameworks */,
@@ -1060,7 +1066,6 @@
 				6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */,
 				6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */,
 				6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */,
-				6375627E1772417D0050E84C /* libCrittercism.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1617,17 +1622,6 @@
 			name = CoreData;
 			sourceTree = "<group>";
 		};
-		6342058816449197009C6BA4 /* CrittercismSDK */ = {
-			isa = PBXGroup;
-			children = (
-				6375627D1772417D0050E84C /* libCrittercism.a */,
-				63AB037E1760005F00003878 /* Crittercism.h */,
-				63AB037F1760005F00003878 /* CrittercismDelegate.h */,
-			);
-			name = CrittercismSDK;
-			path = ../lib/CrittercismSDK;
-			sourceTree = "<group>";
-		};
 		63570A811640F3B10009D8A3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1708,6 +1702,19 @@
 				63F01BFF17D016AD00184A0C /* OPETimeRangeCell.m */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		63A12A9517F63E1B0084291D /* TestFlightSDK2.0.0 */ = {
+			isa = PBXGroup;
+			children = (
+				63A12A9617F63E1B0084291D /* libTestFlight.a */,
+				63A12A9717F63E1B0084291D /* README.md */,
+				63A12A9817F63E1B0084291D /* release_notes.md */,
+				63A12A9917F63E1B0084291D /* TestFlight+AsyncLogging.h */,
+				63A12A9A17F63E1B0084291D /* TestFlight+ManualSessions.h */,
+				63A12A9B17F63E1B0084291D /* TestFlight.h */,
+			);
+			path = TestFlightSDK2.0.0;
 			sourceTree = "<group>";
 		};
 		63D0A5C11700E997007A595E /* Geo */ = {
@@ -1808,11 +1815,11 @@
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				63A12A9517F63E1B0084291D /* TestFlightSDK2.0.0 */,
 				63962B2217975A95008B897C /* DAKeyboardControl */,
 				63962B1C179621A0008B897C /* TTTAttributedLabel */,
 				63E5E39D176943040064A780 /* Pickers */,
 				630A878417680FE1003C9423 /* BButton */,
-				6342058816449197009C6BA4 /* CrittercismSDK */,
 				63FBA586171DFBED0098A2F3 /* osm-parser */,
 				63266A2A171646F0002CD7E4 /* TBXML */,
 				63266A1B1716469B002CD7E4 /* gtm-oauth */,
@@ -2041,6 +2048,7 @@
 				6326692517164579002CD7E4 /* bus.png in Resources */,
 				6326692617164579002CD7E4 /* bus_stop.png in Resources */,
 				6326692717164579002CD7E4 /* butcher.png in Resources */,
+				63A12A9E17F63E1B0084291D /* release_notes.md in Resources */,
 				6326692817164579002CD7E4 /* cabin.png in Resources */,
 				6326692917164579002CD7E4 /* cafe.png in Resources */,
 				6326692A17164579002CD7E4 /* candy.png in Resources */,
@@ -2278,6 +2286,7 @@
 				63266A0D17164579002CD7E4 /* default@2x.png in Resources */,
 				63266A0E17164579002CD7E4 /* gear.png in Resources */,
 				63266A0F17164579002CD7E4 /* gear@2x.png in Resources */,
+				63A12A9D17F63E1B0084291D /* README.md in Resources */,
 				63266A1017164579002CD7E4 /* iphone_delete_button.png in Resources */,
 				63266A1117164579002CD7E4 /* location.png in Resources */,
 				63266A1217164579002CD7E4 /* location@2x.png in Resources */,
@@ -2547,11 +2556,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_MAP_FILE_PATH = "";
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/lib/CrittercismSDK\"",
-					"\"$(SRCROOT)/OSM POI Editor\"",
-					"\"$(SRCROOT)/lib/spatialite/libs\"",
-					"\"$(SRCROOT)/OSM POI Editor/lib\"",
-					"\"$(SRCROOT)/Resources/lib\"",
+					"\\\"$(SRCROOT)/lib/CrittercismSDK\\\"",
+					"\\\"$(SRCROOT)/OSM\\ POI\\ Editor\\\"",
+					"\\\"$(SRCROOT)/lib/spatialite/libs\\\"",
+					"\\\"$(SRCROOT)/OSM\\ POI\\ Editor/lib\\\"",
+					"\\\"$(SRCROOT)/Resources/lib\\\"",
+					"/Users/david/Documents/poi+/osm-poi-editor/OSM\\ POI\\ Editor/TestFlightSDK2.0.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -2589,11 +2599,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_MAP_FILE_PATH = "";
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/lib/CrittercismSDK\"",
-					"\"$(SRCROOT)/OSM POI Editor\"",
-					"\"$(SRCROOT)/lib/spatialite/libs\"",
-					"\"$(SRCROOT)/OSM POI Editor/lib\"",
-					"\"$(SRCROOT)/Resources/lib\"",
+					"\\\"$(SRCROOT)/lib/CrittercismSDK\\\"",
+					"\\\"$(SRCROOT)/OSM\\ POI\\ Editor\\\"",
+					"\\\"$(SRCROOT)/lib/spatialite/libs\\\"",
+					"\\\"$(SRCROOT)/OSM\\ POI\\ Editor/lib\\\"",
+					"\\\"$(SRCROOT)/Resources/lib\\\"",
+					"/Users/david/Documents/poi+/osm-poi-editor/OSM\\ POI\\ Editor/TestFlightSDK2.0.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";

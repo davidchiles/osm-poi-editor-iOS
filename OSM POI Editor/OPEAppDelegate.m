@@ -20,9 +20,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifdef CRITTERCISM_ENABLED
-#import "Crittercism.h"
-#endif
 #import "OPEAPIConstants.h"
 
 
@@ -31,6 +28,7 @@
 #import "OPECoreDataImporter.h"
 #import "OPEMRUtility.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "TestFlight.h"
 
 //#import "OPEOpeningHoursEditViewController.h"
 
@@ -42,10 +40,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     //[OPEOpeningHoursParser test];
-#ifdef CRITTERCISM_ENABLED
+//#ifdef CRITTERCISM_ENABLED
     [TestFlight takeOff:TEST_FLIGHT_SECRET];
-    [Crittercism enableWithAppID: CRITTERCISM_APP_ID];
-#endif
+//#endif
     
     application.statusBarStyle = UIStatusBarStyleLightContent;//FIXME background for status bar
     
