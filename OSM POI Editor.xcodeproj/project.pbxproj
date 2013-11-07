@@ -281,7 +281,6 @@
 		63266A1217164579002CD7E4 /* location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326690A17164579002CD7E4 /* location@2x.png */; };
 		63266A1317164579002CD7E4 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326690B17164579002CD7E4 /* plus.png */; };
 		63266A1417164579002CD7E4 /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326690C17164579002CD7E4 /* plus@2x.png */; };
-		63266A1517164579002CD7E4 /* SPOI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6326690D17164579002CD7E4 /* SPOI.bundle */; };
 		63266A1617164579002CD7E4 /* x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326690E17164579002CD7E4 /* x.png */; };
 		63266A1717164579002CD7E4 /* x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6326690F17164579002CD7E4 /* x@2x.png */; };
 		63266A251716469B002CD7E4 /* GTMHTTPFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 63266A1D1716469B002CD7E4 /* GTMHTTPFetcher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -316,7 +315,6 @@
 		633CD872164B24EE00678D58 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD871164B24EE00678D58 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		633CD874164B24F700678D58 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD873164B24F700678D58 /* StoreKit.framework */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
-		63570A901640F3C00009D8A3 /* libMapBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63570A8C1640F3B10009D8A3 /* libMapBox.a */; };
 		6362032A17CC050B0031B982 /* OPEOSMTagConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6362032917CC050B0031B982 /* OPEOSMTagConverter.m */; };
 		636549E8171CDE8000F16772 /* OPEGeoCentroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 636549E7171CDE8000F16772 /* OPEGeoCentroid.m */; };
 		6366D33017D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6366D32F17D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m */; };
@@ -352,7 +350,6 @@
 		638445EA1665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */; };
 		6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */; };
 		6387126D17582655006C3A4E /* OPENewNodeSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */; };
-		638E994F1665C9FF00C29F9A /* MapBox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 638E99201665C2CC00C29F9A /* MapBox.bundle */; };
 		6391C67316AE2B370084D579 /* Model.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 6391C67216AE2B370084D579 /* Model.xcdatamodel */; };
 		63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1417961B8C008B897C /* OPENoteViewController.m */; };
 		63962B1B17961FAB008B897C /* OPECommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1A17961FAB008B897C /* OPECommentCell.m */; };
@@ -361,9 +358,6 @@
 		63962B2517975A95008B897C /* DAKeyboardControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B2417975A95008B897C /* DAKeyboardControl.m */; };
 		639953FE16113A200070CBAF /* about.css in Resources */ = {isa = PBXBuildFile; fileRef = 639953FD16113A200070CBAF /* about.css */; };
 		639F10AA17C82669003EB958 /* OPEBaseSpecialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 639F10A917C82669003EB958 /* OPEBaseSpecialCell.m */; };
-		63A12A9C17F63E1B0084291D /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A12A9617F63E1B0084291D /* libTestFlight.a */; };
-		63A12A9D17F63E1B0084291D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 63A12A9717F63E1B0084291D /* README.md */; };
-		63A12A9E17F63E1B0084291D /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 63A12A9817F63E1B0084291D /* release_notes.md */; };
 		63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */; };
 		63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BB177BB0EB000C6A0D /* OPEMoveNodeViewController.m */; };
 		63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BE177BBD8C000C6A0D /* OPEButtonCell.m */; };
@@ -397,6 +391,8 @@
 		63E5E3AE176943040064A780 /* ActionSheetDistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E5E3A6176943040064A780 /* ActionSheetDistancePicker.m */; };
 		63E5E3AF176943040064A780 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E5E3A8176943040064A780 /* ActionSheetStringPicker.m */; };
 		63E5E3B0176943040064A780 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E5E3AA176943040064A780 /* DistancePickerView.m */; };
+		63E71810182B114A004398AD /* libMapBox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E7180B182B1132004398AD /* libMapBox.a */; };
+		63E71817182B12F0004398AD /* MapBox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 63E7180D182B1132004398AD /* MapBox.bundle */; };
 		63EB72D917CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72D817CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m */; };
 		63EB72E017CFF8170042F4A4 /* OPEDone+CancelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72DF17CFF8170042F4A4 /* OPEDone+CancelViewController.m */; };
 		63EB72E317CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */; };
@@ -434,25 +430,39 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		63570A8B1640F3B10009D8A3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 63570A801640F3B10009D8A3 /* MapView.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 17F31EFA1331050A00122B16;
-			remoteInfo = MapView;
-		};
-		638E991F1665C2CC00C29F9A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 63570A801640F3B10009D8A3 /* MapView.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DD6A83751644A20C0097F31F;
-			remoteInfo = Resources;
-		};
 		63E39016170CEEBE006F35D0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 63E39012170CEEBE006F35D0 /* UserVoice.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = UserVoice;
+		};
+		63E7180A182B1132004398AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63E71805182B1131004398AD /* MapView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 17F31EFA1331050A00122B16;
+			remoteInfo = MapView;
+		};
+		63E7180C182B1132004398AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63E71805182B1131004398AD /* MapView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DD6A83751644A20C0097F31F;
+			remoteInfo = Resources;
+		};
+		63E71813182B123A004398AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63E71805182B1131004398AD /* MapView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B8C974130E8A19B2007D16AD;
+			remoteInfo = MapView;
+		};
+		63E71815182B123D004398AD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63E39012170CEEBE006F35D0 /* UserVoice.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = UserVoice;
 		};
 /* End PBXContainerItemProxy section */
@@ -814,7 +824,6 @@
 		633CD873164B24F700678D58 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
-		63570A801640F3B10009D8A3 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = "<group>"; };
 		6362032817CC050B0031B982 /* OPEOSMTagConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMTagConverter.h; sourceTree = "<group>"; };
 		6362032917CC050B0031B982 /* OPEOSMTagConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMTagConverter.m; sourceTree = "<group>"; };
 		636549E6171CDE8000F16772 /* OPEGeoCentroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEGeoCentroid.h; sourceTree = "<group>"; };
@@ -894,12 +903,6 @@
 		639953FD16113A200070CBAF /* about.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = about.css; sourceTree = "<group>"; };
 		639F10A817C82669003EB958 /* OPEBaseSpecialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBaseSpecialCell.h; sourceTree = "<group>"; };
 		639F10A917C82669003EB958 /* OPEBaseSpecialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBaseSpecialCell.m; sourceTree = "<group>"; };
-		63A12A9617F63E1B0084291D /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		63A12A9717F63E1B0084291D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		63A12A9817F63E1B0084291D /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
-		63A12A9917F63E1B0084291D /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		63A12A9A17F63E1B0084291D /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
-		63A12A9B17F63E1B0084291D /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		63A3D5B4177BAEB1000C6A0D /* OPECrosshairMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECrosshairMapView.h; sourceTree = "<group>"; };
 		63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECrosshairMapView.m; sourceTree = "<group>"; };
 		63A3D5BA177BB0EB000C6A0D /* OPEMoveNodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEMoveNodeViewController.h; sourceTree = "<group>"; };
@@ -971,6 +974,7 @@
 		63E6BB7F17542B830070EC47 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63E6BB8017542B8D0070EC47 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63E6BB8117542BC70070EC47 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		63E71805182B1131004398AD /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = "<group>"; };
 		63EB72D717CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPEOpeningHoursEditViewController.h; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEOpeningHoursEditViewController.h"; sourceTree = "<group>"; };
 		63EB72D817CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPEOpeningHoursEditViewController.m; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEOpeningHoursEditViewController.m"; sourceTree = "<group>"; };
 		63EB72DE17CFF8170042F4A4 /* OPEDone+CancelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OPEDone+CancelViewController.h"; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEDone+CancelViewController.h"; sourceTree = "<group>"; };
@@ -1041,26 +1045,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63962B2117962294008B897C /* CoreText.framework in Frameworks */,
-				63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */,
-				63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */,
+				63E71810182B114A004398AD /* libMapBox.a in Frameworks */,
+				63E39018170CEEE0006F35D0 /* libUserVoice.a in Frameworks */,
 				63FBA5B0171E08F50098A2F3 /* libstdc++.dylib in Frameworks */,
 				63FBA5AE171E08E70098A2F3 /* libiconv.dylib in Frameworks */,
 				6370D355151A8BAE0081206A /* libsqlite3.dylib in Frameworks */,
-				63E39018170CEEE0006F35D0 /* libUserVoice.a in Frameworks */,
+				633CD870164B24D900678D58 /* libz.1.1.3.dylib in Frameworks */,
+				63E4BF1A14E068EC00E0BD46 /* libz.dylib in Frameworks */,
+				63E279EA14E1F87D009D02BD /* libxml2.dylib in Frameworks */,
+				63962B2117962294008B897C /* CoreText.framework in Frameworks */,
+				63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */,
+				63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */,
 				6333D3A916811F2A00BF129E /* CoreData.framework in Frameworks */,
 				633CD874164B24F700678D58 /* StoreKit.framework in Frameworks */,
-				63A12A9C17F63E1B0084291D /* libTestFlight.a in Frameworks */,
 				633CD872164B24EE00678D58 /* Social.framework in Frameworks */,
-				633CD870164B24D900678D58 /* libz.1.1.3.dylib in Frameworks */,
 				6330AB7314DB519A00448852 /* CoreGraphics.framework in Frameworks */,
 				63E2796814E1F274009D02BD /* CFNetwork.framework in Frameworks */,
 				633CD86E164B24AA00678D58 /* AdSupport.framework in Frameworks */,
 				633CD86C164B249D00678D58 /* Accounts.framework in Frameworks */,
 				633CD86A164B249100678D58 /* AudioToolbox.framework in Frameworks */,
-				63570A901640F3C00009D8A3 /* libMapBox.a in Frameworks */,
-				63E279EA14E1F87D009D02BD /* libxml2.dylib in Frameworks */,
-				63E4BF1A14E068EC00E0BD46 /* libz.dylib in Frameworks */,
 				6383949A14EC85C100C74A57 /* Security.framework in Frameworks */,
 				6330AC0714DB5E4D00448852 /* CoreLocation.framework in Frameworks */,
 				6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */,
@@ -1450,7 +1453,7 @@
 		6330AB5F14DB519A00448852 = {
 			isa = PBXGroup;
 			children = (
-				63570A801640F3B10009D8A3 /* MapView.xcodeproj */,
+				63E71805182B1131004398AD /* MapView.xcodeproj */,
 				6330AB7414DB519A00448852 /* OSM POI Editor */,
 				6326680617164578002CD7E4 /* Resources */,
 				63E8210F16F12A2A0040B892 /* Submodules */,
@@ -1622,15 +1625,6 @@
 			name = CoreData;
 			sourceTree = "<group>";
 		};
-		63570A811640F3B10009D8A3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				63570A8C1640F3B10009D8A3 /* libMapBox.a */,
-				638E99201665C2CC00C29F9A /* MapBox.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		636D781A152E58FD005E31A3 /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -1702,19 +1696,6 @@
 				63F01BFF17D016AD00184A0C /* OPETimeRangeCell.m */,
 			);
 			name = Cells;
-			sourceTree = "<group>";
-		};
-		63A12A9517F63E1B0084291D /* TestFlightSDK2.0.0 */ = {
-			isa = PBXGroup;
-			children = (
-				63A12A9617F63E1B0084291D /* libTestFlight.a */,
-				63A12A9717F63E1B0084291D /* README.md */,
-				63A12A9817F63E1B0084291D /* release_notes.md */,
-				63A12A9917F63E1B0084291D /* TestFlight+AsyncLogging.h */,
-				63A12A9A17F63E1B0084291D /* TestFlight+ManualSessions.h */,
-				63A12A9B17F63E1B0084291D /* TestFlight.h */,
-			);
-			path = TestFlightSDK2.0.0;
 			sourceTree = "<group>";
 		};
 		63D0A5C11700E997007A595E /* Geo */ = {
@@ -1812,10 +1793,18 @@
 			path = lib/ActionSheetPicker/Pickers;
 			sourceTree = SOURCE_ROOT;
 		};
+		63E71806182B1131004398AD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				63E7180B182B1132004398AD /* libMapBox.a */,
+				63E7180D182B1132004398AD /* MapBox.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
-				63A12A9517F63E1B0084291D /* TestFlightSDK2.0.0 */,
 				63962B2217975A95008B897C /* DAKeyboardControl */,
 				63962B1C179621A0008B897C /* TTTAttributedLabel */,
 				63E5E39D176943040064A780 /* Pickers */,
@@ -1928,6 +1917,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				63E71816182B123D004398AD /* PBXTargetDependency */,
+				63E71814182B123A004398AD /* PBXTargetDependency */,
 			);
 			name = "OSM POI Editor";
 			productName = "OSM POI Editor";
@@ -1979,8 +1970,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 63570A811640F3B10009D8A3 /* Products */;
-					ProjectRef = 63570A801640F3B10009D8A3 /* MapView.xcodeproj */;
+					ProductGroup = 63E71806182B1131004398AD /* Products */;
+					ProjectRef = 63E71805182B1131004398AD /* MapView.xcodeproj */;
 				},
 				{
 					ProductGroup = 63E39013170CEEBE006F35D0 /* Products */;
@@ -1995,25 +1986,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		63570A8C1640F3B10009D8A3 /* libMapBox.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMapBox.a;
-			remoteRef = 63570A8B1640F3B10009D8A3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		638E99201665C2CC00C29F9A /* MapBox.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MapBox.bundle;
-			remoteRef = 638E991F1665C2CC00C29F9A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		63E39017170CEEBE006F35D0 /* libUserVoice.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libUserVoice.a;
 			remoteRef = 63E39016170CEEBE006F35D0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		63E7180B182B1132004398AD /* libMapBox.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMapBox.a;
+			remoteRef = 63E7180A182B1132004398AD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		63E7180D182B1132004398AD /* MapBox.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MapBox.bundle;
+			remoteRef = 63E7180C182B1132004398AD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -2023,7 +2014,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				638E994F1665C9FF00C29F9A /* MapBox.bundle in Resources */,
+				63E71817182B12F0004398AD /* MapBox.bundle in Resources */,
 				6330AB7914DB519A00448852 /* InfoPlist.strings in Resources */,
 				63E525D91534E66500D2DA35 /* about.html in Resources */,
 				639953FE16113A200070CBAF /* about.css in Resources */,
@@ -2048,7 +2039,6 @@
 				6326692517164579002CD7E4 /* bus.png in Resources */,
 				6326692617164579002CD7E4 /* bus_stop.png in Resources */,
 				6326692717164579002CD7E4 /* butcher.png in Resources */,
-				63A12A9E17F63E1B0084291D /* release_notes.md in Resources */,
 				6326692817164579002CD7E4 /* cabin.png in Resources */,
 				6326692917164579002CD7E4 /* cafe.png in Resources */,
 				6326692A17164579002CD7E4 /* candy.png in Resources */,
@@ -2286,13 +2276,11 @@
 				63266A0D17164579002CD7E4 /* default@2x.png in Resources */,
 				63266A0E17164579002CD7E4 /* gear.png in Resources */,
 				63266A0F17164579002CD7E4 /* gear@2x.png in Resources */,
-				63A12A9D17F63E1B0084291D /* README.md in Resources */,
 				63266A1017164579002CD7E4 /* iphone_delete_button.png in Resources */,
 				63266A1117164579002CD7E4 /* location.png in Resources */,
 				63266A1217164579002CD7E4 /* location@2x.png in Resources */,
 				63266A1317164579002CD7E4 /* plus.png in Resources */,
 				63266A1417164579002CD7E4 /* plus@2x.png in Resources */,
-				63266A1517164579002CD7E4 /* SPOI.bundle in Resources */,
 				63266A1617164579002CD7E4 /* x.png in Resources */,
 				63266A1717164579002CD7E4 /* x@2x.png in Resources */,
 				63266A291716469B002CD7E4 /* GTMOAuthViewTouch.xib in Resources */,
@@ -2437,6 +2425,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		63E71814182B123A004398AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MapView;
+			targetProxy = 63E71813182B123A004398AD /* PBXContainerItemProxy */;
+		};
+		63E71816182B123D004398AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = UserVoice;
+			targetProxy = 63E71815182B123D004398AD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		631AB0B517276EBF003F5F6F /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
@@ -2540,10 +2541,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/lib\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/lib\"/**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2555,14 +2553,7 @@
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_MAP_FILE_PATH = "";
-				LIBRARY_SEARCH_PATHS = (
-					"\\\"$(SRCROOT)/lib/CrittercismSDK\\\"",
-					"\\\"$(SRCROOT)/OSM\\ POI\\ Editor\\\"",
-					"\\\"$(SRCROOT)/lib/spatialite/libs\\\"",
-					"\\\"$(SRCROOT)/OSM\\ POI\\ Editor/lib\\\"",
-					"\\\"$(SRCROOT)/Resources/lib\\\"",
-					"/Users/david/Documents/poi+/osm-poi-editor/OSM\\ POI\\ Editor/TestFlightSDK2.0.0",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/lib\"/**";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_TEST_FLAGS = "";
@@ -2571,7 +2562,7 @@
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
-				"USER_HEADER_SEARCH_PATHS[arch=*]" = "$(BUILD_PRODUCTS_DIR)";
+				"USER_HEADER_SEARCH_PATHS[arch=*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2583,10 +2574,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/lib\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/lib\"/**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2598,14 +2586,7 @@
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_MAP_FILE_PATH = "";
-				LIBRARY_SEARCH_PATHS = (
-					"\\\"$(SRCROOT)/lib/CrittercismSDK\\\"",
-					"\\\"$(SRCROOT)/OSM\\ POI\\ Editor\\\"",
-					"\\\"$(SRCROOT)/lib/spatialite/libs\\\"",
-					"\\\"$(SRCROOT)/OSM\\ POI\\ Editor/lib\\\"",
-					"\\\"$(SRCROOT)/Resources/lib\\\"",
-					"/Users/david/Documents/poi+/osm-poi-editor/OSM\\ POI\\ Editor/TestFlightSDK2.0.0",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/lib\"/**";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_TEST_FLAGS = "";

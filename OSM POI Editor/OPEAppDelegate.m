@@ -28,7 +28,6 @@
 #import "OPECoreDataImporter.h"
 #import "OPEMRUtility.h"
 #import "AFNetworkActivityIndicatorManager.h"
-#import "TestFlight.h"
 
 //#import "OPEOpeningHoursEditViewController.h"
 
@@ -39,10 +38,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //[OPEOpeningHoursParser test];
-//#ifdef CRITTERCISM_ENABLED
-    [TestFlight takeOff:TEST_FLIGHT_SECRET];
-//#endif
     
     application.statusBarStyle = UIStatusBarStyleLightContent;//FIXME background for status bar
     
