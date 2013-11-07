@@ -185,16 +185,6 @@
         "power" : "generator"
       }
     },
-    "Power Station" : {
-      "optional" : [
-        "voltage",
-        "operator"
-      ],
-      "image" : "lightning",
-      "tags" : {
-        "power" : "generator"
-      }
-    },
     "Lighthouse" : {
       "optional" : [
         "wheelchair",
@@ -245,7 +235,7 @@
       ],
       "image" : "lightning",
       "tags" : {
-        "power" : "generator"
+        "power" : "sub_station"
       }
     }
   },
@@ -817,6 +807,39 @@
       "image" : "none",
       "tags" : {
         "shop" : "bag"
+      }
+    },
+    "Tea Shop" : {
+      "optional" : [
+        "wheelchair",
+        "contact",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "tea"
+      }
+    },
+    "Fabric Shop" : {
+      "optional" : [
+        "wheelchair",
+        "contact",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "fabric"
+      }
+    },
+    "Kitchen Supplies Shop" : {
+      "optional" : [
+        "wheelchair",
+        "contact",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "houseware"
       }
     },
     "Video Rental" : {
