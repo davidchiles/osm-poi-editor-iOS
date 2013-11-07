@@ -144,9 +144,27 @@
       }
     }
   },
+  "Maritime" : {
+    "Slipway" : {
+      "image" : "none",
+      "tags" : {
+        "leisure" : "slipway"
+      }
+    },
+    "Marina" : {
+      "optional" : [
+        "contact",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "leisure" : "marina"
+      }
+    }
+  },
   "Man Made" : {
     "Water Tower" : {
-      "image" : "tank",
+      "image" : "none",
       "tags" : {
         "man_made" : "water_tower"
       }
