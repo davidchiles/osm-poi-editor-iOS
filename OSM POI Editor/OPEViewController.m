@@ -48,6 +48,8 @@
 
 #import "OPEMapManager.h"
 
+#import "OPECrosshairMapView.h"
+
 
 #define noNameTag 100
 
@@ -118,12 +120,7 @@
     
     id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
     
-    mapView = [[RMMapView alloc] initWithFrame:self.view.bounds andTilesource:newTileSource];
-    mapView.clusteringEnabled = NO;
-    mapView.clusterAreaSize = CGSizeMake(10.0, 10.0);
-    mapView.clusterMarkerSize = CGSizeMake(10.0, 10.0);
-    mapView.showLogoBug = NO;
-    mapView.hideAttribution = YES;
+    mapView = [[OPECrosshairMapView alloc] initWithFrame:self.view.bounds andTilesource:newTileSource];
     mapView.userTrackingMode = RMUserTrackingModeFollow;
     
     [mapView setDelegate:self];

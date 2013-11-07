@@ -18,6 +18,7 @@
         self.showLogoBug = NO;
         self.showsUserLocation = YES;
         self.hideAttribution = YES;
+        [self addSubview:self.plusImageView];
         
     }
     return self;
@@ -30,6 +31,7 @@
         self.showLogoBug = NO;
         self.showsUserLocation = YES;
         self.hideAttribution = YES;
+        [self addSubview:self.plusImageView];
         
     }
     return self;
@@ -39,15 +41,32 @@
 {
     if (!_plusImageView) {
         _plusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"plus.png"]];
+        _plusImageView.translatesAutoresizingMaskIntoConstraints = NO;
     }
     return  _plusImageView;
 }
 
--(void)layoutSubviews
+-(void)updateConstraints
 {
-    [super layoutSubviews];
-    self.plusImageView.center = self.center;
-    [self addSubview:self.plusImageView];
+    [super updateConstraints];
+    
+    NSLayoutConstraint * constraint = [NSLayoutConstraint constraintWithItem:self.plusImageView
+                                                                   attribute:NSLayoutAttributeCenterX
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self
+                                                                   attribute:NSLayoutAttributeCenterX
+                                                                  multiplier:1.0
+                                                                    constant:0.0];
+    [self addConstraint:constraint];
+    
+    constraint = [NSLayoutConstraint constraintWithItem:self.plusImageView
+                                              attribute:NSLayoutAttributeCenterY
+                                              relatedBy:NSLayoutRelationEqual
+                                                 toItem:self
+                                              attribute:NSLayoutAttributeCenterY
+                                             multiplier:1.0
+                                               constant:0.0];
+    [self addConstraint:constraint];
 }
 
 @end
