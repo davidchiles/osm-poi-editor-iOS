@@ -91,5 +91,7 @@ typedef enum{
 #define kOTRUserSetLanguageKey @"userSetLanguageKey"
 #define kDatabasePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"spatialdb.sqlite"]
 
+#define AppleBlueColor [UIColor colorWithRed:0 green:0.47843137 blue:1 alpha:1]
+
 
 

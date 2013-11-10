@@ -24,6 +24,11 @@ typedef void (^didSelectDateButton)(UITableViewCell * cell,BOOL isStartButton);
 @property (nonatomic,strong) OPEDateRange * dateRange;
 @property (nonatomic,copy) didSelectDateButton didSelectDateButtonBlock;
 
+
+-(void)setEndButtonSelected;
+-(void)setStartButtonSelected;
+-(void)setSelectedButtonNone;
+
 -(id)initWithIdentifier:(NSString *)reuseIdentifier;
 
 @end

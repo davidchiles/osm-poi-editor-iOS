@@ -11,6 +11,8 @@
 
 @implementation OPEDatePickerCell
 
+@synthesize delegate;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -43,18 +45,40 @@
 - (void)dateChanged:(id)sender
 {
     if ([sender isEqual:datePicker]) {
-        NSDate * date = datePicker.date;
-        NSLog(@"Date Changed: %@",date);
+        [self newDate:datePicker.date];
     }
     
 }
 
 - (void)buttonPressed:(id)sender {
-    if ([sender isEqual:sunsetButton]) {
-        NSLog(@"Sunset Button");
+    if([self.delegate respondsToSelector:@selector(didSelectDate:withCell:)])
+    {
+        OPEDateComponents * currentDateComponent = [[OPEDateComponents alloc] init];
+        if ([sender isEqual:sunsetButton]) {
+            currentDateComponent.isSunset = YES;
+            currentDateComponent.isSunrise = NO;
+        }
+        else if([sender isEqual:sunriseButton]) {
+            currentDateComponent.isSunrise = YES;
+            currentDateComponent.isSunset = NO;
+        }
+        [self.delegate didSelectDate:currentDateComponent withCell:self];
     }
-    else if([sender isEqual:sunriseButton]) {
-        NSLog(@"Sunrise Button");
+    
+}
+
+-(void)newDate:(NSDate *)date {
+    if([self.delegate respondsToSelector:@selector(didSelectDate:withCell:)])
+    {
+        OPEDateComponents * currentDateComponent = [[OPEDateComponents alloc] init];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+        currentDateComponent.hour = components.hour;
+        currentDateComponent.minute = components.minute;
+        currentDateComponent.isSunset = NO;
+        currentDateComponent.isSunrise = NO;
+        [self.delegate didSelectDate:currentDateComponent withCell:self];
+
     }
 }
 
@@ -64,10 +88,24 @@
 
 - (void)setDate:(NSDate *)date
 {
-    [datePicker setDate:date animated:YES];
+    if(date)
+    {
+        [datePicker setDate:date animated:NO];
+    }
+    
+}
+
+- (void)setDate:(NSDate *)date animated:(BOOL)animated
+{
+    if(date)
+    {
+        [datePicker setDate:date animated:animated];
+    }
 }
 
 - (void)applyConstraints {
+    CGFloat topBuffer = 6;
+    CGFloat sideBuffer = 18;
     
     NSLayoutConstraint * constraint = [NSLayoutConstraint constraintWithItem:sunriseButton
                                                                    attribute:NSLayoutAttributeLeft
@@ -75,7 +113,7 @@
                                                                       toItem:self.contentView
                                                                    attribute:NSLayoutAttributeLeft
                                                                   multiplier:1.0
-                                                                    constant:6];
+                                                                    constant:sideBuffer];
     [self.contentView addConstraint:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:sunriseButton
@@ -84,7 +122,7 @@
                                                  toItem:self.contentView
                                               attribute:NSLayoutAttributeTop
                                              multiplier:1.0
-                                               constant:6];
+                                               constant:topBuffer];
     [self.contentView addConstraint:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:sunsetButton
@@ -93,7 +131,7 @@
                                                  toItem:self.contentView
                                               attribute:NSLayoutAttributeRight
                                              multiplier:1.0
-                                               constant:6];
+                                               constant:sideBuffer *-1];
     [self.contentView addConstraint:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:sunsetButton
@@ -102,7 +140,7 @@
                                                  toItem:self.contentView
                                               attribute:NSLayoutAttributeTop
                                              multiplier:1.0
-                                               constant:6];
+                                               constant:topBuffer];
     [self.contentView addConstraint:constraint];
     
     constraint = [NSLayoutConstraint constraintWithItem:datePicker

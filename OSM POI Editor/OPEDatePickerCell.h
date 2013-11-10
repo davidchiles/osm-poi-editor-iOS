@@ -7,6 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OPEOpeningHoursParser.h"
+
+@protocol OPEDatePickerCellDelegate <NSObject>
+
+- (void)didSelectDate:(OPEDateComponents *)dateComponent withCell:(UITableViewCell *)cell;
+
+@end
+
 
 @interface OPEDatePickerCell : UITableViewCell {
     UIButton * sunsetButton;
@@ -15,5 +23,10 @@
 }
 
 @property (nonatomic,strong) NSDate * date;
+@property (nonatomic,weak) id<OPEDatePickerCellDelegate> delegate;
+
+-(void)setDate:(NSDate *)date animated:(BOOL)animated;
 
 @end
+
+

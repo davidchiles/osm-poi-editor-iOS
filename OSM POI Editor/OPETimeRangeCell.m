@@ -10,6 +10,8 @@
 #import "OPEOpeningHoursParser.h"
 #import "OPEStrings.h"
 
+#import "OPEConstants.h"
+
 
 @implementation OPETimeRangeCell
 
@@ -21,10 +23,12 @@
         
         startTimeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         startTimeButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [startTimeButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         [startTimeButton addTarget:self action:@selector(didSelectTimeButton:) forControlEvents:UIControlEventTouchUpInside];
         
         endTimeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         endTimeButton.translatesAutoresizingMaskIntoConstraints = NO;
+        [endTimeButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
         [endTimeButton addTarget:self action:@selector(didSelectTimeButton:) forControlEvents:UIControlEventTouchUpInside];
         
         [self.contentView addSubview:startTimeButton];
@@ -56,6 +60,13 @@
 
 -(void)didSelectTimeButton:(id)sender
 {
+    if ([sender isEqual:startTimeButton]) {
+        [self setStartButtonSelected];
+    }
+    else {
+        [self setEndButtonSelected];
+    }
+    
     if (self.didSelectDateButtonBlock) {
         if ([sender isEqual: startTimeButton]) {
             self.didSelectDateButtonBlock(self,YES);
@@ -64,6 +75,23 @@
             self.didSelectDateButtonBlock(self,NO);
         }
     }
+}
+
+-(void)setEndButtonSelected
+{
+    [endTimeButton setTitleColor:AppleBlueColor forState:UIControlStateNormal];
+    [startTimeButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+}
+-(void)setStartButtonSelected
+{
+    [startTimeButton setTitleColor:AppleBlueColor forState:UIControlStateNormal];
+    [endTimeButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+}
+
+-(void)setSelectedButtonNone
+{
+    [startTimeButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+    [endTimeButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
 }
 
 -(void)updateConstraints

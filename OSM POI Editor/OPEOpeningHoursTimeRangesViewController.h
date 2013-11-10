@@ -7,10 +7,11 @@
 //
 
 #import "OPEOpeningHoursBaseTimeEditViewController.h"
+#import "OPEDatePickerCell.h"
 
 @class OPEDateComponents;
 
-@interface OPEOpeningHoursTimeRangesViewController : OPEOpeningHoursBaseTimeEditViewController
+@interface OPEOpeningHoursTimeRangesViewController : OPEOpeningHoursBaseTimeEditViewController <OPEDatePickerCellDelegate>
 {
     OPEDateComponents * currentDateComponent;
     NSIndexPath * datePickerPath;
