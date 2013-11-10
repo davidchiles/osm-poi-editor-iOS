@@ -11,6 +11,7 @@
 		63021FAB17F3A8AC00812BF6 /* note_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63021FAA17F3A8AC00812BF6 /* note_closed@2x.png */; };
 		63021FAD17F3ADA900812BF6 /* note_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63021FAC17F3ADA900812BF6 /* note_open@2x.png */; };
 		63021FB117F3B10A00812BF6 /* default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63021FB017F3B10A00812BF6 /* default-568h@2x.png */; };
+		6309FCDE182F0A5100B3B22B /* OPEDatePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6309FCDD182F0A5100B3B22B /* OPEDatePickerCell.m */; };
 		630A878D17680FE1003C9423 /* BButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 630A878617680FE1003C9423 /* BButton.m */; };
 		630A878E17680FE1003C9423 /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 630A878817680FE1003C9423 /* NSString+FontAwesome.m */; };
 		630A878F17680FE1003C9423 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 630A878A17680FE1003C9423 /* FontAwesome.ttf */; };
@@ -472,6 +473,8 @@
 		63021FAA17F3A8AC00812BF6 /* note_closed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "note_closed@2x.png"; sourceTree = "<group>"; };
 		63021FAC17F3ADA900812BF6 /* note_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "note_open@2x.png"; sourceTree = "<group>"; };
 		63021FB017F3B10A00812BF6 /* default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-568h@2x.png"; sourceTree = "<group>"; };
+		6309FCDC182F0A5100B3B22B /* OPEDatePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEDatePickerCell.h; sourceTree = "<group>"; };
+		6309FCDD182F0A5100B3B22B /* OPEDatePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEDatePickerCell.m; sourceTree = "<group>"; };
 		630A878517680FE1003C9423 /* BButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BButton.h; sourceTree = "<group>"; };
 		630A878617680FE1003C9423 /* BButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BButton.m; sourceTree = "<group>"; };
 		630A878717680FE1003C9423 /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
@@ -1694,6 +1697,8 @@
 				63292E671593ED670010A11B /* OPESpecialCell2.m */,
 				63F01BFE17D016AD00184A0C /* OPETimeRangeCell.h */,
 				63F01BFF17D016AD00184A0C /* OPETimeRangeCell.m */,
+				6309FCDC182F0A5100B3B22B /* OPEDatePickerCell.h */,
+				6309FCDD182F0A5100B3B22B /* OPEDatePickerCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -2370,6 +2375,7 @@
 				636549E8171CDE8000F16772 /* OPEGeoCentroid.m in Sources */,
 				63723A8417F25F2900DDCCAD /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				631AB0AD1727686E003F5F6F /* OPETranslate.m in Sources */,
+				6309FCDE182F0A5100B3B22B /* OPEDatePickerCell.m in Sources */,
 				63FBA59E171DFBED0098A2F3 /* Node.m in Sources */,
 				63FBA5A0171DFBED0098A2F3 /* OSMDAO.m in Sources */,
 				63FBA5A1171DFBED0098A2F3 /* OSMParser.m in Sources */,
@@ -2539,6 +2545,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/lib\"/**";
@@ -2563,6 +2570,7 @@
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2571,6 +2579,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -2597,6 +2606,7 @@
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "$(BUILD_PRODUCTS_DIR)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

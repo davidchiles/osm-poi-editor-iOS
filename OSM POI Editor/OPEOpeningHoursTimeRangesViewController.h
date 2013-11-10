@@ -13,6 +13,7 @@
 @interface OPEOpeningHoursTimeRangesViewController : OPEOpeningHoursBaseTimeEditViewController
 {
     OPEDateComponents * currentDateComponent;
+    NSIndexPath * datePickerPath;
 }
 
 -(void)showDatePickerWithTitle:(NSString *)pickerTitle withDate:(NSDate *)currentDate withIndex:(NSInteger)index;
