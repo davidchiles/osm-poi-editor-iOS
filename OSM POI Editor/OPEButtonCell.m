@@ -32,7 +32,6 @@
     
     [self.contentView addSubview:_button];
     [self needsUpdateConstraints];
-    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

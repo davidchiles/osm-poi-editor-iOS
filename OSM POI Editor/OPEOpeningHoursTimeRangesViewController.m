@@ -21,6 +21,13 @@
 
 @implementation OPEOpeningHoursTimeRangesViewController
 
+- (id)init {
+    if(self = [super init]) {
+        datePickerPath = nil;
+    }
+    return self;
+}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -49,13 +56,31 @@
     return !([indexPath isEqual:[self lastIndexPathForTableView:tableView]] || [indexPath compare:datePickerPath] == NSOrderedSame);
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (([self hasInlineDatePicker] && [datePickerPath compare:indexPath] == NSOrderedSame) || [[self lastIndexPathForTableView:tableView] compare:indexPath] == NSOrderedSame) {
+        return UITableViewCellEditingStyleNone;
+    }
+    return UITableViewCellEditingStyleDelete;
+}
+
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
-        [self.propertiesArray removeObjectAtIndex:indexPath.row];
+        [self.propertiesArray removeObjectAtIndex:[self indexForPropertiesFromIndexPath:indexPath]];
         [tableView beginUpdates];
-        [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        if ([self hasPickerForIndexPath:indexPath]) {
+            [self removeDatePicker];
+        }
+        else if ([self hasInlineDatePicker])
+        {
+            if (indexPath.row < datePickerPath.row) {
+                datePickerPath = [NSIndexPath indexPathForItem:datePickerPath.row-1 inSection:0];
+            }
+        }
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        //[tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         //[tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [tableView endUpdates];
     }
@@ -167,6 +192,12 @@
         currentDateComponent = dateRange.endDateComponent;
     }
     
+    
+    [self showDatePickerForIndexPath:indexPath withDateComponent:currentDateComponent];
+}
+
+-(void)showDatePickerForIndexPath:(NSIndexPath *)indexPath withDateComponent:(OPEDateComponents *)dateComponent
+{
     if (![self hasPickerForIndexPath:indexPath]) {
         if ([self hasInlineDatePicker]) {
             NSIndexPath * tempIndexPath = [NSIndexPath indexPathForItem:datePickerPath.row-1 inSection:datePickerPath.section];
@@ -176,8 +207,15 @@
         [self displayInlineDatePickerForRowAtIndexPath:indexPath];
     }
     
-    [[self datePickerCellForIndexPath:indexPath]setDate:currentDateComponent.date animated:YES];
-    
+    [[self datePickerCellForIndexPath:indexPath]setDate:dateComponent.date animated:YES];
+}
+
+- (void)removeDatePicker {
+    if ([self hasInlineDatePicker]) {
+        [self.propertiesTableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:datePickerPath.row inSection:0]]
+                                        withRowAnimation:UITableViewRowAnimationFade];
+        datePickerPath = nil;
+    }
 }
 
 - (void)displayInlineDatePickerForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -194,12 +232,7 @@
     BOOL sameCellClicked = (datePickerPath.row - 1 == indexPath.row);
     
     // remove any date picker cell if it exists
-    if ([self hasInlineDatePicker])
-    {
-        [self.propertiesTableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:datePickerPath.row inSection:0]]
-                              withRowAnimation:UITableViewRowAnimationFade];
-        datePickerPath = nil;
-    }
+    [self removeDatePicker];
     
     if (!sameCellClicked)
     {
@@ -287,7 +320,7 @@
 
 
 - (NSInteger)indexForPropertiesFromIndexPath:(NSIndexPath *)indexPath {
-    NSInteger index;
+    NSInteger index = 0;
     if ([datePickerPath compare:indexPath] == NSOrderedAscending) {
         index = indexPath.row-1;
     }

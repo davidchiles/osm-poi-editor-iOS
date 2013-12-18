@@ -651,7 +651,6 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     [super alertView:alertView clickedButtonAtIndex:buttonIndex];
-    NSLog(@"AlertView Tag %d",alertView.tag);
     if (alertView.tag == 1) {
         if(buttonIndex != alertView.cancelButtonIndex)
         {

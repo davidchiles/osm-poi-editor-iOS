@@ -17,6 +17,9 @@
     NSIndexPath * datePickerPath;
 }
 
--(void)showDatePickerWithTitle:(NSString *)pickerTitle withDate:(NSDate *)currentDate withIndex:(NSInteger)index;
-
+- (BOOL)hasInlineDatePicker;
+- (BOOL)hasPickerForIndexPath:(NSIndexPath *)indexPath;
+- (void)displayInlineDatePickerForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (NSInteger)indexForPropertiesFromIndexPath:(NSIndexPath *)indexPath;
+-(void)showDatePickerForIndexPath:(NSIndexPath *)indexPath withDateComponent:(OPEDateComponents *)dateComponent;
 @end

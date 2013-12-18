@@ -354,7 +354,7 @@
 {
     CLLocationCoordinate2D center = mapView.centerCoordinate;
     
-    if ([self.downloadManger downloadedAreaContainsPoint:center]) {
+    if ([self.downloadManger downloadedAreaContainsPoint:center] || YES) {
         NSLog(@"Should be allowed to download");
         if (mapView.zoom > MINZOOM) {
             
