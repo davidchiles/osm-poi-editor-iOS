@@ -64,7 +64,6 @@
 - (id)initWithOsmElement:(OPEManagedOsmElement *)element delegate:(id<OPENodeViewDelegate>)delegate;
 
 - (void) saveButtonPressed;
-- (void) deleteButtonPressed;
 - (void) checkSaveButton;
 
 

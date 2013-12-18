@@ -30,7 +30,6 @@
 #import "OPENodeViewController.h"
 #import "OPEMessageView.h"
 #import "RMPolygonAnnotation.h"
-#import "OPENameEditView.h"
 #import "MBProgressHUD.h"
 #import "OPEBaseViewController.h"
 #import "OPEOSMSearchManager.h"
@@ -38,7 +37,7 @@
 
 @class OPEMapManager;
 
-@interface OPEViewController : OPEBaseViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,OPENameEditViewDelegate,UIToolbarDelegate> {
+@interface OPEViewController : OPEBaseViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,UIToolbarDelegate> {
     RMMapView* mapView;
     UIImageView * plusImageView;
     RMAnnotation * wayAnnotation;

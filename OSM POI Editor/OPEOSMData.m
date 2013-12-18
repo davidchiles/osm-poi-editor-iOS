@@ -21,6 +21,7 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPEOSMData.h"
+
 #import "TBXML.h"
 #import "GTMOAuthViewControllerTouch.h"
 #import "OPEAPIConstants.h"
@@ -30,7 +31,7 @@
 #import "OPEManagedOsmWay.h"
 #import "OPEManagedOsmRelation.h"
 #import "OPEChangeset.h"
-#import "OPEMRUtility.h"
+
 #import "OPEUtility.h"
 #import "OPEGeoCentroid.h"
 #import "OpeManagedOsmRelationMember.h"
@@ -41,6 +42,8 @@
 #import "OSMParserHandlerDefault.h"
 #import "Note.h"
 #import "Comment.h"
+
+
 
 @implementation OPEOSMData
 

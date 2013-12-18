@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OPEMRUtility.h"
 #import "OPEManagedReferenceOptional.h"
 #import "OPEConstants.h"
 #import "OPEManagedOsmElement.h"

@@ -13,4 +13,11 @@
     #import <Foundation/Foundation.h>
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
+    #import "DDLog.h"
+    #import "DDTTYLogger.h"
+    #if DEBUG
+        static const int ddLogLevel = LOG_LEVEL_OFF;
+    #else
+        static const int ddLogLevel = LOG_LEVEL_OFF;
+    #endif
 #endif

@@ -241,7 +241,6 @@
 }
 -(void) didTapRecent:(UISegmentedControl *)sender
 {
-    NSLog(@"Selected: %d",[sender selectedSegmentIndex]);
     if (self.textField)
     {
         self.textField.text = [sender titleForSegmentAtIndex: [sender selectedSegmentIndex]];

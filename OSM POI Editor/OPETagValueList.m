@@ -21,7 +21,6 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPETagValueList.h"
-#import "OPEMRUtility.h"
 #import "OPEManagedReferenceOptional.h"
 #import "OPEManagedReferenceOsmTag.h"
 #import "OPEManagedOsmTag.h"

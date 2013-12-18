@@ -40,7 +40,7 @@
 
 @property (nonatomic, strong) UITableView * settingsTableView;
 @property (nonatomic, strong) id<OPEInfoViewControllerDelegate> delegate;
-@property (nonatomic) int currentNumber;
+@property (nonatomic) NSUInteger currentNumber;
 @property (nonatomic, strong) NSString * attributionString;
 @property (nonatomic, strong) UISwitch * showNoNameStreetsSwitch;
 

@@ -100,7 +100,7 @@
         }
     }];
     [httpRequestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        NSLog(@"Bytes Read: %d\nTotalBytesRead: %lld\nExpected: %lld",bytesRead,totalBytesRead,totalBytesExpectedToRead);
+        NSLog(@"Bytes Read: %lu\nTotalBytesRead: %lld\nExpected: %lld",(unsigned long)bytesRead,totalBytesRead,totalBytesExpectedToRead);
     }];
     
     [httpRequestOperation start];

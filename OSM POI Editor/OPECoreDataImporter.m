@@ -8,7 +8,6 @@
 
 #import "OPECoreDataImporter.h"
 #import "OPEOptionalTag.h"
-#import "CoreData+MagicalRecord.h"
 #import "OPEConstants.h"
 #import "OPEManagedOsmTag.h"
 #import "OPEUtility.h"

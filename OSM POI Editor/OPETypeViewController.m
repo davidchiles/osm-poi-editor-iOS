@@ -21,7 +21,6 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPETypeViewController.h"
-#import "OPEMRUtility.h"
 #import "OPEManagedReferencePoi.h"
 #import "OPEOSMData.h"
 

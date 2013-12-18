@@ -2,9 +2,6 @@
 [submodule "lib/mapbox"]
 	path = lib/mapbox
 	url = git@github.com:davidchiles/mapbox-ios-sdk.git
-[submodule "lib/MagicalRecord"]
-	path = lib/MagicalRecord
-	url = git://github.com/magicalpanda/MagicalRecord.git
 [submodule "lib/AFNetworking"]
 	path = lib/AFNetworking
 	url = git@github.com:AFNetworking/AFNetworking.git
@@ -29,3 +26,6 @@
 [submodule "lib/dakeyboardcontrol"]
 	path = lib/dakeyboardcontrol
 	url = git@github.com:danielamitay/DAKeyboardControl.git
+[submodule "lib/CocoaLumberjack"]
+	path = lib/CocoaLumberjack
+	url = git@github.com:CocoaLumberjack/CocoaLumberjack.git

@@ -37,7 +37,6 @@
 
 #import "OPEManagedOsmElement.h"
 #import "OPEManagedReferencePoi.h"
-#import "OPEMRUtility.h"
 #import "OPEManagedOsmNode.h"
 #import "OPEManagedOsmWay.h"
 #import "OPEManagedOsmRelation.h"

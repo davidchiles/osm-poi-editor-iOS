@@ -73,6 +73,7 @@
         }
     }
     else {
+
         cell.textLabel.text = [self cellTitleForRow:indexPath.row];
         if ([self cellCheckMarkForRow:indexPath.row]) {
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -114,7 +115,7 @@
 {
     NSString * result = nil;
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    NSString * dateString = [NSString stringWithFormat: @"%d", index];
+    NSString * dateString = [NSString stringWithFormat: @"%ld", (long)index];
     if (self.type == OPETypeMonth) {
         [dateFormatter setDateFormat:@"MM"];
         NSDate* myDate = [dateFormatter dateFromString:dateString];

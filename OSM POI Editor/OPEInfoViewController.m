@@ -234,7 +234,6 @@
     static NSString * tileIdentifier = @"Cell";
     static NSString * buttonIdentifier = @"Cell1";
     static NSString * aboutIdentifier = @"Cell2";
-    static NSString * switchIdentifier = @"Cell3";
     if (indexPath.section == 0) {
         
         cell = [tableView dequeueReusableCellWithIdentifier:tileIdentifier];
@@ -306,8 +305,7 @@
         currentNumber = indexPath.row;
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        
-        [OPEUtility setSettingsValue:[NSNumber numberWithInt:indexPath.row] forKey:kTileSourceNumber];
+        [OPEUtility setSettingsValue:[NSNumber numberWithUnsignedInteger:indexPath.row] forKey:kTileSourceNumber];
         id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
         
         [delegate setTileSource:newTileSource];

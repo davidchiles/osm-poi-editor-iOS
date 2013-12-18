@@ -24,7 +24,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "GTMOAuthViewControllerTouch.h"
 #import "AFNetworking.h"
-#import "FMDatabaseQueue.h"
+
 #import "OSMDAO.h"
 #import "OPEManagedReferencePoi.h"
 #import "OPEOSMAPIManager.h"
@@ -35,7 +35,7 @@
 @class OPEManagedOsmWay;
 @class OPEChangeset;
 
-@interface OPEOSMData : NSObject <OSMDAODelegate>
+@interface OPEOSMData : NSObject
 {
     NSMutableDictionary * typeDictionary;
     OPEOSMAPIManager * apiManager;

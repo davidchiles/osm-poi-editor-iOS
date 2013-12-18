@@ -26,7 +26,6 @@
 #import "OPEAppDelegate.h"
 #import "OPEViewController.h"
 #import "OPECoreDataImporter.h"
-#import "OPEMRUtility.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
 //#import "OPEOpeningHoursEditViewController.h"
