@@ -51,7 +51,7 @@
         return SUNSET_OSM_STRING;
     }
     else {
-        return [NSString stringWithFormat:@"%02d:%02d",self.hour,self.minute];
+        return [NSString stringWithFormat:@"%02ld:%02ld",(long)self.hour,(long)self.minute];
     }
     return [super description];
 }
@@ -494,7 +494,7 @@
             *index = *index+1;
         }
         else {
-            NSLog(@"Time Range Error at %d",*index);
+            DDLogError(@"Time Range Error at %ld",(long)*index);
         }
         if (![self matchTokens:tokens atIndex:*index matches:@[@","]]) {
             break;
@@ -588,7 +588,7 @@
     NSError * error = nil;
     NSRegularExpression * regularExpression = [NSRegularExpression regularExpressionWithPattern:regularExpressionString options:NSRegularExpressionCaseInsensitive error:&error];
     if (error) {
-        NSLog(@"RegEx Error: %@",error);
+        DDLogError(@"RegEx Error: %@",error);
     }
     return [regularExpression rangeOfFirstMatchInString:string options:NSMatchingCompleted range:NSMakeRange(0, [string length])];
 
@@ -813,9 +813,9 @@
     
     [testArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [[[OPEOpeningHoursParser alloc] init] parseString:obj success:^(NSArray *blocks) {
-            //NSLog(@"%@",blocks);
+            DDLogVerbose(@"%@",blocks);
         } failure:^(NSError *error) {
-            //NSLog(@"%@",error);
+            DDLogError(@"%@",error);
         }];
     }];
     

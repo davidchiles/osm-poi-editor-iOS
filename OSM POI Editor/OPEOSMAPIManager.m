@@ -95,12 +95,12 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (failure)
         {
-            NSLog(@"Notes Download failed");
+            DDLogError(@"Notes Download failed");
             failure(error);
         }
     }];
     [httpRequestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        NSLog(@"Bytes Read: %lu\nTotalBytesRead: %lld\nExpected: %lld",(unsigned long)bytesRead,totalBytesRead,totalBytesExpectedToRead);
+        DDLogInfo(@"Bytes Read: %lu\nTotalBytesRead: %lld\nExpected: %lld",(unsigned long)bytesRead,totalBytesRead,totalBytesExpectedToRead);
     }];
     
     [httpRequestOperation start];
@@ -122,7 +122,7 @@
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     requestOperation.responseSerializer=[AFHTTPResponseSerializer serializer];
     [requestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        NSLog(@"Bytes Read: %d\nTotalBytesRead: %lld\nExpected: %lld",bytesRead,totalBytesRead,totalBytesExpectedToRead);
+        DDLogVerbose(@"Bytes Read: %lu\nTotalBytesRead: %lld\nExpected: %lld",(unsigned long)bytesRead,totalBytesRead,totalBytesExpectedToRead);
     }];
     
     
@@ -138,7 +138,7 @@
         }
         else if (failure)
         {
-            NSLog(@"Failed Download after 5 tries");
+            DDLogError(@"Failed Download after 5 tries");
             [apiFailures removeAllObjects];
             failure(error);
         }
@@ -147,7 +147,7 @@
     }];
     [requestOperation start];
     
-    NSLog(@"Download URL %@",url);
+    DDLogInfo(@"Download URL %@",url);
     
 }
 
@@ -349,7 +349,7 @@ withChangesetComment:(NSString *)changesetComment
     }
     
     NSArray * batched = [AFURLConnectionOperation batchOfRequestOperations:requestOperations progressBlock:^(NSUInteger numberOfFinishedOperations, NSUInteger totalNumberOfOperations) {
-        NSLog(@"uploaded: %d/%d",numberOfFinishedOperations,totalNumberOfOperations);
+        DDLogInfo(@"uploaded: %lu/%lu",(unsigned long)numberOfFinishedOperations,(unsigned long)totalNumberOfOperations);
     } completionBlock:nil];
     
     [self.httpClient.operationQueue addOperations:batched waitUntilFinished:NO];
@@ -403,7 +403,7 @@ withChangesetComment:(NSString *)changesetComment
     requestOperation.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"changeset %@",responseObject);
+        DDLogInfo(@"changeset %@",responseObject);
         int64_t response = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] longLongValue];
         
         if (elementOsmID < 0) {
@@ -438,7 +438,7 @@ withChangesetComment:(NSString *)changesetComment
     requestOperation.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"changeset %@",responseObject);
+        DDLogInfo(@"changeset %@",responseObject);
         NSInteger newVersion = [[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] integerValue];
         
         element.element.version = newVersion;
