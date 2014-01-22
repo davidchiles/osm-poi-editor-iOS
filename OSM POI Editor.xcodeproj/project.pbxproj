@@ -295,6 +295,7 @@
 		63292E6C1593ED670010A11B /* OPEPhoneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E651593ED670010A11B /* OPEPhoneCell.m */; };
 		63292E6D1593ED670010A11B /* OPESpecialCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E671593ED670010A11B /* OPESpecialCell2.m */; };
 		63292E6E1593ED670010A11B /* OPETagValueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E691593ED670010A11B /* OPETagValueList.m */; };
+		632E0FAD189091BC002C4581 /* libMapbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 632E0FA818909185002C4581 /* libMapbox.a */; };
 		6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB6E14DB519A00448852 /* UIKit.framework */; };
 		6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7014DB519A00448852 /* Foundation.framework */; };
 		6330AB7314DB519A00448852 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7214DB519A00448852 /* CoreGraphics.framework */; };
@@ -387,8 +388,6 @@
 		63E525D21534D90500D2DA35 /* OPECreditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E525D01534D90200D2DA35 /* OPECreditViewController.m */; };
 		63E525D91534E66500D2DA35 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 63E525D81534E66500D2DA35 /* about.html */; };
 		63E5E39917693D4D0064A780 /* wikipediaLanguages.json in Resources */ = {isa = PBXBuildFile; fileRef = 63E5E39817693D4D0064A780 /* wikipediaLanguages.json */; };
-		63E71810182B114A004398AD /* libMapbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E7180B182B1132004398AD /* libMapbox.a */; };
-		63E71817182B12F0004398AD /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 63E7180D182B1132004398AD /* Mapbox.bundle */; };
 		63EB72D917CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72D817CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m */; };
 		63EB72E017CFF8170042F4A4 /* OPEDone+CancelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72DF17CFF8170042F4A4 /* OPEDone+CancelViewController.m */; };
 		63EB72E317CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63EB72E217CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m */; };
@@ -425,33 +424,33 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		632E0FA718909185002C4581 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 632E0FA218909185002C4581 /* MapView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 17F31EFA1331050A00122B16;
+			remoteInfo = MapView;
+		};
+		632E0FA918909185002C4581 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 632E0FA218909185002C4581 /* MapView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DD6A83751644A20C0097F31F;
+			remoteInfo = Resources;
+		};
+		632E0FAB189091AE002C4581 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 632E0FA218909185002C4581 /* MapView.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B8C974130E8A19B2007D16AD;
+			remoteInfo = MapView;
+		};
 		63E39016170CEEBE006F35D0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 63E39012170CEEBE006F35D0 /* UserVoice.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = D2AAC07E0554694100DB518D;
 			remoteInfo = UserVoice;
-		};
-		63E7180A182B1132004398AD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 63E71805182B1131004398AD /* MapView.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 17F31EFA1331050A00122B16;
-			remoteInfo = MapView;
-		};
-		63E7180C182B1132004398AD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 63E71805182B1131004398AD /* MapView.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = DD6A83751644A20C0097F31F;
-			remoteInfo = Resources;
-		};
-		63E71813182B123A004398AD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 63E71805182B1131004398AD /* MapView.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = B8C974130E8A19B2007D16AD;
-			remoteInfo = MapView;
 		};
 		63E71815182B123D004398AD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -778,6 +777,7 @@
 		63292E671593ED670010A11B /* OPESpecialCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPESpecialCell2.m; sourceTree = "<group>"; };
 		63292E681593ED670010A11B /* OPETagValueList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETagValueList.h; sourceTree = "<group>"; };
 		63292E691593ED670010A11B /* OPETagValueList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETagValueList.m; sourceTree = "<group>"; };
+		632E0FA218909185002C4581 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = SOURCE_ROOT; };
 		6330AB6A14DB519A00448852 /* OSM POI Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSM POI Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6330AB6E14DB519A00448852 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6330AB7014DB519A00448852 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -960,7 +960,6 @@
 		63E6BB7F17542B830070EC47 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63E6BB8017542B8D0070EC47 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63E6BB8117542BC70070EC47 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		63E71805182B1131004398AD /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = "<group>"; };
 		63EB72D717CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OPEOpeningHoursEditViewController.h; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEOpeningHoursEditViewController.h"; sourceTree = "<group>"; };
 		63EB72D817CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OPEOpeningHoursEditViewController.m; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEOpeningHoursEditViewController.m"; sourceTree = "<group>"; };
 		63EB72DE17CFF8170042F4A4 /* OPEDone+CancelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "OPEDone+CancelViewController.h"; path = "../../../poi+/osm-poi-editor/OSM POI Editor/OPEDone+CancelViewController.h"; sourceTree = "<group>"; };
@@ -1029,7 +1028,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63E71810182B114A004398AD /* libMapbox.a in Frameworks */,
+				632E0FAD189091BC002C4581 /* libMapbox.a in Frameworks */,
 				63E39018170CEEE0006F35D0 /* libUserVoice.a in Frameworks */,
 				63FBA5B0171E08F50098A2F3 /* libstdc++.dylib in Frameworks */,
 				63FBA5AE171E08E70098A2F3 /* libiconv.dylib in Frameworks */,
@@ -1434,10 +1433,18 @@
 			path = lib/TBXML;
 			sourceTree = SOURCE_ROOT;
 		};
+		632E0FA318909185002C4581 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				632E0FA818909185002C4581 /* libMapbox.a */,
+				632E0FAA18909185002C4581 /* Mapbox.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		6330AB5F14DB519A00448852 = {
 			isa = PBXGroup;
 			children = (
-				63E71805182B1131004398AD /* MapView.xcodeproj */,
 				6330AB7414DB519A00448852 /* OSM POI Editor */,
 				6326680617164578002CD7E4 /* Resources */,
 				63E8210F16F12A2A0040B892 /* Submodules */,
@@ -1765,18 +1772,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		63E71806182B1131004398AD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				63E7180B182B1132004398AD /* libMapbox.a */,
-				63E7180D182B1132004398AD /* Mapbox.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				632E0FA218909185002C4581 /* MapView.xcodeproj */,
 				6334FAC51863D0BE0012CD40 /* ActionSheetPicker */,
 				63962B2217975A95008B897C /* DAKeyboardControl */,
 				63962B1C179621A0008B897C /* TTTAttributedLabel */,
@@ -1889,8 +1888,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				632E0FAC189091AE002C4581 /* PBXTargetDependency */,
 				63E71816182B123D004398AD /* PBXTargetDependency */,
-				63E71814182B123A004398AD /* PBXTargetDependency */,
 			);
 			name = "OSM POI Editor";
 			productName = "OSM POI Editor";
@@ -1942,8 +1941,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 63E71806182B1131004398AD /* Products */;
-					ProjectRef = 63E71805182B1131004398AD /* MapView.xcodeproj */;
+					ProductGroup = 632E0FA318909185002C4581 /* Products */;
+					ProjectRef = 632E0FA218909185002C4581 /* MapView.xcodeproj */;
 				},
 				{
 					ProductGroup = 63E39013170CEEBE006F35D0 /* Products */;
@@ -1958,25 +1957,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		632E0FA818909185002C4581 /* libMapbox.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMapbox.a;
+			remoteRef = 632E0FA718909185002C4581 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		632E0FAA18909185002C4581 /* Mapbox.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Mapbox.bundle;
+			remoteRef = 632E0FA918909185002C4581 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		63E39017170CEEBE006F35D0 /* libUserVoice.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libUserVoice.a;
 			remoteRef = 63E39016170CEEBE006F35D0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		63E7180B182B1132004398AD /* libMapbox.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMapbox.a;
-			remoteRef = 63E7180A182B1132004398AD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		63E7180D182B1132004398AD /* Mapbox.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Mapbox.bundle;
-			remoteRef = 63E7180C182B1132004398AD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1986,7 +1985,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63E71817182B12F0004398AD /* Mapbox.bundle in Resources */,
 				6330AB7914DB519A00448852 /* InfoPlist.strings in Resources */,
 				63E525D91534E66500D2DA35 /* about.html in Resources */,
 				639953FE16113A200070CBAF /* about.css in Resources */,
@@ -2393,10 +2391,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		63E71814182B123A004398AD /* PBXTargetDependency */ = {
+		632E0FAC189091AE002C4581 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MapView;
-			targetProxy = 63E71813182B123A004398AD /* PBXContainerItemProxy */;
+			targetProxy = 632E0FAB189091AE002C4581 /* PBXContainerItemProxy */;
 		};
 		63E71816182B123D004398AD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
