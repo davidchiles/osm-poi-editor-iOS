@@ -25,7 +25,7 @@
 {
     if(self = [super init])
     {
-        queue = [FMDatabaseQueue databaseQueueWithPath:kDatabasePath];
+        queue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
         
     }
     return self;
@@ -205,7 +205,7 @@
 {
     [queue inDatabase:^(FMDatabase *db) {
         BOOL result = NO;
-        OSMDAO * osmData = [[OSMDAO alloc] initWithFilePath:kDatabasePath overrideIfExists:YES];
+        OSMDAO * osmData = [[OSMDAO alloc] initWithFilePath:[OPEConstants databasePath] overrideIfExists:YES];
         [OSMDAO initialize];
         osmData = nil;
         [db beginTransaction];

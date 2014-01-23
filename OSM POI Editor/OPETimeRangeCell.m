@@ -79,12 +79,12 @@
 
 -(void)setEndButtonSelected
 {
-    [endTimeButton setTitleColor:AppleBlueColor forState:UIControlStateNormal];
+    [endTimeButton setTitleColor:[OPEConstants appleBlueColor] forState:UIControlStateNormal];
     [startTimeButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
 }
 -(void)setStartButtonSelected
 {
-    [startTimeButton setTitleColor:AppleBlueColor forState:UIControlStateNormal];
+    [startTimeButton setTitleColor:[OPEConstants appleBlueColor] forState:UIControlStateNormal];
     [endTimeButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
 }
 

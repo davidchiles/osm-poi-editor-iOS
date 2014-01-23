@@ -47,7 +47,7 @@
         for(NSString * key in [dictionary objectForKey:@"optional"])
         {
             if ([key isEqualToString:@"address"]) {
-                NSArray * addressArray = kExpandedAddressArray;
+                NSArray * addressArray = [OPEConstants expandedAddressArray];
                 for( NSString * addr in addressArray)
                 {
                     OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] init];
@@ -56,7 +56,7 @@
                 }
             }
             else if ([key isEqualToString:@"contact"]) {
-                NSArray * addressArray = kExpandedContactArray;
+                NSArray * addressArray = [OPEConstants expandedContactArray];
                 for( NSString * addr in addressArray)
                 {
                     OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] init];

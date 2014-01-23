@@ -47,7 +47,7 @@
         }
         
         OSMParser* parser = [[OSMParser alloc] initWithOSMData:response];
-        OSMParserHandlerDefault* handler = [[OSMParserHandlerDefault alloc] initWithOutputFilePath:kDatabasePath overrideIfExists:NO];
+        OSMParserHandlerDefault* handler = [[OSMParserHandlerDefault alloc] initWithOutputFilePath:[OPEConstants databasePath] overrideIfExists:NO];
         parser.delegate=handler;
         handler.outputDao.delegate = self;
         

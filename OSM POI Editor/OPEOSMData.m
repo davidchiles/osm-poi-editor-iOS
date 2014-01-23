@@ -63,7 +63,7 @@
 -(FMDatabaseQueue *)databaseQueue
 {
     if (!_databaseQueue) {
-        _databaseQueue = [FMDatabaseQueue databaseQueueWithPath:kDatabasePath];
+        _databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
     }
     return _databaseQueue;
 }
@@ -120,7 +120,7 @@
 {
     __block BOOL result = NO;
     if ([way.element.tags count]) {
-        if ([highwayTypes containsObject:[way.element.tags objectForKey:@"highway"]] && ![way.element.tags objectForKey:@"name"]) {
+        if ([[OPEConstants highwayTypesArray] containsObject:[way.element.tags objectForKey:@"highway"]] && ![way.element.tags objectForKey:@"name"]) {
             result = YES;
         }
         else

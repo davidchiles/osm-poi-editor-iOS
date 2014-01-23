@@ -17,7 +17,7 @@
 {
     if(!_databaseQueue)
     {
-        _databaseQueue = [FMDatabaseQueue databaseQueueWithPath:kDatabasePath];
+        _databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
     }
     return _databaseQueue;
 }

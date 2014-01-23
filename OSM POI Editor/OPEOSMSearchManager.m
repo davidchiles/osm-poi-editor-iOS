@@ -20,7 +20,7 @@
 {
     if(self = [super init])
     {
-        databaseQueue = [FMDatabaseQueue databaseQueueWithPath:kDatabasePath];
+        databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
         osmData = [[OPEOSMData alloc] init];
         
     }
@@ -256,7 +256,7 @@
         FMResultSet * resultSet = [db executeQuery:@"select * from (select * from (SELECT *,COUNT(*) AS count FROM (select * from ways_tags where key='highway' union select * from ways_tags where key='name') group by way_id) WHERE count< 2 AND key = 'highway') AS A join ways on A.way_id = id"];
         
         while ([resultSet next]) {
-            if ([highwayTypes containsObject:[resultSet stringForColumn:@"value"]]) {
+            if ([[OPEConstants highwayTypesArray] containsObject:[resultSet stringForColumn:@"value"]]) {
                 OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] initWithDictionary:[resultSet resultDictionary]];
                 way.isNoNameStreet = YES;
                 [resultArray addObject:way];

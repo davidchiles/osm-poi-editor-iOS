@@ -296,6 +296,7 @@
 		63292E6D1593ED670010A11B /* OPESpecialCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E671593ED670010A11B /* OPESpecialCell2.m */; };
 		63292E6E1593ED670010A11B /* OPETagValueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E691593ED670010A11B /* OPETagValueList.m */; };
 		632E0FAD189091BC002C4581 /* libMapbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 632E0FA818909185002C4581 /* libMapbox.a */; };
+		632E0FB0189093FB002C4581 /* OPEConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 632E0FAF189093FB002C4581 /* OPEConstants.m */; };
 		6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB6E14DB519A00448852 /* UIKit.framework */; };
 		6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7014DB519A00448852 /* Foundation.framework */; };
 		6330AB7314DB519A00448852 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7214DB519A00448852 /* CoreGraphics.framework */; };
@@ -770,7 +771,6 @@
 		63266A3417164732002CD7E4 /* OPECategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECategoryViewController.m; sourceTree = "<group>"; };
 		63292E611593ED670010A11B /* OPEBinaryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBinaryCell.h; sourceTree = "<group>"; };
 		63292E621593ED670010A11B /* OPEBinaryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEBinaryCell.m; sourceTree = "<group>"; };
-		63292E631593ED670010A11B /* OPEConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEConstants.h; sourceTree = "<group>"; };
 		63292E641593ED670010A11B /* OPEPhoneCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEPhoneCell.h; sourceTree = "<group>"; };
 		63292E651593ED670010A11B /* OPEPhoneCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEPhoneCell.m; sourceTree = "<group>"; };
 		63292E661593ED670010A11B /* OPESpecialCell2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPESpecialCell2.h; sourceTree = "<group>"; };
@@ -778,6 +778,8 @@
 		63292E681593ED670010A11B /* OPETagValueList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETagValueList.h; sourceTree = "<group>"; };
 		63292E691593ED670010A11B /* OPETagValueList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETagValueList.m; sourceTree = "<group>"; };
 		632E0FA218909185002C4581 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = SOURCE_ROOT; };
+		632E0FAE189093FB002C4581 /* OPEConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEConstants.h; sourceTree = "<group>"; };
+		632E0FAF189093FB002C4581 /* OPEConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEConstants.m; sourceTree = "<group>"; };
 		6330AB6A14DB519A00448852 /* OSM POI Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSM POI Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6330AB6E14DB519A00448852 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6330AB7014DB519A00448852 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1499,9 +1501,10 @@
 				6333D39B1680F55900BF129E /* CoreData */,
 				6332CB3716261E470088F5B0 /* Model */,
 				639F10A717C82548003EB958 /* Cells */,
-				63292E631593ED670010A11B /* OPEConstants.h */,
 				63E17AD417CD18E000C24868 /* opening_hoursParser */,
 				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
+				632E0FAE189093FB002C4581 /* OPEConstants.h */,
+				632E0FAF189093FB002C4581 /* OPEConstants.m */,
 				63FCA44F1643363700A28470 /* OPEUtility.h */,
 				63FCA4501643363700A28470 /* OPEUtility.m */,
 				6362032817CC050B0031B982 /* OPEOSMTagConverter.h */,
@@ -2358,6 +2361,7 @@
 				63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */,
 				6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */,
 				6387126D17582655006C3A4E /* OPENewNodeSelectViewController.m in Sources */,
+				632E0FB0189093FB002C4581 /* OPEConstants.m in Sources */,
 				63723A6F17F25E9600DDCCAD /* AFSecurityPolicy.m in Sources */,
 				63CFCA95176160340006BE38 /* OPEOSMAPIManager.m in Sources */,
 				630A878D17680FE1003C9423 /* BButton.m in Sources */,

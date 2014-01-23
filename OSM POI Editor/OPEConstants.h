@@ -22,21 +22,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface OPEConstants : NSObject
-
-@end
-
-#define kTypeText @"text"
-#define KTypeName @"name"
-#define kTypeList @"list"
-#define kTypeLabel @"label"
-#define kTypeNumber @"number"
-#define kTypeUrl @"url"
-#define kTypePhone @"phone"
-#define kTypeEmail @"email"
-#define kTypeHours @"hours"
-
-typedef enum{
+typedef NS_ENUM(NSUInteger, OPEOptionalType){
     OPEOptionalTypeNone,
     OPEOptionalTypeList,
     OPEOptionalTypeText,
@@ -47,51 +33,61 @@ typedef enum{
     OPEOptionalTypePhone,
     OPEOptionalTypeEmail,
     OPEOptionalTypeHours
-}OPEOptionalType;
+};
 
-#define kLeftTextDefaultSize 76
+extern NSString *const kTypeText;
+extern NSString *const KTypeName;
+extern NSString *const kTypeList;
+extern NSString *const kTypeLabel;
+extern NSString *const kTypeNumber;
+extern NSString *const kTypeUrl;
+extern NSString *const kTypePhone;
+extern NSString *const kTypeEmail;
+extern NSString *const kTypeHours;
 
-#define kOPEAPIURL2 @"http://www.overpass-api.de/api/xapi?*"
-#define kOPEAPIURL1 @"http://overpass.osm.rambler.ru/cgi/xapi?*"
-#define kOPEAPIURL3 @"http://api.openstreetmap.fr/xapi?*"
-#define kOPEAPIURL4 @"http://api.openstreetmap.org/api/0.6/"
-#define kOPEAPIURL5 @"http://api.openstreetmap.fr/api/0.6/"
+extern NSUInteger const kLeftTextDefaultSize;
 
-#define kOPENominatimURL2 @"http://open.mapquestapi.com/nominatim/v1/reverse.php"
-#define kOPENominatimURL1 @"http://nominatim.openstreetmap.org/reverse"
+extern NSString *const kOPEAPIURL2;
+extern NSString *const kOPEAPIURL1;
+extern NSString *const kOPEAPIURL3;
+extern NSString *const kOPEAPIURL4;
+extern NSString *const kOPEAPIURL5;
 
-#define kPointTypeNode @"node"
-#define kPointTypeWay @"way"
-#define kPointTypePoint @"point"
+extern NSString *const kOPENominatimURL2;
+extern NSString *const kOPENominatimURL1;
 
-#define kLastDownloadedKey @"lastFileDownload"
+extern NSString *const kPointTypeNode;
+extern NSString *const kPointTypeWay;
+extern NSString *const kPointTypePoint;
 
-#define kLastImportHashKey @"kLastImportHashKey"
-#define kLastImportFileDate @"kLastImportFileDate"
+extern NSString *const kLastDownloadedKey;
 
+extern NSString *const kLastImportHashKey;
+extern NSString *const kLastImportFileDate;
 
-#define kExpandedAddressArray @[@"addr:housenumber",@"addr:street",@"addr:city",@"addr:postcode",@"addr:state",@"addr:country",@"addr:province"]
-#define kExpandedContactArray @[@"website",@"phone",@"fax",@"email",@"wikipedia",@"opening_hours"]
+extern NSString *const kActionTypeModify;
+extern NSString *const kActionTypeDelete;
 
-#define kActionTypeModify @"update"
-#define kActionTypeDelete @"delete"
-
-#define kOPEOsmElementNode @"node"
-#define kOPEOsmElementWay @"way"
-#define kOPEOsmElementRelation @"relation"
-#define kOPEOsmElementNone @"none"
-
-#define highwayTypes @[@"residential",@"unclassified",@"track",@"tertiary",@"secondary",@"primary",@"trunk",@"footway",@"path",@"cycleway",@"steps",@"bridleway"]
+extern NSString *const kOPEOsmElementNode;
+extern NSString *const kOPEOsmElementWay;
+extern NSString *const kOPEOsmElementRelation;
+extern NSString *const kOPEOsmElementNone;
 
 //settings key
-#define kShowNoNameStreetsKey @"kShowNoNameStreetsKey"
-#define kTileSourceNumber @"tileSourceNumber"
+extern NSString *const kShowNoNameStreetsKey;
+extern NSString *const kTileSourceNumber;
 
-#define kOTRAppleLanguagesKey @"AppleLanguages"
-#define kOTRUserSetLanguageKey @"userSetLanguageKey"
-#define kDatabasePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"spatialdb.sqlite"]
+extern NSString *const kOTRAppleLanguagesKey;
+extern NSString *const kOTRUserSetLanguageKey;
 
-#define AppleBlueColor [UIColor colorWithRed:0 green:0.47843137 blue:1 alpha:1]
-
+@interface OPEConstants : NSObject
 
 
++ (NSArray *)expandedAddressArray;
++ (NSArray *)expandedContactArray;
++ (NSArray *)highwayTypesArray;
++ (NSString *)databasePath;
++ (UIColor *)appleBlueColor;
+                                      
+@end
+                                      
