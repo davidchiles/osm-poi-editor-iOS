@@ -38,7 +38,6 @@
 @class OPEMapManager;
 
 @interface OPEViewController : OPEBaseViewController <RMMapViewDelegate, CLLocationManagerDelegate, OPENodeViewDelegate,OPEInfoViewControllerDelegate,MBProgressHUDDelegate,UIToolbarDelegate> {
-    RMMapView* mapView;
     UIImageView * plusImageView;
     RMAnnotation * wayAnnotation;
     NSMutableDictionary * downloadedNoNameHighways;
@@ -55,6 +54,8 @@
 @property (nonatomic,strong) OPEDownloadManager * downloadManger;
 
 @property (nonatomic,strong) OPEMapManager * mapManager;
+
+@property (nonatomic,strong) RMMapView * mapView;
 
 @property (nonatomic,strong) UIBarButtonItem * infoButton;
 @property (nonatomic,strong) UIBarButtonItem * location;

@@ -24,6 +24,7 @@
 #import "GTMOAuthViewControllerTouch.h"
 #import "RMFoundation.h"
 #import "RMMarker.h"
+#import "RMTileCache.h"
 #import "RMUserLocation.h"
 #import "RMAnnotation.h"
 #import "RMShape.h"
@@ -102,7 +103,7 @@
     
     
     plusImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"plus.png"]];
-    plusImageView.center = mapView.center;
+    plusImageView.center = self.mapView.center;
     [self.view addSubview:plusImageView];
     
     toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [UIApplication sharedApplication].statusBarFrame.size.height, self.view.bounds.size.width, 44)];
@@ -119,10 +120,12 @@
     
     id <RMTileSource> newTileSource = [OPEUtility currentTileSource];
     
-    mapView = [[OPECrosshairMapView alloc] initWithFrame:self.view.bounds andTilesource:newTileSource];
-    mapView.userTrackingMode = RMUserTrackingModeFollow;
+    self.mapView = [[OPECrosshairMapView alloc] initWithFrame:self.view.bounds andTilesource:newTileSource];
+    RMTileCache * tileCache = [[RMTileCache alloc] initWithExpiryPeriod:60*60*24*7]; // one week
+    self.mapView.tileCache = tileCache;
+    self.mapView.userTrackingMode = RMUserTrackingModeFollow;
     
-    [mapView setDelegate:self];
+    [self.mapView setDelegate:self];
     
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
@@ -140,20 +143,20 @@
     initLocation = [[locationManager location] coordinate];
     
     if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] && [[UIScreen mainScreen] scale] == 2){
-        mapView.contentScaleFactor = 2.0;
+        self.mapView.contentScaleFactor = 2.0;
     }
     else {
-        mapView.contentScaleFactor = 1.0;
+        self.mapView.contentScaleFactor = 1.0;
     }
     
-    [mapView setZoom: 18];
+    [self.mapView setZoom: 18];
     
-    mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    [self.view addSubview:mapView];
+    [self.view addSubview:self.mapView];
     [self setupButtons];
     
-    currentSquare = [mapView latitudeLongitudeBoundingBox];
+    currentSquare = [self.mapView latitudeLongitudeBoundingBox];
     
     message = [[OPEMessageView alloc] initWithMessage:ZOOM_ERROR_STRING];
     message.alpha = 0.0;
@@ -173,7 +176,7 @@
 -(OPEDownloadManager *)downloadManger{
     if (!_downloadManger) {
         _downloadManger = [[OPEDownloadManager alloc] init];
-        __block __weak  OPEViewController * viewController =  self;
+        __weak  OPEViewController * viewController =  self;
         _downloadManger.foundMatchingElementsBlock = ^void(NSArray * newElements, NSArray * updatedElements) {
             [viewController didFindNewElements:newElements updatedElements:updatedElements];
         };
@@ -340,8 +343,8 @@
 -(void)setTileSource:(id)tileSource
 {
     if (tileSource) {
-        [mapView removeAllCachedImages];
-        [mapView setTileSource:tileSource];
+        [self.mapView removeAllCachedImages];
+        [self.mapView setTileSource:tileSource];
     }
     NSLog(@"TileSource: %@",((id<RMTileSource>)tileSource));
     
@@ -351,11 +354,11 @@
 
 - (void)addPointButtonPressed:(id)sender
 {
-    CLLocationCoordinate2D center = mapView.centerCoordinate;
+    CLLocationCoordinate2D center = self.mapView.centerCoordinate;
     
     if ([self.downloadManger downloadedAreaContainsPoint:center] || YES) {
         NSLog(@"Should be allowed to download");
-        if (mapView.zoom > MINZOOM) {
+        if (self.mapView.zoom > MINZOOM) {
             
             OPEOsmNode * node = [OPEOsmNode newNode];
             node.element.elementID = [self.osmData newElementId];
@@ -390,18 +393,18 @@
 -(void)locationButtonPressed:(id)sender
 {
     userPressedLocatoinButton = YES;
-    [mapView setCenterCoordinate: mapView.userLocation.coordinate animated:YES];
+    [self.mapView setCenterCoordinate: self.mapView.userLocation.coordinate animated:YES];
 }
 
 -(void)downloadButtonPressed:(id)sender
 {
-    [self downloadNewArea:mapView];
+    [self downloadNewArea:self.mapView];
 }
 - (void)infoButtonPressed:(id)sender
 {
     NSMutableString *attribution = [NSMutableString string];
     
-    for (id <RMTileSource>tileSource in mapView.tileSources)
+    for (id <RMTileSource>tileSource in self.mapView.tileSources)
     {
         if ([tileSource respondsToSelector:@selector(shortAttribution)])
         {
@@ -462,20 +465,20 @@
 #pragma mark OPENOdeViewDelegate
 -(void)updateAnnotationForOsmElements:(NSArray *)elementsArray
 {
-    [self.mapManager updateAnnotationsForOsmElements:elementsArray withMapView:mapView];
+    [self.mapManager updateAnnotationsForOsmElements:elementsArray withMapView:self.mapView];
 }
 
 #pragma OPEOsmDataDelegate
 
 -(void)didFindNewElements:(NSArray *)newElementsArray updatedElements:(NSArray *)updatedElementsArray
 {
-    [self.mapManager addAnnotationsForOsmElements:newElementsArray withMapView:mapView];
-    [self.mapManager updateAnnotationsForOsmElements:updatedElementsArray withMapView:mapView];
+    [self.mapManager addAnnotationsForOsmElements:newElementsArray withMapView:self.mapView];
+    [self.mapManager updateAnnotationsForOsmElements:updatedElementsArray withMapView:self.mapView];
 }
 
 -(void)didFindNewNotes:(NSArray *)newNotes
 {
-    [self.mapManager addNotes:newNotes withMapView:mapView];
+    [self.mapManager addNotes:newNotes withMapView:self.mapView];
 }
 
 -(void)willStartParsing:(NSString *)typeString
@@ -542,7 +545,6 @@
             }
         }];
     }];
-    
 }
 
 @end
