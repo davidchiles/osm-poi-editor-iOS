@@ -16,7 +16,8 @@
 #import "OPEGeo.h"
 #import "OPEOSMRequestSerializer.h"
 
-
+NSString *const putMethod = @"PUT";
+NSString *const deleteMethod = @"DELETE";
 
 @implementation OPEOSMAPIManager
 @synthesize auth = _auth;
@@ -285,7 +286,8 @@ withChangesetComment:(NSString *)changesetComment
     
     NSData * changesetData = [[changeset xml] dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSMutableURLRequest *request = [self.httpClient.requestSerializer requestWithMethod:@"PUT" URLString:[[NSURL URLWithString:@"changeset/create" relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
+    NSError * error = nil;
+    NSMutableURLRequest *request = [self.httpClient.requestSerializer requestWithMethod:putMethod URLString:[[NSURL URLWithString:@"changeset/create" relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil error:&error];
     [request setHTTPBody:changesetData];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
@@ -362,7 +364,11 @@ withChangesetComment:(NSString *)changesetComment
 {
     NSString * path = [NSString stringWithFormat:@"changeset/%lld/close",changesetNumber];
     
-    NSMutableURLRequest *request = [self.httpClient.requestSerializer requestWithMethod:@"PUT" URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
+    NSError * error = nil;
+    NSMutableURLRequest *request = [self.httpClient.requestSerializer requestWithMethod:putMethod URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil error:&error];
+    if (error) {
+        DDLogWarn(@"Error setting parameters on close changeset");
+    }
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -394,9 +400,11 @@ withChangesetComment:(NSString *)changesetComment
     else{
         [path appendFormat:@"%lld",element.element.elementID];
     }
-    
-    
-    NSMutableURLRequest *urlRequest = [self.httpClient.requestSerializer requestWithMethod:@"PUT" URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
+    NSError * error = nil;
+    NSMutableURLRequest *urlRequest = [self.httpClient.requestSerializer requestWithMethod:putMethod URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil error:&error];
+    if (error) {
+        DDLogWarn(@"Error setting request paramters on upload");
+    }
     [urlRequest setHTTPBody:xmlData];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
@@ -431,7 +439,11 @@ withChangesetComment:(NSString *)changesetComment
     NSData * xmlData = [element deleteXMLforChangset:changesetNumber];
     NSString * path = [NSString stringWithFormat:@"%@/%lld",[element osmType],element.element.elementID];
     
-    NSMutableURLRequest *urlRequest = [self.httpClient.requestSerializer requestWithMethod:@"DELETE" URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil];
+    NSError * error = nil;
+    NSMutableURLRequest *urlRequest = [self.httpClient.requestSerializer requestWithMethod:deleteMethod URLString:[[NSURL URLWithString:path relativeToURL:self.httpClient.baseURL] absoluteString] parameters:nil error:&error];
+    if (error) {
+        DDLogWarn(@"Error setting parameters on delete");
+    }
     [urlRequest setHTTPBody:xmlData];
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];

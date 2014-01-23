@@ -19,6 +19,7 @@
 
 
 
+
 @interface OPEOSMAPIManager : NSObject
 {
     NSMutableDictionary * apiFailures;
