@@ -12,7 +12,7 @@
 #import "OPEReferencePoi.h"
 #import "FMDatabaseQueue.h"
 
-@interface OPECoreDataImporter : NSObject
+@interface OPEDatabaseImporter : NSObject
 {
     FMDatabaseQueue *queue;
 }

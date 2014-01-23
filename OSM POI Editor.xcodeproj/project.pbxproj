@@ -307,7 +307,7 @@
 		6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0414DB54A200448852 /* QuartzCore.framework */; };
 		6330AC0714DB5E4D00448852 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0614DB5E4D00448852 /* CoreLocation.framework */; };
 		6333D3A916811F2A00BF129E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6333D3A816811F2A00BF129E /* CoreData.framework */; };
-		6334FAAF1861474A0012CD40 /* OPECoreDataImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6334FAAE1861474A0012CD40 /* OPECoreDataImporter.m */; };
+		6334FAAF1861474A0012CD40 /* OPEDatabaseImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6334FAAE1861474A0012CD40 /* OPEDatabaseImporter.m */; };
 		6334FACB1863D0E40012CD40 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6334FACA1863D0E40012CD40 /* AbstractActionSheetPicker.m */; };
 		6334FACD1863D0FD0012CD40 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6334FACC1863D0FD0012CD40 /* ActionSheetStringPicker.m */; };
 		63397D8F170250AA00D411E7 /* OPERecent+NearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */; };
@@ -365,13 +365,10 @@
 		63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BB177BB0EB000C6A0D /* OPEMoveNodeViewController.m */; };
 		63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BE177BBD8C000C6A0D /* OPEButtonCell.m */; };
 		63A964991729FA6100D14CA1 /* OPEObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A964981729FA6100D14CA1 /* OPEObject.m */; };
-		63AD8F7A15E8570B006F92B8 /* OPECategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7915E8570B006F92B8 /* OPECategory.m */; };
-		63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7C15E8577E006F92B8 /* OPEType.m */; };
 		63B1B15016F285DB00323E9F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B1B14F16F285DB00323E9F /* MBProgressHUD.m */; };
 		63B1B7DB16698FAB006CFD68 /* OPEOpenStreetMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B1B7DA16698FAA006CFD68 /* OPEOpenStreetMapSource.m */; };
 		63CB49D314E9C5A0008C4551 /* OPETextEdit.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49D114E9C5A0008C4551 /* OPETextEdit.m */; };
 		63CB49E214E9E3BF008C4551 /* OPETypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */; };
-		63CE5DC115BE085E00C84B90 /* OPEOptionalTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */; };
 		63CFCA95176160340006BE38 /* OPEOSMAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CFCA94176160330006BE38 /* OPEOSMAPIManager.m */; };
 		63D0A5C41700EEEB007A595E /* OPEGeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5C31700E9AD007A595E /* OPEGeo.m */; };
 		63D0A5D2170112BF007A595E /* OPETagEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D1170112BF007A595E /* OPETagEditViewController.m */; };
@@ -796,8 +793,8 @@
 		6330AC0414DB54A200448852 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6330AC0614DB5E4D00448852 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		6333D3A816811F2A00BF129E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		6334FAAE1861474A0012CD40 /* OPECoreDataImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECoreDataImporter.m; sourceTree = "<group>"; };
-		6334FAB0186147560012CD40 /* OPECoreDataImporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPECoreDataImporter.h; sourceTree = "<group>"; };
+		6334FAAE1861474A0012CD40 /* OPEDatabaseImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEDatabaseImporter.m; sourceTree = "<group>"; };
+		6334FAB0186147560012CD40 /* OPEDatabaseImporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPEDatabaseImporter.h; sourceTree = "<group>"; };
 		6334FAC71863D0D90012CD40 /* ActionSheetStringPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActionSheetStringPicker.h; path = lib/ActionSheetPicker/Pickers/ActionSheetStringPicker.h; sourceTree = SOURCE_ROOT; };
 		6334FAC91863D0E40012CD40 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractActionSheetPicker.h; path = lib/ActionSheetPicker/Pickers/AbstractActionSheetPicker.h; sourceTree = SOURCE_ROOT; };
 		6334FACA1863D0E40012CD40 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AbstractActionSheetPicker.m; path = lib/ActionSheetPicker/Pickers/AbstractActionSheetPicker.m; sourceTree = SOURCE_ROOT; };
@@ -915,10 +912,6 @@
 		63A70B5F17D9924000A671E8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63A964971729FA6100D14CA1 /* OPEObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEObject.h; sourceTree = "<group>"; };
 		63A964981729FA6100D14CA1 /* OPEObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEObject.m; sourceTree = "<group>"; };
-		63AD8F7815E8570B006F92B8 /* OPECategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECategory.h; sourceTree = "<group>"; };
-		63AD8F7915E8570B006F92B8 /* OPECategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECategory.m; sourceTree = "<group>"; };
-		63AD8F7B15E8577D006F92B8 /* OPEType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEType.h; sourceTree = "<group>"; };
-		63AD8F7C15E8577E006F92B8 /* OPEType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEType.m; sourceTree = "<group>"; };
 		63B1B14E16F285DB00323E9F /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = lib/MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		63B1B14F16F285DB00323E9F /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = lib/MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		63B1B7D916698FAA006CFD68 /* OPEOpenStreetMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOpenStreetMapSource.h; sourceTree = "<group>"; };
@@ -927,8 +920,6 @@
 		63CB49D114E9C5A0008C4551 /* OPETextEdit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETextEdit.m; sourceTree = "<group>"; };
 		63CB49DF14E9E3BE008C4551 /* OPETypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETypeViewController.h; sourceTree = "<group>"; };
 		63CB49E014E9E3BE008C4551 /* OPETypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETypeViewController.m; sourceTree = "<group>"; };
-		63CE5DBF15BE085E00C84B90 /* OPEOptionalTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOptionalTag.h; sourceTree = "<group>"; };
-		63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOptionalTag.m; sourceTree = "<group>"; };
 		63CFCA93176160330006BE38 /* OPEOSMAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMAPIManager.h; sourceTree = "<group>"; };
 		63CFCA94176160330006BE38 /* OPEOSMAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMAPIManager.m; sourceTree = "<group>"; };
 		63D0A5C21700E9AD007A595E /* OPEGeo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEGeo.h; sourceTree = "<group>"; };
@@ -1497,7 +1488,6 @@
 			children = (
 				63D0A5C11700E997007A595E /* Geo */,
 				6333D39B1680F55900BF129E /* Model */,
-				6332CB3716261E470088F5B0 /* Model */,
 				639F10A717C82548003EB958 /* Cells */,
 				63E17AD417CD18E000C24868 /* opening_hoursParser */,
 				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
@@ -1572,19 +1562,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		6332CB3716261E470088F5B0 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				63CE5DBF15BE085E00C84B90 /* OPEOptionalTag.h */,
-				63CE5DC015BE085E00C84B90 /* OPEOptionalTag.m */,
-				63AD8F7815E8570B006F92B8 /* OPECategory.h */,
-				63AD8F7915E8570B006F92B8 /* OPECategory.m */,
-				63AD8F7B15E8577D006F92B8 /* OPEType.h */,
-				63AD8F7C15E8577E006F92B8 /* OPEType.m */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
 		6333D39B1680F55900BF129E /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1608,8 +1585,8 @@
 				63F03D2D16B09FD8004AF385 /* OPEReferenceOsmTag.m */,
 				63F03D2E16B09FD8004AF385 /* OPEReferencePoi.h */,
 				63F03D3716B0A2D0004AF385 /* OPEReferencePoi.m */,
-				6334FAB0186147560012CD40 /* OPECoreDataImporter.h */,
-				6334FAAE1861474A0012CD40 /* OPECoreDataImporter.m */,
+				6334FAB0186147560012CD40 /* OPEDatabaseImporter.h */,
+				6334FAAE1861474A0012CD40 /* OPEDatabaseImporter.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2291,10 +2268,7 @@
 				63723A7317F25E9600DDCCAD /* AFURLSessionManager.m in Sources */,
 				63292E6D1593ED670010A11B /* OPESpecialCell2.m in Sources */,
 				63292E6E1593ED670010A11B /* OPETagValueList.m in Sources */,
-				63CE5DC115BE085E00C84B90 /* OPEOptionalTag.m in Sources */,
 				63723A8517F25F2900DDCCAD /* UIAlertView+AFNetworking.m in Sources */,
-				63AD8F7A15E8570B006F92B8 /* OPECategory.m in Sources */,
-				63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */,
 				63FCA4421643127D00A28470 /* OPEBingTileSource.m in Sources */,
 				63FCA4511643363800A28470 /* OPEUtility.m in Sources */,
 				638445EA1665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m in Sources */,
@@ -2378,7 +2352,7 @@
 				63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */,
 				63733B6A1790DE8E007FA7C7 /* Note.m in Sources */,
 				63733B701790DEA9007FA7C7 /* Comment.m in Sources */,
-				6334FAAF1861474A0012CD40 /* OPECoreDataImporter.m in Sources */,
+				6334FAAF1861474A0012CD40 /* OPEDatabaseImporter.m in Sources */,
 				63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */,
 				63962B1B17961FAB008B897C /* OPECommentCell.m in Sources */,
 				63723A8317F25F2900DDCCAD /* AFNetworkActivityIndicatorManager.m in Sources */,

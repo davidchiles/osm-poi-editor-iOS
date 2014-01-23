@@ -25,7 +25,6 @@
 #import "OPETypeViewController.h"
 #import "MBProgressHUD.h"
 #import "OPETagValueList.h"
-#import "OPEType.h"
 #import "RMAnnotation.h"
 #import "OPEOsmElement.h"
 #import "OPETagEditViewController.h"

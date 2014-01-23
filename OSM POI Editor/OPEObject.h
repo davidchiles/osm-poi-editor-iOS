@@ -14,7 +14,6 @@
 @interface OPEObject : NSObject
 
 @property (nonatomic) int64_t rowID;
-@property (nonatomic) FMDatabaseQueue * databaseQueue;
 
 -(void)loadWithResult:(FMResultSet *)set;
 -(NSString *)sqliteInsertString;

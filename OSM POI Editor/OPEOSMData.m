@@ -47,8 +47,6 @@
 
 @implementation OPEOSMData
 
-@synthesize databaseQueue = _databaseQueue;
-
 -(id) init
 {
     self = [super init];
@@ -696,14 +694,14 @@
         for (OPEReferenceOptional * optional in poi.optionalsSet)
         {
             if (optional.type == OPEOptionalTypeList) {
-                [self getTagsFor:optional];
+                [self getTagsForReferenceOptional:optional];
             }
             
         }
     }
 }
 
--(void)getTagsFor:(OPEReferenceOptional *)optional
+-(void)getTagsForReferenceOptional:(OPEReferenceOptional *)optional
 {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQueryWithFormat:@"select * from optionals_tags where optional_id = %d",optional.rowID];

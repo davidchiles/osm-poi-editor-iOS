@@ -6,8 +6,7 @@
 //
 //
 
-#import "OPECoreDataImporter.h"
-#import "OPEOptionalTag.h"
+#import "OPEDatabaseImporter.h"
 #import "OPEConstants.h"
 #import "OPEOsmTag.h"
 #import "OPEUtility.h"
@@ -19,7 +18,7 @@
 #define optionalPlistFilePath [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"json"]
 
 
-@implementation OPECoreDataImporter
+@implementation OPEDatabaseImporter
 
 -(id)init
 {

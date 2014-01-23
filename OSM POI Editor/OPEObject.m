@@ -10,18 +10,6 @@
 
 @implementation OPEObject
 
-@synthesize rowID,databaseQueue=_databaseQueue;
-
-
--(FMDatabaseQueue *)databaseQueue
-{
-    if(!_databaseQueue)
-    {
-        _databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
-    }
-    return _databaseQueue;
-}
-
 -(void)loadWithResult:(FMResultSet *)set
 {
     return;

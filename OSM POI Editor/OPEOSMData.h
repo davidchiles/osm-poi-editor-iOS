@@ -41,12 +41,12 @@
     OPEOSMAPIManager * apiManager;
 }
 
-@property (nonatomic,strong) FMDatabaseQueue * databaseQueue;
+@property (nonatomic, strong) FMDatabaseQueue * databaseQueue;
 
 
--(BOOL)findType:(OPEOsmElement *)element;
--(void)findType:(NSArray *)elements completion:(void (^)(NSArray * foundElements))completion;
--(BOOL)isNoNameStreet:(OPEOsmWay *)way;
+- (BOOL)findType:(OPEOsmElement *)element;
+- (void)findType:(NSArray *)elements completion:(void (^)(NSArray * foundElements))completion;
+- (BOOL)isNoNameStreet:(OPEOsmWay *)way;
 
 - (NSString *)changesetCommentfor:(OPEOsmElement *)element;
 - (NSString *)nameWithElement: (OPEOsmElement *) element;

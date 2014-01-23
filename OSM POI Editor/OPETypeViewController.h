@@ -21,7 +21,6 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
-#import "OPEType.h"
 #import "OPEReferencePoi.h"
 
 

@@ -78,27 +78,6 @@
         return ReferenceOsmTag.name;
     }
     return osmValue;
-    
-}
--(NSSet *)optionalTags
-{
-    if (!_optionalTags && self.rowID && self.type == OPEOptionalTypeList) {
-        NSMutableSet * tempTags = [NSMutableSet set];
-        [self.databaseQueue inDatabase:^(FMDatabase *db) {
-            FMResultSet * set = [db executeQueryWithFormat:@"select * from optionals_tags where optional_id = %lld",self.rowID];
-            while ([set next]) {
-                OPEReferenceOsmTag * tag = [[OPEReferenceOsmTag alloc] init];
-                [tag loadWithResult:set];
-                [tempTags addObject:tag];
-            }
-            
-        }];
-        
-        _optionalTags = tempTags;
-    }
-    
-    return _optionalTags;
-    
 }
 
 -(NSArray *)allSortedTags

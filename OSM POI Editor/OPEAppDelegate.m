@@ -25,7 +25,7 @@
 
 #import "OPEAppDelegate.h"
 #import "OPEViewController.h"
-#import "OPECoreDataImporter.h"
+#import "OPEDatabaseImporter.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
 //#import "OPEOpeningHoursEditViewController.h"
@@ -42,7 +42,7 @@
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
-    OPECoreDataImporter * importer = [[OPECoreDataImporter alloc] init];
+    OPEDatabaseImporter * importer = [[OPEDatabaseImporter alloc] init];
 
     [importer import];
     
