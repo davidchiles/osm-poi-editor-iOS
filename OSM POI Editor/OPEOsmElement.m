@@ -1,27 +1,25 @@
-#import "OPEManagedOsmElement.h"
-#import "OPEManagedReferencePoi.h"
+#import "OPEOsmElement.h"
+#import "OPEReferencePoi.h"
 #import "OPEUtility.h"
-#import "OPEManagedOsmWay.h"
-#import "OPEManagedOsmNode.h"
+#import "OPEOsmWay.h"
+#import "OPEOsmNode.h"
 #import "OPEGeo.h"
-#import "OPEManagedOsmRelation.h"
+#import "OPEOsmRelation.h"
 
-#import "OPEManagedOsmTag.h"
+#import "OPEOsmTag.h"
 
 #import "OPEStrings.h"
 
 
 
-@interface OPEManagedOsmElement ()
+@interface OPEOsmElement ()
 
 // Private interface goes here.
 
 @end
 
 
-@implementation OPEManagedOsmElement
-@synthesize typeID,type,isVisible,element,action;
-@synthesize idKeyPrefix,idKey;
+@implementation OPEOsmElement
 
 -(id)init
 {
@@ -95,37 +93,37 @@
     return [NSString stringWithFormat:@"%@%lld",self.idKeyPrefix,self.elementID];
 }
 
-+(OPEManagedOsmElement *)elementWithBasicOsmElement:(Element *)element
++(OPEOsmElement *)elementWithBasicOsmElement:(Element *)element
 {
     if ([element isKindOfClass:[Node class]]) {
-        OPEManagedOsmNode * node = [[OPEManagedOsmNode alloc] init];
+        OPEOsmNode * node = [[OPEOsmNode alloc] init];
         node.element = (Node *)element;
         return node;
     }
     else if ([element isKindOfClass:[Way class]]) {
-        OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] init];
+        OPEOsmWay * way = [[OPEOsmWay alloc] init];
         way.element = (Way *)element;
         return way;
     }
     else if ([element isKindOfClass:[Relation class]]) {
-        OPEManagedOsmRelation * relation = [[OPEManagedOsmRelation alloc] init];
+        OPEOsmRelation * relation = [[OPEOsmRelation alloc] init];
         relation.element = (Relation *)element;
         return relation;
     }
     return nil;
 }
 
-+(OPEManagedOsmElement *)elementWithType:(NSString *)elementTypeString withDictionary:(NSDictionary *)dictionary;
++(OPEOsmElement *)elementWithType:(NSString *)elementTypeString withDictionary:(NSDictionary *)dictionary;
 {
-    OPEManagedOsmElement * element = nil;
+    OPEOsmElement * element = nil;
     if ([elementTypeString isEqualToString:kOPEOsmElementNode]) {
-        element = [[OPEManagedOsmNode alloc] initWithDictionary:dictionary];
+        element = [[OPEOsmNode alloc] initWithDictionary:dictionary];
     }
     else if ([elementTypeString isEqualToString:kOPEOsmElementWay]) {
-        element = [[OPEManagedOsmWay alloc] initWithDictionary:dictionary];
+        element = [[OPEOsmWay alloc] initWithDictionary:dictionary];
     }
     else if ([elementTypeString isEqualToString:kOPEOsmElementRelation]) {
-        element = [[OPEManagedOsmRelation alloc] initWithDictionary:dictionary];
+        element = [[OPEOsmRelation alloc] initWithDictionary:dictionary];
     }
     return element;
 }
@@ -141,8 +139,8 @@
 
 -(NSString *)displayNameForChangeset
 {
-    if ([self isKindOfClass:[OPEManagedOsmWay class]]) {
-        if(((OPEManagedOsmWay *)self).isNoNameStreet)
+    if ([self isKindOfClass:[OPEOsmWay class]]) {
+        if(((OPEOsmWay *)self).isNoNameStreet)
         {
             return NO_NAME_STRING;
         }

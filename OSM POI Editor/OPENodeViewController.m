@@ -28,12 +28,12 @@
 #import "OPEConstants.h"
 #import "OPEAPIConstants.h"
 #import "OPESpecialCell2.h"
-#import "OPEManagedReferenceOptional.h"
-#import "OPEManagedReferencePoi.h"
-#import "OPEManagedReferenceOptional.h"
-#import "OPEManagedOsmTag.h"
-#import "OPEManagedReferenceOsmTag.h"
-#import "OPEManagedOsmNode.h"
+#import "OPEReferenceOptional.h"
+#import "OPEReferencePoi.h"
+#import "OPEReferenceOptional.h"
+#import "OPEOsmTag.h"
+#import "OPEReferenceOsmTag.h"
+#import "OPEOsmNode.h"
 #import "OPETagEditViewController.h"
 #import "OPEStrings.h"
 #import "BButton.h"
@@ -65,7 +65,7 @@
     }
     return self;
 }
-- (id)initWithOsmElement:(OPEManagedOsmElement *)element delegate:(id<OPENodeViewDelegate>)newDelegate;
+- (id)initWithOsmElement:(OPEOsmElement *)element delegate:(id<OPENodeViewDelegate>)newDelegate;
 {
     self = [self init];
     if(self)
@@ -80,8 +80,8 @@
         originalTypeID = self.managedOsmElement.typeID;
         
         originalTags = [self.managedOsmElement.element.tags copy];
-        if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
-            originalLocation = ((OPEManagedOsmNode *)self.managedOsmElement).element.coordinate;
+        if ([self.managedOsmElement isKindOfClass:[OPEOsmNode class]]) {
+            originalLocation = ((OPEOsmNode *)self.managedOsmElement).element.coordinate;
         }
         [self.osmData updateLegacyTags:managedOsmElement];
         
@@ -116,8 +116,8 @@
     else
     {
         self.managedOsmElement.element.tags = [originalTags mutableCopy];
-        if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
-            ((OPEManagedOsmNode *)self.managedOsmElement).element.coordinate = originalLocation;
+        if ([self.managedOsmElement isKindOfClass:[OPEOsmNode class]]) {
+            ((OPEOsmNode *)self.managedOsmElement).element.coordinate = originalLocation;
         }
         self.managedOsmElement.typeID = originalTypeID;
         [self.osmData getTypeFor:managedOsmElement];
@@ -143,7 +143,7 @@
     nodeInfoTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     
-    if ([managedOsmElement isKindOfClass:[OPEManagedOsmNode class]] && ![self.osmData hasParentElement:self.managedOsmElement]) {
+    if ([managedOsmElement isKindOfClass:[OPEOsmNode class]] && ![self.osmData hasParentElement:self.managedOsmElement]) {
         if (self.managedOsmElement.element.elementID > 0) {
             /*
             deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -233,7 +233,7 @@
     
     for(NSArray * optionalArray in self.optionalSectionsArray)
     {
-        for(OPEManagedReferenceOptional * optional in optionalArray)
+        for(OPEReferenceOptional * optional in optionalArray)
         {
             NSString * name = optional.displayName;
             //float currentWidth = [name sizeWithFont:[UIFont systemFontSize:[UIFont systemFontSize]]].width;
@@ -247,7 +247,7 @@
     
 }
 
--(OPEManagedReferenceOptional *)optionalAtIndexPath:(NSIndexPath *)indexPath
+-(OPEReferenceOptional *)optionalAtIndexPath:(NSIndexPath *)indexPath
 {
     return self.optionalSectionsArray[indexPath.section-2][indexPath.row];
 }
@@ -286,7 +286,7 @@
     else if(section < [self.managedOsmElement.type numberOfOptionalSections] + 2)
     {
         NSInteger index = section-2;
-        OPEManagedReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
+        OPEReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
         return tempOptional.sectionName;
     }
     
@@ -298,7 +298,7 @@
     if(section < [self.managedOsmElement.type numberOfOptionalSections] + 2 && section > 1)
     {
         NSInteger index = section-2;
-        OPEManagedReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
+        OPEReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
         if ([tempOptional.sectionName isEqualToString:@"Address"]) {
             return 45;
         }
@@ -317,7 +317,7 @@
     if(section < [self.managedOsmElement.type numberOfOptionalSections] + 2 && section > 1)
     {
         NSInteger index = section-2;
-        OPEManagedReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
+        OPEReferenceOptional * tempOptional = [[self.optionalSectionsArray objectAtIndex:index] lastObject];
         if ([tempOptional.sectionName isEqualToString:@"Address"]) {
             CGFloat buttonWidth = 150;
             
@@ -409,7 +409,7 @@
     {
         if([[self.optionalSectionsArray objectAtIndex:(indexPath.section-2) ] count] > indexPath.row)
         {
-            OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
+            OPEReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
             
             NSString * valueForOptional = [self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey];
             NSString * displayValueForOptional = [managedOptionalTag displayNameForKey:managedOptionalTag.osmKey withValue:valueForOptional];
@@ -461,9 +461,9 @@
         NSInteger section = [[sender superview] tag];
         NSInteger row = sender.tag;
         
-        OPEManagedReferenceOptional * referenceOptional = [[self.optionalSectionsArray objectAtIndex:section] objectAtIndex:row];
+        OPEReferenceOptional * referenceOptional = [[self.optionalSectionsArray objectAtIndex:section] objectAtIndex:row];
         NSString * title = [sender titleForSegmentAtIndex:[sender selectedSegmentIndex]];
-        OPEManagedReferenceOsmTag * managedReferenceOsmTag = [referenceOptional managedReferenceOsmTagWithName:title];
+        OPEReferenceOsmTag * managedReferenceOsmTag = [referenceOptional referenceOsmTagWithName:title];
         
         [self newOsmKey:managedReferenceOsmTag.key value:managedReferenceOsmTag.value];
         
@@ -473,7 +473,7 @@
 
 -(void)moveButtonPressed:(id)sender
 {
-    OPEMoveNodeViewController * moveNodeViewController = [[OPEMoveNodeViewController alloc] initWithNode:(OPEManagedOsmNode *)self.managedOsmElement];
+    OPEMoveNodeViewController * moveNodeViewController = [[OPEMoveNodeViewController alloc] initWithNode:(OPEOsmNode *)self.managedOsmElement];
     
     [self.navigationController pushViewController:moveNodeViewController animated:YES];
 }
@@ -508,12 +508,12 @@
         
     }
     else{
-        OPEManagedReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
+        OPEReferenceOptional * managedOptionalTag = [[self.optionalSectionsArray objectAtIndex:(indexPath.section-2)]objectAtIndex:indexPath.row];
         
         OPETagEditViewController * viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey currentOsmValue:[self.managedOsmElement valueForOsmKey:managedOptionalTag.osmKey] andType:managedOptionalTag.type withCompletionBlock:self.newTagBlock];
         //viewController = [OPETagEditViewController viewControllerWithOsmKey:managedOptionalTag.osmKey andType:managedOptionalTag.type delegate:self];
         viewController.title = managedOptionalTag.displayName;
-        viewController.managedOptional = managedOptionalTag;
+        viewController.referenceOptional = managedOptionalTag;
         viewController.element = self.managedOsmElement;
         //viewController.currentOsmValue =
         [self.navigationController pushViewController:viewController animated:YES];
@@ -550,7 +550,7 @@
             [self.osmData removeOsmKey:@"name" forElement:self.managedOsmElement];
         }
         else{
-            OPEManagedReferenceOptional * optional = [self optionalAtIndexPath:indexPath];
+            OPEReferenceOptional * optional = [self optionalAtIndexPath:indexPath];
             NSString * osmKey = optional.osmKey;
             [self.osmData removeOsmKey:osmKey forElement:self.managedOsmElement];
         }
@@ -677,7 +677,7 @@
             }];
             
             /*
-            if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
+            if ([self.managedOsmElement isKindOfClass:[OPEOsmNode class]]) {
                 dispatch_queue_t q = dispatch_queue_create("queue", NULL);
                 dispatch_async(q, ^{
                     
@@ -705,7 +705,7 @@
     [nodeInfoTableView reloadData];
 }
 
--(void)newType:(OPEManagedReferencePoi *)newType;
+-(void)newType:(OPEReferencePoi *)newType;
 {
     [self.osmData setNewType:newType forElement:self.managedOsmElement];
     [self.osmData getOptionalsFor:self.managedOsmElement.type];
@@ -719,8 +719,8 @@
 }
 -(BOOL)locationChanged
 {
-    if ([self.managedOsmElement isKindOfClass:[OPEManagedOsmNode class]]) {
-        CLLocationCoordinate2D currentCoordinate = ((OPEManagedOsmNode *)self.managedOsmElement).element.coordinate;
+    if ([self.managedOsmElement isKindOfClass:[OPEOsmNode class]]) {
+        CLLocationCoordinate2D currentCoordinate = ((OPEOsmNode *)self.managedOsmElement).element.coordinate;
         if (currentCoordinate.latitude != originalLocation.latitude || currentCoordinate.longitude != originalLocation.longitude) {
             return YES;
         }

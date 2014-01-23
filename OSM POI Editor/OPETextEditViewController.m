@@ -7,7 +7,7 @@
 //
 
 #import "OPETextEditViewController.h"
-#import "OPEManagedOsmTag.h"
+#import "OPEOsmTag.h"
 
 @interface OPETextEditViewController ()
 

@@ -1,14 +1,14 @@
 //
-//  OPEManagedObject.m
+//  OPEObject.m
 //  OSM POI Editor
 //
 //  Created by David on 4/25/13.
 //
 //
 
-#import "OPEManagedObject.h"
+#import "OPEObject.h"
 
-@implementation OPEManagedObject
+@implementation OPEObject
 
 @synthesize rowID,databaseQueue=_databaseQueue;
 

@@ -21,7 +21,7 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPECategoryViewController.h"
-#import "OPEManagedReferencePoi.h"
+#import "OPEReferencePoi.h"
 #import "OPEOSMData.h"
 
 @implementation OPECategoryViewController
@@ -116,7 +116,7 @@
     searchResults = [[NSMutableArray alloc] init];
     if ([searchTerm length] != 0)
     {
-        for (OPEManagedReferencePoi * currentPoi in self.typesArray)
+        for (OPEReferencePoi * currentPoi in self.typesArray)
         {
             //NSLog(@"CurrentString: %@",currentString);
             NSString * currentString = currentPoi.name;
@@ -178,7 +178,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
      if (tableView == [[self searchDisplayController] searchResultsTableView]) {
-         OPEManagedReferencePoi * poi =[[searchResults objectAtIndex:indexPath.row] objectForKey:@"poi"];
+         OPEReferencePoi * poi =[[searchResults objectAtIndex:indexPath.row] objectForKey:@"poi"];
          [osmData getMetaDataForType:poi];
          [self newType: poi];
          
@@ -200,7 +200,7 @@ shouldReloadTableForSearchString:(NSString *)searchString
 }
 
 #pragma mark - type delegate
--(void)newType:(OPEManagedReferencePoi *)type
+-(void)newType:(OPEReferencePoi *)type
 {
     [self.delegate newType:type];
     [self.navigationController popToRootViewControllerAnimated:YES];

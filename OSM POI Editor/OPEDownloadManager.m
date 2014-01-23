@@ -12,7 +12,7 @@
 #import "OSMParser.h"
 #import "OSMParserHandlerDefault.h"
 
-#import "OPEManagedOsmWay.h"
+#import "OPEOsmWay.h"
 #import "OPEUtility.h"
 #import "OPEGeo.h"
 

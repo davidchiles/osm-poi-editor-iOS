@@ -21,7 +21,7 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPETypeViewController.h"
-#import "OPEManagedReferencePoi.h"
+#import "OPEReferencePoi.h"
 #import "OPEOSMData.h"
 
 @implementation OPETypeViewController
@@ -120,7 +120,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
-    OPEManagedReferencePoi * cellPoi = [self.typeArray objectAtIndex:indexPath.row];
+    OPEReferencePoi * cellPoi = [self.typeArray objectAtIndex:indexPath.row];
     cell.textLabel.text = cellPoi.name;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     

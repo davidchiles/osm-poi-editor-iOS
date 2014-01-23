@@ -21,9 +21,9 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPETagValueList.h"
-#import "OPEManagedReferenceOptional.h"
-#import "OPEManagedReferenceOsmTag.h"
-#import "OPEManagedOsmTag.h"
+#import "OPEReferenceOptional.h"
+#import "OPEReferenceOsmTag.h"
+#import "OPEOsmTag.h"
 
 @interface OPETagValueList ()
 
@@ -35,8 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    valuesArray = [self.managedOptional allSortedTags];
+    valuesArray = [self.referenceOptional allSortedTags];
     
     
     
@@ -103,7 +102,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OPEManagedReferenceOsmTag * refTag = (OPEManagedReferenceOsmTag *)[valuesArray objectAtIndex: indexPath.row];
+    OPEReferenceOsmTag * refTag = (OPEReferenceOsmTag *)[valuesArray objectAtIndex: indexPath.row];
     
     self.currentOsmValue = refTag.value;
     self.osmKey = refTag.key;

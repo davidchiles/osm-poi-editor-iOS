@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OPEManagedReferenceOptional.h"
+#import "OPEReferenceOptional.h"
 #import "OPEConstants.h"
-#import "OPEManagedOsmElement.h"
+#import "OPEOsmElement.h"
 #import "OPEDone+CancelViewController.h"
 
 typedef void (^newTagBlock)(NSString * key,NSString * value);
@@ -18,8 +18,8 @@ typedef void (^newTagBlock)(NSString * key,NSString * value);
 
 @property (nonatomic, strong) NSString * osmKey;
 @property (nonatomic, strong) NSString * currentOsmValue;
-@property (nonatomic, strong) OPEManagedReferenceOptional * managedOptional;
-@property (nonatomic, strong) OPEManagedOsmElement * element;
+@property (nonatomic, strong) OPEReferenceOptional * referenceOptional;
+@property (nonatomic, strong) OPEOsmElement * element;
 
 @property (nonatomic, readonly) BOOL showDoneButton;
 

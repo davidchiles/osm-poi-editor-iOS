@@ -1,5 +1,5 @@
 //
-//  OPEManagedObject.h
+//  OPEObject.h
 //  OSM POI Editor
 //
 //  Created by David on 4/25/13.
@@ -11,7 +11,7 @@
 #import "FMResultSet.h"
 #import "OPEConstants.h"
 
-@interface OPEManagedObject : NSObject
+@interface OPEObject : NSObject
 
 @property (nonatomic) int64_t rowID;
 @property (nonatomic) FMDatabaseQueue * databaseQueue;

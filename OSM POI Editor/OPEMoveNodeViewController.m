@@ -18,7 +18,7 @@
 
 @synthesize mapView,node;
 
--(id)initWithNode:(OPEManagedOsmNode *)newNode
+-(id)initWithNode:(OPEOsmNode *)newNode
 {
     if (self=[super init]) {
         osmData = [[OPEOSMData alloc] init];

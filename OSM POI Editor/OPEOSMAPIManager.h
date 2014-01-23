@@ -10,10 +10,10 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "OPEChangeset.h"
-#import "OPEManagedOsmElement.h"
+#import "OPEOsmElement.h"
 #import "GTMOAuthAuthentication.h"
 #import "AFNetworking.h"
-#import "OPEManagedOsmElement.h"
+#import "OPEOsmElement.h"
 #import "Note.h"
 #import "Comment.h"
 
@@ -36,7 +36,7 @@
              success:(void (^)(NSData * response))success
              failure:(void (^)(NSError *error))failure;
 
--(void)uploadElement:(OPEManagedOsmElement *)element
+-(void)uploadElement:(OPEOsmElement *)element
 withChangesetComment:(NSString *)changesetComment
      openedChangeset:(void (^)(int64_t changesetID))openedChangeset
      updatedElements:(void (^)(NSArray * updatedElements))updatedElements

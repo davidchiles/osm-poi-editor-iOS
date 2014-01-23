@@ -1,17 +1,17 @@
-#import "OPEManagedReferencePoi.h"
-#import "OPEManagedReferenceOptional.h"
+#import "OPEReferencePoi.h"
+#import "OPEReferenceOptional.h"
 #import "FMDatabase.h"
 #import "OPEConstants.h"
 #import "OPETranslate.h"
 
-@interface OPEManagedReferencePoi ()
+@interface OPEReferencePoi ()
 
 // Private interface goes here.
 
 @end
 
 
-@implementation OPEManagedReferencePoi
+@implementation OPEReferencePoi
 
 @synthesize isLegacy,editOnly,imageString,currentTagMethod,oldTagMethod,optionalsSet,tags;
 @synthesize categoryName = _categoryName;
@@ -50,7 +50,7 @@
                 NSArray * addressArray = [OPEConstants expandedAddressArray];
                 for( NSString * addr in addressArray)
                 {
-                    OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] init];
+                    OPEReferenceOptional * optional = [[OPEReferenceOptional alloc] init];
                     optional.name = addr;
                     [tempSet addObject:optional];
                 }
@@ -59,14 +59,14 @@
                 NSArray * addressArray = [OPEConstants expandedContactArray];
                 for( NSString * addr in addressArray)
                 {
-                    OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] init];
+                    OPEReferenceOptional * optional = [[OPEReferenceOptional alloc] init];
                     optional.name = addr;
                     [tempSet addObject:optional];
                 }
             }
             else
             {
-                OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] init];
+                OPEReferenceOptional * optional = [[OPEReferenceOptional alloc] init];
                 optional.name = key;
                 [tempSet addObject:optional];
             }
@@ -107,7 +107,7 @@
     NSMutableString * sqlString = nil;
     if ([self.optionalsSet count] && self.rowID) {
         BOOL first = YES;
-        for ( OPEManagedReferenceOptional * optional in self.optionalsSet)
+        for ( OPEReferenceOptional * optional in self.optionalsSet)
         {
             if (first) {
                 sqlString =  [NSMutableString stringWithFormat:@"insert or replace into pois_optionals select %lld as poi_id,(select optional.rowid from optional where optional.name = \'%@\') as optional_id",self.rowID,optional.name];

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "OPECrosshairMapView.h"
-#import "OPEManagedOsmNode.h"
+#import "OPEOsmNode.h"
 #import "OPEOSMData.h"
 
 
@@ -19,8 +19,8 @@
 }
 
 @property (nonatomic,strong)OPECrosshairMapView * mapView;
-@property (nonatomic,strong)OPEManagedOsmNode * node;
+@property (nonatomic,strong)OPEOsmNode * node;
 
--(id)initWithNode:(OPEManagedOsmNode *)node;
+-(id)initWithNode:(OPEOsmNode *)node;
 
 @end

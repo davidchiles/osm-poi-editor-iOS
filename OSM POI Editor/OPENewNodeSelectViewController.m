@@ -20,7 +20,7 @@
 @implementation OPENewNodeSelectViewController
 @synthesize nodeViewDelegate,location;
 
--(id)initWithNewElement:(OPEManagedOsmElement *)element
+-(id)initWithNewElement:(OPEOsmElement *)element
 {
     if (self = [super init]) {
         newElement = element;
@@ -123,7 +123,7 @@
     }
     
     if (indexPath.section == 0 && [recentlyUsedPoisArray count] && tableView != [[self searchDisplayController] searchResultsTableView] ) {
-        OPEManagedReferencePoi * poi = recentlyUsedPoisArray[indexPath.row];
+        OPEReferencePoi * poi = recentlyUsedPoisArray[indexPath.row];
         cell.textLabel.text = poi.name;
         cell.detailTextLabel.text = poi.categoryName;
     }
@@ -161,7 +161,7 @@
 
 
 #pragma mark - type delegate
--(void)newType:(OPEManagedReferencePoi *)type
+-(void)newType:(OPEReferencePoi *)type
 {
     [[[OPEOSMData alloc] init] setNewType:type forElement:newElement];
     OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithOsmElement:newElement delegate:nodeViewDelegate];

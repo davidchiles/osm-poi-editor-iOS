@@ -35,12 +35,12 @@
 #import "RMPointAnnotation.h"
 #import "OPENoteViewController.h"
 
-#import "OPEManagedOsmElement.h"
-#import "OPEManagedReferencePoi.h"
-#import "OPEManagedOsmNode.h"
-#import "OPEManagedOsmWay.h"
-#import "OPEManagedOsmRelation.h"
-#import "OpeManagedOsmRelationMember.h"
+#import "OPEOsmElement.h"
+#import "OPEReferencePoi.h"
+#import "OPEOsmNode.h"
+#import "OPEOsmWay.h"
+#import "OPEOsmRelation.h"
+#import "OPEOsmRelationMember.h"
 #import "OPEGeo.h"
 #import "OPEGeoCentroid.h"
 #import "OPENewNodeSelectViewController.h"
@@ -357,7 +357,7 @@
         NSLog(@"Should be allowed to download");
         if (mapView.zoom > MINZOOM) {
             
-            OPEManagedOsmNode * node = [OPEManagedOsmNode newNode];
+            OPEOsmNode * node = [OPEOsmNode newNode];
             node.element.elementID = [self.osmData newElementId];
             node.element.latitude = center.latitude;
             node.element.longitude = center.longitude;
@@ -422,7 +422,7 @@
     [[self navigationController] pushViewController:viewer animated:YES];
 }
 
--(void)presentNodeInfoViewControllerWithElement:(OPEManagedOsmElement *)element
+-(void)presentNodeInfoViewControllerWithElement:(OPEOsmElement *)element
 {
     OPENodeViewController * nodeViewController = [[OPENodeViewController alloc] initWithOsmElement:element delegate:self];
     UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:nodeViewController];

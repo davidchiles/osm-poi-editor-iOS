@@ -8,9 +8,9 @@
 
 #import "OPEOSMSearchManager.h"
 #import "FMDatabase.h"
-#import "OPEManagedOsmWay.h"
-#import "OPEManagedOsmNode.h"
-#import "OPEManagedOsmRelation.h"
+#import "OPEOsmWay.h"
+#import "OPEOsmNode.h"
+#import "OPEOsmRelation.h"
 #import "Node.h"
 #import "OPEGeo.h"
 
@@ -27,7 +27,7 @@
     return self;
 }
 
--(NSArray *)nearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey
+-(NSArray *)nearbyValuesForElement:(OPEOsmElement *)element withOsmKey:(NSString *)osmKey
 {
     currentElement = element;
     CLLocationCoordinate2D coordinate = [osmData centerForElement:element];
@@ -160,21 +160,21 @@
 
 }
 
--(double)minDistinceToElement:(OPEManagedOsmElement *)element fromCoordinate:(CLLocationCoordinate2D)fromCoordinate
+-(double)minDistinceToElement:(OPEOsmElement *)element fromCoordinate:(CLLocationCoordinate2D)fromCoordinate
 {
     
     double minDistance = DBL_MAX;
-    if ([element isKindOfClass:[OPEManagedOsmNode class]]) {
+    if ([element isKindOfClass:[OPEOsmNode class]]) {
         minDistance = [OPEGeo distance:fromCoordinate to:[osmData centerForElement:element]];
     }
-    else if ([element isKindOfClass:[OPEManagedOsmWay class]])
+    else if ([element isKindOfClass:[OPEOsmWay class]])
     {
-        minDistance = [self minDistanceToWay:(OPEManagedOsmWay *)element fromCoordinate:fromCoordinate];
+        minDistance = [self minDistanceToWay:(OPEOsmWay *)element fromCoordinate:fromCoordinate];
     }
-    else if ([element isKindOfClass:[OPEManagedOsmRelation class]])
+    else if ([element isKindOfClass:[OPEOsmRelation class]])
     {
-        NSArray * members = [osmData allMembersOfRelation:(OPEManagedOsmRelation *)element];
-        for (OPEManagedOsmElement * element in members)
+        NSArray * members = [osmData allMembersOfRelation:(OPEOsmRelation *)element];
+        for (OPEOsmElement * element in members)
         {
             double tempDistance = [self minDistinceToElement:element fromCoordinate:fromCoordinate];
             if (tempDistance < minDistance) {
@@ -187,7 +187,7 @@
     
 }
 
--(double)minDistanceToWay:(OPEManagedOsmWay *)way fromCoordinate:(CLLocationCoordinate2D)currentCenter
+-(double)minDistanceToWay:(OPEOsmWay *)way fromCoordinate:(CLLocationCoordinate2D)currentCenter
 {
     double distance = DBL_MAX;
     NSArray * points = [osmData pointsForWay:way];
@@ -215,7 +215,7 @@
         FMResultSet * resultSet = [db executeQuery:@"select * from (select * from (SELECT *,COUNT(*) AS count FROM (select * from ways_tags where key='highway' union select * from ways_tags where key='name') group by way_id) WHERE count= 2) AS A join ways on A.way_id = id"];
         
         while ([resultSet next]) {
-            OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] initWithDictionary:[resultSet resultDictionary]];
+            OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[resultSet resultDictionary]];
             [way.element.tags setObject:[resultSet stringForColumn:@"value"] forKey:[resultSet stringForColumn:@"key"]];
             
             [namedHighways addObject:way];
@@ -224,7 +224,7 @@
      
      NSMutableDictionary * highwayDictionary = [NSMutableDictionary dictionary];
      
-     for (OPEManagedOsmWay * way in namedHighways)
+     for (OPEOsmWay * way in namedHighways)
      {
          NSString * wayName = [way valueForOsmKey:@"name"];
          if ([wayName length]) {
@@ -257,7 +257,7 @@
         
         while ([resultSet next]) {
             if ([[OPEConstants highwayTypesArray] containsObject:[resultSet stringForColumn:@"value"]]) {
-                OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] initWithDictionary:[resultSet resultDictionary]];
+                OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[resultSet resultDictionary]];
                 way.isNoNameStreet = YES;
                 [resultArray addObject:way];
             }
@@ -276,7 +276,7 @@
         FMResultSet * resultsSet = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi NATURAL JOIN poi_lastUsed where date IS NOT NULL AND editOnly = 0 AND isLegacy = 0 order by datetime(date) DESC limit ?",[NSNumber numberWithInteger:length]];
         
         while ([resultsSet next]) {
-            [resultArray addObject:[[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[resultsSet resultDictionary]]];
+            [resultArray addObject:[[OPEReferencePoi alloc] initWithSqliteResultDictionary:[resultsSet resultDictionary]]];
         }
     }];
     
@@ -336,17 +336,17 @@
             
             
             while ([result next]) {
-                OPEManagedOsmElement * element =nil;
+                OPEOsmElement * element =nil;
                 if ([osmType isEqualToString:kOPEOsmElementNode]) {
-                    element = [[OPEManagedOsmNode alloc] initWithDictionary:[result resultDictionary]];
+                    element = [[OPEOsmNode alloc] initWithDictionary:[result resultDictionary]];
                 }
                 else if ([osmType isEqualToString:kOPEOsmElementWay])
                 {
-                    element = [[OPEManagedOsmWay alloc] initWithDictionary:[result resultDictionary]];
+                    element = [[OPEOsmWay alloc] initWithDictionary:[result resultDictionary]];
                 }
                 else if ([osmType isEqualToString:kOPEOsmElementRelation])
                 {
-                    element = [[OPEManagedOsmRelation alloc] initWithDictionary:[result resultDictionary]];
+                    element = [[OPEOsmRelation alloc] initWithDictionary:[result resultDictionary]];
                 }
                 double minDistance = [self minDistinceToElement:element fromCoordinate:coordinate];
                 NSString * osmValue = [[result resultDictionary] objectForKey:@"value"];
@@ -365,7 +365,7 @@
     
 }
 
-+(NSArray *)sortedNearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey
++(NSArray *)sortedNearbyValuesForElement:(OPEOsmElement *)element withOsmKey:(NSString *)osmKey
 {
     return [[[OPEOSMSearchManager alloc] init] nearbyValuesForElement:element withOsmKey:osmKey];
 }

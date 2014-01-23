@@ -22,9 +22,6 @@
 
 @implementation OPETagEditViewController
 
-@synthesize osmKey = _osmKey,currentOsmValue = _currentOsmValue;
-@synthesize managedOptional,completionBlock;
-
 -(id)initWithOsmKey:(NSString *)newOsmKey value:(NSString *)newOsmValue withCompletionBlock:(newTagBlock)newCompletionBlock
 {
     if (self = [self initShowCancel:YES showDone:self.showDoneButton]) {
@@ -41,8 +38,8 @@
 }
 -(void)doneButtonPressed:(id)sender
 {
-    if (completionBlock) {
-        completionBlock(self.osmKey,self.currentOsmValue);
+    if (self.completionBlock) {
+        self.completionBlock(self.osmKey,self.currentOsmValue);
     }
     [super doneButtonPressed:sender];
 }

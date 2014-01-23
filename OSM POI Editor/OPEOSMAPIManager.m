@@ -229,7 +229,7 @@ NSString *const deleteMethod = @"DELETE";
     return finalUrl;
 }
 
--(void)uploadElement:(OPEManagedOsmElement *)element
+-(void)uploadElement:(OPEOsmElement *)element
 withChangesetComment:(NSString *)changesetComment
      openedChangeset:(void (^)(int64_t changesetID))openedChangeset
      updatedElements:(void (^)(NSArray * updatedElements))updatedElements
@@ -259,7 +259,7 @@ withChangesetComment:(NSString *)changesetComment
                 failure(error);
             }
         }];
-        } failure:^(OPEManagedOsmElement * element,NSError *error) {
+        } failure:^(OPEOsmElement * element,NSError *error) {
             if (failure) {
                 failure(error);
             }
@@ -307,7 +307,7 @@ withChangesetComment:(NSString *)changesetComment
     [requestOperation start];
 }
 
--(void)uploadElements:(OPEChangeset *)changeset success:(void (^)(NSArray * elements))success failure:(void (^)(OPEManagedOsmElement * element, NSError * error))failure
+-(void)uploadElements:(OPEChangeset *)changeset success:(void (^)(NSArray * elements))success failure:(void (^)(OPEOsmElement * element, NSError * error))failure
 {
     if (!changeset.changesetID && failure) {
         failure(nil,nil);
@@ -316,15 +316,15 @@ withChangesetComment:(NSString *)changesetComment
     NSArray * elements =  @[changeset.nodes,changeset.ways,changeset.relations];
     for( NSArray * elmentArray in elements)
     {
-        for(OPEManagedOsmElement * element in elmentArray)
+        for(OPEOsmElement * element in elmentArray)
         {
             if([element.action isEqualToString:kActionTypeDelete])
             {
-                AFHTTPRequestOperation * deleteOperation = [self deleteRequestOperationWithElement:element changeset:changeset.changesetID success:^(OPEManagedOsmElement *Element) {
+                AFHTTPRequestOperation * deleteOperation = [self deleteRequestOperationWithElement:element changeset:changeset.changesetID success:^(OPEOsmElement *Element) {
                     if (success) {
                         success(@[element]);
                     }
-                } failure:^(OPEManagedOsmElement * element,NSError *error) {
+                } failure:^(OPEOsmElement * element,NSError *error) {
                     if (failure) {
                         failure(element,error);
                     }
@@ -334,11 +334,11 @@ withChangesetComment:(NSString *)changesetComment
             }
             else if([element.action isEqualToString:kActionTypeModify])
             {
-                AFHTTPRequestOperation * updateOperation = [self uploadRequestOperationWithElement:element changeset:changeset.changesetID success:^(OPEManagedOsmElement *element) {
+                AFHTTPRequestOperation * updateOperation = [self uploadRequestOperationWithElement:element changeset:changeset.changesetID success:^(OPEOsmElement *element) {
                     if (success) {
                         success(@[element]);
                     }
-                } failure:^(OPEManagedOsmElement * element,NSError *error) {
+                } failure:^(OPEOsmElement * element,NSError *error) {
                     if (failure) {
                         failure(element,error);
                     }
@@ -387,7 +387,7 @@ withChangesetComment:(NSString *)changesetComment
   
 
 
--(AFHTTPRequestOperation *)uploadRequestOperationWithElement:(OPEManagedOsmElement *) element changeset: (int64_t) changesetNumber success:(void (^)(OPEManagedOsmElement * Element))updateElement failure:(void (^)(OPEManagedOsmElement * element, NSError * error))failure
+-(AFHTTPRequestOperation *)uploadRequestOperationWithElement:(OPEOsmElement *) element changeset: (int64_t) changesetNumber success:(void (^)(OPEOsmElement * Element))updateElement failure:(void (^)(OPEOsmElement * element, NSError * error))failure
 {
     NSData * xmlData = [element uploadXMLforChangset:changesetNumber];
     
@@ -434,7 +434,7 @@ withChangesetComment:(NSString *)changesetComment
     return requestOperation;
 }
 
--(AFHTTPRequestOperation *)deleteRequestOperationWithElement:(OPEManagedOsmElement *) element changeset: (int64_t) changesetNumber success:(void (^)(OPEManagedOsmElement * Element))updateElement failure:(void (^)(OPEManagedOsmElement * element, NSError * error))failure
+-(AFHTTPRequestOperation *)deleteRequestOperationWithElement:(OPEOsmElement *) element changeset: (int64_t) changesetNumber success:(void (^)(OPEOsmElement * Element))updateElement failure:(void (^)(OPEOsmElement * element, NSError * error))failure
 {
     NSData * xmlData = [element deleteXMLforChangset:changesetNumber];
     NSString * path = [NSString stringWithFormat:@"%@/%lld",[element osmType],element.element.elementID];

@@ -1,16 +1,15 @@
-#import "OPEManagedOsmNode.h"
-#import "OPEManagedOsmTag.h"
+#import "OPEOsmNode.h"
+#import "OPEOsmTag.h"
 
 
-@interface OPEManagedOsmNode ()
+@interface OPEOsmNode ()
 
 // Private interface goes here.
 
 @end
 
 
-@implementation OPEManagedOsmNode
-@synthesize element;
+@implementation OPEOsmNode
 
 -(id)initWithDictionary:(NSDictionary *)dictionary
 {
@@ -71,9 +70,9 @@
     return kOPEOsmElementNode;
 }
 
-+(OPEManagedOsmNode *)newNode
++(OPEOsmNode *)newNode
 {
-    OPEManagedOsmNode * node = [[OPEManagedOsmNode alloc] init];
+    OPEOsmNode * node = [[OPEOsmNode alloc] init];
     node.element = [[Node alloc] init];
     return node;
 }

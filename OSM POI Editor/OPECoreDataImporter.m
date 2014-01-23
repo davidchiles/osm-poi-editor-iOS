@@ -9,7 +9,7 @@
 #import "OPECoreDataImporter.h"
 #import "OPEOptionalTag.h"
 #import "OPEConstants.h"
-#import "OPEManagedOsmTag.h"
+#import "OPEOsmTag.h"
 #import "OPEUtility.h"
 #import "FMDatabase.h"
 #import "FMDatabaseQueue.h"
@@ -68,7 +68,7 @@
         {
             [db beginTransaction];
             
-            OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] initWithDictionary:optionalDictionary[key] withName:key];
+            OPEReferenceOptional * optional = [[OPEReferenceOptional alloc] initWithDictionary:optionalDictionary[key] withName:key];
             
             BOOL result = [db executeUpdate:[optional sqliteInsertString]];
             if (result) {
@@ -101,7 +101,7 @@
             {
                 
                 NSDictionary * typeDictionary = [categoryDictionary objectForKey:type];
-                OPEManagedReferencePoi * poi = [[OPEManagedReferencePoi alloc] initWithName:type withCategory:category andDictionary:typeDictionary];
+                OPEReferencePoi * poi = [[OPEReferencePoi alloc] initWithName:type withCategory:category andDictionary:typeDictionary];
                 BOOL result = [db executeUpdate:[poi sqliteInsertString]];
                 
                 if (result) {
@@ -182,8 +182,8 @@
 
 -(BOOL)shouldDoImport
 {
-    double numberOfOptionals = 1;//[[OPEManagedReferenceOptional MR_numberOfEntities] doubleValue];
-    double numberOfPOI = 1;//[[OPEManagedReferencePoi MR_numberOfEntities] doubleValue];
+    double numberOfOptionals = 1;//[[OPEReferenceOptional MR_numberOfEntities] doubleValue];
+    double numberOfPOI = 1;//[[OPEReferencePoi MR_numberOfEntities] doubleValue];
     if ([[self lastImportDate] compare:[self currentMostRecentFileDate]] != NSOrderedSame) {
         return YES;
     }

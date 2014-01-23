@@ -22,12 +22,12 @@
 
 #import <UIKit/UIKit.h>
 #import "OPEType.h"
-#import "OPEManagedReferencePoi.h"
+#import "OPEReferencePoi.h"
 
 
 @protocol OPETypeViewControllerDelegate <NSObject>
 @required
--(void)newType:(OPEManagedReferencePoi *)type;
+-(void)newType:(OPEReferencePoi *)type;
 @end
 
 @interface OPETypeViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>

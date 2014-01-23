@@ -15,10 +15,10 @@
 #import "RMPointAnnotation.h"
 #import "RMShape.h"
 
-#import "OPEManagedOsmElement.h"
-#import "OPEManagedOsmNode.h"
-#import "OPEManagedOsmWay.h"
-#import "OPEManagedOsmRelation.h"
+#import "OPEOsmElement.h"
+#import "OPEOsmNode.h"
+#import "OPEOsmWay.h"
+#import "OPEOsmRelation.h"
 #import "Note.h"
 
 #import "OPEOSMData.h"
@@ -83,7 +83,7 @@
 }
 
 
--(RMMarker *)markerWithManagedObject:(OPEManagedOsmElement *)managedOsmElement
+-(RMMarker *)markerWithManagedObject:(OPEOsmElement *)managedOsmElement
 {
     UIImage * icon = nil;
     if (managedOsmElement.type) {
@@ -112,7 +112,7 @@
     return annotation;
 }
 
--(NSArray *)annotationsForOsmElement:(OPEManagedOsmElement *)managedOsmElement withMapView:(RMMapView *)mapView
+-(NSArray *)annotationsForOsmElement:(OPEOsmElement *)managedOsmElement withMapView:(RMMapView *)mapView
 {
     //NSLog(@"center: %@",[managedOsmElement center]);
     [self.osmData getTypeFor:managedOsmElement];
@@ -129,8 +129,8 @@
     
     annotation.userInfo = managedOsmElement;
     
-    if ([managedOsmElement isKindOfClass:[OPEManagedOsmRelation class]]) {
-        OPEManagedOsmRelation * managedRelation = (OPEManagedOsmRelation *)managedOsmElement;
+    if ([managedOsmElement isKindOfClass:[OPEOsmRelation class]]) {
+        OPEOsmRelation * managedRelation = (OPEOsmRelation *)managedOsmElement;
         
         NSArray * outerPolygonArray = [self.osmData outerPolygonsForRelation:managedRelation];
         
@@ -155,7 +155,7 @@
     return @[annotation];
 }
 
--(RMAnnotation *)shapeForRelation:(OPEManagedOsmRelation *)relation withMapView:(RMMapView *)mapView
+-(RMAnnotation *)shapeForRelation:(OPEOsmRelation *)relation withMapView:(RMMapView *)mapView
 {
     NSArray * outerPoints = [self.osmData outerPolygonsForRelation:relation];
     NSArray * innerPoints = [self.osmData innerPolygonsForRelation:relation];
@@ -207,7 +207,7 @@
     return newAnnotation;
     
 }
--(RMAnnotation *)shapeForWay:(OPEManagedOsmWay *)way withMapView:(RMMapView *)mapView
+-(RMAnnotation *)shapeForWay:(OPEOsmWay *)way withMapView:(RMMapView *)mapView
 {
     
     NSArray * points = [self.osmData pointsForWay:way];
@@ -267,7 +267,7 @@
 }
 
 -(void)updateAnnotationsForOsmElements:(NSArray *)elementsArray withMapView:(RMMapView *)mapView {
-    for (OPEManagedOsmElement * element in elementsArray)
+    for (OPEOsmElement * element in elementsArray)
     {
         [self removeAnnotationForOsmElement:element withMapView:mapView];
         if (![element.action isEqualToString:kActionTypeDelete]) {
@@ -279,7 +279,7 @@
     }
 }
 
--(void)removeAnnotationForOsmElement:(OPEManagedOsmElement *)element withMapView:(RMMapView *)mapView
+-(void)removeAnnotationForOsmElement:(OPEOsmElement *)element withMapView:(RMMapView *)mapView
 {
     NSSet * annotationSet = [self existingAnnotationsForOsmElement:element withMapView:mapView];
     if ([annotationSet count])
@@ -288,7 +288,7 @@
     }
 }
 
--(NSSet *)existingAnnotationsForOsmElement:(OPEManagedOsmElement *)element withMapView:(RMMapView *)mapView {
+-(NSSet *)existingAnnotationsForOsmElement:(OPEOsmElement *)element withMapView:(RMMapView *)mapView {
     NSIndexSet * indexSet = [self indexesOfOsmElement:element withMapView:mapView];
     NSMutableSet * annotationSet = [NSMutableSet set];
     
@@ -299,7 +299,7 @@
     return annotationSet;
 }
 
--(NSIndexSet *)indexesOfOsmElement:(OPEManagedOsmElement *)element withMapView:(RMMapView *)mapView
+-(NSIndexSet *)indexesOfOsmElement:(OPEOsmElement *)element withMapView:(RMMapView *)mapView
 {
     NSIndexSet * set = [mapView.annotations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         RMAnnotation * annotation = (RMAnnotation *)obj;
@@ -315,8 +315,8 @@
 -(RMMapLayer *) mapView:(RMMapView *)mView layerForAnnotation:(RMAnnotation *)annotation
 {
     RMMarker * marker = nil;
-    if ([annotation.userInfo isKindOfClass:[OPEManagedOsmElement class]]) {
-        OPEManagedOsmElement * managedOsmElement = (OPEManagedOsmElement *)annotation.userInfo;;
+    if ([annotation.userInfo isKindOfClass:[OPEOsmElement class]]) {
+        OPEOsmElement * managedOsmElement = (OPEOsmElement *)annotation.userInfo;;
         
         marker = [self markerWithManagedObject:managedOsmElement];
         marker.canShowCallout = YES;
@@ -346,16 +346,16 @@
     
     id osmElement = annotation.userInfo;
     
-    if ([osmElement isKindOfClass:[OPEManagedOsmWay class]]) {
-        OPEManagedOsmWay * osmWay = (OPEManagedOsmWay *)osmElement;
+    if ([osmElement isKindOfClass:[OPEOsmWay class]]) {
+        OPEOsmWay * osmWay = (OPEOsmWay *)osmElement;
         
         wayAnnotation = [self shapeForWay:osmWay withMapView:mapView];
         wayAnnotation.userInfo = annotation.userInfo;
         [mapView addAnnotation:wayAnnotation];
     }
-    else if ([osmElement isKindOfClass:[OPEManagedOsmRelation  class]])
+    else if ([osmElement isKindOfClass:[OPEOsmRelation  class]])
     {
-        OPEManagedOsmRelation * osmRelation = (OPEManagedOsmRelation *)osmElement;
+        OPEOsmRelation * osmRelation = (OPEOsmRelation *)osmElement;
         wayAnnotation = [self shapeForRelation:osmRelation withMapView:mapView];
         wayAnnotation.userInfo = annotation.userInfo;
         [mapView addAnnotation:wayAnnotation];

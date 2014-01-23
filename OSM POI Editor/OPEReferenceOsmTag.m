@@ -1,15 +1,15 @@
-#import "OPEManagedReferenceOsmTag.h"
-#import "OPEManagedOsmTag.h"
+#import "OPEReferenceOsmTag.h"
+#import "OPEOsmTag.h"
 #import "OPETranslate.h"
 
-@interface OPEManagedReferenceOsmTag ()
+@interface OPEReferenceOsmTag ()
 
 // Private interface goes here.
 
 @end
 
 
-@implementation OPEManagedReferenceOsmTag
+@implementation OPEReferenceOsmTag
 @synthesize name =_name;
 
 -(void)loadWithResult:(FMResultSet *)set

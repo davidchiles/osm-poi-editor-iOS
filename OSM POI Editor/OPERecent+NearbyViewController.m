@@ -8,7 +8,7 @@
 
 #import "OPERecent+NearbyViewController.h"
 #import "OPEUtility.h"
-#import "OPEManagedOsmElement.h"
+#import "OPEOsmElement.h"
 #import "OPEOSMSearchManager.h"
 #import "OPEStrings.h"
 

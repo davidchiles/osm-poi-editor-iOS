@@ -1,14 +1,14 @@
-#import "OPEManagedOsmTag.h"
+#import "OPEOsmTag.h"
 
 
-@interface OPEManagedOsmTag ()
+@interface OPEOsmTag ()
 
 // Private interface goes here.
 
 @end
 
 
-@implementation OPEManagedOsmTag
+@implementation OPEOsmTag
 
 @synthesize key,value;
 

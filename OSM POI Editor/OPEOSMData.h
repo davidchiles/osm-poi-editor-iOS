@@ -26,13 +26,13 @@
 #import "AFNetworking.h"
 
 #import "OSMDAO.h"
-#import "OPEManagedReferencePoi.h"
+#import "OPEReferencePoi.h"
 #import "OPEOSMAPIManager.h"
 
-@class OPEManagedOsmNode;
-@class OPEManagedOsmElement;
-@class OPEManagedOsmRelation;
-@class OPEManagedOsmWay;
+@class OPEOsmNode;
+@class OPEOsmElement;
+@class OPEOsmRelation;
+@class OPEOsmWay;
 @class OPEChangeset;
 
 @interface OPEOSMData : NSObject
@@ -44,32 +44,32 @@
 @property (nonatomic,strong) FMDatabaseQueue * databaseQueue;
 
 
--(BOOL)findType:(OPEManagedOsmElement *)element;
+-(BOOL)findType:(OPEOsmElement *)element;
 -(void)findType:(NSArray *)elements completion:(void (^)(NSArray * foundElements))completion;
--(BOOL)isNoNameStreet:(OPEManagedOsmWay *)way;
+-(BOOL)isNoNameStreet:(OPEOsmWay *)way;
 
-- (NSString *)changesetCommentfor:(OPEManagedOsmElement *)element;
-- (NSString *)nameWithElement: (OPEManagedOsmElement *) element;
+- (NSString *)changesetCommentfor:(OPEOsmElement *)element;
+- (NSString *)nameWithElement: (OPEOsmElement *) element;
 
--(void)removeOsmKey:(NSString *)osmKey forElement:(OPEManagedOsmElement *)element;
--(void)setOsmKey:(NSString *)osmKey andValue:(NSString *)osmValue forElement:(OPEManagedOsmElement *)element;
--(void)setNewType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element;
--(void)getMetaDataForType:(OPEManagedReferencePoi *)poi;
--(void)getTagsForType:(OPEManagedReferencePoi *)poi;
+-(void)removeOsmKey:(NSString *)osmKey forElement:(OPEOsmElement *)element;
+-(void)setOsmKey:(NSString *)osmKey andValue:(NSString *)osmValue forElement:(OPEOsmElement *)element;
+-(void)setNewType:(OPEReferencePoi *)type forElement:(OPEOsmElement *)element;
+-(void)getMetaDataForType:(OPEReferencePoi *)poi;
+-(void)getTagsForType:(OPEReferencePoi *)poi;
 
--(void)getTypeFor:(OPEManagedOsmElement *)element;
--(NSString *)nameForElement:(OPEManagedOsmElement *)element;
--(CLLocationCoordinate2D)centerForElement:(OPEManagedOsmElement *)element;
--(NSArray *)pointsForWay:(OPEManagedOsmWay *)way;
--(NSArray *)outerPolygonsForRelation:(OPEManagedOsmRelation *)relation;
--(NSArray *)innerPolygonsForRelation:(OPEManagedOsmRelation *)relation;
--(NSArray *)allMembersOfRelation:(OPEManagedOsmRelation *)relation;
--(void)getTagsForElement:(OPEManagedOsmElement *)element;
--(void)updateLegacyTags:(OPEManagedOsmElement *)element;
+-(void)getTypeFor:(OPEOsmElement *)element;
+-(NSString *)nameForElement:(OPEOsmElement *)element;
+-(CLLocationCoordinate2D)centerForElement:(OPEOsmElement *)element;
+-(NSArray *)pointsForWay:(OPEOsmWay *)way;
+-(NSArray *)outerPolygonsForRelation:(OPEOsmRelation *)relation;
+-(NSArray *)innerPolygonsForRelation:(OPEOsmRelation *)relation;
+-(NSArray *)allMembersOfRelation:(OPEOsmRelation *)relation;
+-(void)getTagsForElement:(OPEOsmElement *)element;
+-(void)updateLegacyTags:(OPEOsmElement *)element;
 
 -(void)updateElements:(NSArray *)elementsArray;
 
--(void)getOptionalsFor:(OPEManagedReferencePoi *)poi;
+-(void)getOptionalsFor:(OPEReferencePoi *)poi;
 -(NSDictionary *)optionalSectionSortOrder;
 
 -(NSArray *)allSortedCategories;
@@ -77,11 +77,11 @@
 -(NSArray *)allTypesIncludeLegacy:(BOOL)includeLegacy;
 
 -(int64_t)newElementId;
--(BOOL)hasParentElement:(OPEManagedOsmElement *)element;
--(NSString *)highwayTypeForOsmWay:(OPEManagedOsmWay *)way;
+-(BOOL)hasParentElement:(OPEOsmElement *)element;
+-(NSString *)highwayTypeForOsmWay:(OPEOsmWay *)way;
 
--(void)saveDate:(NSDate *)date forType:(OPEManagedReferencePoi *)poi;
--(BOOL)isArea:(OPEManagedOsmElement *)element;
+-(void)saveDate:(NSDate *)date forType:(OPEReferencePoi *)poi;
+-(BOOL)isArea:(OPEOsmElement *)element;
 
 -(Note *)createNoteWithJSONDictionary:(NSDictionary *)noteDictionary;
 

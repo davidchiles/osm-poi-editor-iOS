@@ -1,6 +1,6 @@
-#import "OPEManagedObject.h"
+#import "OPEObject.h"
 
-@interface OPEManagedOsmTag : OPEManagedObject {}
+@interface OPEOsmTag : OPEObject {}
 
 @property (nonatomic,strong) NSString * key;
 @property (nonatomic,strong) NSString * value;

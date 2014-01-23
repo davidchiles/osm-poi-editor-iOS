@@ -26,17 +26,17 @@
 #import "GTMOAuthViewControllerTouch.h"
 #import "OPEAPIConstants.h"
 #import "OPEConstants.h"
-#import "OPEManagedOsmNode.h"
-#import "OPEManagedOsmTag.h"
-#import "OPEManagedOsmWay.h"
-#import "OPEManagedOsmRelation.h"
+#import "OPEOsmNode.h"
+#import "OPEOsmTag.h"
+#import "OPEOsmWay.h"
+#import "OPEOsmRelation.h"
 #import "OPEChangeset.h"
 
 #import "OPEUtility.h"
 #import "OPEGeoCentroid.h"
-#import "OpeManagedOsmRelationMember.h"
-#import "OPEManagedReferenceOptional.h"
-#import "OPEManagedReferenceOptional.h"
+#import "OPEOsmRelationMember.h"
+#import "OPEReferenceOptional.h"
+#import "OPEReferenceOptional.h"
 
 #import "OSMParser.h"
 #import "OSMParserHandlerDefault.h"
@@ -99,7 +99,7 @@
     return note;
 }
 
-- (NSString *)changesetCommentfor:(OPEManagedOsmElement *)element
+- (NSString *)changesetCommentfor:(OPEOsmElement *)element
 {
     NSString * comment;
     if ([element.action isEqualToString:kActionTypeDelete]) {
@@ -116,7 +116,7 @@
     return comment;
 }
 
--(BOOL)isNoNameStreet:(OPEManagedOsmWay *)way
+-(BOOL)isNoNameStreet:(OPEOsmWay *)way
 {
     __block BOOL result = NO;
     if ([way.element.tags count]) {
@@ -151,9 +151,9 @@
         
         
         [elements enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            OPEManagedOsmElement * element = obj;
-            if (![obj isKindOfClass:[OPEManagedOsmElement class]]) {
-                 element = [OPEManagedOsmElement elementWithBasicOsmElement:obj];
+            OPEOsmElement * element = obj;
+            if (![obj isKindOfClass:[OPEOsmElement class]]) {
+                 element = [OPEOsmElement elementWithBasicOsmElement:obj];
             }
            
             NSString * baseTableName = [OSMDAO tableName:element.element];
@@ -177,7 +177,7 @@
     completion(foundElements);
 }
 
--(BOOL)findType:(OPEManagedOsmElement *)element
+-(BOOL)findType:(OPEOsmElement *)element
 {
     NSString * baseTableName = [OSMDAO tableName:element.element];
     NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
@@ -203,26 +203,26 @@
     }
     return didFind;
 }
--(void)updateLegacyTags:(OPEManagedOsmElement *)element
+-(void)updateLegacyTags:(OPEOsmElement *)element
 {
     if (element.type.isLegacy) {
         NSString * baseName = [element.type.name stringByReplacingOccurrencesOfString:@" (legacy)" withString:@""];
-        OPEManagedReferencePoi * newPoi = [self getTypeWithName:baseName];
+        OPEReferencePoi * newPoi = [self getTypeWithName:baseName];
         //[element.element.tags addEntriesFromDictionary:newPoi.tags];
         element.type = nil;
         [self setNewType:newPoi forElement:element];
     }
 }
--(OPEManagedReferencePoi *)getTypeWithName:(NSString *)name;
+-(OPEReferencePoi *)getTypeWithName:(NSString *)name;
 {
-    __block OPEManagedReferencePoi * poi = nil;
+    __block OPEReferencePoi * poi = nil;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         db.logsErrors = YES;
         db.traceExecution = YES;
         FMResultSet * set = [db executeQuery:@"SELECT rowid as id,* FROM poi WHERE displayName = ?",name];
         
         while ([set next]) {
-            poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+            poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
         }
         
         set = [db executeQueryWithFormat:@"SELECT * FROM pois_tags WHERE poi_id = %d",poi.rowID];
@@ -236,7 +236,7 @@
     
 }
 
--(void)setNewTypeRow:(NSInteger)rowId forElement:(OPEManagedOsmElement *)element
+-(void)setNewTypeRow:(NSInteger)rowId forElement:(OPEOsmElement *)element
 {
     if (rowId) {
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
@@ -246,7 +246,7 @@
     
 }
 
--(void)setNewType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element
+-(void)setNewType:(OPEReferencePoi *)type forElement:(OPEOsmElement *)element
 {
     [self removeType:element.type forElement:element];
     element.typeID = type.rowID;
@@ -262,11 +262,11 @@
     
     
 }
--(void)removeOsmKey:(NSString *)osmKey forElement:(OPEManagedOsmElement *)element
+-(void)removeOsmKey:(NSString *)osmKey forElement:(OPEOsmElement *)element
 {
     [element.element.tags removeObjectForKey:osmKey];
 }
--(void)setOsmKey:(NSString *)osmKey andValue:(NSString *)osmValue forElement:(OPEManagedOsmElement *)element
+-(void)setOsmKey:(NSString *)osmKey andValue:(NSString *)osmValue forElement:(OPEOsmElement *)element
 {
     if ([osmValue length] && [osmKey length]) {
         [element.element.tags setObject:osmValue forKey:osmKey];
@@ -275,7 +275,7 @@
         [self removeOsmKey:osmKey forElement:element];
     }
 }
--(void)removeType:(OPEManagedReferencePoi *)type forElement:(OPEManagedOsmElement *)element
+-(void)removeType:(OPEReferencePoi *)type forElement:(OPEOsmElement *)element
 {
     if (![type.tags count]) {
         [self getTagsForType:type];
@@ -286,15 +286,15 @@
         [self removeOsmKey:osmKey forElement:element];
     }
 }
--(void)getTypeFor:(OPEManagedOsmElement *)element
+-(void)getTypeFor:(OPEOsmElement *)element
 {
     if (element.typeID) {
-        __block OPEManagedReferencePoi * poi = [typeDictionary objectForKey:[NSNumber numberWithInt:element.typeID]];
+        __block OPEReferencePoi * poi = [typeDictionary objectForKey:[NSNumber numberWithInt:element.typeID]];
         if (!poi) {
             [self.databaseQueue inDatabase:^(FMDatabase *db) {
                 FMResultSet * result = [db executeQuery:@"SELECT *,rowid AS id FROM poi WHERE rowid = ?",[NSNumber numberWithInt:element.typeID]];
                 if ([result next]) {
-                    poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[result resultDictionary]];
+                    poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[result resultDictionary]];
                 }
                 [result close];
             }];
@@ -305,15 +305,15 @@
         
     }
 }
--(NSString *)nameForElement:(OPEManagedOsmElement *)element
+-(NSString *)nameForElement:(OPEOsmElement *)element
 {
     __block NSString * name = [element valueForOsmKey:@"name"];
     if ([name length]) {
         return name;
     }
     
-    if ([element isKindOfClass:[OPEManagedOsmWay class]]) {
-        if(((OPEManagedOsmWay *)element).isNoNameStreet)
+    if ([element isKindOfClass:[OPEOsmWay class]]) {
+        if(((OPEOsmWay *)element).isNoNameStreet)
         {
             return @"No Name Street";
         }
@@ -336,7 +336,7 @@
     }
     return name;
 }
--(NSArray *)pointsForWay:(OPEManagedOsmWay *)way
+-(NSArray *)pointsForWay:(OPEOsmWay *)way
 {
     __block NSMutableArray * resultsArray = [[way points] mutableCopy];
     if ([resultsArray count]) {
@@ -352,18 +352,18 @@
     return resultsArray;
 }
 
--(NSArray *)relationMembersFor:(OPEManagedOsmRelation *)relation
+-(NSArray *)relationMembersFor:(OPEOsmRelation *)relation
 {
     __block NSMutableArray * membersArray = [NSMutableArray array];
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQuery:@"select * from relations_members where relation_id = ?",[NSNumber numberWithLongLong:relation.elementID]];
         while ([set next]) {
-            OpeManagedOsmRelationMember * member = [[OpeManagedOsmRelationMember alloc] initWithDictionary:[set resultDictionary]];
+            OPEOsmRelationMember * member = [[OPEOsmRelationMember alloc] initWithDictionary:[set resultDictionary]];
             [membersArray addObject:member];
         }
     }];
     
-    for (OpeManagedOsmRelationMember * member in membersArray)
+    for (OPEOsmRelationMember * member in membersArray)
     {
         member.element = [self elementOfKind:member.type osmID:member.ref];
     }
@@ -372,16 +372,16 @@
     
 }
 
--(BOOL)isArea:(OPEManagedOsmElement *)element
+-(BOOL)isArea:(OPEOsmElement *)element
 {
-    if (![element isKindOfClass:[OPEManagedOsmNode class]]) {
+    if (![element isKindOfClass:[OPEOsmNode class]]) {
         [self getTagsForElement:element];
         if ([[element.element.tags objectForKey:@"area"] isEqualToString:@"yes"] || [[element.element.tags objectForKey:@"type"] isEqualToString:@"multipolygon"]) {
             return YES;
         }
 
-        if ([element isKindOfClass:[OPEManagedOsmWay class]]) {
-            OPEManagedOsmWay * way = (OPEManagedOsmWay *)element;
+        if ([element isKindOfClass:[OPEOsmWay class]]) {
+            OPEOsmWay * way = (OPEOsmWay *)element;
             return [way.element isFirstNodeId:way.element.lastNodeId];
         }
         
@@ -391,16 +391,16 @@
     return NO;
 }
 
--(CLLocationCoordinate2D)centerForElement:(OPEManagedOsmElement *)element
+-(CLLocationCoordinate2D)centerForElement:(OPEOsmElement *)element
 {
     CLLocationCoordinate2D center = CLLocationCoordinate2DMake(0, 0);
     if ([element.element isKindOfClass:[Node class]]) {
-        center = [((OPEManagedOsmNode *)element).element coordinate];
+        center = [((OPEOsmNode *)element).element coordinate];
     }
     else if ([element.element isKindOfClass:[Way class]])
     {
-        NSArray * array = [self pointsForWay:(OPEManagedOsmWay* )element];
-        if (((OPEManagedOsmWay *)element).isNoNameStreet) {
+        NSArray * array = [self pointsForWay:(OPEOsmWay* )element];
+        if (((OPEOsmWay *)element).isNoNameStreet) {
             center = ((CLLocation *)array[0]).coordinate;
         }
         else if ([self isArea:element])
@@ -416,12 +416,12 @@
     }
     else if ([element.element isKindOfClass:[Relation class]])
     {
-        NSArray * membersArray = [self relationMembersFor:(OPEManagedOsmRelation *)element];
+        NSArray * membersArray = [self relationMembersFor:(OPEOsmRelation *)element];
         
         double centerLat=0.0;
         double centerLon=0.0;
         int num = 0;
-        for(OpeManagedOsmRelationMember * member in membersArray)
+        for(OPEOsmRelationMember * member in membersArray)
         {
             
             if (member.element) {
@@ -438,63 +438,63 @@
     }
     return center;
 }
--(NSArray *)outerPolygonsForRelation:(OPEManagedOsmRelation *)relation
+-(NSArray *)outerPolygonsForRelation:(OPEOsmRelation *)relation
 {
     __block NSMutableArray * waysArray = [NSMutableArray array];
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQuery:@"select * from relations_members,ways where relation_id = ? AND type = 'way' AND role = 'outer' AND ref=id",[NSNumber numberWithLongLong:relation.elementID]];
         while ([set next]) {
-            OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] initWithDictionary:[set resultDictionary]];
+            OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[set resultDictionary]];
             [waysArray addObject:way];
         }
     }];
     
     NSMutableArray * resultsArray = [NSMutableArray array];
     
-    for(OPEManagedOsmWay * way in waysArray)
+    for(OPEOsmWay * way in waysArray)
     {
         [resultsArray addObject:[self pointsForWay:way]];
     }
     return resultsArray;
     
 }
--(NSArray *)innerPolygonsForRelation:(OPEManagedOsmRelation *)relation
+-(NSArray *)innerPolygonsForRelation:(OPEOsmRelation *)relation
 {
     __block NSMutableArray * waysArray = [NSMutableArray array];
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQuery:@"select * from relations_members,ways where relation_id = ? AND type = 'way' AND role = 'inner' AND ref=id",[NSNumber numberWithLongLong:relation.elementID]];
         while ([set next]) {
-            OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] initWithDictionary:[set resultDictionary]];
+            OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[set resultDictionary]];
             [waysArray addObject:way];
         }
     }];
     
     NSMutableArray * resultsArray = [NSMutableArray array];
     
-    for(OPEManagedOsmWay * way in waysArray)
+    for(OPEOsmWay * way in waysArray)
     {
         [resultsArray addObject:[self pointsForWay:way]];
     }
     return resultsArray;
 }
--(NSArray *)allMembersOfRelation:(OPEManagedOsmRelation *)relation
+-(NSArray *)allMembersOfRelation:(OPEOsmRelation *)relation
 {
     __block NSMutableArray * membersArray = [NSMutableArray array];
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQuery:@"select * from relations_members,ways where relation_id = ? AND ref=id",[NSNumber numberWithLongLong:relation.elementID]];
         while ([set next]) {
             if ([[[set resultDictionary] objectForKey:@"type"] isEqualToString:kOPEOsmElementNode]) {
-                OPEManagedOsmNode * node = [[OPEManagedOsmNode alloc] initWithDictionary:[set resultDictionary]];
+                OPEOsmNode * node = [[OPEOsmNode alloc] initWithDictionary:[set resultDictionary]];
                 [membersArray addObject:node];
             }
             else if ([[[set resultDictionary] objectForKey:@"type"] isEqualToString:kOPEOsmElementWay])
             {
-                OPEManagedOsmWay * way = [[OPEManagedOsmWay alloc] initWithDictionary:[set resultDictionary]];
+                OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[set resultDictionary]];
                 [membersArray addObject:way];
             }
             else if ([[[set resultDictionary] objectForKey:@"type"] isEqualToString:kOPEOsmElementRelation])
             {
-                OPEManagedOsmRelation * relation = [[OPEManagedOsmRelation alloc] initWithDictionary:[set resultDictionary]];
+                OPEOsmRelation * relation = [[OPEOsmRelation alloc] initWithDictionary:[set resultDictionary]];
                 [membersArray addObject:relation];
             }
             
@@ -503,7 +503,7 @@
     return membersArray;
     
 }
--(void)updateElement:(OPEManagedOsmElement *)element
+-(void)updateElement:(OPEOsmElement *)element
 {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         [db beginTransaction];
@@ -524,15 +524,15 @@
     }];
 }
 
--(OPEManagedReferencePoi *)typeWithElement:(OPEManagedOsmElement *)element withTags:(BOOL)withTags
+-(OPEReferencePoi *)typeWithElement:(OPEOsmElement *)element withTags:(BOOL)withTags
 {
-    __block OPEManagedReferencePoi * type = nil;
+    __block OPEReferencePoi * type = nil;
     if (element.typeID) {
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
             FMResultSet * result = [db executeQueryWithFormat:@"SELECT * FROM poi WHERE rowid = %d",element.typeID];
             
             if ([result next]) {
-                type = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[result resultDictionary]];
+                type = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[result resultDictionary]];
             }
             [result close];
             if (withTags) {
@@ -549,7 +549,7 @@
     return type;
 }
 
-- (NSString *)nameWithElement: (OPEManagedOsmElement *) element
+- (NSString *)nameWithElement: (OPEOsmElement *) element
 {
     NSString * possibleName = [element valueForOsmKey:@"name"];
     if (!element.type) {
@@ -569,7 +569,7 @@
     }
 }
 
--(NSString *)highwayTypeForOsmWay:(OPEManagedOsmWay *)way
+-(NSString *)highwayTypeForOsmWay:(OPEOsmWay *)way
 {
     NSString * type = @"";
     if (![way.element.tags count]) {
@@ -585,7 +585,7 @@
     return type;
 }
 
--(void)saveDate:(NSDate *)date forType:(OPEManagedReferencePoi *)poi
+-(void)saveDate:(NSDate *)date forType:(OPEReferencePoi *)poi
 {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:@"insert or replace into poi_lastUsed(date,displayName) values(datetime('now','localtime'),?)",[poi refName]];
@@ -604,14 +604,14 @@
     return resultArray;
 }
 
--(OPEManagedOsmElement *)elementOfKind:(NSString *)kind osmID:(int64_t)osmID
+-(OPEOsmElement *)elementOfKind:(NSString *)kind osmID:(int64_t)osmID
 {
-    __block OPEManagedOsmElement * managedElement = nil;
+    __block OPEOsmElement * managedElement = nil;
     NSMutableString * sql = [NSMutableString stringWithFormat:@"SELECT * FROM %@s WHERE id=%lld",kind,osmID];
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQuery:sql];
         while ([set next]) {
-            managedElement = [OPEManagedOsmElement elementWithType:kind withDictionary:[set resultDictionary]];
+            managedElement = [OPEOsmElement elementWithType:kind withDictionary:[set resultDictionary]];
         }
     }];
     return managedElement;
@@ -628,7 +628,7 @@
         FMResultSet * set = [db executeQuery:sql];
         
         while ([set next]) {
-            OPEManagedOsmElement * managedElement = [OPEManagedOsmElement elementWithType:kind withDictionary:[set resultDictionary]];
+            OPEOsmElement * managedElement = [OPEOsmElement elementWithType:kind withDictionary:[set resultDictionary]];
             [resultArray addObject:managedElement];
         }
     }];
@@ -636,7 +636,7 @@
     return  resultArray;
 }
 
--(void)getTagsForElement:(OPEManagedOsmElement *)element
+-(void)getTagsForElement:(OPEOsmElement *)element
 {
     
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
@@ -671,7 +671,7 @@
     
 }
 
--(void)getOptionalsFor:(OPEManagedReferencePoi *)poi
+-(void)getOptionalsFor:(OPEReferencePoi *)poi
 {
     if (poi.rowID) {
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
@@ -680,7 +680,7 @@
             FMResultSet * set = [db executeQueryWithFormat:@"select displayName,osmKey,type,sectionSortOrder,optional_section.name AS section,optional.rowid AS id from pois_optionals,optional,optional_section where optional_id = optional.rowid AND poi_id = %d AND section_id = optional_section.rowid",poi.rowID];
             while([set next])
             {
-                OPEManagedReferenceOptional * optional = [[OPEManagedReferenceOptional alloc] init];
+                OPEReferenceOptional * optional = [[OPEReferenceOptional alloc] init];
                 optional.displayName = [set stringForColumn:@"displayName"];
                 optional.osmKey = [set stringForColumn:@"osmKey"];
                 optional.type = [set intForColumn:@"type"];
@@ -693,7 +693,7 @@
             
         }];
         
-        for (OPEManagedReferenceOptional * optional in poi.optionalsSet)
+        for (OPEReferenceOptional * optional in poi.optionalsSet)
         {
             if (optional.type == OPEOptionalTypeList) {
                 [self getTagsFor:optional];
@@ -703,12 +703,12 @@
     }
 }
 
--(void)getTagsFor:(OPEManagedReferenceOptional *)optional
+-(void)getTagsFor:(OPEReferenceOptional *)optional
 {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQueryWithFormat:@"select * from optionals_tags where optional_id = %d",optional.rowID];
         while ([set next]) {
-            OPEManagedReferenceOsmTag * tag = [[OPEManagedReferenceOsmTag alloc] init];
+            OPEReferenceOsmTag * tag = [[OPEReferenceOsmTag alloc] init];
             tag.name = [set stringForColumn:@"name"];
             tag.key = [set stringForColumn:@"key"];
             tag.value = [set stringForColumn:@"value"];
@@ -737,11 +737,11 @@
     __block NSMutableArray * array = [NSMutableArray array];
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi,pois_tags WHERE  poi.rowid = pois_tags.poi_id AND category = ? ORDER BY displayName",category];
-        OPEManagedReferencePoi * poi = nil;
+        OPEReferencePoi * poi = nil;
         poi.name = @"";
         while ([set next]) {
             if (![poi.name isEqualToString:[set stringForColumn:@"displayName"]]) {
-                poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+                poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
                 
                 [array addObject: poi];
             }
@@ -754,9 +754,9 @@
     return array;
     
 }
--(void)getTagsForType:(OPEManagedReferencePoi *)poi
+-(void)getTagsForType:(OPEReferencePoi *)poi
 {
-    __block OPEManagedReferencePoi * blockPoi = poi;
+    __block OPEReferencePoi * blockPoi = poi;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         db.traceExecution = YES;
         db.logsErrors = YES;
@@ -779,10 +779,10 @@
         }
         
         FMResultSet * set = [db executeQuery:sqlString];
-        OPEManagedReferencePoi * poi = nil;
+        OPEReferencePoi * poi = nil;
         poi.name = @"";
         while ([set next]) {
-            poi = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+            poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
             
             [array addObject: poi];
         }
@@ -791,15 +791,15 @@
     return array;
 }
 
--(void)getMetaDataForType:(OPEManagedReferencePoi *)poi
+-(void)getMetaDataForType:(OPEReferencePoi *)poi
 {
-    __block OPEManagedReferencePoi * newPOI;
+    __block OPEReferencePoi * newPOI;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         db.logsErrors = YES;
         db.traceExecution =YES;
         FMResultSet * set = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi WHERE id = ?",[NSNumber numberWithLongLong:poi.rowID]];
         while ([set next]) {
-            newPOI = [[OPEManagedReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+            newPOI = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
         }
     }];
     [self getTagsForType:newPOI];
@@ -821,13 +821,13 @@
     
     return newID;
 }
--(BOOL)hasParentElement:(OPEManagedOsmElement *)element
+-(BOOL)hasParentElement:(OPEOsmElement *)element
 {
     __block BOOL hasParent = YES;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         BOOL hasWayParent = NO;
         BOOL hasRelationParent = NO;
-        if ([element isKindOfClass:[OPEManagedOsmNode class]]) {
+        if ([element isKindOfClass:[OPEOsmNode class]]) {
             FMResultSet * set = [db executeQuery:@"SELECT EXISTS(SELECT * FROM ways_nodes WHERE node_id= ? LIMIT 1)",[NSNumber numberWithLongLong: element.elementID]];
             while ([set next]) {
                 hasWayParent = [set boolForColumnIndex:0];
@@ -846,7 +846,7 @@
 
 -(void)updateElements:(NSArray *)elementsArray
 {
-    for (OPEManagedOsmElement * element in elementsArray)
+    for (OPEOsmElement * element in elementsArray)
     {
         [self updateElement:element];
     }

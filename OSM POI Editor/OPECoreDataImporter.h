@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OPEManagedReferenceOsmTag.h"
-#import "OPEManagedReferenceOptional.h"
-#import "OPEManagedReferencePoi.h"
+#import "OPEReferenceOsmTag.h"
+#import "OPEReferenceOptional.h"
+#import "OPEReferencePoi.h"
 #import "FMDatabaseQueue.h"
 
 @interface OPECoreDataImporter : NSObject

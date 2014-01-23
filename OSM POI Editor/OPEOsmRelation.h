@@ -1,8 +1,8 @@
 #import "CoreLocation/CoreLocation.h"
 #import "Relation.h"
-#import "OPEManagedOsmElement.h"
+#import "OPEOsmElement.h"
 
-@interface OPEManagedOsmRelation : OPEManagedOsmElement {}
+@interface OPEOsmRelation : OPEOsmElement {}
 
 
 @property (nonatomic,strong) Relation * element;

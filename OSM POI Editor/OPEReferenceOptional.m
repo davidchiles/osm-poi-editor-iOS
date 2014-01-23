@@ -1,17 +1,17 @@
-#import "OPEManagedReferenceOptional.h"
-#import "OPEManagedReferenceOsmTag.h"
+#import "OPEReferenceOptional.h"
+#import "OPEReferenceOsmTag.h"
 #import "FMResultSet.h"
 #import "FMDatabase.h"
 
 
-@interface OPEManagedReferenceOptional ()
+@interface OPEReferenceOptional ()
 
 // Private interface goes here.
 
 @end
 
 
-@implementation OPEManagedReferenceOptional
+@implementation OPEReferenceOptional
 
 @synthesize displayName,sectionSortOrder,osmKey,name,rowID;
 @synthesize optionalTags = _optionalTags;
@@ -74,8 +74,8 @@
     NSSet * filteredSet = [self.optionalTags filteredSetUsingPredicate:tagFilter];
     
     if ([filteredSet count]) {
-        OPEManagedReferenceOsmTag * managedReferenceOsmTag =  [filteredSet anyObject];
-        return managedReferenceOsmTag.name;
+        OPEReferenceOsmTag * ReferenceOsmTag =  [filteredSet anyObject];
+        return ReferenceOsmTag.name;
     }
     return osmValue;
     
@@ -87,7 +87,7 @@
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
             FMResultSet * set = [db executeQueryWithFormat:@"select * from optionals_tags where optional_id = %lld",self.rowID];
             while ([set next]) {
-                OPEManagedReferenceOsmTag * tag = [[OPEManagedReferenceOsmTag alloc] init];
+                OPEReferenceOsmTag * tag = [[OPEReferenceOsmTag alloc] init];
                 [tag loadWithResult:set];
                 [tempTags addObject:tag];
             }
@@ -110,23 +110,23 @@
 -(NSArray *)allDisplayNames
 {
     NSMutableArray * finalArray = [NSMutableArray array];
-    for(OPEManagedReferenceOsmTag * managedReferecneOsmTag in self.optionalTags)
+    for(OPEReferenceOsmTag * ReferecneOsmTag in self.optionalTags)
     {
-        [finalArray addObject:managedReferecneOsmTag.name];
+        [finalArray addObject:ReferecneOsmTag.name];
     }
     return finalArray;
     
 }
--(OPEManagedReferenceOsmTag *)managedReferenceOsmTagWithName:(NSString *)tagName;
+-(OPEReferenceOsmTag *)referenceOsmTagWithName:(NSString *)tagName;
 {
     NSPredicate * tagFilter = [NSPredicate predicateWithFormat:@"name == %@",tagName];
     NSSet * filteredSet = [self.optionalTags filteredSetUsingPredicate:tagFilter];
-    OPEManagedReferenceOsmTag * managedReferenceOsmTag = nil;
+    OPEReferenceOsmTag * ReferenceOsmTag = nil;
     
     if ([filteredSet count]) {
-        managedReferenceOsmTag =  [filteredSet anyObject];
+        ReferenceOsmTag =  [filteredSet anyObject];
     }
-    return managedReferenceOsmTag;
+    return ReferenceOsmTag;
     
     
 }
@@ -149,7 +149,7 @@
         self.type = OPEOptionalTypeList;
         for(NSString *tagName in valuesDictionary)
         {
-            OPEManagedReferenceOsmTag * tag = [[OPEManagedReferenceOsmTag alloc] init];
+            OPEReferenceOsmTag * tag = [[OPEReferenceOsmTag alloc] init];
             tag.key = self.osmKey;
             tag.value = valuesDictionary[tagName];
             tag.name = tagName;
@@ -166,7 +166,7 @@
     NSMutableString * sqlString = nil;
     if ([self.optionalTags count] && self.rowID) {
         BOOL first = YES;
-        for(OPEManagedReferenceOsmTag * tag in self.optionalTags)
+        for(OPEReferenceOsmTag * tag in self.optionalTags)
         {
             if (first) {
                 sqlString = [NSMutableString stringWithFormat:@"insert or replace into optionals_tags select %lld as optional_id,\'%@\' as name,\'%@\' as key,\'%@\' as value",self.rowID,tag.name,tag.key,tag.value];

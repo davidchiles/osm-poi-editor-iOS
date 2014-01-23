@@ -1,15 +1,14 @@
-#import "OpeManagedOsmRelationMember.h"
+#import "OPEOsmRelationMember.h"
 
 
-@interface OpeManagedOsmRelationMember ()
+@interface OPEOsmRelationMember ()
 
 // Private interface goes here.
 
 @end
 
 
-@implementation OpeManagedOsmRelationMember
-@synthesize role,type,ref,element;
+@implementation OPEOsmRelationMember
 
 -(id)initWithDictionary:(NSDictionary *)dictionary
 {
@@ -18,7 +17,6 @@
         self.role = dictionary[@"role"];
         self.ref = [dictionary[@"ref"] longLongValue];
         self.type = dictionary[@"type"];
-        
     }
     return self;
 }

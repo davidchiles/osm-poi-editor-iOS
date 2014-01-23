@@ -7,9 +7,9 @@
 //
 
 #import "OPEChangeset.h"
-#import "OPEManagedOsmNode.h"
-#import "OPEManagedOsmWay.h"
-#import "OPEManagedOsmRelation.h"
+#import "OPEOsmNode.h"
+#import "OPEOsmWay.h"
+#import "OPEOsmRelation.h"
 
 @implementation OPEChangeset
 
@@ -27,16 +27,16 @@
     return self;
 }
 
--(void)addElement:(OPEManagedOsmElement *)element
+-(void)addElement:(OPEOsmElement *)element
 {
-    if ([element isKindOfClass:[OPEManagedOsmNode class]]) {
+    if ([element isKindOfClass:[OPEOsmNode class]]) {
         [self.nodes addObject:element];
     }
-    else if ([element isKindOfClass:[OPEManagedOsmWay class]])
+    else if ([element isKindOfClass:[OPEOsmWay class]])
     {
         [self.ways addObject:element];
     }
-    else if ([element isKindOfClass:[OPEManagedOsmRelation class]])
+    else if ([element isKindOfClass:[OPEOsmRelation class]])
     {
         [self.relations addObject:element];
     }

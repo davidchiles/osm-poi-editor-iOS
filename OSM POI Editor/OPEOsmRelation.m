@@ -1,16 +1,16 @@
-#import "OPEManagedOsmRelation.h"
-#import "OpeManagedOsmRelationMember.h"
-#import "OPEManagedOsmWay.h"
+#import "OPEOsmRelation.h"
+#import "OpeOsmRelationMember.h"
+#import "OPEOsmWay.h"
 
 
-@interface OPEManagedOsmRelation ()
+@interface OPEOsmRelation ()
 
 // Private interface goes here.
 
 @end
 
 
-@implementation OPEManagedOsmRelation
+@implementation OPEOsmRelation
 
 @synthesize element;
 

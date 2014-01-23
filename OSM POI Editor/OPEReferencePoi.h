@@ -1,6 +1,6 @@
-#import "OPEManagedObject.h"
+#import "OPEObject.h"
 
-@interface OPEManagedReferencePoi : OPEManagedObject {}
+@interface OPEReferencePoi : OPEObject {}
 
 
 @property (nonatomic,strong) NSString * name;
@@ -8,8 +8,8 @@
 @property (nonatomic) BOOL isLegacy;
 @property (nonatomic) BOOL editOnly;
 @property (nonatomic) NSString * imageString;
-@property (nonatomic,strong) OPEManagedReferencePoi * currentTagMethod;
-@property (nonatomic,strong) OPEManagedReferencePoi * oldTagMethod;
+@property (nonatomic,strong) OPEReferencePoi * currentTagMethod;
+@property (nonatomic,strong) OPEReferencePoi * oldTagMethod;
 @property (nonatomic,strong) NSMutableSet * optionalsSet;
 @property (nonatomic,strong) NSMutableDictionary * tags;
 

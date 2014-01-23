@@ -354,7 +354,6 @@
 		638445EA1665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */; };
 		6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */; };
 		6387126D17582655006C3A4E /* OPENewNodeSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */; };
-		6391C67316AE2B370084D579 /* Model.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 6391C67216AE2B370084D579 /* Model.xcdatamodel */; };
 		63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1417961B8C008B897C /* OPENoteViewController.m */; };
 		63962B1B17961FAB008B897C /* OPECommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1A17961FAB008B897C /* OPECommentCell.m */; };
 		63962B1F179621A0008B897C /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1E179621A0008B897C /* TTTAttributedLabel.m */; };
@@ -365,7 +364,7 @@
 		63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5B5177BAEB1000C6A0D /* OPECrosshairMapView.m */; };
 		63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BB177BB0EB000C6A0D /* OPEMoveNodeViewController.m */; };
 		63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A3D5BE177BBD8C000C6A0D /* OPEButtonCell.m */; };
-		63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A964981729FA6100D14CA1 /* OPEManagedObject.m */; };
+		63A964991729FA6100D14CA1 /* OPEObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A964981729FA6100D14CA1 /* OPEObject.m */; };
 		63AD8F7A15E8570B006F92B8 /* OPECategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7915E8570B006F92B8 /* OPECategory.m */; };
 		63AD8F7D15E8577E006F92B8 /* OPEType.m in Sources */ = {isa = PBXBuildFile; fileRef = 63AD8F7C15E8577E006F92B8 /* OPEType.m */; };
 		63B1B15016F285DB00323E9F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B1B14F16F285DB00323E9F /* MBProgressHUD.m */; };
@@ -395,15 +394,15 @@
 		63F01BF717D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F01BF617D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m */; };
 		63F01BFD17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F01BFC17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.m */; };
 		63F01C0017D016AD00184A0C /* OPETimeRangeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F01BFF17D016AD00184A0C /* OPETimeRangeCell.m */; };
-		63F03D2F16B09FD8004AF385 /* OPEManagedOsmElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */; };
-		63F03D3016B09FD8004AF385 /* OPEManagedOsmNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2116B09FD8004AF385 /* OPEManagedOsmNode.m */; };
-		63F03D3116B09FD8004AF385 /* OPEManagedOsmRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2316B09FD8004AF385 /* OPEManagedOsmRelation.m */; };
-		63F03D3216B09FD8004AF385 /* OpeManagedOsmRelationMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2516B09FD8004AF385 /* OpeManagedOsmRelationMember.m */; };
-		63F03D3316B09FD8004AF385 /* OPEManagedOsmTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2716B09FD8004AF385 /* OPEManagedOsmTag.m */; };
-		63F03D3416B09FD8004AF385 /* OPEManagedOsmWay.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2916B09FD8004AF385 /* OPEManagedOsmWay.m */; };
-		63F03D3516B09FD8004AF385 /* OPEManagedReferenceOptional.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2B16B09FD8004AF385 /* OPEManagedReferenceOptional.m */; };
-		63F03D3616B09FD8004AF385 /* OPEManagedReferenceOsmTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2D16B09FD8004AF385 /* OPEManagedReferenceOsmTag.m */; };
-		63F03D3816B0A2D1004AF385 /* OPEManagedReferencePoi.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D3716B0A2D0004AF385 /* OPEManagedReferencePoi.m */; };
+		63F03D2F16B09FD8004AF385 /* OPEOsmElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D1F16B09FD8004AF385 /* OPEOsmElement.m */; };
+		63F03D3016B09FD8004AF385 /* OPEOsmNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2116B09FD8004AF385 /* OPEOsmNode.m */; };
+		63F03D3116B09FD8004AF385 /* OPEOsmRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2316B09FD8004AF385 /* OPEOsmRelation.m */; };
+		63F03D3216B09FD8004AF385 /* OPEOsmRelationMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2516B09FD8004AF385 /* OPEOsmRelationMember.m */; };
+		63F03D3316B09FD8004AF385 /* OPEOsmTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2716B09FD8004AF385 /* OPEOsmTag.m */; };
+		63F03D3416B09FD8004AF385 /* OPEOsmWay.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2916B09FD8004AF385 /* OPEOsmWay.m */; };
+		63F03D3516B09FD8004AF385 /* OPEReferenceOptional.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2B16B09FD8004AF385 /* OPEReferenceOptional.m */; };
+		63F03D3616B09FD8004AF385 /* OPEReferenceOsmTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2D16B09FD8004AF385 /* OPEReferenceOsmTag.m */; };
+		63F03D3816B0A2D1004AF385 /* OPEReferencePoi.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D3716B0A2D0004AF385 /* OPEReferencePoi.m */; };
 		63F63D5C17684D340084E703 /* OPEWikipediaWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F63D5B17684D340084E703 /* OPEWikipediaWebViewController.m */; };
 		63FBA59E171DFBED0098A2F3 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA589171DFBED0098A2F3 /* Node.m */; };
 		63FBA59F171DFBED0098A2F3 /* optimizeDb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 63FBA58A171DFBED0098A2F3 /* optimizeDb.sql */; };
@@ -890,7 +889,6 @@
 		6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMSearchManager.m; sourceTree = "<group>"; };
 		6387126B17582655006C3A4E /* OPENewNodeSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENewNodeSelectViewController.h; sourceTree = "<group>"; };
 		6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENewNodeSelectViewController.m; sourceTree = "<group>"; };
-		6391C67216AE2B370084D579 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		63962B1317961B8C008B897C /* OPENoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENoteViewController.h; sourceTree = "<group>"; };
 		63962B1417961B8C008B897C /* OPENoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENoteViewController.m; sourceTree = "<group>"; };
 		63962B1917961FAB008B897C /* OPECommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECommentCell.h; sourceTree = "<group>"; };
@@ -915,8 +913,8 @@
 		63A70B5D17D9923A00A671E8 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63A70B5E17D9923A00A671E8 /* bs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bs; path = bs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63A70B5F17D9924000A671E8 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
-		63A964971729FA6100D14CA1 /* OPEManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedObject.h; sourceTree = "<group>"; };
-		63A964981729FA6100D14CA1 /* OPEManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedObject.m; sourceTree = "<group>"; };
+		63A964971729FA6100D14CA1 /* OPEObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEObject.h; sourceTree = "<group>"; };
+		63A964981729FA6100D14CA1 /* OPEObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEObject.m; sourceTree = "<group>"; };
 		63AD8F7815E8570B006F92B8 /* OPECategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECategory.h; sourceTree = "<group>"; };
 		63AD8F7915E8570B006F92B8 /* OPECategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECategory.m; sourceTree = "<group>"; };
 		63AD8F7B15E8577D006F92B8 /* OPEType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEType.h; sourceTree = "<group>"; };
@@ -974,24 +972,24 @@
 		63F01BFC17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOpeningHoursTimeRangesViewController.m; sourceTree = "<group>"; };
 		63F01BFE17D016AD00184A0C /* OPETimeRangeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETimeRangeCell.h; sourceTree = "<group>"; };
 		63F01BFF17D016AD00184A0C /* OPETimeRangeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETimeRangeCell.m; sourceTree = "<group>"; };
-		63F03D1E16B09FD8004AF385 /* OPEManagedOsmElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmElement.h; sourceTree = "<group>"; };
-		63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedOsmElement.m; sourceTree = "<group>"; };
-		63F03D2016B09FD8004AF385 /* OPEManagedOsmNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmNode.h; sourceTree = "<group>"; };
-		63F03D2116B09FD8004AF385 /* OPEManagedOsmNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedOsmNode.m; sourceTree = "<group>"; };
-		63F03D2216B09FD8004AF385 /* OPEManagedOsmRelation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmRelation.h; sourceTree = "<group>"; };
-		63F03D2316B09FD8004AF385 /* OPEManagedOsmRelation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedOsmRelation.m; sourceTree = "<group>"; };
-		63F03D2416B09FD8004AF385 /* OpeManagedOsmRelationMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpeManagedOsmRelationMember.h; sourceTree = "<group>"; };
-		63F03D2516B09FD8004AF385 /* OpeManagedOsmRelationMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpeManagedOsmRelationMember.m; sourceTree = "<group>"; };
-		63F03D2616B09FD8004AF385 /* OPEManagedOsmTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmTag.h; sourceTree = "<group>"; };
-		63F03D2716B09FD8004AF385 /* OPEManagedOsmTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedOsmTag.m; sourceTree = "<group>"; };
-		63F03D2816B09FD8004AF385 /* OPEManagedOsmWay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedOsmWay.h; sourceTree = "<group>"; };
-		63F03D2916B09FD8004AF385 /* OPEManagedOsmWay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedOsmWay.m; sourceTree = "<group>"; };
-		63F03D2A16B09FD8004AF385 /* OPEManagedReferenceOptional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedReferenceOptional.h; sourceTree = "<group>"; };
-		63F03D2B16B09FD8004AF385 /* OPEManagedReferenceOptional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedReferenceOptional.m; sourceTree = "<group>"; };
-		63F03D2C16B09FD8004AF385 /* OPEManagedReferenceOsmTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedReferenceOsmTag.h; sourceTree = "<group>"; };
-		63F03D2D16B09FD8004AF385 /* OPEManagedReferenceOsmTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedReferenceOsmTag.m; sourceTree = "<group>"; };
-		63F03D2E16B09FD8004AF385 /* OPEManagedReferencePoi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEManagedReferencePoi.h; sourceTree = "<group>"; };
-		63F03D3716B0A2D0004AF385 /* OPEManagedReferencePoi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEManagedReferencePoi.m; sourceTree = "<group>"; };
+		63F03D1E16B09FD8004AF385 /* OPEOsmElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOsmElement.h; sourceTree = "<group>"; };
+		63F03D1F16B09FD8004AF385 /* OPEOsmElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOsmElement.m; sourceTree = "<group>"; };
+		63F03D2016B09FD8004AF385 /* OPEOsmNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOsmNode.h; sourceTree = "<group>"; };
+		63F03D2116B09FD8004AF385 /* OPEOsmNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOsmNode.m; sourceTree = "<group>"; };
+		63F03D2216B09FD8004AF385 /* OPEOsmRelation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOsmRelation.h; sourceTree = "<group>"; };
+		63F03D2316B09FD8004AF385 /* OPEOsmRelation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOsmRelation.m; sourceTree = "<group>"; };
+		63F03D2416B09FD8004AF385 /* OPEOsmRelationMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOsmRelationMember.h; sourceTree = "<group>"; };
+		63F03D2516B09FD8004AF385 /* OPEOsmRelationMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOsmRelationMember.m; sourceTree = "<group>"; };
+		63F03D2616B09FD8004AF385 /* OPEOsmTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOsmTag.h; sourceTree = "<group>"; };
+		63F03D2716B09FD8004AF385 /* OPEOsmTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOsmTag.m; sourceTree = "<group>"; };
+		63F03D2816B09FD8004AF385 /* OPEOsmWay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOsmWay.h; sourceTree = "<group>"; };
+		63F03D2916B09FD8004AF385 /* OPEOsmWay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOsmWay.m; sourceTree = "<group>"; };
+		63F03D2A16B09FD8004AF385 /* OPEReferenceOptional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEReferenceOptional.h; sourceTree = "<group>"; };
+		63F03D2B16B09FD8004AF385 /* OPEReferenceOptional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEReferenceOptional.m; sourceTree = "<group>"; };
+		63F03D2C16B09FD8004AF385 /* OPEReferenceOsmTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEReferenceOsmTag.h; sourceTree = "<group>"; };
+		63F03D2D16B09FD8004AF385 /* OPEReferenceOsmTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEReferenceOsmTag.m; sourceTree = "<group>"; };
+		63F03D2E16B09FD8004AF385 /* OPEReferencePoi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEReferencePoi.h; sourceTree = "<group>"; };
+		63F03D3716B0A2D0004AF385 /* OPEReferencePoi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEReferencePoi.m; sourceTree = "<group>"; };
 		63F63D5A17684D340084E703 /* OPEWikipediaWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEWikipediaWebViewController.h; sourceTree = "<group>"; };
 		63F63D5B17684D340084E703 /* OPEWikipediaWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEWikipediaWebViewController.m; sourceTree = "<group>"; };
 		63FBA588171DFBED0098A2F3 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
@@ -1498,7 +1496,7 @@
 			isa = PBXGroup;
 			children = (
 				63D0A5C11700E997007A595E /* Geo */,
-				6333D39B1680F55900BF129E /* CoreData */,
+				6333D39B1680F55900BF129E /* Model */,
 				6332CB3716261E470088F5B0 /* Model */,
 				639F10A717C82548003EB958 /* Cells */,
 				63E17AD417CD18E000C24868 /* opening_hoursParser */,
@@ -1587,34 +1585,33 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		6333D39B1680F55900BF129E /* CoreData */ = {
+		6333D39B1680F55900BF129E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6391C67216AE2B370084D579 /* Model.xcdatamodel */,
-				63A964971729FA6100D14CA1 /* OPEManagedObject.h */,
-				63A964981729FA6100D14CA1 /* OPEManagedObject.m */,
-				63F03D1E16B09FD8004AF385 /* OPEManagedOsmElement.h */,
-				63F03D1F16B09FD8004AF385 /* OPEManagedOsmElement.m */,
-				63F03D2016B09FD8004AF385 /* OPEManagedOsmNode.h */,
-				63F03D2116B09FD8004AF385 /* OPEManagedOsmNode.m */,
-				63F03D2816B09FD8004AF385 /* OPEManagedOsmWay.h */,
-				63F03D2916B09FD8004AF385 /* OPEManagedOsmWay.m */,
-				63F03D2216B09FD8004AF385 /* OPEManagedOsmRelation.h */,
-				63F03D2316B09FD8004AF385 /* OPEManagedOsmRelation.m */,
-				63F03D2416B09FD8004AF385 /* OpeManagedOsmRelationMember.h */,
-				63F03D2516B09FD8004AF385 /* OpeManagedOsmRelationMember.m */,
-				63F03D2616B09FD8004AF385 /* OPEManagedOsmTag.h */,
-				63F03D2716B09FD8004AF385 /* OPEManagedOsmTag.m */,
-				63F03D2A16B09FD8004AF385 /* OPEManagedReferenceOptional.h */,
-				63F03D2B16B09FD8004AF385 /* OPEManagedReferenceOptional.m */,
-				63F03D2C16B09FD8004AF385 /* OPEManagedReferenceOsmTag.h */,
-				63F03D2D16B09FD8004AF385 /* OPEManagedReferenceOsmTag.m */,
-				63F03D2E16B09FD8004AF385 /* OPEManagedReferencePoi.h */,
-				63F03D3716B0A2D0004AF385 /* OPEManagedReferencePoi.m */,
+				63A964971729FA6100D14CA1 /* OPEObject.h */,
+				63A964981729FA6100D14CA1 /* OPEObject.m */,
+				63F03D1E16B09FD8004AF385 /* OPEOsmElement.h */,
+				63F03D1F16B09FD8004AF385 /* OPEOsmElement.m */,
+				63F03D2016B09FD8004AF385 /* OPEOsmNode.h */,
+				63F03D2116B09FD8004AF385 /* OPEOsmNode.m */,
+				63F03D2816B09FD8004AF385 /* OPEOsmWay.h */,
+				63F03D2916B09FD8004AF385 /* OPEOsmWay.m */,
+				63F03D2216B09FD8004AF385 /* OPEOsmRelation.h */,
+				63F03D2316B09FD8004AF385 /* OPEOsmRelation.m */,
+				63F03D2416B09FD8004AF385 /* OPEOsmRelationMember.h */,
+				63F03D2516B09FD8004AF385 /* OPEOsmRelationMember.m */,
+				63F03D2616B09FD8004AF385 /* OPEOsmTag.h */,
+				63F03D2716B09FD8004AF385 /* OPEOsmTag.m */,
+				63F03D2A16B09FD8004AF385 /* OPEReferenceOptional.h */,
+				63F03D2B16B09FD8004AF385 /* OPEReferenceOptional.m */,
+				63F03D2C16B09FD8004AF385 /* OPEReferenceOsmTag.h */,
+				63F03D2D16B09FD8004AF385 /* OPEReferenceOsmTag.m */,
+				63F03D2E16B09FD8004AF385 /* OPEReferencePoi.h */,
+				63F03D3716B0A2D0004AF385 /* OPEReferencePoi.m */,
 				6334FAB0186147560012CD40 /* OPECoreDataImporter.h */,
 				6334FAAE1861474A0012CD40 /* OPECoreDataImporter.m */,
 			);
-			name = CoreData;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		6334FAC51863D0BE0012CD40 /* ActionSheetPicker */ = {
@@ -2304,16 +2301,15 @@
 				63B1B7DB16698FAB006CFD68 /* OPEOpenStreetMapSource.m in Sources */,
 				6362032A17CC050B0031B982 /* OPEOSMTagConverter.m in Sources */,
 				63723A7117F25E9600DDCCAD /* AFURLRequestSerialization.m in Sources */,
-				6391C67316AE2B370084D579 /* Model.xcdatamodel in Sources */,
-				63F03D2F16B09FD8004AF385 /* OPEManagedOsmElement.m in Sources */,
-				63F03D3016B09FD8004AF385 /* OPEManagedOsmNode.m in Sources */,
-				63F03D3116B09FD8004AF385 /* OPEManagedOsmRelation.m in Sources */,
-				63F03D3216B09FD8004AF385 /* OpeManagedOsmRelationMember.m in Sources */,
-				63F03D3316B09FD8004AF385 /* OPEManagedOsmTag.m in Sources */,
-				63F03D3416B09FD8004AF385 /* OPEManagedOsmWay.m in Sources */,
-				63F03D3516B09FD8004AF385 /* OPEManagedReferenceOptional.m in Sources */,
-				63F03D3616B09FD8004AF385 /* OPEManagedReferenceOsmTag.m in Sources */,
-				63F03D3816B0A2D1004AF385 /* OPEManagedReferencePoi.m in Sources */,
+				63F03D2F16B09FD8004AF385 /* OPEOsmElement.m in Sources */,
+				63F03D3016B09FD8004AF385 /* OPEOsmNode.m in Sources */,
+				63F03D3116B09FD8004AF385 /* OPEOsmRelation.m in Sources */,
+				63F03D3216B09FD8004AF385 /* OPEOsmRelationMember.m in Sources */,
+				63F03D3316B09FD8004AF385 /* OPEOsmTag.m in Sources */,
+				63F03D3416B09FD8004AF385 /* OPEOsmWay.m in Sources */,
+				63F03D3516B09FD8004AF385 /* OPEReferenceOptional.m in Sources */,
+				63F03D3616B09FD8004AF385 /* OPEReferenceOsmTag.m in Sources */,
+				63F03D3816B0A2D1004AF385 /* OPEReferencePoi.m in Sources */,
 				63723A8817F25F2900DDCCAD /* UIProgressView+AFNetworking.m in Sources */,
 				63F01BF717D008BC00184A0C /* OPEOpeningHoursMonths+DaysOfWeekViewController.m in Sources */,
 				6334FACD1863D0FD0012CD40 /* ActionSheetStringPicker.m in Sources */,
@@ -2358,7 +2354,7 @@
 				63F01C0017D016AD00184A0C /* OPETimeRangeCell.m in Sources */,
 				63FBA5A9171DFBED0098A2F3 /* Way.m in Sources */,
 				63FBA5AC171E00F20098A2F3 /* Element.m in Sources */,
-				63A964991729FA6100D14CA1 /* OPEManagedObject.m in Sources */,
+				63A964991729FA6100D14CA1 /* OPEObject.m in Sources */,
 				6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */,
 				6387126D17582655006C3A4E /* OPENewNodeSelectViewController.m in Sources */,
 				632E0FB0189093FB002C4581 /* OPEConstants.m in Sources */,

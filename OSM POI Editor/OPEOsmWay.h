@@ -1,8 +1,8 @@
 #import "CoreLocation/CoreLocation.h"
 #import "Way.h"
-#import "OPEManagedOsmElement.h"
+#import "OPEOsmElement.h"
 
-@interface OPEManagedOsmWay : OPEManagedOsmElement{}
+@interface OPEOsmWay : OPEOsmElement{}
 // Custom logic goes here.
 
 @property (nonatomic,strong) Way * element;

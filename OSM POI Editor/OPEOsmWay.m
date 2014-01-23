@@ -1,18 +1,18 @@
-#import "OPEManagedOsmWay.h"
-#import "OPEManagedOsmNode.h"
-#import "OPEManagedOsmTag.h"
+#import "OPEOsmWay.h"
+#import "OPEOsmNode.h"
+#import "OPEOsmTag.h"
 #import "OPEGeo.h"
 #import "OPEGeoCentroid.h"
 
 
-@interface OPEManagedOsmWay ()
+@interface OPEOsmWay ()
 
 // Private interface goes here.
 
 @end
 
 
-@implementation OPEManagedOsmWay
+@implementation OPEOsmWay
 
 @synthesize points = _points;
 

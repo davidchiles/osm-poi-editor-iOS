@@ -32,7 +32,7 @@
 	
     
     
-    if (self.managedOptional.type == OPEOptionalTypeNumber) {
+    if (self.referenceOptional.type == OPEOptionalTypeNumber) {
         self.textField.keyboardType = UIKeyboardTypeNumberPad;
     }
     

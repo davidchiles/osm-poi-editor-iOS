@@ -8,24 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
-#import "OPEManagedOsmElement.h"
+#import "OPEOsmElement.h"
 #import "FMDatabaseQueue.h"
 #import "OPEOSMData.h"
 
 @interface OPEOSMSearchManager : NSObject
 {
-    OPEManagedOsmElement * currentElement;
+    OPEOsmElement * currentElement;
     FMDatabaseQueue * databaseQueue;
     OPEOSMData * osmData;
 }
 
 
--(NSArray *)nearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey;
+-(NSArray *)nearbyValuesForElement:(OPEOsmElement *)element withOsmKey:(NSString *)osmKey;
 -(NSArray *)sortedNearbyValuesForCoordinate:(CLLocationCoordinate2D)coordinate withOsmKey:(NSString *)osmKey;
 -(NSDictionary *)localReverseGeocode:(CLLocationCoordinate2D)coordinate;
 -(NSArray *)noNameHighways;
 -(NSArray *)recentlyUsedPoisArrayWithLength:(NSInteger)length;
 
-+(NSArray *)sortedNearbyValuesForElement:(OPEManagedOsmElement *)element withOsmKey:(NSString *)osmKey;
++(NSArray *)sortedNearbyValuesForElement:(OPEOsmElement *)element withOsmKey:(NSString *)osmKey;
 
 @end

@@ -1,9 +1,9 @@
-#import "OPEManagedReferenceOsmTag.h"
-#import "OPEManagedObject.h"
+#import "OPEReferenceOsmTag.h"
+#import "OPEObject.h"
 #import "OPEConstants.h"
 
 
-@interface OPEManagedReferenceOptional : OPEManagedObject {}
+@interface OPEReferenceOptional : OPEObject {}
 
 @property (nonatomic,strong) NSString * displayName;
 @property (nonatomic,strong) NSString * name;
@@ -18,7 +18,7 @@
 -(NSString *)displayNameForKey:(NSString *)osmKey withValue:(NSString *)osmValue;
 -(NSArray *)allDisplayNames;
 -(NSArray *)allSortedTags;
--(OPEManagedReferenceOsmTag *)managedReferenceOsmTagWithName:(NSString *)name;
+-(OPEReferenceOsmTag *)referenceOsmTagWithName:(NSString *)name;
 -(NSString *)sqliteInsertString;
 
 -(NSString *)sqliteOptionalTagsInsertString;

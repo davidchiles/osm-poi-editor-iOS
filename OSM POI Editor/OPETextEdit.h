@@ -21,7 +21,7 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
-#import "OPEManagedOsmTag.h"
+#import "OPEOsmTag.h"
 
 @protocol editTagDelegate <NSObject>
 @required

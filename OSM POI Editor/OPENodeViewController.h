@@ -27,7 +27,7 @@
 #import "OPETagValueList.h"
 #import "OPEType.h"
 #import "RMAnnotation.h"
-#import "OPEManagedOsmElement.h"
+#import "OPEOsmElement.h"
 #import "OPETagEditViewController.h"
 #import "OPEBaseViewController.h"
 
@@ -55,13 +55,13 @@
 @property (nonatomic, strong) UIBarButtonItem * saveButton;
 @property (nonatomic, strong) id <OPENodeViewDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray * tableSections;
-@property (nonatomic, strong) OPEManagedOsmElement * managedOsmElement;
+@property (nonatomic, strong) OPEOsmElement * managedOsmElement;
 @property (nonatomic) BOOL newElement;
 @property (nonatomic, strong) NSArray * optionalSectionsArray;
 
 @property (nonatomic,copy) newTagBlock newTagBlock;
 
-- (id)initWithOsmElement:(OPEManagedOsmElement *)element delegate:(id<OPENodeViewDelegate>)delegate;
+- (id)initWithOsmElement:(OPEOsmElement *)element delegate:(id<OPENodeViewDelegate>)delegate;
 
 - (void) saveButtonPressed;
 - (void) checkSaveButton;

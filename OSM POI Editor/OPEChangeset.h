@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class OPEManagedOsmElement;
+@class OPEOsmElement;
 
 @interface OPEChangeset : NSObject
 
@@ -20,7 +20,7 @@
 @property (nonatomic, strong) NSString * message;
 @property (nonatomic, strong) NSMutableDictionary * tags;
 
--(void)addElement:(OPEManagedOsmElement *)element;
+-(void)addElement:(OPEOsmElement *)element;
 -(BOOL)hasNodes;
 -(BOOL)hasWays;
 -(BOOL)hasRelations;
