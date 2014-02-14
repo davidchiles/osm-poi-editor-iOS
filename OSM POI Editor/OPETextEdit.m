@@ -72,7 +72,6 @@
     
     
     if ([type isEqualToString:kTypeLabel] || [type isEqualToString:kTypeNumber] || [type isEqualToString:kTypePhone] || [type isEqualToString:kTypeUrl] || [type isEqualToString:kTypeEmail]) {
-        NSLog(@"It's a label");
         self.textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 300, 35)];
         self.textField.delegate = self;
         self.textField.font = [UIFont systemFontOfSize:24.0];
@@ -125,7 +124,7 @@
     //Recently used Tags
     if ([prefs objectForKey:osmKey]) {
         NSArray * recentArray = [NSArray arrayWithArray:[prefs objectForKey:osmKey]];
-        NSLog(@"Recently Used: %@",recentArray);
+        DDLogInfo(@"Recently Used: %@",recentArray);
         
         recentControl = [[UISegmentedControl alloc] initWithItems:recentArray];
         recentControl.frame = CGRectMake(0, 0, 300, 150);

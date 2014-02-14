@@ -20,6 +20,14 @@
     return 3;
 }
 
+-(NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return [OPETagEditViewController sectionFootnoteForOsmKey:self.osmKey];
+    }
+    return @"";
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifierText = @"Cell_Section_1";

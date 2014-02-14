@@ -13,6 +13,8 @@
 #import "OPEOSMData.h"
 #import "OPETranslate.h"
 
+#import "OPELog.h"
+
 @interface OPEWikipediaEditViewController ()
 
 @end
@@ -51,7 +53,7 @@
         NSArray *relativeComplement = [results filteredArrayUsingPredicate:relativeComplementPredicate];
         [languages addObjectsFromArray:relativeComplement];
     } failure:^(NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"Error");
+        DDLogError(@"Error");
     }];
     
     [self updateLocalSeach];
@@ -72,7 +74,7 @@
         
         
     } failure:^(NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"Error");
+        DDLogError(@"Error");
     }];
 }
 
@@ -86,12 +88,12 @@
     }
     
     [ActionSheetStringPicker showPickerWithTitle:@"Wikipedia Language" rows:[supportedWikipedialanguges valueForKey:@"*"] initialSelection:index doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
-        NSLog(@"selected %@",selectedValue);
+        DDLogInfo(@"selected %@",selectedValue);
         self.locale = [[supportedWikipedialanguges objectAtIndex:selectedIndex] objectForKey:@"code"];
         [languageButton setTitle:self.locale forState:UIControlStateNormal];
         [self updateLocalSeach];
     } cancelBlock:^(ActionSheetStringPicker *picker) {
-        NSLog(@"cancel selected");
+        DDLogInfo(@"cancel selected");
     } origin:sender];
     
     //[self.view addSubview:pickerView];
@@ -111,7 +113,7 @@
             [self updateResults:nearbyTitles];
         }
     } failure:^(NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"error");
+        DDLogError(@"error");
         [self updateResults:@[]];
     }];
     

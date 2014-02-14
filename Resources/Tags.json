@@ -2244,6 +2244,17 @@
         "shop" : "butcher"
       }
     },
+    "Seafood" : {
+      "optional" : [
+        "wheelchair",
+        "contact",
+        "address"
+      ],
+      "image" : "none",
+      "tags" : {
+        "shop" : "seafood"
+      }
+    },
     "Deli" : {
       "optional" : [
         "wheelchair",

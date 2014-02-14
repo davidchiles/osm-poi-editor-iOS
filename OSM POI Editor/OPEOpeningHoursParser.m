@@ -20,6 +20,8 @@
 #import "OPEOpeningHoursParser.h"
 #import "OPEStrings.h"
 
+#import "OPELog.h"
+
 @implementation OPEDateComponents
 @synthesize isSunrise=_isSunrise;
 @synthesize isSunset=_isSunset;
@@ -219,7 +221,7 @@
 -(void)parseString:(NSString *)string
            success:(void (^)(NSArray *blocks))success
            failure:(void (^)(NSError *error))failure {
-     NSLog(@"Original: %@",string);
+    DDLogInfo(@"Original: %@",string);
     string = string.lowercaseString;
     
     NSArray * rules = [string componentsSeparatedByString:@";"];
@@ -235,9 +237,7 @@
         success(blocks);
     }
     
-    //NSLog(@"blocks: %@",blocks);
-   
-    NSLog(@"Round Trip: %@",[self stringWithRules:blocks]);
+    DDLogInfo(@"Round Trip: %@",[self stringWithRules:blocks]);
     
 }
 

@@ -9,6 +9,8 @@
 #import "OPEDone+CancelViewController.h"
 #import "OPEStrings.h"
 
+#import "OPELog.h"
+
 @interface OPEDone_CancelViewController ()
 
 @end
@@ -49,12 +51,12 @@
 
 -(void)doneButtonPressed:(id)sender
 {
-    NSLog(@"%@",@"Done Button Pressed");
+    DDLogInfo(@"%@",@"Done Button Pressed");
     [self popViewController];
 }
 -(void)cancelButtonPressed:(id)sender
 {
-    NSLog(@"%@",@"Cancel Button Pressed");
+    DDLogInfo(@"%@",@"Cancel Button Pressed");
     [self popViewController];
 }
 

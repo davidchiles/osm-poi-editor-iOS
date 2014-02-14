@@ -50,6 +50,8 @@
 
 #import "OPECrosshairMapView.h"
 
+#import "OPELog.h"
+
 
 #define noNameTag 100
 
@@ -135,7 +137,6 @@
     [locationManager startUpdatingLocation];
     
     CLLocationCoordinate2D initLocation;
-    //NSLog(@"location Manager: %@",[locationManager location]);
     
     initLocation.latitude  = 37.871667;
     initLocation.longitude =  -122.272778;
@@ -319,11 +320,11 @@
     RMSphericalTrapezium geoBox = [map latitudeLongitudeBoundingBox];
     if (map.zoom > MINZOOM) {
         [self.downloadManger downloadNotesWithSW:geoBox.southWest forNE:geoBox.northEast didStartParsing:^{
-            NSLog(@"Start parsing Notes");
+            DDLogInfo(@"Start parsing Notes");
         } didFinsihParsing:^(NSArray *newNotes) {
             [self didFindNewNotes:newNotes];
         } faiure:^(NSError *error) {
-            NSLog(@"Error");
+            DDLogError(@"Error");
         }];
     }
 }
@@ -334,7 +335,7 @@
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"Denied Location: %@",error.userInfo);
+    DDLogError(@"Denied Location: %@",error.userInfo);
 }
 
 
@@ -346,7 +347,7 @@
         [self.mapView removeAllCachedImages];
         [self.mapView setTileSource:tileSource];
     }
-    NSLog(@"TileSource: %@",((id<RMTileSource>)tileSource));
+    DDLogInfo(@"TileSource: %@",((id<RMTileSource>)tileSource));
     
 }
 
@@ -357,7 +358,7 @@
     CLLocationCoordinate2D center = self.mapView.centerCoordinate;
     
     if ([self.downloadManger downloadedAreaContainsPoint:center] || YES) {
-        NSLog(@"Should be allowed to download");
+        DDLogInfo(@"Should be allowed to download");
         if (self.mapView.zoom > MINZOOM) {
             
             OPEOsmNode * node = [OPEOsmNode newNode];
@@ -378,7 +379,7 @@
         }
     }
     else {
-        NSLog(@"Outside downloaded area");
+        DDLogError(@"Outside downloaded area");
         
         UIAlertView * zoomAlert = [[UIAlertView alloc]
                                    initWithTitle: ADD_ALERT_TITLE_STRING
@@ -415,7 +416,6 @@
                 [attribution appendString:[tileSource shortAttribution]];
         }
     }
-    //NSLog(@"info button pressed");
     OPEInfoViewController * viewer = [[OPEInfoViewController alloc] init];
     [viewer setDelegate:self];
     viewer.attributionString = attribution;

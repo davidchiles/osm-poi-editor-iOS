@@ -91,7 +91,7 @@
         return YES;
     }
     if ([[[request URL] scheme] isEqual:@"mailto"]) {
-        NSLog(@"mailto tapped");
+        DDLogInfo(@"mailto tapped");
         [[UIApplication sharedApplication] openURL:[request URL]];
         
         return NO;

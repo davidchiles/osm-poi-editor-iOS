@@ -9,6 +9,8 @@
 #import "OPEBaseViewController.h"
 #import "OPEStrings.h"
 
+#import "OPELog.h"
+
 #define authErrorTag 101
 
 @interface OPEBaseViewController ()
@@ -85,7 +87,7 @@
     GTMOAuthAuthentication *auth = [OPEOSMAPIManager osmAuth];
     if (auth == nil) {
         // perhaps display something friendlier in the UI?
-        NSLog(@"A valid consumer key and consumer secret are required for signing in to OSM");
+        DDLogInfo(@"A valid consumer key and consumer secret are required for signing in to OSM");
     }
     
     // set the callback URL to which the site should redirect, and for which
@@ -116,13 +118,13 @@
     if (error != nil) {
         // Authentication failed (perhaps the user denied access, or closed the
         // window before granting access)
-        NSLog(@"Authentication error: %@", error);
+        DDLogError(@"Authentication error: %@", error);
         NSData *responseData = [[error userInfo] objectForKey:@"data"];// kGTMHTTPFetcherStatusDataKey
         if ([responseData length] > 0) {
             // show the body of the server's authentication failure response
             NSString *str = [[NSString alloc] initWithData:responseData
                                                   encoding:NSUTF8StringEncoding];
-            NSLog(@"%@", str);
+            DDLogInfo(@"%@", str);
         }
         
         //[self setAuthentication:nil];
@@ -144,7 +146,7 @@
         // Just to prove we're signed in, we'll attempt an authenticated fetch for the
         // signed-in user
         //[self doAnAuthenticatedAPIFetch];
-        NSLog(@"Suceeed");
+        DDLogInfo(@"Suceeed");
         
         //[self dismissModalViewControllerAnimated:YES];
     }
@@ -154,7 +156,7 @@
 
 -(void)findishedAuthWithError:(NSError *)error
 {
-    NSLog(@"AUTH ERROR: %@",error);
+    DDLogError(@"AUTH ERROR: %@",error);
 }
 
 

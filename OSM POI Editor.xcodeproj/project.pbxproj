@@ -318,6 +318,12 @@
 		633CD870164B24D900678D58 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86F164B24D900678D58 /* libz.1.1.3.dylib */; };
 		633CD872164B24EE00678D58 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD871164B24EE00678D58 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		633CD874164B24F700678D58 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD873164B24F700678D58 /* StoreKit.framework */; };
+		63433EBF18ADA03600265C55 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 63433EB018ADA03600265C55 /* DDLog.m */; };
+		63433EC018ADA03600265C55 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 63433EB218ADA03600265C55 /* DDTTYLogger.m */; };
+		63433EC118ADA03600265C55 /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63433EB518ADA03600265C55 /* DDContextFilterLogFormatter.m */; };
+		63433EC218ADA03600265C55 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63433EB718ADA03600265C55 /* DDDispatchQueueLogFormatter.m */; };
+		63433EC318ADA03600265C55 /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63433EB918ADA03600265C55 /* DDMultiFormatter.m */; };
+		63433EC418ADA03600265C55 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 63433EBA18ADA03600265C55 /* README.txt */; };
 		6345E58014E3122900F55486 /* OPENodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6345E57E14E3122900F55486 /* OPENodeViewController.m */; };
 		6362032A17CC050B0031B982 /* OPEOSMTagConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6362032917CC050B0031B982 /* OPEOSMTagConverter.m */; };
 		636549E8171CDE8000F16772 /* OPEGeoCentroid.m in Sources */ = {isa = PBXBuildFile; fileRef = 636549E7171CDE8000F16772 /* OPEGeoCentroid.m */; };
@@ -819,6 +825,18 @@
 		633CD86F164B24D900678D58 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
 		633CD871164B24EE00678D58 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		633CD873164B24F700678D58 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		63433E9718AD9DCF00265C55 /* OPELog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPELog.h; sourceTree = "<group>"; };
+		63433EAF18ADA03600265C55 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
+		63433EB018ADA03600265C55 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
+		63433EB118ADA03600265C55 /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTTYLogger.h; sourceTree = "<group>"; };
+		63433EB218ADA03600265C55 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTTYLogger.m; sourceTree = "<group>"; };
+		63433EB418ADA03600265C55 /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDContextFilterLogFormatter.h; sourceTree = "<group>"; };
+		63433EB518ADA03600265C55 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDContextFilterLogFormatter.m; sourceTree = "<group>"; };
+		63433EB618ADA03600265C55 /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDDispatchQueueLogFormatter.h; sourceTree = "<group>"; };
+		63433EB718ADA03600265C55 /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDispatchQueueLogFormatter.m; sourceTree = "<group>"; };
+		63433EB818ADA03600265C55 /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDMultiFormatter.h; sourceTree = "<group>"; };
+		63433EB918ADA03600265C55 /* DDMultiFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDMultiFormatter.m; sourceTree = "<group>"; };
+		63433EBA18ADA03600265C55 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		6345E57D14E3122900F55486 /* OPENodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENodeViewController.h; sourceTree = "<group>"; };
 		6345E57E14E3122900F55486 /* OPENodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENodeViewController.m; sourceTree = "<group>"; };
 		6362032817CC050B0031B982 /* OPEOSMTagConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMTagConverter.h; sourceTree = "<group>"; };
@@ -1492,6 +1510,7 @@
 				63E17AD417CD18E000C24868 /* opening_hoursParser */,
 				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
 				632E0FAE189093FB002C4581 /* OPEConstants.h */,
+				63433E9718AD9DCF00265C55 /* OPELog.h */,
 				632E0FAF189093FB002C4581 /* OPEConstants.m */,
 				63FCA44F1643363700A28470 /* OPEUtility.h */,
 				63FCA4501643363700A28470 /* OPEUtility.m */,
@@ -1600,6 +1619,33 @@
 				6334FACC1863D0FD0012CD40 /* ActionSheetStringPicker.m */,
 			);
 			name = ActionSheetPicker;
+			sourceTree = "<group>";
+		};
+		63433EA418ADA03600265C55 /* Lumberjack */ = {
+			isa = PBXGroup;
+			children = (
+				63433EAF18ADA03600265C55 /* DDLog.h */,
+				63433EB018ADA03600265C55 /* DDLog.m */,
+				63433EB118ADA03600265C55 /* DDTTYLogger.h */,
+				63433EB218ADA03600265C55 /* DDTTYLogger.m */,
+				63433EB318ADA03600265C55 /* Extensions */,
+			);
+			name = Lumberjack;
+			path = lib/CocoaLumberjack/Lumberjack;
+			sourceTree = SOURCE_ROOT;
+		};
+		63433EB318ADA03600265C55 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				63433EB418ADA03600265C55 /* DDContextFilterLogFormatter.h */,
+				63433EB518ADA03600265C55 /* DDContextFilterLogFormatter.m */,
+				63433EB618ADA03600265C55 /* DDDispatchQueueLogFormatter.h */,
+				63433EB718ADA03600265C55 /* DDDispatchQueueLogFormatter.m */,
+				63433EB818ADA03600265C55 /* DDMultiFormatter.h */,
+				63433EB918ADA03600265C55 /* DDMultiFormatter.m */,
+				63433EBA18ADA03600265C55 /* README.txt */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		636D781A152E58FD005E31A3 /* MBProgressHUD */ = {
@@ -1752,6 +1798,7 @@
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				63433EA418ADA03600265C55 /* Lumberjack */,
 				632E0FA218909185002C4581 /* MapView.xcodeproj */,
 				6334FAC51863D0BE0012CD40 /* ActionSheetPicker */,
 				63962B2217975A95008B897C /* DAKeyboardControl */,
@@ -2134,6 +2181,7 @@
 				632669B517164579002CD7E4 /* farm@2x.png in Resources */,
 				632669B617164579002CD7E4 /* fast_food@2x.png in Resources */,
 				632669B717164579002CD7E4 /* ferry@2x.png in Resources */,
+				63433EC418ADA03600265C55 /* README.txt in Resources */,
 				632669B817164579002CD7E4 /* fire_hydrant@2x.png in Resources */,
 				632669B917164579002CD7E4 /* fire_station@2x.png in Resources */,
 				632669BA17164579002CD7E4 /* first_aid@2x.png in Resources */,
@@ -2264,6 +2312,7 @@
 				63292E6B1593ED670010A11B /* OPEBinaryCell.m in Sources */,
 				63EB72E017CFF8170042F4A4 /* OPEDone+CancelViewController.m in Sources */,
 				63292E6C1593ED670010A11B /* OPEPhoneCell.m in Sources */,
+				63433EBF18ADA03600265C55 /* DDLog.m in Sources */,
 				6334FACB1863D0E40012CD40 /* AbstractActionSheetPicker.m in Sources */,
 				63723A7317F25E9600DDCCAD /* AFURLSessionManager.m in Sources */,
 				63292E6D1593ED670010A11B /* OPESpecialCell2.m in Sources */,
@@ -2329,6 +2378,7 @@
 				63FBA5A9171DFBED0098A2F3 /* Way.m in Sources */,
 				63FBA5AC171E00F20098A2F3 /* Element.m in Sources */,
 				63A964991729FA6100D14CA1 /* OPEObject.m in Sources */,
+				63433EC118ADA03600265C55 /* DDContextFilterLogFormatter.m in Sources */,
 				6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */,
 				6387126D17582655006C3A4E /* OPENewNodeSelectViewController.m in Sources */,
 				632E0FB0189093FB002C4581 /* OPEConstants.m in Sources */,
@@ -2338,10 +2388,12 @@
 				63723A8617F25F2900DDCCAD /* UIButton+AFNetworking.m in Sources */,
 				63723A8F17F2A3BF00DDCCAD /* OPEMapManager.m in Sources */,
 				630A878E17680FE1003C9423 /* NSString+FontAwesome.m in Sources */,
+				63433EC018ADA03600265C55 /* DDTTYLogger.m in Sources */,
 				630A879017680FE1003C9423 /* UIColor+BButton.m in Sources */,
 				630A879617682275003C9423 /* OPEWikipediaManager.m in Sources */,
 				630A8799176827F3003C9423 /* OPEWikipediaEditViewController.m in Sources */,
 				63723A7017F25E9600DDCCAD /* AFURLConnectionOperation.m in Sources */,
+				63433EC218ADA03600265C55 /* DDDispatchQueueLogFormatter.m in Sources */,
 				639F10AA17C82669003EB958 /* OPEBaseSpecialCell.m in Sources */,
 				63F63D5C17684D340084E703 /* OPEWikipediaWebViewController.m in Sources */,
 				63233BAA17DA90990026CFC5 /* OPEDownloadManager.m in Sources */,
@@ -2356,6 +2408,7 @@
 				63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */,
 				63962B1B17961FAB008B897C /* OPECommentCell.m in Sources */,
 				63723A8317F25F2900DDCCAD /* AFNetworkActivityIndicatorManager.m in Sources */,
+				63433EC318ADA03600265C55 /* DDMultiFormatter.m in Sources */,
 				63962B1F179621A0008B897C /* TTTAttributedLabel.m in Sources */,
 				63962B2517975A95008B897C /* DAKeyboardControl.m in Sources */,
 				63723A6D17F25E9600DDCCAD /* AFHTTPSessionManager.m in Sources */,

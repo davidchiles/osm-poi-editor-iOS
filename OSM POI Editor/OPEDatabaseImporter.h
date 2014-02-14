@@ -13,10 +13,6 @@
 #import "FMDatabaseQueue.h"
 
 @interface OPEDatabaseImporter : NSObject
-{
-    FMDatabaseQueue *queue;
-}
-
 
 -(void)import;
 

@@ -23,6 +23,8 @@
 #import "OPEMessageView.h"
 #import <QuartzCore/QuartzCore.h>
 
+#import "OPELog.h"
+
 @implementation OPEMessageView
 @synthesize textLabel;
 
@@ -47,7 +49,7 @@
 #define WIDTH 180.0
 - (id)init
 {   
-    NSLog(@"super width: %f",self.superview.frame.size.width);
+    DDLogInfo(@"super width: %f",self.superview.frame.size.width);
     float x = 320/2-WIDTH/2;
     float y = 55.0;
     CGRect frame = CGRectMake(x, y, WIDTH, HEIGHT);

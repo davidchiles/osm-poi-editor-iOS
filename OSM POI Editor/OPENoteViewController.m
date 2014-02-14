@@ -14,6 +14,8 @@
 #import "OPEOSMAPIManager.h"
 #import "OPEOSMData.h"
 
+#import "OPELog.h"
+
 #define kChatBarHeight1                      40
 #define kTextViewTag 101
 #define kTableViewTag 102
@@ -180,7 +182,7 @@
 {
     if ([self textViewHasTextLength]) {
         void (^succesBlock)(id) =  ^(id JSON) {
-            NSLog(@"return data: %@",JSON);
+            DDLogInfo(@"return data: %@",JSON);
             [self clearTextViewText];
             self.note = [self.osmData createNoteWithJSONDictionary:JSON];
             [self reloadData];
@@ -192,14 +194,14 @@
         if (self.note.id > 0) {
             
             [self.osmApiManager createNewComment:comment withNote:self.note success:succesBlock failure:^(NSError *error) {
-                NSLog(@"error: %@",error);
+                DDLogError(@"error: %@",error);
             }];
         }
         else{
             //new note
             
             [self.osmApiManager createNewNote:self.note success:succesBlock failure:^(NSError *error) {
-                NSLog(@"error: %@",error);
+                DDLogError(@"error: %@",error);
             }];
             
             
@@ -233,7 +235,7 @@
             [self reloadData];
             [self scrollToBottomAnimated:YES];
         } failure:^(NSError *error) {
-            NSLog(@"error: %@",error);
+            DDLogError(@"error: %@",error);
         }];
     }
     else if (buttonIndex == 1 && actionSheet.numberOfButtons > 2)
@@ -245,7 +247,7 @@
             [self reloadData];
             [self scrollToBottomAnimated:YES];
         } failure:^(NSError *error) {
-            NSLog(@"error: %@",error);
+            DDLogError(@"error: %@",error);
         }];
     }
     //[actionSheet dismissWithClickedButtonIndex:buttonIndex animated:YES];

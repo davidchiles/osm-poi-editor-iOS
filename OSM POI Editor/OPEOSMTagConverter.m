@@ -8,6 +8,8 @@
 
 #import "OPEOSMTagConverter.h"
 
+#import "OPELog.h"
+
 @implementation OPEOSMTagConverter
 
 +(phoneNumber)phoneNumberWithOsmValue:(NSString *)string
@@ -67,7 +69,7 @@
     NSError * error = nil;
     NSRegularExpression * regularExpression = [NSRegularExpression regularExpressionWithPattern:@"(\(d+))" options:NSRegularExpressionCaseInsensitive error:&error];
     if (error) {
-        NSLog(@"RegEx Error: %@",error);
+        DDLogInfo(@"RegEx Error: %@",error);
     }
     
     NSRange range = [regularExpression rangeOfFirstMatchInString:string options:NSMatchingCompleted range:NSMakeRange(0, [string length])];
@@ -86,7 +88,7 @@
         NSError * error = nil;
         NSRegularExpression * regularExpression = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:&error];
         if (error) {
-            NSLog(@"RegEx Error: %@",error);
+            DDLogInfo(@"RegEx Error: %@",error);
         }
 
         NSRange range = [regularExpression rangeOfFirstMatchInString:string options:NSMatchingCompleted range:NSMakeRange(0, [string length])];

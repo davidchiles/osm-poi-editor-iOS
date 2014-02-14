@@ -13,6 +13,7 @@
 #import "OPEOsmRelation.h"
 #import "Node.h"
 #import "OPEGeo.h"
+#import "OPELog.h"
 
 @implementation OPEOSMSearchManager
 
@@ -67,8 +68,8 @@
 {
     __block NSMutableSet * resultsSet = [NSMutableSet set];
     [databaseQueue inDatabase:^(FMDatabase *db) {
-        db.traceExecution = YES;
-        db.logsErrors = YES;
+        db.logsErrors = OPELogDatabaseErrors;
+        db.traceExecution = OPETraceDatabaseTraceExecution;
         
         NSString * keysString = [[osmKeys allObjects] componentsJoinedByString:@"\',\'"];
         NSString * sql = [NSString stringWithFormat:@"SELECT key,value FROM ways_tags WHERE key in (\'%@\')  UNION SELECT key,value FROM nodes_tags WHERE key in (\'%@\') UNION SELECT key,value FROM relations_tags WHERE key in (\'%@\')",keysString,keysString,keysString];
@@ -271,8 +272,8 @@
 {
     NSMutableArray * resultArray = [NSMutableArray array];
     [databaseQueue inDatabase:^(FMDatabase *db) {
-        db.logsErrors = YES;
-        db.traceExecution = YES;
+        db.logsErrors = OPELogDatabaseErrors;
+        db.traceExecution = OPETraceDatabaseTraceExecution;
         FMResultSet * resultsSet = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi NATURAL JOIN poi_lastUsed where date IS NOT NULL AND editOnly = 0 AND isLegacy = 0 order by datetime(date) DESC limit ?",[NSNumber numberWithInteger:length]];
         
         while ([resultsSet next]) {
@@ -329,8 +330,8 @@
     for(NSString * osmType in @[kOPEOsmElementNode,kOPEOsmElementWay,kOPEOsmElementRelation])
     {
         [databaseQueue inDatabase:^(FMDatabase *db) {
-            db.logsErrors = YES;
-            db.traceExecution = YES;
+            db.logsErrors = OPELogDatabaseErrors;
+            db.traceExecution = OPETraceDatabaseTraceExecution;
             NSString * dbQuery = [NSString stringWithFormat:@"select * from (select key,value,%@_id as id from %@s_tags where %@s_tags.key='%@') as tags,%@s where tags.id = %@s.id",osmType,osmType,osmType,osmKey,osmType,osmType];
             FMResultSet * result = [db executeQuery:dbQuery];
             

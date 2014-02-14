@@ -41,6 +41,8 @@
 #import "OPEMoveNodeViewController.h"
 #import "OPEButtonCell.h"
 
+#import "OPELog.h"
+
 
 
 @implementation OPENodeViewController
@@ -588,7 +590,7 @@
     }
     else{
         [self.apiManager reverseLookupAddress:center success:saveDict failure:^(NSError *error) {
-             NSLog(@"error");
+             DDLogError(@"error");
         }];
     }
 }
@@ -623,7 +625,7 @@
         
     }
     else {
-        NSLog(@"NO CHANGES TO UPLOAD");
+        DDLogInfo(@"NO CHANGES TO UPLOAD");
     }
 }
 
@@ -634,7 +636,7 @@
         [self showAuthError];
     }
     else {
-        NSLog(@"Delete Button Pressed");
+        DDLogInfo(@"Delete Button Pressed");
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:DELETE_ALERT_TITLE_STRING
                                                           message:DELETE_ALERT_STRING
                                                          delegate:self
@@ -655,7 +657,7 @@
         {
             self.managedOsmElement.action = kActionTypeDelete;
             
-            NSLog(@"Button YES was selected.");
+            DDLogInfo(@"Button YES was selected.");
             
             
             [self.navigationController.view addSubview:self.HUD];
@@ -690,7 +692,7 @@
         }
         else
         {
-            NSLog(@"Button Cancel was selected.");
+            DDLogInfo(@"Button Cancel was selected.");
         }
     }
     
@@ -738,7 +740,6 @@
 
 - (void)checkSaveButton
 {
-    //NSLog(@"cAndT count %d",[catAndType count]);
     if (([self elementModified] && managedOsmElement.type) || managedOsmElement.elementID < 0) {
         self.saveButton.enabled = YES;
     }

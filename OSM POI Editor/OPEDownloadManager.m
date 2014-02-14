@@ -16,6 +16,8 @@
 #import "OPEUtility.h"
 #import "OPEGeo.h"
 
+#import "OPELog.h"
+
 @implementation OPEDownloadManager
 
 @synthesize dowloadedAreas,foundMatchingElementsBlock,notesDictionary;
@@ -90,7 +92,7 @@
                 }
                 
                 
-                NSLog(@"%@",obj);
+                DDLogInfo(@"%@",obj);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (finishParsing) {
                         finishParsing(newNotes);

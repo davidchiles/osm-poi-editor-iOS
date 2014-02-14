@@ -13,9 +13,16 @@
 #import "FMDatabase.h"
 #import "FMDatabaseQueue.h"
 #import "OSMDAO.h"
+#import "OPELog.h"
 
 #define tagsFilePath [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"json"]
 #define optionalPlistFilePath [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"json"]
+
+@interface OPEDatabaseImporter ()
+
+@property (nonatomic,strong) FMDatabaseQueue * databaseQueue;
+
+@end
 
 
 @implementation OPEDatabaseImporter
@@ -24,8 +31,7 @@
 {
     if(self = [super init])
     {
-        queue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
-        
+        self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
     }
     return self;
 }
@@ -44,7 +50,7 @@
     NSError * error = nil;
     NSData * data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:&error];
     NSDictionary * optionalDictionary = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
-    [queue inDatabase:^(FMDatabase *db) {
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
         for (NSString * name in optionalDictionary)
         {
             int sortOrer = [optionalDictionary[name] intValue];
@@ -60,8 +66,9 @@
     NSError * error = nil;
     NSData * data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:&error];
     NSDictionary * optionalDictionary = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
-    [queue inDatabase:^(FMDatabase *db) {
-        db.logsErrors = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        db.logsErrors = OPELogDatabaseErrors;
+        
         
         for(NSString * key in optionalDictionary)
         {
@@ -89,8 +96,9 @@
     NSError * error = nil;
     NSData * data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:&error];
     NSDictionary * dictionary = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
-    [queue inDatabase:^(FMDatabase *db) {
-        db.logsErrors = YES;
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+        db.logsErrors = OPELogDatabaseErrors;
+        db.traceExecution = OPETraceDatabaseTraceExecution;
         
         for(NSString * category in dictionary)
         {
@@ -113,7 +121,7 @@
                 }
                 else
                 {
-                    NSLog(@"Failed");
+                    DDLogError(@"Failed");
                 }
             }
             [db commit];
@@ -164,7 +172,6 @@
     if (tagsAttrs != nil || optionalAttrs != nil) {
         NSDate *tagsDate = (NSDate*)[tagsAttrs objectForKey: NSFileCreationDate];
         NSDate *optionalDate = (NSDate *)[optionalAttrs objectForKey:NSFileCreationDate];
-        //NSLog(@"Date Created: %@", [tagsAttrs description]);
         if ([tagsDate compare:optionalDate] == NSOrderedDescending) {
             return tagsDate;
         }
@@ -174,7 +181,7 @@
         }
     }
     else {
-        NSLog(@"Not found");
+        DDLogError(@"Not found");
     }
     return nil;
 }
@@ -202,7 +209,7 @@
 
 -(void)setupDatabase
 {
-    [queue inDatabase:^(FMDatabase *db) {
+    [self.databaseQueue inDatabase:^(FMDatabase *db) {
         BOOL result = NO;
         OSMDAO * osmData = [[OSMDAO alloc] initWithFilePath:[OPEConstants databasePath] overrideIfExists:YES];
         [OSMDAO initialize];

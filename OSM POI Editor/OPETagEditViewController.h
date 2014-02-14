@@ -25,10 +25,10 @@ typedef void (^newTagBlock)(NSString * key,NSString * value);
 
 @property (nonatomic, copy) newTagBlock completionBlock;
 
--(id)initWithOsmKey:(NSString *)osmKey value:(NSString *)value withCompletionBlock:(newTagBlock)newCompletionBlock;
+- (id)initWithOsmKey:(NSString *)osmKey value:(NSString *)value withCompletionBlock:(newTagBlock)newCompletionBlock;
 
-+(OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey currentOsmValue:(NSString *)osmValue andType:(OPEOptionalType)type withCompletionBlock:(newTagBlock)newCompletionBlock;
++ (OPETagEditViewController *)viewControllerWithOsmKey:(NSString *)osmKey currentOsmValue:(NSString *)osmValue andType:(OPEOptionalType)type withCompletionBlock:(newTagBlock)newCompletionBlock;
 
-+(NSString *)sectionFootnoteForOsmKey:(NSString *)osmKey;
++ (NSString *)sectionFootnoteForOsmKey:(NSString *)osmKey;
 
 @end

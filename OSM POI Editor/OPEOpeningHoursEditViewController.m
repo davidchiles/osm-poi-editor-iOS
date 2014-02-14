@@ -10,6 +10,8 @@
 #import "OPEOpeningHoursRuleEditViewController.h"
 #import "OPEStrings.h"
 
+#import "OPELog.h"
+
 @interface OPEOpeningHoursEditViewController ()
 
 @end
@@ -34,7 +36,7 @@
             self.rulesArray = [blocks mutableCopy];
             //[rulesTableView reloadData];
         } failure:^(NSError *error) {
-            NSLog(@"Error %@",error);
+            DDLogError(@"Error %@",error);
         }];
     }
     else {

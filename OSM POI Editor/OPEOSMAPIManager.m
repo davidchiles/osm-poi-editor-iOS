@@ -16,6 +16,8 @@
 #import "OPEGeo.h"
 #import "OPEOSMRequestSerializer.h"
 
+#import "OPELog.h"
+
 NSString *const putMethod = @"PUT";
 NSString *const deleteMethod = @"DELETE";
 

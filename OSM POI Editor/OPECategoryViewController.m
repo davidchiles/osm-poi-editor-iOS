@@ -118,7 +118,6 @@
     {
         for (OPEReferencePoi * currentPoi in self.typesArray)
         {
-            //NSLog(@"CurrentString: %@",currentString);
             NSString * currentString = currentPoi.name;
             NSRange range = [currentString rangeOfString:searchTerm options:NSCaseInsensitiveSearch];
             if (range.location != NSNotFound)

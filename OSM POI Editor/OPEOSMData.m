@@ -43,6 +43,8 @@
 #import "Note.h"
 #import "Comment.h"
 
+#import "OPELog.h"
+
 
 
 @implementation OPEOSMData
@@ -215,8 +217,8 @@
 {
     __block OPEReferencePoi * poi = nil;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        db.logsErrors = YES;
-        db.traceExecution = YES;
+        db.logsErrors = OPELogDatabaseErrors;
+        db.traceExecution = OPETraceDatabaseTraceExecution;
         FMResultSet * set = [db executeQuery:@"SELECT rowid as id,* FROM poi WHERE displayName = ?",name];
         
         while ([set next]) {
@@ -673,8 +675,8 @@
 {
     if (poi.rowID) {
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
-            db.logsErrors = YES;
-            db.traceExecution = YES;
+            db.logsErrors = OPELogDatabaseErrors;
+            db.traceExecution = OPETraceDatabaseTraceExecution;
             FMResultSet * set = [db executeQueryWithFormat:@"select displayName,osmKey,type,sectionSortOrder,optional_section.name AS section,optional.rowid AS id from pois_optionals,optional,optional_section where optional_id = optional.rowid AND poi_id = %d AND section_id = optional_section.rowid",poi.rowID];
             while([set next])
             {
@@ -756,8 +758,8 @@
 {
     __block OPEReferencePoi * blockPoi = poi;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        db.traceExecution = YES;
-        db.logsErrors = YES;
+        db.logsErrors = OPELogDatabaseErrors;
+        db.traceExecution = OPETraceDatabaseTraceExecution;
         FMResultSet * set = [db executeQuery:@"SELECT * FROM pois_tags WHERE poi_id = ?",[NSNumber numberWithLongLong:blockPoi.rowID]];
         
         while ([set next]) {
@@ -793,8 +795,8 @@
 {
     __block OPEReferencePoi * newPOI;
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        db.logsErrors = YES;
-        db.traceExecution =YES;
+        db.logsErrors = OPELogDatabaseErrors;
+        db.traceExecution = OPETraceDatabaseTraceExecution;
         FMResultSet * set = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi WHERE id = ?",[NSNumber numberWithLongLong:poi.rowID]];
         while ([set next]) {
             newPOI = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];

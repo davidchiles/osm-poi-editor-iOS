@@ -53,7 +53,6 @@
 {
     CGSize imgSize = [source size];
     
-    //NSLog(@"Image Size: h-%f w-%f",size.height,size.width);
     float rectSize;
     if (imgSize.width > imgSize.height) {
         rectSize = imgSize.width;
@@ -114,7 +113,6 @@
 
 -(NSArray *)annotationsForOsmElement:(OPEOsmElement *)managedOsmElement withMapView:(RMMapView *)mapView
 {
-    //NSLog(@"center: %@",[managedOsmElement center]);
     [self.osmData getTypeFor:managedOsmElement];
     
     RMAnnotation * annotation = [[RMAnnotation alloc] initWithMapView:mapView coordinate:[self.osmData centerForElement:managedOsmElement] andTitle:[self.osmData nameForElement:managedOsmElement]];
