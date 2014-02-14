@@ -8,6 +8,7 @@
 
 #import "OPECommentCell.h"
 #import "OPEUtility.h"
+#import "OSMComment.h"
 
 #define MESSAGE_TEXT_WIDTH_MAX 240
 #define EDGE_MARGIN 20
@@ -60,7 +61,7 @@
     // Configure the view for the selected state
 }
 
--(void)setComment:(Comment *)comment
+-(void)setComment:(OSMComment *)comment
 {
     _comment = comment;
     
@@ -109,7 +110,7 @@
         
 }
 
-+(CGFloat)heightForComment:(Comment *)comment
++(CGFloat)heightForComment:(OSMComment *)comment
 {
     TTTAttributedLabel * label = [OPECommentCell defaultLabel];
     label.text = comment.text;

@@ -23,6 +23,7 @@
 #import "OPECreditViewController.h"
 
 
+#import "OPELog.h"
 @interface OPECreditViewController ()
 
 @end

@@ -32,7 +32,7 @@
 #import "OPEAPIConstants.h"
 #import "OPEUtility.h"
 #import "OPEStrings.h"
-#import "Note.h"
+#import "OSMNote.h"
 #import "RMPointAnnotation.h"
 #import "OPENoteViewController.h"
 
@@ -196,7 +196,7 @@
 {
     id osmElement = annotation.userInfo;
     
-    if ([osmElement isKindOfClass:[Note class]])
+    if ([osmElement isKindOfClass:[OSMNote class]])
     {
         OPENoteViewController * viewController = [[OPENoteViewController alloc] initWithNote:osmElement];
         UINavigationController * navController = [[UINavigationController alloc] initWithRootViewController:viewController];

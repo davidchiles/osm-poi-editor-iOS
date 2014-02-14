@@ -16,7 +16,7 @@
 
 typedef void (^foundMatchingElements)(NSArray * newElements,NSArray * updatedElements);
 
-@interface OPEDownloadManager : NSObject <OSMDAODelegate>
+@interface OPEDownloadManager : NSObject <OSMDatabaseManagerDelegate>
 {
     OPEOSMData * osmData;
     OPEOSMAPIManager * apiManager;

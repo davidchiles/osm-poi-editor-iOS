@@ -9,8 +9,8 @@
 #import "DDLog.h"
 #if DEBUG
     static const int ddLogLevel = LOG_LEVEL_VERBOSE;
-    static const BOOL OPELogDatabaseErrors = YES;
-    static const BOOL OPETraceDatabaseTraceExecution = YES;
+    static const BOOL OPELogDatabaseErrors = NO;
+    static const BOOL OPETraceDatabaseTraceExecution = NO;
 #else
     static const int ddLogLevel = LOG_LEVEL_OFF;
     static const BOOL OPELogDatabaseErrors = NO;

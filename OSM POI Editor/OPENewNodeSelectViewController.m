@@ -149,7 +149,7 @@
     }
     else if (((indexPath.section == 0 && ![recentlyUsedPoisArray count]) || (indexPath.section == 1 && [recentlyUsedPoisArray count]))&& tableView != [[self searchDisplayController] searchResultsTableView])
     {
-        Note * note = [[Note alloc] init];
+        OSMNote * note = [[OSMNote alloc] init];
         note.coordinate = self.location;
         OPENoteViewController * viewController = [[OPENoteViewController alloc] initWithNote:note];
         [self.navigationController setViewControllers:@[viewController] animated:YES];

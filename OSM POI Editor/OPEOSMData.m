@@ -40,10 +40,12 @@
 
 #import "OSMParser.h"
 #import "OSMParserHandlerDefault.h"
-#import "Note.h"
-#import "Comment.h"
+#import "OSMNote.h"
+#import "OSMComment.h"
 
 #import "OPELog.h"
+
+#import "FMDatabase.h"
 
 
 
@@ -68,10 +70,10 @@
     return _databaseQueue;
 }
 
--(Note *)createNoteWithJSONDictionary:(NSDictionary *)noteDictionary
+-(OSMNote *)createNoteWithJSONDictionary:(NSDictionary *)noteDictionary
 {
     NSDictionary * propertiesDictionary = noteDictionary[@"properties"];
-    Note * note = [[Note alloc] init];
+    OSMNote * note = [[OSMNote alloc] init];
     note.id = [propertiesDictionary[@"id"] longLongValue];
     note.coordinate = CLLocationCoordinate2DMake([noteDictionary[@"geometry"][@"coordinates"][1] doubleValue], [noteDictionary[@"geometry"][@"coordinates"][0] doubleValue]);
     note.id = [propertiesDictionary[@"id"] longLongValue];
@@ -83,7 +85,7 @@
     NSArray * comments = (NSArray *)propertiesDictionary[@"comments"];
     [comments enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSDictionary * commentDictionary = (NSDictionary *)obj;
-        Comment * comment = [[Comment alloc] init];
+        OSMComment * comment = [[OSMComment alloc] init];
         NSString * username = commentDictionary[@"user"];
         if ([username length]) {
             comment.username = username;
@@ -156,7 +158,7 @@
                  element = [OPEOsmElement elementWithBasicOsmElement:obj];
             }
            
-            NSString * baseTableName = [OSMDAO tableName:element.element];
+            NSString * baseTableName = [OSMDatabaseManager tableName:element.element];
             NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
             NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
             if (tagsTable && columnID && [element.element.tags count]) {
@@ -179,7 +181,7 @@
 
 -(BOOL)findType:(OPEOsmElement *)element
 {
-    NSString * baseTableName = [OSMDAO tableName:element.element];
+    NSString * baseTableName = [OSMDatabaseManager tableName:element.element];
     NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
     NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
     __block BOOL didFind = NO;
@@ -240,7 +242,7 @@
 {
     if (rowId) {
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
-            [db executeUpdateWithFormat:@"UPDATE %@ SET poi_id = %d WHERE id = %lld",[OSMDAO tableName:element.element],rowId,element.element.elementID];
+            [db executeUpdateWithFormat:@"UPDATE %@ SET poi_id = %d WHERE id = %lld",[OSMDatabaseManager tableName:element.element],rowId,element.element.elementID];
         }];
     }
     
@@ -321,7 +323,7 @@
     
     
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        NSString * baseTableName = [OSMDAO tableName:element.element];
+        NSString * baseTableName = [OSMDatabaseManager tableName:element.element];
         NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
         NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
         NSString * sqlString = [NSString stringWithFormat:@"SELECT value FROM %@ WHERE key = 'name' AND %@ = %lld",tagsTable,columnID,element.elementID];
@@ -394,10 +396,10 @@
 -(CLLocationCoordinate2D)centerForElement:(OPEOsmElement *)element
 {
     CLLocationCoordinate2D center = CLLocationCoordinate2DMake(0, 0);
-    if ([element.element isKindOfClass:[Node class]]) {
+    if ([element.element isKindOfClass:[OSMNode class]]) {
         center = [((OPEOsmNode *)element).element coordinate];
     }
-    else if ([element.element isKindOfClass:[Way class]])
+    else if ([element.element isKindOfClass:[OSMWay class]])
     {
         NSArray * array = [self pointsForWay:(OPEOsmWay* )element];
         if (((OPEOsmWay *)element).isNoNameStreet) {
@@ -414,7 +416,7 @@
         
         
     }
-    else if ([element.element isKindOfClass:[Relation class]])
+    else if ([element.element isKindOfClass:[OSMRelation class]])
     {
         NSArray * membersArray = [self relationMembersFor:(OPEOsmRelation *)element];
         
@@ -508,11 +510,11 @@
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         [db beginTransaction];
         
-        [db executeUpdate:[OSMDAO sqliteInsertOrReplaceString:element.element]];
+        [db executeUpdate:[OSMDatabaseManager sqliteInsertOrReplaceString:element.element]];
         NSString * columnID = [NSString stringWithFormat:@"%@_id",[element.element.tableName substringToIndex:[element.element.tableName length] - 1]];
         NSString * deleteStatement = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %lld",element.element.tagsTableName,columnID,element.elementID];
         [db executeUpdate:deleteStatement];
-        NSArray * sqlArray = [OSMDAO sqliteInsertTagsString:element.element];
+        NSArray * sqlArray = [OSMDatabaseManager sqliteInsertTagsString:element.element];
         for (NSString * sqlString in sqlArray)
         {
             [db executeUpdate:sqlString];
@@ -640,7 +642,7 @@
 {
     
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        NSString * baseTableName = [OSMDAO tableName:element.element];
+        NSString * baseTableName = [OSMDatabaseManager tableName:element.element];
         NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
         NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
         NSString * sqlString = [NSString stringWithFormat:@"select * from %@ where %@ = %lld",tagsTable,columnID,element.elementID];

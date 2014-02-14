@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Comment.h"
 #import "TTTAttributedLabel.h"
+
+@class OSMComment;
 
 @interface OPECommentCell : UITableViewCell <TTTAttributedLabelDelegate>
 {
@@ -16,12 +17,12 @@
     UIView * commentContents;
 }
 
-@property (nonatomic, strong) Comment * comment;
+@property (nonatomic, strong) OSMComment * comment;
 @property (nonatomic, strong) TTTAttributedLabel * commentTextLabel;
 @property (nonatomic, strong) UILabel * commentActionLabel;
 @property (nonatomic, strong) UILabel * commentDetailLabel;
 
 
-+(CGFloat)heightForComment:(Comment *)comment;
++(CGFloat)heightForComment:(OSMComment *)comment;
 
 @end

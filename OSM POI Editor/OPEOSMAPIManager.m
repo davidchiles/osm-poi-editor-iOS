@@ -17,6 +17,7 @@
 #import "OPEOSMRequestSerializer.h"
 
 #import "OPELog.h"
+#import "OSMStreamParser.h"
 
 NSString *const putMethod = @"PUT";
 NSString *const deleteMethod = @"DELETE";
@@ -25,6 +26,8 @@ NSString *const deleteMethod = @"DELETE";
 
 @property (nonatomic,strong) NSMutableDictionary * apiFailures;
 @property (nonatomic,strong) NSMutableDictionary * nominatimFailures;
+
+@property (nonatomic,strong) OSMStreamParser *streamParser;
 
 
 @end
@@ -113,6 +116,35 @@ NSString *const deleteMethod = @"DELETE";
     }];
     
     [httpRequestOperation start];
+}
+
+-(void)downloadStreamWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
+                    success:(void (^)(NSData * response))success
+                    failure:(void (^)(NSError *error))failure
+{
+    self.streamParser = [[OSMStreamParser alloc] init];
+    
+    OPEBoundingBox * bbox = [OPEBoundingBox boundingBoxSW:southWest NE:northEast];
+    
+    NSURL* url = [self downloadURLWithBoundingBox:bbox];
+    NSMutableURLRequest * request =[NSMutableURLRequest requestWithURL:url];
+    [request setTimeoutInterval:20];
+    
+    
+    //[AFXMLRequestOperation addAcceptableContentTypes:];
+    
+    AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    requestOperation.responseSerializer=[AFHTTPResponseSerializer serializer];
+    requestOperation.outputStream = self.streamParser.outputStream;
+    
+    [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Successful");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    
+    [requestOperation start];
+    
 }
 
 -(void)downloadDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
@@ -226,7 +258,7 @@ NSString *const deleteMethod = @"DELETE";
             break;
     }
     
-    if ([self.apiFailures count] < 3) {
+    if ([baseURLString rangeOfString:@"xapi?*"].location != NSNotFound) {
         finalUrl = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",baseURLString,bbox.left,bbox.bottom,bbox.right,bbox.top]];
     }
     else
@@ -477,12 +509,12 @@ withChangesetComment:(NSString *)changesetComment
     return requestOperation;
 }
 
--(void)createNewNote:(Note *)note
+-(void)createNewNote:(OSMNote *)note
              success:(void (^)(NSData * response))success
              failure:(void (^)(NSError *error))failure
 {
     
-    NSDictionary * parameters = @{@"lat": @(note.coordinate.latitude),@"lon":@(note.coordinate.longitude),@"text":((Comment *)[note.commentsArray lastObject]).text};
+    NSDictionary * parameters = @{@"lat": @(note.coordinate.latitude),@"lon":@(note.coordinate.longitude),@"text":((OSMComment *)[note.commentsArray lastObject]).text};
     AFHTTPRequestOperation * requestOperation = [self.httpClient POST:@"notes.json" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (success) {
             success(responseObject);
@@ -497,7 +529,7 @@ withChangesetComment:(NSString *)changesetComment
     
 }
 
--(void)createNewComment:(Comment *)comment withNote:(Note *)note
+-(void)createNewComment:(OSMComment *)comment withNote:(OSMNote *)note
                 success:(void (^)(id JSON))success
                 failure:(void (^)(NSError *error))failure
 {
@@ -517,7 +549,7 @@ withChangesetComment:(NSString *)changesetComment
 
     
 }
--(void)closeNote:(Note *)note withComment:(NSString *)comment
+-(void)closeNote:(OSMNote *)note withComment:(NSString *)comment
          success:(void (^)(id JSON))success
          failure:(void (^)(NSError *error))failure
 {
@@ -540,7 +572,7 @@ withChangesetComment:(NSString *)changesetComment
     [requestOperation start];
 }
 
--(void)reopenNote:(Note *)note
+-(void)reopenNote:(OSMNote *)note
           success:(void (^)(NSData * response))success
           failure:(void (^)(NSError *error))failure
 {

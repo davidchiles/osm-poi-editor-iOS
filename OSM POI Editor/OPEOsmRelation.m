@@ -17,7 +17,7 @@
 -(id)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super initWithDictionary:dictionary]) {
-        self.element = [[Relation alloc] initWithDictionary:dictionary];
+        self.element = [[OSMRelation alloc] initWithDictionary:dictionary];
     }
     return self;
 }
@@ -38,7 +38,7 @@
     [xml appendString:[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"]];
     [xml appendFormat:@"<relation id=\"%lld\" version=\"%lld\" changeset=\"%lld\">",self.element.elementID,self.element.version, changesetNumber];
     
-    for(Member * relationMember in self.element.members)
+    for(OSMMember * relationMember in self.element.members)
     {
         NSString * memberRoleString = @"";
         if ([relationMember.role length]) {

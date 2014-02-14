@@ -86,7 +86,7 @@
                 NSDictionary * noteDictionary = (NSDictionary *)obj;
                 NSDictionary * propertiesDictionary = noteDictionary[@"properties"];
                 if (![self.notesDictionary objectForKey: @([propertiesDictionary[@"id"] longLongValue])]) {
-                    Note * note = [osmData createNoteWithJSONDictionary:noteDictionary];
+                    OSMNote * note = [osmData createNoteWithJSONDictionary:noteDictionary];
                     [self.notesDictionary setObject:note forKey:@(note.id)];
                     [newNotes addObject:note];
                 }
@@ -127,7 +127,7 @@
     return result;
 }
 
-//OSMDAODelegate Mehtod
+//OSMDatabaseManagerDelegate Mehtod
 -(void)didFinishSavingNewElements:(NSArray *)newElements updatedElements:(NSArray *)updatedElements
 {
     __block NSArray * newMatchedElements;

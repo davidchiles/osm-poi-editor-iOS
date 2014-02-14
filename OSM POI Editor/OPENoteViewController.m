@@ -7,7 +7,7 @@
 //
 
 #import "OPENoteViewController.h"
-#import "Comment.h"
+#import "OSMComment.h"
 #import "OPECommentCell.h"
 #import <QuartzCore/QuartzCore.h>
 #import "DAKeyboardControl.h"
@@ -29,7 +29,7 @@
 @synthesize note,osmApiManager = _osmApiManager;
 @synthesize osmData = _osmData;
 
--(id)initWithNote:(Note *)newNote;
+-(id)initWithNote:(OSMNote *)newNote;
 {
     if(self = [self init])
     {
@@ -129,7 +129,7 @@
     if (!cell) {
         cell = [[OPECommentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:tableViewCellIdentifier];
     }
-    Comment * comment = [self.note.commentsArray objectAtIndex:indexPath.row];
+    OSMComment * comment = [self.note.commentsArray objectAtIndex:indexPath.row];
     cell.comment = comment;
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -188,7 +188,7 @@
             [self reloadData];
             [self scrollToBottomAnimated:YES];
         };
-        Comment * comment = [[Comment alloc] init];
+        OSMComment * comment = [[OSMComment alloc] init];
         comment.text = [self textViewStrippedText];
         [self.note addComment:comment];
         if (self.note.id > 0) {

@@ -24,6 +24,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OPEConstants.h"
 
+#import "OPELog.h"
+
 @implementation OPETextEdit
 
 @synthesize osmValue;

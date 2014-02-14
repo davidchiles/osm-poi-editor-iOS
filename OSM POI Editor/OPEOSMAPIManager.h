@@ -14,8 +14,8 @@
 #import "GTMOAuthAuthentication.h"
 #import "AFNetworking.h"
 #import "OPEOsmElement.h"
-#import "Note.h"
-#import "Comment.h"
+#import "OSMNote.h"
+#import "OSMComment.h"
 
 
 
@@ -28,6 +28,9 @@
 -(void)downloadDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
              success:(void (^)(NSData * response))success
              failure:(void (^)(NSError *error))failure;
+-(void)downloadStreamWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
+                    success:(void (^)(NSData * response))success
+                    failure:(void (^)(NSError *error))failure;
 -(void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
              success:(void (^)(NSData * response))success
              failure:(void (^)(NSError *error))failure;
@@ -45,18 +48,18 @@ withChangesetComment:(NSString *)changesetComment
                     failure:(void (^)(NSError * error))failure;
 
 /////////////NOTES///////////////
--(void)createNewNote:(Note *)note
+-(void)createNewNote:(OSMNote *)note
              success:(void (^)(NSData * response))success
              failure:(void (^)(NSError *error))failure;
 
--(void)createNewComment:(Comment *)comment withNote:(Note *)note
+-(void)createNewComment:(OSMComment *)comment withNote:(OSMNote *)note
                 success:(void (^)(id JSON))success
                 failure:(void (^)(NSError *error))failure;
 
--(void)closeNote:(Note *)note withComment:(NSString *)comment
+-(void)closeNote:(OSMNote *)note withComment:(NSString *)comment
          success:(void (^)(id JSON))success
          failure:(void (^)(NSError *error))failure;
--(void)reopenNote:(Note *)note
+-(void)reopenNote:(OSMNote *)note
          success:(void (^)(NSData * response))success
          failure:(void (^)(NSError *error))failure;
 

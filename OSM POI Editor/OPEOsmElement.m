@@ -93,21 +93,21 @@
     return [NSString stringWithFormat:@"%@%lld",self.idKeyPrefix,self.elementID];
 }
 
-+(OPEOsmElement *)elementWithBasicOsmElement:(Element *)element
++(OPEOsmElement *)elementWithBasicOsmElement:(OSMElement *)element
 {
-    if ([element isKindOfClass:[Node class]]) {
+    if ([element isKindOfClass:[OSMNode class]]) {
         OPEOsmNode * node = [[OPEOsmNode alloc] init];
-        node.element = (Node *)element;
+        node.element = (OSMNode *)element;
         return node;
     }
-    else if ([element isKindOfClass:[Way class]]) {
+    else if ([element isKindOfClass:[OSMWay class]]) {
         OPEOsmWay * way = [[OPEOsmWay alloc] init];
-        way.element = (Way *)element;
+        way.element = (OSMWay *)element;
         return way;
     }
-    else if ([element isKindOfClass:[Relation class]]) {
+    else if ([element isKindOfClass:[OSMRelation class]]) {
         OPEOsmRelation * relation = [[OPEOsmRelation alloc] init];
-        relation.element = (Relation *)element;
+        relation.element = (OSMRelation *)element;
         return relation;
     }
     return nil;

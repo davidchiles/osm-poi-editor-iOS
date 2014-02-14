@@ -19,7 +19,7 @@
 -(id)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super initWithDictionary:dictionary]) {
-        self.element = [[Way alloc] initWithDictionary:dictionary];
+        self.element = [[OSMWay alloc] initWithDictionary:dictionary];
     }
     return self;
 }
@@ -30,7 +30,7 @@
     [xml appendString:[NSString stringWithFormat: @"<osm version=\"0.6\" generator=\"OSMPOIEditor\">"]];
     [xml appendFormat:@"<way id=\"%lld\" version=\"%lld\" changeset=\"%lld\">",self.element.elementID,self.element.version, changesetNumber];
     
-    for(Node * node in self.element.nodes)
+    for(OSMNode * node in self.element.nodes)
     {
         [xml appendFormat:@"<nd ref=\"%lld\"/>",node.elementID];
     }
@@ -56,7 +56,7 @@
 {
     if (!_points) {
         NSMutableArray * mutablePointsArray = [NSMutableArray array];
-        for (Node * node in self.element.nodes)
+        for (OSMNode * node in self.element.nodes)
         {
             CLLocationCoordinate2D center = node.coordinate;
             CLLocation * location = [[CLLocation alloc]initWithLatitude:center.latitude longitude:center.longitude];

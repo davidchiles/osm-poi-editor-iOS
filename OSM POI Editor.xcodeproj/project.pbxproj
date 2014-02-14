@@ -312,6 +312,7 @@
 		6334FACD1863D0FD0012CD40 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6334FACC1863D0FD0012CD40 /* ActionSheetStringPicker.m */; };
 		63397D8F170250AA00D411E7 /* OPERecent+NearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */; };
 		63397D9717026B0F00D411E7 /* OPEPhoneEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */; };
+		633C5DDE18ADC9CC000B2610 /* OSMStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 633C5DDD18ADC9CC000B2610 /* OSMStreamParser.m */; };
 		633CD86A164B249100678D58 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD869164B249100678D58 /* AudioToolbox.framework */; };
 		633CD86C164B249D00678D58 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86B164B249D00678D58 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		633CD86E164B24AA00678D58 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86D164B24AA00678D58 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -352,8 +353,8 @@
 		63723A8F17F2A3BF00DDCCAD /* OPEMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63723A8E17F2A3BF00DDCCAD /* OPEMapManager.m */; };
 		6372F80117419F3100DE5909 /* Optional.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80017419F3100DE5909 /* Optional.json */; };
 		6372F80817419F6A00DE5909 /* OptionalCategorySort.json in Resources */ = {isa = PBXBuildFile; fileRef = 6372F80717419F6A00DE5909 /* OptionalCategorySort.json */; };
-		63733B6A1790DE8E007FA7C7 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 63733B691790DE8E007FA7C7 /* Note.m */; };
-		63733B701790DEA9007FA7C7 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 63733B6F1790DEA8007FA7C7 /* Comment.m */; };
+		63733B6A1790DE8E007FA7C7 /* OSMNote.m in Sources */ = {isa = PBXBuildFile; fileRef = 63733B691790DE8E007FA7C7 /* OSMNote.m */; };
+		63733B701790DEA9007FA7C7 /* OSMComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 63733B6F1790DEA8007FA7C7 /* OSMComment.m */; };
 		637C7CCB16F164BE002CD340 /* OPEChangeset.m in Sources */ = {isa = PBXBuildFile; fileRef = 637C7CCA16F164BE002CD340 /* OPEChangeset.m */; };
 		6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6383947F14EC4DDD00C74A57 /* OPEInfoViewController.m */; };
 		6383949A14EC85C100C74A57 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6383949914EC85C100C74A57 /* Security.framework */; };
@@ -407,18 +408,15 @@
 		63F03D3616B09FD8004AF385 /* OPEReferenceOsmTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D2D16B09FD8004AF385 /* OPEReferenceOsmTag.m */; };
 		63F03D3816B0A2D1004AF385 /* OPEReferencePoi.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F03D3716B0A2D0004AF385 /* OPEReferencePoi.m */; };
 		63F63D5C17684D340084E703 /* OPEWikipediaWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F63D5B17684D340084E703 /* OPEWikipediaWebViewController.m */; };
-		63FBA59E171DFBED0098A2F3 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA589171DFBED0098A2F3 /* Node.m */; };
+		63FBA59E171DFBED0098A2F3 /* OSMNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA589171DFBED0098A2F3 /* OSMNode.m */; };
 		63FBA59F171DFBED0098A2F3 /* optimizeDb.sql in Resources */ = {isa = PBXBuildFile; fileRef = 63FBA58A171DFBED0098A2F3 /* optimizeDb.sql */; };
-		63FBA5A0171DFBED0098A2F3 /* OSMDAO.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA58C171DFBED0098A2F3 /* OSMDAO.m */; };
+		63FBA5A0171DFBED0098A2F3 /* OSMDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA58C171DFBED0098A2F3 /* OSMDatabaseManager.m */; };
 		63FBA5A1171DFBED0098A2F3 /* OSMParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA58E171DFBED0098A2F3 /* OSMParser.m */; };
-		63FBA5A2171DFBED0098A2F3 /* OSMParserHandlerAdministrative.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA590171DFBED0098A2F3 /* OSMParserHandlerAdministrative.m */; };
-		63FBA5A3171DFBED0098A2F3 /* OSMParserHandlerAllRoads.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA592171DFBED0098A2F3 /* OSMParserHandlerAllRoads.m */; };
 		63FBA5A4171DFBED0098A2F3 /* OSMParserHandlerDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA594171DFBED0098A2F3 /* OSMParserHandlerDefault.m */; };
-		63FBA5A5171DFBED0098A2F3 /* OSMParserHandlerMotorway.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA596171DFBED0098A2F3 /* OSMParserHandlerMotorway.m */; };
-		63FBA5A7171DFBED0098A2F3 /* Relation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA599171DFBED0098A2F3 /* Relation.m */; };
+		63FBA5A7171DFBED0098A2F3 /* OSMRelation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA599171DFBED0098A2F3 /* OSMRelation.m */; };
 		63FBA5A8171DFBED0098A2F3 /* roadNetworkInit.sql in Resources */ = {isa = PBXBuildFile; fileRef = 63FBA59A171DFBED0098A2F3 /* roadNetworkInit.sql */; };
-		63FBA5A9171DFBED0098A2F3 /* Way.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA59C171DFBED0098A2F3 /* Way.m */; };
-		63FBA5AC171E00F20098A2F3 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA5AB171E00F20098A2F3 /* Element.m */; };
+		63FBA5A9171DFBED0098A2F3 /* OSMWay.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA59C171DFBED0098A2F3 /* OSMWay.m */; };
+		63FBA5AC171E00F20098A2F3 /* OSMElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FBA5AB171E00F20098A2F3 /* OSMElement.m */; };
 		63FBA5AE171E08E70098A2F3 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBA5AD171E08E70098A2F3 /* libiconv.dylib */; };
 		63FBA5B0171E08F50098A2F3 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FBA5AF171E08F40098A2F3 /* libstdc++.dylib */; };
 		63FCA4421643127D00A28470 /* OPEBingTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FCA4411643127D00A28470 /* OPEBingTileSource.m */; };
@@ -819,6 +817,8 @@
 		63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OPERecent+NearbyViewController.m"; sourceTree = "<group>"; };
 		63397D9517026B0F00D411E7 /* OPEPhoneEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEPhoneEditViewController.h; sourceTree = "<group>"; };
 		63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEPhoneEditViewController.m; sourceTree = "<group>"; };
+		633C5DDC18ADC9CC000B2610 /* OSMStreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMStreamParser.h; sourceTree = "<group>"; };
+		633C5DDD18ADC9CC000B2610 /* OSMStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMStreamParser.m; sourceTree = "<group>"; };
 		633CD869164B249100678D58 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		633CD86B164B249D00678D58 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		633CD86D164B24AA00678D58 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -889,10 +889,10 @@
 		63723A8E17F2A3BF00DDCCAD /* OPEMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEMapManager.m; sourceTree = "<group>"; };
 		6372F80017419F3100DE5909 /* Optional.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Optional.json; sourceTree = "<group>"; };
 		6372F80717419F6A00DE5909 /* OptionalCategorySort.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OptionalCategorySort.json; sourceTree = "<group>"; };
-		63733B681790DE8E007FA7C7 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
-		63733B691790DE8E007FA7C7 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
-		63733B6E1790DEA8007FA7C7 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
-		63733B6F1790DEA8007FA7C7 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		63733B681790DE8E007FA7C7 /* OSMNote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMNote.h; sourceTree = "<group>"; };
+		63733B691790DE8E007FA7C7 /* OSMNote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMNote.m; sourceTree = "<group>"; };
+		63733B6E1790DEA8007FA7C7 /* OSMComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMComment.h; sourceTree = "<group>"; };
+		63733B6F1790DEA8007FA7C7 /* OSMComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMComment.m; sourceTree = "<group>"; };
 		637C7CC916F164BE002CD340 /* OPEChangeset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEChangeset.h; sourceTree = "<group>"; };
 		637C7CCA16F164BE002CD340 /* OPEChangeset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEChangeset.m; sourceTree = "<group>"; };
 		6383947E14EC4DDD00C74A57 /* OPEInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEInfoViewController.h; sourceTree = "<group>"; };
@@ -1001,28 +1001,22 @@
 		63F03D3716B0A2D0004AF385 /* OPEReferencePoi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEReferencePoi.m; sourceTree = "<group>"; };
 		63F63D5A17684D340084E703 /* OPEWikipediaWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEWikipediaWebViewController.h; sourceTree = "<group>"; };
 		63F63D5B17684D340084E703 /* OPEWikipediaWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEWikipediaWebViewController.m; sourceTree = "<group>"; };
-		63FBA588171DFBED0098A2F3 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
-		63FBA589171DFBED0098A2F3 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
+		63FBA588171DFBED0098A2F3 /* OSMNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMNode.h; sourceTree = "<group>"; };
+		63FBA589171DFBED0098A2F3 /* OSMNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMNode.m; sourceTree = "<group>"; };
 		63FBA58A171DFBED0098A2F3 /* optimizeDb.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = optimizeDb.sql; sourceTree = "<group>"; };
-		63FBA58B171DFBED0098A2F3 /* OSMDAO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMDAO.h; sourceTree = "<group>"; };
-		63FBA58C171DFBED0098A2F3 /* OSMDAO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMDAO.m; sourceTree = "<group>"; };
+		63FBA58B171DFBED0098A2F3 /* OSMDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMDatabaseManager.h; sourceTree = "<group>"; };
+		63FBA58C171DFBED0098A2F3 /* OSMDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMDatabaseManager.m; sourceTree = "<group>"; };
 		63FBA58D171DFBED0098A2F3 /* OSMParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMParser.h; sourceTree = "<group>"; };
 		63FBA58E171DFBED0098A2F3 /* OSMParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMParser.m; sourceTree = "<group>"; };
-		63FBA58F171DFBED0098A2F3 /* OSMParserHandlerAdministrative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMParserHandlerAdministrative.h; sourceTree = "<group>"; };
-		63FBA590171DFBED0098A2F3 /* OSMParserHandlerAdministrative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMParserHandlerAdministrative.m; sourceTree = "<group>"; };
-		63FBA591171DFBED0098A2F3 /* OSMParserHandlerAllRoads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMParserHandlerAllRoads.h; sourceTree = "<group>"; };
-		63FBA592171DFBED0098A2F3 /* OSMParserHandlerAllRoads.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMParserHandlerAllRoads.m; sourceTree = "<group>"; };
 		63FBA593171DFBED0098A2F3 /* OSMParserHandlerDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMParserHandlerDefault.h; sourceTree = "<group>"; };
 		63FBA594171DFBED0098A2F3 /* OSMParserHandlerDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMParserHandlerDefault.m; sourceTree = "<group>"; };
-		63FBA595171DFBED0098A2F3 /* OSMParserHandlerMotorway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMParserHandlerMotorway.h; sourceTree = "<group>"; };
-		63FBA596171DFBED0098A2F3 /* OSMParserHandlerMotorway.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMParserHandlerMotorway.m; sourceTree = "<group>"; };
-		63FBA598171DFBED0098A2F3 /* Relation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Relation.h; sourceTree = "<group>"; };
-		63FBA599171DFBED0098A2F3 /* Relation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Relation.m; sourceTree = "<group>"; };
+		63FBA598171DFBED0098A2F3 /* OSMRelation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMRelation.h; sourceTree = "<group>"; };
+		63FBA599171DFBED0098A2F3 /* OSMRelation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMRelation.m; sourceTree = "<group>"; };
 		63FBA59A171DFBED0098A2F3 /* roadNetworkInit.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = roadNetworkInit.sql; sourceTree = "<group>"; };
-		63FBA59B171DFBED0098A2F3 /* Way.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Way.h; sourceTree = "<group>"; };
-		63FBA59C171DFBED0098A2F3 /* Way.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Way.m; sourceTree = "<group>"; };
-		63FBA5AA171E00F20098A2F3 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
-		63FBA5AB171E00F20098A2F3 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Element.m; sourceTree = "<group>"; };
+		63FBA59B171DFBED0098A2F3 /* OSMWay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMWay.h; sourceTree = "<group>"; };
+		63FBA59C171DFBED0098A2F3 /* OSMWay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMWay.m; sourceTree = "<group>"; };
+		63FBA5AA171E00F20098A2F3 /* OSMElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMElement.h; sourceTree = "<group>"; };
+		63FBA5AB171E00F20098A2F3 /* OSMElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMElement.m; sourceTree = "<group>"; };
 		63FBA5AD171E08E70098A2F3 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		63FBA5AF171E08F40098A2F3 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		63FCA4401643127D00A28470 /* OPEBingTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEBingTileSource.h; sourceTree = "<group>"; };
@@ -1869,30 +1863,26 @@
 			children = (
 				63FBA58A171DFBED0098A2F3 /* optimizeDb.sql */,
 				63FBA59A171DFBED0098A2F3 /* roadNetworkInit.sql */,
-				63FBA58B171DFBED0098A2F3 /* OSMDAO.h */,
-				63FBA58C171DFBED0098A2F3 /* OSMDAO.m */,
+				63FBA58B171DFBED0098A2F3 /* OSMDatabaseManager.h */,
+				63FBA58C171DFBED0098A2F3 /* OSMDatabaseManager.m */,
 				63FBA58D171DFBED0098A2F3 /* OSMParser.h */,
 				63FBA58E171DFBED0098A2F3 /* OSMParser.m */,
-				63FBA58F171DFBED0098A2F3 /* OSMParserHandlerAdministrative.h */,
-				63FBA590171DFBED0098A2F3 /* OSMParserHandlerAdministrative.m */,
-				63FBA591171DFBED0098A2F3 /* OSMParserHandlerAllRoads.h */,
-				63FBA592171DFBED0098A2F3 /* OSMParserHandlerAllRoads.m */,
+				633C5DDC18ADC9CC000B2610 /* OSMStreamParser.h */,
+				633C5DDD18ADC9CC000B2610 /* OSMStreamParser.m */,
 				63FBA593171DFBED0098A2F3 /* OSMParserHandlerDefault.h */,
 				63FBA594171DFBED0098A2F3 /* OSMParserHandlerDefault.m */,
-				63FBA595171DFBED0098A2F3 /* OSMParserHandlerMotorway.h */,
-				63FBA596171DFBED0098A2F3 /* OSMParserHandlerMotorway.m */,
-				63FBA5AA171E00F20098A2F3 /* Element.h */,
-				63FBA5AB171E00F20098A2F3 /* Element.m */,
-				63FBA588171DFBED0098A2F3 /* Node.h */,
-				63FBA589171DFBED0098A2F3 /* Node.m */,
-				63FBA59B171DFBED0098A2F3 /* Way.h */,
-				63FBA59C171DFBED0098A2F3 /* Way.m */,
-				63FBA598171DFBED0098A2F3 /* Relation.h */,
-				63FBA599171DFBED0098A2F3 /* Relation.m */,
-				63733B681790DE8E007FA7C7 /* Note.h */,
-				63733B691790DE8E007FA7C7 /* Note.m */,
-				63733B6E1790DEA8007FA7C7 /* Comment.h */,
-				63733B6F1790DEA8007FA7C7 /* Comment.m */,
+				63FBA5AA171E00F20098A2F3 /* OSMElement.h */,
+				63FBA5AB171E00F20098A2F3 /* OSMElement.m */,
+				63FBA588171DFBED0098A2F3 /* OSMNode.h */,
+				63FBA589171DFBED0098A2F3 /* OSMNode.m */,
+				63FBA59B171DFBED0098A2F3 /* OSMWay.h */,
+				63FBA59C171DFBED0098A2F3 /* OSMWay.m */,
+				63FBA598171DFBED0098A2F3 /* OSMRelation.h */,
+				63FBA599171DFBED0098A2F3 /* OSMRelation.m */,
+				63733B681790DE8E007FA7C7 /* OSMNote.h */,
+				63733B691790DE8E007FA7C7 /* OSMNote.m */,
+				63733B6E1790DEA8007FA7C7 /* OSMComment.h */,
+				63733B6F1790DEA8007FA7C7 /* OSMComment.m */,
 			);
 			name = "osm-parser";
 			path = "lib/osm-parser";
@@ -2362,21 +2352,18 @@
 				63723A8417F25F2900DDCCAD /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				631AB0AD1727686E003F5F6F /* OPETranslate.m in Sources */,
 				6309FCDE182F0A5100B3B22B /* OPEDatePickerCell.m in Sources */,
-				63FBA59E171DFBED0098A2F3 /* Node.m in Sources */,
-				63FBA5A0171DFBED0098A2F3 /* OSMDAO.m in Sources */,
+				63FBA59E171DFBED0098A2F3 /* OSMNode.m in Sources */,
+				63FBA5A0171DFBED0098A2F3 /* OSMDatabaseManager.m in Sources */,
 				63FBA5A1171DFBED0098A2F3 /* OSMParser.m in Sources */,
 				63EB72E317CFF9220042F4A4 /* OPEOpeningHoursRuleEditViewController.m in Sources */,
-				63FBA5A2171DFBED0098A2F3 /* OSMParserHandlerAdministrative.m in Sources */,
-				63FBA5A3171DFBED0098A2F3 /* OSMParserHandlerAllRoads.m in Sources */,
 				63FBA5A4171DFBED0098A2F3 /* OSMParserHandlerDefault.m in Sources */,
 				63723A6B17F25E9600DDCCAD /* AFHTTPRequestOperation.m in Sources */,
-				63FBA5A5171DFBED0098A2F3 /* OSMParserHandlerMotorway.m in Sources */,
-				63FBA5A7171DFBED0098A2F3 /* Relation.m in Sources */,
+				63FBA5A7171DFBED0098A2F3 /* OSMRelation.m in Sources */,
 				63723A6C17F25E9600DDCCAD /* AFHTTPRequestOperationManager.m in Sources */,
 				63EB72D917CFF14F0042F4A4 /* OPEOpeningHoursEditViewController.m in Sources */,
 				63F01C0017D016AD00184A0C /* OPETimeRangeCell.m in Sources */,
-				63FBA5A9171DFBED0098A2F3 /* Way.m in Sources */,
-				63FBA5AC171E00F20098A2F3 /* Element.m in Sources */,
+				63FBA5A9171DFBED0098A2F3 /* OSMWay.m in Sources */,
+				63FBA5AC171E00F20098A2F3 /* OSMElement.m in Sources */,
 				63A964991729FA6100D14CA1 /* OPEObject.m in Sources */,
 				63433EC118ADA03600265C55 /* DDContextFilterLogFormatter.m in Sources */,
 				6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */,
@@ -2401,9 +2388,10 @@
 				63E17ADA17CD190200C24868 /* OPEOpeningHoursParser.m in Sources */,
 				63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */,
 				63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */,
+				633C5DDE18ADC9CC000B2610 /* OSMStreamParser.m in Sources */,
 				63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */,
-				63733B6A1790DE8E007FA7C7 /* Note.m in Sources */,
-				63733B701790DEA9007FA7C7 /* Comment.m in Sources */,
+				63733B6A1790DE8E007FA7C7 /* OSMNote.m in Sources */,
+				63733B701790DEA9007FA7C7 /* OSMComment.m in Sources */,
 				6334FAAF1861474A0012CD40 /* OPEDatabaseImporter.m in Sources */,
 				63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */,
 				63962B1B17961FAB008B897C /* OPECommentCell.m in Sources */,

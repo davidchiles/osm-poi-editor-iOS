@@ -19,7 +19,7 @@
 #import "OPEOsmNode.h"
 #import "OPEOsmWay.h"
 #import "OPEOsmRelation.h"
-#import "Note.h"
+#import "OSMNote.h"
 
 #import "OPEOSMData.h"
 #import "OPEGeoCentroid.h"
@@ -104,7 +104,7 @@
     return newMarker;
 }
 
--(RMAnnotation *)annotationWForNote:(Note *)note withMapView:(RMMapView *)mapView
+-(RMAnnotation *)annotationWForNote:(OSMNote *)note withMapView:(RMMapView *)mapView
 {
     RMAnnotation * annotation = [RMAnnotation annotationWithMapView:mapView coordinate:note.coordinate andTitle:@"Note"];
     annotation.userInfo = note;
@@ -320,8 +320,8 @@
         marker.canShowCallout = YES;
         marker.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     }
-    else if ([annotation.userInfo isKindOfClass:[Note class]]) {
-        Note * note = annotation.userInfo;
+    else if ([annotation.userInfo isKindOfClass:[OSMNote class]]) {
+        OSMNote * note = annotation.userInfo;
         UIImage * image = nil;
         if (note.isOpen) {
             image = [UIImage imageNamed:@"note_open.png"];

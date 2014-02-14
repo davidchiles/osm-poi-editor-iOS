@@ -11,7 +11,7 @@
 #import "OPEOsmWay.h"
 #import "OPEOsmNode.h"
 #import "OPEOsmRelation.h"
-#import "Node.h"
+#import "OSMNode.h"
 #import "OPEGeo.h"
 #import "OPELog.h"
 

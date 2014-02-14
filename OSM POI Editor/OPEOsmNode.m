@@ -14,7 +14,7 @@
 -(id)initWithDictionary:(NSDictionary *)dictionary
 {
     if (self = [super initWithDictionary:dictionary]) {
-        self.element = [[Node alloc] initWithDictionary:dictionary];
+        self.element = [[OSMNode alloc] initWithDictionary:dictionary];
     }
     return self;
 }
@@ -73,7 +73,7 @@
 +(OPEOsmNode *)newNode
 {
     OPEOsmNode * node = [[OPEOsmNode alloc] init];
-    node.element = [[Node alloc] init];
+    node.element = [[OSMNode alloc] init];
     return node;
 }
 

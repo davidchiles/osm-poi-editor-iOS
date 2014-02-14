@@ -1,9 +1,9 @@
 #import "CoreLocation/CoreLocation.h"
 #import "OPEOsmElement.h"
-#import "Node.h"
+#import "OSMNode.h"
 
 @interface OPEOsmNode : OPEOsmElement {}
-@property (nonatomic,strong) Node * element;
+@property (nonatomic,strong) OSMNode * element;
 
 +(OPEOsmNode *)newNode;
 

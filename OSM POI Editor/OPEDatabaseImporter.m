@@ -12,7 +12,7 @@
 #import "OPEUtility.h"
 #import "FMDatabase.h"
 #import "FMDatabaseQueue.h"
-#import "OSMDAO.h"
+#import "OSMDatabaseManager.h"
 #import "OPELog.h"
 
 #define tagsFilePath [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"json"]
@@ -211,8 +211,8 @@
 {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         BOOL result = NO;
-        OSMDAO * osmData = [[OSMDAO alloc] initWithFilePath:[OPEConstants databasePath] overrideIfExists:YES];
-        [OSMDAO initialize];
+        OSMDatabaseManager * osmData = [[OSMDatabaseManager alloc] initWithFilePath:[OPEConstants databasePath] overrideIfExists:YES];
+        [OSMDatabaseManager initialize];
         osmData = nil;
         [db beginTransaction];
         

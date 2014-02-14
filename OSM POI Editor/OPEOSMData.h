@@ -25,7 +25,7 @@
 #import "GTMOAuthViewControllerTouch.h"
 #import "AFNetworking.h"
 
-#import "OSMDAO.h"
+#import "OSMDatabaseManager.h"
 #import "OPEReferencePoi.h"
 #import "OPEOSMAPIManager.h"
 
@@ -83,7 +83,7 @@
 -(void)saveDate:(NSDate *)date forType:(OPEReferencePoi *)poi;
 -(BOOL)isArea:(OPEOsmElement *)element;
 
--(Note *)createNoteWithJSONDictionary:(NSDictionary *)noteDictionary;
+-(OSMNote *)createNoteWithJSONDictionary:(NSDictionary *)noteDictionary;
 
 -(NSArray *)allElementsWithType:(BOOL)withType;
 

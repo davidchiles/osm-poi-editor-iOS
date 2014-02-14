@@ -9,6 +9,8 @@
 #import "OPETranslate.h"
 #import "OPEConstants.h"
 
+#import "OPELog.h"
+
 @implementation OPETranslate
 
 +(NSString *)translateString:(NSString *)englishString;

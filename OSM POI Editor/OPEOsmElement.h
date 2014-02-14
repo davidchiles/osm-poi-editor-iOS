@@ -1,7 +1,7 @@
 #import "CoreLocation/CoreLocation.h"
 #import "TBXML.h"
 #import "OPEConstants.h"
-#import "Element.h"
+#import "OSMElement.h"
 #import "OPEReferencePoi.h"
 #import "OPEOsmTag.h"
 
@@ -9,7 +9,7 @@
 
 
 @property (nonatomic, strong) OPEReferencePoi *type;
-@property (nonatomic, strong) Element * element;
+@property (nonatomic, strong) OSMElement * element;
 @property (nonatomic, strong) NSString * action;
 @property (nonatomic,readonly) NSString * idKey;
 @property (nonatomic,readonly) NSString * idKeyPrefix;
@@ -28,7 +28,7 @@
 
 -(NSString *)osmType;
 
-+(OPEOsmElement *)elementWithBasicOsmElement:(Element *)element;
++(OPEOsmElement *)elementWithBasicOsmElement:(OSMElement *)element;
 +(OPEOsmElement *)elementWithType:(NSString *)elementTypeString withDictionary:(NSDictionary *)dictionary;
 
 -(NSString *)displayNameForChangeset;
