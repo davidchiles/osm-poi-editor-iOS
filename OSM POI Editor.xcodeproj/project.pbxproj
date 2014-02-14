@@ -1455,9 +1455,9 @@
 		6330AB6D14DB519A00448852 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				63962B2017962293008B897C /* CoreText.framework */,
 				63FBA5AF171E08F40098A2F3 /* libstdc++.dylib */,
 				63FBA5AD171E08E70098A2F3 /* libiconv.dylib */,
+				63962B2017962293008B897C /* CoreText.framework */,
 				6333D3A816811F2A00BF129E /* CoreData.framework */,
 				6330AC0614DB5E4D00448852 /* CoreLocation.framework */,
 				6330AC0414DB54A200448852 /* QuartzCore.framework */,

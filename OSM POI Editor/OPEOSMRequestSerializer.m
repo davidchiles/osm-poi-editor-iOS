@@ -10,12 +10,9 @@
 
 @implementation OPEOSMRequestSerializer
 
-@synthesize auth;
-
-
-- (NSMutableURLRequest *)requestWithMethod:(NSString *)method URLString:(NSString *)URLString parameters:(NSDictionary *)parameters
+- (NSMutableURLRequest *)requestWithMethod:(NSString *)method URLString:(NSString *)URLString parameters:(NSDictionary *)parameters error:(NSError *__autoreleasing *)error
 {
-    NSMutableURLRequest * request = [super requestWithMethod:method URLString:URLString parameters:parameters];
+    NSMutableURLRequest * request = [super requestWithMethod:method URLString:URLString parameters:parameters error:error];
     if (![method isEqualToString:@"GET"]) {
         [self.auth authorizeRequest:request];
     }

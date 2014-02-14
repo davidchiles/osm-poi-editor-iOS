@@ -21,10 +21,6 @@
 
 
 @interface OPEOSMAPIManager : NSObject
-{
-    NSMutableDictionary * apiFailures;
-    NSMutableDictionary * nominatimFailures;
-}
 
 @property (nonatomic,strong) AFHTTPRequestOperationManager * httpClient;
 @property (nonatomic, strong) GTMOAuthAuthentication * auth;

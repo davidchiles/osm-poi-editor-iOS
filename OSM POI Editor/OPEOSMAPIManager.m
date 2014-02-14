@@ -19,17 +19,23 @@
 NSString *const putMethod = @"PUT";
 NSString *const deleteMethod = @"DELETE";
 
+@interface OPEOSMAPIManager ()
+
+@property (nonatomic,strong) NSMutableDictionary * apiFailures;
+@property (nonatomic,strong) NSMutableDictionary * nominatimFailures;
+
+
+@end
+
 @implementation OPEOSMAPIManager
-@synthesize auth = _auth;
-@synthesize httpClient = _httpClient;
 
 -(id)init
 {
     if(self = [super init])
     {
         [self auth];
-        apiFailures = [NSMutableDictionary dictionary];
-        nominatimFailures = [NSMutableDictionary dictionary];
+        self.apiFailures = [NSMutableDictionary dictionary];
+        self.nominatimFailures = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -133,14 +139,14 @@ NSString *const deleteMethod = @"DELETE";
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [apiFailures setObject:[NSNumber numberWithInt:1] forKey:[operation.request.URL.absoluteString componentsSeparatedByString:@"bbox"][0]];
-        if ([apiFailures count] < 5) {
+        [self.apiFailures setObject:[NSNumber numberWithInt:1] forKey:[operation.request.URL.absoluteString componentsSeparatedByString:@"bbox"][0]];
+        if ([self.apiFailures count] < 5) {
             [self downloadDataWithSW:southWest NE:northEast success:success failure:failure];
         }
         else if (failure)
         {
             DDLogError(@"Failed Download after 5 tries");
-            [apiFailures removeAllObjects];
+            [self.apiFailures removeAllObjects];
             failure(error);
         }
         
@@ -164,13 +170,13 @@ NSString *const deleteMethod = @"DELETE";
             success([responseObject objectForKey:@"address"]);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [nominatimFailures setObject:[NSNumber numberWithBool:YES] forKey:[operation.request.URL.absoluteString componentsSeparatedByString:@"reverse"][0]];
-        if ([apiFailures count] < 2) {
+        [self.nominatimFailures setObject:[NSNumber numberWithBool:YES] forKey:[operation.request.URL.absoluteString componentsSeparatedByString:@"reverse"][0]];
+        if ([self.apiFailures count] < 2) {
             [self reverseLookupAddress:coordinate success:success failure:failure];
         }
         else if (failure)
         {
-            [nominatimFailures removeAllObjects];
+            [self.nominatimFailures removeAllObjects];
             failure(error);
         }
     }];
@@ -181,7 +187,7 @@ NSString *const deleteMethod = @"DELETE";
 {
     NSURL * finalURL;
     NSString * baseUrlString;
-    switch ([nominatimFailures count]) {
+    switch ([self.nominatimFailures count]) {
         case 0:
             baseUrlString = kOPENominatimURL1;
             break;
@@ -198,7 +204,7 @@ NSString *const deleteMethod = @"DELETE";
 {
     NSURL * finalUrl;
     NSString * baseURLString;
-    switch ([apiFailures count]) {
+    switch ([self.apiFailures count]) {
         case 0:
             baseURLString = kOPEAPIURL1;
             break;
@@ -218,7 +224,7 @@ NSString *const deleteMethod = @"DELETE";
             break;
     }
     
-    if ([apiFailures count] < 3) {
+    if ([self.apiFailures count] < 3) {
         finalUrl = [NSURL URLWithString: [NSString stringWithFormat:@"%@[bbox=%f,%f,%f,%f][@meta]",baseURLString,bbox.left,bbox.bottom,bbox.right,bbox.top]];
     }
     else

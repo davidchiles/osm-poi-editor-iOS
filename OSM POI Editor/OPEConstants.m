@@ -36,9 +36,9 @@ NSString *const kTypeHours = @"hours";
 NSUInteger const kLeftTextDefaultSize = 76;
 
 NSString *const kOPEAPIURL2 = @"http://www.overpass-api.de/api/xapi?*";
-NSString *const kOPEAPIURL1 = @"http://overpass.osm.rambler.ru/cgi/xapi?*";
+NSString *const kOPEAPIURL4 = @"http://overpass.osm.rambler.ru/cgi/xapi?*";
 NSString *const kOPEAPIURL3 = @"http://api.openstreetmap.fr/xapi?*";
-NSString *const kOPEAPIURL4 = @"http://api.openstreetmap.org/api/0.6/";
+NSString *const kOPEAPIURL1 = @"http://api.openstreetmap.org/api/0.6/";
 NSString *const kOPEAPIURL5 = @"http://api.openstreetmap.fr/api/0.6/";
 
 NSString *const kOPENominatimURL2 = @"http://open.mapquestapi.com/nominatim/v1/reverse.php";
