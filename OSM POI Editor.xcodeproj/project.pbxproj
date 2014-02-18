@@ -313,6 +313,7 @@
 		63397D8F170250AA00D411E7 /* OPERecent+NearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */; };
 		63397D9717026B0F00D411E7 /* OPEPhoneEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */; };
 		633C5DDE18ADC9CC000B2610 /* OSMStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 633C5DDD18ADC9CC000B2610 /* OSMStreamParser.m */; };
+		633C5DE118AE915D000B2610 /* poi.sql in Resources */ = {isa = PBXBuildFile; fileRef = 633C5DE018AE915D000B2610 /* poi.sql */; };
 		633CD86A164B249100678D58 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD869164B249100678D58 /* AudioToolbox.framework */; };
 		633CD86C164B249D00678D58 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86B164B249D00678D58 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		633CD86E164B24AA00678D58 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86D164B24AA00678D58 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -382,6 +383,7 @@
 		63D0A5D517011659007A595E /* OPETextEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D417011659007A595E /* OPETextEditViewController.m */; };
 		63D0A5D8170119B5007A595E /* OPERecentlyUsedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D7170119B4007A595E /* OPERecentlyUsedViewController.m */; };
 		63D0A5DB17011F18007A595E /* OPEOsmValueTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5DA17011F17007A595E /* OPEOsmValueTextField.m */; };
+		63D53F3818B3D8CA0090C849 /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 632E0FAA18909185002C4581 /* Mapbox.bundle */; };
 		63E17ADA17CD190200C24868 /* OPEOpeningHoursParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E17AD917CD190200C24868 /* OPEOpeningHoursParser.m */; };
 		63E2796814E1F274009D02BD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796714E1F274009D02BD /* CFNetwork.framework */; };
 		63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796914E1F281009D02BD /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -751,7 +753,6 @@
 		6326690A17164579002CD7E4 /* location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location@2x.png"; sourceTree = "<group>"; };
 		6326690B17164579002CD7E4 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		6326690C17164579002CD7E4 /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
-		6326690D17164579002CD7E4 /* SPOI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SPOI.bundle; sourceTree = "<group>"; };
 		6326690E17164579002CD7E4 /* x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x.png; sourceTree = "<group>"; };
 		6326690F17164579002CD7E4 /* x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x@2x.png"; sourceTree = "<group>"; };
 		63266A1C1716469B002CD7E4 /* GTMHTTPFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMHTTPFetcher.h; sourceTree = "<group>"; };
@@ -819,6 +820,7 @@
 		63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEPhoneEditViewController.m; sourceTree = "<group>"; };
 		633C5DDC18ADC9CC000B2610 /* OSMStreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMStreamParser.h; sourceTree = "<group>"; };
 		633C5DDD18ADC9CC000B2610 /* OSMStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMStreamParser.m; sourceTree = "<group>"; };
+		633C5DE018AE915D000B2610 /* poi.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = poi.sql; path = "OSM POI Editor/poi.sql"; sourceTree = SOURCE_ROOT; };
 		633CD869164B249100678D58 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		633CD86B164B249D00678D58 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		633CD86D164B24AA00678D58 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -1105,6 +1107,7 @@
 				6372F80017419F3100DE5909 /* Optional.json */,
 				6372F80717419F6A00DE5909 /* OptionalCategorySort.json */,
 				63FD2DAC172F329A0094B969 /* Tags.json */,
+				633C5DE018AE915D000B2610 /* poi.sql */,
 				63E5E39817693D4D0064A780 /* wikipediaLanguages.json */,
 			);
 			path = Resources;
@@ -1133,7 +1136,6 @@
 				6326690A17164579002CD7E4 /* location@2x.png */,
 				6326690B17164579002CD7E4 /* plus.png */,
 				6326690C17164579002CD7E4 /* plus@2x.png */,
-				6326690D17164579002CD7E4 /* SPOI.bundle */,
 				6326690E17164579002CD7E4 /* x.png */,
 				6326690F17164579002CD7E4 /* x@2x.png */,
 			);
@@ -2002,6 +2004,7 @@
 				6330AB7914DB519A00448852 /* InfoPlist.strings in Resources */,
 				63E525D91534E66500D2DA35 /* about.html in Resources */,
 				639953FE16113A200070CBAF /* about.css in Resources */,
+				63D53F3818B3D8CA0090C849 /* Mapbox.bundle in Resources */,
 				6326691317164579002CD7E4 /* airplane.png in Resources */,
 				6326691417164579002CD7E4 /* alcohol.png in Resources */,
 				6326691517164579002CD7E4 /* apartment.png in Resources */,
@@ -2167,6 +2170,7 @@
 				632669B117164579002CD7E4 /* dog@2x.png in Resources */,
 				632669B217164579002CD7E4 /* drinking_water@2x.png in Resources */,
 				632669B317164579002CD7E4 /* embassy@2x.png in Resources */,
+				633C5DE118AE915D000B2610 /* poi.sql in Resources */,
 				632669B417164579002CD7E4 /* EV@2x.png in Resources */,
 				632669B517164579002CD7E4 /* farm@2x.png in Resources */,
 				632669B617164579002CD7E4 /* fast_food@2x.png in Resources */,

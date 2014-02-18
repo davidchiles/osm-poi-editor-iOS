@@ -194,8 +194,7 @@
             if ([result next]) {
                 int poi_id  = [result intForColumn:@"poi_id"];
                 element.typeID = poi_id;
-                sql = [NSString stringWithFormat:@"UPDATE %@ SET poi_id=%d WHERE id=%lld",baseTableName,poi_id,element.element.elementID];
-                [db executeUpdateWithFormat:sql];
+                [db executeUpdate:@"UPDATE %@ SET poi_id=? WHERE id=?",baseTableName,poi_id,element.element.elementID];
                 didFind = YES;
             }
             [result close];

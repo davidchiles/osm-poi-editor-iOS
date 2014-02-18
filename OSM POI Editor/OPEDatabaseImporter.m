@@ -27,13 +27,12 @@
 
 @implementation OPEDatabaseImporter
 
--(id)init
+-(FMDatabaseQueue *)databaseQueue
 {
-    if(self = [super init])
-    {
-        self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
+    if (!_databaseQueue) {
+        _databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
     }
-    return self;
+    return _databaseQueue;
 }
 
 -(void)import
@@ -44,13 +43,15 @@
 }
 
 
+
+
 -(void)importSqliteOptionalSections
 {
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"OptionalCategorySort" ofType:@"json"];
     NSError * error = nil;
     NSData * data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:&error];
     NSDictionary * optionalDictionary = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+    [self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         for (NSString * name in optionalDictionary)
         {
             int sortOrer = [optionalDictionary[name] intValue];
@@ -66,14 +67,12 @@
     NSError * error = nil;
     NSData * data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:&error];
     NSDictionary * optionalDictionary = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+    [self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         db.logsErrors = OPELogDatabaseErrors;
         
         
         for(NSString * key in optionalDictionary)
         {
-            [db beginTransaction];
-            
             OPEReferenceOptional * optional = [[OPEReferenceOptional alloc] initWithDictionary:optionalDictionary[key] withName:key];
             
             BOOL result = [db executeUpdate:[optional sqliteInsertString]];
@@ -85,9 +84,7 @@
                 }
                 
             }
-            [db commit];
         }
-        
     }];
 }
 -(void)importSqlitePoiTags
@@ -96,13 +93,13 @@
     NSError * error = nil;
     NSData * data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:&error];
     NSDictionary * dictionary = [NSJSONSerialization JSONObjectWithData:data options:nil error:&error];
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+    [self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         db.logsErrors = OPELogDatabaseErrors;
         db.traceExecution = OPETraceDatabaseTraceExecution;
         
         for(NSString * category in dictionary)
         {
-            [db beginTransaction];
+            
             NSDictionary * categoryDictionary = [dictionary objectForKey:category];
             for(NSString * type in categoryDictionary)
             {
@@ -124,10 +121,7 @@
                     DDLogError(@"Failed");
                 }
             }
-            [db commit];
-            
         }
-        
     }];
 }
 
@@ -209,13 +203,11 @@
 
 -(void)setupDatabase
 {
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
+    OSMDatabaseManager * osmData = [[OSMDatabaseManager alloc] initWithFilePath:[OPEConstants databasePath] overrideIfExists:YES];
+    //[OSMDatabaseManager initialize];
+    //osmData = nil;
+    [self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         BOOL result = NO;
-        OSMDatabaseManager * osmData = [[OSMDatabaseManager alloc] initWithFilePath:[OPEConstants databasePath] overrideIfExists:YES];
-        [OSMDatabaseManager initialize];
-        osmData = nil;
-        [db beginTransaction];
-        
         
         result = [db executeUpdate:@"DROP TABLE IF EXISTS poi"];
         result = [db executeUpdate:@"DROP TABLE IF EXISTS optional"];
@@ -242,9 +234,6 @@
         result = [db executeUpdate:@"ALTER TABLE nodes ADD COLUMN isVisible INTEGER DEFAULT 1;"];
         result = [db executeUpdate:@"ALTER TABLE ways ADD COLUMN isVisible INTEGER DEFAULT 1;"];
         result = [db executeUpdate:@"ALTER TABLE relations ADD COLUMN isVisible INTEGER DEFAULT 1;"];
-        
-        [db commit];
-        
     }];
     
 }
