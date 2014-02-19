@@ -205,7 +205,7 @@
 {
     OSMDatabaseManager * osmData = [[OSMDatabaseManager alloc] initWithFilePath:[OPEConstants databasePath] overrideIfExists:YES];
     //[OSMDatabaseManager initialize];
-    //osmData = nil;
+    osmData = nil;
     [self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         BOOL result = NO;
         

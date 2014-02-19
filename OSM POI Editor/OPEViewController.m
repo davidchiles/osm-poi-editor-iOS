@@ -208,6 +208,10 @@
     }
 }
 
+- (void)tapOnCalloutForAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map;
+{
+    [self presentNodeInfoViewControllerWithElement:annotation.userInfo];
+}
 
 - (void)tapOnCalloutAccessoryControl:(UIControl *)control forAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)map
 {
@@ -220,7 +224,6 @@
     if (wasUserAction) {
         [self downloadNotes:map];
     }
-    
 }
 
 - (void)afterMapZoom:(RMMapView *)map byUser:(BOOL)wasUserAction

@@ -148,9 +148,7 @@
 -(void)findType:(NSArray *)elements completion:(void (^)(NSArray * foundElements))completion
 {
     __block NSMutableArray * foundElements = [NSMutableArray array];
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        [db beginTransaction];
-        
+    [self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         
         [elements enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             OPEOsmElement * element = obj;
@@ -168,15 +166,16 @@
                 if ([result next]) {
                     int poi_id  = [result intForColumn:@"poi_id"];
                     element.typeID = poi_id;
-                    //sql = [NSString stringWithFormat:@"UPDATE %@ SET poi_id=%d WHERE id=%lld",baseTableName,poi_id,element.element.elementID];
                     [db executeUpdate:@"UPDATE ? Set poi_id=? Where id=?",baseTableName,[NSNumber numberWithInt:poi_id],[NSNumber numberWithLongLong:element.element.elementID]];
                     [foundElements addObject:element];
                 }
             }
         }];
-        [db commit];
     }];
-    completion(foundElements);
+    if (completion) {
+         completion(foundElements);
+    }
+   
 }
 
 -(BOOL)findType:(OPEOsmElement *)element
@@ -226,7 +225,7 @@
             poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
         }
         
-        set = [db executeQueryWithFormat:@"SELECT * FROM pois_tags WHERE poi_id = %d",poi.rowID];
+        set = [db executeQuery:@"SELECT * FROM pois_tags WHERE poi_id = ?",poi.rowID];
         
         while ([set next]) {
             [poi.tags setObject:[set stringForColumn:@"value"] forKey:[set stringForColumn:@"key"]];
@@ -241,7 +240,7 @@
 {
     if (rowId) {
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
-            [db executeUpdateWithFormat:@"UPDATE %@ SET poi_id = %d WHERE id = %lld",[OSMDatabaseManager tableName:element.element],rowId,element.element.elementID];
+            [db executeUpdate:@"UPDATE %@ SET poi_id = ? WHERE id = ?",[OSMDatabaseManager tableName:element.element],rowId,element.element.elementID];
         }];
     }
     
@@ -519,7 +518,7 @@
             [db executeUpdate:sqlString];
         }
         NSString * updatePOIStatement = [NSString stringWithFormat:@"UPDATE %@ SET poi_id = %d,isVisible = %d,action = \'%@\' WHERE id = %lld",element.element.tableName,element.typeID,element.isVisible,element.action,element.elementID];
-        [db executeUpdateWithFormat:updatePOIStatement];
+        [db executeUpdate:updatePOIStatement];
         [db commit];
         
     }];
@@ -678,7 +677,7 @@
         [self.databaseQueue inDatabase:^(FMDatabase *db) {
             db.logsErrors = OPELogDatabaseErrors;
             db.traceExecution = OPETraceDatabaseTraceExecution;
-            FMResultSet * set = [db executeQueryWithFormat:@"select displayName,osmKey,type,sectionSortOrder,optional_section.name AS section,optional.rowid AS id from pois_optionals,optional,optional_section where optional_id = optional.rowid AND poi_id = %d AND section_id = optional_section.rowid",poi.rowID];
+            FMResultSet * set = [db executeQueryWithFormat:@"select displayName,osmKey,type,sectionSortOrder,optional_section.name AS section,optional.rowid AS id from pois_optionals,optional,optional_section where optional_id = optional.rowid AND poi_id = %lld AND section_id = optional_section.rowid",poi.rowID];
             while([set next])
             {
                 OPEReferenceOptional * optional = [[OPEReferenceOptional alloc] init];
@@ -707,7 +706,7 @@
 -(void)getTagsForReferenceOptional:(OPEReferenceOptional *)optional
 {
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        FMResultSet * set = [db executeQueryWithFormat:@"select * from optionals_tags where optional_id = %d",optional.rowID];
+        FMResultSet * set = [db executeQueryWithFormat:@"select * from optionals_tags where optional_id = %lld",optional.rowID];
         while ([set next]) {
             OPEReferenceOsmTag * tag = [[OPEReferenceOsmTag alloc] init];
             tag.name = [set stringForColumn:@"name"];
