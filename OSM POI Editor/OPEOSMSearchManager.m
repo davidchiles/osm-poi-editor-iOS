@@ -14,6 +14,7 @@
 #import "OSMNode.h"
 #import "OPEGeo.h"
 #import "OPELog.h"
+#import "OPEDatabaseManager.h"
 
 @implementation OPEOSMSearchManager
 
@@ -21,7 +22,7 @@
 {
     if(self = [super init])
     {
-        databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
+        databaseQueue = [OPEDatabaseManager defaultDatabaseQueue];
         osmData = [[OPEOSMData alloc] init];
         
     }

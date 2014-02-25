@@ -14,6 +14,7 @@
 #import "FMDatabaseQueue.h"
 #import "OSMDatabaseManager.h"
 #import "OPELog.h"
+#import "OPEDatabaseManager.h"
 
 #define tagsFilePath [[NSBundle mainBundle] pathForResource:@"Tags" ofType:@"json"]
 #define optionalPlistFilePath [[NSBundle mainBundle] pathForResource:@"Optional" ofType:@"json"]
@@ -30,7 +31,7 @@
 -(FMDatabaseQueue *)databaseQueue
 {
     if (!_databaseQueue) {
-        _databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
+        _databaseQueue = [OPEDatabaseManager defaultDatabaseQueue];
     }
     return _databaseQueue;
 }

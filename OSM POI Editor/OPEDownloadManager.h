@@ -14,20 +14,13 @@
 #import "OPEOSMAPIManager.h"
 #import "OPEOSMData.h"
 
-typedef void (^foundMatchingElements)(NSArray * newElements,NSArray * updatedElements);
+typedef void (^foundMatchingElementsBlock)(NSArray * newElements,NSArray * updatedElements);
 
 @interface OPEDownloadManager : NSObject <OSMDatabaseManagerDelegate>
-{
-    OPEOSMData * osmData;
-    OPEOSMAPIManager * apiManager;
-    NSOperationQueue * parseQueue;
-}
 
-
-
-@property (nonatomic,strong)NSMutableSet * dowloadedAreas;
-@property (nonatomic,strong)NSMutableDictionary * notesDictionary;
-@property (nonatomic,copy)foundMatchingElements foundMatchingElementsBlock;
+@property (nonatomic, strong) NSMutableSet * dowloadedAreas;
+@property (nonatomic, strong) NSMutableDictionary * notesDictionary;
+@property (nonatomic, copy) foundMatchingElementsBlock foundMatchingElementsBlock;
 
 
 - (void)downloadDataWithSW:(CLLocationCoordinate2D)southWest

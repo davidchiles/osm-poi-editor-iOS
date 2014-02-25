@@ -362,6 +362,7 @@
 		638445EA1665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 638445E91665BBEA004570A5 /* OPEOpenMapQuestAerialTileSource.m */; };
 		6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */; };
 		6387126D17582655006C3A4E /* OPENewNodeSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */; };
+		638E1DE918BC0EC00034C02B /* OPEDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 638E1DE818BC0EC00034C02B /* OPEDatabaseManager.m */; };
 		63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1417961B8C008B897C /* OPENoteViewController.m */; };
 		63962B1B17961FAB008B897C /* OPECommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1A17961FAB008B897C /* OPECommentCell.m */; };
 		63962B1F179621A0008B897C /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1E179621A0008B897C /* TTTAttributedLabel.m */; };
@@ -906,6 +907,8 @@
 		6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMSearchManager.m; sourceTree = "<group>"; };
 		6387126B17582655006C3A4E /* OPENewNodeSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENewNodeSelectViewController.h; sourceTree = "<group>"; };
 		6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENewNodeSelectViewController.m; sourceTree = "<group>"; };
+		638E1DE718BC0EC00034C02B /* OPEDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEDatabaseManager.h; sourceTree = "<group>"; };
+		638E1DE818BC0EC00034C02B /* OPEDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEDatabaseManager.m; sourceTree = "<group>"; };
 		63962B1317961B8C008B897C /* OPENoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENoteViewController.h; sourceTree = "<group>"; };
 		63962B1417961B8C008B897C /* OPENoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENoteViewController.m; sourceTree = "<group>"; };
 		63962B1917961FAB008B897C /* OPECommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECommentCell.h; sourceTree = "<group>"; };
@@ -1514,6 +1517,8 @@
 				6362032917CC050B0031B982 /* OPEOSMTagConverter.m */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,
 				631539E014DC98D0000236F0 /* OPEOSMData.m */,
+				638E1DE718BC0EC00034C02B /* OPEDatabaseManager.h */,
+				638E1DE818BC0EC00034C02B /* OPEDatabaseManager.m */,
 				63233BA817DA90990026CFC5 /* OPEDownloadManager.h */,
 				63233BA917DA90990026CFC5 /* OPEDownloadManager.m */,
 				63CFCA93176160330006BE38 /* OPEOSMAPIManager.h */,
@@ -2300,6 +2305,7 @@
 				63CB49E214E9E3BF008C4551 /* OPETypeViewController.m in Sources */,
 				6366D33017D6A0D4002C9EF7 /* OPEOpeningHoursBaseTimeEditViewController.m in Sources */,
 				6383948114EC4DDD00C74A57 /* OPEInfoViewController.m in Sources */,
+				638E1DE918BC0EC00034C02B /* OPEDatabaseManager.m in Sources */,
 				636C77C517D94C0400FCDB10 /* OPEOpeningHoursTimesEditViewController.m in Sources */,
 				63E525D21534D90500D2DA35 /* OPECreditViewController.m in Sources */,
 				6310F4B6153736D000C65FD8 /* OPEMessageView.m in Sources */,

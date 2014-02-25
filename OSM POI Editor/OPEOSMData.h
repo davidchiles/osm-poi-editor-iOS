@@ -36,20 +36,15 @@
 @class OPEChangeset;
 
 @interface OPEOSMData : NSObject
-{
-    NSMutableDictionary * typeDictionary;
-    OPEOSMAPIManager * apiManager;
-}
 
 @property (nonatomic, strong) FMDatabaseQueue * databaseQueue;
-
 
 - (BOOL)findType:(OPEOsmElement *)element;
 - (void)findType:(NSArray *)elements completion:(void (^)(NSArray * foundElements))completion;
 - (BOOL)isNoNameStreet:(OPEOsmWay *)way;
 
 - (NSString *)changesetCommentfor:(OPEOsmElement *)element;
-- (NSString *)nameWithElement: (OPEOsmElement *) element;
+- (NSString *)nameWithElement:(OPEOsmElement *) element;
 
 -(void)removeOsmKey:(NSString *)osmKey forElement:(OPEOsmElement *)element;
 -(void)setOsmKey:(NSString *)osmKey andValue:(NSString *)osmValue forElement:(OPEOsmElement *)element;

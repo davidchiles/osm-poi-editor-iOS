@@ -47,6 +47,12 @@
 
 #import "FMDatabase.h"
 
+@interface OPEOSMData ()
+
+@property (nonatomic, strong) NSMutableDictionary * typeDictionary;
+@property (nonatomic, strong) OPEOSMAPIManager * apiManager;
+
+@end
 
 
 @implementation OPEOSMData
@@ -56,7 +62,7 @@
     self = [super init];
     if(self)
     {
-        apiManager = [[OPEOSMAPIManager alloc] init];
+        self.apiManager = [[OPEOSMAPIManager alloc] init];
     }
     
     return self;
@@ -289,7 +295,7 @@
 -(void)getTypeFor:(OPEOsmElement *)element
 {
     if (element.typeID) {
-        __block OPEReferencePoi * poi = [typeDictionary objectForKey:[NSNumber numberWithInt:element.typeID]];
+        __block OPEReferencePoi * poi = [self.typeDictionary objectForKey:[NSNumber numberWithInt:element.typeID]];
         if (!poi) {
             [self.databaseQueue inDatabase:^(FMDatabase *db) {
                 FMResultSet * result = [db executeQuery:@"SELECT *,rowid AS id FROM poi WHERE rowid = ?",[NSNumber numberWithInt:element.typeID]];
@@ -299,7 +305,7 @@
                 [result close];
             }];
         }
-        [typeDictionary setObject:poi forKey:[NSNumber numberWithInt:element.typeID]];
+        [self.typeDictionary setObject:poi forKey:[NSNumber numberWithInt:element.typeID]];
         element.type = poi;
 
         
