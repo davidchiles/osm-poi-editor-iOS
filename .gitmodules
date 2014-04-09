@@ -29,3 +29,6 @@
 [submodule "lib/CocoaLumberjack"]
 	path = lib/CocoaLumberjack
 	url = git@github.com:CocoaLumberjack/CocoaLumberjack.git
+[submodule "lib/HockeySDK-iOS"]
+	path = lib/HockeySDK-iOS
+	url = git@github.com:bitstadium/HockeySDK-iOS.git

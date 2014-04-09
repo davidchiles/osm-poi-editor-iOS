@@ -52,16 +52,20 @@ withChangesetComment:(NSString *)changesetComment
              success:(void (^)(NSData * response))success
              failure:(void (^)(NSError *error))failure;
 
--(void)createNewComment:(OSMComment *)comment withNote:(OSMNote *)note
+-(void)createNewComment:(OSMComment *)comment
+               withNote:(OSMNote *)note
                 success:(void (^)(id JSON))success
                 failure:(void (^)(NSError *error))failure;
 
--(void)closeNote:(OSMNote *)note withComment:(NSString *)comment
+-(void)closeNote:(OSMNote *)note
+     withComment:(NSString *)comment
          success:(void (^)(id JSON))success
          failure:(void (^)(NSError *error))failure;
 -(void)reopenNote:(OSMNote *)note
          success:(void (^)(NSData * response))success
          failure:(void (^)(NSError *error))failure;
+
+- (void)fetchCurrentUserWithComletion:(void (^)(BOOL success,NSError *error))completionBlock;
 
 +(GTMOAuthAuthentication *)osmAuth;
 -(BOOL) canAuth;

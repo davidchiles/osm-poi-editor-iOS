@@ -26,19 +26,32 @@
 #import "OPEAppDelegate.h"
 #import "OPEViewController.h"
 #import "OPEDatabaseImporter.h"
+#import "OPEDatabaseManager.h"
 #import "AFNetworkActivityIndicatorManager.h"
+#import "HockeySDK.h"
 
-//#import "OPEOpeningHoursEditViewController.h"
+@interface OPEAppDelegate () <BITHockeyManagerDelegate>
+
+@end
+
 
 @implementation OPEAppDelegate
-
-@synthesize window = _window;
-@synthesize navController = _navController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    application.statusBarStyle = UIStatusBarStyleLightContent;//FIXME background for status bar
+    [[BITHockeyManager sharedHockeyManager] configureWithBetaIdentifier:HOCKEY_BETA_IDENTIFIER
+                                                         liveIdentifier:HOCKEY_LIVE_IDENTIFIER
+                                                               delegate:self];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
+    
+    application.statusBarStyle = UIStatusBarStyleLightContent;
+    
+    [OPEDatabaseManager createDatabaseWithError:nil];
+    
+    
+    [[[OPEOSMAPIManager alloc] init] fetchCurrentUserWithComletion:nil];
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
@@ -49,11 +62,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     UIViewController *rootView = [[OPEViewController alloc] init];
-    /*NSString * string = @"Nov-May Tu-Su 08:00-15:00;Sa 08:00-12:00;Jun off";
     
-    //UIViewController * rootView = [[OPEOpeningHoursEditViewController alloc] initWithOsmKey:@"opening_hours" value:string withCompletionBlock:^(NSString *key, NSString *value) {
-        NSLog(@"Key: %@\nValue: %@",key,value);
-    }];*/
     self.navController = [[UINavigationController alloc] initWithRootViewController:rootView];
     [[self window] setRootViewController:self.navController];
     

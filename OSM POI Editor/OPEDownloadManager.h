@@ -14,6 +14,8 @@
 #import "OPEOSMAPIManager.h"
 #import "OPEOSMData.h"
 
+@class OSMNote;
+
 typedef void (^foundMatchingElementsBlock)(NSArray * newElements,NSArray * updatedElements);
 
 @interface OPEDownloadManager : NSObject <OSMDatabaseManagerDelegate>
@@ -30,10 +32,10 @@ typedef void (^foundMatchingElementsBlock)(NSArray * newElements,NSArray * updat
                     faiure:(void (^)(NSError * error))failure;
 
 - (void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest
-                     forNE: (CLLocationCoordinate2D) northEast
-           didStartParsing:(void (^)(void))startParsing
-          didFinsihParsing:(void (^)(NSArray * newNotes))finishParsing
-                    faiure:(void (^)(NSError * error))failure;
+                      forNE: (CLLocationCoordinate2D) northEast
+            didStartParsing:(void (^)(void))startParsing
+                onFoundNote:(void (^)(OSMNote *note))foundNote
+                     faiure:(void (^)(NSError *error))failure;
 
 - (BOOL)downloadedAreaContainsPoint:(CLLocationCoordinate2D)point;
 

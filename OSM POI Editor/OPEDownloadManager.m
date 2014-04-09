@@ -16,6 +16,7 @@
 #import "OPEUtility.h"
 #import "OPEGeo.h"
 #import "OPEDatabaseManager.h"
+#import "OPENotesDatabase.h"
 
 #import "OPELog.h"
 
@@ -78,32 +79,23 @@
 - (void)downloadNotesWithSW:(CLLocationCoordinate2D)southWest
                       forNE: (CLLocationCoordinate2D) northEast
             didStartParsing:(void (^)(void))startParsing
-           didFinsihParsing:(void (^)(NSArray * newNotes))finishParsing
-                     faiure:(void (^)(NSError * error))failure {
+                onFoundNote:(void (^)(OSMNote *note))foundNote
+                     faiure:(void (^)(NSError *error))failure {
     
     [self.apiManager downloadNotesWithSW:southWest NE:northEast success:^(id response) {
-        //NSString* newStr = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
         
         [self.parseQueue addOperationWithBlock:^{
             dispatch_async(dispatch_get_main_queue(),startParsing);
-            __block NSMutableArray * newNotes = [NSMutableArray array];
             NSArray * notes = [response objectForKey:@"features"];
             [notes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSDictionary * noteDictionary = (NSDictionary *)obj;
-                NSDictionary * propertiesDictionary = noteDictionary[@"properties"];
-                if (![self.notesDictionary objectForKey: @([propertiesDictionary[@"id"] longLongValue])]) {
-                    OSMNote * note = [self.osmData createNoteWithJSONDictionary:noteDictionary];
-                    [self.notesDictionary setObject:note forKey:@(note.id)];
-                    [newNotes addObject:note];
-                }
                 
-                
-                DDLogInfo(@"%@",obj);
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    if (finishParsing) {
-                        finishParsing(newNotes);
+                OSMNote * note = [self.osmData createNoteWithJSONDictionary:noteDictionary];
+                [OPENotesDatabase saveNote:note completion:^(BOOL success) {
+                    if (success && foundNote) {
+                        foundNote(note);
                     }
-                });
+                }];
             }];
         }];
         

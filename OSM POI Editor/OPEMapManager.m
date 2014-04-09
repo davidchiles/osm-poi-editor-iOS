@@ -23,20 +23,25 @@
 
 #import "OPEOSMData.h"
 #import "OPEGeoCentroid.h"
+#import "OPENotesDatabase.h"
+
+@interface OPEMapManager ()
+
+@property (nonatomic, strong) NSMutableDictionary * imageDictionary;
+@property (nonatomic, strong) RMAnnotation * wayAnnotation;
+@property (nonatomic, strong) NSOperationQueue * operationQueue;
+
+@end
 
 @implementation OPEMapManager
-
-@synthesize osmData = _osmData;
-
-
 
 -(id)init
 {
     if(self = [super init])
     {
-        imageDictionary = [NSMutableDictionary dictionary];
-        operationQueue = [[NSOperationQueue alloc] init];
-        operationQueue.maxConcurrentOperationCount = 2;
+        self.imageDictionary = [NSMutableDictionary dictionary];
+        self.operationQueue = [[NSOperationQueue alloc] init];
+        self.operationQueue.maxConcurrentOperationCount = 2;
     }
     return self;
 }
@@ -86,8 +91,8 @@
 {
     UIImage * icon = nil;
     if (managedOsmElement.type) {
-        if ([imageDictionary objectForKey:managedOsmElement.type.imageString]) {
-            icon = [imageDictionary objectForKey:managedOsmElement.type.imageString];
+        if ([self.imageDictionary objectForKey:managedOsmElement.type.imageString]) {
+            icon = [self.imageDictionary objectForKey:managedOsmElement.type.imageString];
         }
         else {
             NSString * imageString = managedOsmElement.type.imageString;
@@ -95,7 +100,7 @@
                 imageString = @"none.png";
             
             icon = [self imageWithBorderFromImage:[UIImage imageNamed:imageString]]; //center image inside box
-            [imageDictionary setObject:icon forKey:managedOsmElement.type.imageString];
+            [self.imageDictionary setObject:icon forKey:managedOsmElement.type.imageString];
         }
     }
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];
@@ -247,15 +252,58 @@
 #pragma mark AnnotationManagement
 //////////////////////////////////
 
--(void)addNotes:(NSArray *)notes withMapView:(RMMapView *)mapView
+- (void)reloadNotesInMapView:(RMMapView *)mapView
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        __block NSMutableArray *annotationsToBeRemoved = [NSMutableArray array];
+        [mapView.annotations enumerateObjectsUsingBlock:^(RMAnnotation *annotation, NSUInteger idx, BOOL *stop) {
+            if ([annotation.userInfo isKindOfClass:[OSMNote class]]) {
+                [annotationsToBeRemoved addObject:annotation];
+            }
+        }];
+        
+        [OPENotesDatabase allNotesCompletion:^(NSArray *notes) {
+            [mapView removeAnnotations:annotationsToBeRemoved];
+            [self addNotes:notes withMapView:mapView];
+        }];
+        
+    });
+    
+}
+
+- (RMAnnotation *)existingAnnotationForNote:(OSMNote *)note withMapView:(RMMapView *)mapView
+{
+    __block RMAnnotation *noteAnnotation = nil;
+    [mapView.annotations enumerateObjectsUsingBlock:^(RMAnnotation *annotation, NSUInteger idx, BOOL *stop) {
+        if ([annotation.userInfo isKindOfClass:[OSMNote class]]) {
+            OSMNote *annotationNote = (OSMNote *)annotation.userInfo;
+            if (annotationNote.id == note.id) {
+                noteAnnotation = annotation;
+                *stop = YES;
+            }
+        }
+    }];
+    return noteAnnotation;
+}
+
+- (void)addNote:(OSMNote *)note withMapView:(RMMapView *)mapView
+{
+    RMAnnotation *oldAnnotation = [self existingAnnotationForNote:note withMapView:mapView];
+    if (oldAnnotation) {
+        [mapView removeAnnotation:oldAnnotation];
+    }
+    RMAnnotation * annotation = [self annotationWForNote:note withMapView:mapView];
+    [mapView addAnnotation:annotation];
+}
+
+- (void)addNotes:(NSArray *)notes withMapView:(RMMapView *)mapView
 {
     [notes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        RMAnnotation * annotation = [self annotationWForNote:obj withMapView:mapView];
-        [mapView addAnnotation:annotation];
+        [self addNote:obj withMapView:mapView];
     }];
 }
 
--(void)addAnnotationsForOsmElements:(NSArray *)elementsArray withMapView:(RMMapView *)mapView {
+- (void)addAnnotationsForOsmElements:(NSArray *)elementsArray withMapView:(RMMapView *)mapView {
     [elementsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSArray * annotationsArray = [self annotationsForOsmElement:obj withMapView:mapView];
         [annotationsArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -264,7 +312,7 @@
     }];
 }
 
--(void)updateAnnotationsForOsmElements:(NSArray *)elementsArray withMapView:(RMMapView *)mapView {
+- (void)updateAnnotationsForOsmElements:(NSArray *)elementsArray withMapView:(RMMapView *)mapView {
     for (OPEOsmElement * element in elementsArray)
     {
         [self removeAnnotationForOsmElement:element withMapView:mapView];
@@ -277,7 +325,7 @@
     }
 }
 
--(void)removeAnnotationForOsmElement:(OPEOsmElement *)element withMapView:(RMMapView *)mapView
+- (void)removeAnnotationForOsmElement:(OPEOsmElement *)element withMapView:(RMMapView *)mapView
 {
     NSSet * annotationSet = [self existingAnnotationsForOsmElement:element withMapView:mapView];
     if ([annotationSet count])
@@ -286,7 +334,7 @@
     }
 }
 
--(NSSet *)existingAnnotationsForOsmElement:(OPEOsmElement *)element withMapView:(RMMapView *)mapView {
+- (NSSet *)existingAnnotationsForOsmElement:(OPEOsmElement *)element withMapView:(RMMapView *)mapView {
     NSIndexSet * indexSet = [self indexesOfOsmElement:element withMapView:mapView];
     NSMutableSet * annotationSet = [NSMutableSet set];
     
@@ -297,7 +345,7 @@
     return annotationSet;
 }
 
--(NSIndexSet *)indexesOfOsmElement:(OPEOsmElement *)element withMapView:(RMMapView *)mapView
+- (NSIndexSet *)indexesOfOsmElement:(OPEOsmElement *)element withMapView:(RMMapView *)mapView
 {
     NSIndexSet * set = [mapView.annotations indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
         RMAnnotation * annotation = (RMAnnotation *)obj;
@@ -310,7 +358,7 @@
 #pragma mark RMMapViewDelegate
 /////////////////////////////////
 
--(RMMapLayer *) mapView:(RMMapView *)mView layerForAnnotation:(RMAnnotation *)annotation
+- (RMMapLayer *) mapView:(RMMapView *)mView layerForAnnotation:(RMAnnotation *)annotation
 {
     RMMarker * marker = nil;
     if ([annotation.userInfo isKindOfClass:[OPEOsmElement class]]) {
@@ -335,11 +383,11 @@
     return marker;
 }
 
--(void)tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)mapView
+- (void)tapOnAnnotation:(RMAnnotation *)annotation onMap:(RMMapView *)mapView
 {
-    if (wayAnnotation) {
-        [mapView removeAnnotation:wayAnnotation];
-        wayAnnotation = nil;
+    if (self.wayAnnotation) {
+        [mapView removeAnnotation:self.wayAnnotation];
+        self.wayAnnotation = nil;
     }
     
     id osmElement = annotation.userInfo;
@@ -347,16 +395,16 @@
     if ([osmElement isKindOfClass:[OPEOsmWay class]]) {
         OPEOsmWay * osmWay = (OPEOsmWay *)osmElement;
         
-        wayAnnotation = [self shapeForWay:osmWay withMapView:mapView];
-        wayAnnotation.userInfo = annotation.userInfo;
-        [mapView addAnnotation:wayAnnotation];
+        self.wayAnnotation = [self shapeForWay:osmWay withMapView:mapView];
+        self.wayAnnotation.userInfo = annotation.userInfo;
+        [mapView addAnnotation:self.wayAnnotation];
     }
     else if ([osmElement isKindOfClass:[OPEOsmRelation  class]])
     {
         OPEOsmRelation * osmRelation = (OPEOsmRelation *)osmElement;
-        wayAnnotation = [self shapeForRelation:osmRelation withMapView:mapView];
-        wayAnnotation.userInfo = annotation.userInfo;
-        [mapView addAnnotation:wayAnnotation];
+        self.wayAnnotation = [self shapeForRelation:osmRelation withMapView:mapView];
+        self.wayAnnotation.userInfo = annotation.userInfo;
+        [mapView addAnnotation:self.wayAnnotation];
     }
 }
 

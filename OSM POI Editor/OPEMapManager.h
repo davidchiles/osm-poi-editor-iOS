@@ -10,20 +10,18 @@
 
 #import "RMMapViewDelegate.h"
 @class OPEOSMData;
+@class OSMNote;
 
 @interface OPEMapManager : NSObject <RMMapViewDelegate>
-{
-    NSMutableDictionary * imageDictionary;
-    RMAnnotation * wayAnnotation;
-    NSOperationQueue * operationQueue;
-}
 
 @property (nonatomic,strong) OPEOSMData * osmData;
 
+- (void)addNote:(OSMNote *)note withMapView:(RMMapView *)mapView;
+- (void)addNotes:(NSArray *)notes withMapView:(RMMapView *)mapView;
+- (void)reloadNotesInMapView:(RMMapView *)mapView;
 
--(void)addNotes:(NSArray *)notes withMapView:(RMMapView *)mapView;
--(void)addAnnotationsForOsmElements:(NSArray *)elementsArray withMapView:(RMMapView *)mapView;
--(void)updateAnnotationsForOsmElements:(NSArray *)elementsArray withMapView:(RMMapView *)mapView;
+- (void)addAnnotationsForOsmElements:(NSArray *)elementsArray withMapView:(RMMapView *)mapView;
+- (void)updateAnnotationsForOsmElements:(NSArray *)elementsArray withMapView:(RMMapView *)mapView;
 
 
 @end

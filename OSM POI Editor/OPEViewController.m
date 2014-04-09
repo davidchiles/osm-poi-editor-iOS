@@ -324,10 +324,10 @@
     if (map.zoom > MINZOOM) {
         [self.downloadManger downloadNotesWithSW:geoBox.southWest forNE:geoBox.northEast didStartParsing:^{
             DDLogInfo(@"Start parsing Notes");
-        } didFinsihParsing:^(NSArray *newNotes) {
-            [self didFindNewNotes:newNotes];
+        } onFoundNote:^(OSMNote *note) {
+            [self.mapManager addNote:note withMapView:map];
         } faiure:^(NSError *error) {
-            DDLogError(@"Error");
+            DDLogError(@"Error: %@",error);
         }];
     }
 }
@@ -360,7 +360,7 @@
 {
     CLLocationCoordinate2D center = self.mapView.centerCoordinate;
     
-    if ([self.downloadManger downloadedAreaContainsPoint:center] || YES) {
+    if ([self.downloadManger downloadedAreaContainsPoint:center]) {
         DDLogInfo(@"Should be allowed to download");
         if (self.mapView.zoom > MINZOOM) {
             
@@ -450,6 +450,8 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.navigationController setToolbarHidden:YES animated:YES];
+    
+    [self.mapManager reloadNotesInMapView:self.mapView];
     
     userPressedLocatoinButton = NO;
 }

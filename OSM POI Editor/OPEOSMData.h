@@ -39,7 +39,6 @@
 
 @property (nonatomic, strong) FMDatabaseQueue * databaseQueue;
 
-- (BOOL)findType:(OPEOsmElement *)element;
 - (void)findType:(NSArray *)elements completion:(void (^)(NSArray * foundElements))completion;
 - (BOOL)isNoNameStreet:(OPEOsmWay *)way;
 

@@ -46,11 +46,14 @@
 #import "OPELog.h"
 
 #import "FMDatabase.h"
+#import "OPEDatabaseManager.h"
 
 @interface OPEOSMData ()
 
+
 @property (nonatomic, strong) NSMutableDictionary * typeDictionary;
 @property (nonatomic, strong) OPEOSMAPIManager * apiManager;
+@property (nonatomic) dispatch_queue_t workQueue;
 
 @end
 
@@ -63,6 +66,8 @@
     if(self)
     {
         self.apiManager = [[OPEOSMAPIManager alloc] init];
+        NSString * queueLabel = [NSString stringWithFormat:@"%@.work.%@",[self class],self];
+        self.workQueue = dispatch_queue_create([queueLabel UTF8String], 0);
     }
     
     return self;
@@ -71,7 +76,7 @@
 -(FMDatabaseQueue *)databaseQueue
 {
     if (!_databaseQueue) {
-        _databaseQueue = [FMDatabaseQueue databaseQueueWithPath:[OPEConstants databasePath]];
+        _databaseQueue = [OPEDatabaseManager defaultDatabaseQueue];
     }
     return _databaseQueue;
 }
@@ -153,62 +158,56 @@
 
 -(void)findType:(NSArray *)elements completion:(void (^)(NSArray * foundElements))completion
 {
-    __block NSMutableArray * foundElements = [NSMutableArray array];
-    [self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
-        
-        [elements enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            OPEOsmElement * element = obj;
-            if (![obj isKindOfClass:[OPEOsmElement class]]) {
-                 element = [OPEOsmElement elementWithBasicOsmElement:obj];
-            }
-           
-            NSString * baseTableName = [OSMDatabaseManager tableName:element.element];
-            NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
-            NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
-            if (tagsTable && columnID && [element.element.tags count]) {
-                NSString * sql =  [NSString stringWithFormat:@"SELECT poi_id FROM (SELECT D.poi_id,%@ FROM (SELECT poi_id,%@,isLegacy,COUNT(*) AS count FROM (SELECT poi_id,%@ FROM pois_tags NATURAL JOIN %@) AS A JOIN poi AS B ON A.poi_id = B.rowid AND A.%@ = %lld GROUP BY poi_id ORDER BY isLegacy ASC) AS C, (SELECT poi_id,COUNT(*)AS count FROM pois_tags GROUP BY poi_id) AS D WHERE C.poi_id = D.poi_id AND C.count = D.count) LIMIT 1",columnID,columnID,columnID,tagsTable,columnID,element.element.elementID];
-                FMResultSet * result = [db executeQuery:sql];
-                
-                if ([result next]) {
-                    int poi_id  = [result intForColumn:@"poi_id"];
-                    element.typeID = poi_id;
-                    [db executeUpdate:@"UPDATE ? Set poi_id=? Where id=?",baseTableName,[NSNumber numberWithInt:poi_id],[NSNumber numberWithLongLong:element.element.elementID]];
-                    [foundElements addObject:element];
+    if(!elements.count)
+    {
+        if (completion) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(nil);
+            });
+        }
+        return;
+    }
+    
+    dispatch_async(self.workQueue, ^{
+        __block NSMutableArray * foundElements = [NSMutableArray array];
+        [self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
+            
+            [elements enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                OPEOsmElement * element = obj;
+                if (![obj isKindOfClass:[OPEOsmElement class]]) {
+                    element = [OPEOsmElement elementWithBasicOsmElement:obj];
                 }
-            }
+                
+                NSString * baseTableName = [OSMDatabaseManager tableName:element.element];
+                
+                
+                
+                NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
+                NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
+                if (tagsTable && columnID && [element.element.tags count]) {
+                    
+                    NSString * sql =  [NSString stringWithFormat:@"SELECT poi_id FROM (SELECT D.poi_id,%@ FROM (SELECT poi_id,%@,isLegacy,COUNT(*) AS count FROM (SELECT poi_id,%@ FROM pois_tags NATURAL JOIN %@) AS A JOIN poi AS B ON A.poi_id = B.rowid AND A.%@ = %lld GROUP BY poi_id ORDER BY isLegacy ASC) AS C, (SELECT poi_id,COUNT(*)AS count FROM pois_tags GROUP BY poi_id) AS D WHERE C.poi_id = D.poi_id AND C.count = D.count) LIMIT 1",columnID,columnID,columnID,tagsTable,columnID,element.element.elementID];
+                    FMResultSet * result = [db executeQuery:sql];
+                    
+                    if([result next]) {
+                        int poi_id  = [result intForColumn:@"poi_id"];
+                        element.typeID = poi_id;
+                        sql = [NSString stringWithFormat:@"UPDATE %@ SET poi_id=%d WHERE id=%lld",baseTableName,poi_id,element.element.elementID];
+                        [db executeUpdate:sql];
+                        [foundElements addObject:element];
+                    }
+                    [result close];
+                }
+            }];
         }];
-    }];
-    if (completion) {
-         completion(foundElements);
-    }
-   
+        if (completion) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(foundElements);
+            });
+        }
+    });
 }
 
--(BOOL)findType:(OPEOsmElement *)element
-{
-    NSString * baseTableName = [OSMDatabaseManager tableName:element.element];
-    NSString * tagsTable = [NSString stringWithFormat:@"%@_tags",baseTableName];
-    NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
-    __block BOOL didFind = NO;
-    if (tagsTable && columnID && [element.element.tags count]) {
-        [self.databaseQueue inDatabase:^(FMDatabase *db) {
-            
-            NSString * sql =  [NSString stringWithFormat:@"SELECT poi_id FROM (SELECT D.poi_id,%@ FROM (SELECT poi_id,%@,isLegacy,COUNT(*) AS count FROM (SELECT poi_id,%@ FROM pois_tags NATURAL JOIN %@) AS A JOIN poi AS B ON A.poi_id = B.rowid AND A.%@ = %lld GROUP BY poi_id ORDER BY isLegacy ASC) AS C, (SELECT poi_id,COUNT(*)AS count FROM pois_tags GROUP BY poi_id) AS D WHERE C.poi_id = D.poi_id AND C.count = D.count) LIMIT 1",columnID,columnID,columnID,tagsTable,columnID,element.element.elementID];
-            FMResultSet * result = [db executeQuery:sql];
-            
-            if ([result next]) {
-                int poi_id  = [result intForColumn:@"poi_id"];
-                element.typeID = poi_id;
-                [db executeUpdate:@"UPDATE %@ SET poi_id=? WHERE id=?",baseTableName,poi_id,element.element.elementID];
-                didFind = YES;
-            }
-            [result close];
-            
-
-        }];
-    }
-    return didFind;
-}
 -(void)updateLegacyTags:(OPEOsmElement *)element
 {
     if (element.type.isLegacy) {
@@ -307,7 +306,7 @@
         }
         [self.typeDictionary setObject:poi forKey:[NSNumber numberWithInt:element.typeID]];
         element.type = poi;
-
+        
         
     }
 }
@@ -385,7 +384,7 @@
         if ([[element.element.tags objectForKey:@"area"] isEqualToString:@"yes"] || [[element.element.tags objectForKey:@"type"] isEqualToString:@"multipolygon"]) {
             return YES;
         }
-
+        
         if ([element isKindOfClass:[OPEOsmWay class]]) {
             OPEOsmWay * way = (OPEOsmWay *)element;
             return [way.element isFirstNodeId:way.element.lastNodeId];
@@ -406,19 +405,22 @@
     else if ([element.element isKindOfClass:[OSMWay class]])
     {
         NSArray * array = [self pointsForWay:(OPEOsmWay* )element];
-        if (((OPEOsmWay *)element).isNoNameStreet) {
-            center = ((CLLocation *)array[0]).coordinate;
-        }
-        else if ([self isArea:element])
+        if(!array.count)
         {
-            center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:array];
+            DDLogError(@"Way with no points");
         }
-        else{
-            center = [OPEGeoCentroid centroidOfPolyline:array];
+        else {
+            if (((OPEOsmWay *)element).isNoNameStreet) {
+                center = ((CLLocation *)array[0]).coordinate;
+            }
+            else if ([self isArea:element])
+            {
+                center = [[[OPEGeoCentroid alloc] init] centroidOfPolygon:array];
+            }
+            else{
+                center = [OPEGeoCentroid centroidOfPolyline:array];
+            }
         }
-        
-        
-        
     }
     else if ([element.element isKindOfClass:[OSMRelation class]])
     {
@@ -438,7 +440,7 @@
             }
         }
         return CLLocationCoordinate2DMake(centerLat/num, centerLon/num);
-
+        
         
         
     }
@@ -511,8 +513,7 @@
 }
 -(void)updateElement:(OPEOsmElement *)element
 {
-    [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        [db beginTransaction];
+    [self.databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
         
         [db executeUpdate:[OSMDatabaseManager sqliteInsertOrReplaceString:element.element]];
         NSString * columnID = [NSString stringWithFormat:@"%@_id",[element.element.tableName substringToIndex:[element.element.tableName length] - 1]];
@@ -525,8 +526,6 @@
         }
         NSString * updatePOIStatement = [NSString stringWithFormat:@"UPDATE %@ SET poi_id = %d,isVisible = %d,action = \'%@\' WHERE id = %lld",element.element.tableName,element.typeID,element.isVisible,element.action,element.elementID];
         [db executeUpdate:updatePOIStatement];
-        [db commit];
-        
     }];
 }
 

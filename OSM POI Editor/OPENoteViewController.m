@@ -13,6 +13,7 @@
 #import "DAKeyboardControl.h"
 #import "OPEOSMAPIManager.h"
 #import "OPEOSMData.h"
+#import "OPENotesDatabase.h"
 
 #import "OPELog.h"
 
@@ -26,14 +27,15 @@
 
 @implementation OPENoteViewController
 
-@synthesize note,osmApiManager = _osmApiManager;
-@synthesize osmData = _osmData;
-
 -(id)initWithNote:(OSMNote *)newNote;
 {
     if(self = [self init])
     {
         self.note = newNote;
+        [OPENotesDatabase fetchNoteWithID:self.note.id completion:^(OSMNote *note) {
+            self.note = note;
+            [self reloadData];
+        }];
     }
     return self;
 }
@@ -232,6 +234,7 @@
         //Resolve
         [self.osmApiManager closeNote:self.note withComment:nil success:^(id JSON) {
             self.note = [self.osmData createNoteWithJSONDictionary:JSON];
+            [OPENotesDatabase saveNote:self.note completion:nil];
             [self reloadData];
             [self scrollToBottomAnimated:YES];
         } failure:^(NSError *error) {
@@ -244,6 +247,7 @@
         
         [self.osmApiManager closeNote:self.note withComment:[self textViewStrippedText] success:^(id JSON) {
             self.note = [self.osmData createNoteWithJSONDictionary:JSON];
+            [OPENotesDatabase saveNote:self.note completion:nil];
             [self reloadData];
             [self scrollToBottomAnimated:YES];
         } failure:^(NSError *error) {

@@ -11,6 +11,8 @@
 		63021FAB17F3A8AC00812BF6 /* note_closed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63021FAA17F3A8AC00812BF6 /* note_closed@2x.png */; };
 		63021FAD17F3ADA900812BF6 /* note_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63021FAC17F3ADA900812BF6 /* note_open@2x.png */; };
 		63021FB117F3B10A00812BF6 /* default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63021FB017F3B10A00812BF6 /* default-568h@2x.png */; };
+		6309678318E3480600217DCB /* OPEOSMUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6309678218E3480600217DCB /* OPEOSMUser.m */; };
+		6309678C18E37A9B00217DCB /* OPENotesDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 6309678B18E37A9B00217DCB /* OPENotesDatabase.m */; };
 		6309FCDE182F0A5100B3B22B /* OPEDatePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6309FCDD182F0A5100B3B22B /* OPEDatePickerCell.m */; };
 		630A878D17680FE1003C9423 /* BButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 630A878617680FE1003C9423 /* BButton.m */; };
 		630A878E17680FE1003C9423 /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 630A878817680FE1003C9423 /* NSString+FontAwesome.m */; };
@@ -295,7 +297,6 @@
 		63292E6C1593ED670010A11B /* OPEPhoneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E651593ED670010A11B /* OPEPhoneCell.m */; };
 		63292E6D1593ED670010A11B /* OPESpecialCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E671593ED670010A11B /* OPESpecialCell2.m */; };
 		63292E6E1593ED670010A11B /* OPETagValueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 63292E691593ED670010A11B /* OPETagValueList.m */; };
-		632E0FAD189091BC002C4581 /* libMapbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 632E0FA818909185002C4581 /* libMapbox.a */; };
 		632E0FB0189093FB002C4581 /* OPEConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 632E0FAF189093FB002C4581 /* OPEConstants.m */; };
 		6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB6E14DB519A00448852 /* UIKit.framework */; };
 		6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7014DB519A00448852 /* Foundation.framework */; };
@@ -313,7 +314,6 @@
 		63397D8F170250AA00D411E7 /* OPERecent+NearbyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D8E170250AA00D411E7 /* OPERecent+NearbyViewController.m */; };
 		63397D9717026B0F00D411E7 /* OPEPhoneEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */; };
 		633C5DDE18ADC9CC000B2610 /* OSMStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 633C5DDD18ADC9CC000B2610 /* OSMStreamParser.m */; };
-		633C5DE118AE915D000B2610 /* poi.sql in Resources */ = {isa = PBXBuildFile; fileRef = 633C5DE018AE915D000B2610 /* poi.sql */; };
 		633CD86A164B249100678D58 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD869164B249100678D58 /* AudioToolbox.framework */; };
 		633CD86C164B249D00678D58 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86B164B249D00678D58 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		633CD86E164B24AA00678D58 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 633CD86D164B24AA00678D58 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -363,6 +363,11 @@
 		6384D80C1738766500B58AF4 /* OPEOSMSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6384D80B1738766500B58AF4 /* OPEOSMSearchManager.m */; };
 		6387126D17582655006C3A4E /* OPENewNodeSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */; };
 		638E1DE918BC0EC00034C02B /* OPEDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 638E1DE818BC0EC00034C02B /* OPEDatabaseManager.m */; };
+		638E5D2718BD6523006F0890 /* libHockeySDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 638E5D2118BD6501006F0890 /* libHockeySDK.a */; };
+		638E5D2918BD6555006F0890 /* CrashReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 638E5D2818BD6555006F0890 /* CrashReporter.framework */; };
+		638E5D2A18BD6592006F0890 /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 638E5D2318BD6501006F0890 /* HockeySDKResources.bundle */; };
+		638E5D5118BD6C1C006F0890 /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 638E5D4F18BD6BFC006F0890 /* Mapbox.bundle */; };
+		638E5D5418BD6D83006F0890 /* libMapbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 638E5D4D18BD6BFC006F0890 /* libMapbox.a */; };
 		63962B1517961B8C008B897C /* OPENoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1417961B8C008B897C /* OPENoteViewController.m */; };
 		63962B1B17961FAB008B897C /* OPECommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1A17961FAB008B897C /* OPECommentCell.m */; };
 		63962B1F179621A0008B897C /* TTTAttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63962B1E179621A0008B897C /* TTTAttributedLabel.m */; };
@@ -384,7 +389,6 @@
 		63D0A5D517011659007A595E /* OPETextEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D417011659007A595E /* OPETextEditViewController.m */; };
 		63D0A5D8170119B5007A595E /* OPERecentlyUsedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5D7170119B4007A595E /* OPERecentlyUsedViewController.m */; };
 		63D0A5DB17011F18007A595E /* OPEOsmValueTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D0A5DA17011F17007A595E /* OPEOsmValueTextField.m */; };
-		63D53F3818B3D8CA0090C849 /* Mapbox.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 632E0FAA18909185002C4581 /* Mapbox.bundle */; };
 		63E17ADA17CD190200C24868 /* OPEOpeningHoursParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E17AD917CD190200C24868 /* OPEOpeningHoursParser.m */; };
 		63E2796814E1F274009D02BD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796714E1F274009D02BD /* CFNetwork.framework */; };
 		63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796914E1F281009D02BD /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -428,23 +432,44 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		632E0FA718909185002C4581 /* PBXContainerItemProxy */ = {
+		638E5D2018BD6501006F0890 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 632E0FA218909185002C4581 /* MapView.xcodeproj */;
+			containerPortal = 638E5D1818BD6501006F0890 /* HockeySDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1E5954F215B6F24A00A03429;
+			remoteInfo = HockeySDK;
+		};
+		638E5D2218BD6501006F0890 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 638E5D1818BD6501006F0890 /* HockeySDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1E59550A15B6F45800A03429;
+			remoteInfo = HockeySDKResources;
+		};
+		638E5D2418BD6501006F0890 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 638E5D1818BD6501006F0890 /* HockeySDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1E5A459016F0DFC200B55C04;
+			remoteInfo = HockeySDKTests;
+		};
+		638E5D4C18BD6BFC006F0890 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 638E5D4718BD6BFC006F0890 /* MapView.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 17F31EFA1331050A00122B16;
 			remoteInfo = MapView;
 		};
-		632E0FA918909185002C4581 /* PBXContainerItemProxy */ = {
+		638E5D4E18BD6BFC006F0890 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 632E0FA218909185002C4581 /* MapView.xcodeproj */;
+			containerPortal = 638E5D4718BD6BFC006F0890 /* MapView.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = DD6A83751644A20C0097F31F;
 			remoteInfo = Resources;
 		};
-		632E0FAB189091AE002C4581 /* PBXContainerItemProxy */ = {
+		638E5D5518BD719D006F0890 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 632E0FA218909185002C4581 /* MapView.xcodeproj */;
+			containerPortal = 638E5D4718BD6BFC006F0890 /* MapView.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = B8C974130E8A19B2007D16AD;
 			remoteInfo = MapView;
@@ -470,6 +495,10 @@
 		63021FAA17F3A8AC00812BF6 /* note_closed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "note_closed@2x.png"; sourceTree = "<group>"; };
 		63021FAC17F3ADA900812BF6 /* note_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "note_open@2x.png"; sourceTree = "<group>"; };
 		63021FB017F3B10A00812BF6 /* default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "default-568h@2x.png"; sourceTree = "<group>"; };
+		6309678118E3480600217DCB /* OPEOSMUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEOSMUser.h; sourceTree = "<group>"; };
+		6309678218E3480600217DCB /* OPEOSMUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEOSMUser.m; sourceTree = "<group>"; };
+		6309678A18E37A9B00217DCB /* OPENotesDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENotesDatabase.h; sourceTree = "<group>"; };
+		6309678B18E37A9B00217DCB /* OPENotesDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENotesDatabase.m; sourceTree = "<group>"; };
 		6309FCDC182F0A5100B3B22B /* OPEDatePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEDatePickerCell.h; sourceTree = "<group>"; };
 		6309FCDD182F0A5100B3B22B /* OPEDatePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEDatePickerCell.m; sourceTree = "<group>"; };
 		630A878517680FE1003C9423 /* BButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BButton.h; sourceTree = "<group>"; };
@@ -779,7 +808,6 @@
 		63292E671593ED670010A11B /* OPESpecialCell2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPESpecialCell2.m; sourceTree = "<group>"; };
 		63292E681593ED670010A11B /* OPETagValueList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPETagValueList.h; sourceTree = "<group>"; };
 		63292E691593ED670010A11B /* OPETagValueList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPETagValueList.m; sourceTree = "<group>"; };
-		632E0FA218909185002C4581 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = SOURCE_ROOT; };
 		632E0FAE189093FB002C4581 /* OPEConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEConstants.h; sourceTree = "<group>"; };
 		632E0FAF189093FB002C4581 /* OPEConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEConstants.m; sourceTree = "<group>"; };
 		6330AB6A14DB519A00448852 /* OSM POI Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSM POI Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -821,7 +849,6 @@
 		63397D9617026B0F00D411E7 /* OPEPhoneEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEPhoneEditViewController.m; sourceTree = "<group>"; };
 		633C5DDC18ADC9CC000B2610 /* OSMStreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSMStreamParser.h; sourceTree = "<group>"; };
 		633C5DDD18ADC9CC000B2610 /* OSMStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSMStreamParser.m; sourceTree = "<group>"; };
-		633C5DE018AE915D000B2610 /* poi.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = poi.sql; path = "OSM POI Editor/poi.sql"; sourceTree = SOURCE_ROOT; };
 		633CD869164B249100678D58 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		633CD86B164B249D00678D58 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		633CD86D164B24AA00678D58 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -909,6 +936,9 @@
 		6387126C17582655006C3A4E /* OPENewNodeSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENewNodeSelectViewController.m; sourceTree = "<group>"; };
 		638E1DE718BC0EC00034C02B /* OPEDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEDatabaseManager.h; sourceTree = "<group>"; };
 		638E1DE818BC0EC00034C02B /* OPEDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEDatabaseManager.m; sourceTree = "<group>"; };
+		638E5D1818BD6501006F0890 /* HockeySDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HockeySDK.xcodeproj; path = "lib/HockeySDK-iOS/Support/HockeySDK.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		638E5D2818BD6555006F0890 /* CrashReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CrashReporter.framework; path = "lib/HockeySDK-iOS/Vendor/CrashReporter.framework"; sourceTree = "<group>"; };
+		638E5D4718BD6BFC006F0890 /* MapView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MapView.xcodeproj; path = lib/mapbox/MapView/MapView.xcodeproj; sourceTree = SOURCE_ROOT; };
 		63962B1317961B8C008B897C /* OPENoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPENoteViewController.h; sourceTree = "<group>"; };
 		63962B1417961B8C008B897C /* OPENoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPENoteViewController.m; sourceTree = "<group>"; };
 		63962B1917961FAB008B897C /* OPECommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECommentCell.h; sourceTree = "<group>"; };
@@ -1036,7 +1066,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				632E0FAD189091BC002C4581 /* libMapbox.a in Frameworks */,
+				638E5D5418BD6D83006F0890 /* libMapbox.a in Frameworks */,
+				638E5D2718BD6523006F0890 /* libHockeySDK.a in Frameworks */,
 				63E39018170CEEE0006F35D0 /* libUserVoice.a in Frameworks */,
 				63FBA5B0171E08F50098A2F3 /* libstdc++.dylib in Frameworks */,
 				63FBA5AE171E08E70098A2F3 /* libiconv.dylib in Frameworks */,
@@ -1044,6 +1075,8 @@
 				633CD870164B24D900678D58 /* libz.1.1.3.dylib in Frameworks */,
 				63E4BF1A14E068EC00E0BD46 /* libz.dylib in Frameworks */,
 				63E279EA14E1F87D009D02BD /* libxml2.dylib in Frameworks */,
+				6383949A14EC85C100C74A57 /* Security.framework in Frameworks */,
+				638E5D2918BD6555006F0890 /* CrashReporter.framework in Frameworks */,
 				63962B2117962294008B897C /* CoreText.framework in Frameworks */,
 				63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */,
 				63E2796A14E1F281009D02BD /* SystemConfiguration.framework in Frameworks */,
@@ -1055,7 +1088,6 @@
 				633CD86E164B24AA00678D58 /* AdSupport.framework in Frameworks */,
 				633CD86C164B249D00678D58 /* Accounts.framework in Frameworks */,
 				633CD86A164B249100678D58 /* AudioToolbox.framework in Frameworks */,
-				6383949A14EC85C100C74A57 /* Security.framework in Frameworks */,
 				6330AC0714DB5E4D00448852 /* CoreLocation.framework in Frameworks */,
 				6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */,
 				6330AB6F14DB519A00448852 /* UIKit.framework in Frameworks */,
@@ -1066,6 +1098,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6309678E18E4DB7700217DCB /* Databse Managers */ = {
+			isa = PBXGroup;
+			children = (
+				6309678A18E37A9B00217DCB /* OPENotesDatabase.h */,
+				6309678B18E37A9B00217DCB /* OPENotesDatabase.m */,
+				638E1DE718BC0EC00034C02B /* OPEDatabaseManager.h */,
+				638E1DE818BC0EC00034C02B /* OPEDatabaseManager.m */,
+			);
+			name = "Databse Managers";
+			sourceTree = "<group>";
+		};
 		630A878417680FE1003C9423 /* BButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -1110,7 +1153,6 @@
 				6372F80017419F3100DE5909 /* Optional.json */,
 				6372F80717419F6A00DE5909 /* OptionalCategorySort.json */,
 				63FD2DAC172F329A0094B969 /* Tags.json */,
-				633C5DE018AE915D000B2610 /* poi.sql */,
 				63E5E39817693D4D0064A780 /* wikipediaLanguages.json */,
 			);
 			path = Resources;
@@ -1441,15 +1483,6 @@
 			path = lib/TBXML;
 			sourceTree = SOURCE_ROOT;
 		};
-		632E0FA318909185002C4581 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				632E0FA818909185002C4581 /* libMapbox.a */,
-				632E0FAA18909185002C4581 /* Mapbox.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		6330AB5F14DB519A00448852 = {
 			isa = PBXGroup;
 			children = (
@@ -1472,6 +1505,7 @@
 		6330AB6D14DB519A00448852 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				638E5D2818BD6555006F0890 /* CrashReporter.framework */,
 				63FBA5AF171E08F40098A2F3 /* libstdc++.dylib */,
 				63FBA5AD171E08E70098A2F3 /* libiconv.dylib */,
 				63962B2017962293008B897C /* CoreText.framework */,
@@ -1509,6 +1543,7 @@
 				63E17AD417CD18E000C24868 /* opening_hoursParser */,
 				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
 				632E0FAE189093FB002C4581 /* OPEConstants.h */,
+				6309678E18E4DB7700217DCB /* Databse Managers */,
 				63433E9718AD9DCF00265C55 /* OPELog.h */,
 				632E0FAF189093FB002C4581 /* OPEConstants.m */,
 				63FCA44F1643363700A28470 /* OPEUtility.h */,
@@ -1517,8 +1552,6 @@
 				6362032917CC050B0031B982 /* OPEOSMTagConverter.m */,
 				631539DF14DC98D0000236F0 /* OPEOSMData.h */,
 				631539E014DC98D0000236F0 /* OPEOSMData.m */,
-				638E1DE718BC0EC00034C02B /* OPEDatabaseManager.h */,
-				638E1DE818BC0EC00034C02B /* OPEDatabaseManager.m */,
 				63233BA817DA90990026CFC5 /* OPEDownloadManager.h */,
 				63233BA917DA90990026CFC5 /* OPEDownloadManager.m */,
 				63CFCA93176160330006BE38 /* OPEOSMAPIManager.h */,
@@ -1585,6 +1618,8 @@
 		6333D39B1680F55900BF129E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6309678118E3480600217DCB /* OPEOSMUser.h */,
+				6309678218E3480600217DCB /* OPEOSMUser.m */,
 				63A964971729FA6100D14CA1 /* OPEObject.h */,
 				63A964981729FA6100D14CA1 /* OPEObject.m */,
 				63F03D1E16B09FD8004AF385 /* OPEOsmElement.h */,
@@ -1680,6 +1715,25 @@
 			name = "UIKit+AFNetworking";
 			path = "lib/AFNetworking/UIKit+AFNetworking";
 			sourceTree = SOURCE_ROOT;
+		};
+		638E5D1918BD6501006F0890 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				638E5D2118BD6501006F0890 /* libHockeySDK.a */,
+				638E5D2318BD6501006F0890 /* HockeySDKResources.bundle */,
+				638E5D2518BD6501006F0890 /* HockeySDKTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		638E5D4818BD6BFC006F0890 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				638E5D4D18BD6BFC006F0890 /* libMapbox.a */,
+				638E5D4F18BD6BFC006F0890 /* Mapbox.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
 		};
 		63962B1C179621A0008B897C /* TTTAttributedLabel */ = {
 			isa = PBXGroup;
@@ -1780,14 +1834,6 @@
 			name = opening_hoursParser;
 			sourceTree = "<group>";
 		};
-		63E38FE3170CE6BD006F35D0 /* UserVoice */ = {
-			isa = PBXGroup;
-			children = (
-				63E39012170CEEBE006F35D0 /* UserVoice.xcodeproj */,
-			);
-			name = UserVoice;
-			sourceTree = "<group>";
-		};
 		63E39013170CEEBE006F35D0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1799,8 +1845,10 @@
 		63E8210F16F12A2A0040B892 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				638E5D4718BD6BFC006F0890 /* MapView.xcodeproj */,
+				63E39012170CEEBE006F35D0 /* UserVoice.xcodeproj */,
+				638E5D1818BD6501006F0890 /* HockeySDK.xcodeproj */,
 				63433EA418ADA03600265C55 /* Lumberjack */,
-				632E0FA218909185002C4581 /* MapView.xcodeproj */,
 				6334FAC51863D0BE0012CD40 /* ActionSheetPicker */,
 				63962B2217975A95008B897C /* DAKeyboardControl */,
 				63962B1C179621A0008B897C /* TTTAttributedLabel */,
@@ -1808,7 +1856,6 @@
 				63FBA586171DFBED0098A2F3 /* osm-parser */,
 				63266A2A171646F0002CD7E4 /* TBXML */,
 				63266A1B1716469B002CD7E4 /* gtm-oauth */,
-				63E38FE3170CE6BD006F35D0 /* UserVoice */,
 				636D781A152E58FD005E31A3 /* MBProgressHUD */,
 				63E8211216F12A850040B892 /* AFNetworking */,
 			);
@@ -1909,7 +1956,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				632E0FAC189091AE002C4581 /* PBXTargetDependency */,
+				638E5D5618BD719D006F0890 /* PBXTargetDependency */,
 				63E71816182B123D004398AD /* PBXTargetDependency */,
 			);
 			name = "OSM POI Editor";
@@ -1924,6 +1971,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0420;
+				TargetAttributes = {
+					6330AB6914DB519A00448852 = {
+						DevelopmentTeam = SF3NXKQQ64;
+					};
+				};
 			};
 			buildConfigurationList = 6330AB6414DB519A00448852 /* Build configuration list for PBXProject "OSM POI Editor" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1962,8 +2014,12 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 632E0FA318909185002C4581 /* Products */;
-					ProjectRef = 632E0FA218909185002C4581 /* MapView.xcodeproj */;
+					ProductGroup = 638E5D1918BD6501006F0890 /* Products */;
+					ProjectRef = 638E5D1818BD6501006F0890 /* HockeySDK.xcodeproj */;
+				},
+				{
+					ProductGroup = 638E5D4818BD6BFC006F0890 /* Products */;
+					ProjectRef = 638E5D4718BD6BFC006F0890 /* MapView.xcodeproj */;
 				},
 				{
 					ProductGroup = 63E39013170CEEBE006F35D0 /* Products */;
@@ -1978,18 +2034,39 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		632E0FA818909185002C4581 /* libMapbox.a */ = {
+		638E5D2118BD6501006F0890 /* libHockeySDK.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libHockeySDK.a;
+			remoteRef = 638E5D2018BD6501006F0890 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		638E5D2318BD6501006F0890 /* HockeySDKResources.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = HockeySDKResources.bundle;
+			remoteRef = 638E5D2218BD6501006F0890 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		638E5D2518BD6501006F0890 /* HockeySDKTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = HockeySDKTests.octest;
+			remoteRef = 638E5D2418BD6501006F0890 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		638E5D4D18BD6BFC006F0890 /* libMapbox.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libMapbox.a;
-			remoteRef = 632E0FA718909185002C4581 /* PBXContainerItemProxy */;
+			remoteRef = 638E5D4C18BD6BFC006F0890 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		632E0FAA18909185002C4581 /* Mapbox.bundle */ = {
+		638E5D4F18BD6BFC006F0890 /* Mapbox.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = Mapbox.bundle;
-			remoteRef = 632E0FA918909185002C4581 /* PBXContainerItemProxy */;
+			remoteRef = 638E5D4E18BD6BFC006F0890 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		63E39017170CEEBE006F35D0 /* libUserVoice.a */ = {
@@ -2006,10 +2083,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				638E5D5118BD6C1C006F0890 /* Mapbox.bundle in Resources */,
+				638E5D2A18BD6592006F0890 /* HockeySDKResources.bundle in Resources */,
 				6330AB7914DB519A00448852 /* InfoPlist.strings in Resources */,
 				63E525D91534E66500D2DA35 /* about.html in Resources */,
 				639953FE16113A200070CBAF /* about.css in Resources */,
-				63D53F3818B3D8CA0090C849 /* Mapbox.bundle in Resources */,
 				6326691317164579002CD7E4 /* airplane.png in Resources */,
 				6326691417164579002CD7E4 /* alcohol.png in Resources */,
 				6326691517164579002CD7E4 /* apartment.png in Resources */,
@@ -2175,7 +2253,6 @@
 				632669B117164579002CD7E4 /* dog@2x.png in Resources */,
 				632669B217164579002CD7E4 /* drinking_water@2x.png in Resources */,
 				632669B317164579002CD7E4 /* embassy@2x.png in Resources */,
-				633C5DE118AE915D000B2610 /* poi.sql in Resources */,
 				632669B417164579002CD7E4 /* EV@2x.png in Resources */,
 				632669B517164579002CD7E4 /* farm@2x.png in Resources */,
 				632669B617164579002CD7E4 /* fast_food@2x.png in Resources */,
@@ -2315,6 +2392,7 @@
 				63433EBF18ADA03600265C55 /* DDLog.m in Sources */,
 				6334FACB1863D0E40012CD40 /* AbstractActionSheetPicker.m in Sources */,
 				63723A7317F25E9600DDCCAD /* AFURLSessionManager.m in Sources */,
+				6309678C18E37A9B00217DCB /* OPENotesDatabase.m in Sources */,
 				63292E6D1593ED670010A11B /* OPESpecialCell2.m in Sources */,
 				63292E6E1593ED670010A11B /* OPETagValueList.m in Sources */,
 				63723A8517F25F2900DDCCAD /* UIAlertView+AFNetworking.m in Sources */,
@@ -2397,6 +2475,7 @@
 				63F01BFD17D0146500184A0C /* OPEOpeningHoursTimeRangesViewController.m in Sources */,
 				63E17ADA17CD190200C24868 /* OPEOpeningHoursParser.m in Sources */,
 				63A3D5B6177BAEB1000C6A0D /* OPECrosshairMapView.m in Sources */,
+				6309678318E3480600217DCB /* OPEOSMUser.m in Sources */,
 				63A3D5BC177BB0EB000C6A0D /* OPEMoveNodeViewController.m in Sources */,
 				633C5DDE18ADC9CC000B2610 /* OSMStreamParser.m in Sources */,
 				63A3D5BF177BBD8C000C6A0D /* OPEButtonCell.m in Sources */,
@@ -2416,10 +2495,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		632E0FAC189091AE002C4581 /* PBXTargetDependency */ = {
+		638E5D5618BD719D006F0890 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MapView;
-			targetProxy = 632E0FAB189091AE002C4581 /* PBXContainerItemProxy */;
+			targetProxy = 638E5D5518BD719D006F0890 /* PBXContainerItemProxy */;
 		};
 		63E71816182B123D004398AD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2568,7 +2647,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEBUG = "";
 				"DEBUG[arch=*]" = 0;

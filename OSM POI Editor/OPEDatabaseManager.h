@@ -12,6 +12,7 @@
 
 @interface OPEDatabaseManager : NSObject
 
++(BOOL)createDatabaseWithError:(NSError **)error;
 +(FMDatabaseQueue *)defaultDatabaseQueue;
 
 @end

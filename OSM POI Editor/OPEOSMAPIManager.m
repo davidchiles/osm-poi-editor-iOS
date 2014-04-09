@@ -13,6 +13,8 @@
 #import "OPEChangeset.h"
 #import "OPEUtility.h"
 
+#import "OPEOSMUser.h"
+
 #import "OPEGeo.h"
 #import "OPEOSMRequestSerializer.h"
 
@@ -591,9 +593,30 @@ withChangesetComment:(NSString *)changesetComment
     
 }
 
+- (void)fetchCurrentUserWithComletion:(void (^)(BOOL success,NSError *error))completionBlock
+{
+    AFHTTPRequestOperation *requestOperation = [self.httpClient GET:@"user/details" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        if ([responseObject isKindOfClass:[NSXMLParser class]]) {
+            OPEOSMUser *currentUser = [[OPEOSMUser alloc] initWithParser:responseObject];
+            [OPEOSMUser setCurrentUser:currentUser];
+        }
+        
+        if (completionBlock) {
+            completionBlock(YES,nil);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (completionBlock) {
+            completionBlock(NO,error);
+        }
+    }];
+    [requestOperation start];
+}
+
 +(GTMOAuthAuthentication *)osmAuth {
-    NSString *myConsumerKey = osmConsumerKey; //@"pJbuoc7SnpLG5DjVcvlmDtSZmugSDWMHHxr17wL3";    // pre-registered with service
-    NSString *myConsumerSecret = osmConsumerSecret; //@"q5qdc9DvnZllHtoUNvZeI7iLuBtp1HebShbCE9Y1"; // pre-assigned by service
+    NSString *myConsumerKey = osmConsumerKey;
+    NSString *myConsumerSecret = osmConsumerSecret;
     
     GTMOAuthAuthentication *auth;
     auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
