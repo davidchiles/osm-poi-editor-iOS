@@ -12,8 +12,6 @@
 
 @interface OPEBaseViewController : UIViewController <MBProgressHUDDelegate, UIAlertViewDelegate>
 
-
-
 @property (nonatomic,strong)OPEOSMData * osmData;
 @property (nonatomic,strong)OPEOSMAPIManager * apiManager;
 @property (nonatomic,strong)MBProgressHUD * HUD;

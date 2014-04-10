@@ -146,11 +146,6 @@
             self.foundMatchingElementsBlock(newMatchedElements,updatedMatchedElements);
         });
     }];
-    
-    
-    
-    
-    
 }
 
 @end

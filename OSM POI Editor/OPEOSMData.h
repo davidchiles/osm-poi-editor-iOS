@@ -22,7 +22,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "GTMOAuthViewControllerTouch.h"
 #import "AFNetworking.h"
 
 #import "OSMDatabaseManager.h"

@@ -356,6 +356,7 @@
 		63E2796C14E1F28D009D02BD /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		63E279EA14E1F87D009D02BD /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E279E914E1F87D009D02BD /* libxml2.dylib */; };
 		63E4BF1A14E068EC00E0BD46 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E4BF1914E068EC00E0BD46 /* libz.dylib */; };
+		63E4FEA118F755ED00078CD5 /* OPEAppVersionMigration.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E4FEA018F755ED00078CD5 /* OPEAppVersionMigration.m */; };
 		63E525D21534D90500D2DA35 /* OPECreditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E525D01534D90200D2DA35 /* OPECreditViewController.m */; };
 		63E525D91534E66500D2DA35 /* about.html in Resources */ = {isa = PBXBuildFile; fileRef = 63E525D81534E66500D2DA35 /* about.html */; };
 		63E5E39917693D4D0064A780 /* wikipediaLanguages.json in Resources */ = {isa = PBXBuildFile; fileRef = 63E5E39817693D4D0064A780 /* wikipediaLanguages.json */; };
@@ -823,6 +824,8 @@
 		63E2796B14E1F28D009D02BD /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		63E279E914E1F87D009D02BD /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		63E4BF1914E068EC00E0BD46 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		63E4FE9F18F755ED00078CD5 /* OPEAppVersionMigration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPEAppVersionMigration.h; sourceTree = "<group>"; };
+		63E4FEA018F755ED00078CD5 /* OPEAppVersionMigration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPEAppVersionMigration.m; sourceTree = "<group>"; };
 		63E525CF1534D90200D2DA35 /* OPECreditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OPECreditViewController.h; sourceTree = "<group>"; };
 		63E525D01534D90200D2DA35 /* OPECreditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OPECreditViewController.m; sourceTree = "<group>"; };
 		63E525D81534E66500D2DA35 /* about.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = about.html; sourceTree = "<group>"; };
@@ -1321,9 +1324,11 @@
 				63E17AD417CD18E000C24868 /* opening_hoursParser */,
 				63968298153CB8B4008F4C0E /* OPEAPIConstants.h */,
 				632E0FAE189093FB002C4581 /* OPEConstants.h */,
+				632E0FAF189093FB002C4581 /* OPEConstants.m */,
+				63E4FE9F18F755ED00078CD5 /* OPEAppVersionMigration.h */,
+				63E4FEA018F755ED00078CD5 /* OPEAppVersionMigration.m */,
 				6309678E18E4DB7700217DCB /* Databse Managers */,
 				63433E9718AD9DCF00265C55 /* OPELog.h */,
-				632E0FAF189093FB002C4581 /* OPEConstants.m */,
 				63FCA44F1643363700A28470 /* OPEUtility.h */,
 				63FCA4501643363700A28470 /* OPEUtility.m */,
 				6362032817CC050B0031B982 /* OPEOSMTagConverter.h */,
@@ -1975,6 +1980,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63E4FEA118F755ED00078CD5 /* OPEAppVersionMigration.m in Sources */,
 				6330AB7B14DB519A00448852 /* main.m in Sources */,
 				6330AB7F14DB519A00448852 /* OPEAppDelegate.m in Sources */,
 				6330AB8214DB519A00448852 /* OPEViewController.m in Sources */,

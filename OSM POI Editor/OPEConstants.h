@@ -80,6 +80,8 @@ extern NSString *const kTileSourceNumber;
 extern NSString *const kOTRAppleLanguagesKey;
 extern NSString *const kOTRUserSetLanguageKey;
 
+extern NSString *const kOPEUserOAuthTokenKey;
+
 @interface OPEConstants : NSObject
 
 

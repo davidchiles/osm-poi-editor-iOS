@@ -11,19 +11,18 @@
 
 #import "OPEChangeset.h"
 #import "OPEOsmElement.h"
-#import "GTMOAuthAuthentication.h"
 #import "AFNetworking.h"
 #import "OPEOsmElement.h"
 #import "OSMNote.h"
 #import "OSMComment.h"
 
 
-
+@class AFOAuth1Token;
 
 @interface OPEOSMAPIManager : NSObject
 
-@property (nonatomic,strong) AFHTTPRequestOperationManager * httpClient;
-@property (nonatomic, strong) GTMOAuthAuthentication * auth;
+@property (nonatomic, strong) AFHTTPRequestOperationManager * httpClient;
+@property (nonatomic, readonly) AFOAuth1Token *oAuthToken;
 
 -(void)downloadDataWithSW:(CLLocationCoordinate2D)southWest NE:(CLLocationCoordinate2D)northEast
              success:(void (^)(NSData * response))success
@@ -61,13 +60,13 @@ withChangesetComment:(NSString *)changesetComment
      withComment:(NSString *)comment
          success:(void (^)(id JSON))success
          failure:(void (^)(NSError *error))failure;
+
 -(void)reopenNote:(OSMNote *)note
          success:(void (^)(NSData * response))success
          failure:(void (^)(NSError *error))failure;
 
-- (void)fetchCurrentUserWithComletion:(void (^)(BOOL success,NSError *error))completionBlock;
 
-+(GTMOAuthAuthentication *)osmAuth;
--(BOOL) canAuth;
+////////// User //////////////
+- (void)fetchCurrentUserWithComletion:(void (^)(BOOL success,NSError *error))completionBlock;
 
 @end

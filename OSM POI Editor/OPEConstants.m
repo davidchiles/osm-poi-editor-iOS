@@ -68,6 +68,8 @@ NSString *const kTileSourceNumber = @"tileSourceNumber";
 NSString *const kOTRAppleLanguagesKey = @"AppleLanguages";
 NSString *const kOTRUserSetLanguageKey = @"userSetLanguageKey";
 
+NSString *const kOPEUserOAuthTokenKey = @"kOTRUserOAuthTokenKey";
+
 @implementation OPEConstants
 
 + (NSArray *)expandedAddressArray

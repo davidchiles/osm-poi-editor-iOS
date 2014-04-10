@@ -7,7 +7,6 @@
 //
 
 #import "OPEOSMAPIManager.h"
-#import "GTMOAuthViewControllerTouch.h"
 #import "OPEConstants.h"
 #import "OPEAPIConstants.h"
 #import "OPEChangeset.h"
@@ -20,6 +19,8 @@
 
 #import "OPELog.h"
 #import "OSMStreamParser.h"
+#import "AFOAuth1Client.h"
+#import "OPEConstants.h"
 
 NSString *const putMethod = @"PUT";
 NSString *const deleteMethod = @"DELETE";
@@ -29,8 +30,9 @@ NSString *const deleteMethod = @"DELETE";
 @property (nonatomic,strong) NSMutableDictionary * apiFailures;
 @property (nonatomic,strong) NSMutableDictionary * nominatimFailures;
 
-@property (nonatomic,strong) OSMStreamParser *streamParser;
+@property (nonatomic, strong) OSMStreamParser *streamParser;
 
+@property (nonatomic, strong) AFOAuth1Token *oAuthToken;
 
 @end
 
@@ -40,39 +42,18 @@ NSString *const deleteMethod = @"DELETE";
 {
     if(self = [super init])
     {
-        [self auth];
         self.apiFailures = [NSMutableDictionary dictionary];
         self.nominatimFailures = [NSMutableDictionary dictionary];
     }
     return self;
 }
 
--(GTMOAuthAuthentication *)auth
+- (AFOAuth1Token *)oAuthToken
 {
-    if(!_auth)
-    {
-        _auth = [OPEOSMAPIManager osmAuth];
-        [self canAuth];
+    if (!_oAuthToken) {
+        _oAuthToken = [AFOAuth1Token retrieveCredentialWithIdentifier:kOPEUserOAuthTokenKey];
     }
-    return _auth;
-    
-}
-
--(BOOL) canAuth;
-{
-    BOOL didAuth = NO;
-    BOOL canAuth = NO;
-    if (_auth) {
-        didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor" authentication:_auth];
-        // if the auth object contains an access token, didAuth is now true
-        canAuth = [_auth canAuthorize];
-    }
-    else {
-        return NO;
-    }
-    return didAuth && canAuth;
-    
-    
+    return _oAuthToken;
 }
 
 -(AFHTTPRequestOperationManager *)httpClient
@@ -88,7 +69,8 @@ NSString *const deleteMethod = @"DELETE";
         _httpClient.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:@[[AFJSONResponseSerializer serializer],xmlParserResponseSerializer]];
         
         OPEOSMRequestSerializer * requestSerializer = [OPEOSMRequestSerializer serializer];
-        [requestSerializer setAuth:self.auth];
+
+        
         [_httpClient setRequestSerializer:requestSerializer];
     }
     return _httpClient;
@@ -594,6 +576,23 @@ withChangesetComment:(NSString *)changesetComment
     
 }
 
+- (void)fetchUserInfoWithToken:(AFOAuth1Token *)token completion:(void (^)(BOOL success, id responseObject, NSError *error))completionBlock;
+{
+    
+    
+    AFHTTPRequestOperation *requestOperation = [self.httpClient GET:@"user/details" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (completionBlock) {
+            completionBlock(YES,responseObject,nil);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (completionBlock) {
+            completionBlock(NO,nil,error);
+        }
+    }];
+    [requestOperation start];
+}
+
 - (void)fetchCurrentUserWithComletion:(void (^)(BOOL success,NSError *error))completionBlock
 {
     AFHTTPRequestOperation *requestOperation = [self.httpClient GET:@"user/details" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -613,22 +612,6 @@ withChangesetComment:(NSString *)changesetComment
         }
     }];
     [requestOperation start];
-}
-
-+(GTMOAuthAuthentication *)osmAuth {
-    NSString *myConsumerKey = osmConsumerKey;
-    NSString *myConsumerSecret = osmConsumerSecret;
-    
-    GTMOAuthAuthentication *auth;
-    auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
-                                                       consumerKey:myConsumerKey
-                                                        privateKey:myConsumerSecret];
-    
-    // setting the service name lets us inspect the auth object later to know
-    // what service it is for
-    auth.serviceProvider = @"OSMPOIEditor";
-    
-    return auth;
 }
 
 @end

@@ -23,7 +23,6 @@
 #import "OPEOSMData.h"
 
 #import "TBXML.h"
-#import "GTMOAuthViewControllerTouch.h"
 #import "OPEAPIConstants.h"
 #import "OPEConstants.h"
 #import "OPEOsmNode.h"

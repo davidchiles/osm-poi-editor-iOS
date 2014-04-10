@@ -21,7 +21,6 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "OPEViewController.h" 
-#import "GTMOAuthViewControllerTouch.h"
 #import "RMFoundation.h"
 #import "RMMarker.h"
 #import "RMTileCache.h"

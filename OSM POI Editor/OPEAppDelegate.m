@@ -30,6 +30,9 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "HockeySDK.h"
 
+#import "AFOAuth1Client.h"
+#import "OPEAppVersionMigration.h"
+
 @interface OPEAppDelegate () <BITHockeyManagerDelegate>
 
 @end
@@ -47,6 +50,8 @@
     [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
     
     application.statusBarStyle = UIStatusBarStyleLightContent;
+    
+    [OPEAppVersionMigration migrateToCurrentVersion];
     
     [OPEDatabaseManager createDatabaseWithError:nil];
     
@@ -108,6 +113,17 @@
      See also applicationDidEnterBackground:.
      */
     //[OPEMRUtility deleteDownloaded];
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    NSNotification *notification = [NSNotification notificationWithName:kAFApplicationLaunchedWithURLNotification object:nil userInfo:@{kAFApplicationLaunchOptionsURLKey: url}];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    
+    return YES;
 }
 
 @end

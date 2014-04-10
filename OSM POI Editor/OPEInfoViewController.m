@@ -29,6 +29,7 @@
 #import "OPEStrings.h"
 
 #import "OPELog.h"
+#import "AFOAuth1Client.h"
 
 
 @implementation OPEInfoViewController
@@ -65,126 +66,9 @@
     
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
-/*
-- (IBAction)doneButtonPressed:(id)sender
-{
-    GTMOAuthAuthentication *auth = [self osmAuth];
-    BOOL didAuth = NO;
-    BOOL canAuth = NO;
-    if (auth) {
-        didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor"
-                                                                  authentication:auth];
-        canAuth = [auth canAuthorize];
-    }
-    NSLog(@"didAuth %d",didAuth);
-    NSLog(@"canAuth %d",canAuth);
-}
-*/
-
-- (void)viewControllerOLD:(GTMOAuthViewControllerTouch *)viewController
-      finishedWithAuth:(GTMOAuthAuthentication *)auth
-                 error:(NSError *)error {
-    [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
-    if (error != nil) {
-        // Authentication failed (perhaps the user denied access, or closed the
-        // window before granting access)
-        DDLogError(@"Authentication error: %@", error);
-        NSData *responseData = [[error userInfo] objectForKey:@"data"];// kGTMHTTPFetcherStatusDataKey
-        if ([responseData length] > 0) {
-            // show the body of the server's authentication failure response
-            NSString *str = [[NSString alloc] initWithData:responseData
-                                                   encoding:NSUTF8StringEncoding];
-            DDLogInfo(@"%@", str);
-        }
-        
-        //[self setAuthentication:nil];
-    } else {
-        // Authentication succeeded
-        //
-        // At this point, we either use the authentication object to explicitly
-        // authorize requests, like
-        //
-        //   [auth authorizeRequest:myNSURLMutableRequest]
-        //
-        // or store the authentication object into a GTM service object like
-        //
-        //   [[self contactService] setAuthorizer:auth];
-        
-        // save the authentication object
-        //[self setAuthentication:auth];
-        
-        // Just to prove we're signed in, we'll attempt an authenticated fetch for the
-        // signed-in user
-        //[self doAnAuthenticatedAPIFetch];
-    }
-    
-    //[self updateUI];
-}
-
-
-- (GTMOAuthAuthentication *)osmAuthOLD {
-    NSString *myConsumerKey = osmConsumerKey;     // pre-registered with service
-    NSString *myConsumerSecret = osmConsumerSecret;  // pre-assigned by service
-    
-    GTMOAuthAuthentication *auth;
-    auth = [[GTMOAuthAuthentication alloc] initWithSignatureMethod:kGTMOAuthSignatureMethodHMAC_SHA1
-                                                       consumerKey:myConsumerKey
-                                                        privateKey:myConsumerSecret];
-    
-    // setting the service name lets us inspect the auth object later to know
-    // what service it is for
-    auth.serviceProvider = @"OSMPOIEditor";
-    
-    return auth;
-}
-
-/*
-- (void)signInToOSMOLD {
-    
-    NSURL *requestURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/request_token"];
-    NSURL *accessURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/access_token"];
-    NSURL *authorizeURL = [NSURL URLWithString:@"http://www.openstreetmap.org/oauth/authorize"];
-    NSString *scope = @"http://api.openstreetmap.org/";
-    
-    GTMOAuthAuthentication *auth = [self osmAuth];
-    if (auth == nil) {
-        // perhaps display something friendlier in the UI?
-        NSLog(@"A valid consumer key and consumer secret are required for signing in to OSM");
-    }
-    
-    // set the callback URL to which the site should redirect, and for which
-    // the OAuth controller should look to determine when sign-in has
-    // finished or been canceled
-    //
-    // This URL does not need to be for an actual web page
-    [auth setCallback:@"http://www.google.com/OAuthCallback"];
-    
-    // Display the autentication view
-    GTMOAuthViewControllerTouch * viewController = [[GTMOAuthViewControllerTouch alloc] initWithScope:scope
-                                                               language:nil
-                                                        requestTokenURL:requestURL
-                                                      authorizeTokenURL:authorizeURL
-                                                         accessTokenURL:accessURL
-                                                         authentication:auth
-                                                         appServiceName:@"OSMPOIEditor"
-                                                               delegate:self
-                                                       finishedSelector:@selector(viewController:finishedWithAuth:error:)];
-    
-    [[self navigationController] pushViewController:viewController
-                                           animated:YES];
-}
-*/
 - (void) signOutOfOSM
 {
-    [GTMOAuthViewControllerTouch removeParamsFromKeychainForName:@"OSMPOIEditor"];
+    [AFOAuth1Token deleteCredentialWithIdentifier:kOPEUserOAuthTokenKey];
     [settingsTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 -(void)findishedAuthWithError:(NSError *)error
@@ -265,7 +149,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:buttonIdentifier];
         }
         
-        if(![apiManager canAuth])
+        if(!apiManager.oAuthToken)
         {
             cell.textLabel.text = LOGIN_STRING;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -315,7 +199,7 @@
     }
     else if (indexPath.section == 1)
     {
-        if(![apiManager canAuth])
+        if(!apiManager.oAuthToken)
         {
             [self signIntoOSM];
         }
@@ -345,33 +229,6 @@
 }
 
 #pragma mark - View lifecycle
-/*
--(BOOL)loggedIn
-{
-    GTMOAuthAuthentication *auth = [self osmAuth];
-    BOOL didAuth= NO;
-    BOOL canAuth= NO;
-    BOOL hasAuth= NO;
-    if (auth) {
-        didAuth = [GTMOAuthViewControllerTouch authorizeFromKeychainForName:@"OSMPOIEditor" authentication:auth];
-        canAuth = [auth canAuthorize];
-        hasAuth = [auth hasAccessToken];
-    }
-    
-    if (didAuth && canAuth && hasAuth) {
-        NSLog(@"All three true");
-        
-        return YES;
-    }
-    else
-    {
-        NSLog(@"did: %@ can: %@ has: %@",(didAuth ? @"YES" : @"NO"),(canAuth ? @"YES" : @"NO"),(hasAuth ? @"YES" : @"NO"));
-        return NO;
-    }
-    
-}
-*/
-
 
 -(void)infoButtonPressed:(id)sender
 {

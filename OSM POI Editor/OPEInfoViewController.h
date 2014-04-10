@@ -21,7 +21,6 @@
 //  along with POI+.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <UIKit/UIKit.h>
-#import "GTMOAuthViewControllerTouch.h"
 #import "RMMapView.h"
 #import "OPECreditViewController.h"
 #import "OPEBaseViewController.h"
