@@ -25,9 +25,19 @@
         FMDatabaseQueue *databaseQueue = [OPEDatabaseManager defaultDatabaseQueue];
         [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
             
-            sucess = [db executeUpdateWithFormat:@"INSERT OR REPLACE INTO notes (id,open,lat,lon,date_created,closed_at) VALUES (%lld,%@,%@,%@,%@,%@)",note.id,@(note.isOpen),@(note.coordinate.latitude),@(note.coordinate.longitude),note.dateCreated,note.dateClosed];
+            if (note.dateClosed) {
+                sucess = [db executeUpdateWithFormat:@"INSERT OR REPLACE INTO notes (id,open,lat,lon,date_created,closed_at) VALUES (%lld,%@,%@,%@,%@,%@)",note.id,@(note.isOpen),@(note.coordinate.latitude),@(note.coordinate.longitude),note.dateCreated,note.dateClosed];
+            }
+            else {
+                sucess = [db executeUpdateWithFormat:@"INSERT OR REPLACE INTO notes (id,open,lat,lon,date_created) VALUES (%lld,%@,%@,%@,%@)",note.id,@(note.isOpen),@(note.coordinate.latitude),@(note.coordinate.longitude),note.dateCreated];
+            }
+            
             
             BOOL commentSuccess = YES;
+            db.logsErrors = YES;
+            
+            commentSuccess = [db executeUpdateWithFormat:@"DELETE FROM comments WHERE note_id = %lld",note.id];
+            
             for (OSMComment *comment in note.commentsArray) {
                 BOOL tempSuccess = [db executeUpdateWithFormat:@"INSERT OR REPLACE INTO comments (note_id,text,user_id,date,user,action) VALUES (%lld,%@,%lld,%@,%@,%@)",note.id,comment.text,comment.userID,comment.date,comment.username,comment.action];
                 if(!tempSuccess) {
@@ -195,9 +205,11 @@
 
 +(NSDate *)dateWithString:(NSString *)dateString;
 {
-    if (dateString != (id)[NSNull null] || [dateString length]) {
-        NSDateFormatter *dateFormatter = [OSMElement defaultDateFormatter];
-        return [dateFormatter dateFromString:dateString];
+    if (![dateString isEqual:[NSNull null]]) {
+        if ([dateString length]) {
+            NSDateFormatter *dateFormatter = [OSMElement defaultDateFormatter];
+            return [dateFormatter dateFromString:dateString];
+        }
     }
     return nil;
     

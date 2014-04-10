@@ -78,6 +78,11 @@
     
     [commentInputBar addSubview:commentButton];
     
+    if (!self.note.isOpen) {
+        commentButton.enabled = NO;
+    }
+    
+    
     UITextView * textView = [[UITextView alloc] initWithFrame:CGRectMake(5, 5, commentInputBar.frame.size.width-10-commentButton.frame.size.width, kChatBarHeight1 -10)];
     textView.tag = kTextViewTag;
     textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -108,6 +113,7 @@
     
     UIBarButtonItem * cancelButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
     [self.navigationItem setRightBarButtonItem:cancelButtonItem];
+    
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
