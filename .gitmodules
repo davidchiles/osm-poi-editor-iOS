@@ -1,37 +1,6 @@
-
-[submodule "lib/mapbox"]
-	path = lib/mapbox
-	url = git@github.com:davidchiles/mapbox-ios-sdk.git
-[submodule "lib/AFNetworking"]
-	path = lib/AFNetworking
-	url = git@github.com:AFNetworking/AFNetworking.git
-[submodule "lib/MBProgressHUD"]
-	path = lib/MBProgressHUD
-	url = git@github.com:jdg/MBProgressHUD.git
-[submodule "lib/uservoice"]
-	path = lib/uservoice
-	url = git://github.com/uservoice/uservoice-iphone-sdk.git
 [submodule "lib/osm-parser"]
 	path = lib/osm-parser
 	url = git@github.com:davidchiles/osm-parser.git
-[submodule "lib/BButton"]
-	path = lib/BButton
-	url = git@github.com:mattlawer/BButton.git
 [submodule "lib/ActionSheetPicker"]
 	path = lib/ActionSheetPicker
 	url = git@github.com:davidchiles/ActionSheetPicker.git
-[submodule "lib/tttatributedlabel"]
-	path = lib/tttatributedlabel
-	url = git@github.com:mattt/TTTAttributedLabel.git
-[submodule "lib/dakeyboardcontrol"]
-	path = lib/dakeyboardcontrol
-	url = git@github.com:danielamitay/DAKeyboardControl.git
-[submodule "lib/CocoaLumberjack"]
-	path = lib/CocoaLumberjack
-	url = git@github.com:CocoaLumberjack/CocoaLumberjack.git
-[submodule "lib/HockeySDK-iOS"]
-	path = lib/HockeySDK-iOS
-	url = git@github.com:bitstadium/HockeySDK-iOS.git
-[submodule "lib/MapBox"]
-	path = lib/MapBox
-	url = git@github.com:mapbox/mapbox-ios-sdk.git
