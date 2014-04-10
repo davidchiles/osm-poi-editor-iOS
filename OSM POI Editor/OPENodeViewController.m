@@ -203,7 +203,7 @@
 {
     if(!_deleteButton)
     {
-        BButton * button = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypeDanger];
+        BButton *button = [BButton buttonWithType:BButtonTypeDanger];
         [button setTitle:DELETE_STRING forState:UIControlStateNormal];
         [button addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         _deleteButton = button;
@@ -214,7 +214,7 @@
 {
     if(!_moveButton)
     {
-        BButton * button = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
+        BButton * button = [BButton buttonWithType:BButtonTypePrimary];
         [button setTitle:MOVE_NODE_STRING forState:UIControlStateNormal];
         [button addTarget:self action:@selector(moveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         _moveButton = button;
@@ -323,13 +323,13 @@
         if ([tempOptional.sectionName isEqualToString:@"Address"]) {
             CGFloat buttonWidth = 150;
             
-            BButton * lookupButton = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
+            BButton * lookupButton = [BButton buttonWithType:BButtonTypePrimary];
             lookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
             [lookupButton setTitle:@"Nominatim" forState:UIControlStateNormal];
             [lookupButton addTarget:self action:@selector(nominatimLookupAddress) forControlEvents:UIControlEventTouchUpInside];
             
             
-            BButton * localLookupButton = [[BButton alloc]initWithFrame:CGRectZero type:BButtonTypePrimary];
+            BButton * localLookupButton = [BButton buttonWithType:BButtonTypePrimary];
             localLookupButton.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
             [localLookupButton setTitle:LOCA_DATA_STRING forState:UIControlStateNormal];
             [localLookupButton addTarget:self action:@selector(localLookupAddress) forControlEvents:UIControlEventTouchUpInside];

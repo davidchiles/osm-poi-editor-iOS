@@ -1,0 +1,15 @@
+platform :ios, '7.0'
+inhibit_all_warnings!
+
+pod 'Mapbox', :git => 'https://github.com/mapbox/mapbox-ios-sdk', :branch => 'develop'
+pod 'HockeySDK'
+pod 'AFNetworking', '~> 2.2'
+pod 'MBProgressHUD'
+pod 'CocoaLumberjack'
+pod 'TBXML'
+pod 'FMDB'
+pod 'BButton'
+pod 'DAKeyboardControl'
+pod 'TTTAttributedLabel'
+pod 'uservoice-iphone-sdk'
+pod 'gtm-oauth'

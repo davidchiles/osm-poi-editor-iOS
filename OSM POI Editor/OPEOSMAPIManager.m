@@ -113,9 +113,10 @@ NSString *const deleteMethod = @"DELETE";
             failure(error);
         }
     }];
-    [httpRequestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        DDLogInfo(@"Bytes Read: %lu\nTotalBytesRead: %lld\nExpected: %lld",(unsigned long)bytesRead,totalBytesRead,totalBytesExpectedToRead);
-    }];
+    
+//    [httpRequestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+//        DDLogInfo(@"Bytes Read: %lu\nTotalBytesRead: %lld\nExpected: %lld",(unsigned long)bytesRead,totalBytesRead,totalBytesExpectedToRead);
+//    }];
     
     [httpRequestOperation start];
 }
@@ -164,9 +165,9 @@ NSString *const deleteMethod = @"DELETE";
     
     AFHTTPRequestOperation * requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     requestOperation.responseSerializer=[AFHTTPResponseSerializer serializer];
-    [requestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        DDLogVerbose(@"Bytes Read: %lu\nTotalBytesRead: %lld\nExpected: %lld",(unsigned long)bytesRead,totalBytesRead,totalBytesExpectedToRead);
-    }];
+//    [requestOperation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+//        DDLogVerbose(@"Bytes Read: %lu\nTotalBytesRead: %lld\nExpected: %lld",(unsigned long)bytesRead,totalBytesRead,totalBytesExpectedToRead);
+//    }];
     
     
     [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {

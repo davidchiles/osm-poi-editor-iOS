@@ -217,7 +217,7 @@
         FMResultSet * resultSet = [db executeQuery:@"select * from (select * from (SELECT *,COUNT(*) AS count FROM (select * from ways_tags where key='highway' union select * from ways_tags where key='name') group by way_id) WHERE count= 2) AS A join ways on A.way_id = id"];
         
         while ([resultSet next]) {
-            OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[resultSet resultDictionary]];
+            OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[resultSet resultDict]];
             [way.element.tags setObject:[resultSet stringForColumn:@"value"] forKey:[resultSet stringForColumn:@"key"]];
             
             [namedHighways addObject:way];
@@ -259,7 +259,7 @@
         
         while ([resultSet next]) {
             if ([[OPEConstants highwayTypesArray] containsObject:[resultSet stringForColumn:@"value"]]) {
-                OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[resultSet resultDictionary]];
+                OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[resultSet resultDict]];
                 way.isNoNameStreet = YES;
                 [resultArray addObject:way];
             }
@@ -278,7 +278,7 @@
         FMResultSet * resultsSet = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi NATURAL JOIN poi_lastUsed where date IS NOT NULL AND editOnly = 0 AND isLegacy = 0 order by datetime(date) DESC limit ?",[NSNumber numberWithInteger:length]];
         
         while ([resultsSet next]) {
-            [resultArray addObject:[[OPEReferencePoi alloc] initWithSqliteResultDictionary:[resultsSet resultDictionary]]];
+            [resultArray addObject:[[OPEReferencePoi alloc] initWithSqliteResultDictionary:[resultsSet resultDict]]];
         }
     }];
     
@@ -340,18 +340,18 @@
             while ([result next]) {
                 OPEOsmElement * element =nil;
                 if ([osmType isEqualToString:kOPEOsmElementNode]) {
-                    element = [[OPEOsmNode alloc] initWithDictionary:[result resultDictionary]];
+                    element = [[OPEOsmNode alloc] initWithDictionary:[result resultDict]];
                 }
                 else if ([osmType isEqualToString:kOPEOsmElementWay])
                 {
-                    element = [[OPEOsmWay alloc] initWithDictionary:[result resultDictionary]];
+                    element = [[OPEOsmWay alloc] initWithDictionary:[result resultDict]];
                 }
                 else if ([osmType isEqualToString:kOPEOsmElementRelation])
                 {
-                    element = [[OPEOsmRelation alloc] initWithDictionary:[result resultDictionary]];
+                    element = [[OPEOsmRelation alloc] initWithDictionary:[result resultDict]];
                 }
                 double minDistance = [self minDistinceToElement:element fromCoordinate:coordinate];
-                NSString * osmValue = [[result resultDictionary] objectForKey:@"value"];
+                NSString * osmValue = [[result resultDict] objectForKey:@"value"];
                 if (minDistance &&[distanceDictionary objectForKey:osmValue] && [[distanceDictionary objectForKey:osmValue] doubleValue] > minDistance) {
                     [distanceDictionary setObject:[NSNumber numberWithDouble:minDistance] forKey:osmValue];
                 }

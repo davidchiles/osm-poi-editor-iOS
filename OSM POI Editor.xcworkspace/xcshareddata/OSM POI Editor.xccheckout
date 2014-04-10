@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>98B2B5B3-5A11-4713-93CD-414FE75F3CA5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>OSM POI Editor</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>CEDB60DE-E96A-41DA-A5EC-8004FE98B5B8</key>
+		<string>ssh://github.com/davidchiles/osm-poi-editor-iOS.git</string>
+		<key>DF36E4C9-8AF2-45A0-872E-AD1DFA41B6CA</key>
+		<string>ssh://github.com/davidchiles/ActionSheetPicker.git</string>
+		<key>E6E01B29-289F-4396-AD53-9FD203FBD641</key>
+		<string>ssh://github.com/davidchiles/osm-parser.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>OSM POI Editor.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>CEDB60DE-E96A-41DA-A5EC-8004FE98B5B8</key>
+		<string>..</string>
+		<key>DF36E4C9-8AF2-45A0-872E-AD1DFA41B6CA</key>
+		<string>../lib/ActionSheetPicker</string>
+		<key>E6E01B29-289F-4396-AD53-9FD203FBD641</key>
+		<string>../lib/osm-parser</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/davidchiles/osm-poi-editor-iOS.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>CEDB60DE-E96A-41DA-A5EC-8004FE98B5B8</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>DF36E4C9-8AF2-45A0-872E-AD1DFA41B6CA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ActionSheetPicker</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E6E01B29-289F-4396-AD53-9FD203FBD641</string>
+			<key>IDESourceControlWCCName</key>
+			<string>osm-parser</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CEDB60DE-E96A-41DA-A5EC-8004FE98B5B8</string>
+			<key>IDESourceControlWCCName</key>
+			<string>osm-poi-editor</string>
+		</dict>
+	</array>
+</dict>
+</plist>

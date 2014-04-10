@@ -25,11 +25,11 @@
         FMDatabaseQueue *databaseQueue = [OPEDatabaseManager defaultDatabaseQueue];
         [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
             
-            sucess = [db executeUpdateWithFormat:@"INSERT OR REPLACE INTO notes (id,open,lat,lon,date_created,date_closed) VALUES (%lld,%d,%d,%d,%@,%@)",note.id,note.isOpen,note.coordinate.latitude,note.coordinate.longitude,note.dateCreated,note.dateClosed];
+            sucess = [db executeUpdateWithFormat:@"INSERT OR REPLACE INTO notes (id,open,lat,lon,date_created,closed_at) VALUES (%lld,%@,%@,%@,%@,%@)",note.id,@(note.isOpen),@(note.coordinate.latitude),@(note.coordinate.longitude),note.dateCreated,note.dateClosed];
             
             BOOL commentSuccess = YES;
             for (OSMComment *comment in note.commentsArray) {
-                BOOL tempSuccess = [db executeQueryWithFormat:@"INSERT OR REPLACE INTO comments (note_id,text,user_id,date,user,action) VALUES (%lld,%@,%lld,%@,%@,%@)",note.id,comment.text,comment.userID,comment.date,comment.username,comment.action];
+                BOOL tempSuccess = [db executeUpdateWithFormat:@"INSERT OR REPLACE INTO comments (note_id,text,user_id,date,user,action) VALUES (%lld,%@,%lld,%@,%@,%@)",note.id,comment.text,comment.userID,comment.date,comment.username,comment.action];
                 if(!tempSuccess) {
                     commentSuccess = tempSuccess;
                 }
@@ -59,7 +59,7 @@
         for (OSMNote *note in notes) {
             [databaseQueue inTransaction:^(FMDatabase *db, BOOL *rollback) {
                 
-                sucess = [db executeUpdateWithFormat:@"INSERT OR REPLACE INTO notes (id,open,lat,lon,date_created,date_closed) VALUES (%lld,%d,%d,%d,%@,%@)",note.id,note.isOpen,note.coordinate.latitude,note.coordinate.longitude,[self stringWithDate:note.dateCreated],[self stringWithDate:note.dateClosed]];
+                sucess = [db executeUpdateWithFormat:@"INSERT OR REPLACE INTO notes (id,open,lat,lon,date_created,closed_at) VALUES (%lld,%d,%d,%d,%@,%@)",note.id,note.isOpen,note.coordinate.latitude,note.coordinate.longitude,[self stringWithDate:note.dateCreated],[self stringWithDate:note.dateClosed]];
                 
                 BOOL commentSuccess = YES;
                 for (OSMComment *comment in note.commentsArray) {
@@ -97,12 +97,15 @@
             FMResultSet *commentResultSet = [db executeQueryWithFormat:@"SELECT * FROM comments WHERE note_id=%lld ORDER BY datetime(date)",noteID];
             
             while ([noteReultSet next]) {
-                note = [self noteWithDictinoary:[noteReultSet resultDictionary]];
+                note = [self noteWithDictinoary:[noteReultSet resultDict]];
+                note.dateClosed = [noteReultSet dateForColumn:@"closed_at"];
+                note.dateCreated = [noteReultSet dateForColumn:@"date_created"];
             }
             
             NSMutableArray *commentArray = [NSMutableArray array];
             while([commentResultSet next]) {
-                OSMComment *comment = [self commentWithDictionary:[commentResultSet resultDictionary]];
+                OSMComment *comment = [self commentWithDictionary:[commentResultSet resultDict]];
+                comment.date = [commentResultSet dateForColumn:@"date"];
                 [commentArray addObject:comment];
             }
             note.commentsArray = [commentArray copy];
@@ -129,13 +132,13 @@
             
             NSMutableDictionary *noteDictionary = [NSMutableDictionary dictionary];
             while ([resultSet next]) {
-                OSMNote * note = [self noteWithDictinoary:[resultSet resultDictionary]];
+                OSMNote * note = [self noteWithDictinoary:[resultSet resultDict]];
                 
                 [noteDictionary setObject:note forKey:@(note.id)];
             }
             
             while ([commentResultSet next]) {
-                OSMComment *comment = [self commentWithDictionary:[resultSet resultDictionary]];
+                OSMComment *comment = [self commentWithDictionary:[resultSet resultDict]];
                 int64_t noteId = [commentResultSet longLongIntForColumn:@"note_id"];
                 
                 OSMNote *note = noteDictionary[@(noteId)];
@@ -166,7 +169,7 @@
     note.isOpen = [[dictionary objectForKey:@"open"] boolValue];
     note.coordinate = CLLocationCoordinate2DMake([[dictionary objectForKey:@"lat"] doubleValue], [[dictionary objectForKey:@"lon"] doubleValue]);
     note.dateCreated = [self dateWithString:dictionary[@"date_created"]];
-    note.dateClosed = [self dateWithString:dictionary[@"date_closed"]];
+    note.dateClosed = [self dateWithString:dictionary[@"closed_at"]];
     return note;
 }
 
@@ -174,7 +177,7 @@
 {
     OSMComment *comment = [[OSMComment alloc] init];
     comment.text = dictionary[@"text"];
-    comment.username = dictionary[@"username"];
+    comment.username = dictionary[@"user"];
     comment.userID = [dictionary[@"user_id"] longLongValue];
     comment.action = dictionary[@"action"];
     comment.date = [self dateWithString:dictionary[@"date"]];

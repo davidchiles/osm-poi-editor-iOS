@@ -79,7 +79,7 @@
             return;
         }
         
-        if (![db executeUpdate:@"CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY NOT NULL,open INTEGER NOT NULL,lat DOUBLE NOT NULL,lon DOUBLE NOT NULL,date_created TEXT NOT NULL,date_closed TEXT)"]) {
+        if (![db executeUpdate:@"CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY NOT NULL,open INTEGER NOT NULL,lat DOUBLE NOT NULL,lon DOUBLE NOT NULL,date_created TEXT NOT NULL,closed_at TEXT)"]) {
             result = NO;
             return;
         }

@@ -41,7 +41,7 @@
     
     self.textField.text = array[1];
     
-    languageButton = [[BButton alloc] initWithFrame:CGRectZero type:BButtonTypePrimary];
+    languageButton = [BButton buttonWithType:BButtonTypePrimary];
     [languageButton setTitle:self.locale forState:UIControlStateNormal];
     [languageButton addTarget:self action:@selector(languageButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
     

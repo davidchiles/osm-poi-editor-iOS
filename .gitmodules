@@ -32,3 +32,6 @@
 [submodule "lib/HockeySDK-iOS"]
 	path = lib/HockeySDK-iOS
 	url = git@github.com:bitstadium/HockeySDK-iOS.git
+[submodule "lib/MapBox"]
+	path = lib/MapBox
+	url = git@github.com:mapbox/mapbox-ios-sdk.git

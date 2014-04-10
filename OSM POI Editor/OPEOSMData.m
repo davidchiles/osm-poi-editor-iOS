@@ -91,7 +91,7 @@
     NSString * statusString = (NSString *)propertiesDictionary[@"status"];
     note.isOpen = [statusString isEqualToString:@"open"];
     note.dateCreated = [OPEUtility noteDateFromString:(NSString *)propertiesDictionary[@"date_created"]];
-    note.dateClosed = [OPEUtility noteDateFromString:(NSString *)propertiesDictionary[@"date_closed"]];
+    note.dateClosed = [OPEUtility noteDateFromString:(NSString *)propertiesDictionary[@"closed_at"]];
     __block NSMutableArray * newComments = [NSMutableArray array];
     NSArray * comments = (NSArray *)propertiesDictionary[@"comments"];
     [comments enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -227,7 +227,7 @@
         FMResultSet * set = [db executeQuery:@"SELECT rowid as id,* FROM poi WHERE displayName = ?",name];
         
         while ([set next]) {
-            poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+            poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDict]];
         }
         
         set = [db executeQuery:@"SELECT * FROM pois_tags WHERE poi_id = ?",poi.rowID];
@@ -299,7 +299,7 @@
             [self.databaseQueue inDatabase:^(FMDatabase *db) {
                 FMResultSet * result = [db executeQuery:@"SELECT *,rowid AS id FROM poi WHERE rowid = ?",[NSNumber numberWithInt:element.typeID]];
                 if ([result next]) {
-                    poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[result resultDictionary]];
+                    poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[result resultDict]];
                 }
                 [result close];
             }];
@@ -363,7 +363,7 @@
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQuery:@"select * from relations_members where relation_id = ?",[NSNumber numberWithLongLong:relation.elementID]];
         while ([set next]) {
-            OPEOsmRelationMember * member = [[OPEOsmRelationMember alloc] initWithDictionary:[set resultDictionary]];
+            OPEOsmRelationMember * member = [[OPEOsmRelationMember alloc] initWithDictionary:[set resultDict]];
             [membersArray addObject:member];
         }
     }];
@@ -452,7 +452,7 @@
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQuery:@"select * from relations_members,ways where relation_id = ? AND type = 'way' AND role = 'outer' AND ref=id",[NSNumber numberWithLongLong:relation.elementID]];
         while ([set next]) {
-            OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[set resultDictionary]];
+            OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[set resultDict]];
             [waysArray addObject:way];
         }
     }];
@@ -472,7 +472,7 @@
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQuery:@"select * from relations_members,ways where relation_id = ? AND type = 'way' AND role = 'inner' AND ref=id",[NSNumber numberWithLongLong:relation.elementID]];
         while ([set next]) {
-            OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[set resultDictionary]];
+            OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[set resultDict]];
             [waysArray addObject:way];
         }
     }];
@@ -491,18 +491,18 @@
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQuery:@"select * from relations_members,ways where relation_id = ? AND ref=id",[NSNumber numberWithLongLong:relation.elementID]];
         while ([set next]) {
-            if ([[[set resultDictionary] objectForKey:@"type"] isEqualToString:kOPEOsmElementNode]) {
-                OPEOsmNode * node = [[OPEOsmNode alloc] initWithDictionary:[set resultDictionary]];
+            if ([[[set resultDict] objectForKey:@"type"] isEqualToString:kOPEOsmElementNode]) {
+                OPEOsmNode * node = [[OPEOsmNode alloc] initWithDictionary:[set resultDict]];
                 [membersArray addObject:node];
             }
-            else if ([[[set resultDictionary] objectForKey:@"type"] isEqualToString:kOPEOsmElementWay])
+            else if ([[[set resultDict] objectForKey:@"type"] isEqualToString:kOPEOsmElementWay])
             {
-                OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[set resultDictionary]];
+                OPEOsmWay * way = [[OPEOsmWay alloc] initWithDictionary:[set resultDict]];
                 [membersArray addObject:way];
             }
-            else if ([[[set resultDictionary] objectForKey:@"type"] isEqualToString:kOPEOsmElementRelation])
+            else if ([[[set resultDict] objectForKey:@"type"] isEqualToString:kOPEOsmElementRelation])
             {
-                OPEOsmRelation * relation = [[OPEOsmRelation alloc] initWithDictionary:[set resultDictionary]];
+                OPEOsmRelation * relation = [[OPEOsmRelation alloc] initWithDictionary:[set resultDict]];
                 [membersArray addObject:relation];
             }
             
@@ -537,7 +537,7 @@
             FMResultSet * result = [db executeQueryWithFormat:@"SELECT * FROM poi WHERE rowid = %d",element.typeID];
             
             if ([result next]) {
-                type = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[result resultDictionary]];
+                type = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[result resultDict]];
             }
             [result close];
             if (withTags) {
@@ -616,7 +616,7 @@
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
         FMResultSet * set = [db executeQuery:sql];
         while ([set next]) {
-            managedElement = [OPEOsmElement elementWithType:kind withDictionary:[set resultDictionary]];
+            managedElement = [OPEOsmElement elementWithType:kind withDictionary:[set resultDict]];
         }
     }];
     return managedElement;
@@ -633,7 +633,7 @@
         FMResultSet * set = [db executeQuery:sql];
         
         while ([set next]) {
-            OPEOsmElement * managedElement = [OPEOsmElement elementWithType:kind withDictionary:[set resultDictionary]];
+            OPEOsmElement * managedElement = [OPEOsmElement elementWithType:kind withDictionary:[set resultDict]];
             [resultArray addObject:managedElement];
         }
     }];
@@ -746,7 +746,7 @@
         poi.name = @"";
         while ([set next]) {
             if (![poi.name isEqualToString:[set stringForColumn:@"displayName"]]) {
-                poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+                poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDict]];
                 
                 [array addObject: poi];
             }
@@ -787,7 +787,7 @@
         OPEReferencePoi * poi = nil;
         poi.name = @"";
         while ([set next]) {
-            poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+            poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDict]];
             
             [array addObject: poi];
         }
@@ -804,7 +804,7 @@
         db.traceExecution = OPETraceDatabaseTraceExecution;
         FMResultSet * set = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi WHERE id = ?",[NSNumber numberWithLongLong:poi.rowID]];
         while ([set next]) {
-            newPOI = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDictionary]];
+            newPOI = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDict]];
         }
     }];
     [self getTagsForType:newPOI];
