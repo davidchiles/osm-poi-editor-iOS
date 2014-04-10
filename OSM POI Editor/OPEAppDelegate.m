@@ -50,7 +50,6 @@
     
     [OPEDatabaseManager createDatabaseWithError:nil];
     
-    
     [[[OPEOSMAPIManager alloc] init] fetchCurrentUserWithComletion:nil];
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];

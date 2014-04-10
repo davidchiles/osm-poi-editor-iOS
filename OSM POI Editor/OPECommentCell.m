@@ -91,7 +91,7 @@
     
     //FIXME hard coding finding self
     OPEOSMUser *currentUser = [OPEOSMUser currentUser];
-    if (self.comment.userID == [currentUser.userId longLongValue]) {
+    if (self.comment.userID && self.comment.userID == [currentUser.userId longLongValue]) {
         CGFloat newWidth = width+EDGE_MARGIN+OPPOSITE_MARGIN;
         commentContents.frame = CGRectMake(OPPOSITE_MARGIN, 0, width, height);
         UIEdgeInsets insets = UIEdgeInsetsMake(2, 2, 12, 12);
