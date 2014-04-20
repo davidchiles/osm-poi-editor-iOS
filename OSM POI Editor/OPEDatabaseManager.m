@@ -49,7 +49,7 @@
             return;
         }
         
-        if (![db executeUpdateWithFormat:@"CREATE TABLE poi(editOnly INTEGER DEFAULT 0,imageString TEXT,isLegacy INTEGER DEFAULT 0,displayName TEXT NOT NULL,category TEXT NOT NULL,UNIQUE(displayName,category))"]) {
+        if (![db executeUpdateWithFormat:@"CREATE TABLE poi(edit_only INTEGER DEFAULT 0,image_string TEXT,is_legacy INTEGER DEFAULT 0,display_name TEXT NOT NULL,category TEXT NOT NULL,UNIQUE(display_name,category))"]) {
             result = NO;
             return;
         }

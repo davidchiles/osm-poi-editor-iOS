@@ -24,25 +24,17 @@
 #import "OPEReferencePoi.h"
 #import "OPEOSMData.h"
 
+@interface OPECategoryViewController ()
+
+@property (nonatomic, strong) NSMutableArray *searchResults;
+@property (nonatomic, strong) UISearchDisplayController *searchDisplayController;
+
+@end
+
 @implementation OPECategoryViewController
 
 @synthesize searchDisplayController;
-@synthesize categoriesArray,typesArray,searchResults;
-@synthesize delegate;
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
--(void)dealloc
-{
-    self.searchDisplayController.delegate = nil;
-    self.searchDisplayController.searchResultsDelegate = nil;
-    self.searchDisplayController.searchResultsDataSource = nil;
-}
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -63,11 +55,11 @@
     UISearchBar * searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 44)];
     tableView.tableHeaderView = searchBar;
     
-    searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+    self.searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     
-    searchDisplayController.delegate = self;
-    searchDisplayController.searchResultsDataSource = self;
-    searchDisplayController.searchResultsDelegate = self;
+    self.searchDisplayController.delegate = self;
+    self.searchDisplayController.searchResultsDataSource = self;
+    self.searchDisplayController.searchResultsDelegate = self;
     
     [self.view addSubview:tableView];
     
@@ -113,7 +105,7 @@
 
 - (void)handleSearchForTerm:(NSString *)searchTerm
 {
-    searchResults = [[NSMutableArray alloc] init];
+    self.searchResults = [[NSMutableArray alloc] init];
     if ([searchTerm length] != 0)
     {
         for (OPEReferencePoi * currentPoi in self.typesArray)
@@ -124,13 +116,13 @@
             {
                 NSNumber * location = [NSNumber numberWithInteger: range.location];
                 NSDictionary * match = [[NSDictionary alloc] initWithObjectsAndKeys:currentString,@"typeName",currentPoi,@"poi",location,@"location",currentPoi.categoryName,@"catName", nil];
-                [searchResults addObject:match];
+                [self.searchResults addObject:match];
                 
             }
         }
         NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"location"  ascending:YES];
         NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"typeName" ascending:YES];
-        [searchResults sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nameDescriptor,nil]];
+        [self.searchResults sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nameDescriptor,nil]];
     }
 }
 
@@ -145,9 +137,9 @@
 {
     if (tableView == [[self searchDisplayController] searchResultsTableView]) {
         
-        return [searchResults count];
+        return [self.searchResults count];
     }
-    return [categoriesArray count];
+    return [self.categoriesArray count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -165,7 +157,7 @@
     }
     
     
-    cell.textLabel.text = [categoriesArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = [self.categoriesArray objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
@@ -177,7 +169,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
      if (tableView == [[self searchDisplayController] searchResultsTableView]) {
-         OPEReferencePoi * poi =[[searchResults objectAtIndex:indexPath.row] objectForKey:@"poi"];
+         OPEReferencePoi * poi =[[self.searchResults objectAtIndex:indexPath.row] objectForKey:@"poi"];
          [osmData getMetaDataForType:poi];
          [self newType: poi];
          

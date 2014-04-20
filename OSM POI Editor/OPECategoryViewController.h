@@ -32,12 +32,12 @@
 }
 
 //@property (nonatomic,strong) UITableView * categoriesTableView;
-@property (nonatomic,strong) UISearchDisplayController * searchDisplayController;
-@property (nonatomic,strong) NSArray * categoriesArray;
-@property (nonatomic,strong) NSArray * typesArray;
+//@property (nonatomic, strong) UISearchDisplayController * searchDisplayController;
+@property (nonatomic, strong) NSArray * categoriesArray;
+@property (nonatomic, strong) NSArray * typesArray;
 
-@property (nonatomic, strong) id <OPETypeViewControllerDelegate> delegate;
+@property (nonatomic, weak) id <OPETypeViewControllerDelegate> delegate;
 
-@property (nonatomic, retain) NSMutableArray *searchResults;
+
 
 @end

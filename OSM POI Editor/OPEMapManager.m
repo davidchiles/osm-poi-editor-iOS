@@ -24,6 +24,7 @@
 #import "OPEOSMData.h"
 #import "OPEGeoCentroid.h"
 #import "OPENotesDatabase.h"
+#import "OPELog.h"
 
 @interface OPEMapManager ()
 
@@ -100,7 +101,14 @@
                 imageString = @"none.png";
             
             icon = [self imageWithBorderFromImage:[UIImage imageNamed:imageString]]; //center image inside box
-            [self.imageDictionary setObject:icon forKey:managedOsmElement.type.imageString];
+            if(icon && managedOsmElement.type.imageString)
+            {
+                [self.imageDictionary setObject:icon forKey:managedOsmElement.type.imageString];
+            }
+            else {
+                DDLogWarn(@"WARN: No Icon");
+            }
+            
         }
     }
     RMMarker *newMarker = [[RMMarker alloc] initWithUIImage:icon anchorPoint:CGPointMake(0.5, 0.5)];

@@ -13,10 +13,6 @@
 
 @implementation OPEReferencePoi
 
-@synthesize isLegacy,editOnly,imageString,currentTagMethod,oldTagMethod,optionalsSet,tags;
-@synthesize categoryName = _categoryName;
-@synthesize name = _name;
-
 -(id)init
 {
     if (self = [super init]) {
@@ -38,8 +34,8 @@
         self.tags = [dictionary objectForKey:@"tags"];
         
         self.editOnly = NO;
-        if ([dictionary objectForKey:@"editOnly"]) {
-            self.editOnly = [[dictionary objectForKey:@"editOnly"] boolValue];
+        if ([dictionary objectForKey:@"edit_only"]) {
+            self.editOnly = [[dictionary objectForKey:@"edit_only"] boolValue];
         }
         
         
@@ -84,10 +80,10 @@
 -(id)initWithSqliteResultDictionary:(NSDictionary *)dictionary
 {
     if (self = [self init]) {
-        self.name = dictionary[@"displayName"];
-        self.imageString = dictionary[@"imageString"];
-        self.editOnly = [dictionary[@"editOnly"] boolValue];
-        self.isLegacy = [dictionary[@"isLegacy"]boolValue];
+        self.name = dictionary[@"display_name"];
+        self.imageString = dictionary[@"image_string"];
+        self.editOnly = [dictionary[@"edit_only"] boolValue];
+        self.isLegacy = [dictionary[@"is_legacy"]boolValue];
         self.categoryName = dictionary[@"category"];
         id itemId = dictionary[@"id"];
         if ([itemId isKindOfClass:[NSNumber class]]) {
@@ -100,7 +96,7 @@
 
 -(NSString *)sqliteInsertString
 {
-    return [NSString stringWithFormat:@"insert or replace into poi(editOnly,imageString,isLegacy,displayName,category) values(%d,\'%@\',%d,\'%@\',\'%@\')",self.editOnly,self.imageString,self.isLegacy,self.refName,self.categoryName];
+    return [NSString stringWithFormat:@"insert or replace into poi(edit_only,image_string,is_legacy,display_name,category) values(%d,\'%@\',%d,\'%@\',\'%@\')",self.editOnly,self.imageString,self.isLegacy,self.refName,self.categoryName];
 }
 -(NSString *)sqliteOptionalInsertString
 {

@@ -185,7 +185,7 @@
                 NSString * columnID = [NSString stringWithFormat:@"%@_id",[baseTableName substringToIndex:[baseTableName length] - 1]];
                 if (tagsTable && columnID && [element.element.tags count]) {
                     
-                    NSString * sql =  [NSString stringWithFormat:@"SELECT poi_id FROM (SELECT D.poi_id,%@ FROM (SELECT poi_id,%@,isLegacy,COUNT(*) AS count FROM (SELECT poi_id,%@ FROM pois_tags NATURAL JOIN %@) AS A JOIN poi AS B ON A.poi_id = B.rowid AND A.%@ = %lld GROUP BY poi_id ORDER BY isLegacy ASC) AS C, (SELECT poi_id,COUNT(*)AS count FROM pois_tags GROUP BY poi_id) AS D WHERE C.poi_id = D.poi_id AND C.count = D.count) LIMIT 1",columnID,columnID,columnID,tagsTable,columnID,element.element.elementID];
+                    NSString * sql =  [NSString stringWithFormat:@"SELECT poi_id FROM (SELECT D.poi_id,%@ FROM (SELECT poi_id,%@,is_legacy,COUNT(*) AS count FROM (SELECT poi_id,%@ FROM pois_tags NATURAL JOIN %@) AS A JOIN poi AS B ON A.poi_id = B.rowid AND A.%@ = %lld GROUP BY poi_id ORDER BY is_legacy ASC) AS C, (SELECT poi_id,COUNT(*)AS count FROM pois_tags GROUP BY poi_id) AS D WHERE C.poi_id = D.poi_id AND C.count = D.count) LIMIT 1",columnID,columnID,columnID,tagsTable,columnID,element.element.elementID];
                     FMResultSet * result = [db executeQuery:sql];
                     
                     if([result next]) {
@@ -740,11 +740,11 @@
 {
     __block NSMutableArray * array = [NSMutableArray array];
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        FMResultSet * set = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi,pois_tags WHERE  poi.rowid = pois_tags.poi_id AND category = ? ORDER BY displayName",category];
+        FMResultSet * set = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi,pois_tags WHERE  poi.rowid = pois_tags.poi_id AND category = ? ORDER BY display_name",category];
         OPEReferencePoi * poi = nil;
         poi.name = @"";
         while ([set next]) {
-            if (![poi.name isEqualToString:[set stringForColumn:@"displayName"]]) {
+            if (![poi.name isEqualToString:[set stringForColumn:@"display_name"]]) {
                 poi = [[OPEReferencePoi alloc] initWithSqliteResultDictionary:[set resultDict]];
                 
                 [array addObject: poi];
@@ -777,9 +777,9 @@
 {
     __block NSMutableArray * array = [NSMutableArray array];
     [self.databaseQueue inDatabase:^(FMDatabase *db) {
-        NSString * sqlString = @"SELECT displayName,category,poi.rowid AS id FROM poi,pois_tags WHERE  poi.rowid = pois_tags.poi_id AND editOnly=0 GROUP BY id ORDER BY displayName";
+        NSString * sqlString = @"SELECT *,poi.rowid AS id FROM poi,pois_tags WHERE  poi.rowid = pois_tags.poi_id AND edit_only=0 GROUP BY id ORDER BY display_name";
         if (!includeLegacy) {
-            sqlString = [sqlString stringByAppendingFormat:@" AND isLegacy = 0"];
+            sqlString = [sqlString stringByAppendingFormat:@" AND is_legacy = 0"];
         }
         
         FMResultSet * set = [db executeQuery:sqlString];

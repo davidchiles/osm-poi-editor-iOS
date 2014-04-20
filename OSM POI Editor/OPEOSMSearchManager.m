@@ -275,7 +275,7 @@
     [databaseQueue inDatabase:^(FMDatabase *db) {
         db.logsErrors = OPELogDatabaseErrors;
         db.traceExecution = OPETraceDatabaseTraceExecution;
-        FMResultSet * resultsSet = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi NATURAL JOIN poi_lastUsed where date IS NOT NULL AND editOnly = 0 AND isLegacy = 0 order by datetime(date) DESC limit ?",[NSNumber numberWithInteger:length]];
+        FMResultSet * resultsSet = [db executeQuery:@"SELECT *,poi.rowid AS id FROM poi NATURAL JOIN poi_lastUsed where date IS NOT NULL AND editOnly = 0 AND is_legacy = 0 order by datetime(date) DESC limit ?",[NSNumber numberWithInteger:length]];
         
         while ([resultsSet next]) {
             [resultArray addObject:[[OPEReferencePoi alloc] initWithSqliteResultDictionary:[resultsSet resultDict]]];
