@@ -1015,5 +1015,11 @@
       "Voodoo" : "voodoo"
     },
     "section" : "Other"
+  },
+  "fire_hydrant:diameter" : {
+    "displayName" : "Diameter",
+    "osmKey" : "fire_hydrant:diameter",
+    "values" : "number",
+    "section" : "Other"
   }
 }
