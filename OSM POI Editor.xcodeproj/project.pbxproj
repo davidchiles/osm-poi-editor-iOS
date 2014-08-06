@@ -292,7 +292,7 @@
 		6330AB7114DB519A00448852 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7014DB519A00448852 /* Foundation.framework */; };
 		6330AB7314DB519A00448852 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AB7214DB519A00448852 /* CoreGraphics.framework */; };
 		6330AB7914DB519A00448852 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6330AB7714DB519A00448852 /* InfoPlist.strings */; };
-		6330AB7B14DB519A00448852 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6330AB7A14DB519A00448852 /* main.m */; };
+		6330AB7B14DB519A00448852 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6330AB7A14DB519A00448852 /* main.mm */; };
 		6330AB7F14DB519A00448852 /* OPEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6330AB7E14DB519A00448852 /* OPEAppDelegate.m */; };
 		6330AB8214DB519A00448852 /* OPEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6330AB8114DB519A00448852 /* OPEViewController.m */; };
 		6330AC0514DB54A200448852 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6330AC0414DB54A200448852 /* QuartzCore.framework */; };
@@ -700,7 +700,7 @@
 		6330AB7214DB519A00448852 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6330AB7614DB519A00448852 /* OSM POI Editor-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OSM POI Editor-Info.plist"; sourceTree = "<group>"; };
 		6330AB7814DB519A00448852 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6330AB7A14DB519A00448852 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6330AB7A14DB519A00448852 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		6330AB7C14DB519A00448852 /* OSM POI Editor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OSM POI Editor-Prefix.pch"; sourceTree = "<group>"; };
 		6330AB7D14DB519A00448852 /* OPEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPEAppDelegate.h; sourceTree = "<group>"; };
 		6330AB7E14DB519A00448852 /* OPEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPEAppDelegate.m; sourceTree = "<group>"; };
@@ -1392,7 +1392,7 @@
 				639953FD16113A200070CBAF /* about.css */,
 				6330AB7614DB519A00448852 /* OSM POI Editor-Info.plist */,
 				6330AB7714DB519A00448852 /* InfoPlist.strings */,
-				6330AB7A14DB519A00448852 /* main.m */,
+				6330AB7A14DB519A00448852 /* main.mm */,
 				6330AB7C14DB519A00448852 /* OSM POI Editor-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -1981,7 +1981,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63E4FEA118F755ED00078CD5 /* OPEAppVersionMigration.m in Sources */,
-				6330AB7B14DB519A00448852 /* main.m in Sources */,
+				6330AB7B14DB519A00448852 /* main.mm in Sources */,
 				6330AB7F14DB519A00448852 /* OPEAppDelegate.m in Sources */,
 				6330AB8214DB519A00448852 /* OPEViewController.m in Sources */,
 				631539E114DC98D0000236F0 /* OPEOSMData.m in Sources */,
@@ -2171,11 +2171,9 @@
 			baseConfigurationReference = 381DEEC1BA0E43BBBAB2C5D7 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2193,12 +2191,10 @@
 			baseConfigurationReference = 381DEEC1BA0E43BBBAB2C5D7 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OSM POI Editor/OSM POI Editor-Prefix.pch";
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "OSM POI Editor/OSM POI Editor-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;

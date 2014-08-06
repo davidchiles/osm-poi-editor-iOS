@@ -1,7 +1,7 @@
 platform :ios, '7.0'
 inhibit_all_warnings!
 
-pod 'Mapbox', :git => 'https://github.com/mapbox/mapbox-ios-sdk', :branch => 'develop'
+pod 'Mapbox-iOS-SDK', '~> 1.2'
 pod 'AFOAuth1Client', :git => 'https://github.com/WouterDS/AFOAuth1Client', :branch => 'master'
 pod 'HockeySDK'
 pod 'AFNetworking'
@@ -14,3 +14,5 @@ pod 'DAKeyboardControl'
 pod 'TTTAttributedLabel'
 pod 'uservoice-iphone-sdk'
 pod 'gtm-oauth'
+
+pod 'OSMKit', :path => 'Submodules/OSMKit/OSMKit.podspec'

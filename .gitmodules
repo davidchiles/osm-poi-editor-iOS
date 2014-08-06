@@ -4,3 +4,6 @@
 [submodule "lib/ActionSheetPicker"]
 	path = lib/ActionSheetPicker
 	url = git@github.com:davidchiles/ActionSheetPicker.git
+[submodule "Submodules/OSMKit"]
+	path = Submodules/OSMKit
+	url = git@github.com:davidchiles/OSMKit.git
